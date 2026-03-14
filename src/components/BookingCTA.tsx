@@ -17,10 +17,10 @@ const BookingCTA = () => {
           <h2 className="font-display text-3xl md:text-5xl font-bold text-primary-foreground">{t("cta_title")}</h2>
           <p className="mt-4 text-primary-foreground/70 text-lg">{t("cta_subtitle")}</p>
           <Button asChild size="lg" className="mt-8 rounded-full px-10 text-base bg-accent/80 backdrop-blur-md hover:bg-accent/95 text-accent-foreground border border-white/25 shadow-[0_4px_20px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.25)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.35)] gap-2">
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+            <Link to="/fun-dive-booking">
               <MessageCircle className="h-5 w-5" />
               {t("cta_button")}
-            </a>
+            </Link>
           </Button>
         </motion.div>
       </div>
