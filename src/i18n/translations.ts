@@ -803,6 +803,7 @@ export const translations: Record<Language, TranslationStrings> = {
     dur_5_days: "5 jours",
     dur_2_days: "2 jours",
     dur_3_4_days: "3–4 jours",
+    dur_2_5_days: "2,5 jours",
     dur_4_8_weeks: "4–8 semaines",
     dur_varies: "Variable",
     dur_2_3_days: "2–3 jours",
