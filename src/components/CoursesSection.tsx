@@ -112,7 +112,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
           title: t("course_ow"),
           dialogKey: "Open Water Diver",
           price: "11,000",
-          duration: t("dur_3_4_days"),
+          duration: t("dur_2_5_days"),
           highlights: [t("hl_18m"), t("hl_lifetime"), t("hl_4_dives")],
           featured: true,
           hasDetails: true,
