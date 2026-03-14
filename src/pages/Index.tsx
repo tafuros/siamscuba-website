@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import CoursesSection from "@/components/CoursesSection";
-import SailRockBanner from "@/components/SailRockBanner";
+
 import FunDivingSection from "@/components/FunDivingSection";
 import BoatsSection from "@/components/BoatsSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -31,7 +31,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <CoursesSection initialCourse={courseParam} />
-      <SailRockBanner />
+      
       <FunDivingSection />
       <BoatsSection />
       <WhyChooseUs />
