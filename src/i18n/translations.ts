@@ -117,6 +117,7 @@ type TranslationStrings = {
   dur_2_days: string;
   dur_5_days: string;
   dur_3_4_days: string;
+  dur_2_5_days: string;
   dur_4_8_weeks: string;
   dur_varies: string;
   dur_2_3_days: string;
