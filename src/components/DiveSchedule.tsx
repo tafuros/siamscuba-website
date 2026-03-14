@@ -153,8 +153,8 @@ const DiveSchedule = () => {
         className="rounded-2xl border border-border bg-card p-6 flex flex-col"
       >
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center">
-            <Sunset className="h-5 w-5 text-orange-600" />
+          <div className="w-11 h-11 rounded-xl bg-sand flex items-center justify-center">
+            <Sunset className="h-5 w-5 text-accent" />
           </div>
           <div>
             <h3 className="font-display text-lg font-bold text-foreground">Afternoon Dives</h3>
