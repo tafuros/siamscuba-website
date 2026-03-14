@@ -156,7 +156,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
           title: t("course_rescue"),
           dialogKey: "Rescue Diver",
           price: "10,000",
-          duration: t("dur_3_4_days"),
+          duration: t("dur_3_days"),
           highlights: [t("hl_emergency"), t("hl_rescue_tech"), t("hl_stress")],
           hasDetails: true,
         },

@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Upload, X } from "lucide-react";
+import { Upload, X, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,9 +27,12 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic"];
+
+const DIVEFLOW_API = "https://preview-wqmkrdgpcslo.dev.vibecode.run/api/leads/public";
 
 const CERT_LEVELS = [
   "Open Water",
@@ -57,10 +60,19 @@ const bookingSchema = z.object({
 type BookingFormValues = z.infer<typeof bookingSchema>;
 
 interface FunDiveBookingFormProps {
-  date: string; // ISO date string
+  date: string;
   slotLabel: string;
   slotTime: string;
   onSuccess: () => void;
+}
+
+async function uploadFile(file: File, prefix: string): Promise<string> {
+  const ext = file.name.split(".").pop() || "jpg";
+  const path = `${prefix}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage.from("booking-docs").upload(path, file);
+  if (error) throw new Error(`Upload failed: ${error.message}`);
+  const { data } = supabase.storage.from("booking-docs").getPublicUrl(path);
+  return data.publicUrl;
 }
 
 function FileUploadField({
@@ -132,6 +144,7 @@ function FileUploadField({
 
 const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBookingFormProps) => {
   const { toast } = useToast();
+  const [submitting, setSubmitting] = useState(false);
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -144,12 +157,57 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
 
   const dateFormatted = format(new Date(date + "T12:00:00"), "EEEE, MMMM d");
 
-  const onSubmit = (_data: BookingFormValues) => {
-    toast({
-      title: "Booking request sent!",
-      description: "We'll contact you shortly to confirm your dive.",
-    });
-    onSuccess();
+  const onSubmit = async (data: BookingFormValues) => {
+    setSubmitting(true);
+    try {
+      // Upload files in parallel
+      const [licenseUrl, logbookUrl] = await Promise.all([
+        uploadFile(data.licensePhoto, "license"),
+        uploadFile(data.logbookPhoto, "logbook"),
+      ]);
+
+      // Build notes string with all metadata
+      const notes = [
+        `Cert: ${data.certLevel}`,
+        `Dive type: ${slotLabel} (${slotTime})`,
+        `WhatsApp: ${data.whatsapp}`,
+        `License: ${licenseUrl}`,
+        `Logbook: ${logbookUrl}`,
+      ].join(" | ");
+
+      // POST to DiveFlow API
+      const res = await fetch(DIVEFLOW_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: data.fullName,
+          email: data.email,
+          phone: data.whatsapp,
+          desiredStartDate: date,
+          notes,
+          wantsAccommodation: false,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error(err?.error?.message || `Server error (${res.status})`);
+      }
+
+      toast({
+        title: "Booking request sent! ✅",
+        description: "We'll contact you shortly to confirm your dive.",
+      });
+      onSuccess();
+    } catch (err: any) {
+      toast({
+        title: "Something went wrong",
+        description: err.message || "Please try again or contact us via WhatsApp.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -260,8 +318,15 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
             )}
           />
 
-          <Button type="submit" className="w-full mt-2" size="lg">
-            Send Booking Request
+          <Button type="submit" className="w-full mt-2" size="lg" disabled={submitting}>
+            {submitting ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Sending…
+              </>
+            ) : (
+              "Send Booking Request"
+            )}
           </Button>
         </form>
       </Form>

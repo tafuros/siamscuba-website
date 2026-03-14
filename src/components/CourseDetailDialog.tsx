@@ -220,14 +220,14 @@ const courseDetails: Record<string, CourseDetail> = {
       "Surfacing an unconscious diver.",
     ],
     structure: [
-      "Duration: 2-3 days of intense, rewarding scenarios.",
+      "Duration: 3 days of intense, rewarding scenarios.",
       "Includes theory, 10 rescue exercises, and 2 realistic open-water scenarios.",
     ],
     prerequisites: [
       "Advanced Open Water certification (or equivalent).",
       "EFR (First Aid/CPR) certification valid within the last 12 months.",
     ],
-    price: "12,000 THB (Add EFR for 4,000 THB if needed)",
+    price: "10,000 THB (Add EFR for 4,000 THB if needed)",
   },
   "Peak Performance Buoyancy": {
     header: "Master Your Buoyancy & Become a Better Diver",
