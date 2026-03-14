@@ -299,6 +299,7 @@ export const translations: Record<Language, TranslationStrings> = {
     dur_5_days: "5 days",
     dur_2_days: "2 days",
     dur_3_4_days: "3–4 days",
+    dur_2_5_days: "2.5 days",
     dur_4_8_weeks: "4–8 weeks",
     dur_varies: "Varies",
     dur_2_3_days: "2–3 days",
