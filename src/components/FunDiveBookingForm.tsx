@@ -32,7 +32,7 @@ import { supabase } from "@/integrations/supabase/client";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic"];
 
-const DIVEFLOW_API = "https://preview-wqmkrdgpcslo.dev.vibecode.run/api/leads/public";
+const SUBMIT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-booking`;
 
 const CERT_LEVELS = [
   "Open Water",
@@ -176,9 +176,12 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
       ].join(" | ");
 
       // POST to DiveFlow API
-      const res = await fetch(DIVEFLOW_API, {
+      const res = await fetch(SUBMIT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
         body: JSON.stringify({
           fullName: data.fullName,
           email: data.email,
