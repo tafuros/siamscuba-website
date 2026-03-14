@@ -13,6 +13,7 @@ import LocationSection from "@/components/LocationSection";
 import Footer from "@/components/Footer";
 import FloatingInstagram from "@/components/FloatingInstagram";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import ScrollHint from "@/components/ScrollHint";
 
 const Index = () => {
   const [searchParams] = useSearchParams();
@@ -31,8 +32,9 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <CoursesSection initialCourse={courseParam} />
-      
+      <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />
+      <ScrollHint label="Our Boats ↓" targetId="boats" />
       <BoatsSection />
       <WhyChooseUs />
       <BlogPreview />
