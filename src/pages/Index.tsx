@@ -32,8 +32,9 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <CoursesSection initialCourse={courseParam} />
-      
+      <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />
+      <ScrollHint label="Our Boats ↓" targetId="boats" />
       <BoatsSection />
       <WhyChooseUs />
       <BlogPreview />
