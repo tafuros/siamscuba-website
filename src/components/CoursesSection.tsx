@@ -300,7 +300,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
                     </button>
                   </div>
                 ) : (
-                  <div className={`grid grid-cols-1 sm:grid-cols-2 ${cat.courses.length > 2 ? "lg:grid-cols-4" : cat.courses.length === 1 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-6`}>
+                  <div className={`grid grid-cols-1 sm:grid-cols-2 ${cat.courses.length > 2 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-6`}>
                     {cat.courses.map((course, i) => (
                       <motion.div key={course.dialogKey} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.3, delay: i * 0.08 }}>
                         <CourseCard course={course} t={t} setSelectedCourse={setSelectedCourse} />
