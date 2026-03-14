@@ -176,7 +176,7 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
       ].join(" | ");
 
       // POST to DiveFlow API
-      const res = await fetch(DIVEFLOW_API, {
+      const res = await fetch(SUBMIT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
