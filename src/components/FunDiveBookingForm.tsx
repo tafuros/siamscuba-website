@@ -32,7 +32,7 @@ import { supabase } from "@/integrations/supabase/client";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic"];
 
-const DIVEFLOW_API = "https://preview-wqmkrdgpcslo.dev.vibecode.run/api/leads/public";
+const SUBMIT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-booking`;
 
 const CERT_LEVELS = [
   "Open Water",
