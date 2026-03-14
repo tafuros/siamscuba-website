@@ -31,7 +31,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <CoursesSection initialCourse={courseParam} />
-      <SailRockBanner />
+      
       <FunDivingSection />
       <BoatsSection />
       <WhyChooseUs />
