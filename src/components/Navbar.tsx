@@ -49,18 +49,19 @@ const Navbar = () => {
       <div className="container mx-auto flex flex-col items-center px-4">
         <div className="flex items-center justify-between w-full py-2">
           {/* Desktop left links */}
-          <div className="hidden md:flex items-center gap-6">
-            {navLinks.slice(0, 2).map((link) =>
-              link.href.startsWith("/") ? (
-                <Link key={link.href} to={link.href} className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center gap-3">
+            {navLinks.slice(0, 2).map((link) => {
+              const glassClasses = "px-4 py-1.5 rounded-full text-sm font-semibold text-foreground backdrop-blur-md bg-white/15 border border-white/25 shadow-[0_2px_12px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.3)] hover:bg-white/30 hover:shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.4)] hover:-translate-y-0.5 transition-all duration-200";
+              return link.href.startsWith("/") ? (
+                <Link key={link.href} to={link.href} className={glassClasses}>
                   {link.label}
                 </Link>
               ) : (
-                <button key={link.href} onClick={() => handleNav(link.href)} className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors">
+                <button key={link.href} onClick={() => handleNav(link.href)} className={glassClasses}>
                   {link.label}
                 </button>
-              )
-            )}
+              );
+            })}
           </div>
 
           {/* Mobile hamburger (left side) */}
@@ -74,18 +75,19 @@ const Navbar = () => {
           </button>
 
           {/* Desktop right links */}
-          <div className="hidden md:flex items-center gap-6">
-            {navLinks.slice(2).map((link) =>
-              link.href.startsWith("/") ? (
-                <Link key={link.href} to={link.href} className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center gap-3">
+            {navLinks.slice(2).map((link) => {
+              const glassClasses = "px-4 py-1.5 rounded-full text-sm font-semibold text-foreground backdrop-blur-md bg-white/15 border border-white/25 shadow-[0_2px_12px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.3)] hover:bg-white/30 hover:shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.4)] hover:-translate-y-0.5 transition-all duration-200";
+              return link.href.startsWith("/") ? (
+                <Link key={link.href} to={link.href} className={glassClasses}>
                   {link.label}
                 </Link>
               ) : (
-                <button key={link.href} onClick={() => handleNav(link.href)} className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors">
+                <button key={link.href} onClick={() => handleNav(link.href)} className={glassClasses}>
                   {link.label}
                 </button>
-              )
-            )}
+              );
+            })}
             <SiteSearch />
             <LanguageSwitcher />
             <Button asChild size="sm" className="rounded-full px-6 bg-accent/80 backdrop-blur-md hover:bg-accent/95 text-accent-foreground border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.2)] hover:-translate-y-0.5">
