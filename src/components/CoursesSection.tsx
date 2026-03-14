@@ -155,7 +155,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
           icon: ShieldCheck,
           title: t("course_rescue"),
           dialogKey: "Rescue Diver",
-          price: "12,000",
+          price: "10,000",
           duration: t("dur_3_4_days"),
           highlights: [t("hl_emergency"), t("hl_rescue_tech"), t("hl_stress")],
           hasDetails: true,
