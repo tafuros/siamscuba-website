@@ -2,8 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock, CheckCircle2, Gift, Tag, AlertCircle, MessageCircle, Waves, Fish, Anchor, XCircle, Backpack, CreditCard } from "lucide-react";
-
-const WHATSAPP_URL = "https://wa.me/972528641581?text=Hi%20Siam%20Scuba!%20I'm%20interested%20in%20";
+import { Link } from "react-router-dom";
 
 interface CourseDetail {
   header: string;
