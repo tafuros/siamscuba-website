@@ -50,8 +50,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-background/10 text-center text-xs text-background/40">
-          © {new Date().getFullYear()} Siam Scuba. {t("footer_rights")}
+        <div className="mt-10 pt-6 border-t border-background/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-background/40">
+          <span>© {new Date().getFullYear()} Siam Scuba. {t("footer_rights")}</span>
+          <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
         </div>
       </div>
     </footer>
