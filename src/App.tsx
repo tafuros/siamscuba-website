@@ -9,6 +9,7 @@ import FunDiveBookingPage from "./pages/FunDiveBookingPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
