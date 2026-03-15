@@ -3,8 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { toast } from "sonner";
-
-const WHATSAPP_URL = "https://wa.me/972528641581?text=Hi%20Siam%20Scuba!%20I'm%20interested%20in%20";
+import { Link } from "react-router-dom";
 
 const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: any) => string; setSelectedCourse: (key: string) => void }) => {
   const handleShare = async () => {
@@ -66,9 +65,9 @@ const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: an
             )}
             <div className="flex gap-1.5">
               <Button asChild variant={course.featured ? "default" : "outline"} size="sm" className="rounded-full flex-1 h-8 text-xs">
-                <a href={`${WHATSAPP_URL}${encodeURIComponent(course.dialogKey)}`} target="_blank" rel="noopener noreferrer">
+                <Link to="/fun-dive-booking">
                   {course.price ? t("courses_book_now") : t("courses_get_price")}
-                </a>
+                </Link>
               </Button>
               <Button variant="ghost" size="icon" className="rounded-full shrink-0 text-muted-foreground hover:text-primary h-8 w-8" onClick={handleShare} aria-label={t("share_button")}>
                 <Share2 className="h-3.5 w-3.5" />

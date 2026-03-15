@@ -8,7 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { blogPosts } from "@/data/blogPosts";
 
-const WHATSAPP_URL = "https://wa.me/972528641581?text=Hi%20Siam%20Scuba!%20I'd%20like%20to%20book%20a%20dive.";
+
 
 const categoryColors: Record<string, string> = {
   Food: "bg-accent text-accent-foreground",
@@ -129,10 +129,10 @@ const BlogPostPage = () => {
               size="lg"
               className="mt-6 rounded-full px-10 bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
             >
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <Link to="/fun-dive-booking">
                 <MessageCircle className="h-5 w-5" />
                 Book a Dive
-              </a>
+              </Link>
             </Button>
           </div>
         </motion.div>

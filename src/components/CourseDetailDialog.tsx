@@ -2,8 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock, CheckCircle2, Gift, Tag, AlertCircle, MessageCircle, Waves, Fish, Anchor, XCircle, Backpack, CreditCard } from "lucide-react";
-
-const WHATSAPP_URL = "https://wa.me/972528641581?text=Hi%20Siam%20Scuba!%20I'm%20interested%20in%20";
+import { Link } from "react-router-dom";
 
 interface CourseDetail {
   header: string;
@@ -550,15 +549,10 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
 
             {/* CTA */}
             <Button asChild className="w-full rounded-full" size="lg">
-              <a
-                href={`${WHATSAPP_URL}${encodeURIComponent(courseTitle)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
+              <Link to="/fun-dive-booking" className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
-                Book Now on WhatsApp
-              </a>
+                Book Now
+              </Link>
             </Button>
           </div>
         </ScrollArea>
