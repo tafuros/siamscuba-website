@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Compass, Clock, Users } from "lucide-react";
+import { Compass, Clock, Users, Share2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import DiveSchedule from "./DiveSchedule";
 
 const FunDivingSection = () => {
