@@ -1,4 +1,5 @@
 import { MapPin, Phone, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/siam-logo.png";
 import padi from "@/assets/padi-logo.png";
 import { useLanguage } from "@/i18n/LanguageContext";
