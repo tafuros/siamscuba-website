@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { format, addDays, startOfDay, isBefore } from "date-fns";
 
 /* ── Sail Rock date generator ── */
-const SAIL_ROCK_FIRST = new Date("2025-03-15"); // first departure
+const SAIL_ROCK_FIRST = new Date("2026-03-15"); // first departure
 
 function getUpcomingSailRockDates(count: number): Date[] {
   const today = startOfDay(new Date());
