@@ -550,15 +550,10 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
 
             {/* CTA */}
             <Button asChild className="w-full rounded-full" size="lg">
-              <a
-                href={`${WHATSAPP_URL}${encodeURIComponent(courseTitle)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
+              <Link to="/fun-dive-booking" className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
-                Book Now on WhatsApp
-              </a>
+                Book Now
+              </Link>
             </Button>
           </div>
         </ScrollArea>

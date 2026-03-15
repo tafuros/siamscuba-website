@@ -129,10 +129,10 @@ const BlogPostPage = () => {
               size="lg"
               className="mt-6 rounded-full px-10 bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
             >
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <Link to="/fun-dive-booking">
                 <MessageCircle className="h-5 w-5" />
                 Book a Dive
-              </a>
+              </Link>
             </Button>
           </div>
         </motion.div>
