@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Compass, Clock, Users } from "lucide-react";
+import { Compass, Clock, Users, Share2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import DiveSchedule from "./DiveSchedule";
 
 const FunDivingSection = () => {
@@ -17,7 +19,27 @@ const FunDivingSection = () => {
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mx-auto text-center mb-12">
           <p className="text-primary font-body text-sm uppercase tracking-[0.2em] mb-2">{t("fun_label")}</p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">{t("fun_title")}</h2>
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">{t("fun_title")}</h2>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-muted-foreground hover:text-primary h-9 w-9"
+              onClick={async () => {
+                const url = `${window.location.origin}/#fun-diving`;
+                const text = `Fun Diving — Siam Scuba Koh Tao`;
+                if (navigator.share) {
+                  try { await navigator.share({ title: text, url }); } catch {}
+                } else {
+                  await navigator.clipboard.writeText(url);
+                  toast.success(t("share_copied"));
+                }
+              }}
+              aria-label={t("share_button")}
+            >
+              <Share2 className="h-4 w-4" />
+            </Button>
+          </div>
           <p className="mt-4 text-muted-foreground">{t("fun_subtitle")}</p>
         </motion.div>
 
