@@ -1,16 +1,19 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const LEAD_FORM_URL = "https://dash.siamscuba.com/lead-form?ref=ben";
 
 const FunDiveBookingPage = () => {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div className="min-h-screen bg-ocean-surface">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className="container mx-auto px-4 py-6 max-w-5xl"
       >
         <Link
@@ -21,20 +24,24 @@ const FunDiveBookingPage = () => {
           Back to home
         </Link>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
-          className="w-full rounded-xl overflow-hidden border border-white/10 shadow-lg bg-background/30 backdrop-blur-sm"
-        >
+        <div className="relative w-full rounded-xl overflow-hidden border border-border/50 shadow-lg bg-card">
+          {/* Loading spinner */}
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-card z-10">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          )}
+
           <iframe
             src={LEAD_FORM_URL}
             title="Siam Scuba Booking Form"
             className="w-full border-0"
             style={{ height: "calc(100vh - 100px)", minHeight: "600px" }}
             allow="camera;microphone"
+            loading="eager"
+            onLoad={() => setLoaded(true)}
           />
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );
