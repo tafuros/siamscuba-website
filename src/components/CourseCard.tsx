@@ -3,8 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { toast } from "sonner";
-
-const WHATSAPP_URL = "https://wa.me/972528641581?text=Hi%20Siam%20Scuba!%20I'm%20interested%20in%20";
+import { Link } from "react-router-dom";
 
 const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: any) => string; setSelectedCourse: (key: string) => void }) => {
   const handleShare = async () => {
