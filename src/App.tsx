@@ -10,6 +10,7 @@ import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AdPage from "./pages/AdPage";
 
 const queryClient = new QueryClient();
 
