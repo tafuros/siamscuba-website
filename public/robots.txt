@@ -1,14 +1,21 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Sitemap: https://siamscuba.com/sitemap.xml
+
+# Block old WordPress remnants
+Disallow: /wp-content/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-json/
+Disallow: /wp-login.php
+Disallow: /xmlrpc.php
+Disallow: /feed/
+Disallow: /comments/
+Disallow: /trackback/
+Disallow: /category/
+Disallow: /tag/
+Disallow: /author/
+Disallow: /?attachment_id=
+Disallow: /?p=
+Disallow: /?page_id=
+Disallow: /404-page
