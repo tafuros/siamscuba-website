@@ -11,6 +11,7 @@ import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdPage from "./pages/AdPage";
+import CanonicalTag from "./components/CanonicalTag";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <CanonicalTag />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/fun-dive-booking" element={<FunDiveBookingPage />} />
