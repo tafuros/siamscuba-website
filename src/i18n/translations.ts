@@ -550,6 +550,7 @@ export const translations: Record<Language, TranslationStrings> = {
 
     blog_title: "מדריך קוטאו",
     blog_subtitle: "מסעדות, חופים, פעילויות וחיי לילה — כל מה שצריך לדעת על החיים באי.",
+    blog_view_all: "הצג את כל הכתבות",
     blog_page_title: "מדריך קוטאו",
     blog_page_subtitle: "המדריך הפנימי שלך למסעדות, חופים, פעילויות וחיי לילה הטובים ביותר בקוטאו.",
     blog_back_to_guide: "חזרה למדריך",
