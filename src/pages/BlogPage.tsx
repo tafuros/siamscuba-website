@@ -3,14 +3,26 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogCard from "@/components/BlogCard";
-import { blogPosts, blogCategories } from "@/data/blogPosts";
+import { blogPosts } from "@/data/blogPosts";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const BlogPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const { t } = useLanguage();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const categoryMap: Record<string, string> = {
+    All: t("blog_cat_all"),
+    Food: t("blog_cat_food"),
+    Beaches: t("blog_cat_beaches"),
+    Activities: t("blog_cat_activities"),
+    Nightlife: t("blog_cat_nightlife"),
+  };
+
+  const categories = ["All", "Food", "Beaches", "Activities", "Nightlife"];
 
   const filtered = activeCategory === "All"
     ? blogPosts
@@ -27,16 +39,16 @@ const BlogPage = () => {
             className="text-center mb-12"
           >
             <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground">
-              Koh Tao Guide
+              {t("blog_page_title")}
             </h1>
             <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
-              Your insider guide to the best restaurants, beaches, activities, and nightlife on Koh Tao.
+              {t("blog_page_subtitle")}
             </p>
           </motion.div>
 
           {/* Category filters */}
           <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {blogCategories.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -46,7 +58,7 @@ const BlogPage = () => {
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
               >
-                {cat}
+                {categoryMap[cat]}
               </button>
             ))}
           </div>
