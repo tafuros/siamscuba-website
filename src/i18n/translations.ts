@@ -178,6 +178,19 @@ type TranslationStrings = {
   blog_title: string;
   blog_subtitle: string;
   blog_view_all: string;
+  blog_page_title: string;
+  blog_page_subtitle: string;
+  blog_back_to_guide: string;
+  blog_article_not_found: string;
+  blog_view_on_maps: string;
+  blog_cta_title: string;
+  blog_cta_subtitle: string;
+  blog_cta_button: string;
+  blog_cat_all: string;
+  blog_cat_food: string;
+  blog_cat_beaches: string;
+  blog_cat_activities: string;
+  blog_cat_nightlife: string;
 
   // Booking CTA
   cta_title: string;
