@@ -914,6 +914,7 @@ export const translations: Record<Language, TranslationStrings> = {
 
     blog_title: "Guide Koh Tao",
     blog_subtitle: "Restaurants, plages, activités et vie nocturne — tout ce que vous devez savoir sur la vie sur l'île.",
+    blog_view_all: "Voir Tous les Articles",
     blog_page_title: "Guide Koh Tao",
     blog_page_subtitle: "Votre guide des meilleurs restaurants, plages, activités et vie nocturne à Koh Tao.",
     blog_back_to_guide: "Retour au Guide",
