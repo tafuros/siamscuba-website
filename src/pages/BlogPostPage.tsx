@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { blogPosts } from "@/data/blogPosts";
-
-
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const categoryColors: Record<string, string> = {
   Food: "bg-accent text-accent-foreground",
@@ -20,19 +19,34 @@ const categoryColors: Record<string, string> = {
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = blogPosts.find((p) => p.slug === slug);
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  const categoryMap: Record<string, string> = {
+    Food: t("blog_cat_food"),
+    Beaches: t("blog_cat_beaches"),
+    Activities: t("blog_cat_activities"),
+    Nightlife: t("blog_cat_nightlife"),
+  };
+
+  const dateLocaleMap: Record<string, string> = {
+    en: "en-US",
+    he: "he-IL",
+    es: "es-ES",
+    fr: "fr-FR",
+  };
 
   if (!post) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
         <div className="pt-36 pb-20 px-4 text-center">
-          <h1 className="font-display text-3xl font-bold text-foreground">Article not found</h1>
+          <h1 className="font-display text-3xl font-bold text-foreground">{t("blog_article_not_found")}</h1>
           <Link to="/blog" className="text-primary mt-4 inline-block hover:underline">
-            ← Back to Koh Tao Guide
+            ← {t("blog_back_to_guide")}
           </Link>
         </div>
         <Footer />
@@ -61,11 +75,11 @@ const BlogPostPage = () => {
             className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Guide
+            {t("blog_back_to_guide")}
           </Link>
 
           <Badge className={`${categoryColors[post.category] || ""} mb-4`}>
-            {post.category}
+            {categoryMap[post.category] || post.category}
           </Badge>
 
           <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground leading-tight">
@@ -73,7 +87,7 @@ const BlogPostPage = () => {
           </h1>
 
           <p className="mt-4 text-muted-foreground">
-            {new Date(post.date).toLocaleDateString("en-US", {
+            {new Date(post.date).toLocaleDateString(dateLocaleMap[language] || "en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -101,7 +115,7 @@ const BlogPostPage = () => {
                     className="inline-flex items-center gap-2 mt-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
                   >
                     <MapPin className="h-4 w-4" />
-                    View on Google Maps
+                    {t("blog_view_on_maps")}
                   </a>
                 )}
                 {section.image && (
@@ -119,10 +133,10 @@ const BlogPostPage = () => {
           {/* CTA */}
           <div className="mt-16 p-8 rounded-2xl bg-ocean-deep text-center">
             <h3 className="font-display text-2xl font-bold text-primary-foreground">
-              Ready to Explore Koh Tao Underwater?
+              {t("blog_cta_title")}
             </h3>
             <p className="mt-2 text-primary-foreground/70">
-              Book a dive with Siam Scuba — beginners and certified divers welcome.
+              {t("blog_cta_subtitle")}
             </p>
             <Button
               asChild
@@ -131,7 +145,7 @@ const BlogPostPage = () => {
             >
               <Link to="/fun-dive-booking">
                 <MessageCircle className="h-5 w-5" />
-                Book a Dive
+                {t("blog_cta_button")}
               </Link>
             </Button>
           </div>

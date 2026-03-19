@@ -178,6 +178,19 @@ type TranslationStrings = {
   blog_title: string;
   blog_subtitle: string;
   blog_view_all: string;
+  blog_page_title: string;
+  blog_page_subtitle: string;
+  blog_back_to_guide: string;
+  blog_article_not_found: string;
+  blog_view_on_maps: string;
+  blog_cta_title: string;
+  blog_cta_subtitle: string;
+  blog_cta_button: string;
+  blog_cat_all: string;
+  blog_cat_food: string;
+  blog_cat_beaches: string;
+  blog_cat_activities: string;
+  blog_cat_nightlife: string;
 
   // Booking CTA
   cta_title: string;
@@ -356,6 +369,19 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_title: "Koh Tao Guide",
     blog_subtitle: "Restaurants, beaches, activities & nightlife — everything you need to know about life on the island.",
     blog_view_all: "View All Articles",
+    blog_page_title: "Koh Tao Guide",
+    blog_page_subtitle: "Your insider guide to the best restaurants, beaches, activities, and nightlife on Koh Tao.",
+    blog_back_to_guide: "Back to Guide",
+    blog_article_not_found: "Article not found",
+    blog_view_on_maps: "View on Google Maps",
+    blog_cta_title: "Ready to Explore Koh Tao Underwater?",
+    blog_cta_subtitle: "Book a dive with Siam Scuba — beginners and certified divers welcome.",
+    blog_cta_button: "Book a Dive",
+    blog_cat_all: "All",
+    blog_cat_food: "Food",
+    blog_cat_beaches: "Beaches",
+    blog_cat_activities: "Activities",
+    blog_cat_nightlife: "Nightlife",
 
     cta_title: "Ready to Dive In?",
     cta_subtitle: "Send us a message on WhatsApp and we'll get you booked in minutes. No deposit required — just show up and dive!",
@@ -525,6 +551,19 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_title: "מדריך קוטאו",
     blog_subtitle: "מסעדות, חופים, פעילויות וחיי לילה — כל מה שצריך לדעת על החיים באי.",
     blog_view_all: "הצג את כל הכתבות",
+    blog_page_title: "מדריך קוטאו",
+    blog_page_subtitle: "המדריך הפנימי שלך למסעדות, חופים, פעילויות וחיי לילה הטובים ביותר בקוטאו.",
+    blog_back_to_guide: "חזרה למדריך",
+    blog_article_not_found: "הכתבה לא נמצאה",
+    blog_view_on_maps: "הצג ב-Google Maps",
+    blog_cta_title: "מוכן לחקור את קוטאו מתחת למים?",
+    blog_cta_subtitle: "הזמן צלילה עם Siam Scuba — מתחילים ומוסמכים מוזמנים.",
+    blog_cta_button: "הזמן צלילה",
+    blog_cat_all: "הכל",
+    blog_cat_food: "אוכל",
+    blog_cat_beaches: "חופים",
+    blog_cat_activities: "פעילויות",
+    blog_cat_nightlife: "חיי לילה",
 
     cta_title: "מוכן לצלול?",
     cta_subtitle: "שלח לנו הודעה בוואטסאפ ונסדר לך הזמנה תוך דקות. ללא פיקדון — פשוט תגיע ותצלול!",
@@ -694,6 +733,19 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_title: "Guía Koh Tao",
     blog_subtitle: "Restaurantes, playas, actividades y vida nocturna — todo lo que necesitas saber sobre la vida en la isla.",
     blog_view_all: "Ver Todos los Artículos",
+    blog_page_title: "Guía Koh Tao",
+    blog_page_subtitle: "Tu guía de los mejores restaurantes, playas, actividades y vida nocturna en Koh Tao.",
+    blog_back_to_guide: "Volver a la Guía",
+    blog_article_not_found: "Artículo no encontrado",
+    blog_view_on_maps: "Ver en Google Maps",
+    blog_cta_title: "¿Listo para Explorar Koh Tao Bajo el Agua?",
+    blog_cta_subtitle: "Reserva una inmersión con Siam Scuba — principiantes y certificados bienvenidos.",
+    blog_cta_button: "Reservar Inmersión",
+    blog_cat_all: "Todos",
+    blog_cat_food: "Comida",
+    blog_cat_beaches: "Playas",
+    blog_cat_activities: "Actividades",
+    blog_cat_nightlife: "Vida Nocturna",
 
     cta_title: "¿Listo para Sumergirte?",
     cta_subtitle: "Envíanos un mensaje por WhatsApp y te reservamos en minutos. Sin depósito — ¡solo ven y bucea!",
@@ -863,6 +915,19 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_title: "Guide Koh Tao",
     blog_subtitle: "Restaurants, plages, activités et vie nocturne — tout ce que vous devez savoir sur la vie sur l'île.",
     blog_view_all: "Voir Tous les Articles",
+    blog_page_title: "Guide Koh Tao",
+    blog_page_subtitle: "Votre guide des meilleurs restaurants, plages, activités et vie nocturne à Koh Tao.",
+    blog_back_to_guide: "Retour au Guide",
+    blog_article_not_found: "Article introuvable",
+    blog_view_on_maps: "Voir sur Google Maps",
+    blog_cta_title: "Prêt à Explorer Koh Tao Sous l'Eau ?",
+    blog_cta_subtitle: "Réservez une plongée avec Siam Scuba — débutants et certifiés bienvenus.",
+    blog_cta_button: "Réserver une Plongée",
+    blog_cat_all: "Tous",
+    blog_cat_food: "Cuisine",
+    blog_cat_beaches: "Plages",
+    blog_cat_activities: "Activités",
+    blog_cat_nightlife: "Vie Nocturne",
 
     cta_title: "Prêt à Plonger ?",
     cta_subtitle: "Envoyez-nous un message sur WhatsApp et nous vous réservons en quelques minutes. Pas de dépôt — venez simplement plonger !",

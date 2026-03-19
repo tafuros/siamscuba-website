@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import type { BlogPost } from "@/data/blogPosts";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface BlogCardProps {
   post: BlogPost;
@@ -16,6 +17,15 @@ const categoryColors: Record<string, string> = {
 };
 
 const BlogCard = ({ post }: BlogCardProps) => {
+  const { t } = useLanguage();
+
+  const categoryMap: Record<string, string> = {
+    Food: t("blog_cat_food"),
+    Beaches: t("blog_cat_beaches"),
+    Activities: t("blog_cat_activities"),
+    Nightlife: t("blog_cat_nightlife"),
+  };
+
   return (
     <Link to={`/blog/${post.slug}`}>
       <GlowCard glowColor="blue" customSize className="h-full !p-0 !gap-0 !grid-rows-[1fr] !shadow-none">
@@ -30,7 +40,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
           </div>
           <CardContent className="p-5">
             <Badge className={`${categoryColors[post.category] || ""} mb-3 text-xs`}>
-              {post.category}
+              {categoryMap[post.category] || post.category}
             </Badge>
             <h3 className="font-display text-lg font-semibold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors">
               {post.title}
