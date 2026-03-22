@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
+import UnderwaterHero from "@/components/UnderwaterHero";
 import CoursesSection from "@/components/CoursesSection";
 
 import FunDivingSection from "@/components/FunDivingSection";
@@ -30,7 +30,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <HeroSection />
+      <UnderwaterHero />
       <CoursesSection initialCourse={courseParam} />
       <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />
