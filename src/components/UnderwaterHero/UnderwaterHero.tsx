@@ -136,6 +136,31 @@ const UnderwaterHero = () => {
           style={{ background: "linear-gradient(180deg, #020B18 0%, #0A2744 100%)" }}
         />
 
+        {/* Bottom fade to white */}
+        <div
+          className="absolute bottom-0 left-0 right-0 z-[3] pointer-events-none"
+          style={{
+            height: "35%",
+            background: "linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%)",
+          }}
+        />
+
+        {/* Explore text at bottom */}
+        <div className="absolute bottom-8 left-0 right-0 z-[4] flex flex-col items-center pointer-events-none">
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-2"
+          >
+            <span className="font-body text-xs uppercase tracking-[0.4em] text-foreground/50">
+              Explore
+            </span>
+            <svg className="h-5 w-5 text-foreground/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </motion.div>
+        </div>
+
         {/* Placeholder when video not ready */}
         {!videoReady && (
           <div className="absolute inset-0 flex items-center justify-center z-[5] bg-ocean-deep">
