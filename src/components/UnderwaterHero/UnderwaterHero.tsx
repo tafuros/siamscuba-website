@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const HERO_HEIGHT_VH = 300;
+const HERO_HEIGHT_VH = 210;
 
 const UnderwaterHero = () => {
   const { t } = useLanguage();
