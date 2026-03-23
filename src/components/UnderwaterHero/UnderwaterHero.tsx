@@ -126,7 +126,7 @@ const UnderwaterHero = () => {
   return (
     <div ref={containerRef} style={{ height: `${HERO_HEIGHT_VH}vh` }} className="relative w-full">
       {/* Hidden video element */}
-      <video ref={videoRef} className="hidden" />
+      <video ref={videoRef} style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none', zIndex: -1 }} />
 
       {/* Sticky canvas */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
