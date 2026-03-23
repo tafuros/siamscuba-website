@@ -71,15 +71,27 @@ const UnderwaterHero = () => {
     video.preload = "auto";
     video.muted = true;
     video.playsInline = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "true");
     video.pause();
+    video.load();
 
-    const onReady = () => setVideoReady(true);
+    const onReady = () => {
+      setVideoReady(true);
+      progressRef.current = 0;
+      isDirtyRef.current = true;
+      video.currentTime = 0;
+      drawFrame();
+    };
     const onError = () => setVideoError(true);
 
     video.addEventListener("loadeddata", onReady);
+    video.addEventListener("canplay", onReady);
     video.addEventListener("error", onError);
     return () => {
       video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("canplay", onReady);
       video.removeEventListener("error", onError);
     };
   }, []);
