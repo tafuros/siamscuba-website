@@ -91,7 +91,9 @@ const UnderwaterHero = () => {
         isDirtyRef.current = false;
         const video = videoRef.current;
         if (video && video.readyState >= 2 && isFinite(video.duration)) {
-          video.currentTime = progressRef.current * video.duration;
+          const CLIP_SECONDS = 3;
+          const startTime = Math.max(0, video.duration - CLIP_SECONDS);
+          video.currentTime = startTime + progressRef.current * CLIP_SECONDS;
           drawFrame();
         }
       }
