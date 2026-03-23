@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const HERO_HEIGHT_VH = 300;
+const HERO_HEIGHT_VH = 210;
 
 const UnderwaterHero = () => {
   const { t } = useLanguage();
@@ -120,8 +120,8 @@ const UnderwaterHero = () => {
     return () => video.removeEventListener("seeked", onSeeked);
   }, [drawFrame]);
 
-  const textOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.35], [0, -60]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
 
   return (
     <div ref={containerRef} style={{ height: `${HERO_HEIGHT_VH}vh` }} className="relative w-full">
