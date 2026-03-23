@@ -1,51 +1,153 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
-import UnderwaterScene from "./UnderwaterScene";
+
+const HERO_HEIGHT_VH = 300;
 
 const UnderwaterHero = () => {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(true);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const progressRef = useRef(0);
+  const rafRef = useRef<number>(0);
+  const isDirtyRef = useRef(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"],
+    offset: ["start start", "end end"],
   });
 
-  // Track scroll progress for 3D scene
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (v) => {
-      setScrollProgress(v);
-    });
-    return unsubscribe;
-  }, [scrollYProgress]);
+  // Draw video frame to canvas
+  const drawFrame = useCallback(() => {
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (!canvas || !video || video.readyState < 2) return;
 
-  // IntersectionObserver to disable render when off-screen
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const vw = video.videoWidth;
+    const vh = video.videoHeight;
+
+    // object-fit: cover
+    const scale = Math.max(cw / vw, ch / vh);
+    const sw = vw * scale;
+    const sh = vh * scale;
+    const sx = (cw - sw) / 2;
+    const sy = (ch - sh) / 2;
+
+    ctx.drawImage(video, sx, sy, sw, sh);
   }, []);
 
-  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.5], [0, -60]);
+  // Resize canvas to match screen
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth * window.devicePixelRatio;
+      canvas.height = window.innerHeight * window.devicePixelRatio;
+      canvas.style.width = "100%";
+      canvas.style.height = "100vh";
+      drawFrame();
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, [drawFrame]);
+
+  // Setup video
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.src = "/hero-video.mp4";
+    video.preload = "auto";
+    video.muted = true;
+    video.playsInline = true;
+    video.pause();
+
+    const onReady = () => setVideoReady(true);
+    const onError = () => setVideoError(true);
+
+    video.addEventListener("loadeddata", onReady);
+    video.addEventListener("error", onError);
+    return () => {
+      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("error", onError);
+    };
+  }, []);
+
+  // Render loop
+  useEffect(() => {
+    const loop = () => {
+      if (isDirtyRef.current) {
+        isDirtyRef.current = false;
+        const video = videoRef.current;
+        if (video && video.readyState >= 2 && isFinite(video.duration)) {
+          video.currentTime = progressRef.current * video.duration;
+          drawFrame();
+        }
+      }
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    rafRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [drawFrame]);
+
+  // Scroll listener
+  useEffect(() => {
+    const unsub = scrollYProgress.on("change", (v) => {
+      const clamped = Math.max(0, Math.min(1, v));
+      progressRef.current = clamped;
+      isDirtyRef.current = true;
+    });
+    return unsub;
+  }, [scrollYProgress]);
+
+  // Draw on video seek
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onSeeked = () => drawFrame();
+    video.addEventListener("seeked", onSeeked);
+    return () => video.removeEventListener("seeked", onSeeked);
+  }, [drawFrame]);
+
+  const textOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.35], [0, -60]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[200vh]">
+    <div ref={containerRef} style={{ height: `${HERO_HEIGHT_VH}vh` }} className="relative w-full">
+      {/* Hidden video element */}
+      <video ref={videoRef} className="hidden" />
+
       {/* Sticky canvas */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
-        {isVisible && <UnderwaterScene scrollProgress={scrollProgress} />}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full"
+          style={{ background: "linear-gradient(180deg, #020B18 0%, #0A2744 100%)" }}
+        />
 
-        {/* Loading overlay */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0">
-          <div className="w-8 h-8 border-2 border-ocean-light/30 border-t-ocean-light rounded-full animate-spin" />
-        </div>
+        {/* Placeholder when video not ready */}
+        {!videoReady && (
+          <div className="absolute inset-0 flex items-center justify-center z-[5] bg-ocean-deep">
+            {videoError ? (
+              <span className="text-primary-foreground/50 font-body text-sm uppercase tracking-widest">
+                Hero video coming soon
+              </span>
+            ) : (
+              <div className="w-8 h-8 border-2 border-ocean-light/30 border-t-ocean-light rounded-full animate-spin" />
+            )}
+          </div>
+        )}
 
         {/* Text overlay */}
         <motion.div
