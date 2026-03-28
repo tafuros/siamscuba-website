@@ -230,6 +230,23 @@ const UnderwaterHero = () => {
             {t("hero_subtitle")}
           </motion.p>
 
+          {/* PADI 5-Star IDC Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 1.2 }}
+            className="mt-6 flex flex-col items-center gap-2"
+          >
+            <img
+              src={padi5StarBadge}
+              alt="PADI 5 Star IDC Dive Center"
+              className="h-28 md:h-36 w-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+            />
+            <span className="text-primary-foreground font-display text-sm md:text-base uppercase tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+              5 Star IDC Dive Center
+            </span>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
