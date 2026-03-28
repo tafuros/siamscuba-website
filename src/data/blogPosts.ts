@@ -1,3 +1,5 @@
+import padiOpenWaterCover from "@/assets/padi-open-water-cover.jpg";
+
 export interface BlogSection {
   heading?: string;
   paragraphs: string[];
