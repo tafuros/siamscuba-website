@@ -15,6 +15,28 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Diving blog posts — high priority for core SEO keywords -->
+  <url>
+    <loc>https://siamscuba.com/blog/padi-vs-ssi-koh-tao</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://siamscuba.com/blog/koh-tao-dive-sites-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://siamscuba.com/blog/padi-open-water-koh-tao-what-to-expect</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://siamscuba.com/blog/padi-divemaster-koh-tao</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Lifestyle blog posts -->
   <url>
     <loc>https://siamscuba.com/blog/best-restaurants-koh-tao</loc>
     <changefreq>monthly</changefreq>
