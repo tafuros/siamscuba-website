@@ -7,6 +7,7 @@ import CoursesSection from "@/components/CoursesSection";
 import FunDivingSection from "@/components/FunDivingSection";
 import BoatsSection from "@/components/BoatsSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
+import TripAdvisorSection from "@/components/TripAdvisorSection";
 import BlogPreview from "@/components/BlogPreview";
 import BookingCTA from "@/components/BookingCTA";
 import LocationSection from "@/components/LocationSection";
@@ -37,6 +38,7 @@ const Index = () => {
       <ScrollHint label="Our Boats ↓" targetId="boats" />
       <BoatsSection />
       <WhyChooseUs />
+      <TripAdvisorSection />
       <BlogPreview />
       <BookingCTA />
       <LocationSection />
