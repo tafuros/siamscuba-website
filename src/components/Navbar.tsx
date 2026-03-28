@@ -7,7 +7,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import SiteSearch from "@/components/SiteSearch";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const WHATSAPP_URL = "https://wa.me/972528641581?text=Hi%20Siam%20Scuba!%20I'd%20like%20to%20book%20a%20dive.";
+const WHATSAPP_URL = "https://wa.me/66825068898?text=Hi%20Siam%20Scuba!%20I'd%20like%20to%20book%20a%20dive.";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -69,10 +69,18 @@ const Navbar = () => {
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
 
-          {/* Centered Logo */}
-          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center">
+          {/* Centered Logo — navigates home from any page, scrolls to top on home */}
+          <Link
+            to="/"
+            onClick={() => {
+              if (location.pathname === "/") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            className="flex items-center"
+          >
             <img src={logo} alt="Siam Scuba" className="h-24 md:h-28 w-auto" />
-          </button>
+          </Link>
 
           {/* Desktop right links */}
           <div className="hidden md:flex items-center gap-3">
