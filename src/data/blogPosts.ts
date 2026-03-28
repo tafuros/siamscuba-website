@@ -1,3 +1,5 @@
+import padiOpenWaterCover from "@/assets/padi-open-water-cover.jpg";
+
 export interface BlogSection {
   heading?: string;
   paragraphs: string[];
@@ -385,7 +387,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "PADI Open Water Course on Koh Tao — What to Expect",
     category: "Diving",
     excerpt: "Never dived before? Here's exactly what happens during your PADI Open Water Diver course on Koh Tao — day by day.",
-    coverImage: "https://images.unsplash.com/photo-1601024445121-e5b82f020549?w=800&q=80",
+    coverImage: padiOpenWaterCover,
     date: "2026-03-20",
     sections: [
       {
