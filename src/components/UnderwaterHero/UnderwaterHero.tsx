@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
+import padi5StarBadge from "@/assets/padi-5star-badge.png";
 
 const HERO_HEIGHT_VH = 210;
 
