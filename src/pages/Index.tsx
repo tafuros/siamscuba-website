@@ -16,9 +16,9 @@ import FloatingInstagram from "@/components/FloatingInstagram";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ScrollHint from "@/components/ScrollHint";
 
-const Index = () => {
+const Index = ({ courseOverride }: { courseOverride?: string }) => {
   const [searchParams] = useSearchParams();
-  const courseParam = searchParams.get("course");
+  const courseParam = courseOverride || searchParams.get("course");
 
   useEffect(() => {
     if (courseParam) {

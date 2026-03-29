@@ -4,10 +4,14 @@ import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
+import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
 
 const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: any) => string; setSelectedCourse: (key: string) => void }) => {
   const handleShare = async () => {
-    const shareUrl = `${window.location.origin}/?course=${encodeURIComponent(course.dialogKey)}`;
+    const slug = COURSE_TO_SLUG[course.dialogKey];
+    const shareUrl = slug
+      ? `${window.location.origin}/${slug}`
+      : `${window.location.origin}/?course=${encodeURIComponent(course.dialogKey)}`;
     const text = `${course.title}${course.price ? ` — ฿${course.price} THB` : ""}\n${course.duration}\n${course.highlights.join("\n")}\n\nSiam Scuba — Koh Tao`;
     if (navigator.share) {
       try {
