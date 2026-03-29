@@ -54,6 +54,8 @@ const BlogPostPage = () => {
     );
   }
 
+  const isRTL = /[\u0590-\u05FF]/.test(post.title);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -68,7 +70,7 @@ const BlogPostPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
       </div>
 
-      <article className="container mx-auto px-4 -mt-24 relative z-10 max-w-3xl pb-20">
+      <article className="container mx-auto px-4 -mt-24 relative z-10 max-w-3xl pb-20" dir={isRTL ? "rtl" : "ltr"}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <Link
             to="/blog"
