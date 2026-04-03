@@ -19,9 +19,9 @@ const SLOTS: { type: SlotType; label: string; time: string; icon: typeof Sun }[]
 ];
 
 const FunDiveCalendar = () => {
+  const navigate = useNavigate();
   const [weekOffset, setWeekOffset] = useState(0);
   const [selected, setSelected] = useState<SelectedSlot | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const today = useMemo(() => new Date(), []);
 
