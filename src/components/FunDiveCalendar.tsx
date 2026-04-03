@@ -166,19 +166,6 @@ const FunDiveCalendar = () => {
         })}
       </div>
 
-      {/* Booking Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) setSelected(null); }}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-hidden p-6">
-          {selected && selectedSlotInfo && (
-            <FunDiveBookingForm
-              date={selected.date}
-              slotLabel={selectedSlotInfo.label}
-              slotTime={selectedSlotInfo.time}
-              onSuccess={handleFormSuccess}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
