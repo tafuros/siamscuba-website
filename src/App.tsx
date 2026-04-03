@@ -12,6 +12,7 @@ import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdPage from "./pages/AdPage";
+import BookingConfirmationPage from "./pages/BookingConfirmationPage";
 import CanonicalTag from "./components/CanonicalTag";
 
 const queryClient = new QueryClient();
