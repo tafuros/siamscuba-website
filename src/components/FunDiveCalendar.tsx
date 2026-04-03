@@ -1,10 +1,9 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Sun, Sunset, Moon } from "lucide-react";
 import { startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, format, isToday, isTomorrow, startOfDay, isBefore } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import FunDiveBookingForm from "@/components/FunDiveBookingForm";
 
 type SlotType = "morning" | "afternoon" | "night";
 
