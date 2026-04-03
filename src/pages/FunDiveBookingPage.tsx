@@ -1,12 +1,34 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
-const LEAD_FORM_URL = "https://dash.siamscuba.com/lead-form?ref=ben";
+const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 
 const FunDiveBookingPage = () => {
   const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== "https://dash.siamscuba.com") return;
+
+      const data = event.data;
+      if (!data || typeof data !== "object") return;
+
+      if (data.type === "SIAM_BOOKING_COMPLETE") {
+        console.log("Booking complete:", data.data);
+        navigate("/booking-confirmed", { state: data.data });
+      }
+
+      if (data.type === "SIAM_BOOKING_STEP") {
+        console.log("Booking step:", data.data);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-ocean-surface">
@@ -25,7 +47,6 @@ const FunDiveBookingPage = () => {
         </Link>
 
         <div className="relative w-full rounded-xl overflow-hidden border border-border/50 shadow-lg bg-card">
-          {/* Loading spinner */}
           {!loaded && (
             <div className="absolute inset-0 flex items-center justify-center bg-card z-10">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
