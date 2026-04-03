@@ -48,15 +48,8 @@ const FunDiveCalendar = () => {
 
   const handleSelect = (dateStr: string, slot: SlotType) => {
     setSelected({ date: dateStr, slot });
-    setDialogOpen(true);
+    navigate(`/fun-dive-booking?date=${dateStr}&slot=${slot}`);
   };
-
-  const handleFormSuccess = () => {
-    setDialogOpen(false);
-    setSelected(null);
-  };
-
-  const selectedSlotInfo = selected ? SLOTS.find((s) => s.type === selected.slot) : null;
 
   return (
     <div className="w-full">
