@@ -204,6 +204,7 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
         description: "We'll contact you shortly to confirm your dive.",
       });
       onSuccess();
+      navigate(`/booking-confirmed?name=${encodeURIComponent(data.fullName)}`);
     } catch (err: any) {
       toast({
         title: "Something went wrong",
