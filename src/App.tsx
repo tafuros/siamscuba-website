@@ -29,6 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/:courseSlug" element={<CoursePage />} />
             <Route path="/fun-dive-booking" element={<FunDiveBookingPage />} />
+            <Route path="/booking-confirmed" element={<BookingConfirmed />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
