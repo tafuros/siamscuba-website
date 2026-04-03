@@ -1,35 +1,12 @@
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
-import FunDiveBookingForm from "@/components/FunDiveBookingForm";
 
-const SLOTS = [
-  { type: "morning", label: "Morning", time: "6:20" },
-  { type: "afternoon", label: "Afternoon", time: "11:00" },
-  { type: "night", label: "Night", time: "17:30" },
-] as const;
+const LEAD_FORM_URL = "https://dash.siamscuba.com/lead-form?ref=ben";
 
 const FunDiveBookingPage = () => {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-
-  const date = searchParams.get("date");
-  const slotType = searchParams.get("slot");
-  const slotInfo = SLOTS.find((s) => s.type === slotType);
-
-  // If missing params, redirect to home fun-diving section
-  if (!date || !slotInfo) {
-    return (
-      <div className="min-h-screen bg-ocean-surface flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <p className="text-muted-foreground">No dive slot selected.</p>
-          <Link to="/#fun-diving" className="text-primary underline">
-            ← Choose a slot from the calendar
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <div className="min-h-screen bg-ocean-surface">
@@ -37,22 +14,32 @@ const FunDiveBookingPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="container mx-auto px-4 py-6 max-w-lg"
+        className="container mx-auto px-4 py-6 max-w-5xl"
       >
         <Link
-          to="/#fun-diving"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to calendar
+          Back to home
         </Link>
 
-        <div className="bg-card rounded-xl border border-border/50 shadow-lg p-6">
-          <FunDiveBookingForm
-            date={date}
-            slotLabel={slotInfo.label}
-            slotTime={slotInfo.time}
-            onSuccess={() => navigate("/")}
+        <div className="relative w-full rounded-xl overflow-hidden border border-border/50 shadow-lg bg-card">
+          {/* Loading spinner */}
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-card z-10">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          )}
+
+          <iframe
+            src={LEAD_FORM_URL}
+            title="Siam Scuba Booking Form"
+            className="w-full border-0"
+            style={{ height: "calc(100vh - 100px)", minHeight: "600px" }}
+            allow="camera;microphone"
+            loading="eager"
+            onLoad={() => setLoaded(true)}
           />
         </div>
       </motion.div>

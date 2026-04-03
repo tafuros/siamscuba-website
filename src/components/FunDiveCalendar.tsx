@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Sun, Sunset, Moon } from "lucide-react";
 import { startOfWeek, endOfWeek, eachDayOfInterval, addWeeks, format, isToday, isTomorrow, startOfDay, isBefore } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import FunDiveBookingForm from "@/components/FunDiveBookingForm";
 
 type SlotType = "morning" | "afternoon" | "night";
 
@@ -19,9 +20,9 @@ const SLOTS: { type: SlotType; label: string; time: string; icon: typeof Sun }[]
 ];
 
 const FunDiveCalendar = () => {
-  const navigate = useNavigate();
   const [weekOffset, setWeekOffset] = useState(0);
   const [selected, setSelected] = useState<SelectedSlot | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const today = useMemo(() => new Date(), []);
 
@@ -48,8 +49,15 @@ const FunDiveCalendar = () => {
 
   const handleSelect = (dateStr: string, slot: SlotType) => {
     setSelected({ date: dateStr, slot });
-    navigate(`/fun-dive-booking?date=${dateStr}&slot=${slot}`);
+    setDialogOpen(true);
   };
+
+  const handleFormSuccess = () => {
+    setDialogOpen(false);
+    setSelected(null);
+  };
+
+  const selectedSlotInfo = selected ? SLOTS.find((s) => s.type === selected.slot) : null;
 
   return (
     <div className="w-full">
@@ -166,6 +174,19 @@ const FunDiveCalendar = () => {
         })}
       </div>
 
+      {/* Booking Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) setSelected(null); }}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-hidden p-6">
+          {selected && selectedSlotInfo && (
+            <FunDiveBookingForm
+              date={selected.date}
+              slotLabel={selectedSlotInfo.label}
+              slotTime={selectedSlotInfo.time}
+              onSuccess={handleFormSuccess}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
