@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/i18n/LanguageContext";
 import Index from "./pages/Index";
 import CoursePage from "./pages/CoursePage";
 import FunDiveBookingPage from "./pages/FunDiveBookingPage";
+import BookingConfirmed from "./pages/BookingConfirmed";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/:courseSlug" element={<CoursePage />} />
             <Route path="/fun-dive-booking" element={<FunDiveBookingPage />} />
+            <Route path="/booking-confirmed" element={<BookingConfirmed />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
