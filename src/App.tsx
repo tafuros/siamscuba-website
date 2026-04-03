@@ -12,7 +12,6 @@ import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdPage from "./pages/AdPage";
-import BookingConfirmationPage from "./pages/BookingConfirmationPage";
 import CanonicalTag from "./components/CanonicalTag";
 
 const queryClient = new QueryClient();
@@ -29,7 +28,6 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/:courseSlug" element={<CoursePage />} />
             <Route path="/fun-dive-booking" element={<FunDiveBookingPage />} />
-            <Route path="/booking-confirmed" element={<BookingConfirmationPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
