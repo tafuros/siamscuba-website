@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/i18n/LanguageContext";
 import Index from "./pages/Index";
 import CoursePage from "./pages/CoursePage";
 import FunDiveBookingPage from "./pages/FunDiveBookingPage";
+import BookingConfirmed from "./pages/BookingConfirmed";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
