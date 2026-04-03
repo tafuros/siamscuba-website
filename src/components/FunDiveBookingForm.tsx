@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -144,6 +145,7 @@ function FileUploadField({
 
 const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBookingFormProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
@@ -202,6 +204,7 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
         description: "We'll contact you shortly to confirm your dive.",
       });
       onSuccess();
+      navigate(`/booking-confirmed?name=${encodeURIComponent(data.fullName)}`);
     } catch (err: any) {
       toast({
         title: "Something went wrong",
