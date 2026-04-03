@@ -145,6 +145,7 @@ function FileUploadField({
 
 const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBookingFormProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
