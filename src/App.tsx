@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import Index from "./pages/Index";
 import CoursePage from "./pages/CoursePage";
@@ -14,8 +15,17 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdPage from "./pages/AdPage";
 import CanonicalTag from "./components/CanonicalTag";
+import { trackPageView } from "@/utils/tracking";
 
 const queryClient = new QueryClient();
+
+const RouteTracker = () => {
+  const location = useLocation();
+  useEffect(() => {
+    trackPageView({ page_path: location.pathname + location.search });
+  }, [location]);
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -25,6 +35,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <CanonicalTag />
+          <RouteTracker />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/:courseSlug" element={<CoursePage />} />

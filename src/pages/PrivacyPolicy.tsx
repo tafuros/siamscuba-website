@@ -119,7 +119,7 @@ const PrivacyPolicy = () => {
             <p>If you have any questions or concerns about this Privacy Policy, please contact us:</p>
             <ul className="list-none space-y-1 mt-2">
               <li><strong>Email:</strong> info@siamscuba.com</li>
-              <li><strong>Phone:</strong> +66 (0) 123 456 789</li>
+              <li><strong>Phone:</strong> +972 52 864 1581</li>
               <li><strong>Address:</strong> Sairee Beach, Koh Tao, Surat Thani, Thailand</li>
             </ul>
           </section>

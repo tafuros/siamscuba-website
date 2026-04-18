@@ -3,20 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-}
+import { trackPurchase } from "@/utils/tracking";
 
 const BookingConfirmed = () => {
   useEffect(() => {
-    if (window.gtag) {
-      window.gtag('event', 'conversion', {
-        'send_to': 'AW-18050429438/9dlfCLb625gcEP7jjp9D'
-      });
-    }
+    trackPurchase({
+      transaction_id: `booking_${Date.now()}`,
+      item_name: "Fun Dive Booking",
+    });
   }, []);
   const location = useLocation();
   const bookingData = location.state as Record<string, string> | null;

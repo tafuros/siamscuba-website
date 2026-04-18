@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { trackGenerateLead } from "@/utils/tracking";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -201,6 +202,11 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
         title: "Booking request sent! ✅",
         description: "We'll contact you shortly to confirm your dive.",
       });
+      trackGenerateLead({
+        form_name: "fun_dive_booking",
+        dive_date: date,
+        product: slotLabel,
+      });
       onSuccess();
     } catch (err: any) {
       toast({
@@ -259,7 +265,7 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
               <FormItem>
                 <FormLabel>WhatsApp Number</FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="+66 812 345 678" {...field} />
+                  <Input type="tel" placeholder="+972 52 864 1581" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
