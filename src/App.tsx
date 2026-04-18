@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdPage from "./pages/AdPage";
 import CanonicalTag from "./components/CanonicalTag";
+import CookieConsent from "./components/CookieConsent";
 import { trackPageView } from "@/utils/tracking";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
         <BrowserRouter>
           <CanonicalTag />
           <RouteTracker />
+          <CookieConsent />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/:courseSlug" element={<CoursePage />} />
