@@ -290,6 +290,49 @@ const courseDetails: Record<string, CourseDetail> = {
     ],
     price: "37,000 THB",
   },
+  "IDC (Instructor Course)": {
+    header: "🎓 IDC — Instructor Development Course",
+    intro: "Our resident Course Director is Bob Murphy. He has been a CD for 19 years, he still goes fun diving, and he can answer just about any question you may have. In his time as an instructor and through his progression to CD, he has come across almost every obstacle that stands between your student and their progression through the PADI system — and he (almost) has a solution for all.",
+    structure: [
+      "The IDC is a 2-week program designed to finish just before monthly Instructor Examinations on Koh Tao.",
+      "Prior to the IDC start date, we spend 2 short days covering dive theory refresher sessions.",
+      "A multitude of online study tools are provided by both Bob and PADI.",
+      "Rather than focusing on passing an examination (which is necessary), the focus is on realistic, honest, day-to-day teaching — and how to make that effective and memorable for students at any level.",
+      "Passing an exam alone does not make you an educator. The exam will simply be a junction in your road to being a PADI Instructor.",
+    ],
+    schedule: [
+      { time: "April", description: "Prep: 4th → IDC: 7th → Exam: 21st" },
+      { time: "May", description: "Prep: 2nd → IDC: 5th → Exam: 19th" },
+      { time: "June", description: "Prep: 6th → IDC: 9th → Exam: 23rd" },
+      { time: "July", description: "Prep: 4th → IDC: 7th → Exam: 21st" },
+      { time: "August", description: "Prep: 1st → IDC: 4th → Exam: 18th" },
+      { time: "September", description: "Prep: 5th → IDC: 8th → Exam: 22nd" },
+      { time: "October", description: "Prep: 3rd → IDC: 6th → Exam: 20th" },
+      { time: "November", description: "Prep: 7th → IDC: 10th → Exam: 24th" },
+      { time: "December", description: "Prep: Nov 28th → IDC: 1st → Exam: 15th" },
+    ],
+    learns: [
+      "Day 1 of IE: 5 Theory Exams (12 questions each, 90 min) + 1 PADI Standards Exam (50 questions, open book)",
+      "Day 1 Afternoon: Pool — teach a skill from a PADI course + 5-skill demonstration workshop",
+      "Day 2 Morning: Classroom — teach your group about a missed question from a PADI course",
+      "Day 2 Midday: Boat — teach/evaluate your group on 2 skills from PADI courses",
+      "The IE evaluates you on exactly what you practised during the IDC — no surprises.",
+    ],
+    prerequisites: [
+      "PADI Divemaster certification",
+      "100+ logged dives recommended",
+      "EFR/First Aid within 24 months",
+    ],
+    included: [
+      "19 years of Course Director experience with Bob Murphy",
+      "Focus on real-world teaching — not just exam prep",
+      "Monthly IE dates right here on Koh Tao",
+      "Free dive theory refresher before IDC starts",
+      "Personal mentorship throughout the program",
+    ],
+    price: "Contact us for pricing",
+    nextStep: "Want to know more? Contact Bob directly: coursedirectorbob@gmail.com or reach out via WhatsApp 💬",
+  },
 };
 interface CourseDetailDialogProps {
   courseTitle: string;
@@ -524,8 +567,14 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
             {/* Price */}
             <div className="bg-primary/5 rounded-lg p-4 flex items-center gap-3">
               <Tag className="h-5 w-5 text-primary shrink-0" />
-              <span className="text-lg font-bold text-foreground">Price: ฿{detail.price.replace(" THB", "")}</span>
-              <span className="text-sm text-muted-foreground">THB</span>
+              {detail.price.match(/^\d/) ? (
+                <>
+                  <span className="text-lg font-bold text-foreground">Price: ฿{detail.price.replace(" THB", "")}</span>
+                  <span className="text-sm text-muted-foreground">THB</span>
+                </>
+              ) : (
+                <span className="text-lg font-bold text-foreground">{detail.price}</span>
+              )}
             </div>
 
             {/* Extras */}

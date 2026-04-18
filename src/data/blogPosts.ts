@@ -377,7 +377,8 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Why Siam Scuba Teaches PADI",
         paragraphs: [
           "Siam Scuba is a PADI 5 Star IDC Centre — one of the highest PADI ratings awarded to dive operations. This means our instructors are trained to the highest PADI standard, and we can certify divers all the way from absolute beginner to PADI Instructor.",
-          "We chose PADI because of its worldwide recognition, the depth of the training materials, and because our team has decades of combined PADI teaching experience. Our maximum student-to-instructor ratio is 4:1, which means you get far more personal attention than at larger operations.",
+          "PADI is a little more strict with their requirements and sequencing — and that's exactly why we chose them. They do this to enhance both your safety and your retention of critical skills and information. Every skill you learn builds on the previous one, so by the time you finish a course, you're not just certified — you're genuinely confident underwater.",
+          "We also chose PADI because of its worldwide recognition, the depth of the training materials, and because our team has decades of combined PADI teaching experience. Our maximum student-to-instructor ratio is 4:1, which means you get far more personal attention than at larger operations.",
           "If you're still unsure, we're happy to chat. Just reach out via WhatsApp and our team will help you figure out the best course for your goals.",
         ],
       },
