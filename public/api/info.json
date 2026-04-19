@@ -1,0 +1,363 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-04-18",
+  "courses": [
+    {
+      "id": "dsd",
+      "name": "Discover Scuba Diving",
+      "duration": "1 day (half day option)",
+      "price_thb": 2600,
+      "price_thb_extra_dive": 1000,
+      "certification": false,
+      "requires_prior_cert": false,
+      "max_depth_m": 12,
+      "description": "First-time dive experience for people with no prior scuba background. One day at the dive center: briefing, gear intro, 4 basic skills in shallow water, then a dive to 12m. Optional second dive same day for 1,000 THB extra. Personal instructor throughout.",
+      "included": ["2 dives at different sites", "personal instructor", "full equipment", "dive insurance", "boat snacks"],
+      "not_included": ["meals", "transport to dive center"]
+    },
+    {
+      "id": "bubble_maker",
+      "name": "Bubble Maker",
+      "duration": "1 day",
+      "price_thb": 3800,
+      "certification": false,
+      "requires_prior_cert": false,
+      "description": "Kids' introductory scuba experience. Safe, fun pool-based intro to breathing underwater."
+    },
+    {
+      "id": "scuba_review",
+      "name": "Scuba Review",
+      "duration": "1 day",
+      "price_thb": 2500,
+      "certification": false,
+      "requires_prior_cert": true,
+      "description": "Refresher for certified divers who haven't been in the water for 6+ months. Quick knowledge check, skill refresh, then 2 fun open-water dives with an instructor."
+    },
+    {
+      "id": "owd",
+      "name": "Open Water Diver",
+      "duration": "2.5 days",
+      "price_thb": 11000,
+      "certification": true,
+      "requires_prior_cert": false,
+      "max_depth_m": 18,
+      "description": "Entry-level PADI certification, valid for life, recognized worldwide. Theory, pool session, 4 open-water dives to 18m. 2 nights on-site accommodation included. Max 6 students per instructor.",
+      "included": ["4 open-water dives", "full equipment", "theory + pool drills", "2 nights accommodation", "PADI certification card", "dive insurance"],
+      "deposit_thb": 3000
+    },
+    {
+      "id": "aowd",
+      "name": "Advanced Open Water",
+      "duration": "1.5-2 days",
+      "price_thb": 10000,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Open Water Diver (or equivalent)",
+      "max_depth_m": 30,
+      "description": "Second PADI cert. 100% practical, no exams. 5 specialty dives: Deep (30m), Wreck, Night, Buoyancy or Photography, Navigation. 1 night accommodation included. Max 4 students per instructor.",
+      "deposit_thb": 3000,
+      "special_offer": "5% discount if continuing directly to Rescue Diver"
+    },
+    {
+      "id": "rescue",
+      "name": "Rescue Diver",
+      "duration": "3 days",
+      "price_thb": 10000,
+      "price_thb_with_efr": 14500,
+      "efr_price_thb": 4500,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Advanced Open Water + valid EFR (First Aid/CPR) within last 12 months",
+      "description": "Focus on self-rescue, managing diver stress, search patterns, and surfacing an unconscious diver. 10 rescue exercises plus 2 realistic open-water scenarios. EFR can be skipped if customer already has valid EFR within the last 12 months.",
+      "note": "EFR add-on listed in CoursesSection at 4,500 THB; a separate copy in CourseDetailDialog lists 4,000 THB. Authoritative value here matches SOUL.md: 4,500 THB."
+    },
+    {
+      "id": "efr",
+      "name": "Emergency First Response (EFR)",
+      "duration": "1 day",
+      "price_thb": 4500,
+      "certification": true,
+      "requires_prior_cert": false,
+      "description": "CPR and first-aid certification. International cert, valid 24 months. Prerequisite for Rescue Diver unless already held within last 12 months."
+    },
+    {
+      "id": "ppb",
+      "name": "Peak Performance Buoyancy",
+      "duration": "1 day",
+      "price_thb": 5500,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Open Water Diver (or equivalent)",
+      "description": "PADI specialty focused on buoyancy mastery: weighting, trim, hovering, air consumption."
+    },
+    {
+      "id": "wreck",
+      "name": "Wreck Diving",
+      "duration": "2 days",
+      "price_thb": 8500,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Advanced Open Water (typical)",
+      "description": "PADI wreck specialty including limited penetration."
+    },
+    {
+      "id": "deep",
+      "name": "Deep Diving",
+      "duration": "2 days",
+      "price_thb": 8500,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Advanced Open Water",
+      "description": "PADI deep specialty beyond 18m, gas management, deep dive planning."
+    },
+    {
+      "id": "dpv",
+      "name": "Underwater Scooter (DPV)",
+      "duration": "1 day",
+      "price_thb": null,
+      "_needs_update": "DPV price not published on website; contact for pricing.",
+      "certification": true,
+      "requires_prior_cert": true,
+      "description": "Diver Propulsion Vehicle specialty."
+    },
+    {
+      "id": "sidemount",
+      "name": "Sidemount Diving",
+      "duration": "2-3 days",
+      "price_thb": null,
+      "_needs_update": "Sidemount price not published on website; contact for pricing.",
+      "certification": true,
+      "requires_prior_cert": true,
+      "description": "Sidemount configuration specialty: streamlined profile, independent gas supply."
+    },
+    {
+      "id": "uw_photo",
+      "name": "UW Photography & Videography",
+      "duration": "5 days",
+      "price_thb": 37000,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Open Water Diver or higher",
+      "description": "Extended PADI Digital UW Photographer & Videographer. 10 dives dedicated to photography, one-on-one instruction, full access to pro gear (DSLR / TG6 / strobes), editing with Luminar Neo / Lightroom."
+    },
+    {
+      "id": "dm",
+      "name": "Divemaster",
+      "duration": "16-35 days (4-8 weeks)",
+      "price_thb": 38500,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Rescue Diver + valid EFR",
+      "description": "First professional PADI level. Internship-style program. Duration depends on progress. Free stay + free fun diving during training."
+    },
+    {
+      "id": "idc",
+      "name": "IDC (Instructor Development Course)",
+      "duration": "2 weeks (plus 2 days theory prep)",
+      "price_thb": null,
+      "price_note": "Around 100k THB, varies by date and currency. Contact for current pricing.",
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "PADI Divemaster, 100+ logged dives recommended, EFR within 24 months",
+      "course_director": "Bob Murphy (19 years as CD)",
+      "description": "2-week Instructor Development Course ending just before monthly PADI Instructor Examination on Koh Tao. Focus on realistic teaching, not just exam prep. Free dive theory refresher before IDC starts."
+    }
+  ],
+  "fun_dives": {
+    "price_thb": 1800,
+    "dives_per_trip": 2,
+    "schedule": ["morning", "afternoon"],
+    "morning_timeline": [
+      "06:20 meet at dive center",
+      "07:30 1st dive - deep site (Chumphon / SW Pinnacle)",
+      "09:30 2nd dive - reef around Koh Tao",
+      "11:30 return"
+    ],
+    "afternoon_timeline": [
+      "11:30 meet at dive center",
+      "12:30 1st dive - reef site",
+      "14:30 2nd dive - reef around Koh Tao",
+      "16:00 return"
+    ],
+    "included": [
+      "2 guided dives with professional instructor",
+      "full diving equipment",
+      "full air tank (180-200 bar)",
+      "fresh pineapple on the boat",
+      "dive insurance",
+      "photography add-on available"
+    ]
+  },
+  "sail_rock": {
+    "price_thb": 3800,
+    "dives_per_trip": 3,
+    "frequency": "every 3 days",
+    "departure_time": "07:30",
+    "return_time": "16:30",
+    "includes": [
+      "breakfast on the boat",
+      "Thai buffet lunch on the boat",
+      "3 dives (2 at Sail Rock, 1 at Shark Island)",
+      "full diving equipment",
+      "dive insurance",
+      "coffee, tea, cookies, fresh fruit"
+    ],
+    "photo_package_thb": 500,
+    "open_to": "Open Water (max 18m) and Advanced (to 40m)",
+    "notes": "Best dive site in the Gulf of Thailand. Open-ocean pinnacle between Koh Tao and Koh Phangan, rises 15m above surface, drops to 40m. Seasonal whale shark sightings. Famous for The Chimney swim-through (18m to 5m) and dense schools of barracuda, trevally, batfish."
+  },
+  "accommodation": {
+    "available_on_site": true,
+    "description": "On-site accommodation at the dive center in Sairee Beach.",
+    "dsd_extra_night_thb": 500,
+    "included_in_courses": {
+      "open_water": "2 nights included",
+      "advanced_open_water": "1 night included",
+      "divemaster": "free stay during internship"
+    },
+    "_needs_update": "Specific room tiers, occupancy, and per-night pricing for non-course stays are not published on the website. Confirm with Ben."
+  },
+  "idc_dates": {
+    "next_dates_url": "https://www.siamscuba.com/idc",
+    "course_director": "Bob Murphy",
+    "contact_email": "coursedirectorbob@gmail.com",
+    "upcoming": [
+      { "month": "April", "prep_start": "4th", "idc_start": "7th", "ie_date": "21st" },
+      { "month": "May", "prep_start": "2nd", "idc_start": "5th", "ie_date": "19th" },
+      { "month": "June", "prep_start": "6th", "idc_start": "9th", "ie_date": "23rd" },
+      { "month": "July", "prep_start": "4th", "idc_start": "7th", "ie_date": "21st" },
+      { "month": "August", "prep_start": "1st", "idc_start": "4th", "ie_date": "18th" },
+      { "month": "September", "prep_start": "5th", "idc_start": "8th", "ie_date": "22nd" },
+      { "month": "October", "prep_start": "3rd", "idc_start": "6th", "ie_date": "20th" },
+      { "month": "November", "prep_start": "7th", "idc_start": "10th", "ie_date": "24th" },
+      { "month": "December", "prep_start": "Nov 28th", "idc_start": "1st", "ie_date": "15th" }
+    ],
+    "_needs_update": "Dates pulled from CourseDetailDialog 2026 schedule; confirm year and any updates for 2027."
+  },
+  "languages": ["English", "Hebrew", "Thai", "Spanish", "French", "German"],
+  "contact": {
+    "whatsapp": "+972528641581",
+    "instagram": "@siamscuba",
+    "website": "https://siamscuba.com",
+    "location": "Sairee Beach, Koh Tao, Thailand",
+    "padi_status": "PADI 5-Star IDC Dive Center",
+    "boat": "Bongkotpetch",
+    "booking_form_url": "https://dash.siamscuba.com/api/og/lead-form?ref=ben"
+  },
+  "food_recommendations": [
+    {
+      "name": "995 Roasted Duck",
+      "area": "Sairee",
+      "type": "Thai",
+      "notes": "Well-known roasted duck and rice spot, local favorite."
+    },
+    {
+      "name": "Barracuda Restaurant",
+      "area": "Sairee",
+      "type": "Thai / Western / Seafood",
+      "notes": "Popular sit-down dinner spot on Koh Tao."
+    },
+    {
+      "name": "Pranee's Kitchen",
+      "area": "Mae Haad",
+      "type": "Thai",
+      "notes": "Classic Thai, long-running local spot near the pier."
+    },
+    {
+      "name": "Whitening",
+      "area": "Mae Haad beach",
+      "type": "Thai / Western / Bar",
+      "notes": "Beachfront dinner and drinks, good for sunset."
+    },
+    {
+      "name": "Coconut Monkey",
+      "area": "Sairee",
+      "type": "Cafe / Breakfast",
+      "notes": "Smoothie bowls and breakfast."
+    },
+    {
+      "_needs_update": "Food recommendations are general Koh Tao picks, not curated by Siam Scuba. Ben should confirm or replace with current personal picks."
+    }
+  ],
+  "dive_sites": [
+    {
+      "name": "Sail Rock",
+      "location": "Between Koh Tao and Koh Phangan (open ocean pinnacle)",
+      "depth_range_m": [5, 40],
+      "level": "Open Water (to 18m) / Advanced (to 40m)",
+      "highlights": ["The Chimney swim-through (18m to 5m)", "seasonal whale sharks", "dense schools of chevron barracuda, trevally, batfish"],
+      "description": "Best dive site in the Gulf of Thailand. Open-ocean granite pinnacle, reached on the dedicated Sail Rock day trip every 3 days."
+    },
+    {
+      "name": "Chumphon Pinnacle",
+      "location": "West of Koh Tao",
+      "depth_range_m": [14, 35],
+      "level": "Advanced Open Water recommended",
+      "highlights": ["giant grouper", "schools of chevron barracuda", "seasonal whale shark sightings"],
+      "description": "Cluster of submerged granite peaks dropping to 35m. Famous for pelagic life. Currents can be strong."
+    },
+    {
+      "name": "Japanese Gardens",
+      "location": "Between Koh Tao and Koh Nang Yuan",
+      "depth_range_m": [1, 12],
+      "level": "All levels, great for beginners and snorkelling",
+      "highlights": ["hard and soft coral garden", "clownfish in anemones", "pufferfish", "blue-spotted stingrays", "occasional hawksbill turtles"],
+      "description": "Shallow, sheltered coral garden. Common Open Water training site."
+    },
+    {
+      "name": "Shark Island",
+      "location": "South-east of Koh Tao",
+      "depth_range_m": [5, 25],
+      "level": "Open Water+",
+      "highlights": ["boulders covered in coral", "reef fish", "occasional turtles"],
+      "description": "Bonus site paired with the Sail Rock day trip (3rd dive of the day)."
+    },
+    {
+      "name": "White Rock",
+      "location": "West side of Koh Tao",
+      "depth_range_m": [5, 20],
+      "level": "All levels",
+      "highlights": ["resident hawksbill turtles (very reliable)", "coral-covered boulders", "reef fish"],
+      "description": "One of the most visited sites on Koh Tao. Large enough for a full 50-minute dive without repeating ground."
+    },
+    {
+      "name": "Twins / Twin Peaks",
+      "location": "Off Koh Nang Yuan",
+      "depth_range_m": [5, 18],
+      "level": "All levels",
+      "highlights": ["two pinnacles", "anemone fields", "batfish", "suitable for Open Water training"],
+      "description": "Two rocky pinnacles close together, popular for Open Water course dives."
+    },
+    {
+      "name": "Southwest Pinnacle (SW Pinnacle)",
+      "location": "South-west of Koh Tao",
+      "depth_range_m": [8, 30],
+      "level": "Advanced",
+      "highlights": ["granite pinnacles", "barracuda schools", "occasional whale sharks"],
+      "description": "Deeper pinnacle dive, similar profile to Chumphon. Often paired with morning fun dives."
+    }
+  ],
+  "marine_life_notes": {
+    "commonly_seen": ["turtles (hawksbill, green)", "chevron barracuda", "giant grouper", "pufferfish", "clownfish", "batfish", "blue-spotted stingrays"],
+    "seasonal": ["whale sharks (Sail Rock and Chumphon Pinnacle, seasonal)"],
+    "not_present": ["reef sharks (none on local Koh Tao sites)"],
+    "coral_status": "Recovering thanks to ongoing conservation efforts; not pristine but actively regrowing."
+  },
+  "getting_here": {
+    "island": "Koh Tao, Surat Thani province, Thailand",
+    "nearest_airports": [
+      { "name": "Koh Samui (USM)", "notes": "Closest airport, then ferry to Koh Tao (~1.5-2h by Lomprayah)" },
+      { "name": "Surat Thani (URT)", "notes": "Cheaper flights, then bus + ferry combo" },
+      { "name": "Chumphon (CJM)", "notes": "Small airport on the mainland, then Lomprayah or Songserm ferry (~1.5-2h)" },
+      { "name": "Bangkok (BKK / DMK)", "notes": "Overnight bus/train to Chumphon, then ferry" }
+    ],
+    "ferry_operators": [
+      { "name": "Lomprayah", "type": "High-speed catamaran", "routes": ["Chumphon <-> Koh Tao", "Koh Samui / Koh Phangan <-> Koh Tao"] },
+      { "name": "Songserm", "type": "Slower ferry", "routes": ["Chumphon <-> Koh Tao", "Koh Samui <-> Koh Tao"] },
+      { "name": "Seatran Discovery", "type": "Ferry", "routes": ["Koh Samui / Koh Phangan <-> Koh Tao"] }
+    ],
+    "pier_on_koh_tao": "Mae Haad",
+    "dive_center_location": "Sairee Beach (short taxi or songthaew from Mae Haad pier, ~5-10 min)",
+    "_needs_update": "Ferry schedules and prices change; bot should direct customers to the operators' official websites for live times. Content here is for general orientation only."
+  }
+}
