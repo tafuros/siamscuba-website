@@ -226,7 +226,7 @@ const courseDetails: Record<string, CourseDetail> = {
       "Advanced Open Water certification (or equivalent).",
       "EFR (First Aid/CPR) certification valid within the last 12 months.",
     ],
-    price: "10,000 THB (Add EFR for 4,000 THB if needed)",
+    price: "10,000 THB (Add EFR for 4,500 THB if needed)",
   },
   "Peak Performance Buoyancy": {
     header: "Master Your Buoyancy & Become a Better Diver",
