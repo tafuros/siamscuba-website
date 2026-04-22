@@ -50,9 +50,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-background/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-background/40">
+        <div className="mt-10 pt-6 border-t border-background/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-background/40">
           <span>© {new Date().getFullYear()} Siam Scuba. {t("footer_rights")}</span>
-          <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+          <nav className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link to="/data-deletion" className="hover:text-primary transition-colors">Data Deletion</Link>
+          </nav>
         </div>
       </div>
     </footer>
