@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { trackPurchase } from "@/utils/tracking";
 
 const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
+const ALLOWED_ORIGINS = ["https://dash.siamscuba.com", "https://siamscuba.com"];
 
 const FunDiveBookingPage = () => {
   const [loaded, setLoaded] = useState(false);
@@ -11,13 +13,43 @@ const FunDiveBookingPage = () => {
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== "https://dash.siamscuba.com") return;
+      if (!ALLOWED_ORIGINS.includes(event.origin)) {
+        console.warn("[booking] rejected postMessage origin:", event.origin);
+        return;
+      }
 
       const data = event.data;
       if (!data || typeof data !== "object") return;
 
       if (data.type === "SIAM_BOOKING_COMPLETE") {
         console.log("Booking complete:", data.data);
+        // Fire conversion before navigation so the ping is sent even if routing fails.
+        const payload = (data.data ?? {}) as Record<string, unknown>;
+        const rawValue = payload.value ?? payload.price ?? payload.amount;
+        const numericValue =
+          typeof rawValue === "number"
+            ? rawValue
+            : typeof rawValue === "string" && rawValue.trim() !== ""
+              ? Number(rawValue)
+              : undefined;
+        const value =
+          typeof numericValue === "number" && !Number.isNaN(numericValue)
+            ? numericValue
+            : undefined;
+        const currency =
+          typeof payload.currency === "string" ? payload.currency : undefined;
+        const transactionId =
+          typeof payload.booking_id === "string"
+            ? payload.booking_id
+            : typeof payload.id === "string"
+              ? payload.id
+              : `booking_${Date.now()}`;
+        trackPurchase({
+          transaction_id: transactionId,
+          value,
+          currency,
+          item_name: "Fun Dive Booking",
+        });
         navigate("/booking-confirmed", { state: data.data });
       }
 
