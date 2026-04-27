@@ -1,17 +1,10 @@
-import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { trackPurchase } from "@/utils/tracking";
 
+// Conversion is fired in FunDiveBookingPage on SIAM_BOOKING_COMPLETE postMessage to avoid double-counting on reload/back-nav.
 const BookingConfirmed = () => {
-  useEffect(() => {
-    trackPurchase({
-      transaction_id: `booking_${Date.now()}`,
-      item_name: "Fun Dive Booking",
-    });
-  }, []);
   const location = useLocation();
   const bookingData = location.state as Record<string, string> | null;
 
