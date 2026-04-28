@@ -13,6 +13,9 @@ import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import DataDeletion from "./pages/DataDeletion";
 import AdPage from "./pages/AdPage";
 import CanonicalTag from "./components/CanonicalTag";
 import CookieConsent from "./components/CookieConsent";
@@ -40,6 +43,9 @@ const App = () => (
           <CookieConsent />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/data-deletion" element={<DataDeletion />} />
             <Route path="/:courseSlug" element={<CoursePage />} />
             <Route path="/fun-dive-booking" element={<FunDiveBookingPage />} />
             <Route path="/booking-confirmed" element={<BookingConfirmed />} />
