@@ -32,10 +32,6 @@ export function trackWhatsAppClick(params: WhatsAppClickParams): void {
     event_label: params.location,
     url: params.url,
   });
-  gtag("event", "conversion", {
-    send_to: `${GA_MEASUREMENT_ID}/${CONVERSION_LABEL}`,
-    event_category: "lead",
-  });
 }
 
 export interface GenerateLeadParams {
@@ -51,10 +47,6 @@ export function trackGenerateLead(params: GenerateLeadParams): void {
     dive_date: params.dive_date,
     product: params.product,
     currency: "THB",
-  });
-  gtag("event", "conversion", {
-    send_to: `${GA_MEASUREMENT_ID}/${CONVERSION_LABEL}`,
-    event_category: "lead",
   });
 }
 
