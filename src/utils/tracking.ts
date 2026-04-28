@@ -13,7 +13,7 @@ declare global {
 }
 
 const GA_MEASUREMENT_ID = "AW-18050429438";
-const CONVERSION_LABEL = "9d1fCLb625gcEP7jjp9D";
+const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
 
 function gtag(...args: unknown[]): void {
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
