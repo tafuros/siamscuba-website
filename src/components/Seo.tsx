@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 import { useLocation } from "react-router-dom";
 
 const SITE_URL = "https://siamscuba.com";
@@ -34,7 +34,7 @@ const Seo = ({
   const ld = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 
   return (
-    <Helmet>
+    <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
@@ -64,7 +64,7 @@ const Seo = ({
           {JSON.stringify(entry)}
         </script>
       ))}
-    </Helmet>
+    </Head>
   );
 };
 

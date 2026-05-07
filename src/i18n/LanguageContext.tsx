@@ -10,20 +10,24 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const isBrowser = typeof window !== "undefined";
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem("siam-lang");
+    if (!isBrowser) return "en";
+    const saved = window.localStorage.getItem("siam-lang");
     return (saved as Language) || "en";
   });
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem("siam-lang", lang);
+    if (isBrowser) window.localStorage.setItem("siam-lang", lang);
   }, []);
 
   const isRTL = rtlLanguages.includes(language);
 
   useEffect(() => {
+    if (!isBrowser) return;
     document.documentElement.dir = isRTL ? "rtl" : "ltr";
     document.documentElement.lang = language;
   }, [language, isRTL]);
