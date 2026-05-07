@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, MessageCircle, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { blogPosts } from "@/data/blogPosts";
@@ -42,6 +43,7 @@ const BlogPostPage = () => {
   if (!post) {
     return (
       <div className="min-h-screen bg-background">
+        <Seo title="Article not found | Siam Scuba Blog" description="The blog post you are looking for could not be found." noindex />
         <Navbar />
         <div className="pt-36 pb-20 px-4 text-center">
           <h1 className="font-display text-3xl font-bold text-foreground">{t("blog_article_not_found")}</h1>
@@ -56,8 +58,34 @@ const BlogPostPage = () => {
 
   const isRTL = /[\u0590-\u05FF]/.test(post.title);
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { "@type": "Organization", name: "Siam Scuba" },
+    publisher: {
+      "@type": "Organization",
+      name: "Siam Scuba",
+      logo: { "@type": "ImageObject", url: "https://siamscuba.com/favicon.png" },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://siamscuba.com/blog/${post.slug}` },
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title={`${post.title} | Siam Scuba Blog`}
+        description={post.excerpt.slice(0, 158)}
+        ogType="article"
+        ogImage={post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`}
+        publishedTime={post.date}
+        author="Siam Scuba"
+        jsonLd={articleSchema}
+      />
       <Navbar />
 
       {/* Hero */}

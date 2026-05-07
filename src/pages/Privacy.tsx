@@ -1,29 +1,15 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const PAGE_TITLE = "Privacy Policy – Siam Scuba";
-const PAGE_DESCRIPTION =
-  'Siam Scuba ("we", "us", "our") operates siamscuba.com and the WhatsApp assistant "Nemo" reachable at +972 52-864-1581. This policy explains what personal data we collect, why, and your rights over it.';
-
 const Privacy = () => {
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = PAGE_TITLE;
-
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prevDesc = metaDesc?.getAttribute("content") ?? null;
-    metaDesc?.setAttribute("content", PAGE_DESCRIPTION);
-
-    return () => {
-      document.title = prevTitle;
-      if (prevDesc !== null) metaDesc?.setAttribute("content", prevDesc);
-    };
-  }, []);
-
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Privacy Policy | Siam Scuba"
+        description='How Siam Scuba ("we", "us") collects and uses personal data on siamscuba.com and via the WhatsApp assistant "Nemo". Your rights and how to contact us.'
+      />
       <Navbar />
       <div className="container mx-auto px-4 pt-36 pb-16 max-w-3xl">
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">Privacy Policy</h1>

@@ -1,9 +1,14 @@
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Privacy Policy | Siam Scuba"
+        description="How Siam Scuba collects, uses, and safeguards your personal information when you visit siamscuba.com or use our services."
+      />
       <Navbar />
       <div className="container mx-auto px-4 pt-36 pb-16 max-w-3xl">
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-8">Privacy Policy</h1>

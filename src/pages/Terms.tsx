@@ -1,28 +1,14 @@
-import { useEffect } from "react";
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const PAGE_TITLE = "Terms of Service – Siam Scuba";
-const PAGE_DESCRIPTION =
-  'These terms govern your use of siamscuba.com, our WhatsApp assistant "Nemo", and the dive-related services we offer. By using any of these, you accept these terms.';
-
 const Terms = () => {
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = PAGE_TITLE;
-
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prevDesc = metaDesc?.getAttribute("content") ?? null;
-    metaDesc?.setAttribute("content", PAGE_DESCRIPTION);
-
-    return () => {
-      document.title = prevTitle;
-      if (prevDesc !== null) metaDesc?.setAttribute("content", prevDesc);
-    };
-  }, []);
-
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Terms of Service | Siam Scuba"
+        description='Terms governing your use of siamscuba.com, our WhatsApp assistant "Nemo", and the dive-related services we offer.'
+      />
       <Navbar />
       <div className="container mx-auto px-4 pt-36 pb-16 max-w-3xl">
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">Terms of Service</h1>

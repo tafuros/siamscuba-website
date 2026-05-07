@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import Seo from "@/components/Seo";
 import { trackPurchase } from "@/utils/tracking";
 
 const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
@@ -64,6 +65,10 @@ const FunDiveBookingPage = () => {
 
   return (
     <div className="min-h-screen bg-ocean-surface">
+      <Seo
+        title="Book a Fun Dive in Koh Tao – Guided Day Trips | Siam Scuba"
+        description="Book a guided fun dive in Koh Tao with Siam Scuba: small groups, two custom dive boats, sites including Chumphon Pinnacle, Sail Rock, and Twins."
+      />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

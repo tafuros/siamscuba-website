@@ -1,27 +1,14 @@
-import { useEffect } from "react";
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const PAGE_TITLE = "Data Deletion – Siam Scuba";
-const PAGE_DESCRIPTION = "You can ask us to delete personal data we hold about you at any time.";
-
 const DataDeletion = () => {
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = PAGE_TITLE;
-
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prevDesc = metaDesc?.getAttribute("content") ?? null;
-    metaDesc?.setAttribute("content", PAGE_DESCRIPTION);
-
-    return () => {
-      document.title = prevTitle;
-      if (prevDesc !== null) metaDesc?.setAttribute("content", prevDesc);
-    };
-  }, []);
-
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Data Deletion Request | Siam Scuba"
+        description="Request deletion of personal data Siam Scuba holds about you, at any time."
+      />
       <Navbar />
       <div className="container mx-auto px-4 pt-36 pb-16 max-w-3xl">
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">Data Deletion</h1>

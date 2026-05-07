@@ -5,6 +5,7 @@ import seaCreatures from "@/assets/sea-creatures-nobg.png";
 import siamLogo from "@/assets/siam-logo.png";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
+import Seo from "@/components/Seo";
 
 const AdPage = () => {
   const adRef = useRef<HTMLDivElement>(null);
@@ -24,6 +25,7 @@ const AdPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-8 gap-6">
+      <Seo title="Ad Generator | Siam Scuba" description="Internal ad generator." noindex />
       <Button onClick={handleDownload} size="lg" className="gap-2 bg-teal-600 hover:bg-teal-700">
         <Download className="w-5 h-5" />
         הורד מודעה כתמונה

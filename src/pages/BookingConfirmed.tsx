@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import Seo from "@/components/Seo";
 
 // Conversion is fired in FunDiveBookingPage on SIAM_BOOKING_COMPLETE postMessage to avoid double-counting on reload/back-nav.
 const BookingConfirmed = () => {
@@ -10,6 +11,11 @@ const BookingConfirmed = () => {
 
   return (
     <div className="min-h-screen bg-ocean-surface flex items-center justify-center px-4">
+      <Seo
+        title="Booking Confirmed | Siam Scuba"
+        description="Your dive booking with Siam Scuba is confirmed."
+        noindex
+      />
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

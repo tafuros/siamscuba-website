@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogCard from "@/components/BlogCard";
@@ -30,6 +31,10 @@ const BlogPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Koh Tao Diving & Travel Blog | Siam Scuba"
+        description="Honest guides to diving, food, beaches, and nightlife in Koh Tao. PADI tips, dive site reviews, and what to expect on your trip to Thailand's tropical paradise."
+      />
       <Navbar />
       <div className="pt-36 pb-20 px-4">
         <div className="container mx-auto">
