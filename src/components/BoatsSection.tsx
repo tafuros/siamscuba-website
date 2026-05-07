@@ -28,7 +28,7 @@ const BoatsSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="rounded-2xl overflow-hidden shadow-xl">
-            <img src={boatImg} alt="Siam Scuba dive boat at Koh Tao" className="w-full h-full object-cover" />
+            <img src={boatImg} alt="Siam Scuba dive boat at Koh Tao" className="w-full h-full object-cover" loading="lazy" decoding="async" />
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
