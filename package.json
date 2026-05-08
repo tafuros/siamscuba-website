@@ -9,6 +9,7 @@
     "build:csr": "vite build",
     "build:dev": "vite-react-ssg build --mode development && bun run scripts/generate-sitemap.ts",
     "sitemap": "bun run scripts/generate-sitemap.ts",
+    "indexnow": "bun run scripts/indexnow-ping.ts",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
