@@ -85,15 +85,22 @@ const BlogPostPage = () => {
         publishedTime={post.date}
         author="Siam Scuba"
         jsonLd={articleSchema}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Koh Tao Guide", path: "/blog" },
+          { name: post.title },
+        ]}
       />
       <Navbar />
 
+      <main>
       {/* Hero */}
       <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
         <img
           src={post.coverImage}
           alt={post.title}
           className="w-full h-full object-cover"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
       </div>
@@ -181,6 +188,7 @@ const BlogPostPage = () => {
           </div>
         </motion.div>
       </article>
+      </main>
 
       <Footer />
     </div>

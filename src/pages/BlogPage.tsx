@@ -34,9 +34,13 @@ const BlogPage = () => {
       <Seo
         title="Koh Tao Diving & Travel Blog | Siam Scuba"
         description="Honest guides to diving, food, beaches, and nightlife in Koh Tao. PADI tips, dive site reviews, and what to expect on your trip to Thailand's tropical paradise."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Koh Tao Guide" },
+        ]}
       />
       <Navbar />
-      <div className="pt-36 pb-20 px-4">
+      <main className="pt-36 pb-20 px-4">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -82,7 +86,7 @@ const BlogPage = () => {
             ))}
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

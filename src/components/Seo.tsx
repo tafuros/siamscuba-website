@@ -3,6 +3,12 @@ import { useLocation } from "react-router-dom";
 
 const SITE_URL = "https://siamscuba.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+const SUPPORTED_LANGS = ["en", "he", "es", "fr"] as const;
+
+export interface BreadcrumbItem {
+  name: string;
+  path?: string; // Absolute URL or path. Last item should omit path.
+}
 
 interface SeoProps {
   title: string;
@@ -15,6 +21,20 @@ interface SeoProps {
   author?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+function buildBreadcrumbSchema(items: BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      ...(it.path ? { item: it.path.startsWith("http") ? it.path : `${SITE_URL}${it.path}` } : {}),
+    })),
+  };
 }
 
 const Seo = ({
@@ -28,10 +48,19 @@ const Seo = ({
   author,
   noindex,
   jsonLd,
+  breadcrumbs,
 }: SeoProps) => {
   const { pathname } = useLocation();
   const url = canonical || `${SITE_URL}${pathname === "/" ? "" : pathname}`;
-  const ld = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+
+  const ldEntries: Record<string, unknown>[] = [];
+  if (jsonLd) {
+    if (Array.isArray(jsonLd)) ldEntries.push(...jsonLd);
+    else ldEntries.push(jsonLd);
+  }
+  if (breadcrumbs && breadcrumbs.length > 0) {
+    ldEntries.push(buildBreadcrumbSchema(breadcrumbs));
+  }
 
   return (
     <Head>
@@ -39,6 +68,12 @@ const Seo = ({
       <meta name="description" content={description} />
       <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
       <link rel="canonical" href={url} />
+
+      {/* hreflang — site is available in 4 languages at the same URL via in-app i18n */}
+      <link rel="alternate" hrefLang="x-default" href={url} />
+      {SUPPORTED_LANGS.map((lang) => (
+        <link key={lang} rel="alternate" hrefLang={lang} href={url} />
+      ))}
 
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
@@ -59,7 +94,7 @@ const Seo = ({
       {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
       {author && <meta name="author" content={author} />}
 
-      {ld.map((entry, i) => (
+      {ldEntries.map((entry, i) => (
         <script key={i} type="application/ld+json">
           {JSON.stringify(entry)}
         </script>

@@ -43,7 +43,19 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
 
   return (
     <div className="min-h-screen">
-      <Seo title={seo.title} description={seo.description} />
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        breadcrumbs={
+          courseOverride
+            ? [
+                { name: "Home", path: "/" },
+                { name: "Courses", path: "/#courses" },
+                { name: courseOverride },
+              ]
+            : undefined
+        }
+      />
       <Navbar />
       <UnderwaterHero />
       <CoursesSection initialCourse={courseParam} />
