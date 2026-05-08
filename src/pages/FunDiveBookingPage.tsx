@@ -69,7 +69,7 @@ const FunDiveBookingPage = () => {
         title="Book a Fun Dive in Koh Tao – Guided Day Trips | Siam Scuba"
         description="Book a guided fun dive in Koh Tao with Siam Scuba: small groups, two custom dive boats, sites including Chumphon Pinnacle, Sail Rock, and Twins."
       />
-      <motion.div
+      <motion.main
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
@@ -100,7 +100,7 @@ const FunDiveBookingPage = () => {
             onLoad={() => setLoaded(true)}
           />
         </div>
-      </motion.div>
+      </motion.main>
     </div>
   );
 };
