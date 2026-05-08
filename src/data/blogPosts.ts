@@ -1,4 +1,4 @@
-import padiOpenWaterCover from "@/assets/padi-open-water-cover.jpg";
+import padiOpenWaterCover from "@/assets/padi-open-water-cover.webp";
 
 export interface BlogSection {
   heading?: string;
@@ -240,7 +240,7 @@ export const blogPosts: BlogPost[] = [
     title: "Things to Do on Koh Tao Besides Diving",
     category: "Activities",
     excerpt: "Rock climbing, jungle hikes, Muay Thai, cooking classes — Koh Tao has way more than just diving.",
-    coverImage: new URL("../assets/koh-tao-real-viewpoint.jpg", import.meta.url).href,
+    coverImage: new URL("../assets/koh-tao-real-viewpoint.webp", import.meta.url).href,
     date: "2026-02-28",
     sections: [
       {

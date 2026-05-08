@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Waves } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import sailRockChimney from "@/assets/sail-rock-chimney.png";
+import sailRockChimney from "@/assets/sail-rock-chimney.webp";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const SailRockBanner = () => {

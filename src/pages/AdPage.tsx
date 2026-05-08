@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import html2canvas from "html2canvas-pro";
 import adBackground from "@/assets/ad-background.jpg";
-import seaCreatures from "@/assets/sea-creatures-nobg.png";
+import seaCreatures from "@/assets/sea-creatures-nobg.webp";
 import siamLogo from "@/assets/siam-logo.png";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";

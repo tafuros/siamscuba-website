@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Anchor, Shield, Users, Droplets, Coffee, Ship, LifeBuoy, Wind, DoorOpen, Package } from "lucide-react";
-import boatImg from "@/assets/siam-boat.png";
+import boatImg from "@/assets/siam-boat.webp";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const BoatsSection = () => {
