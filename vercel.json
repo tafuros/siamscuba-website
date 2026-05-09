@@ -1,6 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/contact-us", "destination": "/", "permanent": true },
+    { "source": "/zero-to-hero-dive-master-internship", "destination": "/divemaster", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
