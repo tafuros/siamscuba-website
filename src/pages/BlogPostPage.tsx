@@ -112,14 +112,19 @@ const BlogPostPage = () => {
   const langCode = post.language ?? "en";
   const articleUrl = `https://siamscuba.com${post.language === "es" ? "/es" : ""}/blog/${post.slug}`;
 
+  // ISO 8601 with Koh Tao timezone (ICT, no DST). Schema requires a full
+  // datetime with timezone for datePublished / dateModified - bare YYYY-MM-DD
+  // gets flagged as a non-critical issue by Google's Rich Results Test.
+  const datePublishedIso = `${post.date}T00:00:00+07:00`;
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
     image: post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`,
-    datePublished: post.date,
-    dateModified: post.date,
+    datePublished: datePublishedIso,
+    dateModified: datePublishedIso,
     inLanguage: langCode,
     wordCount,
     articleSection: post.category,
@@ -156,7 +161,7 @@ const BlogPostPage = () => {
         description={post.excerpt.slice(0, 158)}
         ogType="article"
         ogImage={post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`}
-        publishedTime={post.date}
+        publishedTime={datePublishedIso}
         author="Siam Scuba"
         jsonLd={articleSchema}
         breadcrumbs={[

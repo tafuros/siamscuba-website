@@ -15,8 +15,8 @@ const articleSchema = {
   description:
     "המדריך השלם לצלילה בקוטאו לישראלים - מחירי קורסי PADI, תקציב לטיול, עונות הצלילה, ולמה ב-Siam Scuba העלות שקופה ויחס המדריך 1:4.",
   inLanguage: "he",
-  datePublished: "2026-05-10",
-  dateModified: "2026-05-10",
+  datePublished: "2026-05-10T00:00:00+07:00",
+  dateModified: "2026-05-10T00:00:00+07:00",
   author: { "@type": "Organization", name: "Siam Scuba" },
   publisher: {
     "@type": "Organization",
