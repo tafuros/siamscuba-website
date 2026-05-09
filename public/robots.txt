@@ -19,3 +19,10 @@ Disallow: /?attachment_id=
 Disallow: /?p=
 Disallow: /?page_id=
 Disallow: /404-page
+
+# Old WooCommerce + theme remnants (added 2026-05-10 from GSC audit)
+Disallow: /cart/
+Disallow: /shop/
+Disallow: /product/
+Disallow: /product-category/
+Disallow: /portfolio/
