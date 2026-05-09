@@ -16,6 +16,11 @@ const UnderwaterHero = () => {
       >
         <picture>
           <source
+            type="image/avif"
+            srcSet="/hero/turtle-768.avif 768w, /hero/turtle-1280.avif 1280w, /hero/turtle-1920.avif 1920w"
+            sizes="100vw"
+          />
+          <source
             type="image/webp"
             srcSet="/hero/turtle-768.webp 768w, /hero/turtle-1280.webp 1280w, /hero/turtle-1920.webp 1920w"
             sizes="100vw"

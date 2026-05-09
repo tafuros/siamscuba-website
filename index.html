@@ -12,6 +12,28 @@
     <link rel="dns-prefetch" href="https://dash.siamscuba.com" />
 
     <!--
+      LCP hero preload. Mirrors the <picture> sources in UnderwaterHero so the
+      browser starts fetching the responsive hero image before JS parses,
+      which moves LCP earlier on slower connections. Update if hero changes.
+    -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset="/hero/turtle-768.avif 768w, /hero/turtle-1280.avif 1280w, /hero/turtle-1920.avif 1920w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      imagesrcset="/hero/turtle-768.webp 768w, /hero/turtle-1280.webp 1280w, /hero/turtle-1920.webp 1920w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+
+    <!--
       Per-page <title>, <meta name="description">, OG, Twitter, and canonical
       are injected at build time by react-helmet-async via the Seo component.
       Do not duplicate them here.
