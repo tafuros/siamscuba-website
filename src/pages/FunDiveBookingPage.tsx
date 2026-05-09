@@ -6,7 +6,16 @@ import Seo from "@/components/Seo";
 import { trackPurchase } from "@/utils/tracking";
 
 const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
-const ALLOWED_ORIGINS = ["https://dash.siamscuba.com", "https://siamscuba.com"];
+// Accept messages from the iframe (dash.*) AND from the same site under
+// either apex or www. The dashboard currently posts with targetOrigin set
+// to the apex; if a user lands on www the browser drops that message
+// silently. The www entry below + the targetOrigin fix on the dashboard
+// side together close that gap.
+const ALLOWED_ORIGINS = [
+  "https://dash.siamscuba.com",
+  "https://siamscuba.com",
+  "https://www.siamscuba.com",
+];
 
 const FunDiveBookingPage = () => {
   const [loaded, setLoaded] = useState(false);

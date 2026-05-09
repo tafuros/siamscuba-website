@@ -3,12 +3,32 @@
 // accidentally caching the wrong things. Bump VERSION to invalidate
 // the cache after any behavior change here.
 
-const VERSION = "v1-2026-05-10";
+const VERSION = "v2-2026-05-10";
 const CACHE_NAME = `siamscuba-${VERSION}`;
 
 // Pages we precache so a repeat visitor opening any of these gets an
 // instant render. Keep this list short to avoid cache pressure.
 const PRECACHE_URLS = ["/", "/he", "/blog"];
+
+// A response is only safe to cache if it's a clean 200 from our own
+// origin and not a Vercel bot-challenge HTML body served at any URL
+// (challenges come back with status 403 + text/html + x-vercel-mitigated,
+// but we belt-and-suspenders the content-type too).
+function isCacheable(response, expectedKind) {
+  if (!response || !response.ok) return false;
+  if (response.type === "opaque" || response.type === "opaqueredirect") return false;
+  if (response.redirected) return false;
+  if (response.headers.get("x-vercel-mitigated")) return false;
+  const ct = (response.headers.get("content-type") || "").toLowerCase();
+  if (expectedKind === "asset") {
+    // Hashed JS/CSS/images/fonts must come back as their own type, never HTML.
+    if (ct.startsWith("text/html")) return false;
+  }
+  if (expectedKind === "html") {
+    if (!ct.startsWith("text/html")) return false;
+  }
+  return true;
+}
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -50,7 +70,10 @@ self.addEventListener("fetch", (event) => {
     url.pathname.startsWith("/assets/") ||
     /\.(?:js|css|woff2?|ttf|otf|webp|avif|jpg|jpeg|png|svg|ico)$/.test(url.pathname);
 
-  // Static assets: cache-first (Vite emits hashed filenames so they're immutable)
+  // Static assets: cache-first (Vite emits hashed filenames so they're immutable).
+  // Critical: only cache *clean* responses. Vercel's bot mitigation can return
+  // a 403 HTML body for an /assets/*.js URL; if we cached that we'd serve
+  // garbage HTML to the JS parser on every repeat visit.
   if (isStaticAsset) {
     event.respondWith(
       caches.open(CACHE_NAME).then(async (cache) => {
@@ -58,7 +81,7 @@ self.addEventListener("fetch", (event) => {
         if (cached) return cached;
         try {
           const response = await fetch(request);
-          if (response.ok) cache.put(request, response.clone());
+          if (isCacheable(response, "asset")) cache.put(request, response.clone());
           return response;
         } catch (err) {
           return cached || Response.error();
@@ -68,7 +91,10 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // HTML navigations: stale-while-revalidate
+  // HTML navigations: stale-while-revalidate. Same rule — never cache a
+  // bot-challenge page. We also skip caching when SSG might have shipped a
+  // new build with renamed asset hashes; the safety net is that we only
+  // store HTML that came back as text/html with no mitigation flag.
   const accept = request.headers.get("Accept") || "";
   if (request.mode === "navigate" || accept.includes("text/html")) {
     event.respondWith(
@@ -76,7 +102,7 @@ self.addEventListener("fetch", (event) => {
         const cached = await cache.match(request);
         const fetchPromise = fetch(request)
           .then((response) => {
-            if (response.ok) cache.put(request, response.clone());
+            if (isCacheable(response, "html")) cache.put(request, response.clone());
             return response;
           })
           .catch(() => cached);
