@@ -20,6 +20,13 @@ export interface BlogPost {
   relatedBlogSlugs?: string[];
   featured?: boolean;
   readingTime?: number;
+  /**
+   * Content language. Determines URL namespace:
+   *   "en" or undefined  -> /blog/<slug>
+   *   "he"               -> /blog/<slug>  (kept in default namespace, content is in HE)
+   *   "es"               -> /es/blog/<slug>
+   */
+  language?: "en" | "he" | "es";
 }
 
 export const blogPosts: BlogPost[] = [
@@ -80,6 +87,7 @@ export const blogPosts: BlogPost[] = [
     relatedCourses: ["open-water", "discover-scuba"],
     relatedBlogSlugs: ["padi-open-water-koh-tao-what-to-expect", "padi-vs-ssi-koh-tao"],
     readingTime: 8,
+    language: "he",
   },
   {
     slug: "best-restaurants-koh-tao",
@@ -1075,6 +1083,166 @@ const divingBlogPosts: BlogPost[] = [
     relatedCourses: ["divemaster", "rescue-diver"],
     relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "koh-tao-dive-sites-guide"],
     readingTime: 8,
+  },
+  {
+    slug: "curso-buceo-koh-tao",
+    title: "Curso de Buceo Open Water en Koh Tao: La Guía Completa en Español",
+    category: "Diving",
+    excerpt: "Todo sobre el curso PADI Open Water en Koh Tao en español: qué aprenderás, las 4 inmersiones en mar abierto, el precio (11.000 THB), y cómo reservar sin depósito.",
+    coverImage: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1200&q=80",
+    date: "2026-05-09",
+    sections: [
+      {
+        heading: "Qué es el curso PADI Open Water y por qué hacerlo en Koh Tao",
+        paragraphs: [
+          "El PADI Open Water Diver es la certificación de buceo más extendida del mundo. Más de 29 millones de buceadores certificados la tienen. Es vitalicia (no caduca), reconocida en unos 135 países, y te permite bucear hasta los 18 metros de profundidad acompañado de un compañero, en cualquier parte del mundo.",
+          "Koh Tao, una pequeña isla en el golfo de Tailandia, es el lugar donde más certificaciones PADI Open Water se emiten cada año en todo el planeta. Esto se debe a una combinación de aguas cálidas (28-30°C todo el año), buena visibilidad, una gran cantidad de centros de buceo que compiten entre sí, y precios que son una fracción de lo que cuesta certificarse en el Caribe o Australia.",
+          "En Siam Scuba, el curso cuesta 11.000 THB (unos 290 EUR / 320 USD) y dura 3 días. Incluye todo el equipo, las inmersiones, los manuales, y la tarjeta de certificación oficial. No hay sorpresas en el precio.",
+        ],
+      },
+      {
+        heading: "El curso paso a paso: teoría, piscina y mar abierto",
+        paragraphs: [
+          "Día 1: Teoría y piscina. Llegas por la mañana a nuestra base en Mae Haad. Repasas la teoría con tu instructor (puedes haber hecho la parte online en casa, recomendado, para ahorrar tiempo). Por la tarde bajas a la piscina con todo el equipo y practicas las habilidades fundamentales: respirar bajo el agua, despejar la máscara, recuperar el regulador, control de flotabilidad básico.",
+          "Día 2: Dos inmersiones en mar abierto. Salimos en nuestro barco (Siam Explorer o Siam Pearl) hacia un sitio de buceo cercano. La primera inmersión es a 8-12 metros - una zona de coral suave con peces tropicales. La segunda baja a 12-15 metros, donde verás más vida marina, posiblemente tortugas.",
+          "Día 3: Dos inmersiones más, esta vez con más profundidad (hasta 18 metros) y un pequeño ejercicio de navegación con brújula. El examen final teórico (50 preguntas tipo test, 75% para aprobar) lo haces antes o después de las inmersiones, según prefieras.",
+          "Al final del Día 3 sales con la certificación. La tarjeta física llega por correo en 1-2 semanas, pero el certificado digital queda activo inmediatamente.",
+        ],
+      },
+      {
+        heading: "Por qué el ratio de 4 alumnos por instructor importa",
+        paragraphs: [
+          "El estándar PADI permite hasta 8 alumnos por instructor. La mayoría de centros de Koh Tao trabaja con 6-8 alumnos por grupo. Nosotros tenemos un ratio máximo de 4 alumnos por instructor. Sin excepciones.",
+          "Cuatro alumnos por instructor significa que el instructor puede ver lo que cada uno hace bajo el agua. Si alguien tiene problemas con el equilibrado de oídos, el instructor lo nota. Si alguien va demasiado rápido o demasiado lento, hay tiempo para ajustar.",
+          "Con 8 alumnos, el instructor está vigilando un grupo - es físicamente imposible darle atención individual a cada uno. Las habilidades se hacen rápido, los errores se acumulan, y los alumnos terminan el curso menos cómodos en el agua.",
+          "Es la diferencia entre aprender bien y aprender deprisa. Por el mismo precio.",
+        ],
+      },
+      {
+        heading: "Requisitos médicos antes de venir",
+        paragraphs: [
+          "Antes de empezar el curso rellenas un formulario médico PADI con 10 preguntas (sí/no). Si respondes sí a alguna, necesitas la firma de un médico antes de poder bucear.",
+          "Las condiciones más comunes que requieren autorización médica: asma (la mayoría de asmáticos pueden bucear con medicación controlada, pero necesitan autorización), historial de cirugía de oído, infecciones de oído recientes, problemas cardíacos, embarazo (no se bucea durante el embarazo), alergias graves, ataques de pánico/ansiedad, cirugías recientes.",
+          "Recomendación: si tienes alguna de estas condiciones, hazte un examen médico de buceo en tu país antes de volar. Cuesta lo mismo que en Tailandia (50-80 EUR), y evita la situación de no poder bucear después de haber llegado a Koh Tao.",
+          "En Koh Tao puedes hacerte el examen médico de buceo en una clínica local por 1.000-1.500 THB (30-45 EUR) - tarda unos 30 minutos.",
+        ],
+      },
+      {
+        heading: "Qué llevarte a Koh Tao para el curso",
+        paragraphs: [
+          "Equipo personal: nada estrictamente obligatorio. Todo el equipo de buceo está incluido en el precio del curso (máscara, snorkel, traje de neopreno, BCD, regulador, aletas, lastres, botella, ordenador de buceo).",
+          "Recomendable: si tienes una máscara que te queda bien, tráela. Una máscara que sella correctamente sobre tu cara es la pieza más útil de equipo personal. La que te alquilamos funciona, pero la propia es más cómoda.",
+          "Ropa: traje de baño, ropa ligera para la isla, protector solar (mejor mineral, sin oxibenzona, para no dañar el coral), gorra, gafas de sol. La temperatura en la isla es de 28-32°C todo el año.",
+          "Documentación: pasaporte (los datos de tu pasaporte aparecen en la tarjeta de certificación), seguro de viaje que cubra buceo (importante - no todos los seguros estándar lo cubren), tu carnet de buceo si ya tienes uno de antes.",
+        ],
+      },
+      {
+        heading: "El presupuesto total para los 4-5 días en Koh Tao",
+        paragraphs: [
+          "Curso PADI Open Water: 11.000 THB.",
+          "Alojamiento: 4 noches. Hostel en habitación compartida 250-450 THB/noche. Habitación privada con ventilador 700-1.200 THB/noche. Habitación con aire acondicionado 1.200-2.500 THB/noche. Calcula 3.500-8.000 THB total para alojamiento.",
+          "Comida: comida tailandesa de calle 70-120 THB por plato. Restaurante para extranjeros 250-450 THB. Calcula 800-1.500 THB por día para tres comidas.",
+          "Transporte interno: scooter de alquiler 200-300 THB/día (incluido combustible). Songthaew (taxi compartido) 100-200 THB por trayecto.",
+          "Ferry hasta Koh Tao desde Bangkok: 800-1.300 THB por trayecto. Vuelo a Bangkok desde Madrid o Barcelona: 700-1.200 EUR según fechas y antelación.",
+          "Total estimado para curso + 4-5 noches: 17.000-25.000 THB en isla (450-680 EUR), más vuelo desde España.",
+        ],
+      },
+      {
+        heading: "Cómo reservar (sin depósito)",
+        paragraphs: [
+          "Escríbenos por WhatsApp con tus fechas, cuántos sois, y el nombre de cada uno. Confirmamos disponibilidad en menos de una hora durante el día (hora de Tailandia).",
+          "No pedimos depósito. Llegas a Koh Tao primero, conoces al equipo, ves las instalaciones y los barcos, y solo entonces te comprometes. Si algo no encaja cuando nos visitas, no nos debes nada.",
+          "Si vienes desde España y tienes nivel de español pero no de inglés, avísanos al reservar. Tenemos instructores y divemasters que hablan español; coordinamos la asignación según los grupos del momento.",
+          "Si quieres seguir leyendo: nuestro Advanced Open Water (en inglés por ahora, pronto en español) cubre lo que viene después del Open Water. Y si te interesa el camino profesional, mira la guía del Divemaster.",
+        ],
+      },
+    ],
+    tags: ["PADI", "Open Water", "Spanish", "Beginner"],
+    relatedCourses: ["open-water", "discover-scuba", "advanced-open-water"],
+    relatedBlogSlugs: ["divemaster-koh-tao-padi-espanol"],
+    readingTime: 8,
+    language: "es",
+  },
+  {
+    slug: "divemaster-koh-tao-padi-espanol",
+    title: "PADI Divemaster en Koh Tao: La Guía Completa al Camino Profesional (en Español)",
+    category: "Diving",
+    excerpt: "El curso PADI Divemaster en Koh Tao explicado en español: estructura semana a semana, requisitos, precio (38.500 THB), y qué viene después con la carrera de buceo profesional.",
+    coverImage: "https://images.unsplash.com/photo-1551244072-5d12893278ab?w=1200&q=80",
+    date: "2026-05-09",
+    sections: [
+      {
+        heading: "Qué es el PADI Divemaster",
+        paragraphs: [
+          "El PADI Divemaster es la primera certificación profesional dentro del sistema PADI. Te habilita para liderar inmersiones con buceadores certificados, ayudar a instructores en cursos de Open Water y Advanced, y trabajar como buceador profesional en centros de buceo de todo el mundo.",
+          "No es un curso, es una pasantía. Durante 4 a 8 semanas trabajas dentro del centro de buceo: estudias teoría avanzada, demuestras tus habilidades de buceo a un nivel profesional, y - lo más importante - asistes en cursos reales con alumnos reales. Esa experiencia práctica es lo que diferencia a un Divemaster preparado de uno con la tarjeta pero sin rodaje.",
+          "En Koh Tao, los Divemaster son la columna vertebral de la industria del buceo local. Cada barco de buceo lleva al menos uno (a menudo dos o tres) trabajando con los instructores y los grupos de fun divers.",
+        ],
+      },
+      {
+        heading: "Por qué Koh Tao es el mejor lugar del mundo para hacer el Divemaster",
+        paragraphs: [
+          "Volumen. Koh Tao certifica más buceadores PADI cada año que cualquier otro lugar del planeta. Eso significa que durante tu pasantía hay flujo constante de alumnos en los que practicar la asistencia. En otros destinos puedes pasar semanas sin tener un alumno real al que ayudar - aquí tienes uno cada día.",
+          "Comunidad. En la isla hay típicamente 15-25 Divemaster Trainees activos en cualquier momento, distribuidos entre varios centros. La amistad que se forma entre el grupo - cohorte mentality, le llamamos - es uno de los aspectos que más recuerdan los exalumnos.",
+          "Coste. La pasantía de Divemaster en Koh Tao es gratuita - está incluida en el precio del curso (38.500 THB). En el Caribe, Australia o las Maldivas, las pasantías de Divemaster cobran entre 2.000 y 3.000 USD adicionales sobre el precio del curso. Información que vale la pena saber al comparar.",
+          "Cultura. Koh Tao es informal, joven, multinacional. La vida nocturna es activa, la comida es barata, y el ritmo permite vivir bien con un presupuesto modesto durante las 4-8 semanas que dura la pasantía.",
+        ],
+      },
+      {
+        heading: "Requisitos para empezar",
+        paragraphs: [
+          "PADI Rescue Diver activo (o equivalente reconocido de otra agencia: SSI, NAUI, SDI, etc.). Si solo tienes Open Water o Advanced, puedes hacer el Rescue Diver con nosotros antes - lo añadimos al paquete.",
+          "EFR Primary y Secondary Care (curso de primeros auxilios y RCP) en los últimos 24 meses. Si no lo tienes, lo hacemos al principio de la pasantía.",
+          "Mínimo 40 inmersiones registradas para empezar. Para graduarte, necesitas 60 inmersiones registradas. La mayoría de candidatos llega a 80-120 inmersiones durante la pasantía gracias a las inmersiones de fun diving y las asistencias.",
+          "18 años o más.",
+          "Apto médicamente, con el formulario médico PADI rellenado y firmado por un médico cuando aplique.",
+        ],
+      },
+      {
+        heading: "La pasantía semana a semana",
+        paragraphs: [
+          "Semana 1-2: Fundamentos. Curso teórico intensivo (física, fisiología, equipo, ambiente, planificación). Evaluación de habilidades acuáticas: 400m a nado, 800m con snorkel, 100m de remolque, 15 minutos de superficie sin apoyos. Demostración de las 24 habilidades fundamentales de PADI a nivel profesional. Empiezas a observar clases de instructores en silencio.",
+          "Semana 3-4: Asistencia en cursos. Empiezas a trabajar con alumnos reales bajo supervisión del instructor. Preparación pre-buceo, asistencia bajo el agua, debriefings. Aquí dejas de pensar como buceador y empiezas a pensar como profesional.",
+          "Semana 5: Liderar a buceadores certificados. Mapeas un sitio de buceo (carta completa con profundidades, peligros, vida marina). Dirigís briefings completos. Escenarios de búsqueda y recuperación. Inmersiones profundas guiadas.",
+          "Semana 6: Exámenes finales. 5 exámenes teóricos (75% para aprobar cada uno). Demostración final de habilidades. Documentación de horas de pasantía. Aplicación a PADI - la tarjeta llega por correo en 1-2 semanas.",
+        ],
+      },
+      {
+        heading: "Coste total: el curso y la vida en la isla",
+        paragraphs: [
+          "Curso de Divemaster: 38.500 THB en Siam Scuba. Incluye toda la formación, los manuales, las inmersiones, la pasantía, y las cuotas de procesamiento de PADI.",
+          "Si necesitas Rescue Diver + EFR antes: 16.500 THB adicionales (12.000 + 4.500). En total el paquete completo desde Advanced Open Water hasta Divemaster ronda los 55.000 THB.",
+          "Alojamiento por 6-8 semanas: estudios mensuales con ventilador 8.000-15.000 THB/mes; habitaciones con aire acondicionado 15.000-25.000 THB/mes. Calcula 30.000-50.000 THB en total para 6 semanas.",
+          "Comida: 8.000-15.000 THB al mes según estilo de vida (comida tailandesa de calle vs. restaurantes para extranjeros).",
+          "Total realista para 6 semanas: 80.000-120.000 THB (2.150-3.250 EUR / 2.300-3.450 USD), curso incluido. Probablemente la ruta más barata del mundo para llegar a buceador profesional.",
+        ],
+      },
+      {
+        heading: "El día a día como Divemaster Trainee",
+        paragraphs: [
+          "Mañanas en el barco: salida desde Mae Haad pier hacia el sitio de buceo de la mañana. Ayudas a los alumnos con el equipo, asistes durante la inmersión, debrief en el camino de vuelta.",
+          "Comida y descanso: 2-3 horas en la base. Sandwich, fruta, agua. Tiempo para revisar el equipo y descansar.",
+          "Tarde: o segundo día de buceo (otra salida con un grupo distinto), o sesión teórica en la base, o ejercicio práctico (mapeo, escenarios).",
+          "Tarde-noche: revisión de dive logs, estudio teórico, descanso. La rutina es físicamente exigente - bucear dos veces al día durante 6 semanas requiere recuperación.",
+          "Fin de semana: en Siam Scuba los DMTs tienen flexibilidad. La mayoría usa los fines de semana para hacer fun dives en sitios que aún no están autorizados a guiar (como Sail Rock o Chumphon Pinnacle), o simplemente para descansar y disfrutar de la isla.",
+        ],
+      },
+      {
+        heading: "Qué pasa después de graduarte de Divemaster",
+        paragraphs: [
+          "El camino más común: continuar directamente con el Instructor Development Course (IDC) después del Divemaster. Coste total desde Open Water hasta Open Water Scuba Instructor: aproximadamente 120.000-180.000 THB (3.250-4.850 EUR) en 3-4 meses.",
+          "Alternativa: trabajar como Divemaster durante 6-12 meses primero, ahorrar, y después hacer el IDC. Esto es lo que recomendamos a candidatos que quieren confirmar que el buceo es la carrera correcta antes de invertir en el camino de instructor.",
+          "Mercado laboral para Divemasters nuevos: hay vacantes regulares en el sudeste asiático (Tailandia, Indonesia, Filipinas, Malasia), Caribe (Belice, Roatán, Curacao), Mar Rojo (Egipto, Jordania, Sudán), Maldivas, Australia (Gran Barrera), y el Mediterráneo.",
+          "Sueldo de entrada: modesto (USD 600-1.000/mes después de alojamiento), pero el coste de vida en destinos tropicales es bajo. Muchos Divemasters jóvenes ahorran lo suficiente para pagar el IDC en 6-12 meses de trabajo activo.",
+          "El siguiente paso de la carrera (Instructor PADI) suele ser donde realmente se monetiza la formación. Pero el Divemaster ya te abre puertas - es el primer paso real al mundo del buceo profesional.",
+        ],
+      },
+    ],
+    tags: ["PADI", "Divemaster", "Spanish", "Pro"],
+    relatedCourses: ["divemaster", "rescue-diver", "idc"],
+    relatedBlogSlugs: ["curso-buceo-koh-tao"],
+    readingTime: 9,
+    language: "es",
   },
 ];
 

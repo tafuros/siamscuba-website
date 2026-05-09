@@ -27,12 +27,16 @@ const BlogPage = () => {
   const categories = ["All", "Diving", "Food", "Beaches", "Activities", "Nightlife"];
 
   const sorted = useMemo(() => {
-    return [...blogPosts].sort((a, b) => {
-      const fa = a.featured ? 1 : 0;
-      const fb = b.featured ? 1 : 0;
-      if (fa !== fb) return fb - fa;
-      return b.date.localeCompare(a.date);
-    });
+    // /blog index excludes Spanish posts (those live at /es/blog/<slug>)
+    return blogPosts
+      .filter((p) => p.language !== "es")
+      .slice()
+      .sort((a, b) => {
+        const fa = a.featured ? 1 : 0;
+        const fb = b.featured ? 1 : 0;
+        if (fa !== fb) return fb - fa;
+        return b.date.localeCompare(a.date);
+      });
   }, []);
 
   const filtered = activeCategory === "All"

@@ -59,7 +59,13 @@ export const routes: RouteRecord[] = [
         path: "blog/:slug",
         lazy: lazyDefault(() => import("./pages/BlogPostPage")),
         entry: "src/pages/BlogPostPage.tsx",
-        getStaticPaths: () => blogPosts.map((p) => `blog/${p.slug}`),
+        getStaticPaths: () => blogPosts.filter((p) => p.language !== "es").map((p) => `blog/${p.slug}`),
+      },
+      {
+        path: "es/blog/:slug",
+        lazy: lazyDefault(() => import("./pages/BlogPostPage")),
+        entry: "src/pages/BlogPostPage.tsx",
+        getStaticPaths: () => blogPosts.filter((p) => p.language === "es").map((p) => `es/blog/${p.slug}`),
       },
       {
         path: "ad",

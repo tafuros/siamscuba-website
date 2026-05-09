@@ -117,7 +117,10 @@ const BlogPostPage = () => {
       name: "Siam Scuba",
       logo: { "@type": "ImageObject", url: "https://siamscuba.com/favicon.png" },
     },
-    mainEntityOfPage: { "@type": "WebPage", "@id": `https://siamscuba.com/blog/${post.slug}` },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://siamscuba.com${post.language === "es" ? "/es" : ""}/blog/${post.slug}`,
+    },
   };
 
   return (

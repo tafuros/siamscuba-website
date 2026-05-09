@@ -12,6 +12,11 @@ interface SitemapEntry {
   lastmod?: string; // YYYY-MM-DD
   changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
   priority?: number; // 0.0-1.0
+  /**
+   * If set, only emit hreflang for these languages (single-language content like blog posts).
+   * If undefined, the page is multi-language (i18n switcher) and gets all SUPPORTED_LANGS.
+   */
+  hreflangs?: string[];
 }
 
 async function loadRoutes(): Promise<SitemapEntry[]> {
@@ -32,11 +37,14 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   ];
 
   for (const post of blogPosts) {
+    const prefix = post.language === "es" ? "/es" : "";
+    const lang = post.language || "en";
     entries.push({
-      loc: `/blog/${post.slug}`,
+      loc: `${prefix}/blog/${post.slug}`,
       lastmod: post.date,
       changefreq: "monthly",
       priority: 0.7,
+      hreflangs: [lang],
     });
   }
 
@@ -56,9 +64,10 @@ function buildXml(entries: SitemapEntry[]): string {
   const urls = entries
     .map((e) => {
       const loc = `${SITE_URL}${e.loc}`;
-      const alternates = SUPPORTED_LANGS.map(
-        (lang) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${loc}" />`,
-      ).join("\n");
+      const langs = e.hreflangs ?? SUPPORTED_LANGS;
+      const alternates = langs
+        .map((lang) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${loc}" />`)
+        .join("\n");
       return [
         "  <url>",
         `    <loc>${loc}</loc>`,
