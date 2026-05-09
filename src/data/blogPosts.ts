@@ -15,6 +15,11 @@ export interface BlogPost {
   coverImage: string;
   date: string;
   sections: BlogSection[];
+  tags?: string[];
+  relatedCourses?: string[];
+  relatedBlogSlugs?: string[];
+  featured?: boolean;
+  readingTime?: number;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -71,6 +76,10 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["Hebrew", "PADI", "Open Water", "Beginner"],
+    relatedCourses: ["open-water", "discover-scuba"],
+    relatedBlogSlugs: ["padi-open-water-koh-tao-what-to-expect", "padi-vs-ssi-koh-tao"],
+    readingTime: 8,
   },
   {
     slug: "best-restaurants-koh-tao",
@@ -116,6 +125,9 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["Food", "Local"],
+    relatedBlogSlugs: ["best-dishes-koh-tao", "things-to-do-besides-diving"],
+    readingTime: 5,
   },
   {
     slug: "best-dishes-koh-tao",
@@ -158,6 +170,9 @@ export const blogPosts: BlogPost[] = [
         mapLink: "https://maps.app.goo.gl/DDbiYNQXd7z5kLpv5?g_st=ic",
       },
     ],
+    tags: ["Food", "Local"],
+    relatedBlogSlugs: ["best-restaurants-koh-tao", "things-to-do-besides-diving"],
+    readingTime: 5,
   },
   {
     slug: "top-beaches-viewpoints-koh-tao",
@@ -196,6 +211,10 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["Beaches", "Viewpoints", "Non-divers"],
+    relatedCourses: ["discover-scuba"],
+    relatedBlogSlugs: ["best-snorkeling-spots-non-divers", "things-to-do-besides-diving"],
+    readingTime: 6,
   },
   {
     slug: "best-snorkeling-spots-non-divers",
@@ -234,6 +253,10 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["Snorkeling", "Beaches", "Non-divers"],
+    relatedCourses: ["discover-scuba", "open-water"],
+    relatedBlogSlugs: ["top-beaches-viewpoints-koh-tao", "things-to-do-besides-diving"],
+    readingTime: 5,
   },
   {
     slug: "things-to-do-besides-diving",
@@ -279,6 +302,10 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["Activities", "Non-divers"],
+    relatedCourses: ["discover-scuba"],
+    relatedBlogSlugs: ["top-beaches-viewpoints-koh-tao", "koh-tao-nightlife-guide"],
+    readingTime: 6,
   },
   {
     slug: "koh-tao-nightlife-guide",
@@ -324,6 +351,9 @@ export const blogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["Nightlife"],
+    relatedBlogSlugs: ["best-restaurants-koh-tao", "things-to-do-besides-diving"],
+    readingTime: 5,
   },
 ];
 
@@ -383,6 +413,11 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["PADI", "SSI", "Beginner", "Open Water"],
+    relatedCourses: ["open-water", "discover-scuba"],
+    relatedBlogSlugs: ["padi-open-water-koh-tao-what-to-expect", "koh-tao-dive-sites-guide"],
+    featured: true,
+    readingTime: 8,
   },
   {
     slug: "koh-tao-dive-sites-guide",
@@ -436,6 +471,11 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["Dive Sites", "Wrecks", "Sail Rock", "Advanced"],
+    relatedCourses: ["advanced-open-water", "wreck-diving", "deep-diving"],
+    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "padi-open-water-koh-tao-what-to-expect"],
+    featured: true,
+    readingTime: 9,
   },
   {
     slug: "padi-open-water-koh-tao-what-to-expect",
@@ -483,6 +523,10 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["PADI", "Open Water", "Beginner"],
+    relatedCourses: ["open-water", "discover-scuba"],
+    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "kokhav-rishon-koh-tao"],
+    readingTime: 7,
   },
   {
     slug: "padi-divemaster-koh-tao",
@@ -529,6 +573,10 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
     ],
+    tags: ["PADI", "Divemaster", "Pro"],
+    relatedCourses: ["divemaster", "rescue-diver"],
+    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "koh-tao-dive-sites-guide"],
+    readingTime: 8,
   },
 ];
 

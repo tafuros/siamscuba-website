@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
@@ -17,17 +17,31 @@ const BlogPage = () => {
 
   const categoryMap: Record<string, string> = {
     All: t("blog_cat_all"),
+    Diving: t("blog_cat_diving"),
     Food: t("blog_cat_food"),
     Beaches: t("blog_cat_beaches"),
     Activities: t("blog_cat_activities"),
     Nightlife: t("blog_cat_nightlife"),
   };
 
-  const categories = ["All", "Food", "Beaches", "Activities", "Nightlife"];
+  const categories = ["All", "Diving", "Food", "Beaches", "Activities", "Nightlife"];
+
+  const sorted = useMemo(() => {
+    return [...blogPosts].sort((a, b) => {
+      const fa = a.featured ? 1 : 0;
+      const fb = b.featured ? 1 : 0;
+      if (fa !== fb) return fb - fa;
+      return b.date.localeCompare(a.date);
+    });
+  }, []);
 
   const filtered = activeCategory === "All"
-    ? blogPosts
-    : blogPosts.filter((p) => p.category === activeCategory);
+    ? sorted
+    : sorted.filter((p) => p.category === activeCategory);
+
+  const showFeaturedStrip = activeCategory === "All";
+  const featured = showFeaturedStrip ? filtered.filter((p) => p.featured).slice(0, 3) : [];
+  const rest = showFeaturedStrip ? filtered.filter((p) => !featured.includes(p)) : filtered;
 
   return (
     <div className="min-h-screen bg-background">
@@ -72,9 +86,40 @@ const BlogPage = () => {
             ))}
           </div>
 
+          {/* Featured strip — 1 large + 2 small, only on All view */}
+          {featured.length > 0 && (
+            <section aria-labelledby="featured-heading" className="mb-12">
+              <h2
+                id="featured-heading"
+                className="font-display text-2xl font-semibold text-foreground mb-5"
+              >
+                {t("blog_featured")}
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="lg:col-span-2 lg:row-span-2"
+                >
+                  <BlogCard post={featured[0]} variant="hero" />
+                </motion.div>
+                {featured.slice(1, 3).map((post, i) => (
+                  <motion.div
+                    key={post.slug}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: (i + 1) * 0.05 }}
+                  >
+                    <BlogCard post={post} />
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Posts grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((post, i) => (
+            {rest.map((post, i) => (
               <motion.div
                 key={post.slug}
                 initial={{ opacity: 0, y: 20 }}

@@ -187,10 +187,22 @@ type TranslationStrings = {
   blog_cta_subtitle: string;
   blog_cta_button: string;
   blog_cat_all: string;
+  blog_cat_diving: string;
   blog_cat_food: string;
   blog_cat_beaches: string;
   blog_cat_activities: string;
   blog_cat_nightlife: string;
+  blog_featured: string;
+  blog_reading_time: string;
+  blog_toc_title: string;
+  blog_inline_cta_title: string;
+  blog_inline_cta_button: string;
+  blog_related_courses_title: string;
+  blog_related_courses_subtitle: string;
+  blog_related_courses_cta: string;
+  blog_related_posts_title: string;
+  blog_for_course_title: string;
+  blog_for_course_subtitle: string;
 
   // Booking CTA
   cta_title: string;
@@ -378,10 +390,22 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cta_subtitle: "Book a dive with Siam Scuba — beginners and certified divers welcome.",
     blog_cta_button: "Book a Dive",
     blog_cat_all: "All",
+    blog_cat_diving: "Diving",
     blog_cat_food: "Food",
     blog_cat_beaches: "Beaches",
     blog_cat_activities: "Activities",
     blog_cat_nightlife: "Nightlife",
+    blog_featured: "Featured",
+    blog_reading_time: "{n} min read",
+    blog_toc_title: "In this guide",
+    blog_inline_cta_title: "Ready to dive Koh Tao?",
+    blog_inline_cta_button: "Book your dive",
+    blog_related_courses_title: "Courses you might like",
+    blog_related_courses_subtitle: "Hand-picked PADI courses based on this article.",
+    blog_related_courses_cta: "View course",
+    blog_related_posts_title: "Keep reading",
+    blog_for_course_title: "From the Koh Tao guide",
+    blog_for_course_subtitle: "Long-form articles to help you prepare for this course.",
 
     cta_title: "Ready to Dive In?",
     cta_subtitle: "Send us a message on WhatsApp and we'll get you booked in minutes. No deposit required — just show up and dive!",
@@ -560,10 +584,22 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cta_subtitle: "הזמן צלילה עם Siam Scuba — מתחילים ומוסמכים מוזמנים.",
     blog_cta_button: "הזמן צלילה",
     blog_cat_all: "הכל",
+    blog_cat_diving: "צלילה",
     blog_cat_food: "אוכל",
     blog_cat_beaches: "חופים",
     blog_cat_activities: "פעילויות",
     blog_cat_nightlife: "חיי לילה",
+    blog_featured: "מומלצים",
+    blog_reading_time: "{n} דקות קריאה",
+    blog_toc_title: "במדריך הזה",
+    blog_inline_cta_title: "מוכנים לצלול בקוטאו?",
+    blog_inline_cta_button: "להזמין צלילה",
+    blog_related_courses_title: "קורסים שאולי יעניינו אתכם",
+    blog_related_courses_subtitle: "קורסי PADI נבחרים בהתאמה למאמר הזה.",
+    blog_related_courses_cta: "לפרטי הקורס",
+    blog_related_posts_title: "המשיכו לקרוא",
+    blog_for_course_title: "ממדריך קוטאו שלנו",
+    blog_for_course_subtitle: "מאמרים מעמיקים שיעזרו לכם להתכונן לקורס.",
 
     cta_title: "מוכן לצלול?",
     cta_subtitle: "שלח לנו הודעה בוואטסאפ ונסדר לך הזמנה תוך דקות. ללא פיקדון — פשוט תגיע ותצלול!",
@@ -742,10 +778,22 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cta_subtitle: "Reserva una inmersión con Siam Scuba — principiantes y certificados bienvenidos.",
     blog_cta_button: "Reservar Inmersión",
     blog_cat_all: "Todos",
+    blog_cat_diving: "Buceo",
     blog_cat_food: "Comida",
     blog_cat_beaches: "Playas",
     blog_cat_activities: "Actividades",
     blog_cat_nightlife: "Vida Nocturna",
+    blog_featured: "Destacados",
+    blog_reading_time: "{n} min de lectura",
+    blog_toc_title: "En esta guía",
+    blog_inline_cta_title: "¿Listo para bucear en Koh Tao?",
+    blog_inline_cta_button: "Reservar inmersión",
+    blog_related_courses_title: "Cursos relacionados",
+    blog_related_courses_subtitle: "Cursos PADI seleccionados en base a este artículo.",
+    blog_related_courses_cta: "Ver curso",
+    blog_related_posts_title: "Sigue leyendo",
+    blog_for_course_title: "De la guía de Koh Tao",
+    blog_for_course_subtitle: "Artículos detallados para prepararte para este curso.",
 
     cta_title: "¿Listo para Sumergirte?",
     cta_subtitle: "Envíanos un mensaje por WhatsApp y te reservamos en minutos. Sin depósito — ¡solo ven y bucea!",
@@ -924,10 +972,22 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cta_subtitle: "Réservez une plongée avec Siam Scuba — débutants et certifiés bienvenus.",
     blog_cta_button: "Réserver une Plongée",
     blog_cat_all: "Tous",
+    blog_cat_diving: "Plongée",
     blog_cat_food: "Cuisine",
     blog_cat_beaches: "Plages",
     blog_cat_activities: "Activités",
     blog_cat_nightlife: "Vie Nocturne",
+    blog_featured: "À la une",
+    blog_reading_time: "{n} min de lecture",
+    blog_toc_title: "Dans ce guide",
+    blog_inline_cta_title: "Prêt à plonger à Koh Tao ?",
+    blog_inline_cta_button: "Réserver une plongée",
+    blog_related_courses_title: "Cours qui pourraient vous plaire",
+    blog_related_courses_subtitle: "Cours PADI sélectionnés en fonction de cet article.",
+    blog_related_courses_cta: "Voir le cours",
+    blog_related_posts_title: "Continuez à lire",
+    blog_for_course_title: "Du guide Koh Tao",
+    blog_for_course_subtitle: "Articles détaillés pour vous préparer à ce cours.",
 
     cta_title: "Prêt à Plonger ?",
     cta_subtitle: "Envoyez-nous un message sur WhatsApp et nous vous réservons en quelques minutes. Pas de dépôt — venez simplement plonger !",

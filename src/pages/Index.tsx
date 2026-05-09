@@ -65,7 +65,7 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
       <BoatsSection />
       <WhyChooseUs />
       <TripAdvisorSection />
-      <BlogPreview />
+      <BlogPreview courseSlug={courseSlug} />
       <BookingCTA />
       <LocationSection />
       <Footer />
