@@ -103,24 +103,50 @@ const BlogPostPage = () => {
   // Insert mid-article CTA between sections 3 and 4 (only if there are at least 5 sections)
   const midCtaIndex = post.sections.length >= 5 ? 3 : -1;
 
+  // Approximate word count from sections (used by Article schema for richer signals)
+  const wordCount = post.sections.reduce(
+    (sum, s) => sum + s.paragraphs.reduce((n, p) => n + p.split(/\s+/).filter(Boolean).length, 0),
+    0,
+  );
+
+  const langCode = post.language ?? "en";
+  const articleUrl = `https://siamscuba.com${post.language === "es" ? "/es" : ""}/blog/${post.slug}`;
+
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
     image: post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`,
     datePublished: post.date,
     dateModified: post.date,
-    author: { "@type": "Organization", name: "Siam Scuba" },
+    inLanguage: langCode,
+    wordCount,
+    articleSection: post.category,
+    keywords: post.tags?.join(", "),
+    author: {
+      "@type": "Organization",
+      "@id": "https://siamscuba.com/#organization",
+      name: "Siam Scuba",
+      url: "https://siamscuba.com",
+    },
     publisher: {
       "@type": "Organization",
+      "@id": "https://siamscuba.com/#organization",
       name: "Siam Scuba",
-      logo: { "@type": "ImageObject", url: "https://siamscuba.com/favicon.png" },
+      url: "https://siamscuba.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://siamscuba.com/favicon.png",
+        width: 512,
+        height: 512,
+      },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://siamscuba.com${post.language === "es" ? "/es" : ""}/blog/${post.slug}`,
+      "@id": articleUrl,
     },
+    url: articleUrl,
   };
 
   return (

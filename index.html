@@ -52,11 +52,12 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "https://siamscuba.com/#website",
       "name": "Siam Scuba",
       "alternateName": "Siam Scuba Dive Center",
       "url": "https://siamscuba.com",
       "inLanguage": ["en", "he", "es", "fr"],
-      "publisher": { "@type": "Organization", "name": "Siam Scuba", "url": "https://siamscuba.com" }
+      "publisher": { "@id": "https://siamscuba.com/#organization" }
     }
     </script>
 
@@ -84,7 +85,8 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": ["LocalBusiness", "Organization"],
+      "@id": "https://siamscuba.com/#organization",
       "name": "Siam Scuba",
       "description": "Professional PADI dive center on Koh Tao, Thailand. Small groups, flexible schedules, two custom dive boats.",
       "url": "https://siamscuba.com",
