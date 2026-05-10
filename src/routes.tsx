@@ -77,6 +77,53 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/AdPage")),
         entry: "src/pages/AdPage.tsx",
       },
+      // Paid-campaign landers — must come BEFORE :courseSlug (which is a greedy
+      // dynamic match). 9 dedicated pages, 3 offers × 3 languages.
+      {
+        path: "discover-scuba-diving",
+        lazy: lazyDefault(() => import("./pages/landers/DsdEnPage")),
+        entry: "src/pages/landers/DsdEnPage.tsx",
+      },
+      {
+        path: "es/discover-scuba-diving",
+        lazy: lazyDefault(() => import("./pages/landers/DsdEsPage")),
+        entry: "src/pages/landers/DsdEsPage.tsx",
+      },
+      {
+        path: "he/discover-scuba-diving",
+        lazy: lazyDefault(() => import("./pages/landers/DsdHePage")),
+        entry: "src/pages/landers/DsdHePage.tsx",
+      },
+      {
+        path: "open-water-course",
+        lazy: lazyDefault(() => import("./pages/landers/OwdEnPage")),
+        entry: "src/pages/landers/OwdEnPage.tsx",
+      },
+      {
+        path: "es/open-water-course",
+        lazy: lazyDefault(() => import("./pages/landers/OwdEsPage")),
+        entry: "src/pages/landers/OwdEsPage.tsx",
+      },
+      {
+        path: "he/open-water-course",
+        lazy: lazyDefault(() => import("./pages/landers/OwdHePage")),
+        entry: "src/pages/landers/OwdHePage.tsx",
+      },
+      {
+        path: "fun-dives",
+        lazy: lazyDefault(() => import("./pages/landers/FunDiveEnPage")),
+        entry: "src/pages/landers/FunDiveEnPage.tsx",
+      },
+      {
+        path: "es/fun-dives",
+        lazy: lazyDefault(() => import("./pages/landers/FunDiveEsPage")),
+        entry: "src/pages/landers/FunDiveEsPage.tsx",
+      },
+      {
+        path: "he/fun-dives",
+        lazy: lazyDefault(() => import("./pages/landers/FunDiveHePage")),
+        entry: "src/pages/landers/FunDiveHePage.tsx",
+      },
       {
         path: ":courseSlug",
         lazy: lazyDefault(() => import("./pages/CoursePage")),

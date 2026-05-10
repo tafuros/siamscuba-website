@@ -6,6 +6,7 @@ declare global {
   interface Window {
     dataLayer: unknown[];
     gtag: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
@@ -17,6 +18,11 @@ function updateConsent(granted: boolean) {
     ad_personalization: value,
     analytics_storage: value,
   });
+  window.fbq?.("consent", granted ? "grant" : "revoke");
+  if (granted) {
+    // Fire the suppressed PageView for the current route now that consent landed.
+    window.fbq?.("track", "PageView");
+  }
 }
 
 const CookieConsent = () => {

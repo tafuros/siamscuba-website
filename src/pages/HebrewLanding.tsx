@@ -7,6 +7,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { trackWhatsAppClick } from "@/utils/tracking";
+import { buildWhatsAppLink } from "@/utils/whatsapp";
+
+const HEBREW_WHATSAPP_HREF = buildWhatsAppLink({ offer: "general", lang: "he" });
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -79,7 +83,12 @@ const HebrewLanding = () => {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
                 <Button asChild size="lg" className="rounded-full px-8 bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
-                  <a href="https://wa.me/972528641581" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={HEBREW_WHATSAPP_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackWhatsAppClick({ location: "hebrew_landing_hero", url: HEBREW_WHATSAPP_HREF })}
+                  >
                     <MessageCircle className="h-5 w-5" />
                     דברו איתנו בוואטסאפ
                   </a>
@@ -359,7 +368,12 @@ const HebrewLanding = () => {
                 size="lg"
                 className="rounded-full px-10 bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
               >
-                <a href="https://wa.me/972528641581" target="_blank" rel="noopener noreferrer">
+                <a
+                  href={HEBREW_WHATSAPP_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ location: "hebrew_landing_footer", url: HEBREW_WHATSAPP_HREF })}
+                >
                   <MessageCircle className="h-5 w-5" />
                   לפתיחת וואטסאפ
                 </a>

@@ -7,13 +7,13 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import SiteSearch from "@/components/SiteSearch";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { trackWhatsAppClick } from "@/utils/tracking";
-
-const WHATSAPP_URL = "https://wa.me/972528641581";
+import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const whatsappHref = buildWhatsAppLink({ lang: normalizeLang(language) });
 
   const navLinks = [
     { label: t("nav_courses"), href: "#courses" },
@@ -83,10 +83,10 @@ const Navbar = () => {
               <Link to="/fun-dive-booking">{t("nav_book_now")}</Link>
             </Button>
             <a
-              href={WHATSAPP_URL}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick({ location: "navbar", url: WHATSAPP_URL })}
+              onClick={() => trackWhatsAppClick({ location: "navbar", url: whatsappHref })}
               className="rounded-full px-4 py-1.5 text-sm font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-[0_4px_16px_rgba(0,0,0,0.12)] hover:-translate-y-0.5 transition-all duration-200 whitespace-nowrap"
             >
               WhatsApp
@@ -127,10 +127,10 @@ const Navbar = () => {
               <Link to="/fun-dive-booking">{t("nav_book_now")}</Link>
             </Button>
             <a
-              href={WHATSAPP_URL}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick({ location: "navbar", url: WHATSAPP_URL })}
+              onClick={() => trackWhatsAppClick({ location: "navbar", url: whatsappHref })}
               className="rounded-full px-4 py-2 text-sm font-semibold text-white text-center bg-[#25D366] hover:bg-[#1da851] transition-all duration-200 mt-1"
             >
               WhatsApp

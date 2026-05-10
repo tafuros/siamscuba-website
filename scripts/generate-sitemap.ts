@@ -41,6 +41,16 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/privacy", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/data-deletion", changefreq: "yearly", priority: 0.2, lastmod: today },
+    // Paid-campaign landers — single-language pages, hreflang only for that language.
+    { loc: "/discover-scuba-diving",    changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
+    { loc: "/es/discover-scuba-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
+    { loc: "/he/discover-scuba-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
+    { loc: "/open-water-course",        changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
+    { loc: "/es/open-water-course",     changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
+    { loc: "/he/open-water-course",     changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
+    { loc: "/fun-dives",                changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
+    { loc: "/es/fun-dives",             changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
+    { loc: "/he/fun-dives",             changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
   ];
 
   for (const post of blogPosts) {

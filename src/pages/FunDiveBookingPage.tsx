@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
-import { trackPurchase } from "@/utils/tracking";
+import { trackGenerateLead, trackPurchase } from "@/utils/tracking";
 
 const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 // Accept messages from the iframe (dash.*) AND from the same site under
@@ -65,6 +65,17 @@ const FunDiveBookingPage = () => {
 
       if (data.type === "SIAM_BOOKING_STEP") {
         console.log("Booking step:", data.data);
+        // Mid-funnel lead event so Google Ads + Meta can optimize on form-fill
+        // intent, not just completed purchases. Dashboard side must emit
+        // step:"form_submitted" with product/date for this to fire.
+        const step = (data.data ?? {}) as { step?: string; product?: string; date?: string };
+        if (step.step === "form_submitted" || step.step === "details_complete") {
+          trackGenerateLead({
+            form_name: "fun_dive_booking",
+            dive_date: step.date,
+            product: step.product,
+          });
+        }
       }
     };
 

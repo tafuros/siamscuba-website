@@ -1,13 +1,16 @@
 /**
  * Siam Scuba — Conversion Tracking Utilities
- * Wraps gtag() calls with TypeScript types for all tracked events.
- * Google Ads Account: AW-18050429438
- * Conversion label: 9d1fCLb625gcEP7jjp9D
+ * Wraps gtag() and fbq() so every conversion event fires to both Google Ads/GA4
+ * and Meta Pixel from a single function. Keeping the calls paired here prevents
+ * the "added GA but forgot Meta" drift as new events get added.
  */
+
+import { getStoredUtm, type UtmParams } from "@/utils/utm";
 
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
     dataLayer?: unknown[];
   }
 }
@@ -21,6 +24,24 @@ function gtag(...args: unknown[]): void {
   }
 }
 
+function fbq(...args: unknown[]): void {
+  if (typeof window !== "undefined" && typeof window.fbq === "function") {
+    window.fbq(...args);
+  }
+}
+
+function utmFields(): Record<string, string | undefined> {
+  const utm: UtmParams = getStoredUtm();
+  if (!utm.source) return {};
+  return {
+    campaign_source: utm.source,
+    campaign_medium: utm.medium,
+    campaign_name: utm.campaign,
+    campaign_content: utm.content,
+    campaign_term: utm.term,
+  };
+}
+
 export interface WhatsAppClickParams {
   location: string;
   url?: string;
@@ -31,7 +52,9 @@ export function trackWhatsAppClick(params: WhatsAppClickParams): void {
     event_category: "engagement",
     event_label: params.location,
     url: params.url,
+    ...utmFields(),
   });
+  fbq("track", "Contact", { location: params.location });
 }
 
 export interface GenerateLeadParams {
@@ -47,6 +70,12 @@ export function trackGenerateLead(params: GenerateLeadParams): void {
     dive_date: params.dive_date,
     product: params.product,
     currency: "THB",
+    ...utmFields(),
+  });
+  fbq("track", "Lead", {
+    form_name: params.form_name,
+    content_name: params.product,
+    currency: "THB",
   });
 }
 
@@ -60,7 +89,9 @@ export function trackPageView(params: PageViewParams): void {
     page_path: params.page_path,
     page_title: params.page_title ?? document.title,
     send_to: GA_MEASUREMENT_ID,
+    ...utmFields(),
   });
+  fbq("track", "PageView");
 }
 
 export interface PurchaseParams {
@@ -78,11 +109,40 @@ export function trackPurchase(params: PurchaseParams): void {
     items: params.item_name
       ? [{ item_name: params.item_name, currency: "THB", price: params.value }]
       : [],
+    ...utmFields(),
   });
   gtag("event", "conversion", {
     send_to: `${GA_MEASUREMENT_ID}/${CONVERSION_LABEL}`,
     value: params.value,
     currency: params.currency ?? "THB",
     transaction_id: params.transaction_id,
+  });
+  fbq("track", "Purchase", {
+    value: params.value,
+    currency: params.currency ?? "THB",
+    content_name: params.item_name,
+  });
+}
+
+export interface ViewContentParams {
+  offer: string;
+  lang: string;
+  value?: number;
+}
+
+export function trackViewContent(params: ViewContentParams): void {
+  gtag("event", "view_item", {
+    item_name: params.offer,
+    item_category: "campaign_lander",
+    language: params.lang,
+    value: params.value,
+    currency: "THB",
+    ...utmFields(),
+  });
+  fbq("track", "ViewContent", {
+    content_name: params.offer,
+    content_category: "campaign_lander",
+    value: params.value,
+    currency: "THB",
   });
 }

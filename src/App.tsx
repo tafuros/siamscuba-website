@@ -1,4 +1,4 @@
-import { useEffect, Suspense } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,12 +7,18 @@ import { Outlet, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import CookieConsent from "./components/CookieConsent";
 import { trackPageView } from "@/utils/tracking";
+import { captureUtmFromUrl } from "@/utils/utm";
 
 const queryClient = new QueryClient();
 
 const RouteTracker = () => {
   const location = useLocation();
+  const utmCapturedRef = useRef(false);
   useEffect(() => {
+    if (!utmCapturedRef.current) {
+      captureUtmFromUrl();
+      utmCapturedRef.current = true;
+    }
     trackPageView({ page_path: location.pathname + location.search });
   }, [location]);
   return null;
