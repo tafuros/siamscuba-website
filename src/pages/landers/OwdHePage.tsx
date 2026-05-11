@@ -17,6 +17,7 @@ const OwdHePage = () => {
       <Seo
         title={copy.seoTitle}
         description={copy.seoDescription}
+        noindex
         canonical={landerUrl(OFFER, LANG)}
         hreflangAlternates={landerHreflangAlternates(OFFER)}
         jsonLd={buildLanderJsonLd(OFFER, LANG)}
