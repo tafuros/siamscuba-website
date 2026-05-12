@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { MessageCircle } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
@@ -8,7 +9,11 @@ const FloatingWhatsApp = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, (v) => Math.sin(v * 0.01) * 8);
   const { language } = useLanguage();
-  const whatsappHref = buildWhatsAppLink({ lang: normalizeLang(language) });
+  const location = useLocation();
+  const whatsappHref = buildWhatsAppLink({
+    lang: normalizeLang(language),
+    pathname: location.pathname,
+  });
 
   return (
     <motion.a

@@ -13,7 +13,11 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { t, language } = useLanguage();
-  const whatsappHref = buildWhatsAppLink({ lang: normalizeLang(language) });
+  const location = useLocation();
+  const whatsappHref = buildWhatsAppLink({
+    lang: normalizeLang(language),
+    pathname: location.pathname,
+  });
 
   const navLinks = [
     { label: t("nav_courses"), href: "#courses" },
@@ -28,8 +32,6 @@ const Navbar = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const location = useLocation();
 
   const handleNav = (href: string) => {
     setMobileOpen(false);
