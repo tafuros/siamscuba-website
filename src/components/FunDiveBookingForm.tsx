@@ -33,7 +33,11 @@ import { supabase } from "@/integrations/supabase/client";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic"];
 
-const SUBMIT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-booking`;
+// Booking submissions go directly to production DiveOS (dash.siamscuba.com).
+// Previously proxied through a Supabase edge function → a Vibecode preview URL,
+// which went 502 and silently dropped bookings. DiveOS CORS already allows
+// siamscuba.com and the payload matches its /api/leads/public schema.
+const SUBMIT_URL = "https://dash.siamscuba.com/api/leads/public";
 
 const CERT_LEVELS = [
   "Open Water",
@@ -181,7 +185,6 @@ const FunDiveBookingForm = ({ date, slotLabel, slotTime, onSuccess }: FunDiveBoo
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
           fullName: data.fullName,
