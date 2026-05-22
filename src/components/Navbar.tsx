@@ -23,6 +23,7 @@ const Navbar = () => {
     { label: t("nav_courses"), href: "#courses" },
     { label: t("nav_fun_diving"), href: "#fun-diving" },
     { label: t("nav_boats"), href: "#boats" },
+    { label: t("nav_dive_sites"), href: "/dive-sites" },
     { label: t("nav_koh_tao_guide"), href: "/blog" },
     { label: t("nav_about"), href: "#about" },
   ];

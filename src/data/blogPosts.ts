@@ -18,6 +18,8 @@ export interface BlogPost {
   tags?: string[];
   relatedCourses?: string[];
   relatedBlogSlugs?: string[];
+  /** Cross-links to dedicated dive-site pages (see diveSites.ts). */
+  relatedDiveSites?: string[];
   featured?: boolean;
   readingTime?: number;
   /**
@@ -536,6 +538,7 @@ const divingBlogPosts: BlogPost[] = [
     tags: ["PADI", "Advanced Open Water", "Intermediate"],
     relatedCourses: ["advanced-open-water", "wreck-diving", "deep-diving", "rescue-diver"],
     relatedBlogSlugs: ["padi-open-water-koh-tao-what-to-expect", "koh-tao-dive-sites-guide", "koh-tao-diving-cost-guide"],
+    relatedDiveSites: ["chumphon-pinnacle", "sail-rock", "twins"],
     readingTime: 8,
   },
   {
@@ -698,6 +701,7 @@ const divingBlogPosts: BlogPost[] = [
     tags: ["Seasons", "Weather", "Wildlife"],
     relatedCourses: ["discover-scuba", "open-water", "advanced-open-water"],
     relatedBlogSlugs: ["koh-tao-dive-sites-guide", "koh-tao-diving-cost-guide", "padi-vs-ssi-koh-tao"],
+    relatedDiveSites: ["chumphon-pinnacle", "sail-rock"],
     readingTime: 8,
   },
   {
@@ -980,6 +984,7 @@ const divingBlogPosts: BlogPost[] = [
     tags: ["Dive Sites", "Wrecks", "Sail Rock", "Advanced"],
     relatedCourses: ["advanced-open-water", "wreck-diving", "deep-diving"],
     relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "padi-open-water-koh-tao-what-to-expect"],
+    relatedDiveSites: ["twins", "chumphon-pinnacle", "sail-rock"],
     featured: true,
     readingTime: 9,
   },

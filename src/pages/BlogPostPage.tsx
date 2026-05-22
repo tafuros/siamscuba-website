@@ -9,7 +9,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RelatedCourses from "@/components/RelatedCourses";
 import RelatedPosts from "@/components/RelatedPosts";
+import DiveSiteCard from "@/components/DiveSiteCard";
 import { blogPosts } from "@/data/blogPosts";
+import { findDiveSite } from "@/data/diveSites";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const categoryColors: Record<string, string> = {
@@ -285,6 +287,30 @@ const BlogPostPage = () => {
               {post.relatedCourses && post.relatedCourses.length > 0 && (
                 <RelatedCourses slugs={post.relatedCourses} />
               )}
+
+              {/* Related dive sites (cross-link blog → dive-site pages) */}
+              {(() => {
+                const sites = (post.relatedDiveSites ?? [])
+                  .map((slug) => findDiveSite(slug))
+                  .filter((s): s is NonNullable<typeof s> => Boolean(s))
+                  .slice(0, 3);
+                if (sites.length === 0) return null;
+                return (
+                  <section aria-labelledby="related-dive-sites" className="mt-16">
+                    <h2
+                      id="related-dive-sites"
+                      className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6"
+                    >
+                      {t("blog_related_dive_sites_title")}
+                    </h2>
+                    <div className={`grid gap-6 ${sites.length === 1 ? "grid-cols-1" : sites.length === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-3"}`}>
+                      {sites.map((s) => (
+                        <DiveSiteCard key={s.slug} site={s} />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })()}
 
               {/* End-of-article CTA */}
               <div className="mt-16 p-8 rounded-2xl bg-ocean-deep text-center">
