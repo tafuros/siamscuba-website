@@ -8,6 +8,7 @@ import UnderwaterHero from "@/components/UnderwaterHero";
 import CoursesSection from "@/components/CoursesSection";
 
 import FunDivingSection from "@/components/FunDivingSection";
+import DiveSitesSection from "@/components/DiveSitesSection";
 import BoatsSection from "@/components/BoatsSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import TripAdvisorSection from "@/components/TripAdvisorSection";
@@ -61,6 +62,7 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
       <CoursesSection initialCourse={courseParam} />
       <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />
+      <DiveSitesSection />
       <ScrollHint label="Our Boats ↓" targetId="boats" />
       <BoatsSection />
       <WhyChooseUs />

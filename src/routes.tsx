@@ -2,6 +2,7 @@ import type { RouteRecord } from "vite-react-ssg";
 import App from "./App";
 import Index from "./pages/Index";
 import { blogPosts } from "./data/blogPosts";
+import { diveSites } from "./data/diveSites";
 import { SLUG_TO_COURSE } from "./lib/courseSlugMap";
 
 // react-router data routers want { Component } from lazy().
@@ -66,6 +67,17 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/BlogPostPage")),
         entry: "src/pages/BlogPostPage.tsx",
         getStaticPaths: () => blogPosts.filter((p) => p.language === "es").map((p) => `es/blog/${p.slug}`),
+      },
+      {
+        path: "dive-sites",
+        lazy: lazyDefault(() => import("./pages/DiveSitesPage")),
+        entry: "src/pages/DiveSitesPage.tsx",
+      },
+      {
+        path: "dive-sites/:siteSlug",
+        lazy: lazyDefault(() => import("./pages/DiveSitePage")),
+        entry: "src/pages/DiveSitePage.tsx",
+        getStaticPaths: () => diveSites.map((s) => `dive-sites/${s.slug}`),
       },
       {
         path: "he",
