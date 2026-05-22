@@ -22,6 +22,7 @@ type TranslationStrings = {
   nav_courses: string;
   nav_fun_diving: string;
   nav_boats: string;
+  nav_dive_sites: string;
   nav_koh_tao_guide: string;
   nav_about: string;
   nav_book_now: string;
@@ -201,6 +202,7 @@ type TranslationStrings = {
   blog_related_courses_subtitle: string;
   blog_related_courses_cta: string;
   blog_related_posts_title: string;
+  blog_related_dive_sites_title: string;
   blog_for_course_title: string;
   blog_for_course_subtitle: string;
 
@@ -235,6 +237,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_courses: "Courses",
     nav_fun_diving: "Fun Diving",
     nav_boats: "The Boats",
+    nav_dive_sites: "Dive Sites",
     nav_koh_tao_guide: "Koh Tao Guide",
     nav_about: "About Us",
     nav_book_now: "Book Now",
@@ -404,6 +407,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_related_courses_subtitle: "Hand-picked PADI courses based on this article.",
     blog_related_courses_cta: "View course",
     blog_related_posts_title: "Keep reading",
+    blog_related_dive_sites_title: "Dive sites in this guide",
     blog_for_course_title: "From the Koh Tao guide",
     blog_for_course_subtitle: "Long-form articles to help you prepare for this course.",
 
@@ -429,6 +433,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_courses: "קורסים",
     nav_fun_diving: "צלילות כיף",
     nav_boats: "הסירות",
+    nav_dive_sites: "אתרי צלילה",
     nav_koh_tao_guide: "מדריך קוטאו",
     nav_about: "אודות",
     nav_book_now: "הזמן עכשיו",
@@ -598,6 +603,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_related_courses_subtitle: "קורסי PADI נבחרים בהתאמה למאמר הזה.",
     blog_related_courses_cta: "לפרטי הקורס",
     blog_related_posts_title: "המשיכו לקרוא",
+    blog_related_dive_sites_title: "אתרי הצלילה במדריך הזה",
     blog_for_course_title: "ממדריך קוטאו שלנו",
     blog_for_course_subtitle: "מאמרים מעמיקים שיעזרו לכם להתכונן לקורס.",
 
@@ -623,6 +629,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_courses: "Cursos",
     nav_fun_diving: "Buceo Recreativo",
     nav_boats: "Los Barcos",
+    nav_dive_sites: "Sitios de Buceo",
     nav_koh_tao_guide: "Guía Koh Tao",
     nav_about: "Sobre Nosotros",
     nav_book_now: "Reservar",
@@ -792,6 +799,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_related_courses_subtitle: "Cursos PADI seleccionados en base a este artículo.",
     blog_related_courses_cta: "Ver curso",
     blog_related_posts_title: "Sigue leyendo",
+    blog_related_dive_sites_title: "Sitios de buceo en esta guía",
     blog_for_course_title: "De la guía de Koh Tao",
     blog_for_course_subtitle: "Artículos detallados para prepararte para este curso.",
 
@@ -817,6 +825,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_courses: "Cours",
     nav_fun_diving: "Plongée Loisir",
     nav_boats: "Les Bateaux",
+    nav_dive_sites: "Sites de Plongée",
     nav_koh_tao_guide: "Guide Koh Tao",
     nav_about: "À Propos",
     nav_book_now: "Réserver",
@@ -986,6 +995,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_related_courses_subtitle: "Cours PADI sélectionnés en fonction de cet article.",
     blog_related_courses_cta: "Voir le cours",
     blog_related_posts_title: "Continuez à lire",
+    blog_related_dive_sites_title: "Sites de plongée dans ce guide",
     blog_for_course_title: "Du guide Koh Tao",
     blog_for_course_subtitle: "Articles détaillés pour vous préparer à ce cours.",
 

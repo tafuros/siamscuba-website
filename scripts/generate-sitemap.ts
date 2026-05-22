@@ -22,6 +22,7 @@ interface SitemapEntry {
 async function loadRoutes(): Promise<SitemapEntry[]> {
   // Dynamically import data sources so this script picks up edits without rebuilding the bundle.
   const { blogPosts } = await import("../src/data/blogPosts");
+  const { diveSites } = await import("../src/data/diveSites");
   const { SLUG_TO_COURSE } = await import("../src/lib/courseSlugMap");
 
   const today = new Date().toISOString().slice(0, 10);
@@ -29,6 +30,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   const entries: SitemapEntry[] = [
     { loc: "/", changefreq: "weekly", priority: 1.0, lastmod: today },
     { loc: "/blog", changefreq: "weekly", priority: 0.8, lastmod: today },
+    { loc: "/dive-sites", changefreq: "monthly", priority: 0.8, lastmod: today },
     { loc: "/fun-dive-booking", changefreq: "monthly", priority: 0.9, lastmod: today },
     {
       loc: "/he",
@@ -55,6 +57,15 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
       changefreq: "monthly",
       priority: 0.7,
       hreflangs: [lang],
+    });
+  }
+
+  for (const site of diveSites) {
+    entries.push({
+      loc: `/dive-sites/${site.slug}`,
+      lastmod: today,
+      changefreq: "monthly",
+      priority: 0.7,
     });
   }
 

@@ -36,6 +36,16 @@ const Footer = () => {
           <div>
             <h2 className="font-display text-sm font-semibold text-background mb-3">{t("footer_links")}</h2>
             <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/dive-sites" className="hover:text-primary transition-colors">
+                  {t("nav_dive_sites")}
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="hover:text-primary transition-colors">
+                  {t("nav_koh_tao_guide")}
+                </Link>
+              </li>
               {quickLinks.map((link) => (
                 <li key={link.id}>
                   <button
