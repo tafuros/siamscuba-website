@@ -55,7 +55,7 @@ const CookieConsent = () => {
 
   return (
     <div
-      className="fixed bottom-4 left-4 right-4 md:left-auto md:right-20 md:max-w-lg z-50
+      className="fixed bottom-4 left-4 right-20 md:left-auto md:right-20 md:max-w-lg z-50
         bg-[#0A0A0A]/90 backdrop-blur-sm text-white text-sm rounded-xl shadow-lg
         px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center gap-3
         animate-[slideUp_0.3s_ease-out]"
