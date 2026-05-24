@@ -28,7 +28,7 @@ const UnderwaterHero = () => {
           <img
             src="/hero/turtle-1920.jpg"
             alt="Green sea turtle gliding near the surface in clear tropical water at Koh Tao"
-            className="absolute inset-0 w-full h-full object-contain object-top md:object-cover md:[object-position:35%_center]"
+            className="absolute inset-0 w-full h-full object-contain object-top md:object-cover md:[object-position:35%_center] [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] md:[mask-image:none] md:[-webkit-mask-image:none]"
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -41,12 +41,16 @@ const UnderwaterHero = () => {
       {/* Subtle dark vignette for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/30 via-transparent to-ocean-deep/40 pointer-events-none z-[1]" />
 
-      {/* Bottom fade to background */}
+      {/* Bottom fade — multi-stop ocean-deep → mid → light → surface → background.
+          Taller and fully opaque on mobile (73%) so the entire area below
+          the contained image becomes a smooth blue-to-white progression that
+          flows into the courses section. Desktop keeps the lighter 30% fade
+          since the image already covers the whole section. */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-[2] pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 z-[2] pointer-events-none h-[73%] md:h-[30%]"
         style={{
-          height: "30%",
-          background: "linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%)",
+          background:
+            "linear-gradient(to bottom, transparent 0%, hsl(var(--ocean-deep)) 6%, hsl(var(--ocean-mid)) 40%, hsl(var(--ocean-light)) 70%, hsl(var(--ocean-surface)) 90%, hsl(var(--background)) 100%)",
         }}
       />
 
