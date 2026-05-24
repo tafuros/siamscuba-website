@@ -78,7 +78,7 @@ const UnderwaterHero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] max-w-3xl mx-auto text-center px-4 [text-shadow:_0_4px_24px_rgba(0,20,45,0.85),_0_2px_6px_rgba(0,0,0,0.65)]"
+          className="font-display text-[2rem] sm:text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] max-w-3xl mx-auto text-center px-4 [text-shadow:_0_4px_24px_rgba(0,20,45,0.85),_0_2px_6px_rgba(0,0,0,0.65)]"
         >
           {t("hero_title_1")}
           <br />
@@ -89,14 +89,14 @@ const UnderwaterHero = () => {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mx-auto mt-6 mb-6 h-px w-24 bg-gradient-to-r from-transparent via-ocean-light/70 to-transparent"
+          className="mx-auto mt-4 mb-4 md:mt-6 md:mb-6 h-px w-24 bg-gradient-to-r from-transparent via-ocean-light/70 to-transparent"
         />
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1 }}
-          className="text-base md:text-lg max-w-xl mx-auto font-body font-light leading-relaxed text-primary-foreground text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]"
+          className="text-sm md:text-lg max-w-xl mx-auto font-body font-light leading-relaxed text-primary-foreground text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]"
         >
           {t("hero_subtitle")}
         </motion.p>
@@ -105,16 +105,16 @@ const UnderwaterHero = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 1.2 }}
-          className="mt-6 flex flex-col items-center gap-2"
+          className="mt-4 md:mt-6 flex flex-col items-center gap-1.5 md:gap-2"
         >
           <img
             src={padi5StarBadge}
             alt="PADI 5 Star IDC Dive Center"
-            className="h-24 md:h-32 w-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)]"
+            className="h-16 sm:h-20 md:h-32 w-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)]"
             loading="lazy"
             decoding="async"
           />
-          <span className="text-primary-foreground font-display text-sm md:text-base uppercase tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+          <span className="text-primary-foreground font-display text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
             5 Star IDC Dive Center
           </span>
         </motion.div>
@@ -124,7 +124,7 @@ const UnderwaterHero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.6 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="hidden sm:flex absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
         >
           <span className="text-primary-foreground/70 font-body text-[10px] uppercase tracking-[0.3em] drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
             {t("hero_explore")}
