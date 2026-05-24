@@ -28,8 +28,7 @@ const UnderwaterHero = () => {
           <img
             src="/hero/turtle-1920.jpg"
             alt="Green sea turtle gliding near the surface in clear tropical water at Koh Tao"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "35% center" }}
+            className="absolute inset-0 w-full h-full object-contain object-top md:object-cover md:[object-position:35%_center]"
             loading="eager"
             fetchPriority="high"
             decoding="async"
