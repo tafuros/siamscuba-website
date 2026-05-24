@@ -18,6 +18,13 @@ declare global {
 const GA_MEASUREMENT_ID = "AW-18050429438";
 const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
 
+// Per-event Google Ads conversion labels. Fill in real labels from
+// Google Ads → Goals → Conversions after creating the actions. Until set,
+// the events still fire as gtag events (and to GA4) but won't count as
+// Google Ads conversions. See docs/google-ads-blueprint.md §10.
+const LEAD_CONVERSION_LABEL: string | null = null;
+const WHATSAPP_CONVERSION_LABEL: string | null = null;
+
 function gtag(...args: unknown[]): void {
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
     window.gtag(...args);
@@ -54,6 +61,11 @@ export function trackWhatsAppClick(params: WhatsAppClickParams): void {
     url: params.url,
     ...utmFields(),
   });
+  if (WHATSAPP_CONVERSION_LABEL) {
+    gtag("event", "conversion", {
+      send_to: `${GA_MEASUREMENT_ID}/${WHATSAPP_CONVERSION_LABEL}`,
+    });
+  }
   fbq("track", "Contact", { location: params.location });
 }
 
@@ -72,6 +84,12 @@ export function trackGenerateLead(params: GenerateLeadParams): void {
     currency: "THB",
     ...utmFields(),
   });
+  if (LEAD_CONVERSION_LABEL) {
+    gtag("event", "conversion", {
+      send_to: `${GA_MEASUREMENT_ID}/${LEAD_CONVERSION_LABEL}`,
+      currency: "THB",
+    });
+  }
   fbq("track", "Lead", {
     form_name: params.form_name,
     content_name: params.product,
