@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local env files (gemini API key, dev overrides, etc.) - never commit
+.env.local
+.env.*.local
