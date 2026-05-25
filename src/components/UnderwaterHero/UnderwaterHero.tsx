@@ -28,7 +28,7 @@ const UnderwaterHero = () => {
           <img
             src="/hero/turtle-1920.jpg"
             alt="Green sea turtle gliding near the surface in clear tropical water at Koh Tao"
-            className="absolute inset-0 w-full h-full object-contain object-top md:object-cover md:[object-position:35%_center] [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] md:[mask-image:none] md:[-webkit-mask-image:none]"
+            className="absolute inset-0 w-full h-full object-contain object-top md:object-cover md:[object-position:35%_center] [mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)] md:[mask-image:none] md:[-webkit-mask-image:none]"
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -42,17 +42,50 @@ const UnderwaterHero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/30 via-transparent to-ocean-deep/40 pointer-events-none z-[1]" />
 
       {/* Bottom fade — multi-stop ocean-deep → mid → light → surface → background.
-          Taller and fully opaque on mobile (73%) so the entire area below
-          the contained image becomes a smooth blue-to-white progression that
-          flows into the courses section. Desktop keeps the lighter 30% fade
-          since the image already covers the whole section. */}
+          Slow ramp at the top (transparent → an intermediate teal that matches the
+          photo's bottom water tone) so the masked image dissolves into the gradient
+          without a visible band, then progresses through ocean stops to white. */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-[2] pointer-events-none h-[73%] md:h-[30%]"
+        className="absolute bottom-0 left-0 right-0 z-[2] pointer-events-none h-[85%] md:h-[30%]"
         style={{
           background:
-            "linear-gradient(to bottom, transparent 0%, hsl(var(--ocean-deep)) 6%, hsl(var(--ocean-mid)) 40%, hsl(var(--ocean-light)) 70%, hsl(var(--ocean-surface)) 90%, hsl(var(--background)) 100%)",
+            "linear-gradient(to bottom, transparent 0%, hsl(210 55% 32% / 0.55) 12%, hsl(var(--ocean-deep)) 28%, hsl(var(--ocean-mid)) 52%, hsl(var(--ocean-light)) 74%, hsl(var(--ocean-surface)) 92%, hsl(var(--background)) 100%)",
         }}
       />
+
+      {/* Sun rays — CSS-painted light shafts that originate near the surface
+          (top of the section, matching the photo's actual ray direction from
+          upper-right) and extend down into the gradient, fading as they go.
+          Mobile only — desktop has the real photo's rays. */}
+      <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden md:hidden">
+        <div
+          className="absolute -top-10 right-[8%] w-16 h-[110%] origin-top -rotate-[8deg]"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.45) 18%, rgba(255,255,255,0.22) 45%, rgba(255,255,255,0.05) 75%, transparent 100%)",
+            filter: "blur(10px)",
+            mixBlendMode: "screen",
+          }}
+        />
+        <div
+          className="absolute -top-10 right-[32%] w-24 h-[100%] origin-top -rotate-[4deg]"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.35) 22%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.04) 78%, transparent 100%)",
+            filter: "blur(14px)",
+            mixBlendMode: "screen",
+          }}
+        />
+        <div
+          className="absolute -top-10 right-[58%] w-12 h-[90%] origin-top -rotate-[12deg]"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.4) 15%, rgba(255,255,255,0.18) 42%, rgba(255,255,255,0.03) 72%, transparent 100%)",
+            filter: "blur(8px)",
+            mixBlendMode: "screen",
+          }}
+        />
+      </div>
 
       {/* Floating bubbles (CSS-only, GPU-driven) */}
       <div aria-hidden className="hero-bubbles absolute inset-0 z-[3] pointer-events-none motion-reduce:hidden">
