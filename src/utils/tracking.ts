@@ -22,8 +22,8 @@ const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
 // Google Ads → Goals → Conversions after creating the actions. Until set,
 // the events still fire as gtag events (and to GA4) but won't count as
 // Google Ads conversions. See docs/google-ads-blueprint.md §10.
-const LEAD_CONVERSION_LABEL: string | null = null;
-const WHATSAPP_CONVERSION_LABEL: string | null = null;
+const LEAD_CONVERSION_LABEL: string | null = "XvmFCNXAjrMcEP7jjp9D";
+const WHATSAPP_CONVERSION_LABEL: string | null = "GDJZCNjAjrMcEP7jjp9D";
 
 function gtag(...args: unknown[]): void {
   if (typeof window !== "undefined" && typeof window.gtag === "function") {

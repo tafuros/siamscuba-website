@@ -15,7 +15,7 @@ Companion to `~/.claude/plans/glimmering-percolating-pebble.md` (code) and `~/.c
 | gtag + fbq paired in `src/utils/tracking.ts` | SHIPPED |
 | Lead event from booking iframe (`SIAM_BOOKING_STEP`) | SHIPPED |
 | Landers in sitemap | **OFF** (commented out in `scripts/generate-sitemap.ts:46-48`, noindex'd at the page) — by design; restore at launch |
-| **Google Ads conversion labels** | **MISSING for lead + WhatsApp click**. Only `Booking Confirmed` (`9d1fCLb625gcEP7jjp9D`) exists. |
+| **Google Ads conversion labels** | SHIPPED 2026-05-25 - all 3 actions wired: Booking Confirmed (`9d1fCLb625gcEP7jjp9D`), Lead (`XvmFCNXAjrMcEP7jjp9D`), WhatsApp Click (`GDJZCNjAjrMcEP7jjp9D`). See §10. |
 | Meta Pixel ID | Placeholder (`YOUR_PIXEL_ID` ×2 in `index.html`) — Google-first means we can defer |
 
 ---
@@ -609,10 +609,10 @@ Run before publishing campaigns:
 
 ## 10. Conversion labels — PASTE WHEN READY
 
-| Action | gtag event name | Label (paste here after creating in Google Ads UI) |
+| Action | gtag event name | Label |
 |---|---|---|
-| Booking Confirmed | `purchase` | `9d1fCLb625gcEP7jjp9D` ✅ already wired |
-| Lead — Form Submitted | `generate_lead` | `_______________` |
-| WhatsApp Click | `whatsapp_click` | `_______________` |
+| Booking Confirmed | `purchase` | `9d1fCLb625gcEP7jjp9D` (wired pre-2026-05-25) |
+| Lead - Booking Form Submitted | `generate_lead` | `XvmFCNXAjrMcEP7jjp9D` (wired 2026-05-25) |
+| WhatsApp Click | `whatsapp_click` | `GDJZCNjAjrMcEP7jjp9D` (wired 2026-05-25) |
 
-Once filled in, I edit `src/utils/tracking.ts` to attach `send_to: AW-18050429438/<label>` to the two events, then we ship.
+All three labels live in `src/utils/tracking.ts` as `CONVERSION_LABEL`, `LEAD_CONVERSION_LABEL`, `WHATSAPP_CONVERSION_LABEL`. Conversion-action defaults set in Google Ads UI: Lead = 100 THB / 30d click / 1d view; WhatsApp = 50 THB / 7d click / 1d view; both Primary, Data-driven attribution, One per click.
