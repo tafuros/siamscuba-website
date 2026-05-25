@@ -16,8 +16,9 @@ set -a; source .env.local; set +a
 if [ -z "${GEMINI_API_KEY:-}" ]; then echo "GEMINI_API_KEY not set in .env.local" >&2; exit 1; fi
 
 OUT_BASE="${1:-turtle-extended-mobile}"
-MODEL="${GEMINI_MODEL:-gemini-2.5-flash-image-preview}"
-SOURCE_IMG="public/hero/turtle-1920.jpg"
+MODEL="${GEMINI_MODEL:-gemini-2.5-flash-image}"
+SOURCE_IMG="${SOURCE_IMG:-public/hero/turtle-1920.jpg}"
+PROMPT_FILE="${PROMPT_FILE:-}"
 TS=$(date +%Y%m%d-%H%M%S)
 WORK=".playwright-mcp/nano-banana-${TS}"
 mkdir -p "$WORK"
@@ -30,7 +31,10 @@ echo "[gen] work dir = $WORK"
 IMG_B64=$(base64 -i "$SOURCE_IMG" | tr -d '\n')
 
 # 2. Build the prompt and request payload via jq so we don't fight shell quoting
-PROMPT='Extend this underwater turtle photograph downward to create a tall vertical portrait composition (aspect ratio 9:16).
+if [ -n "$PROMPT_FILE" ] && [ -f "$PROMPT_FILE" ]; then
+  PROMPT=$(cat "$PROMPT_FILE")
+else
+  PROMPT='Extend this underwater turtle photograph downward to create a tall vertical portrait composition (aspect ratio 9:16).
 
 CRITICAL: preserve the original photo exactly as-is in the upper portion of the new image. Do not alter, recompose, or restyle the turtle, the sun-lit surface, or anything in the source photo.
 
@@ -45,13 +49,21 @@ DO NOT add: any animals (fish, turtles, divers, sharks), bubbles (other than fai
 The seam between the original photo and the generated extension must be invisible - water colour, light direction, ray geometry, and clarity must match perfectly at the boundary.
 
 Output: a single vertical portrait image, 9:16 ratio, with the original photo at the top and the new generated water + ray + white-fade extension filling the bottom.'
+fi
 
 PAYLOAD_FILE="$WORK/request.json"
-jq -n --arg prompt "$PROMPT" --arg img "$IMG_B64" '{
+EXT_LOWER="${SOURCE_IMG##*.}"
+case "$EXT_LOWER" in
+  "jpg"|"jpeg") MIME_IN="image/jpeg" ;;
+  "png") MIME_IN="image/png" ;;
+  "webp") MIME_IN="image/webp" ;;
+  *) MIME_IN="image/jpeg" ;;
+esac
+jq -n --arg prompt "$PROMPT" --arg img "$IMG_B64" --arg mime "$MIME_IN" '{
   contents: [{
     parts: [
       { text: $prompt },
-      { inline_data: { mime_type: "image/jpeg", data: $img } }
+      { inline_data: { mime_type: $mime, data: $img } }
     ]
   }],
   generationConfig: { responseModalities: ["IMAGE"] }

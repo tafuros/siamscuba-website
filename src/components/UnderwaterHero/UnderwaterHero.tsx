@@ -15,20 +15,29 @@ const UnderwaterHero = () => {
         transition={{ duration: 26, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
       >
         <picture>
+          {/* Mobile-only composite: ORIGINAL turtle photo on top (pixel-perfect,
+              preserved unchanged) + AI-generated water + sun-ray + white-fade
+              continuation below, blended at the seam with a 140px alpha fade.
+              The turtle is "our constant"; only the depth/light/fade below
+              comes from Gemini 2.5 Flash Image. */}
+          <source
+            media="(max-width: 767px)"
+            srcSet="/hero/turtle-mobile-composite.jpg"
+          />
           <source
             type="image/avif"
-            srcSet="/hero/turtle-768.avif 768w, /hero/turtle-1280.avif 1280w, /hero/turtle-1920.avif 1920w"
+            srcSet="/hero/turtle-1280.avif 1280w, /hero/turtle-1920.avif 1920w"
             sizes="100vw"
           />
           <source
             type="image/webp"
-            srcSet="/hero/turtle-768.webp 768w, /hero/turtle-1280.webp 1280w, /hero/turtle-1920.webp 1920w"
+            srcSet="/hero/turtle-1280.webp 1280w, /hero/turtle-1920.webp 1920w"
             sizes="100vw"
           />
           <img
             src="/hero/turtle-1920.jpg"
             alt="Green sea turtle gliding near the surface in clear tropical water at Koh Tao"
-            className="absolute inset-0 w-full h-full object-contain object-top md:object-cover md:[object-position:35%_center] [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] md:[mask-image:none] md:[-webkit-mask-image:none]"
+            className="absolute inset-0 w-full h-full object-cover object-top md:[object-position:35%_center]"
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -38,19 +47,27 @@ const UnderwaterHero = () => {
         </picture>
       </motion.div>
 
+      {/* Desktop-only: AI-generated water + sun rays + fade-to-white strip layered
+          at the bottom of the hero. mask-image fade at the top lets it blend
+          into the turtle photo above. On mobile this isn't needed because the
+          mobile <source> already serves a pre-composited image. */}
+      <img
+        src="/hero/desktop-extension.jpg"
+        alt=""
+        aria-hidden="true"
+        className="hidden md:block absolute bottom-0 left-0 right-0 w-full h-[40%] object-cover z-[1] pointer-events-none [mask-image:linear-gradient(to_bottom,transparent_0%,black_40%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_40%)]"
+      />
+
       {/* Subtle dark vignette for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/30 via-transparent to-ocean-deep/40 pointer-events-none z-[1]" />
 
-      {/* Bottom fade — multi-stop ocean-deep → mid → light → surface → background.
-          Taller and fully opaque on mobile (73%) so the entire area below
-          the contained image becomes a smooth blue-to-white progression that
-          flows into the courses section. Desktop keeps the lighter 30% fade
-          since the image already covers the whole section. */}
+      {/* Bottom fade. On mobile the AI-extended image already fades to white
+          at its bottom, so we just need a short final blend into the page bg.
+          Desktop still uses the broader 30% fade for the full-bleed photo. */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-[2] pointer-events-none h-[73%] md:h-[30%]"
+        className="absolute bottom-0 left-0 right-0 z-[2] pointer-events-none h-[12%] md:h-[30%]"
         style={{
-          background:
-            "linear-gradient(to bottom, transparent 0%, hsl(var(--ocean-deep)) 6%, hsl(var(--ocean-mid)) 40%, hsl(var(--ocean-light)) 70%, hsl(var(--ocean-surface)) 90%, hsl(var(--background)) 100%)",
+          background: "linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%)",
         }}
       />
 
