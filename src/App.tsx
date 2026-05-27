@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/i18n/LanguageContext";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
 import { trackPageView } from "@/utils/tracking";
 import { captureUtmFromUrl } from "@/utils/utm";
@@ -38,6 +39,7 @@ const App = () => (
         <Sonner />
         <RouteTracker />
         <CookieConsent />
+        <SpeedInsights />
         <Suspense fallback={<PageFallback />}>
           <Outlet />
         </Suspense>
