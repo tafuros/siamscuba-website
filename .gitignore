@@ -24,5 +24,12 @@ dist-ssr
 *.sw?
 
 # Local env files (gemini API key, dev overrides, etc.) - never commit
+# Plain .env was leaked publicly - never commit again (see /tmp/security-audit-2026-05-27.html)
+.env
 .env.local
 .env.*.local
+
+# Auth state / OAuth tokens / cookies - never commit
+.secrets/
+playwright-report/
+.playwright-mcp/
