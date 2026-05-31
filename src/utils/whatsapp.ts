@@ -1,5 +1,4 @@
 import type { Lang, Offer } from "@/lib/landerCopy";
-import { getStoredUtm } from "@/utils/utm";
 
 export const WHATSAPP_NUMBER = "972528641581";
 
@@ -97,7 +96,6 @@ export interface WhatsAppLinkOpts {
   /** Pathname to derive topic from (used by global buttons). */
   pathname?: string;
   lang?: Lang;
-  appendUtm?: boolean;
 }
 
 // Maps app-wide Language ("en" | "he" | "es" | "fr") down to lander Lang.
@@ -108,18 +106,11 @@ export function normalizeLang(lang: string | undefined): Lang {
 }
 
 export function buildWhatsAppLink(opts: WhatsAppLinkOpts = {}): string {
-  const { topic, offer, pathname, lang = "en", appendUtm = true } = opts;
+  const { topic, offer, pathname, lang = "en" } = opts;
   const resolvedTopic: WhatsAppTopic =
     topic ?? offer ?? (pathname ? topicFromPath(pathname) : "general");
-  let text = PREFILLED_MESSAGES[resolvedTopic][lang];
-  if (appendUtm) {
-    const utm = getStoredUtm();
-    if (utm.source) {
-      const tag = `${utm.source}/${utm.medium ?? "?"}${utm.campaign ? "/" + utm.campaign : ""}`;
-      text += `\n\n— ${tag}`;
-    }
-  }
-  // Page tag — read by n8n Nemo classifier. Keep on its own line at the end.
-  text += `\n\n[ref:${resolvedTopic}]`;
+  // Customer-facing prefill only — no tracking/routing tags appended, since
+  // wa.me text is sent by the customer and any tag would be visible to them.
+  const text = PREFILLED_MESSAGES[resolvedTopic][lang];
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
