@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Award, Calendar, Heart, MessageCircle, Sailboat, Shield, Users } from "lucide-react";
+import { Award, Calendar, Heart, MessageCircle, Sailboat, Shield, Users, Waves } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
 import TripAdvisorSection from "@/components/TripAdvisorSection";
 import LanderNav from "@/components/landers/LanderNav";
+import padiLogo from "@/assets/padi-logo.png";
 import { LANDER_COPY, type Lang, type Offer, type UspTile } from "@/lib/landerCopy";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
@@ -32,6 +33,15 @@ const ICONS: Record<UspTile["icon"], typeof Shield> = {
 };
 
 const FUN_DIVE_BOOKING_PATH = "/fun-dive-booking";
+
+// Dive-site photos that live in /public/dive-sites. To add a photo later, drop
+// the file in that folder and add one line here keyed by the exact site name.
+// Sites with no entry render the clean text-only card (no broken image, no 404).
+const DIVE_SITE_IMAGES: Record<string, string> = {
+  "Chumphon Pinnacle": "/dive-sites/chumphon-pinnacle.webp",
+  "Sail Rock": "/dive-sites/sail-rock.webp",
+  Twins: "/dive-sites/twins.webp",
+};
 
 const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
   const copy = LANDER_COPY[offer][lang];
@@ -116,6 +126,47 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
         </div>
       </section>
 
+      {/* Dive sites — moved high and emphasised; this is the hook for certified divers */}
+      {copy.diveSites && (
+        <section className="py-14 md:py-20 bg-card border-y border-border">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-8 md:mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">{copy.whatYouDoHeadline}</h2>
+              <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+                {copy.whatYouDoSubhead}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+              {copy.diveSites.map((site) => {
+                const image = DIVE_SITE_IMAGES[site.name];
+                return (
+                  <div
+                    key={site.name}
+                    className="group overflow-hidden rounded-xl border border-border bg-background transition-all hover:border-accent/50 hover:shadow-md"
+                  >
+                    {image && (
+                      <img
+                        src={image}
+                        alt={site.name}
+                        loading="lazy"
+                        className="w-full h-40 object-cover"
+                      />
+                    )}
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Waves className="h-5 w-5 text-accent shrink-0" />
+                        <h3 className="font-semibold text-lg">{site.name}</h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{site.blurb}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* USP tiles */}
       <section className="py-12 md:py-16 bg-card">
         <div className="container mx-auto px-4 max-w-5xl">
@@ -128,7 +179,15 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                   key={tile.title}
                   className="flex flex-col items-center text-center p-6 rounded-xl border border-border bg-background"
                 >
-                  <Icon className="h-8 w-8 mb-3 text-accent" />
+                  {tile.badge === "padi5star" ? (
+                    <img
+                      src={padiLogo}
+                      alt="PADI 5 Star Dive Center"
+                      className="h-16 w-auto mb-3 object-contain"
+                    />
+                  ) : (
+                    <Icon className="h-8 w-8 mb-3 text-accent" />
+                  )}
                   <h3 className="font-semibold mb-2">{tile.title}</h3>
                   <p className="text-sm text-muted-foreground">{tile.body}</p>
                 </div>
@@ -188,15 +247,15 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
         <TripAdvisorSection />
       </section>
 
-      {/* What you'll do */}
-      <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-2">{copy.whatYouDoHeadline}</h2>
-            <p className="text-sm md:text-base text-muted-foreground">{copy.whatYouDoSubhead}</p>
-          </div>
+      {/* Schedule (DSD / OWD) — dive-site offers render their sites high up instead */}
+      {copy.schedule && (
+        <section className="py-12 md:py-16">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-2">{copy.whatYouDoHeadline}</h2>
+              <p className="text-sm md:text-base text-muted-foreground">{copy.whatYouDoSubhead}</p>
+            </div>
 
-          {copy.schedule && (
             <ol className="space-y-3">
               {copy.schedule.map((step) => (
                 <li
@@ -208,20 +267,9 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                 </li>
               ))}
             </ol>
-          )}
-
-          {copy.diveSites && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {copy.diveSites.map((site) => (
-                <div key={site.name} className="p-4 rounded-lg border border-border bg-card">
-                  <h3 className="font-semibold mb-1">{site.name}</h3>
-                  <p className="text-sm text-muted-foreground">{site.blurb}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* CTA strip */}
       <section className="py-12 md:py-16 bg-accent text-accent-foreground">
