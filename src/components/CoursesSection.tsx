@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Award, BookOpen, Star, Crown, Fish, Anchor, ArrowDown, Zap, Layers, ShieldCheck, Heart, Feather, Camera, Waves } from "lucide-react";
+import { Award, BookOpen, Star, Crown, Fish, Anchor, ArrowDown, Moon, Zap, Layers, ShieldCheck, Heart, Feather, Camera, Waves } from "lucide-react";
 import padi from "@/assets/padi-logo.png";
 import CourseDetailDialog from "./CourseDetailDialog";
 import CourseCarouselRow from "./CourseCarouselRow";
@@ -45,6 +45,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
         { icon: Feather, title: t("course_ppb"), dialogKey: "Peak Performance Buoyancy", price: "5,500", duration: t("dur_1_day"), highlights: [t("hl_ppb_buoyancy"), t("hl_ppb_air"), t("hl_ppb_glide")], hasDetails: true },
         { icon: Anchor, title: t("course_wreck"), dialogKey: "Wreck Diving", price: "9,000", duration: t("dur_2_days"), highlights: [t("hl_wrecks"), t("hl_penetration"), t("hl_specialty_cert")] },
         { icon: ArrowDown, title: t("course_deep"), dialogKey: "Deep Diving", price: "9,000", duration: t("dur_2_days"), highlights: [t("hl_beyond_18"), t("hl_gas"), t("hl_deep_plan")] },
+        { icon: Moon, title: t("course_night_dive"), dialogKey: "Night Dive", price: "1,300", duration: t("dur_1_day"), highlights: [t("hl_night_certified"), t("hl_night_reef"), t("hl_night_guided")] },
         { icon: Zap, title: t("course_dpv"), dialogKey: "Underwater Scooter (DPV)", price: null, duration: t("dur_1_day"), highlights: [t("hl_dpv"), t("hl_cover_ground"), t("hl_unique")] },
         { icon: Layers, title: t("course_sidemount"), dialogKey: "Sidemount Diving", price: null, duration: t("dur_2_3_days"), highlights: [t("hl_streamline"), t("hl_independent_gas"), t("hl_advanced_config")] },
         { icon: Camera, title: t("course_uw_photo"), dialogKey: "UW Photography & Videography", price: "37,000", duration: t("dur_5_days"), highlights: [t("hl_uw_10dives"), t("hl_uw_1on1"), t("hl_uw_padi_cert")], hasDetails: true },

@@ -61,6 +61,7 @@ type TranslationStrings = {
   course_idc: string;
   course_wreck: string;
   course_deep: string;
+  course_night_dive: string;
   course_dpv: string;
   course_sidemount: string;
   course_ppb: string;
@@ -100,6 +101,9 @@ type TranslationStrings = {
   hl_beyond_18: string;
   hl_gas: string;
   hl_deep_plan: string;
+  hl_night_certified: string;
+  hl_night_reef: string;
+  hl_night_guided: string;
   hl_dpv: string;
   hl_cover_ground: string;
   hl_unique: string;
@@ -274,6 +278,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_idc: "IDC (Instructor Course)",
     course_wreck: "Wreck Diving",
     course_deep: "Deep Diving",
+    course_night_dive: "Night Dive",
     course_dpv: "Underwater Scooter (DPV)",
     course_sidemount: "Sidemount Diving",
     course_ppb: "Peak Performance Buoyancy",
@@ -309,6 +314,9 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_beyond_18: "Dive beyond 18m",
     hl_gas: "Gas management",
     hl_deep_plan: "Deep dive planning",
+    hl_night_certified: "For certified divers",
+    hl_night_reef: "The reef after dark",
+    hl_night_guided: "1 guided night dive",
     hl_dpv: "Ride a DPV underwater",
     hl_cover_ground: "Cover more ground",
     hl_unique: "Unique experience",
@@ -471,6 +479,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_idc: "IDC (קורס מדריכים)",
     course_wreck: "צלילת ספינות טרופות",
     course_deep: "צלילה עמוקה",
+    course_night_dive: "צלילת לילה",
     course_dpv: "קטנוע תת-ימי (DPV)",
     course_sidemount: "צלילת סיידמאונט",
     course_ppb: "שליטה מושלמת בציפה",
@@ -506,6 +515,9 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_beyond_18: "צלול מעבר ל-18 מטר",
     hl_gas: "ניהול גזים",
     hl_deep_plan: "תכנון צלילה עמוקה",
+    hl_night_certified: "לצוללים מוסמכים",
+    hl_night_reef: "השונית אחרי החשכה",
+    hl_night_guided: "צלילת לילה מודרכת אחת",
     hl_dpv: "רכב על DPV מתחת למים",
     hl_cover_ground: "כסה שטח רב יותר",
     hl_unique: "חוויה ייחודית",
@@ -668,6 +680,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_idc: "IDC (Curso de Instructor)",
     course_wreck: "Buceo en Pecios",
     course_deep: "Buceo Profundo",
+    course_night_dive: "Buceo Nocturno",
     course_dpv: "Scooter Submarino (DPV)",
     course_sidemount: "Buceo Sidemount",
     course_ppb: "Flotabilidad Perfecta",
@@ -703,6 +716,9 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_beyond_18: "Bucea más allá de 18m",
     hl_gas: "Gestión de gases",
     hl_deep_plan: "Planificación de buceo profundo",
+    hl_night_certified: "Para buceadores certificados",
+    hl_night_reef: "El arrecife de noche",
+    hl_night_guided: "1 inmersión nocturna guiada",
     hl_dpv: "Monta un DPV bajo el agua",
     hl_cover_ground: "Cubre más terreno",
     hl_unique: "Experiencia única",
@@ -865,6 +881,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_idc: "IDC (Cours Instructeur)",
     course_wreck: "Plongée Épave",
     course_deep: "Plongée Profonde",
+    course_night_dive: "Plongée de Nuit",
     course_dpv: "Scooter Sous-marin (DPV)",
     course_sidemount: "Plongée Sidemount",
     course_ppb: "Flottabilité Parfaite",
@@ -900,6 +917,9 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_beyond_18: "Plongez au-delà de 18m",
     hl_gas: "Gestion des gaz",
     hl_deep_plan: "Planification de plongée profonde",
+    hl_night_certified: "Pour plongeurs certifiés",
+    hl_night_reef: "Le récif la nuit",
+    hl_night_guided: "1 plongée de nuit guidée",
     hl_dpv: "Pilotez un DPV sous l'eau",
     hl_cover_ground: "Couvrez plus de terrain",
     hl_unique: "Expérience unique",
