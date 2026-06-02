@@ -18,7 +18,7 @@ const Privacy = () => {
         <div className="prose prose-sm max-w-none text-foreground/80 space-y-6">
           <p>
             Siam Scuba ("we", "us", "our") operates <strong>siamscuba.com</strong> and the WhatsApp assistant "Nemo"
-            reachable at <strong>+66 82-506-8898</strong>. This policy explains what personal data we collect, why,
+            reachable at <strong>+972 52-864-1581</strong>. This policy explains what personal data we collect, why,
             and your rights over it.
           </p>
 

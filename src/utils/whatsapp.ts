@@ -1,6 +1,6 @@
 import type { Lang, Offer } from "@/lib/landerCopy";
 
-export const WHATSAPP_NUMBER = "66825068898";
+export const WHATSAPP_NUMBER = "972528641581";
 
 // Topics map to the [ref:CODE] tag appended to every prefilled WhatsApp
 // message. n8n's Nemo bot reads the tag and routes to the matching S-node
