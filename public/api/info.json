@@ -37,7 +37,7 @@
       "id": "owd",
       "name": "Open Water Diver",
       "duration": "2.5 days",
-      "price_thb": 11000,
+      "price_thb": 12000,
       "certification": true,
       "requires_prior_cert": false,
       "max_depth_m": 18,
@@ -49,7 +49,7 @@
       "id": "aowd",
       "name": "Advanced Open Water",
       "duration": "1.5-2 days",
-      "price_thb": 10000,
+      "price_thb": 11000,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Open Water Diver (or equivalent)",
@@ -62,20 +62,20 @@
       "id": "rescue",
       "name": "Rescue Diver",
       "duration": "3 days",
-      "price_thb": 10000,
-      "price_thb_with_efr": 14500,
-      "efr_price_thb": 4500,
+      "price_thb": 11000,
+      "price_thb_with_efr": 16000,
+      "efr_price_thb": 5000,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Advanced Open Water + valid EFR (First Aid/CPR) within last 12 months",
       "description": "Focus on self-rescue, managing diver stress, search patterns, and surfacing an unconscious diver. 10 rescue exercises plus 2 realistic open-water scenarios. EFR can be skipped if customer already has valid EFR within the last 12 months.",
-      "note": "EFR add-on listed in CoursesSection at 4,500 THB; a separate copy in CourseDetailDialog lists 4,000 THB. Authoritative value here matches SOUL.md: 4,500 THB."
+      "note": "Authoritative price (updated 2026-06-02): Rescue 11,000 THB, EFR add-on 5,000 THB, combined 16,000 THB."
     },
     {
       "id": "efr",
       "name": "Emergency First Response (EFR)",
       "duration": "1 day",
-      "price_thb": 4500,
+      "price_thb": 5000,
       "certification": true,
       "requires_prior_cert": false,
       "description": "CPR and first-aid certification. International cert, valid 24 months. Prerequisite for Rescue Diver unless already held within last 12 months."
@@ -94,7 +94,7 @@
       "id": "wreck",
       "name": "Wreck Diving",
       "duration": "2 days",
-      "price_thb": 8500,
+      "price_thb": 9000,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Advanced Open Water (typical)",
@@ -104,7 +104,7 @@
       "id": "deep",
       "name": "Deep Diving",
       "duration": "2 days",
-      "price_thb": 8500,
+      "price_thb": 9000,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Advanced Open Water",
@@ -164,7 +164,7 @@
     }
   ],
   "fun_dives": {
-    "price_thb": 1800,
+    "price_thb": 2000,
     "dives_per_trip": 2,
     "schedule": ["morning", "afternoon"],
     "morning_timeline": [
@@ -186,6 +186,19 @@
       "fresh pineapple on the boat",
       "dive insurance",
       "photography add-on available"
+    ]
+  },
+  "night_dive": {
+    "price_thb": 1300,
+    "dives_per_trip": 1,
+    "for": "certified divers",
+    "description": "Single guided night dive on a Koh Tao reef - the reef comes alive after dark. For certified divers.",
+    "included": [
+      "1 guided night dive with professional instructor",
+      "full diving equipment",
+      "full air tank",
+      "dive light",
+      "dive insurance"
     ]
   },
   "sail_rock": {

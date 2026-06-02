@@ -337,11 +337,11 @@ const DSD_HE: LanderCopy = {
 // ---------- OWD (PADI Open Water Diver) ----------
 
 const OWD_EN: LanderCopy = {
-  seoTitle: "PADI Open Water Course in Koh Tao – 11,000 THB Lifelong Cert | Siam Scuba",
+  seoTitle: "PADI Open Water Course in Koh Tao – 12,000 THB Lifelong Cert | Siam Scuba",
   seoDescription:
     "Get PADI certified in 2.5 days on Koh Tao. Small groups (max 4), classroom + pool + four ocean dives, 2 nights' accommodation included. Lifelong certification.",
   heroBadge: "PADI Open Water Diver",
-  heroH1: "Get PADI certified in Koh Tao — 2.5 days, 11,000 THB, lifelong",
+  heroH1: "Get PADI certified in Koh Tao — 2.5 days, 12,000 THB, lifelong",
   heroSubhead:
     "Theory online and in our classroom, pool practice, then four real ocean dives — all in 2.5 days. You leave with a PADI card you can dive on anywhere in the world, forever.",
   ctaPrimary: "Chat on WhatsApp",
@@ -366,7 +366,7 @@ const OWD_EN: LanderCopy = {
   ],
   pricingHeadline: "What's included",
   pricing: {
-    price: "11,000 THB",
+    price: "12,000 THB",
     perWhat: "per person, all in",
     includes: [
       "PADI eLearning + classroom theory at our club",
@@ -425,16 +425,16 @@ const OWD_EN: LanderCopy = {
       a: "Yes, and we discount it heavily if you book together. Ask on WhatsApp.",
     },
   ],
-  closingCtaHeadline: "PADI cert. 2.5 days. 11,000 THB.",
+  closingCtaHeadline: "PADI cert. 2.5 days. 12,000 THB.",
   closingCtaSubhead: "Two nights' accommodation included. WhatsApp us your dates — we start courses every day.",
 };
 
 const OWD_ES: LanderCopy = {
-  seoTitle: "Curso PADI Open Water en Koh Tao – Certificación de por Vida 11,000 THB | Siam Scuba",
+  seoTitle: "Curso PADI Open Water en Koh Tao – Certificación de por Vida 12,000 THB | Siam Scuba",
   seoDescription:
     "Sácate el PADI en 2,5 días en Koh Tao. Grupos pequeños (máx. 4), teoría + piscina + cuatro inmersiones, 2 noches de alojamiento incluidas. Certificación de por vida.",
   heroBadge: "PADI Open Water Diver",
-  heroH1: "Certifícate PADI en Koh Tao — 2,5 días, 11,000 THB, de por vida",
+  heroH1: "Certifícate PADI en Koh Tao — 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
     "Teoría online y en nuestra aula, prácticas en piscina y cuatro inmersiones reales en el mar — todo en 2,5 días. Te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
   ctaPrimary: "Chatea por WhatsApp",
@@ -459,7 +459,7 @@ const OWD_ES: LanderCopy = {
   ],
   pricingHeadline: "Qué incluye",
   pricing: {
-    price: "11,000 THB",
+    price: "12,000 THB",
     perWhat: "por persona, todo incluido",
     includes: [
       "Teoría online + clase en nuestro club",
@@ -518,16 +518,16 @@ const OWD_ES: LanderCopy = {
       a: "Sí, y con descuento importante si lo reservas junto. Pregúntanos por WhatsApp.",
     },
   ],
-  closingCtaHeadline: "Cert PADI. 2,5 días. 11,000 THB.",
+  closingCtaHeadline: "Cert PADI. 2,5 días. 12,000 THB.",
   closingCtaSubhead: "2 noches de alojamiento incluidas. WhatsApp con tus fechas — abrimos cursos cada día.",
 };
 
 const OWD_HE: LanderCopy = {
-  seoTitle: "קורס PADI Open Water בקוטאו – הסמכה לכל החיים ב-11,000 THB | סיאם סקובה",
+  seoTitle: "קורס PADI Open Water בקוטאו – הסמכה לכל החיים ב-12,000 THB | סיאם סקובה",
   seoDescription:
     "תוסמכו ל-PADI ב-2.5 ימים בקוטאו. קבוצות קטנות (מקס׳ 4), תיאוריה + בריכה + ארבע צלילות בים, 2 לילות לינה כלולים. הסמכה לכל החיים.",
   heroBadge: "PADI Open Water Diver",
-  heroH1: "הסמכת PADI בקוטאו — 2.5 ימים, 11,000 THB, לכל החיים",
+  heroH1: "הסמכת PADI בקוטאו — 2.5 ימים, 12,000 THB, לכל החיים",
   heroSubhead:
     "לימוד עיוני אונליין + שיעור במועדון, תרגול בבריכה, ואז ארבע צלילות אמיתיות בים — הכל ב-2.5 ימים. יוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
   ctaPrimary: "שיחה ב-WhatsApp",
@@ -552,7 +552,7 @@ const OWD_HE: LanderCopy = {
   ],
   pricingHeadline: "מה כלול",
   pricing: {
-    price: "11,000 THB",
+    price: "12,000 THB",
     perWhat: "לאדם, הכל כלול",
     includes: [
       "לימוד עיוני אונליין + שיעור כיתה במועדון",
@@ -611,7 +611,7 @@ const OWD_HE: LanderCopy = {
       a: "כן, ובהנחה משמעותית אם מזמינים יחד. שאלו ב-WhatsApp.",
     },
   ],
-  closingCtaHeadline: "הסמכת PADI. 2.5 ימים. 11,000 THB.",
+  closingCtaHeadline: "הסמכת PADI. 2.5 ימים. 12,000 THB.",
   closingCtaSubhead: "2 לילות לינה כלולים. WhatsApp עם התאריכים — פותחים קורסים כל יום.",
 };
 
@@ -979,7 +979,7 @@ export function landerHreflangAlternates(offer: Offer): Partial<Record<Lang, str
 // detailed in copy). Schema.org Offer expects a single number per Offer.
 const PRICES: Record<Offer, { price: string; currency: string; duration: string }> = {
   dsd: { price: "2600", currency: "THB", duration: "P1D" },
-  owd: { price: "11000", currency: "THB", duration: "P2DT12H" },
+  owd: { price: "12000", currency: "THB", duration: "P2DT12H" },
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
 };
 

@@ -13,19 +13,19 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
       "Try scuba diving in Koh Tao with no experience needed. One-day intro with PADI instructor: pool training plus 1-2 ocean dives in calm tropical water. ฿2,600.",
   },
   "open-water": {
-    title: "PADI Open Water Course Koh Tao – 4 Days, ฿11,000 | Siam Scuba",
+    title: "PADI Open Water Course Koh Tao – ฿12,000 Lifetime Cert | Siam Scuba",
     description:
-      "Get your PADI Open Water Diver certification in Koh Tao. 3-4 day course, max 4 students per instructor, two custom dive boats, lifetime certification. ฿11,000.",
+      "Get your PADI Open Water Diver certification in Koh Tao. Small groups, two custom dive boats, lifetime certification. ฿12,000.",
   },
   "advanced-open-water": {
     title: "PADI Advanced Open Water Course Koh Tao – 2 Days | Siam Scuba",
     description:
-      "Advance to 30m depth with the PADI Advanced Open Water course in Koh Tao. 2 days, 5 adventure dives, deep diving and navigation. ฿10,000 with Siam Scuba.",
+      "Advance to 30m depth with the PADI Advanced Open Water course in Koh Tao. 2 days, 5 adventure dives, deep diving and navigation. ฿11,000 with Siam Scuba.",
   },
   "rescue-diver": {
     title: "PADI Rescue Diver Course Koh Tao – 4 Days | Siam Scuba",
     description:
-      "Build emergency response and rescue skills in Koh Tao with the PADI Rescue Diver course. 3-4 days of scenarios, stress management, and rescue techniques. ฿12,000.",
+      "Build emergency response and rescue skills in Koh Tao with the PADI Rescue Diver course. 3-4 days of scenarios, stress management, and rescue techniques. ฿11,000.",
   },
   "divemaster": {
     title: "PADI Divemaster Course Koh Tao – Pro Internship | Siam Scuba",
@@ -75,7 +75,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "efr": {
     title: "Emergency First Response (EFR) Course Koh Tao | Siam Scuba",
     description:
-      "International CPR and first aid certification in Koh Tao. EFR Primary and Secondary Care – essential for Rescue Diver, Divemaster, and life skills. ฿4,500.",
+      "International CPR and first aid certification in Koh Tao. EFR Primary and Secondary Care – essential for Rescue Diver, Divemaster, and life skills. ฿5,000.",
   },
   "uw-photography": {
     title: "Underwater Photography Course Koh Tao – 5 Days | Siam Scuba",

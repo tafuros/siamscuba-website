@@ -64,7 +64,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "מה כולל הקורס ומה המחיר?",
         paragraphs: [
-          "קורס Open Water Diver ב-Siam Scuba עולה 11,000 בת (כ-1,100 שקל) וכולל: כל הציוד (מסכה, כנפיים, רגולטור, חליפה), ספרי לימוד PADI, 4 צלילות בים הפתוח, 2 צלילות בבריכה, מדריך אישי, כרטיס הסמכה בינלאומי, ומימון מלא לסירות הצלילה שלנו.",
+          "קורס Open Water Diver ב-Siam Scuba עולה 12,000 בת (כ-1,200 שקל) וכולל: כל הציוד (מסכה, כנפיים, רגולטור, חליפה), ספרי לימוד PADI, 4 צלילות בים הפתוח, 2 צלילות בבריכה, מדריך אישי, כרטיס הסמכה בינלאומי, ומימון מלא לסירות הצלילה שלנו.",
           "אין הפתעות במחיר — מה שרואים זה מה שמשלמים. ניתן לרכוש את חוברות הלימוד של PADI אונליין מראש (eLearning) ולחסוך זמן יקר בקוטאו.",
         ],
       },
@@ -387,7 +387,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Why Koh Tao is the cheapest place in the world to learn to dive",
         paragraphs: [
           "Koh Tao certifies more PADI Open Water divers each year than anywhere else on the planet. The volume keeps prices low - but more importantly, the competition keeps them honest. A small Thai island packed with 50+ dive shops is the closest thing scuba has to a free market, and that's good news for your wallet.",
-          "For comparison: a PADI Open Water course costs USD 600-900 in the Caribbean, AUD 700+ in Australia, and EUR 450-600 in Egypt. In Koh Tao the same internationally recognised certification - same PADI standards, same training, same lifetime card - costs ฿11,000 (about USD 320 / EUR 295 at current rates).",
+          "For comparison: a PADI Open Water course costs USD 600-900 in the Caribbean, AUD 700+ in Australia, and EUR 450-600 in Egypt. In Koh Tao the same internationally recognised certification - same PADI standards, same training, same lifetime card - costs ฿12,000 (about USD 340 / EUR 310 at current rates).",
           "Cheap doesn't mean low-quality here. The training agencies (PADI, SSI) audit the centres regularly, the dive sites are 20-40 minutes by boat from shore, and the warm water (28-30°C year-round) means you train without a thick wetsuit slowing you down. You're paying less because the shops are competing, not because corners are cut.",
         ],
       },
@@ -398,9 +398,9 @@ const divingBlogPosts: BlogPost[] = [
           "Discover Scuba Diving: ฿2,600 - One day, no certification. Pool training plus 1-2 ocean dives in calm water. Best if you're not sure you'll like diving.",
           "PADI Bubble Maker (kids 8+): ฿3,800 - Pool-based scuba intro for children, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
-          "PADI Open Water Diver: ฿11,000 - 3 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
-          "PADI Advanced Open Water: ฿10,000 - 2 days, 5 dives including deep and navigation. Takes you to 30m.",
-          "PADI Rescue Diver + EFR: ฿16,500 (฿12,000 + ฿4,500) - 4 days. The course most people say changes how they dive.",
+          "PADI Open Water Diver: ฿12,000 - 3 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
+          "PADI Advanced Open Water: ฿11,000 - 2 days, 5 dives including deep and navigation. Takes you to 30m.",
+          "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,500 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver / Deep Diver / Sidemount / DPV: each runs ฿7,000-฿9,500 depending on dive count.",
           "PADI Divemaster: ฿38,500 - 4-8 weeks, includes a free internship period. Your first professional certification.",
@@ -435,8 +435,8 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Total budget by goal: from try-dive to professional",
         paragraphs: [
           "Day tripper / try diving: ฿2,600 for the Discover Scuba dive + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
-          "Hobby diver in 4 days: ฿11,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿17,000-฿20,000 all-in. That's USD 480-570.",
-          "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿11,000 + ฿10,000 + ฿2,500 = ฿23,500 for courses. Plus 7 days accommodation/food: ฿28,000-฿35,000 total. Around USD 800-1,000.",
+          "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
+          "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿3,000 = ฿26,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
           "Pro pathway: ฿38,500 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿80,000-฿120,000 over 6-8 weeks. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",
           "Total instructor pipeline (Open Water → Instructor): roughly ฿120,000-฿180,000 in course fees over 3-4 months. Possibly the cheapest route to a globally portable scuba instructor career on the planet.",
         ],
@@ -503,7 +503,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Prerequisites and cost",
         paragraphs: [
           "You need a PADI Open Water certification (or recognized equivalent from another agency - SSI, NAUI, BSAC, etc. all qualify). No minimum logged dives required by PADI standards, though we recommend you have 5-10 dives under your belt for comfort.",
-          "AOW at Siam Scuba is 10,000 THB. That includes all gear rental, 5 boat dives, dive computer rental, certification card processing, and tax. No surcharges for dive site access (Sail Rock has a small marine fee that's already included).",
+          "AOW at Siam Scuba is 11,000 THB. That includes all gear rental, 5 boat dives, dive computer rental, certification card processing, and tax. No surcharges for dive site access (Sail Rock has a small marine fee that's already included).",
           "2 days standard. Min age 12 for Junior AOW, 15 for full AOW (Junior gets a depth-restricted card that converts to full AOW automatically when they turn 15).",
         ],
       },
@@ -513,7 +513,7 @@ const divingBlogPosts: BlogPost[] = [
           "For most people, yes. Three reasons.",
           "First, momentum. You've just spent 3 days getting comfortable underwater. Your buoyancy is starting to click, your gear feels normal, you're not fighting your mask anymore. Stopping for months and coming back later means rebuilding that comfort - usually you'll need a refresher dive at least.",
           "Second, depth confidence. The first time you go past 18m is psychologically different than the first time at 12m. Doing it under instructor supervision while AOW skills are fresh is the safer way to make that jump.",
-          "Third, it unlocks the actually-good dive sites. Doing OW + AOW back-to-back over 5-6 days means you spend the second half of your trip diving the legendary sites instead of the training reefs. The cost difference (10,000 THB) is small relative to the value of doing AOW now vs. flying home and coming back later.",
+          "Third, it unlocks the actually-good dive sites. Doing OW + AOW back-to-back over 5-6 days means you spend the second half of your trip diving the legendary sites instead of the training reefs. The cost difference (11,000 THB) is small relative to the value of doing AOW now vs. flying home and coming back later.",
           "When NOT to do AOW immediately: if you didn't enjoy Open Water and aren't sure diving is for you, take a break. Forcing AOW right after a rough OW course is how people end up with bad memories and never dive again.",
         ],
       },
@@ -1093,7 +1093,7 @@ const divingBlogPosts: BlogPost[] = [
     slug: "curso-buceo-koh-tao",
     title: "Curso de Buceo Open Water en Koh Tao: La Guía Completa en Español",
     category: "Diving",
-    excerpt: "Todo sobre el curso PADI Open Water en Koh Tao en español: qué aprenderás, las 4 inmersiones en mar abierto, el precio (11.000 THB), y cómo reservar sin depósito.",
+    excerpt: "Todo sobre el curso PADI Open Water en Koh Tao en español: qué aprenderás, las 4 inmersiones en mar abierto, el precio (12.000 THB), y cómo reservar sin depósito.",
     coverImage: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1200&q=80",
     date: "2026-05-09",
     sections: [
@@ -1102,7 +1102,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "El PADI Open Water Diver es la certificación de buceo más extendida del mundo. Más de 29 millones de buceadores certificados la tienen. Es vitalicia (no caduca), reconocida en unos 135 países, y te permite bucear hasta los 18 metros de profundidad acompañado de un compañero, en cualquier parte del mundo.",
           "Koh Tao, una pequeña isla en el golfo de Tailandia, es el lugar donde más certificaciones PADI Open Water se emiten cada año en todo el planeta. Esto se debe a una combinación de aguas cálidas (28-30°C todo el año), buena visibilidad, una gran cantidad de centros de buceo que compiten entre sí, y precios que son una fracción de lo que cuesta certificarse en el Caribe o Australia.",
-          "En Siam Scuba, el curso cuesta 11.000 THB (unos 290 EUR / 320 USD) y dura 3 días. Incluye todo el equipo, las inmersiones, los manuales, y la tarjeta de certificación oficial. No hay sorpresas en el precio.",
+          "En Siam Scuba, el curso cuesta 12.000 THB (unos 310 EUR / 340 USD) y dura 3 días. Incluye todo el equipo, las inmersiones, los manuales, y la tarjeta de certificación oficial. No hay sorpresas en el precio.",
         ],
       },
       {
@@ -1144,12 +1144,12 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "El presupuesto total para los 4-5 días en Koh Tao",
         paragraphs: [
-          "Curso PADI Open Water: 11.000 THB.",
+          "Curso PADI Open Water: 12.000 THB.",
           "Alojamiento: 4 noches. Hostel en habitación compartida 250-450 THB/noche. Habitación privada con ventilador 700-1.200 THB/noche. Habitación con aire acondicionado 1.200-2.500 THB/noche. Calcula 3.500-8.000 THB total para alojamiento.",
           "Comida: comida tailandesa de calle 70-120 THB por plato. Restaurante para extranjeros 250-450 THB. Calcula 800-1.500 THB por día para tres comidas.",
           "Transporte interno: scooter de alquiler 200-300 THB/día (incluido combustible). Songthaew (taxi compartido) 100-200 THB por trayecto.",
           "Ferry hasta Koh Tao desde Bangkok: 800-1.300 THB por trayecto. Vuelo a Bangkok desde Madrid o Barcelona: 700-1.200 EUR según fechas y antelación.",
-          "Total estimado para curso + 4-5 noches: 17.000-25.000 THB en isla (450-680 EUR), más vuelo desde España.",
+          "Total estimado para curso + 4-5 noches: 18.000-26.000 THB en isla (470-680 EUR), más vuelo desde España.",
         ],
       },
       {
@@ -1216,7 +1216,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Coste total: el curso y la vida en la isla",
         paragraphs: [
           "Curso de Divemaster: 38.500 THB en Siam Scuba. Incluye toda la formación, los manuales, las inmersiones, la pasantía, y las cuotas de procesamiento de PADI.",
-          "Si necesitas Rescue Diver + EFR antes: 16.500 THB adicionales (12.000 + 4.500). En total el paquete completo desde Advanced Open Water hasta Divemaster ronda los 55.000 THB.",
+          "Si necesitas Rescue Diver + EFR antes: 16.000 THB adicionales (11.000 + 5.000). En total el paquete completo desde Advanced Open Water hasta Divemaster ronda los 54.500 THB.",
           "Alojamiento por 6-8 semanas: estudios mensuales con ventilador 8.000-15.000 THB/mes; habitaciones con aire acondicionado 15.000-25.000 THB/mes. Calcula 30.000-50.000 THB en total para 6 semanas.",
           "Comida: 8.000-15.000 THB al mes según estilo de vida (comida tailandesa de calle vs. restaurantes para extranjeros).",
           "Total realista para 6 semanas: 80.000-120.000 THB (2.150-3.250 EUR / 2.300-3.450 USD), curso incluido. Probablemente la ruta más barata del mundo para llegar a buceador profesional.",
