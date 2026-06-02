@@ -31,19 +31,19 @@ const PREFILLED_MESSAGES: Record<WhatsAppTopic, Record<Lang, string>> = {
     he: "היי סיאם סקובה! אני מעוניין/ת בחוויית Discover Scuba Diving (מ-2,600 THB / 3,600 THB ל-2 צלילות). תוכלו לשתף זמינות?",
   },
   owd: {
-    en: "Hi Siam Scuba! I'd like to book the PADI Open Water course (11,000 THB). What dates are available?",
-    es: "¡Hola Siam Scuba! Quisiera reservar el curso PADI Open Water (11,000 THB). ¿Qué fechas tienen disponibles?",
-    he: "היי סיאם סקובה! אני רוצה להזמין קורס PADI Open Water (11,000 THB). אילו תאריכים פנויים?",
+    en: "Hi Siam Scuba! I'd like to book the PADI Open Water course (12,000 THB). What dates are available?",
+    es: "¡Hola Siam Scuba! Quisiera reservar el curso PADI Open Water (12,000 THB). ¿Qué fechas tienen disponibles?",
+    he: "היי סיאם סקובה! אני רוצה להזמין קורס PADI Open Water (12,000 THB). אילו תאריכים פנויים?",
   },
   aow: {
-    en: "Hi Siam Scuba! I'd like to know more about the PADI Advanced Open Water course (10,000 THB).",
-    es: "¡Hola Siam Scuba! Me gustaría saber más sobre el curso PADI Advanced Open Water (10,000 THB).",
-    he: "היי סיאם סקובה! אני רוצה לקבל מידע על קורס PADI Advanced Open Water (10,000 THB).",
+    en: "Hi Siam Scuba! I'd like to know more about the PADI Advanced Open Water course (11,000 THB).",
+    es: "¡Hola Siam Scuba! Me gustaría saber más sobre el curso PADI Advanced Open Water (11,000 THB).",
+    he: "היי סיאם סקובה! אני רוצה לקבל מידע על קורס PADI Advanced Open Water (11,000 THB).",
   },
   rescue: {
-    en: "Hi Siam Scuba! I'm interested in the PADI Rescue Diver course (10,000 THB). What are the prerequisites?",
-    es: "¡Hola Siam Scuba! Me interesa el curso PADI Rescue Diver (10,000 THB). ¿Cuáles son los requisitos?",
-    he: "היי סיאם סקובה! אני מעוניין/ת בקורס PADI Rescue Diver (10,000 THB). מה תנאי הקבלה?",
+    en: "Hi Siam Scuba! I'm interested in the PADI Rescue Diver course (11,000 THB). What are the prerequisites?",
+    es: "¡Hola Siam Scuba! Me interesa el curso PADI Rescue Diver (11,000 THB). ¿Cuáles son los requisitos?",
+    he: "היי סיאם סקובה! אני מעוניין/ת בקורס PADI Rescue Diver (11,000 THB). מה תנאי הקבלה?",
   },
   dm: {
     en: "Hi Siam Scuba! I'd like to know more about the PADI Divemaster internship (38,500 THB).",

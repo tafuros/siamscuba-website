@@ -152,15 +152,15 @@ const courseDetails: Record<string, CourseDetail> = {
       "Good vibes & a sense of adventure 👍",
     ],
     payment: [
-      "Course price: 11,000 THB",
+      "Course price: 12,000 THB",
       "Booking deposit: 3,000 THB (payable via Bit)",
-      "Balance on dive day: 8,000 THB (cash or Thai bank transfer)",
+      "Balance on dive day: 9,000 THB (cash or Thai bank transfer)",
       "Deposit is non-refundable ❌",
       "Reschedule up to 12 hours before",
       "If you stop mid-course — partial refund available",
       "Complete the course anywhere in the world within 12 months",
     ],
-    price: "11,000 THB",
+    price: "12,000 THB",
     nextStep: "Continue to Advanced Open Water — 1.5 days, 5 more dives! 🌊",
   },
   "Advanced Open Water": {
@@ -205,7 +205,7 @@ const courseDetails: Record<string, CourseDetail> = {
     perks: [
       "Pre-dive briefing before every dive — your instructor explains exactly what to expect.",
     ],
-    price: "10,000 THB",
+    price: "11,000 THB",
     prerequisites: ["Open Water certification (or equivalent)"],
     specialOffer: "Continue directly to Rescue Diver and get 5% off! 🎯",
     nextStep: "Continue to Rescue Diver course — become a true underwater leader! 🌊",
@@ -226,7 +226,7 @@ const courseDetails: Record<string, CourseDetail> = {
       "Advanced Open Water certification (or equivalent).",
       "EFR (First Aid/CPR) certification valid within the last 12 months.",
     ],
-    price: "10,000 THB (Add EFR for 4,500 THB if needed)",
+    price: "11,000 THB (Add EFR for 5,000 THB if needed)",
   },
   "Peak Performance Buoyancy": {
     header: "Master Your Buoyancy & Become a Better Diver",
