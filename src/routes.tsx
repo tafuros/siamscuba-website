@@ -137,6 +137,11 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/landers/FunDiveHePage.tsx",
       },
       {
+        path: "accessibility",
+        lazy: lazyDefault(() => import("./pages/Accessibility")),
+        entry: "src/pages/Accessibility.tsx",
+      },
+      {
         path: ":courseSlug",
         lazy: lazyDefault(() => import("./pages/CoursePage")),
         entry: "src/pages/CoursePage.tsx",

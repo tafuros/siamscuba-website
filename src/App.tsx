@@ -4,9 +4,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, useLocation } from "react-router-dom";
-import { LanguageProvider } from "@/i18n/LanguageContext";
+import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
+import AccessibilityMenu from "@/components/AccessibilityMenu";
 import { trackPageView } from "@/utils/tracking";
 import { captureUtmFromUrl } from "@/utils/utm";
 
@@ -25,6 +26,15 @@ const RouteTracker = () => {
   return null;
 };
 
+const SkipLink = () => {
+  const { language } = useLanguage();
+  return (
+    <a href="#main-content" className="skip-link">
+      {language === "he" ? "דלג לתוכן הראשי" : "Skip to main content"}
+    </a>
+  );
+};
+
 const PageFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-ocean-deep">
     <div className="w-8 h-8 border-2 border-ocean-light/30 border-t-ocean-light rounded-full animate-spin" />
@@ -35,14 +45,18 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LanguageProvider>
+        <SkipLink />
         <Toaster />
         <Sonner />
         <RouteTracker />
         <CookieConsent />
         <SpeedInsights />
-        <Suspense fallback={<PageFallback />}>
-          <Outlet />
-        </Suspense>
+        <main id="main-content">
+          <Suspense fallback={<PageFallback />}>
+            <Outlet />
+          </Suspense>
+        </main>
+        <AccessibilityMenu />
       </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>

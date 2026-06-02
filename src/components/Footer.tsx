@@ -65,6 +65,7 @@ const Footer = () => {
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link to="/accessibility" className="hover:text-primary transition-colors">{t("footer_accessibility")}</Link>
             <Link to="/data-deletion" className="hover:text-primary transition-colors">Data Deletion</Link>
           </nav>
         </div>
