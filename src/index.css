@@ -128,6 +128,111 @@
     display: none;
   }
 
+  /* ── Accessibility (IL תקנות נגישות / IS 5568 / WCAG 2.0 AA) ─────────────
+     User-adjustable modes driven by AccessibilityMenu.tsx via data-attrs on
+     <html>. Defaults (no attr / "off"/"0") leave the site exactly as designed. */
+
+  /* Skip-link: visually hidden until focused (2.4.1 bypass blocks). */
+  .skip-link {
+    position: fixed;
+    inset-inline-start: 1rem;
+    top: -100px;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+    transition: top 0.15s ease-out;
+  }
+  .skip-link:focus {
+    top: calc(0.5rem + env(safe-area-inset-top));
+  }
+
+  /* Text resize (1.4.4) — scales all rem-based sizing from the root. */
+  html[data-a11y-font="1"] { font-size: 112.5%; }
+  html[data-a11y-font="2"] { font-size: 125%; }
+  html[data-a11y-font="3"] { font-size: 140%; }
+
+  /* Stop animations (2.3.3 / user request) — mirrors prefers-reduced-motion. */
+  html[data-a11y-motion="off"] *,
+  html[data-a11y-motion="off"] *::before,
+  html[data-a11y-motion="off"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Emphasise links (1.4.1 — don't rely on colour alone): high-contrast yellow
+     chip + underline + outline so links stand out from the site's buttons. */
+  html[data-a11y-links="on"] a,
+  html[data-a11y-links="on"] [role="link"] {
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 2px;
+    color: #0f131c !important;
+    background-color: #ffe815 !important;
+    outline: 2px solid #0f131c !important;
+    outline-offset: 1px;
+    border-radius: 2px;
+  }
+
+  /* High-contrast mode (WCAG 2.0 §1.4.3 AA → beyond). The whole theme resolves
+     to hsl(var(--token)); remapping the HSL channel triplets here recolours the
+     entire site: light surfaces → white, text → near-black, primary kept as a
+     very dark ocean blue so identity survives at high ratio. Scoped to the attr,
+     so the default design is untouched when off. */
+  html[data-a11y-contrast="on"] {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 5%;
+    --primary: 210 100% 16%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 222 47% 5%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 222 30% 18%;
+    --accent: 0 72% 30%;
+    --accent-foreground: 0 0% 100%;
+    --border: 0 0% 0%;
+    --input: 0 0% 0%;
+    --ring: 210 100% 16%;
+    --ocean-deep: 210 100% 12%;
+    --ocean-mid: 210 100% 18%;
+    --ocean-light: 210 60% 30%;
+    --ocean-surface: 0 0% 96%;
+    --coral: 0 72% 30%;
+    --sand: 0 0% 96%;
+  }
+  html[data-a11y-contrast="on"] body {
+    background-image: none;
+    background-color: #ffffff;
+    color: #0f131c;
+  }
+  /* Drop translucency/blur (they sink contrast). */
+  html[data-a11y-contrast="on"] .glass {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: #000000 !important;
+  }
+  /* Make faint borders visible. */
+  html[data-a11y-contrast="on"] [class*="border"] {
+    border-color: #000000 !important;
+  }
+  html[data-a11y-contrast="on"] a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  html[data-a11y-contrast="on"] :focus-visible {
+    outline: 3px solid #0f131c !important;
+    outline-offset: 2px;
+  }
+
   .hero-bubbles .bubble {
     position: absolute;
     bottom: -30px;
