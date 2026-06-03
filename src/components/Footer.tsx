@@ -28,7 +28,7 @@ const Footer = () => {
             <h2 className="font-display text-sm font-semibold text-background mb-3">{t("footer_contact")}</h2>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> Sairee Beach, Koh Tao</li>
-              <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +972 52 864 1581</li>
+              <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +66 82 506 8898</li>
               <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> info@siamscuba.com</li>
             </ul>
           </div>
