@@ -17,7 +17,6 @@ import BookingCTA from "@/components/BookingCTA";
 import LocationSection from "@/components/LocationSection";
 import Footer from "@/components/Footer";
 import FloatingInstagram from "@/components/FloatingInstagram";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import FloatingBookNow from "@/components/FloatingBookNow";
 import ScrollHint from "@/components/ScrollHint";
 
@@ -72,7 +71,6 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
       <LocationSection />
       <Footer />
       <FloatingInstagram />
-      <FloatingWhatsApp />
       <FloatingBookNow />
     </div>
   );
