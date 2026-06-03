@@ -8,6 +8,7 @@ import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
+import NemoChat from "@/components/NemoChat";
 import { trackPageView } from "@/utils/tracking";
 import { captureUtmFromUrl } from "@/utils/utm";
 
@@ -57,6 +58,7 @@ const App = () => (
           </Suspense>
         </main>
         <AccessibilityMenu />
+        <NemoChat />
       </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
