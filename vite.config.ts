@@ -20,7 +20,7 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
           const chunks: Buffer[] = [];
           for await (const c of req) chunks.push(c as Buffer);
           const body = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
-          const { generateReply } = await server.ssrLoadModule("/api/_core.ts");
+          const { generateReply } = await server.ssrLoadModule("/api/chat.ts");
           const reply = await generateReply(
             body.messages ?? [],
             body.lang ?? "en",
