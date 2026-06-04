@@ -33,3 +33,4 @@ dist-ssr
 .secrets/
 playwright-report/
 .playwright-mcp/
+.vercel

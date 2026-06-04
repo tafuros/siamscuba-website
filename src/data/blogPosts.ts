@@ -445,7 +445,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Why we publish exact prices (and most don't)",
         paragraphs: [
           "Most Koh Tao dive shops keep their prices off their website on purpose - they want you to walk in, get the sales pitch, and feel committed before you hear a number. We do the opposite. Every course we run has a fixed, publicly listed price with no hidden fees.",
-          "If you book with us, you pay no deposit - you arrive in Koh Tao first, meet the team, see the boats, see the gear, and only then commit. If something feels off when you visit, you owe us nothing. That's how confident we are that the price-quality combination is right.",
+          "When you book with us, a deposit holds your spot - then you arrive in Koh Tao, meet the team, see the boats and the gear, and settle the balance in person before your course starts. We want you to see exactly what you're getting first; that's how confident we are the price-quality combination is right.",
           "Compare a few shops if you want - you should. Just make sure you're comparing the same thing: PADI standards, instructor ratio, gear quality, what's actually included.",
         ],
       },
@@ -453,7 +453,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Ready to book? Here's how",
         paragraphs: [
           "Send us a WhatsApp message with your dates and which course you're interested in. We'll confirm availability within an hour during daytime hours (Thailand time).",
-          "No deposit required - you only pay once you arrive on Koh Tao and have met our instructors. We're at Mae Haad pier, a 5-minute walk from the ferry dock. Most students drop their bags, come over, sign up, and start the course the next morning.",
+          "A deposit secures your spot, and you settle the balance once you arrive on Koh Tao and have met our instructors. We're at Mae Haad pier, a 5-minute walk from the ferry dock. Most students drop their bags, come over, sign up, and start the course the next morning.",
           "If you're still narrowing down which course is right for you, two reads worth your time: our PADI vs SSI comparison and our walkthrough of what to expect on the Open Water course. Both linked below.",
         ],
       },
@@ -529,7 +529,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "Booking and next steps",
         paragraphs: [
-          "Same booking flow as Open Water. WhatsApp us with your dates, we confirm within an hour during daytime. No deposit required - you pay once you arrive on Koh Tao and meet the team.",
+          "Same booking flow as Open Water. WhatsApp us with your dates, we confirm within an hour during daytime. A deposit secures your spot, and you settle the balance once you arrive on Koh Tao and meet the team.",
           "If you're considering OW + AOW together, mention it in the message. We can schedule them back-to-back so you finish in 5-6 days rather than spreading across two trips.",
           "Where AOW leads: Rescue Diver is the natural next step (most divers say it changes how they dive). Then Divemaster if you want to go pro. We have the full pathway in-house, same shop, same instructors.",
         ],
@@ -708,7 +708,7 @@ const divingBlogPosts: BlogPost[] = [
     slug: "padi-open-water-koh-tao-complete-guide",
     title: "PADI Open Water Course on Koh Tao: The Complete 2026 Guide",
     category: "Diving",
-    excerpt: "Comprehensive guide to the PADI Open Water Diver course on Koh Tao - what you actually learn, the 4 ocean dives, group size, gear, health requirements, and how to book without a deposit.",
+    excerpt: "Comprehensive guide to the PADI Open Water Diver course on Koh Tao - what you actually learn, the 4 ocean dives, group size, gear, health requirements, and how to book your spot.",
     coverImage: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1200&q=80",
     date: "2026-05-09",
     sections: [
@@ -784,7 +784,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Booking next steps",
         paragraphs: [
           "WhatsApp us with your dates, the names in your group (singles, couples, friends - tell us so we can plan grouping), and any concerns. We confirm within an hour during daytime hours (Thailand time).",
-          "No deposit required. You arrive, you meet the team, you see the boats and the gear, and only then you commit. If something feels off, you owe us nothing.",
+          "A deposit holds your spot. You arrive, meet the team, see the boats and the gear, and settle the balance in person before your course begins - so you know exactly what you're signing up for.",
           "Pre-purchase the PADI eLearning if you want to save a day - tell us when you book and we'll send you the activation link.",
           "If you're flying in the day you start: we recommend not. Flying within 24 hours of diving is a no-go (decompression risk). Most students arrive on Koh Tao a day before the course starts.",
         ],
