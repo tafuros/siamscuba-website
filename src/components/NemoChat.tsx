@@ -27,10 +27,10 @@ const COPY: Record<string, Copy> = {
     wa: "Talk to a human on WhatsApp",
     error: "Sorry, I had a hiccup 🫧 Please try again or message us on WhatsApp.",
     suggestions: [
-      { emoji: "🎓", label: "Which course is right for me?" },
-      { emoji: "💰", label: "How much does it cost?" },
-      { emoji: "🐢", label: "What will I see underwater?" },
-      { emoji: "📅", label: "I want to book a dive" },
+      { emoji: "🐠", label: "Can I dive with no experience?" },
+      { emoji: "🤿", label: "I'm certified - I want to dive" },
+      { emoji: "🌊", label: "Which dive sites do you go to?" },
+      { emoji: "🔄", label: "I haven't dived in a while" },
     ],
   },
   he: {
@@ -41,10 +41,10 @@ const COPY: Record<string, Copy> = {
     wa: "לדבר עם נציג בוואטסאפ",
     error: "סליחה, הייתה תקלה קטנה 🫧 נסו שוב או כתבו לנו בוואטסאפ.",
     suggestions: [
-      { emoji: "🎓", label: "איזה קורס מתאים לי?" },
-      { emoji: "💰", label: "כמה זה עולה?" },
-      { emoji: "🐢", label: "מה אראה מתחת למים?" },
-      { emoji: "📅", label: "אני רוצה להזמין צלילה" },
+      { emoji: "🐠", label: "אפשר לצלול בלי ניסיון?" },
+      { emoji: "🤿", label: "יש לי רישיון ואני רוצה לצלול" },
+      { emoji: "🌊", label: "באיזה אתרים יוצאים לצלול?" },
+      { emoji: "🔄", label: "לא צללתי הרבה זמן" },
     ],
   },
   es: {
@@ -55,26 +55,80 @@ const COPY: Record<string, Copy> = {
     wa: "Habla con una persona por WhatsApp",
     error: "Lo siento, tuve un problemilla 🫧 Inténtalo de nuevo o escríbenos por WhatsApp.",
     suggestions: [
-      { emoji: "🎓", label: "¿Qué curso es para mí?" },
-      { emoji: "💰", label: "¿Cuánto cuesta?" },
-      { emoji: "🐢", label: "¿Qué veré bajo el agua?" },
-      { emoji: "📅", label: "Quiero reservar una inmersión" },
+      { emoji: "🐠", label: "¿Puedo bucear sin experiencia?" },
+      { emoji: "🤿", label: "Tengo licencia y quiero bucear" },
+      { emoji: "🌊", label: "¿A qué sitios de buceo vais?" },
+      { emoji: "🔄", label: "Hace tiempo que no buceo" },
     ],
   },
 };
 
-function NemoAvatar({ className }: { className?: string }) {
+// A few bubbles that rise inside the avatar tank (static config - no randomness).
+const AVATAR_BUBBLES = [
+  { left: "24%", size: 5, delay: 0 },
+  { left: "50%", size: 7, delay: 0.9 },
+  { left: "70%", size: 4, delay: 1.7 },
+  { left: "38%", size: 6, delay: 2.5 },
+  { left: "60%", size: 3, delay: 1.3 },
+];
+
+// Nemo in an ocean-blue "tank": the deep-blue gradient makes the yellow fish
+// pop (complementary contrast), bubbles rise behind him, and he gently floats.
+// `active` (true while awaiting a reply) makes him swim faster + bubbles speed up.
+function NemoAvatar({
+  size,
+  active = false,
+  className = "",
+}: {
+  size: number;
+  active?: boolean;
+  className?: string;
+}) {
   const [broken, setBroken] = useState(false);
-  if (broken) return <span className={className} aria-hidden>🐠</span>;
+  const fish = size * 0.82;
   return (
-    <img
-      src="/nemo/nemo-avatar.png"
-      alt=""
-      aria-hidden
-      onError={() => setBroken(true)}
-      className={className}
-      style={{ objectFit: "contain" }}
-    />
+    <div
+      className={`relative shrink-0 overflow-hidden rounded-full border-[3px] border-white/60 shadow-lg ${className}`}
+      style={{
+        width: size,
+        height: size,
+        background:
+          "radial-gradient(circle at 50% 28%, hsl(192 90% 60%), hsl(204 84% 42%) 55%, hsl(210 82% 24%))",
+      }}
+    >
+      {AVATAR_BUBBLES.map((b, i) => (
+        <motion.span
+          key={i}
+          className="absolute rounded-full bg-white/50"
+          style={{ width: b.size, height: b.size, left: b.left, bottom: -6 }}
+          animate={{ y: [0, -(size + 12)], opacity: [0, 0.7, 0] }}
+          transition={{ duration: active ? 1.7 : 3.4, repeat: Infinity, delay: b.delay, ease: "easeOut" }}
+        />
+      ))}
+      <span
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(circle at 50% 20%, rgba(255,255,255,0.35), transparent 55%)" }}
+      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        {broken ? (
+          <span style={{ fontSize: size * 0.5 }} aria-hidden>🐠</span>
+        ) : (
+          <motion.img
+            src="/nemo/nemo-avatar.png"
+            alt=""
+            aria-hidden
+            onError={() => setBroken(true)}
+            style={{ width: fish, height: fish, objectFit: "contain" }}
+            animate={
+              active
+                ? { y: [0, -size * 0.09, 0], rotate: [0, -7, 5, 0] }
+                : { y: [0, -size * 0.05, 0], rotate: [0, -3, 3, 0] }
+            }
+            transition={{ duration: active ? 1.0 : 3.6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -138,9 +192,7 @@ const NemoChat = () => {
             aria-label={copy.pill}
             className="fixed bottom-4 right-4 z-40 flex items-center gap-2 rounded-full border border-border bg-white py-2 pl-2 pr-4 shadow-lg transition-shadow hover:shadow-xl"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-coral to-[hsl(22_90%_70%)] text-lg">
-              <NemoAvatar className="h-7 w-7 rounded-full" />
-            </span>
+            <NemoAvatar size={40} />
             <span className="text-sm font-bold text-ocean-deep">{copy.pill}</span>
           </motion.button>
         )}
@@ -165,9 +217,7 @@ const NemoChat = () => {
               >
                 <X className="h-5 w-5" />
               </button>
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border-[3px] border-white/55 bg-gradient-to-br from-coral to-[hsl(22_90%_72%)] text-3xl shadow-lg">
-                <NemoAvatar className="h-11 w-11 rounded-full" />
-              </span>
+              <NemoAvatar size={84} active={loading} className="mx-auto" />
               <div className="mt-2 text-base font-extrabold">{copy.title}</div>
               <div className="text-xs text-white/90">{copy.sub}</div>
             </div>
@@ -192,7 +242,7 @@ const NemoChat = () => {
               {messages.map((m, i) => (
                 <div
                   key={i}
-                  className={`max-w-[85%] rounded-2xl px-3 py-2 text-[13px] leading-relaxed ${
+                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-3 py-2 text-[13px] leading-relaxed ${
                     m.role === "user"
                       ? "ms-auto rounded-br-sm bg-ocean-mid text-white"
                       : "me-auto rounded-bl-sm border border-border bg-white text-foreground shadow-sm"
