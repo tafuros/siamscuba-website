@@ -1,6 +1,9 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/chat.ts": { "includeFiles": "api/_kb.json" }
+  },
   "redirects": [
     { "source": "/contact-us", "destination": "/", "permanent": true },
     { "source": "/zero-to-hero-dive-master-internship", "destination": "/divemaster", "permanent": true }
