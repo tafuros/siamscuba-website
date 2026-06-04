@@ -421,7 +421,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_for_course_subtitle: "Long-form articles to help you prepare for this course.",
 
     cta_title: "Ready to Dive In?",
-    cta_subtitle: "Send us a message on WhatsApp and we'll get you booked in minutes. No deposit required — just show up and dive!",
+    cta_subtitle: "Send us a message on WhatsApp and we'll get you booked in minutes. A quick deposit holds your spot - then just show up and dive!",
     cta_button: "Chat on WhatsApp",
 
     loc_label: "Find Us",
@@ -622,7 +622,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_for_course_subtitle: "מאמרים מעמיקים שיעזרו לכם להתכונן לקורס.",
 
     cta_title: "מוכן לצלול?",
-    cta_subtitle: "שלח לנו הודעה בוואטסאפ ונסדר לך הזמנה תוך דקות. ללא פיקדון — פשוט תגיע ותצלול!",
+    cta_subtitle: "שלח לנו הודעה בוואטסאפ ונסדר לך הזמנה תוך דקות. פיקדון קטן שומר לך מקום - ואז פשוט מגיעים וצוללים!",
     cta_button: "צ'אט בוואטסאפ",
 
     loc_label: "מצא אותנו",
