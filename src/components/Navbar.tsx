@@ -64,7 +64,7 @@ const Navbar = () => {
             }}
             className="flex items-center shrink-0"
           >
-            <img src={logo} alt="Siam Scuba" className="h-16 md:h-20 lg:h-24 w-auto" />
+            <img src={logo} alt="Siam Scuba" width={227} height={256} className="h-16 md:h-20 lg:h-24 w-auto" />
           </Link>
 
           {/* Desktop: all nav items in a single row to the right */}
