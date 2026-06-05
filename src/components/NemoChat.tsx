@@ -190,7 +190,7 @@ const NemoChat = () => {
             exit={{ opacity: 0, scale: 0.8, y: 10 }}
             onClick={() => setOpen(true)}
             aria-label={copy.pill}
-            className="fixed bottom-4 right-4 z-40 flex items-center gap-2 rounded-full border border-border bg-white py-2 pl-2 pr-4 shadow-lg transition-shadow hover:shadow-xl"
+            className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border border-border bg-white py-2 pl-2 pr-4 shadow-lg transition-shadow hover:shadow-xl"
           >
             <NemoAvatar size={40} />
             <span className="text-sm font-bold text-ocean-deep">{copy.pill}</span>
@@ -206,7 +206,7 @@ const NemoChat = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 320, damping: 30 }}
-            className="fixed bottom-4 right-4 z-40 flex h-[min(560px,80vh)] w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] border border-border bg-white shadow-2xl"
+            className="fixed bottom-4 right-4 z-50 flex h-[min(560px,80vh)] w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] border border-border bg-white shadow-2xl"
           >
             {/* header */}
             <div className="relative overflow-hidden bg-gradient-to-br from-ocean-mid to-ocean-deep px-4 pb-4 pt-5 text-center text-white">
