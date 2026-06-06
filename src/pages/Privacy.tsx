@@ -18,7 +18,7 @@ const Privacy = () => {
         <div className="prose prose-sm max-w-none text-foreground/80 space-y-6">
           <p>
             Siam Scuba ("we", "us", "our") operates <strong>siamscuba.com</strong> and the WhatsApp assistant "Nemo"
-            reachable at <strong>+66 82-506-8898</strong>. This policy explains what personal data we collect, why,
+            reachable at <strong>+972 52-864-1581</strong>. This policy explains what personal data we collect, why,
             and your rights over it.
           </p>
 
@@ -27,7 +27,7 @@ const Privacy = () => {
             <p>Siam Scuba is a PADI dive centre based on Koh Tao, Thailand.</p>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Address:</strong> 9/9 Koh Tao, Amphoe Ko Pha-Ngan, Surat Thani 84360, Thailand</li>
-              <li><strong>Business phone:</strong> +66 82 506 8898</li>
+              <li><strong>Business phone:</strong> +972 52 864 1581</li>
               <li><strong>Email:</strong> info@siamscuba.com</li>
             </ul>
           </section>

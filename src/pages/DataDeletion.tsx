@@ -72,7 +72,7 @@ const DataDeletion = () => {
             <p>9/9 Koh Tao, Amphoe Ko Pha-Ngan, Surat Thani 84360, Thailand</p>
             <ul className="list-none space-y-1">
               <li><strong>Email:</strong> info@siamscuba.com</li>
-              <li><strong>Business phone:</strong> +66 82 506 8898</li>
+              <li><strong>Business phone:</strong> +972 52 864 1581</li>
             </ul>
           </section>
         </div>
