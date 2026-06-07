@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Anchor, Shield, Users, Droplets, Coffee, Ship, LifeBuoy, Wind, DoorOpen, Package } from "lucide-react";
 import boatImg from "@/assets/siam-boat.webp";
 import { useLanguage } from "@/i18n/LanguageContext";
+import AmbientReviews from "@/components/AmbientReviews";
 
 const BoatsSection = () => {
   const { t } = useLanguage();
@@ -18,7 +19,8 @@ const BoatsSection = () => {
   ];
 
   return (
-    <section id="boats" className="section-padding bg-background">
+    <section id="boats" className="section-padding bg-background relative overflow-hidden isolate">
+      <AmbientReviews startIndex={6} count={3} />
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
           <p className="text-primary font-body text-sm uppercase tracking-[0.2em] mb-2">{t("boats_label")}</p>

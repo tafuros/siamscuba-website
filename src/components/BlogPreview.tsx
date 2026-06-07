@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import BlogCard from "@/components/BlogCard";
 import { blogPosts } from "@/data/blogPosts";
 import { useLanguage } from "@/i18n/LanguageContext";
+import AmbientReviews from "@/components/AmbientReviews";
 
 interface BlogPreviewProps {
   courseSlug?: string;
@@ -22,7 +23,8 @@ const BlogPreview = ({ courseSlug }: BlogPreviewProps) => {
   const isCourseContext = courseSlug && courseFiltered.length > 0;
 
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding bg-background relative overflow-hidden isolate">
+      <AmbientReviews startIndex={5} count={4} />
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">

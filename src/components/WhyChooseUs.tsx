@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ShieldCheck, GraduationCap, MapPin, Heart } from "lucide-react";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { useLanguage } from "@/i18n/LanguageContext";
+import AmbientReviews from "@/components/AmbientReviews";
 
 const WhyChooseUs = () => {
   const { t } = useLanguage();
@@ -14,7 +15,8 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section id="about" className="section-padding bg-ocean-surface">
+    <section id="about" className="section-padding bg-ocean-surface relative overflow-hidden isolate">
+      <AmbientReviews startIndex={1} count={4} />
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
           <p className="text-primary font-body text-sm uppercase tracking-[0.2em] mb-2">{t("why_label")}</p>

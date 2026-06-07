@@ -4,12 +4,14 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DiveSiteCard from "@/components/DiveSiteCard";
 import { diveSites } from "@/data/diveSites";
+import AmbientReviews from "@/components/AmbientReviews";
 
 const DiveSitesSection = () => {
   const featured = diveSites.filter((s) => s.featured).slice(0, 3);
 
   return (
-    <section id="dive-sites" className="section-padding">
+    <section id="dive-sites" className="section-padding relative overflow-hidden isolate">
+      <AmbientReviews startIndex={4} count={3} />
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -5,6 +5,7 @@ import padi from "@/assets/padi-logo.png";
 import CourseDetailDialog from "./CourseDetailDialog";
 import CourseCarouselRow from "./CourseCarouselRow";
 import { useLanguage } from "@/i18n/LanguageContext";
+import AmbientReviews from "@/components/AmbientReviews";
 
 const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) => {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(initialCourse || null);
@@ -55,7 +56,8 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
 
   return (
     <>
-      <section id="courses" className="section-padding bg-background">
+      <section id="courses" className="section-padding bg-background relative overflow-hidden isolate">
+        <AmbientReviews startIndex={0} count={4} />
         <div className="container mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mb-12">
             <div className="flex items-center justify-center gap-3 mb-2">

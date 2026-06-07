@@ -4,6 +4,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import DiveSchedule from "./DiveSchedule";
+import AmbientReviews from "@/components/AmbientReviews";
 
 const FunDivingSection = () => {
   const { t } = useLanguage();
@@ -15,7 +16,8 @@ const FunDivingSection = () => {
   ];
 
   return (
-    <section id="fun-diving" className="section-padding bg-ocean-surface">
+    <section id="fun-diving" className="section-padding bg-ocean-surface relative overflow-hidden isolate">
+      <AmbientReviews startIndex={2} count={4} />
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mx-auto text-center mb-12">
           <p className="text-primary font-body text-sm uppercase tracking-[0.2em] mb-2">{t("fun_label")}</p>

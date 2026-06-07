@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Star, ExternalLink, PenLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AmbientReviews from "@/components/AmbientReviews";
 
 const TRIPADVISOR_URL =
   "https://www.tripadvisor.com/Attraction_Review-g303910-d2385121-Reviews-Siam_Scuba-Koh_Tao_Surat_Thani_Province.html";
@@ -57,7 +58,8 @@ const RatingBubbles = ({ rating }: { rating: number }) => (
 
 const TripAdvisorSection = () => {
   return (
-    <section className="section-padding bg-ocean-surface">
+    <section className="section-padding bg-ocean-surface relative overflow-hidden isolate">
+      <AmbientReviews startIndex={3} count={3} />
       <div className="container mx-auto">
         {/* Header */}
         <motion.div
