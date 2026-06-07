@@ -12,6 +12,7 @@ export const SLUG_TO_COURSE: Record<string, string> = {
   "peak-performance-buoyancy": "Peak Performance Buoyancy",
   "wreck-diving": "Wreck Diving",
   "deep-diving": "Deep Diving",
+  "night-dive": "Night Dive",
   "dpv": "Underwater Scooter (DPV)",
   "sidemount": "Sidemount Diving",
   "uw-photography": "UW Photography & Videography",

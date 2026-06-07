@@ -62,6 +62,11 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
     description:
       "Dive deeper safely in Koh Tao with the PADI Deep Diver specialty. 4 dives down to 40m, including Chumphon Pinnacle and Sail Rock with Siam Scuba.",
   },
+  "night-dive": {
+    title: "Night Diving in Koh Tao – Guided Night Dive | Siam Scuba",
+    description:
+      "Explore Koh Tao's reefs after dark with a guided night dive. Spot hunting marine life and glowing plankton with experienced PADI instructors at Siam Scuba. ฿1,300.",
+  },
   "dpv": {
     title: "Underwater Scooter (DPV) Course Koh Tao | Siam Scuba",
     description:
