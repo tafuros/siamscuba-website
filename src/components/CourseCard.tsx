@@ -12,13 +12,14 @@ const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: an
     const shareUrl = slug
       ? `${window.location.origin}/${slug}`
       : `${window.location.origin}/?course=${encodeURIComponent(course.dialogKey)}`;
-    const text = `${course.title}${course.price ? ` — ฿${course.price} THB` : ""}\n${course.duration}\n${course.highlights.join("\n")}\n\nSiam Scuba — Koh Tao`;
+    // Share the link only (no text blob) so messaging apps render a clickable
+    // link with a rich preview instead of a wall of text.
     if (navigator.share) {
       try {
-        await navigator.share({ title: course.title, text, url: shareUrl });
+        await navigator.share({ title: `${course.title} - Siam Scuba`, url: shareUrl });
       } catch {}
     } else {
-      await navigator.clipboard.writeText(`${text}\n${shareUrl}`);
+      await navigator.clipboard.writeText(shareUrl);
       toast.success(t("share_copied"));
     }
   };
