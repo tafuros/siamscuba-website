@@ -10,7 +10,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "discover-scuba": {
     title: "Discover Scuba Diving in Koh Tao – Try Diving | Siam Scuba",
     description:
-      "Try scuba diving in Koh Tao with no experience needed. One-day intro with PADI instructor: pool training plus 1-2 ocean dives in calm tropical water. ฿2,600.",
+      "Try scuba diving in Koh Tao with no experience needed. One-day intro with PADI instructor: an easy shallow-water start plus 1-2 ocean dives in calm tropical water. ฿2,600.",
   },
   "open-water": {
     title: "PADI Open Water Course Koh Tao – ฿12,000 Lifetime Cert | Siam Scuba",

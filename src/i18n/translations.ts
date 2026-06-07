@@ -291,7 +291,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_review: "Scuba Review",
 
     hl_no_exp: "No experience needed",
-    hl_pool_ocean: "Pool + ocean dive",
+    hl_pool_ocean: "2 calm ocean dives",
     hl_padi_instructor: "PADI certified instructor",
     hl_18m: "Dive to 18m worldwide",
     hl_lifetime: "Lifetime certification",
@@ -495,7 +495,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_review: "צלילת ריענון",
 
     hl_no_exp: "ללא ניסיון נדרש",
-    hl_pool_ocean: "בריכה + צלילת ים",
+    hl_pool_ocean: "2 צלילות ים רגועות",
     hl_padi_instructor: "מדריך PADI מוסמך",
     hl_18m: "צלול עד 18 מטר בכל העולם",
     hl_lifetime: "הסמכה לכל החיים",
@@ -699,7 +699,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_review: "Repaso de Buceo",
 
     hl_no_exp: "Sin experiencia necesaria",
-    hl_pool_ocean: "Piscina + buceo en mar",
+    hl_pool_ocean: "2 inmersiones tranquilas en el mar",
     hl_padi_instructor: "Instructor certificado PADI",
     hl_18m: "Bucea hasta 18m en todo el mundo",
     hl_lifetime: "Certificación de por vida",
@@ -903,7 +903,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_review: "Révision de Plongée",
 
     hl_no_exp: "Aucune expérience requise",
-    hl_pool_ocean: "Piscine + plongée en mer",
+    hl_pool_ocean: "2 plongées tranquilles en mer",
     hl_padi_instructor: "Instructeur certifié PADI",
     hl_18m: "Plongez jusqu'à 18m partout dans le monde",
     hl_lifetime: "Certification à vie",

@@ -149,7 +149,7 @@ const DSD_EN: LanderCopy = {
     },
     {
       q: "Can this count toward Open Water certification later?",
-      a: "Yes — your DSD pool session counts toward your first confined-water dive if you continue with us within 6 months.",
+      a: "Yes - your DSD dives count toward your first confined-water dive if you continue with us within 6 months.",
     },
   ],
   closingCtaHeadline: "Two dives, one day, 3,600 THB.",
@@ -238,7 +238,7 @@ const DSD_ES: LanderCopy = {
     },
     {
       q: "¿Cuenta para la certificación Open Water más adelante?",
-      a: "Sí — la sesión de piscina cuenta como tu primera inmersión confinada si continúas con nosotros en 6 meses.",
+      a: "Sí - tus inmersiones de DSD cuentan como tu primera inmersión confinada si continúas con nosotros en 6 meses.",
     },
   ],
   closingCtaHeadline: "Dos inmersiones, un día, 3,600 THB.",
@@ -327,7 +327,7 @@ const DSD_HE: LanderCopy = {
     },
     {
       q: "זה ייחשב להסמכת Open Water בהמשך?",
-      a: "כן — מפגש הבריכה נחשב לצלילת התרגול הראשונה אם תמשיכו איתנו תוך 6 חודשים.",
+      a: "כן - צלילות ההיכרות נחשבות לצלילת התרגול הראשונה אם תמשיכו איתנו תוך 6 חודשים.",
     },
   ],
   closingCtaHeadline: "שתי צלילות, יום אחד, 3,600 THB.",

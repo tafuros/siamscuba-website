@@ -395,7 +395,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Honest price breakdown for every PADI course on Koh Tao",
         paragraphs: [
           "Here's what each course costs at Siam Scuba in 2026. Every price below includes all gear rental, boat trips, certification fees, and tax. No surcharges added at the shop.",
-          "Discover Scuba Diving: ฿2,600 - One day, no certification. Pool training plus 1-2 ocean dives in calm water. Best if you're not sure you'll like diving.",
+          "Discover Scuba Diving: ฿2,600 - One day, no certification. An easy shallow-water start plus 1-2 ocean dives in calm water. Best if you're not sure you'll like diving.",
           "PADI Bubble Maker (kids 8+): ฿3,800 - Pool-based scuba intro for children, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
           "PADI Open Water Diver: ฿12,000 - 3 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
