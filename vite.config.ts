@@ -20,7 +20,21 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
           const chunks: Buffer[] = [];
           for await (const c of req) chunks.push(c as Buffer);
           const body = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
-          const { generateReply } = await server.ssrLoadModule("/api/chat.ts");
+          const { generateReply, rateLimited, clientIp, checkPayload } =
+            await server.ssrLoadModule("/api/chat.ts");
+
+          // Mirror the prod abuse guards so dev behaves like the Vercel handler.
+          if (rateLimited(clientIp(req))) {
+            res.statusCode = 429;
+            res.setHeader("Retry-After", "30");
+            return res.end(JSON.stringify({ error: "rate_limited" }));
+          }
+          const payloadError = checkPayload(body.messages ?? []);
+          if (payloadError) {
+            res.statusCode = 400;
+            return res.end(JSON.stringify({ error: payloadError }));
+          }
+
           const reply = await generateReply(
             body.messages ?? [],
             body.lang ?? "en",

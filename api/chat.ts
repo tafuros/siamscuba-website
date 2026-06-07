@@ -22,6 +22,59 @@ const MODEL = "claude-haiku-4-5-20251001";
 const MAX_HISTORY = 12; // keep the last N turns to bound input size
 const MAX_TOKENS = 400;
 
+// ── Abuse caps ──────────────────────────────────────────────────────────────
+// Reject obviously oversized payloads before they reach the model.
+const MAX_MESSAGES = 20; // hard cap on incoming messages array
+const MAX_TOTAL_CHARS = 8000; // hard cap on combined message content length
+
+// Best-effort per-IP rate limit. NOTE: Vercel functions are stateless across
+// cold starts and run as many parallel instances, so this in-memory bucket only
+// throttles bursts hitting the SAME warm instance. It is a cheap abuse dampener,
+// not a hard guarantee - a determined attacker spread across instances can still
+// get through. A real limit would need shared state (Upstash/KV), intentionally
+// avoided here to keep zero external deps.
+const RATE_WINDOW_MS = 30_000; // 30s sliding window
+const RATE_MAX = 10; // max requests per IP per window
+const ipHits = new Map<string, number[]>();
+
+export function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const fresh = (ipHits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  // opportunistically evict stale buckets so the map cannot grow unbounded
+  if (ipHits.size > 5000) {
+    for (const [k, v] of ipHits) {
+      if (!v.some((t) => now - t < RATE_WINDOW_MS)) ipHits.delete(k);
+    }
+  }
+  if (fresh.length >= RATE_MAX) {
+    ipHits.set(ip, fresh);
+    return true;
+  }
+  fresh.push(now);
+  ipHits.set(ip, fresh);
+  return false;
+}
+
+export function clientIp(req: VercelRequest): string {
+  const xff = req.headers["x-forwarded-for"];
+  const raw = Array.isArray(xff) ? xff[0] : xff;
+  return (raw?.split(",")[0].trim() || req.socket?.remoteAddress || "unknown");
+}
+
+// Validate the incoming messages payload against the abuse caps. Returns an
+// error code (suitable for a 400) or null when the payload is acceptable.
+// Exported so the Vite dev middleware enforces the exact same caps as prod.
+export function checkPayload(messages: unknown): "too_many_messages" | "payload_too_large" | null {
+  const arr = Array.isArray(messages) ? (messages as ChatMessage[]) : [];
+  if (arr.length > MAX_MESSAGES) return "too_many_messages";
+  const totalChars = arr.reduce(
+    (n, m) => n + (typeof m?.content === "string" ? m.content.length : 0),
+    0,
+  );
+  if (totalChars > MAX_TOTAL_CHARS) return "payload_too_large";
+  return null;
+}
+
 // Read the KB from disk (shipped via vercel.json includeFiles in prod; present
 // at api/_kb.json relative to cwd in dev). cwd is the project root in both.
 const kbRecords = JSON.parse(
@@ -148,6 +201,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  // Best-effort per-IP throttle (see note on the in-memory limiter above).
+  if (rateLimited(clientIp(req))) {
+    res.setHeader("Retry-After", String(Math.ceil(RATE_WINDOW_MS / 1000)));
+    return res.status(429).json({ error: "rate_limited" });
+  }
+
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body ?? {};
     const messages = (body.messages ?? []) as ChatMessage[];
@@ -155,6 +214,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({ error: "messages required" });
+    }
+
+    // Reject oversized payloads (too many turns or too much text overall).
+    const payloadError = checkPayload(messages);
+    if (payloadError) {
+      return res.status(400).json({ error: payloadError });
     }
 
     const reply = await generateReply(messages, lang);

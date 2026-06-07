@@ -8,8 +8,16 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { extractKbRecords, summarizeBySource } from "./lib/extract-kb";
 
-const records = extractKbRecords();
+const allRecords = extractKbRecords();
+
+// Website-chat-only trim: drop translations:* records. These are raw UI strings
+// (~16% of the KB) with no Q&A value for the chat widget. Done here so the shared
+// extractor and the WhatsApp Nemo KB are left untouched.
+const records = allRecords.filter((r) => !r.source.startsWith("translations"));
+
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), "../api/_kb.json");
 writeFileSync(OUT, JSON.stringify(records));
-console.log(`wrote ${records.length} records → ${OUT}`);
+console.log(
+  `wrote ${records.length} records (dropped ${allRecords.length - records.length} translations:*) → ${OUT}`,
+);
 summarizeBySource(records);
