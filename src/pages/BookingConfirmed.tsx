@@ -3,6 +3,7 @@ import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Seo from "@/components/Seo";
+import FunDiveDocsNotice from "@/components/FunDiveDocsNotice";
 
 // Conversion is fired in FunDiveBookingPage on SIAM_BOOKING_COMPLETE postMessage to avoid double-counting on reload/back-nav.
 const BookingConfirmed = () => {
@@ -35,6 +36,8 @@ const BookingConfirmed = () => {
             See you soon, <span className="font-semibold text-foreground">{bookingData.fullName}</span>!
           </p>
         )}
+
+        <FunDiveDocsNotice className="mb-6" />
 
         <Button asChild className="w-full">
           <Link to="/">Back to Home</Link>

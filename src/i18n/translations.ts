@@ -215,6 +215,11 @@ type TranslationStrings = {
   cta_subtitle: string;
   cta_button: string;
 
+  // Fun-dive document reminder (license + last dive record)
+  fundive_docs_title: string;
+  fundive_docs_body: string;
+  fundive_docs_button: string;
+
   // Location
   loc_label: string;
   loc_title: string;
@@ -438,6 +443,9 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "No results found.",
     share_button: "Share",
     share_copied: "Link copied!",
+    fundive_docs_title: "One quick thing before you dive",
+    fundive_docs_body: "Please send us a photo of your diving license and your last dive record (logbook) on WhatsApp so we can prepare your dive.",
+    fundive_docs_button: "Send on WhatsApp",
   },
   he: {
     nav_courses: "קורסים",
@@ -639,6 +647,9 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "לא נמצאו תוצאות.",
     share_button: "שתף",
     share_copied: "הקישור הועתק!",
+    fundive_docs_title: "דבר אחד קטן לפני הצלילה",
+    fundive_docs_body: "שלחו לנו בבקשה בוואטסאפ תמונה של רישיון הצלילה שלכם ושל רישום הצלילה האחרון (לוג בוק), כדי שנוכל להכין את הצלילה שלכם.",
+    fundive_docs_button: "שליחה בוואטסאפ",
   },
   es: {
     nav_courses: "Cursos",
@@ -840,6 +851,9 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "No se encontraron resultados.",
     share_button: "Compartir",
     share_copied: "¡Enlace copiado!",
+    fundive_docs_title: "Una última cosa antes de bucear",
+    fundive_docs_body: "Envíanos por WhatsApp una foto de tu licencia de buceo y de tu último registro de inmersión (logbook) para que podamos preparar tu inmersión.",
+    fundive_docs_button: "Enviar por WhatsApp",
   },
   fr: {
     nav_courses: "Cours",
@@ -1041,5 +1055,8 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "Aucun résultat trouvé.",
     share_button: "Partager",
     share_copied: "Lien copié !",
+    fundive_docs_title: "Une dernière chose avant de plonger",
+    fundive_docs_body: "Envoyez-nous sur WhatsApp une photo de votre brevet de plongée et de votre dernier carnet de plongée (logbook) afin que nous puissions préparer votre plongée.",
+    fundive_docs_button: "Envoyer sur WhatsApp",
   },
 };
