@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Paint the very first frame ocean-blue (matches the hero's bg-ocean-deep)
+         so page load / reload eases into the dark hero instead of flashing white.
+         Inline + before the app stylesheet so it applies on the earliest paint. -->
+    <meta name="theme-color" content="#0a335c" />
+    <style>html{background-color:#0a335c}</style>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
