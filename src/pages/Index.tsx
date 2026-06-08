@@ -23,7 +23,7 @@ import ScrollHint from "@/components/ScrollHint";
 const HOME_SEO = {
   title: "Siam Scuba | PADI 5 Star Dive Center in Koh Tao, Thailand",
   description:
-    "PADI dive center on Koh Tao with two custom dive boats, max 4:1 student-to-instructor ratio, flexible schedules. Open Water, Advanced, Divemaster & specialty courses.",
+    "PADI 5-Star dive center on Koh Tao. Two custom dive boats, max 4:1 student-to-instructor ratio, flexible schedules. Open Water, Advanced & Divemaster courses.",
 };
 
 const Index = ({ courseOverride }: { courseOverride?: string }) => {
@@ -31,7 +31,8 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
   const courseParam = courseOverride || searchParams.get("course");
 
   const courseSlug = courseOverride ? COURSE_TO_SLUG[courseOverride] : undefined;
-  const seo = (courseSlug && COURSE_SEO[courseSlug]) || HOME_SEO;
+  const courseSeo = courseSlug ? COURSE_SEO[courseSlug] : undefined;
+  const seo = courseSeo || HOME_SEO;
 
   useEffect(() => {
     if (courseParam) {
@@ -57,7 +58,7 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
         }
       />
       <Navbar />
-      <UnderwaterHero />
+      <UnderwaterHero courseHeading={courseSeo?.h1} />
       <CoursesSection initialCourse={courseParam} />
       <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />

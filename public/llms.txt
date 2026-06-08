@@ -1,0 +1,38 @@
+# Siam Scuba
+
+> PADI 5-Star dive center on Koh Tao, Thailand. Scuba diving courses (beginner to
+> instructor), fun diving for certified divers, and try-diving experiences - run
+> from two custom dive boats with a max 4:1 student-to-instructor ratio and
+> flexible daily schedules. Booking and enquiries are handled over WhatsApp.
+
+Languages: English (default), Hebrew (/he), Spanish (/es).
+Location: Koh Tao, Surat Thani, Thailand. Main dive sites include Chumphon
+Pinnacle, Sail Rock, and Twins.
+
+## Key pages
+
+- [Home](https://siamscuba.com/): Dive center overview, courses, boats, and reviews.
+- [Dive sites](https://siamscuba.com/dive-sites): Guides to Koh Tao's dive sites.
+- [Blog](https://siamscuba.com/blog): Diving guides and Koh Tao travel articles.
+- [Fun dive booking](https://siamscuba.com/fun-dive-booking): Book fun dives for certified divers.
+
+## Courses
+
+- [Discover Scuba Diving](https://siamscuba.com/discover-scuba): One-day intro dive, no experience needed.
+- [Open Water Diver](https://siamscuba.com/open-water): PADI entry-level certification.
+- [Advanced Open Water](https://siamscuba.com/advanced-open-water): 5 adventure dives, depth to 30m.
+- [Rescue Diver](https://siamscuba.com/rescue-diver): Emergency response and rescue skills.
+- [Divemaster](https://siamscuba.com/divemaster): Professional-level internship.
+- [IDC / Instructor](https://siamscuba.com/idc): PADI Instructor Development Course.
+- [Specialties](https://siamscuba.com/deep-diving): Deep, Wreck, Night, Sidemount, DPV, Buoyancy, and more.
+
+## Landing pages
+
+- [Discover Scuba Diving](https://siamscuba.com/discover-scuba-diving)
+- [Open Water Course](https://siamscuba.com/open-water-course)
+- [Fun Dives](https://siamscuba.com/fun-dives)
+
+## Contact
+
+- WhatsApp: primary booking and enquiry channel (see site for current number).
+- Website: https://siamscuba.com

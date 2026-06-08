@@ -983,48 +983,62 @@ const PRICES: Record<Offer, { price: string; currency: string; duration: string 
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
 };
 
-export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unknown> {
+function buildFaqJsonLd(offer: Offer, lang: Lang): Record<string, unknown> {
+  const copy = LANDER_COPY[offer][lang];
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: copy.faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unknown>[] {
   const copy = LANDER_COPY[offer][lang];
   const url = landerUrl(offer, lang);
   const meta = PRICES[offer];
 
-  if (offer === "fun-dive") {
-    return {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: copy.heroH1,
-      description: copy.seoDescription,
-      url,
-      provider: { "@type": "Organization", name: "Siam Scuba", "@id": `${SITE}/#organization` },
-      areaServed: { "@type": "Place", name: "Koh Tao" },
-      offers: {
-        "@type": "Offer",
-        price: meta.price,
-        priceCurrency: meta.currency,
-        availability: "https://schema.org/InStock",
-        url,
-      },
-    };
-  }
+  const primary: Record<string, unknown> =
+    offer === "fun-dive"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: copy.heroH1,
+          description: copy.seoDescription,
+          url,
+          provider: { "@type": "Organization", name: "Siam Scuba", "@id": `${SITE}/#organization` },
+          areaServed: { "@type": "Place", name: "Koh Tao" },
+          offers: {
+            "@type": "Offer",
+            price: meta.price,
+            priceCurrency: meta.currency,
+            availability: "https://schema.org/InStock",
+            url,
+          },
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: copy.heroH1,
+          description: copy.seoDescription,
+          url,
+          provider: { "@type": "Organization", name: "Siam Scuba", "@id": `${SITE}/#organization` },
+          hasCourseInstance: {
+            "@type": "CourseInstance",
+            courseMode: "onsite",
+            duration: meta.duration,
+          },
+          offers: {
+            "@type": "Offer",
+            price: meta.price,
+            priceCurrency: meta.currency,
+            availability: "https://schema.org/InStock",
+            url,
+          },
+        };
 
-  return {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    name: copy.heroH1,
-    description: copy.seoDescription,
-    url,
-    provider: { "@type": "Organization", name: "Siam Scuba", "@id": `${SITE}/#organization` },
-    hasCourseInstance: {
-      "@type": "CourseInstance",
-      courseMode: "onsite",
-      duration: meta.duration,
-    },
-    offers: {
-      "@type": "Offer",
-      price: meta.price,
-      priceCurrency: meta.currency,
-      availability: "https://schema.org/InStock",
-      url,
-    },
-  };
+  return [primary, buildFaqJsonLd(offer, lang)];
 }

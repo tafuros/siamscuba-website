@@ -2,7 +2,13 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
 import padi5StarBadge from "@/assets/padi-5star-badge.png";
 
-const UnderwaterHero = () => {
+interface UnderwaterHeroProps {
+  /** When set (course landing pages), the H1 becomes "<courseHeading> in Koh Tao"
+   *  instead of the generic homepage headline, so each course page has a unique H1. */
+  courseHeading?: string;
+}
+
+const UnderwaterHero = ({ courseHeading }: UnderwaterHeroProps) => {
   const { t } = useLanguage();
 
   return (
@@ -100,9 +106,19 @@ const UnderwaterHero = () => {
           transition={{ duration: 0.7, delay: 0.5 }}
           className="font-display text-[2rem] sm:text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] max-w-3xl mx-auto text-center px-4 [text-shadow:_0_4px_24px_rgba(0,20,45,0.85),_0_2px_6px_rgba(0,0,0,0.65)]"
         >
-          {t("hero_title_1")}
-          <br />
-          <span className="text-ocean-light italic">{t("hero_title_2")}</span>
+          {courseHeading ? (
+            <>
+              {courseHeading}
+              <br />
+              <span className="text-ocean-light italic">in Koh Tao</span>
+            </>
+          ) : (
+            <>
+              {t("hero_title_1")}
+              <br />
+              <span className="text-ocean-light italic">{t("hero_title_2")}</span>
+            </>
+          )}
         </motion.h1>
 
         <motion.div
