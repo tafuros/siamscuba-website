@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
-import FunDiveDocsNotice from "@/components/FunDiveDocsNotice";
 import {
   trackGenerateLead,
   trackPurchase,
@@ -130,8 +129,6 @@ const FunDiveBookingPage = () => {
           <ArrowLeft className="h-4 w-4" />
           Back to home
         </Link>
-
-        <FunDiveDocsNotice className="mb-4" />
 
         <div className="relative w-full rounded-xl overflow-hidden border border-border/50 shadow-lg bg-card">
           {!loaded && (
