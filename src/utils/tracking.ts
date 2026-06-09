@@ -17,6 +17,9 @@ declare global {
 
 const GA_MEASUREMENT_ID = "AW-18050429438";
 const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
+// "Booking - Pay Later": a confirmed booking with no deposit paid yet.
+// Lower-tier conversion than a paid Purchase, fired WITHOUT a value.
+const BOOKING_PAY_LATER_LABEL = "9WY5CICH4rscEP7jjp9D";
 
 // Per-event Google Ads conversion labels. Fill in real labels from
 // Google Ads → Goals → Conversions after creating the actions. Until set,
@@ -70,7 +73,7 @@ export function trackWhatsAppClick(params: WhatsAppClickParams): void {
 }
 
 export interface GenerateLeadParams {
-  form_name: "fun_dive_booking" | "course_inquiry" | "contact";
+  form_name: "fun_dive_booking" | "booking_wizard" | "course_inquiry" | "contact";
   dive_date?: string;
   product?: string;
 }
@@ -139,6 +142,32 @@ export function trackPurchase(params: PurchaseParams): void {
     value: params.value,
     currency: params.currency ?? "THB",
     content_name: params.item_name,
+  });
+}
+
+export interface BookingPayLaterParams {
+  transaction_id: string;
+  product?: string;
+}
+
+/**
+ * Fires for a confirmed booking where no deposit was paid (pay-on-arrival).
+ * Lower-tier than a paid Purchase: NO monetary value is attached - it counts
+ * the booking commitment, not revenue. Google Ads action "Booking - Pay Later".
+ */
+export function trackBookingPayLater(params: BookingPayLaterParams): void {
+  gtag("event", "booking_pay_later", {
+    event_category: "booking",
+    transaction_id: params.transaction_id,
+    content_name: params.product,
+    ...utmFields(),
+  });
+  gtag("event", "conversion", {
+    send_to: `${GA_MEASUREMENT_ID}/${BOOKING_PAY_LATER_LABEL}`,
+    transaction_id: params.transaction_id,
+  });
+  fbq("track", "Schedule", {
+    content_name: params.product,
   });
 }
 

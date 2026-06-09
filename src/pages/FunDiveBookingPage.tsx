@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
 import FunDiveDocsNotice from "@/components/FunDiveDocsNotice";
-import { trackGenerateLead, trackPurchase } from "@/utils/tracking";
+import {
+  trackGenerateLead,
+  trackPurchase,
+  trackBookingPayLater,
+} from "@/utils/tracking";
 
 const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 // Accept messages from the iframe (dash.*) AND from the same site under
@@ -21,6 +25,10 @@ const ALLOWED_ORIGINS = [
 const FunDiveBookingPage = () => {
   const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
+  // Fire the lead conversion at most once per page session, so a customer who
+  // edits their contact details mid-wizard (re-emitting SIAM_BOOKING_LEAD)
+  // doesn't double-count in Google Ads / Meta.
+  const leadFiredRef = useRef(false);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -32,11 +40,32 @@ const FunDiveBookingPage = () => {
       const data = event.data;
       if (!data || typeof data !== "object") return;
 
+      // CANONICAL CONTRACT (matches diveos customer-wizard emitter):
+      // Lead:     { type: "SIAM_BOOKING_LEAD", product?, courseStartDate?, schemaVersion: 1 }
+      // Complete: { type: "SIAM_BOOKING_COMPLETE", bookingId?, value?, currency?, lead?, schemaVersion: 1 }
+      // All conversion fields are read from the TOP LEVEL of the message.
+
+      if (data.type === "SIAM_BOOKING_LEAD") {
+        console.log("Booking lead:", data);
+        if (leadFiredRef.current) return;
+        leadFiredRef.current = true;
+        const product =
+          typeof data.product === "string" ? data.product : undefined;
+        const diveDate =
+          typeof data.courseStartDate === "string"
+            ? data.courseStartDate
+            : undefined;
+        trackGenerateLead({
+          form_name: "booking_wizard",
+          dive_date: diveDate,
+          product,
+        });
+      }
+
       if (data.type === "SIAM_BOOKING_COMPLETE") {
-        console.log("Booking complete:", data.data);
+        console.log("Booking complete:", data);
         // Fire conversion before navigation so the ping is sent even if routing fails.
-        const payload = (data.data ?? {}) as Record<string, unknown>;
-        const rawValue = payload.value ?? payload.price ?? payload.amount;
+        const rawValue = data.value;
         const numericValue =
           typeof rawValue === "number"
             ? rawValue
@@ -48,35 +77,33 @@ const FunDiveBookingPage = () => {
             ? numericValue
             : undefined;
         const currency =
-          typeof payload.currency === "string" ? payload.currency : undefined;
+          typeof data.currency === "string" ? data.currency : undefined;
         const transactionId =
-          typeof payload.booking_id === "string"
-            ? payload.booking_id
-            : typeof payload.id === "string"
-              ? payload.id
-              : `booking_${Date.now()}`;
-        trackPurchase({
-          transaction_id: transactionId,
-          value,
-          currency,
-          item_name: "Fun Dive Booking",
-        });
-        navigate("/booking-confirmed", { state: data.data });
-      }
-
-      if (data.type === "SIAM_BOOKING_STEP") {
-        console.log("Booking step:", data.data);
-        // Mid-funnel lead event so Google Ads + Meta can optimize on form-fill
-        // intent, not just completed purchases. Dashboard side must emit
-        // step:"form_submitted" with product/date for this to fire.
-        const step = (data.data ?? {}) as { step?: string; product?: string; date?: string };
-        if (step.step === "form_submitted" || step.step === "details_complete") {
-          trackGenerateLead({
-            form_name: "fun_dive_booking",
-            dive_date: step.date,
-            product: step.product,
+          typeof data.bookingId === "string"
+            ? data.bookingId
+            : `booking_${Date.now()}`;
+        const product =
+          typeof data?.lead?.product === "string"
+            ? data.lead.product
+            : undefined;
+        // TWO-TIER purchase rule: a deposit-paid booking is a revenue Purchase;
+        // a pay-on-arrival booking fires the lower-tier "Booking - Pay Later"
+        // conversion WITHOUT a value (we haven't collected money yet).
+        const paid = data?.lead?.depositPaid === true;
+        if (paid) {
+          trackPurchase({
+            transaction_id: transactionId,
+            value,
+            currency,
+            item_name: "Dive Booking",
+          });
+        } else {
+          trackBookingPayLater({
+            transaction_id: transactionId,
+            product,
           });
         }
+        navigate("/booking-confirmed", { state: data.lead ?? null });
       }
     };
 
