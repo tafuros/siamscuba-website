@@ -128,7 +128,7 @@ const AmbientReviews = ({
     <div
       ref={ref}
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 -z-10 overflow-hidden ${className}`}
+      className={`pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden sm:block ${className}`}
     >
       {placements.map((placement, i) => (
         <AmbientCard

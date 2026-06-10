@@ -46,7 +46,7 @@ const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowP
     <div className="relative group">
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 -mb-2 scrollbar-hide"
+        className="flex items-start sm:items-stretch gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 -mb-2 scrollbar-hide"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {courses.map((course, i) => (
@@ -75,7 +75,7 @@ const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowP
       {canScrollLeft && (
         <button
           onClick={() => scroll(-1)}
-          className="absolute -left-3 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all opacity-0 group-hover:opacity-100"
+          className="absolute -left-3 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
           aria-label="Previous"
         >
           <ChevronLeft className="h-4 w-4" />
@@ -84,7 +84,7 @@ const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowP
       {canScrollRight && (
         <button
           onClick={() => scroll(1)}
-          className="absolute -right-3 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all opacity-0 group-hover:opacity-100"
+          className="absolute -right-3 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
           aria-label="Next"
         >
           <ChevronRight className="h-4 w-4" />

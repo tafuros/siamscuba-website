@@ -11,7 +11,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 
 const COORDINATOR = {
   email: "benmosheavivi@gmail.com",
-  phone: "+972-52-864-1581",
+  phone: "+66-82-506-8898",
 };
 
 const Accessibility = () => {

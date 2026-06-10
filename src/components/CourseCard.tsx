@@ -53,7 +53,7 @@ const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: an
             )}
           </div>
           <p className="text-[11px] text-muted-foreground mb-2">{course.duration}</p>
-          <ul className="space-y-1 mb-3 flex-1">
+          <ul className="space-y-1 mb-3 sm:flex-1">
             {course.highlights.map((h: string) => (
               <li key={h} className="flex items-start gap-1.5 text-xs text-foreground/80">
                 <Award className="h-3.5 w-3.5 text-primary mt-0.5 shrink-0" />
@@ -61,7 +61,7 @@ const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: an
               </li>
             ))}
           </ul>
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 mt-auto">
             {course.hasDetails && (
               <Button variant="ghost" size="sm" className="rounded-full w-full text-primary hover:text-primary/80 h-8 text-xs" onClick={() => setSelectedCourse(course.dialogKey)}>
                 <Info className="h-3.5 w-3.5 mr-1" />

@@ -25,7 +25,7 @@ const Terms = () => {
             <p>Siam Scuba, a PADI dive centre on Koh Tao, Thailand.</p>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Address:</strong> 9/9 Koh Tao, Amphoe Ko Pha-Ngan, Surat Thani 84360, Thailand</li>
-              <li><strong>Business phone:</strong> +972 52 864 1581</li>
+              <li><strong>Business phone:</strong> +66 82 506 8898</li>
               <li><strong>Email:</strong> info@siamscuba.com</li>
             </ul>
           </section>

@@ -8,7 +8,8 @@ const FloatingBookNow = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, (v) => Math.sin(v * 0.01) * 8);
 
-  // Mobile-only conversion FAB. Stack order from bottom: WhatsApp -> Instagram -> Book Now.
+  // Mobile-only conversion FAB. Pinned top-right (just below the navbar) so it
+  // stays reachable without covering the course cards mid-screen.
   const handleClick = () => {
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
       window.gtag("event", "book_now_click", {
@@ -21,7 +22,7 @@ const FloatingBookNow = () => {
   return (
     <motion.div
       style={{ y }}
-      className="fixed right-4 bottom-36 z-40 md:hidden"
+      className="fixed right-4 top-24 z-40 md:hidden"
     >
       <span
         aria-hidden="true"
