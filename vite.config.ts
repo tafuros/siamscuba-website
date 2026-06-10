@@ -52,6 +52,52 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
   };
 }
 
+// Dev-only: serve GET /api/pulse from the same handler logic Vercel uses in
+// prod, so the Google Ads pulse can be verified on `vite` (port 8080) without
+// `vercel dev`. Reuses getPulse from api/pulse.ts; auth mirrors the prod guard.
+function googleAdsPulseDevApi(env: Record<string, string>): Plugin {
+  return {
+    name: "google-ads-pulse-dev-api",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use("/api/pulse", async (req, res) => {
+        if (req.method !== "GET") {
+          res.statusCode = 405;
+          return res.end(JSON.stringify({ error: "method_not_allowed" }));
+        }
+        try {
+          const secret = env.PULSE_READ_SECRET;
+          if (!secret) {
+            res.statusCode = 503;
+            return res.end(JSON.stringify({ error: "pulse_not_configured" }));
+          }
+          const got = req.headers["x-pulse-secret"];
+          const provided = Array.isArray(got) ? got[0] : got;
+          if (provided !== secret) {
+            res.statusCode = 401;
+            return res.end(JSON.stringify({ error: "unauthorized" }));
+          }
+          const { getPulse } = await server.ssrLoadModule("/api/pulse.ts");
+          const pulse = await getPulse(env);
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify(pulse));
+        } catch (err: any) {
+          const msg = err?.message || String(err);
+          console.error("[dev /api/pulse]", msg);
+          res.statusCode = msg.startsWith("missing_creds:") ? 503 : 502;
+          res.end(
+            JSON.stringify({
+              error: msg.startsWith("missing_creds:")
+                ? "pulse_not_configured"
+                : "pulse_upstream_failed",
+            }),
+          );
+        }
+      });
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -67,6 +113,7 @@ export default defineConfig(({ mode }) => {
     react(),
     mode === "development" && componentTagger(),
     mode === "development" && nemoChatDevApi(env),
+    mode === "development" && googleAdsPulseDevApi(env),
     ViteImageOptimizer({
       png: { quality: 80, compressionLevel: 9 },
       jpeg: { quality: 78, mozjpeg: true },
