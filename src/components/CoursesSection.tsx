@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Award, BookOpen, Star, Crown, Fish, Anchor, ArrowDown, Moon, Zap, Layers, ShieldCheck, Heart, Feather, Camera, Waves } from "lucide-react";
 import padi from "@/assets/padi-logo.png";
@@ -8,8 +8,23 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import AmbientReviews from "@/components/AmbientReviews";
 
 const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) => {
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(initialCourse || null);
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const { t } = useLanguage();
+
+  // Auto-open the deep-linked course modal (e.g. /discover-scuba), but NOT while
+  // the first-visit cookie banner is still up: dismissing that banner registers
+  // as a click-outside and would instantly close the modal. So wait until consent
+  // is resolved before opening.
+  useEffect(() => {
+    if (!initialCourse || typeof window === "undefined") return;
+    if (localStorage.getItem("cookie_consent")) {
+      setSelectedCourse(initialCourse);
+      return;
+    }
+    const open = () => setSelectedCourse(initialCourse);
+    window.addEventListener("cookie-consent-resolved", open);
+    return () => window.removeEventListener("cookie-consent-resolved", open);
+  }, [initialCourse]);
 
   const categories = [
     {

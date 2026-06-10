@@ -44,12 +44,14 @@ const CookieConsent = () => {
     localStorage.setItem(STORAGE_KEY, "granted");
     updateConsent(true);
     setVisible(false);
+    window.dispatchEvent(new Event("cookie-consent-resolved"));
   };
 
   const handleDecline = () => {
     localStorage.setItem(STORAGE_KEY, "denied");
     updateConsent(false);
     setVisible(false);
+    window.dispatchEvent(new Event("cookie-consent-resolved"));
   };
 
   if (!visible) return null;

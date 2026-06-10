@@ -240,6 +240,21 @@ type TranslationStrings = {
   // Share
   share_button: string;
   share_copied: string;
+
+  // Course detail dialog (section labels)
+  cd_top_highlights: string;
+  cd_trip_details: string;
+  cd_your_day: string;
+  cd_course_plan: string;
+  cd_specialty_dives: string;
+  cd_skills: string;
+  cd_structure: string;
+  cd_included: string;
+  cd_not_included: string;
+  cd_what_to_bring: string;
+  cd_requirements: string;
+  cd_payment: string;
+  cd_price: string;
 };
 
 export const translations: Record<Language, TranslationStrings> = {
@@ -443,6 +458,19 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "No results found.",
     share_button: "Share",
     share_copied: "Link copied!",
+    cd_top_highlights: "Top Highlights",
+    cd_trip_details: "Trip Details",
+    cd_your_day: "Your Day",
+    cd_course_plan: "The Course Plan",
+    cd_specialty_dives: "5 Specialty Dives",
+    cd_skills: "Skills You'll Master",
+    cd_structure: "Course Structure",
+    cd_included: "What's Included",
+    cd_not_included: "Not Included",
+    cd_what_to_bring: "What to Bring",
+    cd_requirements: "Requirements",
+    cd_payment: "Payment & Terms",
+    cd_price: "Price",
     fundive_docs_title: "One quick thing before you dive",
     fundive_docs_body: "Please send us a photo of your diving license and your last dive record (logbook) on WhatsApp so we can prepare your dive.",
     fundive_docs_button: "Send on WhatsApp",
@@ -647,6 +675,19 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "לא נמצאו תוצאות.",
     share_button: "שתף",
     share_copied: "הקישור הועתק!",
+    cd_top_highlights: "עיקרי הדגשים",
+    cd_trip_details: "פרטי הטיול",
+    cd_your_day: "מהלך היום",
+    cd_course_plan: "תוכנית הקורס",
+    cd_specialty_dives: "5 צלילות התמחות",
+    cd_skills: "מיומנויות שתרכשו",
+    cd_structure: "מבנה הקורס",
+    cd_included: "מה כלול",
+    cd_not_included: "מה לא כלול",
+    cd_what_to_bring: "מה להביא",
+    cd_requirements: "דרישות קדם",
+    cd_payment: "תשלום ותנאים",
+    cd_price: "מחיר",
     fundive_docs_title: "דבר אחד קטן לפני הצלילה",
     fundive_docs_body: "שלחו לנו בבקשה בוואטסאפ תמונה של רישיון הצלילה שלכם ושל רישום הצלילה האחרון (לוג בוק), כדי שנוכל להכין את הצלילה שלכם.",
     fundive_docs_button: "שליחה בוואטסאפ",
@@ -851,6 +892,19 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "No se encontraron resultados.",
     share_button: "Compartir",
     share_copied: "¡Enlace copiado!",
+    cd_top_highlights: "Lo más destacado",
+    cd_trip_details: "Detalles de la salida",
+    cd_your_day: "Tu día",
+    cd_course_plan: "El plan del curso",
+    cd_specialty_dives: "5 inmersiones de especialidad",
+    cd_skills: "Habilidades que dominarás",
+    cd_structure: "Estructura del curso",
+    cd_included: "Qué incluye",
+    cd_not_included: "No incluye",
+    cd_what_to_bring: "Qué llevar",
+    cd_requirements: "Requisitos",
+    cd_payment: "Pago y condiciones",
+    cd_price: "Precio",
     fundive_docs_title: "Una última cosa antes de bucear",
     fundive_docs_body: "Envíanos por WhatsApp una foto de tu licencia de buceo y de tu último registro de inmersión (logbook) para que podamos preparar tu inmersión.",
     fundive_docs_button: "Enviar por WhatsApp",
@@ -1055,6 +1109,19 @@ export const translations: Record<Language, TranslationStrings> = {
     search_no_results: "Aucun résultat trouvé.",
     share_button: "Partager",
     share_copied: "Lien copié !",
+    cd_top_highlights: "Points forts",
+    cd_trip_details: "Détails de la sortie",
+    cd_your_day: "Votre journée",
+    cd_course_plan: "Le déroulé du cours",
+    cd_specialty_dives: "5 plongées de spécialité",
+    cd_skills: "Compétences à maîtriser",
+    cd_structure: "Structure du cours",
+    cd_included: "Ce qui est inclus",
+    cd_not_included: "Non inclus",
+    cd_what_to_bring: "Quoi apporter",
+    cd_requirements: "Prérequis",
+    cd_payment: "Paiement et conditions",
+    cd_price: "Prix",
     fundive_docs_title: "Une dernière chose avant de plonger",
     fundive_docs_body: "Envoyez-nous sur WhatsApp une photo de votre brevet de plongée et de votre dernier carnet de plongée (logbook) afin que nous puissions préparer votre plongée.",
     fundive_docs_button: "Envoyer sur WhatsApp",
