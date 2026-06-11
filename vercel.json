@@ -6,7 +6,8 @@
   },
   "redirects": [
     { "source": "/contact-us", "destination": "/", "permanent": true },
-    { "source": "/zero-to-hero-dive-master-internship", "destination": "/divemaster", "permanent": true }
+    { "source": "/zero-to-hero-dive-master-internship", "destination": "/divemaster", "permanent": true },
+    { "source": "/nemo", "destination": "https://wa.me/66825068898?text=Hi%20Nemo!%20%F0%9F%90%A0", "permanent": false }
   ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
