@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Award, BookOpen, Star, Crown, Fish, Anchor, ArrowDown, Moon, Zap, Layers, ShieldCheck, Heart, Feather, Camera, Waves } from "lucide-react";
+import { Award, BookOpen, Star, Crown, Fish, Anchor, ArrowDown, Moon, Zap, Layers, ShieldCheck, Heart, Feather, Camera, Waves, Compass } from "lucide-react";
 import padi from "@/assets/padi-logo.png";
 import CourseDetailDialog from "./CourseDetailDialog";
 import CourseCarouselRow from "./CourseCarouselRow";
@@ -64,6 +64,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
         { icon: Moon, title: t("course_night_dive"), dialogKey: "Night Dive", price: "1,300", duration: t("dur_1_day"), highlights: [t("hl_night_certified"), t("hl_night_reef"), t("hl_night_guided")] },
         { icon: Zap, title: t("course_dpv"), dialogKey: "Underwater Scooter (DPV)", price: null, duration: t("dur_1_day"), highlights: [t("hl_dpv"), t("hl_cover_ground"), t("hl_unique")] },
         { icon: Layers, title: t("course_sidemount"), dialogKey: "Sidemount Diving", price: null, duration: t("dur_2_3_days"), highlights: [t("hl_streamline"), t("hl_independent_gas"), t("hl_advanced_config")] },
+        { icon: Compass, title: t("course_self_reliant"), dialogKey: "Self-Reliant Diver", price: "13,000", duration: t("dur_1_5_days"), highlights: [t("hl_self_100dives"), t("hl_self_redundancy"), t("hl_self_indep")], hasDetails: true },
         { icon: Camera, title: t("course_uw_photo"), dialogKey: "UW Photography & Videography", price: "37,000", duration: t("dur_5_days"), highlights: [t("hl_uw_10dives"), t("hl_uw_1on1"), t("hl_uw_padi_cert")], hasDetails: true },
       ],
     },

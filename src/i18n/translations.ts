@@ -66,6 +66,7 @@ type TranslationStrings = {
   course_sidemount: string;
   course_ppb: string;
   course_uw_photo: string;
+  course_self_reliant: string;
   course_review: string;
 
   // Course highlights
@@ -116,9 +117,13 @@ type TranslationStrings = {
   hl_uw_10dives: string;
   hl_uw_1on1: string;
   hl_uw_padi_cert: string;
+  hl_self_100dives: string;
+  hl_self_redundancy: string;
+  hl_self_indep: string;
 
   // Duration
   dur_1_day: string;
+  dur_1_5_days: string;
   dur_2_days: string;
   dur_5_days: string;
   dur_3_4_days: string;
@@ -303,6 +308,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_sidemount: "Sidemount Diving",
     course_ppb: "Peak Performance Buoyancy",
     course_uw_photo: "UW Photography & Video",
+    course_self_reliant: "Self-Reliant Diver",
     course_review: "Scuba Review",
 
     hl_no_exp: "No experience needed",
@@ -349,11 +355,15 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_uw_10dives: "10 dedicated photo dives",
     hl_uw_1on1: "1-on-1 instructor",
     hl_uw_padi_cert: "PADI UW Photo certification",
+    hl_self_100dives: "100+ logged dives",
+    hl_self_redundancy: "Backup gear & redundancy",
+    hl_self_indep: "Dive independently",
     hl_review_refresh: "Refresh your skills",
     hl_review_2dives: "2 open-water dives",
     hl_review_instructor: "Personal instructor guidance",
 
     dur_1_day: "1 day",
+    dur_1_5_days: "1.5 days",
     dur_5_days: "5 days",
     dur_2_days: "2 days",
     dur_3_4_days: "3–4 days",
@@ -520,6 +530,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_sidemount: "צלילת סיידמאונט",
     course_ppb: "שליטה מושלמת בציפה",
     course_uw_photo: "צילום תת-ימי ווידאו",
+    course_self_reliant: "צוללן עצמאי",
     course_review: "צלילת ריענון",
 
     hl_no_exp: "ללא ניסיון נדרש",
@@ -566,11 +577,15 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_uw_10dives: "10 צלילות צילום ייעודיות",
     hl_uw_1on1: "מדריך אחד על אחד",
     hl_uw_padi_cert: "הסמכת PADI צילום תת-ימי",
+    hl_self_100dives: "100+ צלילות מתועדות",
+    hl_self_redundancy: "ציוד גיבוי ויתירות",
+    hl_self_indep: "צלילה עצמאית",
     hl_review_refresh: "ריענון מיומנויות",
     hl_review_2dives: "2 צלילות במים פתוחים",
     hl_review_instructor: "ליווי מדריך אישי",
 
     dur_1_day: "יום אחד",
+    dur_1_5_days: "יום וחצי",
     dur_5_days: "5 ימים",
     dur_2_days: "יומיים",
     dur_3_4_days: "3–4 ימים",
@@ -737,6 +752,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_sidemount: "Buceo Sidemount",
     course_ppb: "Flotabilidad Perfecta",
     course_uw_photo: "Fotografía y Video Submarino",
+    course_self_reliant: "Buceador Autosuficiente",
     course_review: "Repaso de Buceo",
 
     hl_no_exp: "Sin experiencia necesaria",
@@ -783,11 +799,15 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_uw_10dives: "10 inmersiones de foto dedicadas",
     hl_uw_1on1: "Instructor 1 a 1",
     hl_uw_padi_cert: "Certificación PADI Foto Submarina",
+    hl_self_100dives: "100+ inmersiones registradas",
+    hl_self_redundancy: "Equipo de respaldo y redundancia",
+    hl_self_indep: "Bucea de forma independiente",
     hl_review_refresh: "Refresca tus habilidades",
     hl_review_2dives: "2 inmersiones en aguas abiertas",
     hl_review_instructor: "Instructor personal",
 
     dur_1_day: "1 día",
+    dur_1_5_days: "1,5 días",
     dur_5_days: "5 días",
     dur_2_days: "2 días",
     dur_3_4_days: "3–4 días",
@@ -954,6 +974,7 @@ export const translations: Record<Language, TranslationStrings> = {
     course_sidemount: "Plongée Sidemount",
     course_ppb: "Flottabilité Parfaite",
     course_uw_photo: "Photo et Vidéo Sous-marine",
+    course_self_reliant: "Plongeur Autonome",
     course_review: "Révision de Plongée",
 
     hl_no_exp: "Aucune expérience requise",
@@ -1000,11 +1021,15 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_uw_10dives: "10 plongées photo dédiées",
     hl_uw_1on1: "Instructeur individuel",
     hl_uw_padi_cert: "Certification PADI Photo Sous-marine",
+    hl_self_100dives: "100+ plongées enregistrées",
+    hl_self_redundancy: "Équipement de secours et redondance",
+    hl_self_indep: "Plongez en autonomie",
     hl_review_refresh: "Rafraîchissez vos compétences",
     hl_review_2dives: "2 plongées en eaux libres",
     hl_review_instructor: "Accompagnement instructeur",
 
     dur_1_day: "1 jour",
+    dur_1_5_days: "1,5 jour",
     dur_5_days: "5 jours",
     dur_2_days: "2 jours",
     dur_3_4_days: "3–4 jours",

@@ -106,4 +106,10 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
       "Extended PADI UW Photographer & Videographer course in Koh Tao. 5 days, 10 dives, 1-on-1 instruction, professional underwater imaging. ฿37,000.",
     h1: "Underwater Photography Course",
   },
+  "self-reliant-diver": {
+    title: "PADI Self-Reliant Diver Course Koh Tao – 1.5 Days | Siam Scuba",
+    description:
+      "Learn to dive independently in Koh Tao with the PADI Self-Reliant Diver specialty. 1.5 days, 3 dives, backup-gear redundancy and SAC-rate planning. ฿13,000.",
+    h1: "PADI Self-Reliant Diver Course",
+  },
 };

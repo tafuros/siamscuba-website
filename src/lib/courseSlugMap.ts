@@ -15,6 +15,7 @@ export const SLUG_TO_COURSE: Record<string, string> = {
   "night-dive": "Night Dive",
   "dpv": "Underwater Scooter (DPV)",
   "sidemount": "Sidemount Diving",
+  "self-reliant-diver": "Self-Reliant Diver",
   "uw-photography": "UW Photography & Videography",
 };
 
