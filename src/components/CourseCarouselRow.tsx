@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import CourseCard from "./CourseCard";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface CourseCarouselRowProps {
   courses: any[];
@@ -10,19 +11,45 @@ interface CourseCarouselRowProps {
 }
 
 const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowProps) => {
+  const { isRTL } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+  // Physical sides - whether content overflows past the left / right edge. Computed
+  // from element geometry so it's correct regardless of LTR/RTL or the browser's
+  // RTL scrollLeft model (Chrome negative vs legacy reversed-positive).
+  const [leftHasMore, setLeftHasMore] = useState(false);
+  const [rightHasMore, setRightHasMore] = useState(false);
 
   const checkScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 2);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 2);
+    const cr = el.getBoundingClientRect();
+    let minLeft = Infinity;
+    let maxRight = -Infinity;
+    for (const child of Array.from(el.children)) {
+      const r = (child as HTMLElement).getBoundingClientRect();
+      minLeft = Math.min(minLeft, r.left);
+      maxRight = Math.max(maxRight, r.right);
+    }
+    setLeftHasMore(minLeft < cr.left - 2);
+    setRightHasMore(maxRight > cr.right + 2);
+  };
+
+  // Position the row at its logical start: first card flush with the start edge
+  // (left in LTR, right in RTL). Handles both RTL scrollLeft models.
+  const resetToStart = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    if (!isRTL) {
+      el.scrollLeft = 0;
+    } else {
+      el.scrollLeft = -1; // probe: negative model keeps it negative, reversed clamps to 0
+      el.scrollLeft = el.scrollLeft < 0 ? 0 : el.scrollWidth - el.clientWidth;
+    }
+    checkScroll();
   };
 
   useEffect(() => {
-    checkScroll();
+    resetToStart();
     const el = scrollRef.current;
     if (el) {
       el.addEventListener("scroll", checkScroll, { passive: true });
@@ -33,13 +60,16 @@ const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowP
         ro.disconnect();
       };
     }
-  }, [courses]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [courses, isRTL]);
 
-  const scroll = (dir: number) => {
+  // scrollBy is in scrollLeft coordinates, where a negative delta always reveals
+  // physical-left content and a positive delta physical-right content, in every model.
+  const scroll = (toRight: boolean) => {
     const el = scrollRef.current;
     if (!el) return;
     const cardWidth = el.querySelector<HTMLElement>(":scope > div")?.offsetWidth || 300;
-    el.scrollBy({ left: dir * cardWidth, behavior: "smooth" });
+    el.scrollBy({ left: (toRight ? 1 : -1) * cardWidth, behavior: "smooth" });
   };
 
   return (
@@ -64,28 +94,28 @@ const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowP
       </div>
 
       {/* Fade edges when scrollable */}
-      {canScrollLeft && (
+      {leftHasMore && (
         <div className="absolute left-0 top-0 bottom-2 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none z-[1]" />
       )}
-      {canScrollRight && (
+      {rightHasMore && (
         <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none z-[1]" />
       )}
 
-      {/* Nav buttons */}
-      {canScrollLeft && (
+      {/* Nav buttons - each reveals whatever is hidden off its own edge */}
+      {leftHasMore && (
         <button
-          onClick={() => scroll(-1)}
+          onClick={() => scroll(false)}
           className="absolute -left-3 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
-          aria-label="Previous"
+          aria-label={isRTL ? "Next" : "Previous"}
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
       )}
-      {canScrollRight && (
+      {rightHasMore && (
         <button
-          onClick={() => scroll(1)}
+          onClick={() => scroll(true)}
           className="absolute -right-3 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
-          aria-label="Next"
+          aria-label={isRTL ? "Previous" : "Next"}
         >
           <ChevronRight className="h-4 w-4" />
         </button>
