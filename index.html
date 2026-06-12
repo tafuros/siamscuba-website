@@ -17,6 +17,28 @@
     <link rel="dns-prefetch" href="https://dash.siamscuba.com" />
 
     <!--
+      Fonts: load in the <head> from the first byte (parallel with the app
+      bundle) instead of via a render-blocking @import inside the bundled CSS.
+      preconnect warms the TLS handshake; the stylesheet itself is loaded
+      non-blocking (media=print swap) so it never holds up first paint.
+      Keep &display=swap so text shows immediately in a fallback then swaps.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+      />
+    </noscript>
+
+    <!--
       LCP hero preload. Mirrors the <picture> sources in UnderwaterHero so the
       browser starts fetching the responsive hero image before JS parses,
       which moves LCP earlier on slower connections. Update if hero changes.

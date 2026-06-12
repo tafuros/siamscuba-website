@@ -100,10 +100,15 @@ const UnderwaterHero = ({ courseHeading }: UnderwaterHeroProps) => {
           </span>
         </motion.div>
 
+        {/* LCP element: must paint the instant React mounts, so it is NEVER
+            started at opacity:0 (that would gate Largest Contentful Paint on
+            the JS bundle + animation finishing). We animate only a transform
+            (y) - a translated element still counts as painted - so the
+            entrance feel is preserved without delaying LCP. */}
         <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
+          initial={{ y: 16 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="font-display text-[2rem] sm:text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] max-w-3xl mx-auto text-center px-4 [text-shadow:_0_4px_24px_rgba(0,20,45,0.85),_0_2px_6px_rgba(0,0,0,0.65)]"
         >
           {courseHeading ? (

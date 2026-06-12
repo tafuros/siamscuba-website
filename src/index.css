@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+/* Fonts (Playfair Display + DM Sans) are loaded from index.html <head> via
+   preconnect + a non-blocking <link>, NOT a render-blocking @import here.
+   Importing them inside this Vite-bundled CSS made them load serially after
+   the JS->CSS chain, delaying the hero <h1> (LCP) font swap. */
 
 @tailwind base;
 @tailwind components;

@@ -1,6 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Clock, CheckCircle2, Gift, Tag, AlertCircle, MessageCircle, Fish, Anchor, XCircle, Backpack, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -24,8 +23,13 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[90vh] p-0 overflow-hidden">
-        <ScrollArea className="max-h-[85vh]">
+      <DialogContent className="max-w-lg max-h-[90dvh] p-0 overflow-hidden">
+        {/* Native scroll container (not Radix ScrollArea): on iOS Safari the
+            custom ScrollArea viewport fights text-selection auto-scroll and the
+            dialog gets shoved off-screen and stuck. dvh keeps the height within
+            the *visible* viewport (vh ignores the iOS toolbar), and
+            overscroll-contain stops the scroll from chaining to the page. */}
+        <div className="max-h-[90dvh] overflow-y-auto overscroll-contain">
           <div className="p-6 space-y-6">
             {/* In-modal language toggle */}
             <div className="flex flex-wrap gap-1.5">
@@ -303,7 +307,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
               </Link>
             </Button>
           </div>
-        </ScrollArea>
+        </div>
       </DialogContent>
     </Dialog>
   );

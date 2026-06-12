@@ -153,6 +153,34 @@ const NemoChat = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
+  // Lock page scroll while the chat is open so finger-drags move the chat (or
+  // nothing) instead of the page behind it. The `top: -scrollY` trick keeps the
+  // background visually in place (no jump) and is the iOS-Safari-safe approach -
+  // plain `overflow:hidden` on body does not stop touch scrolling on iOS.
+  useEffect(() => {
+    if (!open) return;
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const prev = {
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    };
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    return () => {
+      Object.assign(body.style, prev);
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
   const send = useCallback(
     async (text: string) => {
       const clean = text.trim();
@@ -206,7 +234,7 @@ const NemoChat = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 320, damping: 30 }}
-            className="fixed bottom-4 right-4 z-50 flex h-[min(560px,80vh)] w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] border border-border bg-white shadow-2xl"
+            className="fixed bottom-4 right-4 z-50 flex h-[min(560px,80dvh)] w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[22px] border border-border bg-white shadow-2xl"
           >
             {/* header */}
             <div className="relative overflow-hidden bg-gradient-to-br from-ocean-mid to-ocean-deep px-4 pb-4 pt-5 text-center text-white">
@@ -223,7 +251,7 @@ const NemoChat = () => {
             </div>
 
             {/* body */}
-            <div ref={scrollRef} className="flex-1 space-y-2 overflow-y-auto bg-gradient-to-b from-secondary/40 to-white px-3 py-3.5">
+            <div ref={scrollRef} className="flex-1 space-y-2 overflow-y-auto overscroll-contain bg-gradient-to-b from-secondary/40 to-white px-3 py-3.5">
               {messages.length === 0 && (
                 <div className="space-y-2">
                   {copy.suggestions.map((s) => (
