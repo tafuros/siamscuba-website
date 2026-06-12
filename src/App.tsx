@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense } from "react";
+import { useEffect, useRef, Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,9 +8,13 @@ import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
-import NemoChat from "@/components/NemoChat";
 import { trackPageView } from "@/utils/tracking";
 import { captureUtmFromUrl } from "@/utils/utm";
+
+// Floating chat widget - client-only, not SEO content. Lazy-load it so its
+// code (and the avatar) is split out of the initial app bundle and fetched
+// after hydration instead of blocking it.
+const NemoChat = lazy(() => import("@/components/NemoChat"));
 
 const queryClient = new QueryClient();
 
@@ -58,7 +62,9 @@ const App = () => (
           </Suspense>
         </main>
         <AccessibilityMenu />
-        <NemoChat />
+        <Suspense fallback={null}>
+          <NemoChat />
+        </Suspense>
       </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>

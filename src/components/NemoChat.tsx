@@ -114,7 +114,7 @@ function NemoAvatar({
           <span style={{ fontSize: size * 0.5 }} aria-hidden>🐠</span>
         ) : (
           <motion.img
-            src="/nemo/nemo-avatar.png"
+            src="/nemo/nemo-avatar.webp"
             alt=""
             aria-hidden
             onError={() => setBroken(true)}
