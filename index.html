@@ -17,26 +17,19 @@
     <link rel="dns-prefetch" href="https://dash.siamscuba.com" />
 
     <!--
-      Fonts: load in the <head> from the first byte (parallel with the app
-      bundle) instead of via a render-blocking @import inside the bundled CSS.
-      preconnect warms the TLS handshake; the stylesheet itself is loaded
-      non-blocking (media=print swap) so it never holds up first paint.
-      Keep &display=swap so text shows immediately in a fallback then swaps.
+      Self-hosted fonts (see src/fonts.css). Preload ONLY the hero <h1> weight
+      (Playfair Display 700, latin) so it downloads same-origin in the first
+      wave - this is the file the LCP was waiting on. Other weights/subsets
+      load from the bundled @font-face on demand. as=font preload requires the
+      crossorigin attribute even same-origin (fonts fetch in CORS mode).
     -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
-      media="print"
-      onload="this.media='all'"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/playfair-700-latin.woff2"
+      crossorigin
     />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
-      />
-    </noscript>
 
     <!--
       LCP hero preload. Mirrors the <picture> sources in UnderwaterHero so the

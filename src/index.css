@@ -1,7 +1,8 @@
-/* Fonts (Playfair Display + DM Sans) are loaded from index.html <head> via
-   preconnect + a non-blocking <link>, NOT a render-blocking @import here.
-   Importing them inside this Vite-bundled CSS made them load serially after
-   the JS->CSS chain, delaying the hero <h1> (LCP) font swap. */
+/* Self-hosted @font-face declarations (Vite inlines this local @import into
+   the main CSS bundle - one origin, no extra request, font-display: swap).
+   The hero <h1> weight (Playfair 700) is ALSO preloaded in index.html so it
+   arrives in the first wave - the LCP was gated on this font downloading. */
+@import './fonts.css';
 
 @tailwind base;
 @tailwind components;
