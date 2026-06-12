@@ -41,19 +41,20 @@ type Placement = {
   rotate: number;
 };
 
-// Option B - top/bottom bands pulled toward the centre (not the edges), so the
-// cards float in each section's breathing room above the heading and below the
-// content. Pattern repeats top,top,bottom,bottom so any 4-card window stays
-// balanced. Sections rotate through these via `startIndex` for variety.
+// Cards hug the OUTER side margins (left/right edges) so they never sit over the
+// section heading or the central content/widget - they decorate the gutters, not
+// the title. Pattern alternates left/right so any window stays balanced.
+// Sections rotate through these via `startIndex` for variety. Hidden below lg
+// (see container class) because narrow viewports have no side gutter to spare.
 const PRESETS: Placement[] = [
-  { pos: "top-16 left-[22%] w-48 sm:w-56", drift: [55, -45], rotate: -3 },
-  { pos: "top-10 right-[20%] w-48 sm:w-56", drift: [85, -55], rotate: 3 },
-  { pos: "bottom-12 left-[32%] w-48 sm:w-56", drift: [50, -60], rotate: -2 },
-  { pos: "bottom-16 right-[30%] w-48 sm:w-56", drift: [70, -40], rotate: 4 },
-  { pos: "top-12 left-[36%] w-44 sm:w-52", drift: [90, -50], rotate: 2 },
-  { pos: "top-20 right-[34%] w-44 sm:w-52", drift: [60, -75], rotate: -4 },
-  { pos: "bottom-20 left-[20%] w-48 sm:w-56", drift: [45, -55], rotate: 3 },
-  { pos: "bottom-10 right-[24%] w-48 sm:w-56", drift: [85, -35], rotate: -3 },
+  { pos: "top-16 left-[1%] w-44 xl:w-52", drift: [55, -45], rotate: -3 },
+  { pos: "top-10 right-[1%] w-44 xl:w-52", drift: [85, -55], rotate: 3 },
+  { pos: "bottom-12 left-[2%] w-44 xl:w-52", drift: [50, -60], rotate: -2 },
+  { pos: "bottom-16 right-[2%] w-44 xl:w-52", drift: [70, -40], rotate: 4 },
+  { pos: "top-1/2 left-[1%] w-40 xl:w-48", drift: [90, -50], rotate: 2 },
+  { pos: "top-1/2 right-[1%] w-40 xl:w-48", drift: [60, -75], rotate: -4 },
+  { pos: "bottom-20 left-[1%] w-44 xl:w-52", drift: [45, -55], rotate: 3 },
+  { pos: "bottom-10 right-[2%] w-44 xl:w-52", drift: [85, -35], rotate: -3 },
 ];
 
 const AmbientCard = ({
@@ -128,7 +129,7 @@ const AmbientReviews = ({
     <div
       ref={ref}
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden sm:block ${className}`}
+      className={`pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden lg:block ${className}`}
     >
       {placements.map((placement, i) => (
         <AmbientCard

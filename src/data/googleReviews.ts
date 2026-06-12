@@ -1,10 +1,9 @@
 // Google reviews for the ambient background layer (AmbientReviews.tsx).
 //
 // These are decorative, faded background cards scattered across the homepage.
-// PLACEHOLDERS - replace `text`/`name`/`country`/`date` with your real Google
-// reviews (copy from your Google Business profile). Keep `text` short (~1-2
-// lines) so the faded cards stay tidy. Add/remove freely; the layer cycles
-// through whatever is here.
+// Real reviews from the Siam Scuba Google Business profile, lightly trimmed to
+// 1-2 lines so the faded cards stay tidy. Keep `text` short. Add/remove freely;
+// the layer cycles through whatever is here.
 
 export type GoogleReview = {
   name: string;
@@ -16,73 +15,73 @@ export type GoogleReview = {
 
 export const googleReviews: GoogleReview[] = [
   {
-    name: "Emma W.",
-    country: "🇬🇧 United Kingdom",
-    text: "Best dive school on Koh Tao - tiny groups, the instructors actually care. Did my Open Water here and never felt rushed.",
+    name: "Sipra K.",
+    country: "🇳🇵 Nepal",
+    text: "Did my Open Water here with the most amazing instructor - so much learning, with so much love, care and patience. Highly recommend!",
+    rating: 5,
+    date: "March 2026",
+  },
+  {
+    name: "Alon S.",
+    country: "🇮🇱 Israel",
+    text: "This dive center is incredible. The level of professionalism is unmatched, yet they keep the vibes so much fun and full of energy.",
+    rating: 5,
+    date: "June 2026",
+  },
+  {
+    name: "Morganne V.",
+    country: "🇧🇪 Belgium",
+    text: "Had the best time doing my refresh and advanced course - great experience, great hospitality, funny, friendly and very professional staff!",
+    rating: 5,
+    date: "February 2026",
+  },
+  {
+    name: "Hod M.",
+    country: "🇮🇱 Israel",
+    text: "Finished my first and second star here - amazing, amazing and caring people. I enjoyed every single moment.",
+    rating: 5,
+    date: "June 2026",
+  },
+  {
+    name: "Lea C.",
+    country: "🇫🇷 France",
+    text: "Had the best time ever learning my PADI Open Water with Kate, she's the best! I felt safe and so much more confident in my diving.",
+    rating: 5,
+    date: "February 2026",
+  },
+  {
+    name: "Noam G.",
+    country: "🇮🇱 Israel",
+    text: "Amazing experience with Siam Scuba! 2 dives in 2 beautiful dive sites, with a lot of colourful fish and corals. Really recommend!",
+    rating: 5,
+    date: "June 2026",
+  },
+  {
+    name: "Mariana R.",
+    country: "🇲🇽 Mexico",
+    text: "John was a very good instructor, responsible, and explained everything very well. Diving with this center was 10/10! Incredible experience.",
+    rating: 5,
+    date: "November 2025",
+  },
+  {
+    name: "Idan E.",
+    country: "🇮🇱 Israel",
+    text: "Thank you for a fun and educational experience. Did a fun dive and refresh with Lea - she was awesome, responsible and patient.",
     rating: 5,
     date: "May 2026",
   },
   {
-    name: "Marco B.",
-    country: "🇮🇹 Italy",
-    text: "Professional, friendly and genuinely fun. The boats are beautiful and the 4:1 ratio makes a huge difference underwater.",
-    rating: 5,
-    date: "April 2026",
-  },
-  {
     name: "Sophie L.",
-    country: "🇫🇷 France",
-    text: "From the first message to the last dive everything was perfect. Patient instructors, great equipment, unforgettable.",
+    country: "🇬🇧 United Kingdom",
+    text: "Had the best time learning to dive with John! We really valued his patient teaching style and felt safe and at ease the whole time.",
     rating: 5,
-    date: "April 2026",
+    date: "June 2026",
   },
   {
-    name: "Daniel K.",
-    country: "🇩🇪 Germany",
-    text: "Got Advanced certified in three days. Small classes, real attention, and the Sail Rock trip was the highlight of Thailand.",
-    rating: 5,
-    date: "March 2026",
-  },
-  {
-    name: "Ava T.",
-    country: "🇦🇺 Australia",
-    text: "Could not recommend Siam Scuba more. Felt safe the whole time and laughed all day - the nicest crew on the island.",
-    rating: 5,
-    date: "March 2026",
-  },
-  {
-    name: "Noa P.",
+    name: "Racheli A.",
     country: "🇮🇱 Israel",
-    text: "First time diving and they made it so easy. Calm, clear, super welcoming. Already planning to come back for Divemaster.",
+    text: "Went for an introductory dive, a little worried as it was my first time. The team was simply amazing - patient and supportive. Unforgettable!",
     rating: 5,
-    date: "February 2026",
-  },
-  {
-    name: "James R.",
-    country: "🇺🇸 United States",
-    text: "Outstanding. The personal attention you get here just doesn't exist at the bigger shops. Worth every baht.",
-    rating: 5,
-    date: "February 2026",
-  },
-  {
-    name: "Lena S.",
-    country: "🇳🇱 Netherlands",
-    text: "Amazing experience from start to finish. Beautiful reefs, brilliant instructors, and two gorgeous private boats.",
-    rating: 5,
-    date: "January 2026",
-  },
-  {
-    name: "Carlos M.",
-    country: "🇪🇸 Spain",
-    text: "The flexible schedule let us dive around our trip. Friendly, relaxed, and seriously good in the water. Five stars.",
-    rating: 5,
-    date: "January 2026",
-  },
-  {
-    name: "Yuki H.",
-    country: "🇯🇵 Japan",
-    text: "Such a warm little dive family. They remembered our names, our nerves, and made every dive special. Thank you!",
-    rating: 5,
-    date: "December 2025",
+    date: "May 2026",
   },
 ];

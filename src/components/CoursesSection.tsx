@@ -31,7 +31,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       label: t("courses_basic"),
       description: t("courses_basic_desc"),
       courses: [
-        { icon: Fish, title: t("course_dsd"), dialogKey: "Discover Scuba Diving", subtitle: "One Day Experience", price: "2,600", duration: t("dur_1_day"), highlights: [t("hl_no_exp"), t("hl_pool_ocean"), t("hl_padi_instructor")], hasDetails: true },
+        { icon: Fish, title: t("course_dsd"), dialogKey: "Discover Scuba Diving", subtitle: "One Day Experience", price: "2,600", duration: t("dur_1_day"), highlights: [t("hl_no_exp"), t("hl_dsd_dives"), t("hl_padi_instructor")], hasDetails: true },
         { icon: BookOpen, title: t("course_ow"), dialogKey: "Open Water Diver", price: "12,000", duration: t("dur_2_5_days"), highlights: [t("hl_18m"), t("hl_lifetime"), t("hl_4_dives")], featured: true, hasDetails: true },
         { icon: Fish, title: t("course_bubble"), dialogKey: "Bubble Maker", price: "3,800", duration: t("dur_1_day"), highlights: [t("hl_children"), t("hl_fun_intro"), t("hl_safe")], hasDetails: true },
         { icon: Waves, title: t("course_review"), dialogKey: "Scuba Review", price: "2,500", duration: t("dur_1_day"), highlights: [t("hl_review_refresh"), t("hl_review_2dives"), t("hl_review_instructor")], hasDetails: true },
