@@ -335,12 +335,8 @@ const NemoChat = () => {
       setInput("");
       setLoading(true);
 
-      // Surface the lead-capture prompt once the conversation has legs
-      // (>= 2 user turns) and we haven't shown/submitted it yet.
-      const userTurns = next.filter((m) => m.role === "user").length;
-      if (userTurns >= 2 && leadStatus === "idle" && !showLeadForm) {
-        setShowLeadForm(true);
-      }
+      // Lead form is opened ONLY by explicit user click on the nudge button
+      // below - never auto-popped, so the conversation never feels pressured.
 
       try {
         const res = await fetch("/api/chat", {
