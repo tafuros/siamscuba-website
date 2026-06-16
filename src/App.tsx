@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, useLocation } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 import CookieConsent from "./components/CookieConsent";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
 import { trackPageView } from "@/utils/tracking";
@@ -56,6 +57,7 @@ const App = () => (
         <RouteTracker />
         <CookieConsent />
         <SpeedInsights />
+        <Analytics />
         <main id="main-content">
           <Suspense fallback={<PageFallback />}>
             <Outlet />
