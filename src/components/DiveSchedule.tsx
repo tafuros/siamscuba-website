@@ -135,7 +135,7 @@ const DiveSchedule = () => {
 
         <div className="mt-auto pt-6 flex items-center justify-between">
           <div>
-            <span className="text-2xl font-bold text-foreground font-display">฿1,800</span>
+            <span className="text-2xl font-bold text-foreground font-display">฿2,000</span>
             <span className="text-sm text-muted-foreground ml-1">/ person</span>
           </div>
           <Button asChild className="rounded-full bg-accent hover:bg-accent/90 text-accent-foreground px-6">
@@ -172,7 +172,7 @@ const DiveSchedule = () => {
 
         <div className="mt-auto pt-6 flex items-center justify-between">
           <div>
-            <span className="text-2xl font-bold text-foreground font-display">฿1,800</span>
+            <span className="text-2xl font-bold text-foreground font-display">฿2,000</span>
             <span className="text-sm text-muted-foreground ml-1">/ person</span>
           </div>
           <Button asChild className="rounded-full bg-accent hover:bg-accent/90 text-accent-foreground px-6">
