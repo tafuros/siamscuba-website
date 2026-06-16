@@ -1,10 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Send, X, MessageCircle } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { Send, X, MessageCircle, Sailboat, GraduationCap } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
-import { trackWhatsAppClick } from "@/utils/tracking";
+import {
+  trackWhatsAppClick,
+  trackChatOpen,
+  trackChatEngaged,
+  trackChatCtaClick,
+  submitChatLead,
+} from "@/utils/tracking";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -16,6 +22,21 @@ type Copy = {
   wa: string;
   error: string;
   suggestions: { emoji: string; label: string }[];
+  // Persistent CTA row
+  ctaFunDive: string;
+  ctaWhatsApp: string;
+  ctaCourses: string;
+  // Lead capture
+  leadPrompt: string;
+  leadCta: string;
+  leadName: string;
+  leadPhone: string;
+  leadSubmit: string;
+  leadSuccess: string;
+  leadError: string;
+  // Teaser bubble
+  teaser: string;
+  teaserKohTao: string;
 };
 
 const COPY: Record<string, Copy> = {
@@ -32,6 +53,18 @@ const COPY: Record<string, Copy> = {
       { emoji: "🌊", label: "Which dive sites do you go to?" },
       { emoji: "🔄", label: "I haven't dived in a while" },
     ],
+    ctaFunDive: "Book a fun dive",
+    ctaWhatsApp: "WhatsApp",
+    ctaCourses: "See courses",
+    leadPrompt: "Want us to hold a spot? Leave your name and WhatsApp number and the team will reach out.",
+    leadCta: "Leave your WhatsApp number",
+    leadName: "Your name",
+    leadPhone: "WhatsApp number (e.g. +66...)",
+    leadSubmit: "Send to the team",
+    leadSuccess: "Got it! 🐠 The team will message you on WhatsApp shortly.",
+    leadError: "Couldn't send that. Please try WhatsApp instead 🫧",
+    teaser: "Diving in Koh Tao? I can help 🐠",
+    teaserKohTao: "Diving Koh Tao? I can check dates 🤿",
   },
   he: {
     pill: "שאל את נמו",
@@ -46,6 +79,18 @@ const COPY: Record<string, Copy> = {
       { emoji: "🌊", label: "באיזה אתרים יוצאים לצלול?" },
       { emoji: "🔄", label: "לא צללתי הרבה זמן" },
     ],
+    ctaFunDive: "הזמנת צלילה",
+    ctaWhatsApp: "וואטסאפ",
+    ctaCourses: "קורסים",
+    leadPrompt: "רוצים שנשמור לכם מקום? השאירו שם ומספר וואטסאפ והצוות יחזור אליכם.",
+    leadCta: "השאירו מספר וואטסאפ",
+    leadName: "השם שלכם",
+    leadPhone: "מספר וואטסאפ (למשל +972...)",
+    leadSubmit: "שליחה לצוות",
+    leadSuccess: "קיבלנו! 🐠 הצוות יכתוב לכם בוואטסאפ בקרוב.",
+    leadError: "לא הצלחנו לשלוח. נסו דרך וואטסאפ 🫧",
+    teaser: "צוללים בקוטאו? אני אשמח לעזור 🐠",
+    teaserKohTao: "צוללים בקוטאו? אני יכול לבדוק תאריכים 🤿",
   },
   es: {
     pill: "Pregunta a Nemo",
@@ -60,8 +105,34 @@ const COPY: Record<string, Copy> = {
       { emoji: "🌊", label: "¿A qué sitios de buceo vais?" },
       { emoji: "🔄", label: "Hace tiempo que no buceo" },
     ],
+    ctaFunDive: "Reserva una inmersión",
+    ctaWhatsApp: "WhatsApp",
+    ctaCourses: "Ver cursos",
+    leadPrompt: "¿Quieres que te guardemos una plaza? Deja tu nombre y número de WhatsApp y el equipo te escribirá.",
+    leadCta: "Deja tu número de WhatsApp",
+    leadName: "Tu nombre",
+    leadPhone: "Número de WhatsApp (p. ej. +34...)",
+    leadSubmit: "Enviar al equipo",
+    leadSuccess: "¡Listo! 🐠 El equipo te escribirá por WhatsApp en breve.",
+    leadError: "No se pudo enviar. Prueba por WhatsApp 🫧",
+    teaser: "¿Buceo en Koh Tao? Puedo ayudarte 🐠",
+    teaserKohTao: "¿Buceo en Koh Tao? Puedo mirar fechas 🤿",
   },
 };
+
+// Per-route course hint for the lead payload, so a lead captured on a specific
+// lander carries the right course tag for DiveOS + offline-conversion upload.
+function courseFromPath(pathname: string): string | null {
+  const p = pathname.toLowerCase();
+  if (/open-water/.test(p)) return "open-water";
+  if (/discover-scuba/.test(p)) return "discover-scuba";
+  if (/fun-dive/.test(p)) return "fun-dive";
+  if (/sail-rock/.test(p)) return "sail-rock";
+  if (/koh-tao-diving/.test(p)) return "fun-dive";
+  return null;
+}
+
+const TEASER_DISMISSED_KEY = "nemo_teaser_dismissed";
 
 // A few bubbles that rise inside the avatar tank (static config - no randomness).
 const AVATAR_BUBBLES = [
@@ -137,12 +208,25 @@ const NemoChat = () => {
   const location = useLocation();
   const copy = COPY[language] ?? COPY.en;
   const isRtl = language === "he";
+  const isKohTao = /koh-tao-diving/.test(location.pathname);
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Teaser bubble (dismissible, once per session).
+  const [showTeaser, setShowTeaser] = useState(false);
+
+  // Lead-capture mini-form state.
+  const [showLeadForm, setShowLeadForm] = useState(false);
+  const [leadName, setLeadName] = useState("");
+  const [leadPhone, setLeadPhone] = useState("");
+  const [leadStatus, setLeadStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  // Fired-once guards.
+  const engagedRef = useRef(false);
 
   const waHref = buildWhatsAppLink({
     lang: normalizeLang(language),
@@ -151,7 +235,61 @@ const NemoChat = () => {
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, loading]);
+  }, [messages, loading, showLeadForm]);
+
+  // ── Teaser bubble trigger ──────────────────────────────────────────────────
+  // Show a small, dismissible teaser after dwell time (or 50% scroll), once per
+  // session. On koh-tao landers fire faster with koh-tao copy.
+  useEffect(() => {
+    if (open) return;
+    let dismissed = false;
+    try {
+      dismissed = sessionStorage.getItem(TEASER_DISMISSED_KEY) === "1";
+    } catch {
+      /* sessionStorage unavailable - just skip the teaser */
+    }
+    if (dismissed) return;
+
+    const dwellMs = isKohTao ? 5000 : 10000;
+    let shown = false;
+    const reveal = () => {
+      if (shown || open) return;
+      shown = true;
+      setShowTeaser(true);
+    };
+
+    const timer = window.setTimeout(reveal, dwellMs);
+    const onScroll = () => {
+      const scrolled = window.scrollY + window.innerHeight;
+      if (scrolled >= document.documentElement.scrollHeight * 0.5) reveal();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [open, isKohTao]);
+
+  const dismissTeaser = useCallback(() => {
+    setShowTeaser(false);
+    try {
+      sessionStorage.setItem(TEASER_DISMISSED_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const openChat = useCallback(
+    (source: "pill" | "teaser") => {
+      setOpen(true);
+      trackChatOpen(source);
+      // Opening from the teaser also retires it for the session.
+      if (source === "teaser") dismissTeaser();
+      else setShowTeaser(false);
+    },
+    [dismissTeaser],
+  );
 
   // Lock page scroll while the chat is open so finger-drags move the chat (or
   // nothing) instead of the page behind it. The `top: -scrollY` trick keeps the
@@ -185,10 +323,25 @@ const NemoChat = () => {
     async (text: string) => {
       const clean = text.trim();
       if (!clean || loading) return;
+
+      // First user message of the session = engagement signal.
+      if (!engagedRef.current) {
+        engagedRef.current = true;
+        trackChatEngaged();
+      }
+
       const next = [...messages, { role: "user" as const, content: clean }];
       setMessages(next);
       setInput("");
       setLoading(true);
+
+      // Surface the lead-capture prompt once the conversation has legs
+      // (>= 2 user turns) and we haven't shown/submitted it yet.
+      const userTurns = next.filter((m) => m.role === "user").length;
+      if (userTurns >= 2 && leadStatus === "idle" && !showLeadForm) {
+        setShowLeadForm(true);
+      }
+
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
@@ -204,25 +357,78 @@ const NemoChat = () => {
         setLoading(false);
       }
     },
-    [messages, loading, language, copy.error],
+    [messages, loading, language, copy.error, leadStatus, showLeadForm],
+  );
+
+  const lastUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content ?? null;
+
+  const submitLead = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (leadStatus === "sending") return;
+      const phone = leadPhone.trim();
+      if (!phone) return;
+      setLeadStatus("sending");
+      const result = await submitChatLead({
+        phone,
+        name: leadName.trim() || null,
+        lang: normalizeLang(language),
+        course: courseFromPath(location.pathname),
+        message: lastUserMessage,
+      });
+      setLeadStatus(result.ok ? "sent" : "error");
+    },
+    [leadStatus, leadPhone, leadName, language, location.pathname, lastUserMessage],
   );
 
   return (
     <div dir={isRtl ? "rtl" : "ltr"}>
-      {/* ── Floating pill trigger ── */}
+      {/* ── Floating pill trigger + teaser bubble ── */}
       <AnimatePresence>
         {!open && (
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 10 }}
-            onClick={() => setOpen(true)}
-            aria-label={copy.pill}
-            className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border border-border bg-white py-2 pl-2 pr-4 shadow-lg transition-shadow hover:shadow-xl"
+            className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2"
           >
-            <NemoAvatar size={40} />
-            <span className="text-sm font-bold text-ocean-deep">{copy.pill}</span>
-          </motion.button>
+            {/* Teaser bubble */}
+            <AnimatePresence>
+              {showTeaser && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.92 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.92 }}
+                  transition={{ type: "spring", stiffness: 360, damping: 26 }}
+                  className="relative max-w-[230px] rounded-2xl rounded-br-sm border border-border bg-white px-3 py-2.5 pe-7 text-[13px] font-semibold text-ocean-deep shadow-xl"
+                >
+                  <button
+                    onClick={() => openChat("teaser")}
+                    className="text-start"
+                    aria-label={isKohTao ? copy.teaserKohTao : copy.teaser}
+                  >
+                    {isKohTao ? copy.teaserKohTao : copy.teaser}
+                  </button>
+                  <button
+                    onClick={dismissTeaser}
+                    aria-label="Dismiss"
+                    className="absolute end-1.5 top-1.5 rounded-full p-0.5 text-muted-foreground/70 transition-colors hover:bg-secondary hover:text-foreground"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <button
+              onClick={() => openChat("pill")}
+              aria-label={copy.pill}
+              className="flex items-center gap-2 rounded-full border border-border bg-white py-2 pl-2 pr-4 shadow-lg transition-shadow hover:shadow-xl"
+            >
+              <NemoAvatar size={40} />
+              <span className="text-sm font-bold text-ocean-deep">{copy.pill}</span>
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -248,6 +454,39 @@ const NemoChat = () => {
               <NemoAvatar size={84} active={loading} className="mx-auto" />
               <div className="mt-2 text-base font-extrabold">{copy.title}</div>
               <div className="text-xs text-white/90">{copy.sub}</div>
+            </div>
+
+            {/* Persistent CTA row - NOT LLM-dependent. Each fires its own event. */}
+            <div className="grid grid-cols-3 gap-1.5 border-b border-border bg-secondary/30 px-2.5 py-2">
+              <Link
+                to="/fun-dive-booking"
+                onClick={() => trackChatCtaClick("fun_dive")}
+                className="flex flex-col items-center gap-1 rounded-lg border border-border bg-white px-1 py-1.5 text-center text-[11px] font-semibold leading-tight text-ocean-deep transition-colors hover:border-coral hover:bg-coral/5"
+              >
+                <Sailboat className="h-4 w-4 text-coral" />
+                {copy.ctaFunDive}
+              </Link>
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackChatCtaClick("whatsapp");
+                  trackWhatsAppClick({ location: "nemo-chat-cta", url: waHref });
+                }}
+                className="flex flex-col items-center gap-1 rounded-lg border border-border bg-white px-1 py-1.5 text-center text-[11px] font-semibold leading-tight text-ocean-deep transition-colors hover:border-[#25D366] hover:bg-[#25D366]/5"
+              >
+                <MessageCircle className="h-4 w-4 text-[#25D366]" />
+                {copy.ctaWhatsApp}
+              </a>
+              <a
+                href="/#courses"
+                onClick={() => trackChatCtaClick("courses")}
+                className="flex flex-col items-center gap-1 rounded-lg border border-border bg-white px-1 py-1.5 text-center text-[11px] font-semibold leading-tight text-ocean-deep transition-colors hover:border-coral hover:bg-coral/5"
+              >
+                <GraduationCap className="h-4 w-4 text-coral" />
+                {copy.ctaCourses}
+              </a>
             </div>
 
             {/* body */}
@@ -292,19 +531,59 @@ const NemoChat = () => {
                   ))}
                 </div>
               )}
+
+              {/* Lead-capture mini-form (inline, in the message stream) */}
+              {showLeadForm && leadStatus !== "sent" && (
+                <div className="me-auto w-[92%] rounded-2xl rounded-bl-sm border border-coral/40 bg-coral/5 p-3 shadow-sm">
+                  <p className="mb-2 text-[12.5px] font-medium leading-snug text-ocean-deep">
+                    {copy.leadPrompt}
+                  </p>
+                  <form onSubmit={submitLead} className="space-y-2">
+                    <input
+                      value={leadName}
+                      onChange={(e) => setLeadName(e.target.value)}
+                      placeholder={copy.leadName}
+                      aria-label={copy.leadName}
+                      className="w-full rounded-lg border border-border bg-white px-2.5 py-2 text-[13px] text-foreground outline-none focus:border-coral"
+                    />
+                    <input
+                      value={leadPhone}
+                      onChange={(e) => setLeadPhone(e.target.value)}
+                      placeholder={copy.leadPhone}
+                      aria-label={copy.leadPhone}
+                      inputMode="tel"
+                      className="w-full rounded-lg border border-border bg-white px-2.5 py-2 text-[13px] text-foreground outline-none focus:border-coral"
+                    />
+                    {leadStatus === "error" && (
+                      <p className="text-[12px] font-medium text-red-600">{copy.leadError}</p>
+                    )}
+                    <button
+                      type="submit"
+                      disabled={!leadPhone.trim() || leadStatus === "sending"}
+                      className="w-full rounded-lg bg-coral py-2 text-[13px] font-bold text-white transition-opacity disabled:opacity-40"
+                    >
+                      {copy.leadSubmit}
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {leadStatus === "sent" && (
+                <div className="me-auto max-w-[85%] rounded-2xl rounded-bl-sm border border-coral/40 bg-coral/5 px-3 py-2 text-[13px] font-medium text-ocean-deep shadow-sm">
+                  {copy.leadSuccess}
+                </div>
+              )}
             </div>
 
-            {/* WhatsApp handoff */}
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick({ location: "nemo-chat", url: waHref })}
-              className="mx-3 mb-2 flex items-center justify-center gap-2 rounded-[13px] bg-[#25D366] py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90"
-            >
-              <MessageCircle className="h-4 w-4" />
-              {copy.wa}
-            </a>
+            {/* Soft lead-capture nudge (shown before the form auto-opens) */}
+            {!showLeadForm && leadStatus === "idle" && messages.length > 0 && (
+              <button
+                onClick={() => setShowLeadForm(true)}
+                className="mx-3 mb-1 rounded-[13px] border border-dashed border-coral/50 py-2 text-[12.5px] font-semibold text-coral transition-colors hover:bg-coral/5"
+              >
+                {copy.leadCta}
+              </button>
+            )}
 
             {/* input */}
             <form

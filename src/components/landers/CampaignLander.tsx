@@ -56,13 +56,22 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
     [offer, lang]
   );
 
-  // For fun-dive landers the primary CTA goes to the existing iframe page.
-  // For DSD / OWD there is no self-serve booking — both CTAs go to WhatsApp.
-  const primaryHref =
-    offer === "fun-dive"
-      ? `${FUN_DIVE_BOOKING_PATH}?utm_passthrough=1`
-      : whatsappHref;
-  const primaryIsExternal = offer !== "fun-dive";
+  // For fun-dive + koh-tao landers (certified divers) the primary CTA goes to
+  // the existing booking iframe page, where the postMessage->lead/purchase
+  // conversion tracking is wired. For DSD / OWD there is no self-serve booking,
+  // so both CTAs go to WhatsApp.
+  const usesBookingIframe = offer === "fun-dive" || offer === "koh-tao";
+  const primaryHref = usesBookingIframe
+    ? `${FUN_DIVE_BOOKING_PATH}?utm_passthrough=1`
+    : whatsappHref;
+  const primaryIsExternal = !usesBookingIframe;
+
+  // Per-offer WhatsApp click locations. The koh-tao conquest lander reports its
+  // own slug-prefixed locations (e.g. koh_tao_diving_hero) so its conquest
+  // traffic is distinguishable in analytics; other landers keep their existing
+  // lander_* labels untouched.
+  const waLocation = (slot: "hero" | "hero_secondary" | "cta_strip" | "closing") =>
+    offer === "koh-tao" ? `koh_tao_diving_${slot}` : `lander_${slot}`;
 
   const onWhatsApp = (location: string) => () =>
     trackWhatsAppClick({ location, url: whatsappHref });
@@ -76,7 +85,22 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
 
       {/* Hero */}
       <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/80 via-ocean-deep/60 to-background" />
+        {/* TODO: swap hero image when photographyAI shots are processed (boats/, sail-rock/, happy-divers/). */}
+        {copy.heroImage && (
+          <img
+            src={copy.heroImage}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
+        <div
+          className={`absolute inset-0 ${
+            copy.heroImage
+              ? "bg-gradient-to-b from-ocean-deep/85 via-ocean-deep/70 to-background"
+              : "bg-gradient-to-b from-ocean-deep/80 via-ocean-deep/60 to-background"
+          }`}
+        />
         <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -98,7 +122,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                   href={primaryHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={onWhatsApp("lander_hero")}
+                  onClick={onWhatsApp(waLocation("hero"))}
                   className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm md:text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg transition-all hover:-translate-y-0.5"
                 >
                   <MessageCircle className="h-4 w-4" />
@@ -114,7 +138,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={onWhatsApp("lander_hero_secondary")}
+                  onClick={onWhatsApp(waLocation("hero_secondary"))}
                   className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm md:text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg transition-all hover:-translate-y-0.5"
                 >
                   <MessageCircle className="h-4 w-4" />
@@ -185,6 +209,10 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                       alt="PADI 5 Star Dive Center"
                       className="h-16 w-auto mb-3 object-contain"
                     />
+                  ) : tile.emoji ? (
+                    <span className="text-4xl mb-3 leading-none" aria-hidden="true">
+                      {tile.emoji}
+                    </span>
                   ) : (
                     <Icon className="h-8 w-8 mb-3 text-accent" />
                   )}
@@ -282,7 +310,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                 href={primaryHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={onWhatsApp("lander_cta_strip")}
+                onClick={onWhatsApp(waLocation("cta_strip"))}
                 className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm md:text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg"
               >
                 <MessageCircle className="h-4 w-4" />
@@ -302,7 +330,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={onWhatsApp("lander_cta_strip")}
+                  onClick={onWhatsApp(waLocation("cta_strip"))}
                   className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm md:text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg"
                 >
                   <MessageCircle className="h-4 w-4" />
@@ -338,7 +366,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={onWhatsApp("lander_closing")}
+            onClick={onWhatsApp(waLocation("closing"))}
             className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg"
           >
             <MessageCircle className="h-5 w-5" />

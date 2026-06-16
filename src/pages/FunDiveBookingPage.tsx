@@ -40,9 +40,28 @@ const FunDiveBookingPage = () => {
       if (!data || typeof data !== "object") return;
 
       // CANONICAL CONTRACT (matches diveos customer-wizard emitter):
-      // Lead:     { type: "SIAM_BOOKING_LEAD", product?, courseStartDate?, schemaVersion: 1 }
-      // Complete: { type: "SIAM_BOOKING_COMPLETE", bookingId?, value?, currency?, lead?, schemaVersion: 1 }
+      // Lead:     { type: "SIAM_BOOKING_LEAD", product?, courseStartDate?, email?, phone?, schemaVersion: 1 }
+      // Complete: { type: "SIAM_BOOKING_COMPLETE", bookingId?, value?, currency?, email?, phone?, lead?, schemaVersion: 1 }
       // All conversion fields are read from the TOP LEVEL of the message.
+      //
+      // ENHANCED CONVERSIONS: email + phone are passed through to the Google Ads
+      // conversion (gtag user_data) so Google can hash + match the conversion to
+      // the ad click. They are OPTIONAL here - if DiveOS hasn't added them yet we
+      // simply fire the conversion without EC data (status quo). For email we
+      // prefer top-level data.email, falling back to data.lead.email; same for
+      // phone. They are read defensively because data.lead is a free-form blob.
+
+      // Pull an enhanced-conversion identifier from top level, falling back to
+      // the lead blob. Returns undefined when absent so EC is simply skipped.
+      const ecString = (topKey: string, leadKey: string): string | undefined => {
+        const top = (data as Record<string, unknown>)[topKey];
+        if (typeof top === "string" && top.trim() !== "") return top;
+        const fromLead = (data?.lead as Record<string, unknown> | undefined)?.[leadKey];
+        if (typeof fromLead === "string" && fromLead.trim() !== "") return fromLead;
+        return undefined;
+      };
+      const ecEmail = ecString("email", "email");
+      const ecPhone = ecString("phone", "phone");
 
       if (data.type === "SIAM_BOOKING_LEAD") {
         console.log("Booking lead:", data);
@@ -58,6 +77,8 @@ const FunDiveBookingPage = () => {
           form_name: "booking_wizard",
           dive_date: diveDate,
           product,
+          email: ecEmail,
+          phone: ecPhone,
         });
       }
 
@@ -95,11 +116,15 @@ const FunDiveBookingPage = () => {
             value,
             currency,
             item_name: "Dive Booking",
+            email: ecEmail,
+            phone: ecPhone,
           });
         } else {
           trackBookingPayLater({
             transaction_id: transactionId,
             product,
+            email: ecEmail,
+            phone: ecPhone,
           });
         }
         navigate("/booking-confirmed", { state: data.lead ?? null });

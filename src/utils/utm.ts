@@ -8,7 +8,29 @@ export interface UtmParams {
 }
 
 const STORAGE_KEY = "siam_utm";
+const GCLID_KEY = "siam_gclid";
 const KEYS: (keyof UtmParams)[] = ["source", "medium", "campaign", "content", "term"];
+
+// Google click id. Captured first-touch on landing (alongside UTMs) and read
+// later by the lead-capture POST so a paid Google Ads click that becomes a
+// booking can be uploaded back to Google Ads as an offline conversion.
+// See lead-capture-contract.md.
+export function captureGclidFromUrl(): void {
+  if (typeof window === "undefined") return;
+  const gclid = new URLSearchParams(window.location.search).get("gclid");
+  if (!gclid) return;
+  if (sessionStorage.getItem(GCLID_KEY)) return; // first-touch wins
+  sessionStorage.setItem(GCLID_KEY, gclid);
+}
+
+export function getStoredGclid(): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return sessionStorage.getItem(GCLID_KEY);
+  } catch {
+    return null;
+  }
+}
 
 // First-touch wins: scoped to sessionStorage so a new tab is correctly attributed.
 export function captureUtmFromUrl(): void {

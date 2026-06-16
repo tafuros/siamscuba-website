@@ -137,6 +137,21 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/landers/FunDiveHePage.tsx",
       },
       {
+        path: "koh-tao-diving",
+        lazy: lazyDefault(() => import("./pages/landers/KohTaoEnPage")),
+        entry: "src/pages/landers/KohTaoEnPage.tsx",
+      },
+      {
+        path: "es/koh-tao-diving",
+        lazy: lazyDefault(() => import("./pages/landers/KohTaoEsPage")),
+        entry: "src/pages/landers/KohTaoEsPage.tsx",
+      },
+      {
+        path: "he/koh-tao-diving",
+        lazy: lazyDefault(() => import("./pages/landers/KohTaoHePage")),
+        entry: "src/pages/landers/KohTaoHePage.tsx",
+      },
+      {
         path: "accessibility",
         lazy: lazyDefault(() => import("./pages/Accessibility")),
         entry: "src/pages/Accessibility.tsx",

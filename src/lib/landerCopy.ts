@@ -6,7 +6,7 @@
 // because campaign landers must render the AD's language regardless of any
 // returning-visitor preference stored in localStorage.
 
-export type Offer = "dsd" | "owd" | "fun-dive";
+export type Offer = "dsd" | "owd" | "fun-dive" | "koh-tao";
 export type Lang = "en" | "es" | "he";
 
 export interface FaqItem {
@@ -35,6 +35,9 @@ export interface UspTile {
   icon: "shield" | "users" | "boat" | "calendar" | "award" | "heart";
   // When set, the tile renders this brand badge image instead of the lucide icon.
   badge?: "padi5star";
+  // When set, the tile renders this colorful emoji instead of the monochrome
+  // lucide icon (used by the koh-tao conquest lander). `badge` still wins.
+  emoji?: string;
   title: string;
   body: string;
 }
@@ -42,6 +45,12 @@ export interface UspTile {
 export interface LanderCopy {
   seoTitle: string;
   seoDescription: string;
+  /**
+   * Optional hero background image (absolute path under /public). When set, the
+   * lander renders it behind the hero gradient instead of the plain gradient.
+   * Used by the koh-tao conquest lander; existing landers leave it unset.
+   */
+  heroImage?: string;
   heroBadge: string;
   heroH1: string;
   heroSubhead: string;
@@ -945,10 +954,367 @@ const FUN_HE: LanderCopy = {
   closingCtaSubhead: "לחצו למטה להזמנה — או WhatsApp עם התאריכים המועדפים.",
 };
 
+// ---------- Koh Tao Diving (conquest / category campaign) ----------
+// Landing page for competitor-conquest + category ad clicks. Sells "why Siam
+// Scuba" hard against the big island shops. Audience is certified divers
+// comparing shops, so the booking CTA reuses the fun-dive iframe flow.
+
+const KOH_TAO_EN: LanderCopy = {
+  seoTitle: "Koh Tao Diving, Done Right – Small Groups, Private Boat | Siam Scuba",
+  seoDescription:
+    "Dive Koh Tao with Siam Scuba: small groups (max 4 per instructor), our own private boat with new gear, PADI 5-Star Center, 4.9 on Google (845) and 5.0 on TripAdvisor (776). Reserve in minutes on WhatsApp.",
+  // TODO: swap hero image when photographyAI boats/ shots are processed.
+  heroImage: "/hero/turtle-1920.webp",
+  heroBadge: "PADI 5-Star Dive Center · Koh Tao",
+  heroH1: "Koh Tao Diving, Done Right",
+  heroSubhead:
+    "Small groups, our own private boat, and new gear — not a 20-person cattle dive on a shared boat. This is how diving on Koh Tao is supposed to feel.",
+  ctaPrimary: "Book your dive",
+  ctaSecondary: "Or chat on WhatsApp",
+  uspHeadline: "Why Divers Choose Siam 🤿",
+  uspTiles: [
+    {
+      icon: "users",
+      emoji: "👥",
+      title: "Small groups, max 4 per instructor",
+      body: "Real attention and real safety. You're a diver, not a number on a packed boat.",
+    },
+    {
+      icon: "boat",
+      emoji: "🛥️",
+      title: "Our own private boat + new gear",
+      body: "We don't share boats with other shops. Modern, well-maintained equipment, and the schedule actually runs on time.",
+    },
+    {
+      icon: "shield",
+      badge: "padi5star",
+      title: "PADI 5-Star Center",
+      body: "Top PADI standards on Koh Tao, with a fraction of the crowd of the big factory shops.",
+    },
+    {
+      icon: "award",
+      emoji: "🌟",
+      title: "4.9 Google · 5.0 TripAdvisor",
+      body: "One of the most-reviewed dive shops on the island. Read why divers keep coming back.",
+    },
+    {
+      icon: "heart",
+      emoji: "🗣️",
+      title: "Instructors in EN / ES / HE",
+      body: "Brief, dive, and debrief in your own language — English, Spanish or Hebrew.",
+    },
+    {
+      icon: "calendar",
+      emoji: "✅",
+      title: "Easy booking on WhatsApp",
+      body: "Message us, pick your day, and a small deposit secures your spot. We reply within minutes.",
+    },
+  ],
+  pricingHeadline: "Pricing",
+  pricing: {
+    price: "from 2,000 THB",
+    perWhat: "2-tank half-day · Sail Rock full-day 3,800 THB",
+    includes: [
+      "Guided dives with a pro dive guide",
+      "All gear (BCD, regulator, mask, fins, wetsuit) — new and well-maintained",
+      "Full air tank (180-200 bar), tanks and weights",
+      "Fresh fruit and drinks on our private boat",
+      "Dive insurance",
+      "Sail Rock full-day: breakfast and lunch included",
+    ],
+    excludes: ["Hotel pickup", "GoPro rental", "Underwater photos (add-on)"],
+  },
+  socialProofHeadline: "4.9 on Google (845) · 5.0 on TripAdvisor (776).",
+  socialProofSubhead: "See what divers say after diving Koh Tao the Siam Scuba way.",
+  whatYouDoHeadline: "The dives you came to Koh Tao for",
+  whatYouDoSubhead:
+    "We pick dive sites daily based on the weather ⛅, where visibility is best, and where the gentle giant was last spotted - Koh Tao's whale sharks.",
+  diveSites: [
+    {
+      name: "Sail Rock",
+      blurb: "The best dive in the Gulf. A 6m chimney swim-through, huge schools, and whale sharks in season. Full-day trip on our boat.",
+    },
+    {
+      name: "Chumphon Pinnacle",
+      blurb: "Koh Tao's big-fish site. Whale shark sightings in season, schools of barracuda and batfish year-round.",
+    },
+    {
+      name: "Twins",
+      blurb: "Two pinnacles on a sandy bottom, easy 12-18m. Great for buoyancy work and macro spotting.",
+    },
+    {
+      name: "Shark Island",
+      blurb: "Wall dive on the south side. Reef sharks, turtles and anemones — usually a relaxed second dive.",
+    },
+  ],
+  ctaStripHeadline: "Dive Koh Tao the way it should be",
+  ctaStripSubhead: "Pick your day and reserve your spot with a small deposit. We confirm the same day.",
+  faqHeadline: "Frequently asked",
+  faqItems: [
+    {
+      q: "Which certifications do you accept?",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — anything mainstream. Bring your card or have a digital copy ready.",
+    },
+    {
+      q: "Do I really get a private boat and small group?",
+      a: "Yes. We run our own boat and keep groups small (max 4 per instructor on courses), so you're never crammed onto a shared 20-diver trip.",
+    },
+    {
+      q: "I haven't dived in 2+ years. Should I do a refresher?",
+      a: "We recommend a quick refresher (Scuba Review). It's two skills sessions plus a shallow dive — far better than skipping your first fun dive confused.",
+    },
+    {
+      q: "Do I have to pay a deposit to book?",
+      a: "Yes - a small deposit secures your spot, and the balance is paid here on the island. Message us on WhatsApp and we'll arrange it in a minute.",
+    },
+    {
+      q: "Can I see whale sharks?",
+      a: "Whale sharks visit Sail Rock and Chumphon Pinnacle in season (roughly March-May and Sept-Oct). Sightings are never guaranteed, but those are your best bets.",
+    },
+  ],
+  closingCtaHeadline: "Koh Tao diving, done right.",
+  closingCtaSubhead: "Small groups, private boat. Reserve your dive with a small deposit - WhatsApp us your dates.",
+};
+
+const KOH_TAO_ES: LanderCopy = {
+  seoTitle: "Buceo en Koh Tao en Español!!! – Grupos Pequeños, Barco Propio | Siam Scuba",
+  seoDescription:
+    "Bucea en Koh Tao con Siam Scuba: grupos pequeños (máx. 4 por instructor), barco propio con equipo nuevo, Centro PADI 5 estrellas, 4,9 en Google (845) y 5,0 en TripAdvisor (776). Reserva en minutos por WhatsApp.",
+  // TODO: swap hero image when photographyAI boats/ shots are processed.
+  heroImage: "/hero/turtle-1920.webp",
+  heroBadge: "Centro PADI 5 estrellas · Koh Tao",
+  heroH1: "Buceo en Koh Tao en Español!!!",
+  heroSubhead:
+    "Grupos pequeños, barco propio y equipo nuevo — no una inmersión masiva de 20 personas en un barco compartido. Así es como debería sentirse bucear en Koh Tao.",
+  ctaPrimary: "Reserva tu inmersión",
+  ctaSecondary: "O chatea por WhatsApp",
+  uspHeadline: "Por qué los buceadores eligen Siam 🇪🇸",
+  uspTiles: [
+    {
+      icon: "users",
+      emoji: "👥",
+      title: "Grupos pequeños, máx. 4 por instructor",
+      body: "Atención y seguridad reales. Eres un buceador, no un número en un barco lleno.",
+    },
+    {
+      icon: "boat",
+      emoji: "🛥️",
+      title: "Barco propio + equipo nuevo",
+      body: "No compartimos barco con otras tiendas. Equipo moderno y cuidado, y el horario se cumple.",
+    },
+    {
+      icon: "shield",
+      badge: "padi5star",
+      title: "Centro PADI 5 estrellas",
+      body: "Los más altos estándares PADI en Koh Tao, con mucha menos gente que las grandes tiendas industriales.",
+    },
+    {
+      icon: "award",
+      emoji: "🌟",
+      title: "4,9 Google · 5,0 TripAdvisor",
+      body: "Una de las tiendas de buceo más reseñadas de la isla. Mira por qué los buceadores repiten.",
+    },
+    {
+      icon: "heart",
+      emoji: "🗣️",
+      title: "Instructores en EN / ES / HE",
+      body: "Briefing, inmersión y debriefing en tu idioma — inglés, español o hebreo.",
+    },
+    {
+      icon: "calendar",
+      emoji: "✅",
+      title: "Reserva fácil por WhatsApp",
+      body: "Escríbenos, elige tu día y un pequeño depósito asegura tu plaza. Respondemos en minutos.",
+    },
+  ],
+  pricingHeadline: "Precios",
+  pricing: {
+    price: "desde 2,000 THB",
+    perWhat: "2 inmersiones medio día · Sail Rock día completo 3,800 THB",
+    includes: [
+      "Inmersiones guiadas con guía profesional",
+      "Equipo completo (chaleco, regulador, máscara, aletas, traje) — nuevo y cuidado",
+      "Botella llena (180-200 bar), botellas y plomos",
+      "Fruta fresca y bebidas en nuestro barco privado",
+      "Seguro de buceo",
+      "Día completo Sail Rock: desayuno y almuerzo incluidos",
+    ],
+    excludes: ["Recogida en hotel", "Alquiler de GoPro", "Fotos subacuáticas (extra)"],
+  },
+  socialProofHeadline: "4,9 en Google (845) · 5,0 en TripAdvisor (776).",
+  socialProofSubhead: "Mira lo que dicen los buceadores tras bucear Koh Tao al estilo Siam Scuba.",
+  whatYouDoHeadline: "Las inmersiones por las que viniste a Koh Tao",
+  whatYouDoSubhead:
+    "Elegimos los sitios cada día según el clima ⛅, dónde hay mejor visibilidad y dónde se vio por última vez al gigante gentil: los tiburones ballena de Koh Tao.",
+  diveSites: [
+    {
+      name: "Sail Rock",
+      blurb: "La mejor inmersión del Golfo. Chimenea de 6m, grandes bancos y tiburones ballena en temporada. Salida de día completo en nuestro barco.",
+    },
+    {
+      name: "Chumphon Pinnacle",
+      blurb: "El sitio de pez grande de Koh Tao. Tiburones ballena en temporada, bancos de barracudas y peces murciélago todo el año.",
+    },
+    {
+      name: "Twins",
+      blurb: "Dos pináculos sobre fondo de arena, fácil 12-18m. Perfecto para flotabilidad y macro.",
+    },
+    {
+      name: "Shark Island",
+      blurb: "Pared en la cara sur. Tiburones de arrecife, tortugas y anémonas — suele ser una segunda inmersión relajada.",
+    },
+  ],
+  ctaStripHeadline: "Buceo en Koh Tao en Español!!!",
+  ctaStripSubhead: "Elige tu día y reserva tu plaza con un pequeño depósito. Confirmamos el mismo día.",
+  faqHeadline: "Preguntas frecuentes",
+  faqItems: [
+    {
+      q: "¿Qué certificaciones aceptan?",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — todo lo mayoritario. Trae la tarjeta o ten una copia digital.",
+    },
+    {
+      q: "¿De verdad tengo barco propio y grupo pequeño?",
+      a: "Sí. Operamos nuestro propio barco y mantenemos grupos pequeños (máx. 4 por instructor en cursos), así que nunca vas apretado en una salida compartida de 20 buceadores.",
+    },
+    {
+      q: "Llevo 2+ años sin bucear. ¿Debo hacer un repaso?",
+      a: "Recomendamos un repaso rápido (Scuba Review): dos sesiones de habilidades más una inmersión poco profunda. Mucho mejor que perderse la primera inmersión.",
+    },
+    {
+      q: "¿Tengo que pagar un depósito para reservar?",
+      a: "Sí - un pequeño depósito asegura tu plaza y el resto se paga aquí en la isla. Escríbenos por WhatsApp y lo arreglamos en un minuto.",
+    },
+    {
+      q: "¿Puedo ver tiburones ballena?",
+      a: "Los tiburones ballena visitan Sail Rock y Chumphon Pinnacle en temporada (aprox. marzo-mayo y sept-oct). No se garantizan, pero son tu mejor opción.",
+    },
+  ],
+  closingCtaHeadline: "Buceo en Koh Tao en Español!!!",
+  closingCtaSubhead: "Grupos pequeños, barco propio. Reserva tu inmersión con un pequeño depósito - o escríbenos tus fechas por WhatsApp.",
+};
+
+const KOH_TAO_HE: LanderCopy = {
+  seoTitle: "צלילות בקוטאו בעברית!!! – קבוצות קטנות, סירה פרטית | סיאם סקובה",
+  seoDescription:
+    "צוללים בקוטאו עם סיאם סקובה: קבוצות קטנות (מקס׳ 4 למדריך), סירה פרטית עם ציוד חדש, מרכז PADI 5 כוכבים, 4.9 בגוגל (845) ו-5.0 בטריפאדוויזר (776). הזמנה תוך דקות ב-WhatsApp.",
+  // TODO: swap hero image when photographyAI boats/ shots are processed.
+  heroImage: "/hero/turtle-1920.webp",
+  heroBadge: "מרכז PADI 5 כוכבים · קוטאו",
+  heroH1: "צלילות בקוטאו בעברית!!!",
+  heroSubhead:
+    "קבוצות קטנות, סירה פרטית של המועדון, וציוד חדש. ככה צלילה בקוטאו צריכה להראות.",
+  ctaPrimary: "הזמינו צלילה",
+  ctaSecondary: "או דברו איתנו ב-WhatsApp",
+  uspHeadline: "למה צוללים בוחרים ב-Siam 🇮🇱",
+  uspTiles: [
+    {
+      icon: "users",
+      emoji: "👥",
+      title: "קבוצות קטנות, מקס׳ 4 למדריך",
+      body: "תשומת לב אמיתית ובטיחות אמיתית. אתם צוללים, לא מספר על סירה גדושה.",
+    },
+    {
+      icon: "boat",
+      emoji: "🛥️",
+      title: "סירה פרטית משלנו + ציוד חדש",
+      body: "אנחנו לא חולקים סירה עם חנויות אחרות. ציוד מודרני ומתוחזק, והלו״ז באמת עומד בזמנים.",
+    },
+    {
+      icon: "shield",
+      badge: "padi5star",
+      title: "מרכז PADI 5 כוכבים",
+      body: "הסטנדרטים הגבוהים של PADI בקוטאו, עם הרבה פחות עומס מחנויות הענק.",
+    },
+    {
+      icon: "award",
+      emoji: "🌟",
+      title: "4.9 גוגל · 5.0 טריפאדוויזר",
+      body: "אחת מחנויות הצלילה הכי מדורגות באי. תראו למה צוללים חוזרים אלינו שוב ושוב.",
+    },
+    {
+      icon: "heart",
+      emoji: "🗣️",
+      title: "מדריכים באנגלית / ספרדית / עברית",
+      body: "תדריך, צלילה ותחקיר בשפה שלכם — אנגלית, ספרדית או עברית.",
+    },
+    {
+      icon: "calendar",
+      emoji: "✅",
+      title: "הזמנה קלה ב-WhatsApp",
+      body: "כתבו לנו, בחרו יום, ומקדמה קטנה שומרת לכם מקום. אנחנו עונים תוך דקות.",
+    },
+  ],
+  pricingHeadline: "מחירים",
+  pricing: {
+    price: "2,000 ฿ לשתי צלילות",
+    perWhat: "2 צלילות חצי יום · Sail Rock יום שלם 3,800 ฿",
+    includes: [
+      "צלילות מודרכות עם מדריך מקצועי",
+      "כל הציוד (מאזן ציפה, רגולטור, מסכה, סנפירים, חליפה) — חדש ומתוחזק",
+      "מיכל אוויר מלא (180-200 bar), בלונים ומשקולות",
+      "פירות טריים ושתייה על הסירה הפרטית שלנו",
+      "ביטוח צלילה",
+      "יום שלם ב-Sail Rock: ארוחת בוקר וצהריים כלולות",
+    ],
+    excludes: ["איסוף מהמלון", "השכרת GoPro", "תמונות מתחת למים (תוספת בתשלום)"],
+  },
+  socialProofHeadline: "4.9 בגוגל (845) · 5.0 בטריפאדוויזר (776).",
+  socialProofSubhead: "תראו מה צוללים מספרים אחרי שצללו בקוטאו בדרך של סיאם סקובה.",
+  whatYouDoHeadline: "הצלילות שבשבילן באתם לקוטאו",
+  whatYouDoSubhead:
+    "אנחנו בוחרים אתרים על בסיס יומי לפי מזג האוויר ⛅, איפה הראות הכי טובה, ואיפה ראו בפעם האחרונה את הענק העדין (כרישי הלוויתן של קוטאו)",
+  diveSites: [
+    {
+      name: "Sail Rock",
+      blurb: "הצלילה הכי טובה במפרץ. מעבר ארובה של 6 מטר, להקות ענק, וכריש לוויתן בעונה. יום שלם על הסירה שלנו.",
+    },
+    {
+      name: "Chumphon Pinnacle",
+      blurb: "אתר הדגים הגדולים של קוטאו. כריש לוויתן בעונה, להקות ברקודות ודגי עטלף כל השנה.",
+    },
+    {
+      name: "Twins",
+      blurb: "שתי טבעות על קרקעית חולית, 12-18 מטר קלילים. מעולה לתרגול ציפה ולמאקרו.",
+    },
+    {
+      name: "Shark Island",
+      blurb: "צלילת קיר בצד הדרומי. כרישי שונית, צבים ושושנות ים — בדרך כלל צלילה שנייה רגועה.",
+    },
+  ],
+  ctaStripHeadline: "צלילות בקוטאו בעברית!!!",
+  ctaStripSubhead: "בחרו יום ותשמרו מקום עם מקדמה קטנה. אנחנו מאשרים באותו יום.",
+  faqHeadline: "שאלות נפוצות",
+  faqItems: [
+    {
+      q: "אילו הסמכות אתם מקבלים?",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — כל מה שמרכזי. הביאו את הכרטיס או צילום דיגיטלי.",
+    },
+    {
+      q: "באמת מקבלים סירה פרטית וקבוצה קטנה?",
+      a: "כן. אנחנו מפעילים סירה משלנו ושומרים על קבוצות קטנות (מקס׳ 4 למדריך בקורסים), כך שאתם אף פעם לא נדחסים ליציאה משותפת של 20 צוללים.",
+    },
+    {
+      q: "לא צללתי 2+ שנים. כדאי לעשות ריענון?",
+      a: "אנחנו ממליצים על ריענון מהיר (Scuba Review): שני מפגשי תרגול וצלילה רדודה. הרבה יותר טוב מאשר להתבלבל בצלילה הראשונה.",
+    },
+    {
+      q: "צריך לשלם מקדמה כדי להזמין?",
+      a: "כן - מקדמה קטנה שומרת לכם מקום, והיתרה משולמת כאן באי. כתבו לנו ב-WhatsApp ונסדר את זה תוך דקה.",
+    },
+    {
+      q: "אפשר לראות כרישי לוויתן?",
+      a: "כרישי לוויתן מבקרים ב-Sail Rock וב-Chumphon Pinnacle בעונה (בערך מרץ-מאי וספטמבר-אוקטובר). אין הבטחה, אבל אלה הסיכויים הכי טובים.",
+    },
+  ],
+  closingCtaHeadline: "צלילות בקוטאו בעברית!!!",
+  closingCtaSubhead: "קבוצות קטנות, סירה פרטית. תשמרו מקום עם מקדמה קטנה - או שלחו לנו תאריכים ב-WhatsApp.",
+};
+
 export const LANDER_COPY: Record<Offer, Record<Lang, LanderCopy>> = {
   dsd: { en: DSD_EN, es: DSD_ES, he: DSD_HE },
   owd: { en: OWD_EN, es: OWD_ES, he: OWD_HE },
   "fun-dive": { en: FUN_EN, es: FUN_ES, he: FUN_HE },
+  "koh-tao": { en: KOH_TAO_EN, es: KOH_TAO_ES, he: KOH_TAO_HE },
 };
 
 const SITE = "https://siamscuba.com";
@@ -957,6 +1323,7 @@ const SLUGS: Record<Offer, string> = {
   dsd: "discover-scuba-diving",
   owd: "open-water-course",
   "fun-dive": "fun-dives",
+  "koh-tao": "koh-tao-diving",
 };
 
 function langPrefix(lang: Lang): string {
@@ -981,6 +1348,7 @@ const PRICES: Record<Offer, { price: string; currency: string; duration: string 
   dsd: { price: "2600", currency: "THB", duration: "P1D" },
   owd: { price: "12000", currency: "THB", duration: "P2DT12H" },
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
+  "koh-tao": { price: "2000", currency: "THB", duration: "PT4H" },
 };
 
 function buildFaqJsonLd(offer: Offer, lang: Lang): Record<string, unknown> {
@@ -1002,7 +1370,7 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
   const meta = PRICES[offer];
 
   const primary: Record<string, unknown> =
-    offer === "fun-dive"
+    offer === "fun-dive" || offer === "koh-tao"
       ? {
           "@context": "https://schema.org",
           "@type": "Service",

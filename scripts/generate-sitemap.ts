@@ -53,6 +53,9 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
     { loc: "/es/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
     { loc: "/he/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
+    { loc: "/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
+    { loc: "/es/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
+    { loc: "/he/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
   ];
 
   for (const post of blogPosts) {

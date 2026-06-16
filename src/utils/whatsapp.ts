@@ -14,6 +14,7 @@ export type WhatsAppTopic =
   | "dm"
   | "idc"
   | "fun-dive"
+  | "koh-tao"
   | "refresher";
 
 // Back-compat alias — callers passing the narrower Offer keep working.
@@ -60,6 +61,11 @@ const PREFILLED_MESSAGES: Record<WhatsAppTopic, Record<Lang, string>> = {
     es: "¡Hola Siam Scuba! Quisiera reservar una inmersión guiada. ¿Qué tienen disponible esta semana?",
     he: "היי סיאם סקובה! אני רוצה להזמין צלילת בילוי מודרכת. מה פנוי השבוע?",
   },
+  "koh-tao": {
+    en: "Hi Siam Scuba! I'd like to dive Koh Tao with you - small groups and your own boat. What's available?",
+    es: "¡Hola Siam Scuba! Quiero bucear en Koh Tao con vosotros - grupos pequeños y barco propio. ¿Qué tenéis disponible?",
+    he: "היי סיאם סקובה! אני רוצה לצלול בקוטאו אצלכם - קבוצות קטנות וסירה פרטית. מה פנוי?",
+  },
   refresher: {
     en: "Hi Siam Scuba! I haven't dived in a while — I'd like info on a refresher (PADI ReActivate).",
     es: "¡Hola Siam Scuba! Hace tiempo que no buceo — quisiera información sobre un refresher (PADI ReActivate).",
@@ -79,6 +85,7 @@ const PATH_TO_TOPIC: { test: RegExp; topic: WhatsAppTopic }[] = [
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?discover-scuba(-diving)?(\/|$)/i, topic: "dsd" },
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?scuba-review(\/|$)/i, topic: "refresher" },
   { test: /^\/(en\/|es\/|he\/)?fun-dives?(\/|$)/i, topic: "fun-dive" },
+  { test: /^\/(en\/|es\/|he\/)?koh-tao-diving(\/|$)/i, topic: "koh-tao" },
 ];
 
 export function topicFromPath(pathname: string): WhatsAppTopic {

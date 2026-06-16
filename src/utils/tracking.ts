@@ -5,7 +5,7 @@
  * the "added GA but forgot Meta" drift as new events get added.
  */
 
-import { getStoredUtm, type UtmParams } from "@/utils/utm";
+import { getStoredUtm, getStoredGclid, type UtmParams } from "@/utils/utm";
 
 declare global {
   interface Window {
@@ -52,6 +52,50 @@ function utmFields(): Record<string, string | undefined> {
   };
 }
 
+// ── Enhanced Conversions for Web (user-provided data) ────────────────────────
+// Google Ads matches conversions to ad clicks more accurately when the page
+// sends the customer's email/phone alongside the conversion. We send UNHASHED
+// data via gtag('set','user_data',{...}); Google normalizes + SHA-256 hashes it
+// client-side before it leaves the browser - we must NOT pre-hash (double-hash
+// = no match). `allow_enhanced_conversions: true` is set on the AW config in
+// index.html. `set` associates the data with every SUBSEQUENT event on the
+// page, so it MUST be called BEFORE the conversion event fires.
+// Spec: https://support.google.com/google-ads/answer/13258081
+//
+// Consent: this is gated by Google Consent Mode v2. Defaults are 'denied'
+// (index.html) and only flip to 'granted' when the visitor accepts cookies
+// (CookieConsent.tsx -> ad_user_data: granted). When ad_user_data is denied,
+// gtag withholds the user_data payload from the conversion ping, so no
+// unconsented PII is transmitted - the set() call is harmless in that state.
+
+export interface EnhancedConversionData {
+  /** Raw email, lower-cased/trimmed by Google. Leave undefined if unknown. */
+  email?: string | null;
+  /** Phone in E.164 (e.g. +66825068898). Google normalizes; we light-clean. */
+  phone?: string | null;
+}
+
+/** Strip spaces, dashes, parens from a phone so it reads closer to E.164. */
+function normalizePhone(phone: string): string {
+  const cleaned = phone.replace(/[\s().-]/g, "");
+  return cleaned.startsWith("+") ? cleaned : cleaned;
+}
+
+/**
+ * Sets enhanced-conversion user data for subsequent conversion events.
+ * No-op when neither field is present, so it's safe to call unconditionally.
+ */
+function setEnhancedConversionData(data?: EnhancedConversionData): void {
+  if (!data) return;
+  const userData: Record<string, string> = {};
+  const email = data.email?.trim();
+  if (email) userData.email = email.toLowerCase();
+  const phone = data.phone?.trim();
+  if (phone) userData.phone_number = normalizePhone(phone);
+  if (Object.keys(userData).length === 0) return;
+  gtag("set", "user_data", userData);
+}
+
 export interface WhatsAppClickParams {
   location: string;
   url?: string;
@@ -76,9 +120,14 @@ export interface GenerateLeadParams {
   form_name: "fun_dive_booking" | "booking_wizard" | "course_inquiry" | "contact";
   dive_date?: string;
   product?: string;
+  /** Enhanced-conversion user data. Lead capture usually has a phone. */
+  email?: string | null;
+  phone?: string | null;
 }
 
 export function trackGenerateLead(params: GenerateLeadParams): void {
+  // Enhanced conversions: set user data BEFORE the conversion event (when present).
+  setEnhancedConversionData({ email: params.email, phone: params.phone });
   gtag("event", "generate_lead", {
     event_category: "lead",
     form_name: params.form_name,
@@ -120,9 +169,15 @@ export interface PurchaseParams {
   value?: number;
   currency?: string;
   item_name?: string;
+  /** Enhanced-conversion user data (email/phone). Improves Google Ads match. */
+  email?: string | null;
+  phone?: string | null;
 }
 
 export function trackPurchase(params: PurchaseParams): void {
+  // Enhanced conversions: set user data BEFORE the conversion event so gtag
+  // attaches the hashed identifiers to the conversion ping.
+  setEnhancedConversionData({ email: params.email, phone: params.phone });
   gtag("event", "purchase", {
     transaction_id: params.transaction_id,
     value: params.value,
@@ -148,6 +203,9 @@ export function trackPurchase(params: PurchaseParams): void {
 export interface BookingPayLaterParams {
   transaction_id: string;
   product?: string;
+  /** Enhanced-conversion user data (email/phone). Improves Google Ads match. */
+  email?: string | null;
+  phone?: string | null;
 }
 
 /**
@@ -156,6 +214,8 @@ export interface BookingPayLaterParams {
  * the booking commitment, not revenue. Google Ads action "Booking - Pay Later".
  */
 export function trackBookingPayLater(params: BookingPayLaterParams): void {
+  // Enhanced conversions: set user data BEFORE the conversion event.
+  setEnhancedConversionData({ email: params.email, phone: params.phone });
   gtag("event", "booking_pay_later", {
     event_category: "booking",
     transaction_id: params.transaction_id,
@@ -192,4 +252,120 @@ export function trackViewContent(params: ViewContentParams): void {
     value: params.value,
     currency: "THB",
   });
+}
+
+// ── Nemo chat engagement ─────────────────────────────────────────────────────
+// These are SIGNALS, not conversions. They fire as gtag/GA4 + Meta custom events
+// only - no Google Ads conversion send_to - so they never inflate conversion
+// counts. The real lead conversion is generate_lead, fired only on form submit.
+
+/** Fired when the visitor opens the chat (pill click or teaser accept). */
+export function trackChatOpen(source: "pill" | "teaser"): void {
+  gtag("event", "chat_open", {
+    event_category: "engagement",
+    event_label: source,
+    ...utmFields(),
+  });
+  fbq("trackCustom", "ChatOpen", { source });
+}
+
+/** Fired on the visitor's FIRST message in a chat session. */
+export function trackChatEngaged(): void {
+  gtag("event", "chat_engaged", {
+    event_category: "engagement",
+    ...utmFields(),
+  });
+  fbq("trackCustom", "ChatEngaged");
+}
+
+/** Fired when a persistent chat CTA button is clicked. */
+export function trackChatCtaClick(cta: "fun_dive" | "whatsapp" | "courses"): void {
+  gtag("event", "chat_cta_click", {
+    event_category: "engagement",
+    event_label: cta,
+    ...utmFields(),
+  });
+  fbq("trackCustom", "ChatCtaClick", { cta });
+}
+
+// ── Chat lead capture (POST to DiveOS + Google Ads generate_lead) ────────────
+// Contract: /Users/.../campaign-plans/lead-capture-contract.md
+// POST https://dash.siamscuba.com/api/public/lead with X-Lead-Token header.
+// The token is public-facing (gates the endpoint) and is read from the build
+// env var VITE_LEAD_TOKEN. Ben must set the SAME value in Vercel and in DiveOS.
+
+const LEAD_ENDPOINT = "https://dash.siamscuba.com/api/public/lead";
+const LEAD_TOKEN = import.meta.env.VITE_LEAD_TOKEN ?? "";
+
+export interface ChatLeadInput {
+  phone: string;
+  name?: string | null;
+  lang: "en" | "es" | "he";
+  course?: string | null;
+  dates?: string | null;
+  message?: string | null;
+}
+
+export interface ChatLeadResult {
+  ok: boolean;
+  leadId?: string;
+  error?: string;
+}
+
+/**
+ * Posts a captured chat lead to the DiveOS public lead endpoint, then (on a
+ * network-level success) fires the existing generate_lead Google Ads + Meta
+ * conversion. The gclid is pulled from sessionStorage (captured first-touch on
+ * landing) so this click can later be uploaded back to Google Ads as a booking.
+ */
+export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResult> {
+  const utm: UtmParams = getStoredUtm();
+  const payload = {
+    source: "website-chat" as const,
+    phone: input.phone || null,
+    name: input.name ?? null,
+    lang: input.lang,
+    course: input.course ?? null,
+    dates: input.dates ?? null,
+    message: input.message ?? null,
+    gclid: getStoredGclid(),
+    utm: {
+      source: utm.source ?? null,
+      medium: utm.medium ?? null,
+      campaign: utm.campaign ?? null,
+    },
+    timestamp: new Date().toISOString(),
+  };
+
+  try {
+    const res = await fetch(LEAD_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Lead-Token": LEAD_TOKEN,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      return { ok: false, error: `status ${res.status}` };
+    }
+
+    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; leadId?: string };
+
+    // Fire the lead conversion only after a successful POST so the conversion
+    // count matches stored leads. trackGenerateLead handles GA + Meta + the
+    // Google Ads generate_lead conversion (AW-18050429438/XvmFCNXAjrMcEP7jjp9D).
+    trackGenerateLead({
+      form_name: "course_inquiry",
+      product: input.course ?? undefined,
+      // Enhanced conversions: the chat captured a phone (and maybe more) - pass
+      // it so the lead conversion can be matched to the click in Google Ads.
+      phone: input.phone || null,
+    });
+
+    return { ok: data.ok !== false, leadId: data.leadId };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : "network_error" };
+  }
 }

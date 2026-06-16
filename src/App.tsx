@@ -9,7 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
 import { trackPageView } from "@/utils/tracking";
-import { captureUtmFromUrl } from "@/utils/utm";
+import { captureUtmFromUrl, captureGclidFromUrl } from "@/utils/utm";
 
 // Floating chat widget - client-only, not SEO content. Lazy-load it so its
 // code (and the avatar) is split out of the initial app bundle and fetched
@@ -24,6 +24,7 @@ const RouteTracker = () => {
   useEffect(() => {
     if (!utmCapturedRef.current) {
       captureUtmFromUrl();
+      captureGclidFromUrl();
       utmCapturedRef.current = true;
     }
     trackPageView({ page_path: location.pathname + location.search });
