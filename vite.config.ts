@@ -44,8 +44,9 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
             env.ANTHROPIC_API_KEY,
             leadToken,
           );
-          res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify({ reply }));
+          // Persist BEFORE responding (mirrors the prod handler): a post-response
+          // await is unreliable on Vercel where the instance can freeze once the
+          // body is flushed. logConversation is time-boxed + error-swallowed.
           await logConversation(
             {
               sessionId: typeof body.sessionId === "string" ? body.sessionId : null,
@@ -55,6 +56,8 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
             },
             leadToken,
           );
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ reply }));
         } catch (err: any) {
           console.error("[dev /api/chat]", err?.message || err);
           res.statusCode = err?.message === "ANTHROPIC_API_KEY is not set" ? 503 : 500;

@@ -294,12 +294,12 @@ function cleanup(text: string): string {
 }
 
 // ── Conversation logging ─────────────────────────────────────────────────────
-// Fire-and-forget the full transcript to DiveOS, which UPSERTs one row per
-// session (see contract). Time-boxed and error-swallowed so it can NEVER block
-// or break the user's chat. Returns a promise the caller awaits AFTER sending the
-// HTTP response - on Vercel the function stays alive until the handler resolves,
-// so awaiting post-response persists the write without adding user-visible
-// latency (a truly detached fetch would be frozen when the function suspends).
+// Send the full transcript to DiveOS, which UPSERTs one row per session (see
+// contract). Time-boxed (2s AbortController) and error-swallowed so it can NEVER
+// block or break the user's chat. The handler awaits this BEFORE flushing the
+// HTTP response: a post-response await is unreliable on Vercel because the
+// instance can be frozen the moment the body is sent, dropping the in-flight
+// fetch. Awaiting first costs ~one round-trip but guarantees the write goes out.
 export async function logConversation(
   payload: {
     sessionId?: string | null;
@@ -359,15 +359,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const reply = await generateReply(messages, lang);
-    // Respond to the user first, then persist the transcript (incl. this reply)
-    // while the function stays alive - logging never adds latency to the reply.
-    res.status(200).json({ reply });
+    // Persist the transcript (incl. this reply) BEFORE sending the response.
+    // A post-response `await` is unreliable on Vercel: once the body is flushed
+    // the instance can be frozen before the fetch goes out, so the log never
+    // sends (observed: zero requests reaching DiveOS). logConversation is itself
+    // time-boxed (2s AbortController) and fully error-swallowed, so awaiting it
+    // here adds at most ~the network round-trip and can NEVER break the reply.
     await logConversation({
       sessionId: typeof body.sessionId === "string" ? body.sessionId : null,
       messages: [...messages, { role: "assistant", content: reply }],
       lang,
       page: typeof body.page === "string" ? body.page : null,
     });
+    res.status(200).json({ reply });
     return;
   } catch (err: any) {
     console.error("[api/chat]", err?.message || err);
