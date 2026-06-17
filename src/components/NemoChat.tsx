@@ -134,6 +134,30 @@ function courseFromPath(pathname: string): string | null {
 
 const TEASER_DISMISSED_KEY = "nemo_teaser_dismissed";
 
+// One stable id per chat session, shared by the chat-log and the lead capture so
+// DiveOS can link a conversation to the lead it produced (see chat-console
+// contract). Persisted in sessionStorage so reopening the widget continues the
+// same conversation row rather than starting a new one.
+const CHAT_SESSION_KEY = "nemo_chat_session_id";
+function randomId(): string {
+  try {
+    return crypto.randomUUID();
+  } catch {
+    return `${Date.now().toString(16)}-${Math.random().toString(16).slice(2, 14)}`;
+  }
+}
+function getChatSessionId(): string {
+  try {
+    const existing = sessionStorage.getItem(CHAT_SESSION_KEY);
+    if (existing) return existing;
+    const id = randomId();
+    sessionStorage.setItem(CHAT_SESSION_KEY, id);
+    return id;
+  } catch {
+    return randomId();
+  }
+}
+
 // A few bubbles that rise inside the avatar tank (static config - no randomness).
 const AVATAR_BUBBLES = [
   { left: "24%", size: 5, delay: 0 },
@@ -227,6 +251,13 @@ const NemoChat = () => {
 
   // Fired-once guards.
   const engagedRef = useRef(false);
+
+  // Stable per-session id (lazy - only created once the visitor actually chats).
+  const sessionIdRef = useRef<string | null>(null);
+  const getSessionId = useCallback(() => {
+    if (!sessionIdRef.current) sessionIdRef.current = getChatSessionId();
+    return sessionIdRef.current;
+  }, []);
 
   const waHref = buildWhatsAppLink({
     lang: normalizeLang(language),
@@ -342,7 +373,12 @@ const NemoChat = () => {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: next, lang: language }),
+          body: JSON.stringify({
+            messages: next,
+            lang: language,
+            sessionId: getSessionId(),
+            page: location.pathname,
+          }),
         });
         if (!res.ok) throw new Error(`status ${res.status}`);
         const data = await res.json();
@@ -353,7 +389,7 @@ const NemoChat = () => {
         setLoading(false);
       }
     },
-    [messages, loading, language, copy.error, leadStatus, showLeadForm],
+    [messages, loading, language, copy.error, getSessionId, location.pathname],
   );
 
   const lastUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content ?? null;
@@ -371,10 +407,11 @@ const NemoChat = () => {
         lang: normalizeLang(language),
         course: courseFromPath(location.pathname),
         message: lastUserMessage,
+        sessionId: getSessionId(),
       });
       setLeadStatus(result.ok ? "sent" : "error");
     },
-    [leadStatus, leadPhone, leadName, language, location.pathname, lastUserMessage],
+    [leadStatus, leadPhone, leadName, language, location.pathname, lastUserMessage, getSessionId],
   );
 
   return (

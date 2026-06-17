@@ -304,6 +304,10 @@ export interface ChatLeadInput {
   course?: string | null;
   dates?: string | null;
   message?: string | null;
+  // Chat session id - lets DiveOS link this lead back to the conversation that
+  // produced it (the same id is sent on the chat-log calls). See chat-console
+  // contract.
+  sessionId?: string | null;
 }
 
 export interface ChatLeadResult {
@@ -328,6 +332,7 @@ export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResu
     course: input.course ?? null,
     dates: input.dates ?? null,
     message: input.message ?? null,
+    sessionId: input.sessionId ?? null,
     gclid: getStoredGclid(),
     utm: {
       source: utm.source ?? null,

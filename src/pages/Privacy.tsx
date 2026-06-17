@@ -39,7 +39,7 @@ const Privacy = () => {
               <li><strong>Identification data</strong> — name, email address, phone/WhatsApp number, nationality, date of birth (as required for PADI certification).</li>
               <li><strong>Diving history</strong> — certification level, number of logged dives, relevant medical declarations (only when needed for a specific course).</li>
               <li><strong>Booking data</strong> — course or trip selected, dates, accommodation preference, payment method.</li>
-              <li><strong>Messages</strong> — the content of WhatsApp conversations with Nemo and any email you send us.</li>
+              <li><strong>Messages</strong> — the content of conversations with our assistant Nemo (on WhatsApp and in the website chat) and any email you send us. We store website chat conversations for support and quality purposes.</li>
               <li><strong>Technical data</strong> — IP address, browser type, pages visited, referral source (via standard web analytics).</li>
             </ul>
             <p>We never collect payment-card details directly; payments are processed by our third-party payment provider.</p>

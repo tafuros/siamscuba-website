@@ -20,7 +20,7 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
           const chunks: Buffer[] = [];
           for await (const c of req) chunks.push(c as Buffer);
           const body = JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
-          const { generateReply, rateLimited, clientIp, checkPayload } =
+          const { generateReply, logConversation, rateLimited, clientIp, checkPayload } =
             await server.ssrLoadModule("/api/chat.ts");
 
           // Mirror the prod abuse guards so dev behaves like the Vercel handler.
@@ -35,13 +35,26 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
             return res.end(JSON.stringify({ error: payloadError }));
           }
 
+          // Pass the shared lead token from the loaded env so the KB overlay +
+          // conversation logging can reach DiveOS during local testing too.
+          const leadToken = env.LEAD_CAPTURE_TOKEN || env.VITE_LEAD_TOKEN || undefined;
           const reply = await generateReply(
             body.messages ?? [],
             body.lang ?? "en",
             env.ANTHROPIC_API_KEY,
+            leadToken,
           );
           res.setHeader("Content-Type", "application/json");
           res.end(JSON.stringify({ reply }));
+          await logConversation(
+            {
+              sessionId: typeof body.sessionId === "string" ? body.sessionId : null,
+              messages: [...(body.messages ?? []), { role: "assistant", content: reply }],
+              lang: body.lang ?? "en",
+              page: typeof body.page === "string" ? body.page : null,
+            },
+            leadToken,
+          );
         } catch (err: any) {
           console.error("[dev /api/chat]", err?.message || err);
           res.statusCode = err?.message === "ANTHROPIC_API_KEY is not set" ? 503 : 500;
