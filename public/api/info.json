@@ -168,7 +168,7 @@
     "dives_per_trip": 2,
     "schedule": ["morning", "afternoon"],
     "morning_timeline": [
-      "06:20 meet at dive center",
+      "06:00 meet at dive center",
       "07:30 1st dive - deep site (Chumphon / SW Pinnacle)",
       "09:30 2nd dive - reef around Koh Tao",
       "11:30 return"

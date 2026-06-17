@@ -175,7 +175,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       itinerary: [
         { day: "Day 1", description: "10:00 - Meet at the club. 11:00 - Buoyancy dive. 13:00 - Break on the boat. 14:00 - Navigation dive with compass skills. 16:00 - Back to club. 17:30 - Night dive!" },
-        { day: "Day 2", description: "06:20 - Early departure for Deep dive (30m) + Wreck dive. 09:00 - Break. 10:00 - Second dive. 11:30 - Back to club, certification & celebration 🎉" },
+        { day: "Day 2", description: "06:00 - Early departure for Deep dive (30m) + Wreck dive. 09:00 - Break. 10:00 - Second dive. 11:30 - Back to club, certification & celebration 🎉" },
       ],
       included: [
         "1 night at our club hostel 🏠",
@@ -518,7 +518,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       itinerary: [
         { day: "יום 1", description: "10:00 - מפגש במועדון. 11:00 - צלילת ציפה. 13:00 - הפסקה על הסירה. 14:00 - צלילת ניווט עם תרגול מצפן. 16:00 - חזרה למועדון. 17:30 - צלילת לילה!" },
-        { day: "יום 2", description: "06:20 - יציאה מוקדמת לצלילה עמוקה (30 מ') + צלילת מבנה טבוע. 09:00 - הפסקה. 10:00 - צלילה שנייה. 11:30 - חזרה למועדון, הסמכה וחגיגה 🎉" },
+        { day: "יום 2", description: "06:00 - יציאה מוקדמת לצלילה עמוקה (30 מ') + צלילת מבנה טבוע. 09:00 - הפסקה. 10:00 - צלילה שנייה. 11:30 - חזרה למועדון, הסמכה וחגיגה 🎉" },
       ],
       included: [
         "לינת לילה אחד באכסניית המועדון שלנו 🏠",
@@ -861,7 +861,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       itinerary: [
         { day: "Día 1", description: "10:00 - Encuentro en el club. 11:00 - Inmersión de flotabilidad. 13:00 - Descanso en el barco. 14:00 - Inmersión de navegación con brújula. 16:00 - De vuelta al club. 17:30 - ¡Inmersión nocturna!" },
-        { day: "Día 2", description: "06:20 - Salida temprana para inmersión profunda (30 m) + inmersión en pecio. 09:00 - Descanso. 10:00 - Segunda inmersión. 11:30 - De vuelta al club, certificación y celebración 🎉" },
+        { day: "Día 2", description: "06:00 - Salida temprana para inmersión profunda (30 m) + inmersión en pecio. 09:00 - Descanso. 10:00 - Segunda inmersión. 11:30 - De vuelta al club, certificación y celebración 🎉" },
       ],
       included: [
         "1 noche en el hostel de nuestro club 🏠",
@@ -1204,7 +1204,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       itinerary: [
         { day: "Jour 1", description: "10h00 - Rendez-vous au club. 11h00 - Plongée flottabilité. 13h00 - Pause sur le bateau. 14h00 - Plongée navigation au compas. 16h00 - Retour au club. 17h30 - Plongée de nuit !" },
-        { day: "Jour 2", description: "06h20 - Départ matinal pour la plongée profonde (30 m) + plongée sur épave. 09h00 - Pause. 10h00 - Deuxième plongée. 11h30 - Retour au club, certification et célébration 🎉" },
+        { day: "Jour 2", description: "06h00 - Départ matinal pour la plongée profonde (30 m) + plongée sur épave. 09h00 - Pause. 10h00 - Deuxième plongée. 11h30 - Retour au club, certification et célébration 🎉" },
       ],
       included: [
         "1 nuit à l'auberge de notre club 🏠",

@@ -62,7 +62,7 @@ const DiveSchedule = () => {
   const sailRockDates = useMemo(() => getUpcomingSailRockDates(4), []);
 
   const morningSchedule: TimelineStep[] = [
-    { time: "06:20", label: "Meet at the dive center" },
+    { time: "06:00", label: "Meet at the dive center" },
     { time: "07:30", label: "1st dive – deep site (Chumphon / SW Pinnacle)" },
     { time: "09:00", label: "Sail to 2nd dive site" },
     { time: "09:30", label: "2nd dive – reef around Koh Tao" },
