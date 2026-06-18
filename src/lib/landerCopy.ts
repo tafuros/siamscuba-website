@@ -6,7 +6,7 @@
 // because campaign landers must render the AD's language regardless of any
 // returning-visitor preference stored in localStorage.
 
-export type Offer = "dsd" | "owd" | "fun-dive" | "koh-tao";
+export type Offer = "dsd" | "owd" | "aow" | "fun-dive" | "koh-tao";
 export type Lang = "en" | "es" | "he";
 
 export interface FaqItem {
@@ -77,13 +77,13 @@ export interface LanderCopy {
 // ---------- DSD (Discover Scuba Diving) ----------
 
 const DSD_EN: LanderCopy = {
-  seoTitle: "Discover Scuba Diving in Koh Tao – Two Dives 3,600 THB | Siam Scuba",
+  seoTitle: "Discover Scuba Diving in Koh Tao - Two Dives 3,600 THB | Siam Scuba",
   seoDescription:
-    "Try scuba diving in Koh Tao — 2 dives 3,600 THB, all gear and PADI instructor included. Or 1 dive 2,600 THB. Small groups, two custom boats, no certification needed.",
+    "Try scuba diving in Koh Tao - 2 dives 3,600 THB, all gear and PADI instructor included. Or 1 dive 2,600 THB. Small groups, two custom boats, no certification needed.",
   heroBadge: "PADI Discover Scuba Diving",
-  heroH1: "Try scuba diving in Koh Tao — 2 dives, 3,600 THB",
+  heroH1: "Try scuba diving in Koh Tao - 2 dives, 3,600 THB",
   heroSubhead:
-    "No certification needed. A PADI instructor takes you from your first breath underwater to two real ocean dives on Koh Tao's reefs — all in one day. Want just one dive? 2,600 THB.",
+    "No certification needed. A PADI instructor takes you from your first breath underwater to two real ocean dives on Koh Tao's reefs - all in one day. Want just one dive? 2,600 THB.",
   ctaPrimary: "Chat on WhatsApp",
   ctaSecondary: "Or send a quick message",
   uspHeadline: "Why try diving with Siam Scuba",
@@ -133,11 +133,11 @@ const DSD_EN: LanderCopy = {
     { time: "Day before", label: "Register at the shop by 18:00" },
     { time: "10:30", label: "Briefing, gear intro, expectations and safety" },
     { time: "Dive 1", label: "4 basic skills in shallow water, then descend to max 12m" },
-    { time: "Dive 2", label: "Just enjoy — no skills, max 12m" },
+    { time: "Dive 2", label: "Just enjoy - no skills, max 12m" },
     { time: "16:00", label: "Activity ends" },
   ],
   ctaStripHeadline: "Ready to take the first breath?",
-  ctaStripSubhead: "Tell us your dates on WhatsApp — usually we reply within minutes.",
+  ctaStripSubhead: "Tell us your dates on WhatsApp - usually we reply within minutes.",
   faqHeadline: "Frequently asked",
   faqItems: [
     {
@@ -146,7 +146,7 @@ const DSD_EN: LanderCopy = {
     },
     {
       q: "What's the minimum age?",
-      a: "10 years old. Kids 8-9 can do the Bubble Maker program — ask us on WhatsApp.",
+      a: "10 years old. Kids 8-9 can do the Bubble Maker program - ask us on WhatsApp.",
     },
     {
       q: "What if I have asthma / heart condition / pregnancy?",
@@ -162,15 +162,15 @@ const DSD_EN: LanderCopy = {
     },
   ],
   closingCtaHeadline: "Two dives, one day, 3,600 THB.",
-  closingCtaSubhead: "Or one dive for 2,600 THB. WhatsApp us — we'll find you a slot this week.",
+  closingCtaSubhead: "Or one dive for 2,600 THB. WhatsApp us - we'll find you a slot this week.",
 };
 
 const DSD_ES: LanderCopy = {
-  seoTitle: "Discover Scuba Diving en Koh Tao – Dos Inmersiones 3,600 THB | Siam Scuba",
+  seoTitle: "Discover Scuba Diving en Koh Tao - Dos Inmersiones 3,600 THB | Siam Scuba",
   seoDescription:
-    "Prueba el buceo en Koh Tao — 2 inmersiones 3,600 THB, equipo e instructor PADI incluidos. O 1 inmersión 2,600 THB. Grupos pequeños, dos barcos propios, sin certificación previa.",
+    "Prueba el buceo en Koh Tao - 2 inmersiones 3,600 THB, equipo e instructor PADI incluidos. O 1 inmersión 2,600 THB. Grupos pequeños, dos barcos propios, sin certificación previa.",
   heroBadge: "PADI Discover Scuba Diving",
-  heroH1: "Prueba el buceo en Koh Tao — 2 inmersiones, 3,600 THB",
+  heroH1: "Prueba el buceo en Koh Tao - 2 inmersiones, 3,600 THB",
   heroSubhead:
     "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración bajo el agua hasta dos inmersiones reales en los arrecifes de Koh Tao, todo en un día. ¿Solo una inmersión? 2,600 THB.",
   ctaPrimary: "Chatea por WhatsApp",
@@ -222,11 +222,11 @@ const DSD_ES: LanderCopy = {
     { time: "Día antes", label: "Regístrate en la tienda antes de las 18:00" },
     { time: "10:30", label: "Briefing, presentación del equipo, expectativas y seguridad" },
     { time: "Inmersión 1", label: "4 habilidades básicas en aguas poco profundas, luego hasta 12m" },
-    { time: "Inmersión 2", label: "Solo disfrutar — sin habilidades, hasta 12m" },
+    { time: "Inmersión 2", label: "Solo disfrutar - sin habilidades, hasta 12m" },
     { time: "16:00", label: "Fin de la actividad" },
   ],
   ctaStripHeadline: "¿Listo para la primera respiración?",
-  ctaStripSubhead: "Cuéntanos tus fechas por WhatsApp — solemos responder en minutos.",
+  ctaStripSubhead: "Cuéntanos tus fechas por WhatsApp - solemos responder en minutos.",
   faqHeadline: "Preguntas frecuentes",
   faqItems: [
     {
@@ -235,7 +235,7 @@ const DSD_ES: LanderCopy = {
     },
     {
       q: "¿Cuál es la edad mínima?",
-      a: "10 años. Niños de 8-9 pueden hacer el programa Bubble Maker — pregúntanos por WhatsApp.",
+      a: "10 años. Niños de 8-9 pueden hacer el programa Bubble Maker - pregúntanos por WhatsApp.",
     },
     {
       q: "¿Y si tengo asma / problemas cardíacos / embarazo?",
@@ -251,17 +251,17 @@ const DSD_ES: LanderCopy = {
     },
   ],
   closingCtaHeadline: "Dos inmersiones, un día, 3,600 THB.",
-  closingCtaSubhead: "O una inmersión por 2,600 THB. Escríbenos por WhatsApp — te buscamos hueco esta semana.",
+  closingCtaSubhead: "O una inmersión por 2,600 THB. Escríbenos por WhatsApp - te buscamos hueco esta semana.",
 };
 
 const DSD_HE: LanderCopy = {
-  seoTitle: "צלילת היכרות בקוטאו – שתי צלילות ב-3,600 THB | סיאם סקובה",
+  seoTitle: "צלילת היכרות בקוטאו - שתי צלילות ב-3,600 THB | סיאם סקובה",
   seoDescription:
-    "תנסו צלילה בקוטאו — 2 צלילות ב-3,600 THB, כל הציוד ומדריך PADI כלולים. או צלילה אחת ב-2,600 THB. קבוצות קטנות, שתי סירות פרטיות, ללא הסמכה קודמת.",
+    "תנסו צלילה בקוטאו - 2 צלילות ב-3,600 THB, כל הציוד ומדריך PADI כלולים. או צלילה אחת ב-2,600 THB. קבוצות קטנות, שתי סירות פרטיות, ללא הסמכה קודמת.",
   heroBadge: "PADI Discover Scuba Diving",
-  heroH1: "צלילת היכרות בקוטאו — שתי צלילות, 3,600 THB",
+  heroH1: "צלילת היכרות בקוטאו - שתי צלילות, 3,600 THB",
   heroSubhead:
-    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה מתחת למים עד שתי צלילות אמיתיות בשונית של קוטאו — הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
+    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה מתחת למים עד שתי צלילות אמיתיות בשונית של קוטאו - הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
   ctaPrimary: "שיחה ב-WhatsApp",
   ctaSecondary: "או שלחו הודעה מהירה",
   uspHeadline: "למה לצלול איתנו",
@@ -311,11 +311,11 @@ const DSD_HE: LanderCopy = {
     { time: "יום לפני", label: "רישום במועדון עד 18:00" },
     { time: "10:30", label: "תדריך, היכרות עם הציוד, תיאום ציפיות ובטיחות" },
     { time: "צלילה 1", label: "4 תרגילים בסיסיים במים רדודים, ואז צלילה לעומק עד 12 מ׳" },
-    { time: "צלילה 2", label: "פשוט נהנים — בלי תרגילים, עומק עד 12 מ׳" },
+    { time: "צלילה 2", label: "פשוט נהנים - בלי תרגילים, עומק עד 12 מ׳" },
     { time: "16:00", label: "סיום הפעילות" },
   ],
   ctaStripHeadline: "מוכנים לנשימה הראשונה?",
-  ctaStripSubhead: "כתבו לנו ב-WhatsApp את התאריכים — בדרך כלל אנחנו עונים תוך דקות.",
+  ctaStripSubhead: "כתבו לנו ב-WhatsApp את התאריכים - בדרך כלל אנחנו עונים תוך דקות.",
   faqHeadline: "שאלות נפוצות",
   faqItems: [
     {
@@ -324,7 +324,7 @@ const DSD_HE: LanderCopy = {
     },
     {
       q: "מה גיל המינימום?",
-      a: "גיל 10. ילדים בני 8-9 יכולים לעשות את תוכנית Bubble Maker — שאלו אותנו ב-WhatsApp.",
+      a: "גיל 10. ילדים בני 8-9 יכולים לעשות את תוכנית Bubble Maker - שאלו אותנו ב-WhatsApp.",
     },
     {
       q: "מה אם יש לי אסטמה / מחלת לב / הריון?",
@@ -340,19 +340,19 @@ const DSD_HE: LanderCopy = {
     },
   ],
   closingCtaHeadline: "שתי צלילות, יום אחד, 3,600 THB.",
-  closingCtaSubhead: "או צלילה אחת ב-2,600 THB. כתבו לנו ב-WhatsApp — נמצא לכם משבצת השבוע.",
+  closingCtaSubhead: "או צלילה אחת ב-2,600 THB. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
 };
 
 // ---------- OWD (PADI Open Water Diver) ----------
 
 const OWD_EN: LanderCopy = {
-  seoTitle: "PADI Open Water Course in Koh Tao – 12,000 THB Lifelong Cert | Siam Scuba",
+  seoTitle: "PADI Open Water Course in Koh Tao - 12,000 THB Lifelong Cert | Siam Scuba",
   seoDescription:
     "Get PADI certified in 2.5 days on Koh Tao. Small groups (max 4), classroom + pool + four ocean dives, 2 nights' accommodation included. Lifelong certification.",
   heroBadge: "PADI Open Water Diver",
-  heroH1: "Get PADI certified in Koh Tao — 2.5 days, 12,000 THB, lifelong",
+  heroH1: "Get PADI certified in Koh Tao - 2.5 days, 12,000 THB, lifelong",
   heroSubhead:
-    "Theory online and in our classroom, pool practice, then four real ocean dives — all in 2.5 days. You leave with a PADI card you can dive on anywhere in the world, forever.",
+    "Theory online and in our classroom, pool practice, then four real ocean dives - all in 2.5 days. You leave with a PADI card you can dive on anywhere in the world, forever.",
   ctaPrimary: "Chat on WhatsApp",
   ctaSecondary: "Ask about dates and discounts",
   uspHeadline: "Why certify with Siam Scuba",
@@ -385,7 +385,7 @@ const OWD_EN: LanderCopy = {
       "4 open-water dives at Koh Tao's best sites",
       "Dive insurance",
       "Boat refreshments: fruit, cookies, tea, coffee, water",
-      "2 nights' accommodation — free",
+      "2 nights' accommodation - free",
       "PADI certification fee",
     ],
     excludes: [
@@ -402,7 +402,7 @@ const OWD_EN: LanderCopy = {
     "Day 1 is theory and pool. Days 2-3 are four real ocean dives, with a short final morning. Start the eLearning before you arrive and the classroom part flies by.",
   schedule: [
     { time: "Day 1", label: "09:00 theory at the club · 11:00 pool practice" },
-    { time: "Day 2", label: "Theory, then boat — sea drills and a dive to 12m, second dive at 14:00, back by 16:00" },
+    { time: "Day 2", label: "Theory, then boat - sea drills and a dive to 12m, second dive at 14:00, back by 16:00" },
     { time: "Day 3", label: "06:00 dawn dive to 18m · 10:00 final dive · certified by 11:00 🎉" },
   ],
   ctaStripHeadline: "Start your course this week",
@@ -411,7 +411,7 @@ const OWD_EN: LanderCopy = {
   faqItems: [
     {
       q: "Do I need to know how to swim?",
-      a: "Yes — you need to be able to swim 200m unaided and float for 10 minutes. Stroke doesn't matter.",
+      a: "Yes - you need to be able to swim 200m unaided and float for 10 minutes. Stroke doesn't matter.",
     },
     {
       q: "Can I do the theory before I arrive?",
@@ -427,7 +427,7 @@ const OWD_EN: LanderCopy = {
     },
     {
       q: "Is there an age limit?",
-      a: "Minimum 10 (Junior Open Water — limited to 12m). 15+ for the full Open Water Diver cert.",
+      a: "Minimum 10 (Junior Open Water - limited to 12m). 15+ for the full Open Water Diver cert.",
     },
     {
       q: "Can I add Advanced after?",
@@ -435,17 +435,17 @@ const OWD_EN: LanderCopy = {
     },
   ],
   closingCtaHeadline: "PADI cert. 2.5 days. 12,000 THB.",
-  closingCtaSubhead: "Two nights' accommodation included. WhatsApp us your dates — we start courses every day.",
+  closingCtaSubhead: "Two nights' accommodation included. WhatsApp us your dates - we start courses every day.",
 };
 
 const OWD_ES: LanderCopy = {
-  seoTitle: "Curso PADI Open Water en Koh Tao – Certificación de por Vida 12,000 THB | Siam Scuba",
+  seoTitle: "Curso PADI Open Water en Koh Tao - Certificación de por Vida 12,000 THB | Siam Scuba",
   seoDescription:
     "Sácate el PADI en 2,5 días en Koh Tao. Grupos pequeños (máx. 4), teoría + piscina + cuatro inmersiones, 2 noches de alojamiento incluidas. Certificación de por vida.",
   heroBadge: "PADI Open Water Diver",
-  heroH1: "Certifícate PADI en Koh Tao — 2,5 días, 12,000 THB, de por vida",
+  heroH1: "Certifícate PADI en Koh Tao - 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
-    "Teoría online y en nuestra aula, prácticas en piscina y cuatro inmersiones reales en el mar — todo en 2,5 días. Te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
+    "Teoría online y en nuestra aula, prácticas en piscina y cuatro inmersiones reales en el mar - todo en 2,5 días. Te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
   ctaPrimary: "Chatea por WhatsApp",
   ctaSecondary: "Pregunta por fechas y descuentos",
   uspHeadline: "Por qué certificarte con Siam Scuba",
@@ -478,7 +478,7 @@ const OWD_ES: LanderCopy = {
       "4 inmersiones en los mejores sitios de Koh Tao",
       "Seguro de buceo",
       "Tentempiés en el barco: fruta, galletas, té, café y agua",
-      "2 noches de alojamiento — gratis",
+      "2 noches de alojamiento - gratis",
       "Tasa de certificación PADI",
     ],
     excludes: [
@@ -495,7 +495,7 @@ const OWD_ES: LanderCopy = {
     "Día 1 teoría y piscina. Días 2-3 cuatro inmersiones reales, con una última mañana corta. Empieza el eLearning antes de llegar y la parte teórica será pan comido.",
   schedule: [
     { time: "Día 1", label: "09:00 teoría en el club · 11:00 prácticas en piscina" },
-    { time: "Día 2", label: "Teoría y barco — prácticas en el mar e inmersión a 12m, segunda inmersión a las 14:00, vuelta a las 16:00" },
+    { time: "Día 2", label: "Teoría y barco - prácticas en el mar e inmersión a 12m, segunda inmersión a las 14:00, vuelta a las 16:00" },
     { time: "Día 3", label: "06:00 inmersión al amanecer a 18m · 10:00 última inmersión · certificado a las 11:00 🎉" },
   ],
   ctaStripHeadline: "Empieza tu curso esta semana",
@@ -504,7 +504,7 @@ const OWD_ES: LanderCopy = {
   faqItems: [
     {
       q: "¿Necesito saber nadar?",
-      a: "Sí — debes nadar 200m sin ayuda y flotar 10 minutos. El estilo no importa.",
+      a: "Sí - debes nadar 200m sin ayuda y flotar 10 minutos. El estilo no importa.",
     },
     {
       q: "¿Puedo hacer la teoría antes de llegar?",
@@ -528,17 +528,17 @@ const OWD_ES: LanderCopy = {
     },
   ],
   closingCtaHeadline: "Cert PADI. 2,5 días. 12,000 THB.",
-  closingCtaSubhead: "2 noches de alojamiento incluidas. WhatsApp con tus fechas — abrimos cursos cada día.",
+  closingCtaSubhead: "2 noches de alojamiento incluidas. WhatsApp con tus fechas - abrimos cursos cada día.",
 };
 
 const OWD_HE: LanderCopy = {
-  seoTitle: "קורס PADI Open Water בקוטאו – הסמכה לכל החיים ב-12,000 THB | סיאם סקובה",
+  seoTitle: "קורס PADI Open Water בקוטאו - הסמכה לכל החיים ב-12,000 THB | סיאם סקובה",
   seoDescription:
     "תוסמכו ל-PADI ב-2.5 ימים בקוטאו. קבוצות קטנות (מקס׳ 4), תיאוריה + בריכה + ארבע צלילות בים, 2 לילות לינה כלולים. הסמכה לכל החיים.",
-  heroBadge: "PADI Open Water Diver",
-  heroH1: "הסמכת PADI בקוטאו — 2.5 ימים, 12,000 THB, לכל החיים",
+  heroBadge: "PADI כוכב ראשון - Open Water Diver",
+  heroH1: "כוכב ראשון ב-2.5 ימים בקו-טאו, 12,000 THB, לכל החיים",
   heroSubhead:
-    "לימוד עיוני אונליין + שיעור במועדון, תרגול בבריכה, ואז ארבע צלילות אמיתיות בים — הכל ב-2.5 ימים. יוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
+    "לימוד עיוני אונליין + שיעור במועדון, תרגול בבריכה, ואז ארבע צלילות אמיתיות בים - הכל ב-2.5 ימים. יוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
   ctaPrimary: "שיחה ב-WhatsApp",
   ctaSecondary: "שאלו על תאריכים והנחות",
   uspHeadline: "למה להסמיך איתנו",
@@ -588,7 +588,7 @@ const OWD_HE: LanderCopy = {
     "יום 1 תיאוריה ובריכה. ימים 2-3 ארבע צלילות בים, כשהבוקר האחרון קצר. שווה להתחיל את הלימוד האונליין לפני שמגיעים.",
   schedule: [
     { time: "יום 1", label: "09:00 תיאוריה במועדון · 11:00 תרגול בבריכה" },
-    { time: "יום 2", label: "תיאוריה, ואז סירה — תרגול בים וצלילה עד 12 מ׳, צלילה שנייה ב-14:00, חזרה ב-16:00" },
+    { time: "יום 2", label: "תיאוריה, ואז סירה - תרגול בים וצלילה עד 12 מ׳, צלילה שנייה ב-14:00, חזרה ב-16:00" },
     { time: "יום 3", label: "06:00 צלילת שחר עד 18 מ׳ · 10:00 צלילה אחרונה · מוסמכים ב-11:00 🎉" },
   ],
   ctaStripHeadline: "התחילו את הקורס השבוע",
@@ -597,7 +597,7 @@ const OWD_HE: LanderCopy = {
   faqItems: [
     {
       q: "צריך לדעת לשחות?",
-      a: "כן — צריך לשחות 200 מטר ללא עזרה ולצוף 10 דקות. הסגנון לא משנה.",
+      a: "כן - צריך לשחות 200 מטר ללא עזרה ולצוף 10 דקות. הסגנון לא משנה.",
     },
     {
       q: "אפשר לעשות את התיאוריה לפני שמגיעים?",
@@ -621,19 +621,297 @@ const OWD_HE: LanderCopy = {
     },
   ],
   closingCtaHeadline: "הסמכת PADI. 2.5 ימים. 12,000 THB.",
-  closingCtaSubhead: "2 לילות לינה כלולים. WhatsApp עם התאריכים — פותחים קורסים כל יום.",
+  closingCtaSubhead: "2 לילות לינה כלולים. WhatsApp עם התאריכים - פותחים קורסים כל יום.",
+};
+
+// ---------- AOW (PADI Advanced Open Water Diver) ----------
+
+const AOW_EN: LanderCopy = {
+  seoTitle: "PADI Advanced Open Water Course in Koh Tao - 1.5 Days, 11,000 THB | Siam Scuba",
+  seoDescription:
+    "Level up with the PADI Advanced Open Water course on Koh Tao. 1.5 days, 5 adventure dives to 30m incl. deep, wreck, night and navigation. Small groups (max 4), 1 night accommodation included. 4.9 on Google (845), 5.0 on TripAdvisor (776).",
+  heroBadge: "PADI Advanced Open Water Diver",
+  heroH1: "Go Advanced in Koh Tao - 1.5 days, 5 dives, 11,000 THB",
+  heroSubhead:
+    "Already Open Water certified? Push to 30m with five adventure dives - deep, wreck, night, navigation and buoyancy. No exams, no theory, just diving. One night's accommodation included.",
+  ctaPrimary: "Chat on WhatsApp",
+  ctaSecondary: "Ask about dates and combos",
+  uspHeadline: "Why go Advanced with Siam Scuba",
+  uspTiles: [
+    {
+      icon: "users",
+      title: "Max 4 students per instructor",
+      body: "More water time, real coaching on your buoyancy and air, less waiting around.",
+    },
+    {
+      icon: "boat",
+      title: "Private boat + new gear",
+      body: "We don't share boats with other shops, so the deep and night dives run on schedule with kit you can trust.",
+    },
+    {
+      icon: "award",
+      title: "Lifelong PADI certification",
+      body: "Recognized at every dive shop on Earth. Yours forever, no renewals.",
+    },
+  ],
+  pricingHeadline: "What's included",
+  pricing: {
+    price: "11,000 THB",
+    perWhat: "per person, all in",
+    includes: [
+      "5 adventure dives: deep (30m), wreck, night, navigation, buoyancy/photo",
+      "English, Spanish and Hebrew-speaking PADI instructors",
+      "All gear, all dives, all materials",
+      "1 night's accommodation at our club - free",
+      "Dive insurance",
+      "Boat snacks: pineapple, cookies, tea, coffee, water",
+      "Club dive T-shirt",
+      "International PADI Advanced certification",
+    ],
+    excludes: [
+      "Meals",
+      "Hotel / dive-center transfer",
+      "Underwater photos & video (add-on)",
+      "Private instructor (add-on)",
+    ],
+  },
+  socialProofHeadline: "4.9 on Google (845) · 5.0 on TripAdvisor (776).",
+  socialProofSubhead: "Read what divers say after going Advanced the Siam Scuba way.",
+  whatYouDoHeadline: "Your 1.5-day path to Advanced",
+  whatYouDoSubhead:
+    "It's 100% practical - no exams, no classroom theory. Five dives across a day and a half, including a 30m deep dive and a night dive on the reef.",
+  schedule: [
+    { time: "Day 1", label: "10:00 meet at the club · 11:00 buoyancy dive · 14:00 navigation dive · 17:30 night dive" },
+    { time: "Day 2", label: "06:00 early boat for deep dive (30m) + wreck dive · 10:00 final dive" },
+    { time: "Day 2", label: "11:30 back to the club - certified & celebrating 🎉" },
+  ],
+  ctaStripHeadline: "Start your Advanced this week",
+  ctaStripSubhead: "Send your travel dates on WhatsApp and we'll find a start day that fits.",
+  faqHeadline: "Frequently asked",
+  faqItems: [
+    {
+      q: "What do I need to start?",
+      a: "An Open Water certification (PADI or equivalent). That's it - Advanced is the natural next step.",
+    },
+    {
+      q: "Is there an exam or theory?",
+      a: "No exams and no classroom theory. There's short knowledge reading per adventure dive, but the course is 100% in-water.",
+    },
+    {
+      q: "What's the maximum depth?",
+      a: "30 meters - that's the deep adventure dive. It's one of the highlights of the course.",
+    },
+    {
+      q: "Do I have to pay a deposit to book?",
+      a: "Yes - a 3,000 THB deposit secures your spot, and the balance is paid here on the island. Message us on WhatsApp and we'll arrange it in a minute.",
+    },
+    {
+      q: "Can I do it straight after my Open Water?",
+      a: "Yes, and that's the most popular way to do it. Book both together and we discount the combo - ask us on WhatsApp.",
+    },
+    {
+      q: "How long does it take?",
+      a: "1.5 days, five dives. You're certified by late morning on day two.",
+    },
+  ],
+  closingCtaHeadline: "Advanced cert. 1.5 days. 11,000 THB.",
+  closingCtaSubhead: "One night's accommodation included. WhatsApp us your dates - we start courses every day.",
+};
+
+const AOW_ES: LanderCopy = {
+  seoTitle: "Curso PADI Advanced Open Water en Koh Tao - 1.5 Días, 11,000 THB | Siam Scuba",
+  seoDescription:
+    "Sube de nivel con el curso PADI Advanced Open Water en Koh Tao. 1.5 días, 5 inmersiones de aventura hasta 30m incl. profunda, pecio, nocturna y navegación. Grupos pequeños (máx. 4), 1 noche de alojamiento incluida. 4,9 en Google (845), 5,0 en TripAdvisor (776).",
+  heroBadge: "PADI Advanced Open Water Diver",
+  heroH1: "Sácate el Advanced en Koh Tao en Español!!! - 1.5 días, 5 inmersiones",
+  heroSubhead:
+    "¿Ya eres Open Water? Baja hasta 30m con cinco inmersiones de aventura - profunda, pecio, nocturna, navegación y flotabilidad. Sin exámenes, sin teoría, solo buceo. Una noche de alojamiento incluida.",
+  ctaPrimary: "Chatea por WhatsApp",
+  ctaSecondary: "Pregunta por fechas y combos",
+  uspHeadline: "Por qué hacer el Advanced con Siam Scuba",
+  uspTiles: [
+    {
+      icon: "users",
+      title: "Máximo 4 alumnos por instructor",
+      body: "Más tiempo bajo el agua, coaching real de flotabilidad y consumo de aire, menos esperas.",
+    },
+    {
+      icon: "boat",
+      title: "Barco propio + equipo nuevo",
+      body: "No compartimos barco con otras tiendas, así que las inmersiones profunda y nocturna salen a tiempo y con equipo de confianza.",
+    },
+    {
+      icon: "award",
+      title: "Certificación PADI de por vida",
+      body: "Reconocida en todos los centros del mundo. Tuya para siempre, sin renovaciones.",
+    },
+  ],
+  pricingHeadline: "Qué incluye",
+  pricing: {
+    price: "11,000 THB",
+    perWhat: "por persona, todo incluido",
+    includes: [
+      "5 inmersiones de aventura: profunda (30m), pecio, nocturna, navegación, flotabilidad/foto",
+      "Instructores PADI que hablan inglés, español y hebreo",
+      "Equipo profesional, inmersiones y material completo",
+      "1 noche de alojamiento en nuestro club - gratis",
+      "Seguro de buceo",
+      "Tentempiés en el barco: piña, galletas, té, café y agua",
+      "Camiseta de buceo del club",
+      "Certificación internacional PADI Advanced",
+    ],
+    excludes: [
+      "Comidas",
+      "Traslado al centro de buceo",
+      "Fotos / vídeo submarino (extra)",
+      "Instructor privado (extra)",
+    ],
+  },
+  socialProofHeadline: "4,9 en Google (845) · 5,0 en TripAdvisor (776).",
+  socialProofSubhead: "Lee lo que dicen los buceadores tras hacer el Advanced al estilo Siam Scuba.",
+  whatYouDoHeadline: "Tu camino al Advanced en 1.5 días",
+  whatYouDoSubhead:
+    "Es 100% práctico - sin exámenes ni teoría en aula. Cinco inmersiones en un día y medio, incluyendo una profunda a 30m y una nocturna en el arrecife.",
+  schedule: [
+    { time: "Día 1", label: "10:00 encuentro en el club · 11:00 inmersión de flotabilidad · 14:00 inmersión de navegación · 17:30 inmersión nocturna" },
+    { time: "Día 2", label: "06:00 barco temprano para inmersión profunda (30m) + pecio · 10:00 última inmersión" },
+    { time: "Día 2", label: "11:30 vuelta al club - certificado y celebrando 🎉" },
+  ],
+  ctaStripHeadline: "Empieza tu Advanced esta semana",
+  ctaStripSubhead: "Envía tus fechas por WhatsApp y te buscamos un día de inicio que encaje.",
+  faqHeadline: "Preguntas frecuentes",
+  faqItems: [
+    {
+      q: "¿Qué necesito para empezar?",
+      a: "Una certificación Open Water (PADI o equivalente). Nada más - el Advanced es el siguiente paso natural.",
+    },
+    {
+      q: "¿Hay examen o teoría?",
+      a: "Sin exámenes ni teoría en aula. Hay una breve lectura por inmersión de aventura, pero el curso es 100% en el agua.",
+    },
+    {
+      q: "¿Cuál es la profundidad máxima?",
+      a: "30 metros - esa es la inmersión profunda de aventura. Es uno de los momentos estrella del curso.",
+    },
+    {
+      q: "¿Tengo que pagar un depósito para reservar?",
+      a: "Sí - un depósito de 3,000 THB asegura tu plaza y el resto se paga aquí en la isla. Escríbenos por WhatsApp y lo arreglamos en un minuto.",
+    },
+    {
+      q: "¿Puedo hacerlo justo después del Open Water?",
+      a: "Sí, y es la forma más popular de hacerlo. Reserva ambos juntos y te descontamos el combo - pregúntanos por WhatsApp.",
+    },
+    {
+      q: "¿Cuánto dura?",
+      a: "1.5 días, cinco inmersiones. Estás certificado a media mañana del segundo día.",
+    },
+  ],
+  closingCtaHeadline: "Cert Advanced. 1.5 días. 11,000 THB.",
+  closingCtaSubhead: "Una noche de alojamiento incluida. WhatsApp con tus fechas - abrimos cursos cada día.",
+};
+
+const AOW_HE: LanderCopy = {
+  seoTitle: "קורס PADI כוכב שני (Advanced Open Water) בקוטאו - יום וחצי, 11,000 THB | סיאם סקובה",
+  seoDescription:
+    "מעלים רמה עם קורס PADI כוכב שני (Advanced Open Water) בקוטאו. יום וחצי, 5 צלילות הרפתקה עד 30 מ׳ כולל עומק, ספינה טרופה, לילה וניווט. קבוצות קטנות (מקס׳ 4), לילה לינה כלול. 4.9 בגוגל (845), 5.0 בטריפאדוויזר (776).",
+  heroBadge: "PADI כוכב שני - Advanced Open Water",
+  heroH1: "כוכב שני בקוטאו בעברית!!! - יום וחצי, 5 צלילות, 11,000 THB",
+  heroSubhead:
+    "כבר מוסמכים Open Water? תרדו ל-30 מטר עם חמש צלילות הרפתקה - עומק, ספינה טרופה, לילה, ניווט וציפה. בלי מבחנים, בלי תיאוריה, רק צלילה. לילה לינה כלול.",
+  ctaPrimary: "שיחה ב-WhatsApp",
+  ctaSecondary: "שאלו על תאריכים וחבילות",
+  uspHeadline: "למה לעשות כוכב שני איתנו",
+  uspTiles: [
+    {
+      icon: "users",
+      title: "מקסימום 4 חניכים למדריך",
+      body: "יותר זמן מתחת למים, ליווי אמיתי על ציפה וצריכת אוויר, פחות המתנה.",
+    },
+    {
+      icon: "boat",
+      title: "סירה פרטית + ציוד חדש",
+      body: "אנחנו לא חולקים סירה עם חנויות אחרות, אז צלילות העומק והלילה יוצאות בזמן ועם ציוד שאפשר לסמוך עליו.",
+    },
+    {
+      icon: "award",
+      title: "הסמכת PADI לכל החיים",
+      body: "מוכרת בכל חנות צלילה בעולם. שלכם לתמיד, ללא חידושים.",
+    },
+  ],
+  pricingHeadline: "מה כלול",
+  pricing: {
+    price: "11,000 THB",
+    perWhat: "לאדם, הכל כלול",
+    includes: [
+      "5 צלילות הרפתקה: עומק (30 מ׳), ספינה טרופה, לילה, ניווט, ציפה/צילום",
+      "מדריכים דוברי עברית, אנגלית וספרדית",
+      "ציוד צלילה מלא ומקצועי, כל הצלילות והחומרים",
+      "לילה לינה במועדון שלנו - מתנה 🎁",
+      "ביטוח צלילה",
+      "כיבוד על הסירה: אננס, עוגיות, תה, קפה ומים",
+      "חולצת צלילה של המועדון",
+      "הסמכת PADI כוכב שני (Advanced Open Water) בינלאומית",
+    ],
+    excludes: [
+      "ארוחות",
+      "הסעה למרכז הצלילה",
+      "צילום מתחת למים (תוספת בתשלום)",
+      "מדריך פרטי (תוספת בתשלום)",
+    ],
+  },
+  socialProofHeadline: "4.9 בגוגל (845) · 5.0 בטריפאדוויזר (776).",
+  socialProofSubhead: "קראו מה צוללים מספרים אחרי שעשו כוכב שני בדרך של סיאם סקובה.",
+  whatYouDoHeadline: "הדרך שלכם לכוכב שני תוך יום וחצי",
+  whatYouDoSubhead:
+    "זה 100% מעשי - בלי מבחנים ובלי תיאוריה בכיתה. חמש צלילות לאורך יום וחצי, כולל צלילת עומק ל-30 מטר וצלילת לילה בשונית.",
+  schedule: [
+    { time: "יום 1", label: "10:00 מפגש במועדון · 11:00 צלילת ציפה · 14:00 צלילת ניווט · 17:30 צלילת לילה" },
+    { time: "יום 2", label: "06:00 סירה מוקדמת לצלילת עומק (30 מ׳) + ספינה טרופה · 10:00 צלילה אחרונה" },
+    { time: "יום 2", label: "11:30 חזרה למועדון - מוסמכים וחוגגים 🎉" },
+  ],
+  ctaStripHeadline: "התחילו את קורס כוכב שני השבוע",
+  ctaStripSubhead: "שלחו תאריכי טיול ב-WhatsApp ונמצא יום פתיחה שמתאים.",
+  faqHeadline: "שאלות נפוצות",
+  faqItems: [
+    {
+      q: "מה צריך כדי להתחיל?",
+      a: "הסמכת Open Water (PADI או שווה ערך). זהו - כוכב שני הוא הצעד הטבעי הבא.",
+    },
+    {
+      q: "יש מבחן או תיאוריה?",
+      a: "בלי מבחנים ובלי תיאוריה בכיתה. יש קריאת ידע קצרה לכל צלילת הרפתקה, אבל הקורס 100% במים.",
+    },
+    {
+      q: "מה העומק המקסימלי?",
+      a: "30 מטרים - זו צלילת העומק. אחד מרגעי השיא של הקורס.",
+    },
+    {
+      q: "צריך לשלם מקדמה כדי להזמין?",
+      a: "כן - מקדמה של 3,000 THB שומרת לכם מקום, והיתרה משולמת כאן באי. כתבו לנו ב-WhatsApp ונסדר את זה תוך דקה.",
+    },
+    {
+      q: "אפשר לעשות מיד אחרי Open Water?",
+      a: "כן, וזו הדרך הכי פופולרית. הזמינו את שניהם יחד ונעניק הנחה על החבילה - שאלו אותנו ב-WhatsApp.",
+    },
+    {
+      q: "כמה זמן זה לוקח?",
+      a: "יום וחצי, חמש צלילות. אתם מוסמכים עד אמצע הבוקר של היום השני.",
+    },
+  ],
+  closingCtaHeadline: "הסמכת כוכב שני. יום וחצי. 11,000 THB.",
+  closingCtaSubhead: "לילה לינה כלול. WhatsApp עם התאריכים - פותחים קורסים כל יום.",
 };
 
 // ---------- Fun Dive ----------
 
 const FUN_EN: LanderCopy = {
-  seoTitle: "Fun Dives in Koh Tao – Guided Day Trips from 2,000 THB | Siam Scuba",
+  seoTitle: "Fun Dives in Koh Tao - Guided Day Trips from 2,000 THB | Siam Scuba",
   seoDescription:
-    "Certified divers — book guided fun dives in Koh Tao. Two morning or afternoon dives 2,000 THB. Full-day Sail Rock 3,800 THB. Small groups, two custom boats.",
+    "Certified divers - book guided fun dives in Koh Tao. Two morning or afternoon dives 2,000 THB. Full-day Sail Rock 3,800 THB. Small groups, two custom boats.",
   heroBadge: "For certified divers",
-  heroH1: "Fun dives in Koh Tao — small groups, custom boats, from 2,000 THB",
+  heroH1: "Fun dives in Koh Tao - small groups, custom boats, from 2,000 THB",
   heroSubhead:
-    "You're already certified. Pick your day, pick your sites — Chumphon Pinnacle, Sail Rock, Twins, Shark Island. We handle the boat, the gear, the guide.",
+    "You're already certified. Pick your day, pick your sites - Chumphon Pinnacle, Sail Rock, Twins, Shark Island. We handle the boat, the gear, the guide.",
   ctaPrimary: "Book a fun dive",
   ctaSecondary: "Or message us on WhatsApp",
   uspHeadline: "Why dive with us",
@@ -668,7 +946,7 @@ const FUN_EN: LanderCopy = {
     ],
     excludes: ["Hotel pickup", "GoPro rental", "Underwater photos (add 1,500 THB)"],
   },
-  socialProofHeadline: "Trusted by 778 reviewers on TripAdvisor — 5.0 stars.",
+  socialProofHeadline: "Trusted by 778 reviewers on TripAdvisor - 5.0 stars.",
   socialProofSubhead: "Most repeat customers we've ever had. They keep coming back, you'll see why.",
   whatYouDoHeadline: "Where we dive",
   whatYouDoSubhead:
@@ -688,7 +966,7 @@ const FUN_EN: LanderCopy = {
     },
     {
       name: "Shark Island",
-      blurb: "Wall dive on the south side. Reef sharks, turtles, anemones — usually our second dive.",
+      blurb: "Wall dive on the south side. Reef sharks, turtles, anemones - usually our second dive.",
     },
     {
       name: "Hin Wong Pinnacle",
@@ -696,7 +974,7 @@ const FUN_EN: LanderCopy = {
     },
     {
       name: "Southwest Pinnacle",
-      blurb: "A cluster of pinnacles dropping to 28m. Big schools, groupers, whale sharks in season — quieter than Chumphon.",
+      blurb: "A cluster of pinnacles dropping to 28m. Big schools, groupers, whale sharks in season - quieter than Chumphon.",
     },
     {
       name: "White Rock",
@@ -704,20 +982,20 @@ const FUN_EN: LanderCopy = {
     },
     {
       name: "Mango Bay",
-      blurb: "Shallow, calm bay on the north coast. Healthy hard coral and macro life — perfect for easy, long, low-current dives.",
+      blurb: "Shallow, calm bay on the north coast. Healthy hard coral and macro life - perfect for easy, long, low-current dives.",
     },
   ],
   ctaStripHeadline: "Pick your dive day",
-  ctaStripSubhead: "Book online or send dates on WhatsApp — we'll confirm the same day.",
+  ctaStripSubhead: "Book online or send dates on WhatsApp - we'll confirm the same day.",
   faqHeadline: "Frequently asked",
   faqItems: [
     {
       q: "Which certifications do you accept?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — anything mainstream. Bring your card or have a digital copy ready.",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - anything mainstream. Bring your card or have a digital copy ready.",
     },
     {
       q: "I haven't dived in 2+ years. Should I do a refresher?",
-      a: "Yes. We offer a quick refresher (Scuba Review) for 2,500 THB — two skills sessions plus a shallow dive. Saves you skipping the first fun dive in confusion.",
+      a: "Yes. We offer a quick refresher (Scuba Review) for 2,500 THB - two skills sessions plus a shallow dive. Saves you skipping the first fun dive in confusion.",
     },
     {
       q: "Can I dive Sail Rock as my first dive of the trip?",
@@ -733,17 +1011,17 @@ const FUN_EN: LanderCopy = {
     },
   ],
   closingCtaHeadline: "Two dives, your day, 2,000 THB.",
-  closingCtaSubhead: "Tap below to book — or WhatsApp us your preferred dates.",
+  closingCtaSubhead: "Tap below to book - or WhatsApp us your preferred dates.",
 };
 
 const FUN_ES: LanderCopy = {
-  seoTitle: "Inmersiones Guiadas en Koh Tao – Desde 2,000 THB | Siam Scuba",
+  seoTitle: "Inmersiones Guiadas en Koh Tao - Desde 2,000 THB | Siam Scuba",
   seoDescription:
-    "Buceadores certificados — reserva inmersiones guiadas en Koh Tao. Dos inmersiones mañana o tarde 2,000 THB. Día completo Sail Rock 3,800 THB. Grupos pequeños, barcos propios.",
+    "Buceadores certificados - reserva inmersiones guiadas en Koh Tao. Dos inmersiones mañana o tarde 2,000 THB. Día completo Sail Rock 3,800 THB. Grupos pequeños, barcos propios.",
   heroBadge: "Para buceadores certificados",
-  heroH1: "Buceo en Koh Tao — grupos pequeños, barcos propios, desde 2,000 THB",
+  heroH1: "Buceo en Koh Tao - grupos pequeños, barcos propios, desde 2,000 THB",
   heroSubhead:
-    "Ya estás certificado. Elige el día, elige los sitios — Chumphon Pinnacle, Sail Rock, Twins, Shark Island. Nosotros nos ocupamos del barco, el equipo y el guía.",
+    "Ya estás certificado. Elige el día, elige los sitios - Chumphon Pinnacle, Sail Rock, Twins, Shark Island. Nosotros nos ocupamos del barco, el equipo y el guía.",
   ctaPrimary: "Reserva una inmersión",
   ctaSecondary: "O escríbenos por WhatsApp",
   uspHeadline: "Por qué bucear con nosotros",
@@ -779,7 +1057,7 @@ const FUN_ES: LanderCopy = {
     excludes: ["Recogida en hotel", "Alquiler de GoPro", "Fotos subacuáticas (+1.500 THB)"],
   },
   socialProofHeadline: "778 reseñas en TripAdvisor con 5,0 estrellas.",
-  socialProofSubhead: "Los clientes que más repiten. Vuelven una y otra vez — ya verás por qué.",
+  socialProofSubhead: "Los clientes que más repiten. Vuelven una y otra vez - ya verás por qué.",
   whatYouDoHeadline: "Dónde buceamos",
   whatYouDoSubhead: "Rotamos sitios según el tiempo y la visibilidad. Algunos de nuestros sitios habituales:",
   diveSites: [
@@ -797,7 +1075,7 @@ const FUN_ES: LanderCopy = {
     },
     {
       name: "Shark Island",
-      blurb: "Pared en la cara sur. Tiburones de arrecife, tortugas, anémonas — suele ser nuestra segunda inmersión.",
+      blurb: "Pared en la cara sur. Tiburones de arrecife, tortugas, anémonas - suele ser nuestra segunda inmersión.",
     },
     {
       name: "Hin Wong Pinnacle",
@@ -805,7 +1083,7 @@ const FUN_ES: LanderCopy = {
     },
     {
       name: "Southwest Pinnacle",
-      blurb: "Conjunto de pináculos que baja a 28m. Grandes bancos, meros y tiburones ballena en temporada — más tranquilo que Chumphon.",
+      blurb: "Conjunto de pináculos que baja a 28m. Grandes bancos, meros y tiburones ballena en temporada - más tranquilo que Chumphon.",
     },
     {
       name: "White Rock",
@@ -813,20 +1091,20 @@ const FUN_ES: LanderCopy = {
     },
     {
       name: "Mango Bay",
-      blurb: "Bahía poco profunda y tranquila en la costa norte. Coral duro sano y vida macro — perfecta para inmersiones largas y sin corriente.",
+      blurb: "Bahía poco profunda y tranquila en la costa norte. Coral duro sano y vida macro - perfecta para inmersiones largas y sin corriente.",
     },
   ],
   ctaStripHeadline: "Elige tu día de buceo",
-  ctaStripSubhead: "Reserva online o envíanos fechas por WhatsApp — confirmamos el mismo día.",
+  ctaStripSubhead: "Reserva online o envíanos fechas por WhatsApp - confirmamos el mismo día.",
   faqHeadline: "Preguntas frecuentes",
   faqItems: [
     {
       q: "¿Qué certificaciones aceptan?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — todo lo mayoritario. Trae la tarjeta o ten una copia digital.",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - todo lo mayoritario. Trae la tarjeta o ten una copia digital.",
     },
     {
       q: "Llevo 2+ años sin bucear. ¿Debo hacer un repaso?",
-      a: "Sí. Ofrecemos un Scuba Review rápido por 2,500 THB — dos sesiones de habilidades más una inmersión poco profunda. Mejor que perderse la primera inmersión.",
+      a: "Sí. Ofrecemos un Scuba Review rápido por 2,500 THB - dos sesiones de habilidades más una inmersión poco profunda. Mejor que perderse la primera inmersión.",
     },
     {
       q: "¿Puedo bucear Sail Rock como primera inmersión del viaje?",
@@ -842,17 +1120,17 @@ const FUN_ES: LanderCopy = {
     },
   ],
   closingCtaHeadline: "Dos inmersiones, tu día, 2,000 THB.",
-  closingCtaSubhead: "Pulsa abajo para reservar — o escríbenos por WhatsApp con tus fechas.",
+  closingCtaSubhead: "Pulsa abajo para reservar - o escríbenos por WhatsApp con tus fechas.",
 };
 
 const FUN_HE: LanderCopy = {
-  seoTitle: "צלילות פאן בקוטאו – יציאות יומיות מ-2,000 THB | סיאם סקובה",
+  seoTitle: "צלילות פאן בקוטאו - יציאות יומיות מ-2,000 THB | סיאם סקובה",
   seoDescription:
-    "צוללים מוסמכים — הזמינו צלילות פאן מודרכות בקוטאו. שתי צלילות בוקר או אחרי הצהריים ב-2,000 THB. יום שלם ב-Sail Rock ב-3,800 THB. קבוצות קטנות, סירות פרטיות.",
+    "צוללים מוסמכים - הזמינו צלילות פאן מודרכות בקוטאו. שתי צלילות בוקר או אחרי הצהריים ב-2,000 THB. יום שלם ב-Sail Rock ב-3,800 THB. קבוצות קטנות, סירות פרטיות.",
   heroBadge: "לצוללים מוסמכים",
-  heroH1: "צלילות פאן בקוטאו — קבוצות קטנות, סירות פרטיות, מ-2,000 THB",
+  heroH1: "צלילות פאן בקוטאו - קבוצות קטנות, סירות פרטיות, מ-2,000 THB",
   heroSubhead:
-    "כבר מוסמכים. בחרו יום, בחרו אתרים — Chumphon Pinnacle, Sail Rock, Twins, Shark Island. אנחנו מטפלים בסירה, בציוד ובמדריך.",
+    "כבר מוסמכים. בחרו יום, בחרו אתרים - Chumphon Pinnacle, Sail Rock, Twins, Shark Island. אנחנו מטפלים בסירה, בציוד ובמדריך.",
   ctaPrimary: "הזמינו צלילה",
   ctaSecondary: "או כתבו לנו ב-WhatsApp",
   uspHeadline: "למה לצלול איתנו",
@@ -888,7 +1166,7 @@ const FUN_HE: LanderCopy = {
     excludes: ["איסוף מהמלון", "השכרת GoPro", "תמונות מתחת למים (תוספת 1,500 THB)"],
   },
   socialProofHeadline: "778 ביקורות ב-TripAdvisor עם 5.0 כוכבים.",
-  socialProofSubhead: "הכי הרבה לקוחות חוזרים שאי פעם היו לנו. הם חוזרים שוב ושוב — אתם תראו למה.",
+  socialProofSubhead: "הכי הרבה לקוחות חוזרים שאי פעם היו לנו. הם חוזרים שוב ושוב - אתם תראו למה.",
   whatYouDoHeadline: "איפה אנחנו צוללים",
   whatYouDoSubhead: "מסובבים אתרים לפי מזג אוויר וראות. כמה מהאתרים הקבועים שלנו:",
   diveSites: [
@@ -906,7 +1184,7 @@ const FUN_HE: LanderCopy = {
     },
     {
       name: "Shark Island",
-      blurb: "צלילת קיר בצד הדרומי. כרישי שונית, צבים, שושנות — בדרך כלל הצלילה השנייה שלנו.",
+      blurb: "צלילת קיר בצד הדרומי. כרישי שונית, צבים, שושנות - בדרך כלל הצלילה השנייה שלנו.",
     },
     {
       name: "Hin Wong Pinnacle",
@@ -914,7 +1192,7 @@ const FUN_HE: LanderCopy = {
     },
     {
       name: "Southwest Pinnacle",
-      blurb: "אשכול טבעות שיורד ל-28 מטר. להקות גדולות, דקרים, וכריש לוויתן בעונה — שקט יותר מ-Chumphon.",
+      blurb: "אשכול טבעות שיורד ל-28 מטר. להקות גדולות, דקרים, וכריש לוויתן בעונה - שקט יותר מ-Chumphon.",
     },
     {
       name: "White Rock",
@@ -922,20 +1200,20 @@ const FUN_HE: LanderCopy = {
     },
     {
       name: "Mango Bay",
-      blurb: "מפרץ רדוד ושקט בצפון האי. אלמוגים קשים בריאים וחיי מאקרו — מושלם לצלילות ארוכות בלי זרם.",
+      blurb: "מפרץ רדוד ושקט בצפון האי. אלמוגים קשים בריאים וחיי מאקרו - מושלם לצלילות ארוכות בלי זרם.",
     },
   ],
   ctaStripHeadline: "בחרו יום צלילה",
-  ctaStripSubhead: "הזמינו אונליין או שלחו תאריכים ב-WhatsApp — נאשר באותו יום.",
+  ctaStripSubhead: "הזמינו אונליין או שלחו תאריכים ב-WhatsApp - נאשר באותו יום.",
   faqHeadline: "שאלות נפוצות",
   faqItems: [
     {
       q: "אילו הסמכות אתם מקבלים?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — כל מה שמרכזי. הביאו את הכרטיס או צילום דיגיטלי.",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - כל מה שמרכזי. הביאו את הכרטיס או צילום דיגיטלי.",
     },
     {
       q: "לא צללתי 2+ שנים. כדאי לעשות רענון?",
-      a: "כן. יש לנו Scuba Review מהיר ב-2,500 THB — שני מפגשי תרגול וצלילה רדודה. עדיף מאשר להפסיד את הצלילה הראשונה בבלבול.",
+      a: "כן. יש לנו Scuba Review מהיר ב-2,500 THB - שני מפגשי תרגול וצלילה רדודה. עדיף מאשר להפסיד את הצלילה הראשונה בבלבול.",
     },
     {
       q: "אפשר לצלול ב-Sail Rock כצלילה ראשונה של הטיול?",
@@ -951,7 +1229,7 @@ const FUN_HE: LanderCopy = {
     },
   ],
   closingCtaHeadline: "שתי צלילות, היום שלכם, 2,000 THB.",
-  closingCtaSubhead: "לחצו למטה להזמנה — או WhatsApp עם התאריכים המועדפים.",
+  closingCtaSubhead: "לחצו למטה להזמנה - או WhatsApp עם התאריכים המועדפים.",
 };
 
 // ---------- Koh Tao Diving (conquest / category campaign) ----------
@@ -960,7 +1238,7 @@ const FUN_HE: LanderCopy = {
 // comparing shops, so the booking CTA reuses the fun-dive iframe flow.
 
 const KOH_TAO_EN: LanderCopy = {
-  seoTitle: "Koh Tao Diving, Done Right – Small Groups, Private Boat | Siam Scuba",
+  seoTitle: "Koh Tao Diving, Done Right - Small Groups, Private Boat | Siam Scuba",
   seoDescription:
     "Dive Koh Tao with Siam Scuba: small groups (max 4 per instructor), our own private boat with new gear, PADI 5-Star Center, 4.9 on Google (845) and 5.0 on TripAdvisor (776). Reserve in minutes on WhatsApp.",
   // TODO: swap hero image when photographyAI boats/ shots are processed.
@@ -968,7 +1246,7 @@ const KOH_TAO_EN: LanderCopy = {
   heroBadge: "PADI 5-Star Dive Center · Koh Tao",
   heroH1: "Koh Tao Diving, Done Right",
   heroSubhead:
-    "Small groups, our own private boat, and new gear — not a 20-person cattle dive on a shared boat. This is how diving on Koh Tao is supposed to feel.",
+    "Small groups, our own private boat, and new gear - not a 20-person cattle dive on a shared boat. This is how diving on Koh Tao is supposed to feel.",
   ctaPrimary: "Book your dive",
   ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why Divers Choose Siam 🤿",
@@ -1001,7 +1279,7 @@ const KOH_TAO_EN: LanderCopy = {
       icon: "heart",
       emoji: "🗣️",
       title: "Instructors in EN / ES / HE",
-      body: "Brief, dive, and debrief in your own language — English, Spanish or Hebrew.",
+      body: "Brief, dive, and debrief in your own language - English, Spanish or Hebrew.",
     },
     {
       icon: "calendar",
@@ -1016,7 +1294,7 @@ const KOH_TAO_EN: LanderCopy = {
     perWhat: "2-tank half-day · Sail Rock full-day 3,800 THB",
     includes: [
       "Guided dives with a pro dive guide",
-      "All gear (BCD, regulator, mask, fins, wetsuit) — new and well-maintained",
+      "All gear (BCD, regulator, mask, fins, wetsuit) - new and well-maintained",
       "Full air tank (180-200 bar), tanks and weights",
       "Fresh fruit and drinks on our private boat",
       "Dive insurance",
@@ -1044,7 +1322,7 @@ const KOH_TAO_EN: LanderCopy = {
     },
     {
       name: "Shark Island",
-      blurb: "Wall dive on the south side. Reef sharks, turtles and anemones — usually a relaxed second dive.",
+      blurb: "Wall dive on the south side. Reef sharks, turtles and anemones - usually a relaxed second dive.",
     },
   ],
   ctaStripHeadline: "Dive Koh Tao the way it should be",
@@ -1053,7 +1331,7 @@ const KOH_TAO_EN: LanderCopy = {
   faqItems: [
     {
       q: "Which certifications do you accept?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — anything mainstream. Bring your card or have a digital copy ready.",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - anything mainstream. Bring your card or have a digital copy ready.",
     },
     {
       q: "Do I really get a private boat and small group?",
@@ -1061,7 +1339,7 @@ const KOH_TAO_EN: LanderCopy = {
     },
     {
       q: "I haven't dived in 2+ years. Should I do a refresher?",
-      a: "We recommend a quick refresher (Scuba Review). It's two skills sessions plus a shallow dive — far better than skipping your first fun dive confused.",
+      a: "We recommend a quick refresher (Scuba Review). It's two skills sessions plus a shallow dive - far better than skipping your first fun dive confused.",
     },
     {
       q: "Do I have to pay a deposit to book?",
@@ -1077,7 +1355,7 @@ const KOH_TAO_EN: LanderCopy = {
 };
 
 const KOH_TAO_ES: LanderCopy = {
-  seoTitle: "Buceo en Koh Tao en Español!!! – Grupos Pequeños, Barco Propio | Siam Scuba",
+  seoTitle: "Buceo en Koh Tao en Español!!! - Grupos Pequeños, Barco Propio | Siam Scuba",
   seoDescription:
     "Bucea en Koh Tao con Siam Scuba: grupos pequeños (máx. 4 por instructor), barco propio con equipo nuevo, Centro PADI 5 estrellas, 4,9 en Google (845) y 5,0 en TripAdvisor (776). Reserva en minutos por WhatsApp.",
   // TODO: swap hero image when photographyAI boats/ shots are processed.
@@ -1085,7 +1363,7 @@ const KOH_TAO_ES: LanderCopy = {
   heroBadge: "Centro PADI 5 estrellas · Koh Tao",
   heroH1: "Buceo en Koh Tao en Español!!!",
   heroSubhead:
-    "Grupos pequeños, barco propio y equipo nuevo — no una inmersión masiva de 20 personas en un barco compartido. Así es como debería sentirse bucear en Koh Tao.",
+    "Grupos pequeños, barco propio y equipo nuevo - no una inmersión masiva de 20 personas en un barco compartido. Así es como debería sentirse bucear en Koh Tao.",
   ctaPrimary: "Reserva tu inmersión",
   ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué los buceadores eligen Siam 🇪🇸",
@@ -1118,7 +1396,7 @@ const KOH_TAO_ES: LanderCopy = {
       icon: "heart",
       emoji: "🗣️",
       title: "Instructores en EN / ES / HE",
-      body: "Briefing, inmersión y debriefing en tu idioma — inglés, español o hebreo.",
+      body: "Briefing, inmersión y debriefing en tu idioma - inglés, español o hebreo.",
     },
     {
       icon: "calendar",
@@ -1133,7 +1411,7 @@ const KOH_TAO_ES: LanderCopy = {
     perWhat: "2 inmersiones medio día · Sail Rock día completo 3,800 THB",
     includes: [
       "Inmersiones guiadas con guía profesional",
-      "Equipo completo (chaleco, regulador, máscara, aletas, traje) — nuevo y cuidado",
+      "Equipo completo (chaleco, regulador, máscara, aletas, traje) - nuevo y cuidado",
       "Botella llena (180-200 bar), botellas y plomos",
       "Fruta fresca y bebidas en nuestro barco privado",
       "Seguro de buceo",
@@ -1161,7 +1439,7 @@ const KOH_TAO_ES: LanderCopy = {
     },
     {
       name: "Shark Island",
-      blurb: "Pared en la cara sur. Tiburones de arrecife, tortugas y anémonas — suele ser una segunda inmersión relajada.",
+      blurb: "Pared en la cara sur. Tiburones de arrecife, tortugas y anémonas - suele ser una segunda inmersión relajada.",
     },
   ],
   ctaStripHeadline: "Buceo en Koh Tao en Español!!!",
@@ -1170,7 +1448,7 @@ const KOH_TAO_ES: LanderCopy = {
   faqItems: [
     {
       q: "¿Qué certificaciones aceptan?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — todo lo mayoritario. Trae la tarjeta o ten una copia digital.",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - todo lo mayoritario. Trae la tarjeta o ten una copia digital.",
     },
     {
       q: "¿De verdad tengo barco propio y grupo pequeño?",
@@ -1194,7 +1472,7 @@ const KOH_TAO_ES: LanderCopy = {
 };
 
 const KOH_TAO_HE: LanderCopy = {
-  seoTitle: "צלילות בקוטאו בעברית!!! – קבוצות קטנות, סירה פרטית | סיאם סקובה",
+  seoTitle: "צלילות בקוטאו בעברית!!! - קבוצות קטנות, סירה פרטית | סיאם סקובה",
   seoDescription:
     "צוללים בקוטאו עם סיאם סקובה: קבוצות קטנות (מקס׳ 4 למדריך), סירה פרטית עם ציוד חדש, מרכז PADI 5 כוכבים, 4.9 בגוגל (845) ו-5.0 בטריפאדוויזר (776). הזמנה תוך דקות ב-WhatsApp.",
   // TODO: swap hero image when photographyAI boats/ shots are processed.
@@ -1235,7 +1513,7 @@ const KOH_TAO_HE: LanderCopy = {
       icon: "heart",
       emoji: "🗣️",
       title: "מדריכים באנגלית / ספרדית / עברית",
-      body: "תדריך, צלילה ותחקיר בשפה שלכם — אנגלית, ספרדית או עברית.",
+      body: "תדריך, צלילה ותחקיר בשפה שלכם - אנגלית, ספרדית או עברית.",
     },
     {
       icon: "calendar",
@@ -1250,7 +1528,7 @@ const KOH_TAO_HE: LanderCopy = {
     perWhat: "2 צלילות חצי יום · Sail Rock יום שלם 3,800 ฿",
     includes: [
       "צלילות מודרכות עם מדריך מקצועי",
-      "כל הציוד (מאזן ציפה, רגולטור, מסכה, סנפירים, חליפה) — חדש ומתוחזק",
+      "כל הציוד (מאזן ציפה, רגולטור, מסכה, סנפירים, חליפה) - חדש ומתוחזק",
       "מיכל אוויר מלא (180-200 bar), בלונים ומשקולות",
       "פירות טריים ושתייה על הסירה הפרטית שלנו",
       "ביטוח צלילה",
@@ -1278,7 +1556,7 @@ const KOH_TAO_HE: LanderCopy = {
     },
     {
       name: "Shark Island",
-      blurb: "צלילת קיר בצד הדרומי. כרישי שונית, צבים ושושנות ים — בדרך כלל צלילה שנייה רגועה.",
+      blurb: "צלילת קיר בצד הדרומי. כרישי שונית, צבים ושושנות ים - בדרך כלל צלילה שנייה רגועה.",
     },
   ],
   ctaStripHeadline: "צלילות בקוטאו בעברית!!!",
@@ -1287,7 +1565,7 @@ const KOH_TAO_HE: LanderCopy = {
   faqItems: [
     {
       q: "אילו הסמכות אתם מקבלים?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS — כל מה שמרכזי. הביאו את הכרטיס או צילום דיגיטלי.",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - כל מה שמרכזי. הביאו את הכרטיס או צילום דיגיטלי.",
     },
     {
       q: "באמת מקבלים סירה פרטית וקבוצה קטנה?",
@@ -1313,6 +1591,7 @@ const KOH_TAO_HE: LanderCopy = {
 export const LANDER_COPY: Record<Offer, Record<Lang, LanderCopy>> = {
   dsd: { en: DSD_EN, es: DSD_ES, he: DSD_HE },
   owd: { en: OWD_EN, es: OWD_ES, he: OWD_HE },
+  aow: { en: AOW_EN, es: AOW_ES, he: AOW_HE },
   "fun-dive": { en: FUN_EN, es: FUN_ES, he: FUN_HE },
   "koh-tao": { en: KOH_TAO_EN, es: KOH_TAO_ES, he: KOH_TAO_HE },
 };
@@ -1322,6 +1601,7 @@ const SITE = "https://siamscuba.com";
 const SLUGS: Record<Offer, string> = {
   dsd: "discover-scuba-diving",
   owd: "open-water-course",
+  aow: "advanced-open-water-course",
   "fun-dive": "fun-dives",
   "koh-tao": "koh-tao-diving",
 };
@@ -1342,11 +1622,12 @@ export function landerHreflangAlternates(offer: Offer): Partial<Record<Lang, str
   };
 }
 
-// JSON-LD pricing — uses the lower tier as the headline price (with availability/options
+// JSON-LD pricing - uses the lower tier as the headline price (with availability/options
 // detailed in copy). Schema.org Offer expects a single number per Offer.
 const PRICES: Record<Offer, { price: string; currency: string; duration: string }> = {
   dsd: { price: "2600", currency: "THB", duration: "P1D" },
   owd: { price: "12000", currency: "THB", duration: "P2DT12H" },
+  aow: { price: "11000", currency: "THB", duration: "P1DT12H" },
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
   "koh-tao": { price: "2000", currency: "THB", duration: "PT4H" },
 };
