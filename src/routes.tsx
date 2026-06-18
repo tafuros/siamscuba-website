@@ -90,7 +90,7 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/AdPage.tsx",
       },
       // Paid-campaign landers — must come BEFORE :courseSlug (which is a greedy
-      // dynamic match). 9 dedicated pages, 3 offers × 3 languages.
+      // dynamic match). 5 offers × 3 languages.
       {
         path: "discover-scuba-diving",
         lazy: lazyDefault(() => import("./pages/landers/DsdEnPage")),
@@ -120,6 +120,21 @@ export const routes: RouteRecord[] = [
         path: "he/open-water-course",
         lazy: lazyDefault(() => import("./pages/landers/OwdHePage")),
         entry: "src/pages/landers/OwdHePage.tsx",
+      },
+      {
+        path: "advanced-open-water-course",
+        lazy: lazyDefault(() => import("./pages/landers/AowEnPage")),
+        entry: "src/pages/landers/AowEnPage.tsx",
+      },
+      {
+        path: "es/advanced-open-water-course",
+        lazy: lazyDefault(() => import("./pages/landers/AowEsPage")),
+        entry: "src/pages/landers/AowEsPage.tsx",
+      },
+      {
+        path: "he/advanced-open-water-course",
+        lazy: lazyDefault(() => import("./pages/landers/AowHePage")),
+        entry: "src/pages/landers/AowHePage.tsx",
       },
       {
         path: "fun-dives",
