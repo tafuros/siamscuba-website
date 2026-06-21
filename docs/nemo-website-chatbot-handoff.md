@@ -1,6 +1,6 @@
 # Handoff: Website chatbot (Nemo) → unify with WhatsApp Nemo
 
-**For:** the `nemo` agent (owner of the WhatsApp Nemo bot, `~/Projects/n8n-nemo`).
+**For:** the `nemo` agent (owner of the WhatsApp Nemo bot, `~/Projects/Nemo`).
 **From:** the `website` agent (`~/Projects/website`).
 **Date:** 2026-06-04. **Status:** website chatbot is LIVE on siamscuba.com.
 
