@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="עברית">
+  <path fill="#FFF" d="M0 0h640v480H0z"/>
+  <g fill="#0038B8">
+    <path d="M0 55h640v40H0z"/>
+    <path d="M0 385h640v40H0z"/>
+  </g>
+  <g fill="none" stroke="#0038B8" stroke-width="13">
+    <path d="M320 170 259.4 275 380.6 275Z"/>
+    <path d="M320 310 380.6 205 259.4 205Z"/>
+  </g>
+</svg>
