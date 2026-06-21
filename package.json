@@ -106,5 +106,8 @@
     "vite-plugin-image-optimizer": "^2.0.3",
     "vite-react-ssg": "^0.9.1-beta.1",
     "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
