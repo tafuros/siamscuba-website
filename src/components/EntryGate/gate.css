@@ -1,0 +1,102 @@
+/* Scoped to the entry gate only - does NOT touch the homepage hero bubbles. */
+
+/* Shimmering sun rays / light shafts from the surface (echoes smiledolphin.com).
+   Pure CSS - no Three.js canvas. */
+.god-rays {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.god-ray {
+  position: absolute;
+  top: -25%;
+  left: var(--ray-left, 50%);
+  width: var(--ray-width, 120px);
+  height: 150%;
+  background: linear-gradient(
+    to bottom,
+    rgba(190, 230, 255, 0.22),
+    rgba(150, 210, 255, 0.08) 45%,
+    transparent 80%
+  );
+  transform-origin: top center;
+  transform: rotate(var(--ray-rot, 8deg)) translateX(0) scaleX(1);
+  filter: blur(10px);
+  opacity: 0;
+  will-change: opacity, transform;
+  animation: god-ray-flicker var(--ray-dur, 9s) ease-in-out infinite;
+  animation-delay: var(--ray-delay, 0s);
+}
+@keyframes god-ray-flicker {
+  0%, 100% { opacity: 0.12; transform: rotate(var(--ray-rot, 8deg)) translateX(-8px) scaleX(0.92); }
+  50%      { opacity: 0.5;  transform: rotate(var(--ray-rot, 8deg)) translateX(8px) scaleX(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .god-ray { animation: none !important; opacity: 0.16 !important; transform: rotate(var(--ray-rot, 8deg)) !important; }
+}
+
+.gate-bubbles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* A realistic underwater bubble: near-transparent glassy sphere with a bright
+   top-left specular highlight, a thin refractive rim, and a soft inner shadow
+   on the lower-right. */
+.gate-bubble {
+  position: absolute;
+  bottom: -8%;
+  border-radius: 50%;
+  background:
+    radial-gradient(38% 30% at 30% 26%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(22% 18% at 70% 72%, rgba(190, 230, 255, 0.35), rgba(190, 230, 255, 0) 65%),
+    radial-gradient(circle at 50% 50%, rgba(200, 235, 255, 0.10) 0%, rgba(150, 205, 255, 0.05) 62%, rgba(120, 180, 255, 0.02) 78%, transparent 80%);
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.30),
+    inset -2px -3px 7px rgba(80, 140, 210, 0.25),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.12),
+    0 0 8px rgba(180, 220, 255, 0.10);
+  border: 1px solid rgba(220, 240, 255, 0.18);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation-name: gate-bubble-rise;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.7, 1);
+  animation-iteration-count: infinite;
+}
+
+/* Alternate drift direction so the field doesn't all sway the same way. */
+.gate-bubble:nth-child(even) {
+  animation-name: gate-bubble-rise-alt;
+}
+
+@keyframes gate-bubble-rise {
+  0% { transform: translateY(0) translateX(0) scale(0.85); opacity: 0; }
+  6% { opacity: var(--bubble-max, 0.7); }
+  25% { transform: translateY(-28vh) translateX(10px) scale(0.95); }
+  50% { transform: translateY(-56vh) translateX(-8px) scale(1); opacity: calc(var(--bubble-max, 0.7) * 0.85); }
+  75% { transform: translateY(-84vh) translateX(12px) scale(1.03); }
+  90% { opacity: calc(var(--bubble-max, 0.7) * 0.4); }
+  100% { transform: translateY(-114vh) translateX(-6px) scale(1.06); opacity: 0; }
+}
+
+@keyframes gate-bubble-rise-alt {
+  0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+  6% { opacity: var(--bubble-max, 0.7); }
+  25% { transform: translateY(-30vh) translateX(-12px) scale(0.92); }
+  50% { transform: translateY(-58vh) translateX(9px) scale(1); opacity: calc(var(--bubble-max, 0.7) * 0.8); }
+  75% { transform: translateY(-86vh) translateX(-14px) scale(1.04); }
+  90% { opacity: calc(var(--bubble-max, 0.7) * 0.38); }
+  100% { transform: translateY(-116vh) translateX(8px) scale(1.08); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate-bubble {
+    animation: none !important;
+    opacity: 0.22 !important;
+    transform: none !important;
+  }
+}

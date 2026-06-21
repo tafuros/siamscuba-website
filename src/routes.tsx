@@ -167,6 +167,16 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/landers/KohTaoHePage.tsx",
       },
       {
+        path: "similan",
+        lazy: lazyDefault(() => import("./pages/SiamSimilansPage")),
+        entry: "src/pages/SiamSimilansPage.tsx",
+      },
+      {
+        path: "phuket-diving",
+        lazy: lazyDefault(() => import("./pages/SiamPhuketPage")),
+        entry: "src/pages/SiamPhuketPage.tsx",
+      },
+      {
         path: "accessibility",
         lazy: lazyDefault(() => import("./pages/Accessibility")),
         entry: "src/pages/Accessibility.tsx",
