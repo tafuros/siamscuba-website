@@ -127,8 +127,8 @@ const DSD_EN: LanderCopy = {
   heroH1: "Try scuba diving in Koh Tao - 2 dives, 3,600 THB",
   heroSubhead:
     "No certification needed. A PADI instructor takes you from your first breath underwater to two real ocean dives on Koh Tao's reefs - all in one day. Want just one dive? 2,600 THB.",
-  ctaPrimary: "Chat on WhatsApp",
-  ctaSecondary: "Or send a quick message",
+  ctaPrimary: "Book your Discover Scuba day",
+  ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why try diving with Siam Scuba",
   uspTiles: [
     {
@@ -216,8 +216,8 @@ const DSD_ES: LanderCopy = {
   heroH1: "Prueba el buceo en Koh Tao - 2 inmersiones, 3,600 THB",
   heroSubhead:
     "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración bajo el agua hasta dos inmersiones reales en los arrecifes de Koh Tao, todo en un día. ¿Solo una inmersión? 2,600 THB.",
-  ctaPrimary: "Chatea por WhatsApp",
-  ctaSecondary: "O envíanos un mensaje rápido",
+  ctaPrimary: "Reserva tu día de buceo",
+  ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué bucear con Siam Scuba",
   uspTiles: [
     {
@@ -305,8 +305,8 @@ const DSD_HE: LanderCopy = {
   heroH1: "צלילת היכרות בקוטאו - שתי צלילות, 3,600 THB",
   heroSubhead:
     "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה מתחת למים עד שתי צלילות אמיתיות בשונית של קוטאו - הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
-  ctaPrimary: "שיחה ב-WhatsApp",
-  ctaSecondary: "או שלחו הודעה מהירה",
+  ctaPrimary: "הזמינו צלילת היכרות",
+  ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה לצלול איתנו",
   uspTiles: [
     {

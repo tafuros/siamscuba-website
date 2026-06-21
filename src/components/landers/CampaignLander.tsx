@@ -56,13 +56,23 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
     [offer, lang]
   );
 
-  // For fun-dive + koh-tao landers (certified divers) the primary CTA goes to
-  // the existing booking iframe page, where the postMessage->lead/purchase
-  // conversion tracking is wired. For DSD / OWD there is no self-serve booking,
-  // so both CTAs go to WhatsApp.
-  const usesBookingIframe = offer === "fun-dive" || offer === "koh-tao";
+  // Landers whose primary CTA routes through the booking iframe page, where the
+  // postMessage->lead/purchase conversion tracking is wired so a deposit fires a
+  // valued Purchase in Google Ads:
+  //   - fun-dive + koh-tao (certified divers, generic fun-dive booking)
+  //   - dsd (Discover Scuba) -> booking with product=DSD so a deposit fires the
+  //     full ~3,600 THB Purchase value instead of a valueless WhatsApp tap.
+  // For these, WhatsApp stays as the SECONDARY CTA. Other offers (owd) keep both
+  // CTAs on WhatsApp since they have no self-serve booking.
+  const usesBookingIframe =
+    offer === "fun-dive" || offer === "koh-tao" || offer === "dsd";
+  // DSD pre-selects its product in the DiveOS wizard; date-based offers (Sail
+  // Rock) carry a date instead, but DSD has no per-trip date strip - just the
+  // product. utm_passthrough=1 forwards the lander's first-touch UTMs/gclid.
+  const bookingParams = new URLSearchParams({ utm_passthrough: "1" });
+  if (offer === "dsd") bookingParams.set("product", "DSD");
   const primaryHref = usesBookingIframe
-    ? `${FUN_DIVE_BOOKING_PATH}?utm_passthrough=1`
+    ? `${FUN_DIVE_BOOKING_PATH}?${bookingParams.toString()}`
     : whatsappHref;
   const primaryIsExternal = !usesBookingIframe;
 
@@ -362,16 +372,34 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{copy.closingCtaHeadline}</h2>
           <p className="text-sm md:text-base text-muted-foreground mb-6">{copy.closingCtaSubhead}</p>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={onWhatsApp(waLocation("closing"))}
-            className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg"
-          >
-            <MessageCircle className="h-5 w-5" />
-            {copy.ctaPrimary}
-          </a>
+          {primaryIsExternal ? (
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onWhatsApp(waLocation("closing"))}
+              className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg"
+            >
+              <MessageCircle className="h-5 w-5" />
+              {copy.ctaPrimary}
+            </a>
+          ) : (
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild size="lg" className="rounded-full px-8 bg-accent hover:bg-accent/90">
+                <Link to={primaryHref}>{copy.ctaPrimary}</Link>
+              </Button>
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onWhatsApp(waLocation("closing"))}
+                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-white bg-[#25D366] hover:bg-[#1da851] shadow-lg"
+              >
+                <MessageCircle className="h-5 w-5" />
+                {copy.ctaSecondary}
+              </a>
+            </div>
+          )}
         </div>
       </section>
 
