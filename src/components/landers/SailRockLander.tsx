@@ -49,7 +49,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
   const locale = lang === "es" ? "es-ES" : lang === "he" ? "he-IL" : "en-US";
 
   useEffect(() => {
-    trackViewContent({ offer: OFFER, lang, value: 3800 });
+    trackViewContent({ offer: OFFER, lang, value: 4000 });
   }, [lang]);
 
   const departures = useMemo(() => getUpcomingSailRockDates(4), []);

@@ -950,7 +950,7 @@ const AOW_HE: LanderCopy = {
 const FUN_EN: LanderCopy = {
   seoTitle: "Fun Dives in Koh Tao - Guided Day Trips from 2,000 THB | Siam Scuba",
   seoDescription:
-    "Certified divers - book guided fun dives in Koh Tao. Two morning or afternoon dives 2,000 THB. Full-day Sail Rock 3,800 THB. Small groups, two custom boats.",
+    "Certified divers - book guided fun dives in Koh Tao. Two morning or afternoon dives 2,000 THB. Full-day Sail Rock 4,000 THB. Small groups, two custom boats.",
   heroBadge: "For certified divers",
   heroH1: "Fun dives in Koh Tao - small groups, custom boats, from 2,000 THB",
   heroSubhead:
@@ -977,7 +977,7 @@ const FUN_EN: LanderCopy = {
   ],
   pricingHeadline: "Pricing",
   pricing: {
-    price: "2,000 / 3,800 THB",
+    price: "2,000 / 4,000 THB",
     perWhat: "2-tank half-day / Sail Rock full-day",
     includes: [
       "2 guided dives with a pro dive guide",
@@ -1060,7 +1060,7 @@ const FUN_EN: LanderCopy = {
 const FUN_ES: LanderCopy = {
   seoTitle: "Inmersiones Guiadas en Koh Tao - Desde 2,000 THB | Siam Scuba",
   seoDescription:
-    "Buceadores certificados - reserva inmersiones guiadas en Koh Tao. Dos inmersiones mañana o tarde 2,000 THB. Día completo Sail Rock 3,800 THB. Grupos pequeños, barcos propios.",
+    "Buceadores certificados - reserva inmersiones guiadas en Koh Tao. Dos inmersiones mañana o tarde 2,000 THB. Día completo Sail Rock 4,000 THB. Grupos pequeños, barcos propios.",
   heroBadge: "Para buceadores certificados",
   heroH1: "Buceo en Koh Tao - grupos pequeños, barcos propios, desde 2,000 THB",
   heroSubhead:
@@ -1087,7 +1087,7 @@ const FUN_ES: LanderCopy = {
   ],
   pricingHeadline: "Precios",
   pricing: {
-    price: "2,000 / 3,800 THB",
+    price: "2,000 / 4,000 THB",
     perWhat: "2 inmersiones medio día / Sail Rock día completo",
     includes: [
       "2 inmersiones guiadas con guía profesional",
@@ -1169,7 +1169,7 @@ const FUN_ES: LanderCopy = {
 const FUN_HE: LanderCopy = {
   seoTitle: "צלילות פאן בקוטאו - יציאות יומיות מ-2,000 THB | סיאם סקובה",
   seoDescription:
-    "צוללים מוסמכים - הזמינו צלילות פאן מודרכות בקוטאו. שתי צלילות בוקר או אחרי הצהריים ב-2,000 THB. יום שלם ב-Sail Rock ב-3,800 THB. קבוצות קטנות, סירות פרטיות.",
+    "צוללים מוסמכים - הזמינו צלילות פאן מודרכות בקוטאו. שתי צלילות בוקר או אחרי הצהריים ב-2,000 THB. יום שלם ב-Sail Rock ב-4,000 THB. קבוצות קטנות, סירות פרטיות.",
   heroBadge: "לצוללים מוסמכים",
   heroH1: "צלילות פאן בקוטאו - קבוצות קטנות, סירות פרטיות, מ-2,000 THB",
   heroSubhead:
@@ -1196,7 +1196,7 @@ const FUN_HE: LanderCopy = {
   ],
   pricingHeadline: "מחירים",
   pricing: {
-    price: "2,000 / 3,800 THB",
+    price: "2,000 / 4,000 THB",
     perWhat: "2 צלילות חצי יום / Sail Rock יום שלם",
     includes: [
       "2 צלילות מודרכות עם מדריך מקצועי",
@@ -1334,7 +1334,7 @@ const KOH_TAO_EN: LanderCopy = {
   pricingHeadline: "Pricing",
   pricing: {
     price: "from 2,000 THB",
-    perWhat: "2-tank half-day · Sail Rock full-day 3,800 THB",
+    perWhat: "2-tank half-day · Sail Rock full-day 4,000 THB",
     includes: [
       "Guided dives with a pro dive guide",
       "All gear (BCD, regulator, mask, fins, wetsuit) - new and well-maintained",
@@ -1451,7 +1451,7 @@ const KOH_TAO_ES: LanderCopy = {
   pricingHeadline: "Precios",
   pricing: {
     price: "desde 2,000 THB",
-    perWhat: "2 inmersiones medio día · Sail Rock día completo 3,800 THB",
+    perWhat: "2 inmersiones medio día · Sail Rock día completo 4,000 THB",
     includes: [
       "Inmersiones guiadas con guía profesional",
       "Equipo completo (chaleco, regulador, máscara, aletas, traje) - nuevo y cuidado",
@@ -1568,7 +1568,7 @@ const KOH_TAO_HE: LanderCopy = {
   pricingHeadline: "מחירים",
   pricing: {
     price: "2,000 ฿ לשתי צלילות",
-    perWhat: "2 צלילות חצי יום · Sail Rock יום שלם 3,800 ฿",
+    perWhat: "2 צלילות חצי יום · Sail Rock יום שלם 4,000 ฿",
     includes: [
       "צלילות מודרכות עם מדריך מקצועי",
       "כל הציוד (מאזן ציפה, רגולטור, מסכה, סנפירים, חליפה) - חדש ומתוחזק",
@@ -1634,7 +1634,7 @@ const KOH_TAO_HE: LanderCopy = {
 // ---------- Sail Rock (Hin Bai) - full-day dive trip ----------
 // Dedicated SailRockLander component (photo-fade cards + clickable departures
 // strip), not the shared CampaignLander. Audience: certified divers. CTA routes
-// through the /fun-dive-booking iframe so a paid deposit fires a valued ฿3,800
+// through the /fun-dive-booking iframe so a paid deposit fires a valued ฿4,000
 // Purchase (the DSD valueless-conversion fix).
 
 const SAIL_ROCK_FEATURE_IMAGES = {
@@ -1645,9 +1645,9 @@ const SAIL_ROCK_FEATURE_IMAGES = {
 };
 
 const SAIL_ROCK_EN: LanderCopy = {
-  seoTitle: "Dive Sail Rock from Koh Tao - Full-Day Trip, 3,800 THB | Siam Scuba",
+  seoTitle: "Dive Sail Rock from Koh Tao - Full-Day Trip, 4,000 THB | Siam Scuba",
   seoDescription:
-    "Dive Sail Rock (Hin Bai) - the best dive in the Gulf of Thailand. Full-day boat trip from Koh Tao: 3 dives (2x Sail Rock + Shark Island), whale shark chance, the famous Chimney swim-through. 3,800 THB all-in. Google 4.9 (845), TripAdvisor 5.0 (776).",
+    "Dive Sail Rock (Hin Bai) - the best dive in the Gulf of Thailand. Full-day boat trip from Koh Tao: 3 dives (2x Sail Rock + Shark Island), whale shark chance, the famous Chimney swim-through. 4,000 THB all-in. Google 4.9 (845), TripAdvisor 5.0 (776).",
   heroBadge: "For certified divers",
   heroEyebrow: "The Best Dive in the Gulf of Thailand",
   heroH1: "Dive Sail Rock",
@@ -1690,7 +1690,7 @@ const SAIL_ROCK_EN: LanderCopy = {
   uspTiles: [],
   pricingHeadline: "",
   pricing: {
-    price: "฿3,800",
+    price: "฿4,000",
     perWhat: "per person · full-day trip · 3 dives",
     includes: [
       "Full dive gear & tanks (180-200 bar)",
@@ -1735,7 +1735,7 @@ const SAIL_ROCK_EN: LanderCopy = {
       a: "Yes - a deposit secures your spot on the boat (spaces are limited), and the balance is paid here on the island.",
     },
     {
-      q: "What's included for 3,800 THB?",
+      q: "What's included for 4,000 THB?",
       a: "3 dives (2x Sail Rock + Shark Island), all gear and tanks, a private boat with experienced guides, breakfast, a Thai lunch buffet, drinks and dive insurance. Photos are an optional +500 THB.",
     },
   ],
@@ -1746,9 +1746,9 @@ const SAIL_ROCK_EN: LanderCopy = {
 };
 
 const SAIL_ROCK_ES: LanderCopy = {
-  seoTitle: "Bucea en Sail Rock desde Koh Tao - Día Completo, 3,800 THB | Siam Scuba",
+  seoTitle: "Bucea en Sail Rock desde Koh Tao - Día Completo, 4,000 THB | Siam Scuba",
   seoDescription:
-    "Bucea en Sail Rock (Hin Bai) - la mejor inmersión del Golfo de Tailandia. Excursión de día completo desde Koh Tao: 3 inmersiones (2x Sail Rock + Shark Island), tiburón ballena y la famosa Chimenea. 3,800 THB todo incluido. Google 4,9 (845), TripAdvisor 5,0 (776).",
+    "Bucea en Sail Rock (Hin Bai) - la mejor inmersión del Golfo de Tailandia. Excursión de día completo desde Koh Tao: 3 inmersiones (2x Sail Rock + Shark Island), tiburón ballena y la famosa Chimenea. 4,000 THB todo incluido. Google 4,9 (845), TripAdvisor 5,0 (776).",
   heroBadge: "Para buceadores certificados",
   heroEyebrow: "La mejor inmersión del Golfo de Tailandia",
   heroH1: "Bucea en Sail Rock",
@@ -1791,7 +1791,7 @@ const SAIL_ROCK_ES: LanderCopy = {
   uspTiles: [],
   pricingHeadline: "",
   pricing: {
-    price: "฿3,800",
+    price: "฿4,000",
     perWhat: "por persona · día completo · 3 inmersiones",
     includes: [
       "Equipo completo y botellas (180-200 bar)",
@@ -1836,7 +1836,7 @@ const SAIL_ROCK_ES: LanderCopy = {
       a: "Sí - un depósito asegura tu plaza en el barco (las plazas son limitadas) y el resto se paga aquí en la isla.",
     },
     {
-      q: "¿Qué incluye por 3,800 THB?",
+      q: "¿Qué incluye por 4,000 THB?",
       a: "3 inmersiones (2x Sail Rock + Shark Island), todo el equipo y botellas, barco privado con guías expertos, desayuno, buffet de almuerzo tailandés, bebidas y seguro de buceo. Las fotos son +500 THB opcionales.",
     },
   ],
@@ -1847,9 +1847,9 @@ const SAIL_ROCK_ES: LanderCopy = {
 };
 
 const SAIL_ROCK_HE: LanderCopy = {
-  seoTitle: "צלילה בסייל רוק מקוטאו - יום שלם, 3,800 THB | סיאם סקובה",
+  seoTitle: "צלילה בסייל רוק מקוטאו - יום שלם, 4,000 THB | סיאם סקובה",
   seoDescription:
-    "צלילה בסייל רוק (הין באי) - הצלילה הכי טובה במפרץ תאילנד. טיול יום שלם מקוטאו: 3 צלילות (2x סייל רוק + שארק איילנד), סיכוי לכריש לוויתן וה\"ארובה\" המפורסמת. 3,800 THB הכל כלול. גוגל 4.9 (845), טריפאדוויזר 5.0 (776).",
+    "צלילה בסייל רוק (הין באי) - הצלילה הכי טובה במפרץ תאילנד. טיול יום שלם מקוטאו: 3 צלילות (2x סייל רוק + שארק איילנד), סיכוי לכריש לוויתן וה\"ארובה\" המפורסמת. 4,000 THB הכל כלול. גוגל 4.9 (845), טריפאדוויזר 5.0 (776).",
   heroBadge: "לצוללים מוסמכים",
   heroEyebrow: "הצלילה הכי טובה במפרץ תאילנד",
   heroH1: "צלילה בסייל רוק",
@@ -1892,7 +1892,7 @@ const SAIL_ROCK_HE: LanderCopy = {
   uspTiles: [],
   pricingHeadline: "",
   pricing: {
-    price: "฿3,800",
+    price: "฿4,000",
     perWhat: "לאדם · יום שלם · 3 צלילות",
     includes: [
       "ציוד צלילה מלא ובלונים (180-200 bar)",
@@ -1937,7 +1937,7 @@ const SAIL_ROCK_HE: LanderCopy = {
       a: "כן - מקדמה שומרת לכם מקום על הסירה (המקומות מוגבלים), והיתרה משולמת כאן באי.",
     },
     {
-      q: "מה כלול ב-3,800 THB?",
+      q: "מה כלול ב-4,000 THB?",
       a: "3 צלילות (2x סייל רוק + שארק איילנד), כל הציוד והבלונים, סירה פרטית עם מדריכים מנוסים, ארוחת בוקר, בופה צהריים תאי, שתייה וביטוח צלילה. תמונות בתוספת 500 THB אופציונלית.",
     },
   ],
@@ -1991,7 +1991,7 @@ const PRICES: Record<Offer, { price: string; currency: string; duration: string 
   aow: { price: "11000", currency: "THB", duration: "P1DT12H" },
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
   "koh-tao": { price: "2000", currency: "THB", duration: "PT4H" },
-  "sail-rock": { price: "3800", currency: "THB", duration: "PT8H" },
+  "sail-rock": { price: "4000", currency: "THB", duration: "PT8H" },
 };
 
 function buildFaqJsonLd(offer: Offer, lang: Lang): Record<string, unknown> {
