@@ -3,25 +3,8 @@ import { motion } from "framer-motion";
 import { Sun, Sunset, Anchor, Clock, Ship, Camera, CheckCircle2, Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { format, addDays, startOfDay, isBefore } from "date-fns";
-
-/* ── Sail Rock date generator ── */
-const SAIL_ROCK_FIRST = new Date("2026-03-15"); // first departure
-
-function getUpcomingSailRockDates(count: number): Date[] {
-  const today = startOfDay(new Date());
-  const dates: Date[] = [];
-  // find the next occurrence on or after today
-  let d = new Date(SAIL_ROCK_FIRST);
-  while (isBefore(d, today)) {
-    d = addDays(d, 3);
-  }
-  for (let i = 0; i < count; i++) {
-    dates.push(new Date(d));
-    d = addDays(d, 3);
-  }
-  return dates;
-}
+import { format } from "date-fns";
+import { getUpcomingSailRockDates } from "@/lib/sailRockDates";
 
 /* ── Schedule row component ── */
 interface TimelineStep {

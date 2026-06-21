@@ -6,7 +6,13 @@
 // because campaign landers must render the AD's language regardless of any
 // returning-visitor preference stored in localStorage.
 
-export type Offer = "dsd" | "owd" | "aow" | "fun-dive" | "koh-tao";
+// Sail Rock feature-card photos that live under src/assets (Vite hashes these).
+// The other two card photos live in /public/dive-sites and are referenced by
+// absolute path below.
+import sailRockChimney from "@/assets/sail-rock-chimney.webp";
+import siamBoat from "@/assets/siam-boat.webp";
+
+export type Offer = "dsd" | "owd" | "aow" | "fun-dive" | "koh-tao" | "sail-rock";
 export type Lang = "en" | "es" | "he";
 
 export interface FaqItem {
@@ -29,6 +35,17 @@ export interface PricingDetail {
   perWhat: string;
   includes: string[];
   excludes: string[];
+}
+
+/**
+ * Photo-fade feature card (Sail Rock lander). The image is masked 100%->0%
+ * opacity downward over a dark scrim; title + body sit at the bottom in white.
+ * `image` is an absolute /public path OR an imported asset URL.
+ */
+export interface FeatureCard {
+  image: string;
+  title: string;
+  body: string;
 }
 
 export interface UspTile {
@@ -72,6 +89,32 @@ export interface LanderCopy {
   faqItems: FaqItem[];
   closingCtaHeadline: string;
   closingCtaSubhead: string;
+
+  // ── Sail Rock lander extras (optional; only the dedicated SailRockLander
+  //    component reads these — the shared CampaignLander ignores them). ──
+  /** Pill/eyebrow above the hero H1 (e.g. "The Best Dive in the Gulf"). */
+  heroEyebrow?: string;
+  /** Star-rating line, e.g. social-proof under the hero. */
+  ratingsLine?: string;
+  /** Photo-fade "why it's unmissable" feature cards. */
+  featureCards?: FeatureCard[];
+  /** Label above the upcoming-departures strip. */
+  departuresLabel?: string;
+  /** "NEXT BOAT" pill text on the next departure. */
+  nextBoatLabel?: string;
+  /** Reserve CTA on the departures strip. */
+  reserveCta?: string;
+  /** "Next boat: {date}" prefix under the hero CTA. */
+  nextBoatPrefix?: string;
+  /** "Secure your spot for {date}" prefix under the pricing CTA. */
+  securePrefix?: string;
+  /** Optional add-on line under the price (e.g. "+ ฿500 photo package"). */
+  pricingAddon?: string;
+  /** Day-on-the-boat timeline (Sail Rock). */
+  dayTimelineHeadline?: string;
+  dayTimeline?: ScheduleStep[];
+  /** Closing-section headline templated with the next boat date. */
+  closingDateHeadline?: string;
 }
 
 // ---------- DSD (Discover Scuba Diving) ----------
@@ -1588,12 +1631,329 @@ const KOH_TAO_HE: LanderCopy = {
   closingCtaSubhead: "קבוצות קטנות, סירה פרטית. תשמרו מקום עם מקדמה קטנה - או שלחו לנו תאריכים ב-WhatsApp.",
 };
 
+// ---------- Sail Rock (Hin Bai) - full-day dive trip ----------
+// Dedicated SailRockLander component (photo-fade cards + clickable departures
+// strip), not the shared CampaignLander. Audience: certified divers. CTA routes
+// through the /fun-dive-booking iframe so a paid deposit fires a valued ฿3,800
+// Purchase (the DSD valueless-conversion fix).
+
+const SAIL_ROCK_FEATURE_IMAGES = {
+  whaleShark: "/dive-sites/chumphon-pinnacle.webp", // real whale shark
+  chimney: sailRockChimney,
+  fish: "/dive-sites/twins.webp", // divers + schooling fish + light rays
+  boat: siamBoat, // our boat, Bongkotpetch
+};
+
+const SAIL_ROCK_EN: LanderCopy = {
+  seoTitle: "Dive Sail Rock from Koh Tao - Full-Day Trip, 3,800 THB | Siam Scuba",
+  seoDescription:
+    "Dive Sail Rock (Hin Bai) - the best dive in the Gulf of Thailand. Full-day boat trip from Koh Tao: 3 dives (2x Sail Rock + Shark Island), whale shark chance, the famous Chimney swim-through. 3,800 THB all-in. Google 4.9 (845), TripAdvisor 5.0 (776).",
+  heroBadge: "For certified divers",
+  heroEyebrow: "The Best Dive in the Gulf of Thailand",
+  heroH1: "Dive Sail Rock",
+  heroSubhead:
+    "Hin Bai - the legendary pinnacle. Whale shark territory, the famous vertical Chimney swim-through, and massive schools of fish. A full-day boat trip from Koh Tao, every 3 days.",
+  ratingsLine: "★ Google 4.9 (845 reviews) · TripAdvisor 5.0 (776 reviews)",
+  ctaPrimary: "Book the Sail Rock Trip",
+  ctaSecondary: "Or message us on WhatsApp",
+  nextBoatPrefix: "Next boat",
+  securePrefix: "Secure your spot for",
+  departuresLabel: "We sail every 3 days · upcoming departures",
+  nextBoatLabel: "NEXT BOAT",
+  reserveCta: "Reserve my spot",
+  whatYouDoHeadline: "Why Sail Rock is unmissable",
+  whatYouDoSubhead:
+    "A 90-minute boat ride into open water rewards you with the richest marine life in the Gulf - and the single best chance in Thailand to swim with a whale shark.",
+  featureCards: [
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.whaleShark,
+      title: "Whale shark chance",
+      body: "The Gulf's top spot to encounter the gentle giants - Sail Rock draws them in.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.chimney,
+      title: "The Chimney",
+      body: "A thrilling vertical swim-through cutting down through the pinnacle - a signature dive.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.fish,
+      title: "Walls of fish",
+      body: "Barracuda tornadoes, trevally, batfish and huge schools swirling around the rock.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.boat,
+      title: "3 dives in a day",
+      body: "Two dives at Sail Rock plus a stop at Shark Island - a complete day on the water.",
+    },
+  ],
+  uspHeadline: "",
+  uspTiles: [],
+  pricingHeadline: "",
+  pricing: {
+    price: "฿3,800",
+    perWhat: "per person · full-day trip · 3 dives",
+    includes: [
+      "Full dive gear & tanks (180-200 bar)",
+      "Private boat, experienced guides",
+      "Breakfast + Thai lunch buffet on board",
+      "Coffee, tea, fresh fruit, cookies",
+      "Dive insurance included",
+      "For certified divers",
+    ],
+    excludes: [],
+  },
+  pricingAddon: "+ ฿500 underwater photo package (optional)",
+  socialProofHeadline: "4.9 on Google (845) · 5.0 on TripAdvisor (776).",
+  socialProofSubhead: "See what divers say after a day on the Sail Rock boat with us.",
+  dayTimelineHeadline: "Your day on the boat",
+  dayTimeline: [
+    { time: "07:30", label: "Depart Koh Tao - breakfast on board as we cruise to the pinnacle" },
+    { time: "09:30", label: "Dive 1 - Sail Rock: the Chimney & the deep pinnacle walls" },
+    { time: "11:30", label: "Dive 2 - Sail Rock: drift the schools, scan the blue for whale sharks" },
+    { time: "13:00", label: "Thai lunch buffet & surface interval" },
+    { time: "14:00", label: "Dive 3 - Shark Island: reef life & blacktip reef sharks" },
+    { time: "15:30", label: "Back to Koh Tao" },
+  ],
+  ctaStripHeadline: "Pick your Sail Rock day",
+  ctaStripSubhead: "Reserve a spot with a deposit - we confirm the same day.",
+  faqHeadline: "Frequently asked",
+  faqItems: [
+    {
+      q: "Which certifications do you accept?",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - anything mainstream. Bring your card or have a digital copy ready.",
+    },
+    {
+      q: "How deep is Sail Rock?",
+      a: "The pinnacle drops below 30m, but most of the dive is in the 12-22m range. It can have current, so a little recent experience helps.",
+    },
+    {
+      q: "Will I actually see a whale shark?",
+      a: "Sightings are never guaranteed, but Sail Rock is the single best whale-shark spot in the Gulf - peak chances are roughly March-May and Sept-Oct.",
+    },
+    {
+      q: "Do I have to pay a deposit to book?",
+      a: "Yes - a deposit secures your spot on the boat (spaces are limited), and the balance is paid here on the island.",
+    },
+    {
+      q: "What's included for 3,800 THB?",
+      a: "3 dives (2x Sail Rock + Shark Island), all gear and tanks, a private boat with experienced guides, breakfast, a Thai lunch buffet, drinks and dive insurance. Photos are an optional +500 THB.",
+    },
+  ],
+  closingCtaHeadline: "The next boat leaves",
+  closingDateHeadline: "The next boat leaves {date}",
+  closingCtaSubhead:
+    "Spots on the Sail Rock boat are limited and fill fast. Reserve yours now.",
+};
+
+const SAIL_ROCK_ES: LanderCopy = {
+  seoTitle: "Bucea en Sail Rock desde Koh Tao - Día Completo, 3,800 THB | Siam Scuba",
+  seoDescription:
+    "Bucea en Sail Rock (Hin Bai) - la mejor inmersión del Golfo de Tailandia. Excursión de día completo desde Koh Tao: 3 inmersiones (2x Sail Rock + Shark Island), tiburón ballena y la famosa Chimenea. 3,800 THB todo incluido. Google 4,9 (845), TripAdvisor 5,0 (776).",
+  heroBadge: "Para buceadores certificados",
+  heroEyebrow: "La mejor inmersión del Golfo de Tailandia",
+  heroH1: "Bucea en Sail Rock",
+  heroSubhead:
+    "Hin Bai - el pináculo legendario. Zona de tiburón ballena, la famosa Chimenea vertical y enormes bancos de peces. Excursión de día completo desde Koh Tao, cada 3 días.",
+  ratingsLine: "★ Google 4,9 (845 reseñas) · TripAdvisor 5,0 (776 reseñas)",
+  ctaPrimary: "Reserva la excursión a Sail Rock",
+  ctaSecondary: "O escríbenos por WhatsApp",
+  nextBoatPrefix: "Próximo barco",
+  securePrefix: "Asegura tu plaza para el",
+  departuresLabel: "Salimos cada 3 días · próximas salidas",
+  nextBoatLabel: "PRÓXIMO BARCO",
+  reserveCta: "Reserva mi plaza",
+  whatYouDoHeadline: "Por qué Sail Rock es imperdible",
+  whatYouDoSubhead:
+    "90 minutos de barco mar adentro te recompensan con la vida marina más rica del Golfo - y la mejor oportunidad de Tailandia para nadar con un tiburón ballena.",
+  featureCards: [
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.whaleShark,
+      title: "Posible tiburón ballena",
+      body: "El mejor punto del Golfo para encontrarte con los gigantes gentiles - Sail Rock los atrae.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.chimney,
+      title: "La Chimenea",
+      body: "Un emocionante paso vertical que atraviesa el pináculo - una inmersión inolvidable.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.fish,
+      title: "Muros de peces",
+      body: "Tornados de barracudas, jureles, peces murciélago y enormes bancos girando alrededor de la roca.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.boat,
+      title: "3 inmersiones en un día",
+      body: "Dos inmersiones en Sail Rock y una parada en Shark Island - un día completo en el agua.",
+    },
+  ],
+  uspHeadline: "",
+  uspTiles: [],
+  pricingHeadline: "",
+  pricing: {
+    price: "฿3,800",
+    perWhat: "por persona · día completo · 3 inmersiones",
+    includes: [
+      "Equipo completo y botellas (180-200 bar)",
+      "Barco privado, guías expertos",
+      "Desayuno + buffet de almuerzo tailandés a bordo",
+      "Café, té, fruta fresca y galletas",
+      "Seguro de buceo incluido",
+      "Para buceadores certificados",
+    ],
+    excludes: [],
+  },
+  pricingAddon: "+ ฿500 paquete de fotos submarinas (opcional)",
+  socialProofHeadline: "4,9 en Google (845) · 5,0 en TripAdvisor (776).",
+  socialProofSubhead: "Mira lo que dicen los buceadores tras un día en el barco de Sail Rock.",
+  dayTimelineHeadline: "Tu día en el barco",
+  dayTimeline: [
+    { time: "07:30", label: "Salida de Koh Tao - desayuno a bordo mientras navegamos al pináculo" },
+    { time: "09:30", label: "Inmersión 1 - Sail Rock: la Chimenea y las paredes profundas del pináculo" },
+    { time: "11:30", label: "Inmersión 2 - Sail Rock: deriva entre los bancos, busca tiburones ballena en el azul" },
+    { time: "13:00", label: "Buffet de almuerzo tailandés e intervalo en superficie" },
+    { time: "14:00", label: "Inmersión 3 - Shark Island: vida de arrecife y tiburones de punta negra" },
+    { time: "15:30", label: "Vuelta a Koh Tao" },
+  ],
+  ctaStripHeadline: "Elige tu día en Sail Rock",
+  ctaStripSubhead: "Reserva tu plaza con un depósito - confirmamos el mismo día.",
+  faqHeadline: "Preguntas frecuentes",
+  faqItems: [
+    {
+      q: "¿Qué certificaciones aceptan?",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - todo lo mayoritario. Trae la tarjeta o ten una copia digital.",
+    },
+    {
+      q: "¿Qué profundidad tiene Sail Rock?",
+      a: "El pináculo baja de los 30m, pero la mayor parte de la inmersión está entre 12 y 22m. Puede haber corriente, así que algo de experiencia reciente ayuda.",
+    },
+    {
+      q: "¿Veré de verdad un tiburón ballena?",
+      a: "No se garantizan, pero Sail Rock es el mejor punto del Golfo para verlos - las mejores fechas son aprox. marzo-mayo y sept-oct.",
+    },
+    {
+      q: "¿Tengo que pagar un depósito para reservar?",
+      a: "Sí - un depósito asegura tu plaza en el barco (las plazas son limitadas) y el resto se paga aquí en la isla.",
+    },
+    {
+      q: "¿Qué incluye por 3,800 THB?",
+      a: "3 inmersiones (2x Sail Rock + Shark Island), todo el equipo y botellas, barco privado con guías expertos, desayuno, buffet de almuerzo tailandés, bebidas y seguro de buceo. Las fotos son +500 THB opcionales.",
+    },
+  ],
+  closingCtaHeadline: "El próximo barco sale el",
+  closingDateHeadline: "El próximo barco sale el {date}",
+  closingCtaSubhead:
+    "Las plazas en el barco de Sail Rock son limitadas y se llenan rápido. Reserva la tuya ahora.",
+};
+
+const SAIL_ROCK_HE: LanderCopy = {
+  seoTitle: "צלילה בסייל רוק מקוטאו - יום שלם, 3,800 THB | סיאם סקובה",
+  seoDescription:
+    "צלילה בסייל רוק (הין באי) - הצלילה הכי טובה במפרץ תאילנד. טיול יום שלם מקוטאו: 3 צלילות (2x סייל רוק + שארק איילנד), סיכוי לכריש לוויתן וה\"ארובה\" המפורסמת. 3,800 THB הכל כלול. גוגל 4.9 (845), טריפאדוויזר 5.0 (776).",
+  heroBadge: "לצוללים מוסמכים",
+  heroEyebrow: "הצלילה הכי טובה במפרץ תאילנד",
+  heroH1: "צלילה בסייל רוק",
+  heroSubhead:
+    "הין באי - הפינה האגדית. אזור כרישי הלוויתן, ה\"ארובה\" האנכית המפורסמת ולהקות ענק של דגים. טיול יום שלם מקוטאו, כל 3 ימים.",
+  ratingsLine: "★ גוגל 4.9 (845 ביקורות) · טריפאדוויזר 5.0 (776 ביקורות)",
+  ctaPrimary: "הזמינו את טיול סייל רוק",
+  ctaSecondary: "או כתבו לנו ב-WhatsApp",
+  nextBoatPrefix: "הסירה הבאה",
+  securePrefix: "שריינו מקום ל-",
+  departuresLabel: "יוצאים כל 3 ימים · יציאות קרובות",
+  nextBoatLabel: "הסירה הבאה",
+  reserveCta: "שריינו לי מקום",
+  whatYouDoHeadline: "למה אסור לפספס את סייל רוק",
+  whatYouDoSubhead:
+    "90 דקות שיט אל הים הפתוח מתגמלות אתכם בחיים הימיים העשירים ביותר במפרץ - והסיכוי הכי טוב בתאילנד לשחות עם כריש לוויתן.",
+  featureCards: [
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.whaleShark,
+      title: "סיכוי לכריש לוויתן",
+      body: "הנקודה הכי טובה במפרץ לפגוש את הענקים העדינים - סייל רוק מושך אותם.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.chimney,
+      title: "הארובה",
+      body: "מעבר אנכי מרגש שחותך דרך הפינה - צלילת חתימה אמיתית.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.fish,
+      title: "קירות של דגים",
+      body: "מערבולות ברקודה, טרוולי, דגי עטלף ולהקות ענק שמסתחררות סביב הסלע.",
+    },
+    {
+      image: SAIL_ROCK_FEATURE_IMAGES.boat,
+      title: "3 צלילות ביום",
+      body: "שתי צלילות בסייל רוק ועצירה בשארק איילנד - יום שלם על המים.",
+    },
+  ],
+  uspHeadline: "",
+  uspTiles: [],
+  pricingHeadline: "",
+  pricing: {
+    price: "฿3,800",
+    perWhat: "לאדם · יום שלם · 3 צלילות",
+    includes: [
+      "ציוד צלילה מלא ובלונים (180-200 bar)",
+      "סירה פרטית, מדריכים מנוסים",
+      "ארוחת בוקר + בופה צהריים תאי על הסירה",
+      "קפה, תה, פירות טריים ועוגיות",
+      "ביטוח צלילה כלול",
+      "לצוללים מוסמכים",
+    ],
+    excludes: [],
+  },
+  pricingAddon: "+ ฿500 חבילת תמונות מתחת למים (אופציונלי)",
+  socialProofHeadline: "4.9 בגוגל (845) · 5.0 בטריפאדוויזר (776).",
+  socialProofSubhead: "תראו מה צוללים מספרים אחרי יום על סירת סייל רוק איתנו.",
+  dayTimelineHeadline: "היום שלכם על הסירה",
+  dayTimeline: [
+    { time: "07:30", label: "יציאה מקוטאו - ארוחת בוקר על הסירה בדרך לפינה" },
+    { time: "09:30", label: "צלילה 1 - סייל רוק: הארובה וקירות הפינה העמוקים" },
+    { time: "11:30", label: "צלילה 2 - סייל רוק: שייט עם הלהקות, סורקים את הכחול לכריש לוויתן" },
+    { time: "13:00", label: "בופה צהריים תאי והפסקת פני שטח" },
+    { time: "14:00", label: "צלילה 3 - שארק איילנד: חיי שונית וכרישי שונית שחורי-קצה" },
+    { time: "15:30", label: "חזרה לקוטאו" },
+  ],
+  ctaStripHeadline: "בחרו את יום סייל רוק שלכם",
+  ctaStripSubhead: "שריינו מקום עם מקדמה - אנחנו מאשרים באותו יום.",
+  faqHeadline: "שאלות נפוצות",
+  faqItems: [
+    {
+      q: "אילו הסמכות אתם מקבלים?",
+      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - כל מה שמרכזי. הביאו את הכרטיס או צילום דיגיטלי.",
+    },
+    {
+      q: "כמה עמוק סייל רוק?",
+      a: "הפינה יורדת מתחת ל-30 מטר, אבל רוב הצלילה בטווח 12-22 מטר. יכול להיות זרם, אז קצת ניסיון עדכני עוזר.",
+    },
+    {
+      q: "באמת אראה כריש לוויתן?",
+      a: "אין הבטחה, אבל סייל רוק היא הנקודה הכי טובה במפרץ לכרישי לוויתן - הסיכויים הטובים ביותר בערך מרץ-מאי וספטמבר-אוקטובר.",
+    },
+    {
+      q: "צריך לשלם מקדמה כדי להזמין?",
+      a: "כן - מקדמה שומרת לכם מקום על הסירה (המקומות מוגבלים), והיתרה משולמת כאן באי.",
+    },
+    {
+      q: "מה כלול ב-3,800 THB?",
+      a: "3 צלילות (2x סייל רוק + שארק איילנד), כל הציוד והבלונים, סירה פרטית עם מדריכים מנוסים, ארוחת בוקר, בופה צהריים תאי, שתייה וביטוח צלילה. תמונות בתוספת 500 THB אופציונלית.",
+    },
+  ],
+  closingCtaHeadline: "הסירה הבאה יוצאת ב-",
+  closingDateHeadline: "הסירה הבאה יוצאת ב-{date}",
+  closingCtaSubhead:
+    "המקומות על סירת סייל רוק מוגבלים ומתמלאים מהר. שריינו את שלכם עכשיו.",
+};
+
 export const LANDER_COPY: Record<Offer, Record<Lang, LanderCopy>> = {
   dsd: { en: DSD_EN, es: DSD_ES, he: DSD_HE },
   owd: { en: OWD_EN, es: OWD_ES, he: OWD_HE },
   aow: { en: AOW_EN, es: AOW_ES, he: AOW_HE },
   "fun-dive": { en: FUN_EN, es: FUN_ES, he: FUN_HE },
   "koh-tao": { en: KOH_TAO_EN, es: KOH_TAO_ES, he: KOH_TAO_HE },
+  "sail-rock": { en: SAIL_ROCK_EN, es: SAIL_ROCK_ES, he: SAIL_ROCK_HE },
 };
 
 const SITE = "https://siamscuba.com";
@@ -1604,6 +1964,7 @@ const SLUGS: Record<Offer, string> = {
   aow: "advanced-open-water-course",
   "fun-dive": "fun-dives",
   "koh-tao": "koh-tao-diving",
+  "sail-rock": "sail-rock-diving",
 };
 
 function langPrefix(lang: Lang): string {
@@ -1630,6 +1991,7 @@ const PRICES: Record<Offer, { price: string; currency: string; duration: string 
   aow: { price: "11000", currency: "THB", duration: "P1DT12H" },
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
   "koh-tao": { price: "2000", currency: "THB", duration: "PT4H" },
+  "sail-rock": { price: "3800", currency: "THB", duration: "PT8H" },
 };
 
 function buildFaqJsonLd(offer: Offer, lang: Lang): Record<string, unknown> {
@@ -1651,7 +2013,7 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
   const meta = PRICES[offer];
 
   const primary: Record<string, unknown> =
-    offer === "fun-dive" || offer === "koh-tao"
+    offer === "fun-dive" || offer === "koh-tao" || offer === "sail-rock"
       ? {
           "@context": "https://schema.org",
           "@type": "Service",

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
@@ -8,6 +8,7 @@ import {
   trackPurchase,
   trackBookingPayLater,
 } from "@/utils/tracking";
+import { getStoredUtm, getStoredGclid } from "@/utils/utm";
 
 const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 // Accept messages from the iframe (dash.*) AND from the same site under
@@ -24,6 +25,55 @@ const ALLOWED_ORIGINS = [
 const FunDiveBookingPage = () => {
   const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Forward booking context + attribution into the DiveOS wizard iframe.
+  // - `product` + `date` let the wizard pre-select the trip & departure
+  //   (e.g. ?product=SAILROCK&date=2026-06-22 from the Sail Rock lander).
+  // - utm_* and gclid are forwarded for attribution. When the caller sets
+  //   utm_passthrough=1 we also pull first-touch UTMs/gclid from sessionStorage
+  //   (captured on the lander) so attribution survives the in-app navigation.
+  // The DiveOS wizard reads these params (work done in parallel by the diveos
+  // agent); we only deliver them on the iframe URL.
+  const iframeSrc = useMemo(() => {
+    const incoming = new URLSearchParams(location.search);
+    const out = new URLSearchParams();
+
+    const product = incoming.get("product");
+    if (product) out.set("product", product);
+    const date = incoming.get("date");
+    if (date) out.set("date", date);
+
+    // Explicit utm_* / gclid present on the incoming URL win.
+    for (const [key, value] of incoming.entries()) {
+      if (key.startsWith("utm_") && key !== "utm_passthrough" && value) {
+        out.set(key, value);
+      }
+    }
+    const incomingGclid = incoming.get("gclid");
+    if (incomingGclid) out.set("gclid", incomingGclid);
+
+    // Backfill from first-touch storage when asked, without clobbering explicit
+    // values already set above.
+    if (incoming.get("utm_passthrough") === "1") {
+      const utm = getStoredUtm();
+      const utmMap: Record<string, string | undefined> = {
+        utm_source: utm.source,
+        utm_medium: utm.medium,
+        utm_campaign: utm.campaign,
+        utm_content: utm.content,
+        utm_term: utm.term,
+      };
+      for (const [key, value] of Object.entries(utmMap)) {
+        if (value && !out.has(key)) out.set(key, value);
+      }
+      const storedGclid = getStoredGclid();
+      if (storedGclid && !out.has("gclid")) out.set("gclid", storedGclid);
+    }
+
+    const qs = out.toString();
+    return qs ? `${LEAD_FORM_URL}?${qs}` : LEAD_FORM_URL;
+  }, [location.search]);
   // Fire the lead conversion at most once per page session, so a customer who
   // edits their contact details mid-wizard (re-emitting SIAM_BOOKING_LEAD)
   // doesn't double-count in Google Ads / Meta.
@@ -163,7 +213,7 @@ const FunDiveBookingPage = () => {
           )}
 
           <iframe
-            src={LEAD_FORM_URL}
+            src={iframeSrc}
             title="Siam Scuba Booking Form"
             className="w-full border-0"
             style={{ height: "calc(100vh - 100px)", minHeight: "600px" }}

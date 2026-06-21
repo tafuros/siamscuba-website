@@ -167,6 +167,21 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/landers/KohTaoHePage.tsx",
       },
       {
+        path: "sail-rock-diving",
+        lazy: lazyDefault(() => import("./pages/landers/SailRockEnPage")),
+        entry: "src/pages/landers/SailRockEnPage.tsx",
+      },
+      {
+        path: "es/sail-rock-diving",
+        lazy: lazyDefault(() => import("./pages/landers/SailRockEsPage")),
+        entry: "src/pages/landers/SailRockEsPage.tsx",
+      },
+      {
+        path: "he/sail-rock-diving",
+        lazy: lazyDefault(() => import("./pages/landers/SailRockHePage")),
+        entry: "src/pages/landers/SailRockHePage.tsx",
+      },
+      {
         path: "accessibility",
         lazy: lazyDefault(() => import("./pages/Accessibility")),
         entry: "src/pages/Accessibility.tsx",
