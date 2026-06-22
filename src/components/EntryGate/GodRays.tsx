@@ -1,37 +1,77 @@
-// Shimmering sun rays / light shafts (styles in gate.css). Pure CSS, no canvas -
-// safe to drop into any dark ocean section (the gate + the Siam Similans page).
+import { useEffect, useRef } from "react";
+
+// Shimmering sun rays / light shafts (styles in gate.css). Pure CSS, no canvas.
+// All rays fan out from ONE light source FIXED near the top-centre of the
+// surface. The rays sway continuously on their own (real sunbeams are never
+// still). On desktop the whole fan tilts a few degrees toward the cursor by
+// PIVOTING around the fixed source (the sun stays put - only the angle changes),
+// which reads far more naturally than sliding the source. Disabled on
+// touch / reduced-motion.
 
 interface GodRaysProps {
   reducedMotion?: boolean;
 }
 
-// Hand-placed beams fanning out from the surface, varied so they don't pulse in
-// unison. left %, width px, rotation deg, duration s, delay s.
+// Thin rays fanning out from the source by angle (deg). Varied widths/timings
+// so they shimmer out of sync.
 const RAYS = [
-  { left: 8, width: 90, rot: -14, dur: 11, delay: 0 },
-  { left: 24, width: 140, rot: -7, dur: 9, delay: 1.5 },
-  { left: 42, width: 110, rot: 4, dur: 12, delay: 0.6 },
-  { left: 58, width: 170, rot: -3, dur: 8.5, delay: 2.2 },
-  { left: 74, width: 120, rot: 9, dur: 10.5, delay: 1.1 },
-  { left: 90, width: 95, rot: 15, dur: 9.5, delay: 3 },
+  { angle: -32, width: 26, dur: 5.5, delay: 0 },
+  { angle: -22, width: 40, dur: 7, delay: 1.3 },
+  { angle: -13, width: 30, dur: 4.6, delay: 0.6 },
+  { angle: -5, width: 46, dur: 6.4, delay: 2.1 },
+  { angle: 4, width: 28, dur: 5, delay: 1.5 },
+  { angle: 12, width: 42, dur: 7.4, delay: 0.3 },
+  { angle: 21, width: 30, dur: 5.8, delay: 2.4 },
+  { angle: 31, width: 24, dur: 6.2, delay: 1 },
 ];
 
-const GodRays = ({ reducedMotion = false }: GodRaysProps) => (
-  <div className="god-rays" aria-hidden="true">
-    {RAYS.map((r, i) => (
-      <span
-        key={i}
-        className="god-ray"
-        style={{
-          ["--ray-left" as string]: `${r.left}%`,
-          ["--ray-width" as string]: `${r.width}px`,
-          ["--ray-rot" as string]: `${r.rot}deg`,
-          ["--ray-dur" as string]: reducedMotion ? "0s" : `${r.dur}s`,
-          ["--ray-delay" as string]: reducedMotion ? "0s" : `${r.delay}s`,
-        }}
-      />
-    ))}
-  </div>
-);
+const GodRays = ({ reducedMotion = false }: GodRaysProps) => {
+  const sourceRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (reducedMotion || typeof window === "undefined") return;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!canHover) return;
+
+    // Tilt the whole fan toward the cursor by rotating around the fixed source
+    // (CSS transition on .god-ray-source eases it). No permanent rAF loop.
+    let queued = false;
+    const onMove = (e: MouseEvent) => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        const pct = (e.clientX / window.innerWidth) * 100;
+        // Gentle: at most ~7deg of tilt either side of vertical.
+        const tilt = (pct - 50) * 0.14;
+        if (sourceRef.current) sourceRef.current.style.transform = `rotate(${tilt}deg)`;
+      });
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [reducedMotion]);
+
+  return (
+    <div className="god-rays" aria-hidden="true">
+      <div ref={sourceRef} className="god-ray-source" style={{ left: "50%" }}>
+        {/* Soft glow at the source itself */}
+        <span className="god-ray-sun" />
+        {RAYS.map((r, i) => (
+          <span
+            key={i}
+            className="god-ray"
+            style={{
+              ["--ray-rot" as string]: `${r.angle}deg`,
+              ["--ray-width" as string]: `${r.width}px`,
+              ["--ray-dur" as string]: reducedMotion ? "0s" : `${r.dur}s`,
+              ["--ray-delay" as string]: reducedMotion ? "0s" : `${r.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default GodRays;

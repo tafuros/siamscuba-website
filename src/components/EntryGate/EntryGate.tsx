@@ -52,7 +52,11 @@ const EntryGate = () => {
 
   const copy = gateContent[language];
 
-  const close = () => setActive(false);
+  const close = () => {
+    // Drop the pre-paint cover (index.html) so the homepage / destination shows.
+    if (typeof document !== "undefined") document.getElementById("gate-preload-cover")?.remove();
+    setActive(false);
+  };
 
   const handlePickLanguage = (lang: Language) => {
     setLanguage(lang);
@@ -79,13 +83,9 @@ const EntryGate = () => {
   const branchQuestion = state.where ? copy[state.where] : null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
+    <div
       dir={isRTL ? "rtl" : "ltr"}
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-[100] overflow-hidden"
       style={{
         background:
           "radial-gradient(120% 100% at 50% 0%, #0a3a66 0%, #08315a 38%, #051f3a 72%, #03152a 100%)",
@@ -94,7 +94,17 @@ const EntryGate = () => {
       aria-modal="true"
       aria-label="Siam Scuba welcome"
     >
-      <GodRays reducedMotion={prefersReduced} />
+      {/* The solid dark background above appears instantly - it covers the live
+          homepage the moment the gate mounts. Only the SCENE below rises in over
+          it (no flash of the production site), which also reads as "something is
+          about to happen". */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+        className="absolute inset-0"
+      >
+        <GodRays reducedMotion={prefersReduced} />
       <GateBubbles reducedMotion={prefersReduced} />
 
       {/* Soft vignette for depth */}
@@ -104,22 +114,23 @@ const EntryGate = () => {
         aria-hidden="true"
       />
 
-      {/* Back control (not on the first screen) */}
-      {state.step !== "welcome" && (
-        <button
-          type="button"
-          onClick={() => dispatch({ type: "BACK" })}
-          className={`absolute top-5 z-10 flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-white/15 ${
-            isRTL ? "right-5" : "left-5"
-          }`}
-        >
-          <span aria-hidden="true">{isRTL ? "→" : "←"}</span>
-          {copy.back}
-        </button>
-      )}
-
-      <div className="relative z-[1] flex max-h-[100dvh] w-full items-center justify-center overflow-y-auto py-16">
-        <AnimatePresence mode="wait">
+      <div className="relative z-[1] flex min-h-[100dvh] w-full flex-col">
+        {/* Top bar - Back from the language step onward, kept out of the content
+            flow so it never overlaps the cards. */}
+        <div className="flex h-16 shrink-0 items-center px-5">
+          {state.step !== "welcome" && (
+            <button
+              type="button"
+              onClick={() => dispatch({ type: "BACK" })}
+              className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-white/15"
+            >
+              <span aria-hidden="true">{isRTL ? "→" : "←"}</span>
+              {copy.back}
+            </button>
+          )}
+        </div>
+        <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-10">
+          <AnimatePresence mode="wait">
           {state.step === "welcome" && (
             <motion.div
               key="welcome"
@@ -163,12 +174,15 @@ const EntryGate = () => {
                 question={branchQuestion}
                 onPick={handleFinalAnswer}
                 reducedMotion={prefersReduced}
+                artByKey={state.where === "kohTao" ? { freediving: "freediver", scuba: "scuba" } : undefined}
               />
             </motion.div>
           )}
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

@@ -8,6 +8,27 @@
          Inline + before the app stylesheet so it applies on the earliest paint. -->
     <meta name="theme-color" content="#0a335c" />
     <style>html{background-color:#0a335c}</style>
+    <!-- Entry gate: paint an instant deep-ocean cover BEFORE the homepage body
+         renders, so a hard reload eases straight into the gate instead of
+         flashing the live site for a few frames. Gated by the build flag (no-op
+         when the gate is off), only on "/", skipped with ?gate=0. The gate removes
+         it on enter; a safety timeout removes it if the gate never loads. -->
+    <script>
+      (function () {
+        try {
+          if ("%VITE_ENTRY_GATE%" !== "on") return;
+          if (location.pathname !== "/") return;
+          if (new URLSearchParams(location.search).get("gate") === "0") return;
+          var c = document.createElement("div");
+          c.id = "gate-preload-cover";
+          c.setAttribute("aria-hidden", "true");
+          c.style.cssText =
+            "position:fixed;inset:0;z-index:99;background:radial-gradient(120% 100% at 50% 0%,#0a3a66 0%,#08315a 38%,#051f3a 72%,#03152a 100%)";
+          (document.body || document.documentElement).appendChild(c);
+          setTimeout(function () { var e = document.getElementById("gate-preload-cover"); if (e) e.remove(); }, 6000);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

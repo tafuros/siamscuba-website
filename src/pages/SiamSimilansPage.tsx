@@ -13,6 +13,9 @@ import SimilanBookingForm from "@/components/similan/SimilanBookingForm";
 const OCEAN_BG =
   "radial-gradient(120% 90% at 50% 0%, #0a3a66 0%, #08315a 36%, #051f3a 70%, #03152a 100%)";
 
+// Card image fade: full opacity at the top, dissolving to 0 at the bottom.
+const CARD_IMG_FADE = "linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%)";
+
 const SiamSimilansPage = () => {
   const { language, isRTL } = useLanguage();
   const copy = similanCopy[language];
@@ -129,41 +132,56 @@ const SiamSimilansPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.45, delay: i * 0.06 }}
-                className={`relative flex flex-col rounded-3xl border p-6 backdrop-blur-md ${
+                className={`group relative flex min-h-[21rem] flex-col overflow-hidden rounded-3xl border p-6 ${
                   trip.recommended
-                    ? "border-ocean-light/60 bg-white/[0.1] shadow-[0_0_40px_-12px_rgba(125,211,252,0.5)]"
-                    : "border-white/12 bg-white/[0.05]"
+                    ? "border-ocean-light/60 shadow-[0_0_40px_-12px_rgba(125,211,252,0.5)]"
+                    : "border-white/12"
                 }`}
               >
-                {text?.badge && (
-                  <span
-                    className={`absolute -top-3 ${isRTL ? "right-5" : "left-5"} rounded-full px-3 py-1 text-[11px] font-semibold ${
-                      trip.recommended ? "bg-ocean-light text-ocean-deep" : "bg-white/15 text-white"
+                {/* Image background, fading from full opacity at the top to 0 at the bottom */}
+                <div className="pointer-events-none absolute inset-0 bg-ocean-deep">
+                  <img
+                    src={trip.image}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ WebkitMaskImage: CARD_IMG_FADE, maskImage: CARD_IMG_FADE }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/35 via-ocean-deep/55 to-ocean-deep/90" />
+                </div>
+
+                <div className="relative z-[1] flex flex-1 flex-col">
+                  {text?.badge && (
+                    <span
+                      className={`mb-3 w-fit rounded-full px-3 py-1 text-[11px] font-semibold ${
+                        trip.recommended ? "bg-ocean-light text-ocean-deep" : "bg-white/20 text-white backdrop-blur-sm"
+                      }`}
+                    >
+                      {text.badge}
+                    </span>
+                  )}
+                  <h3 className="font-display text-2xl font-semibold drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">{text?.name}</h3>
+                  <p className="mt-1 text-sm font-medium text-ocean-light drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">{text?.meta}</p>
+                  <p className="mt-3 flex-1 text-sm text-white/85 drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">{text?.route}</p>
+                  <div className="mt-5">
+                    <div className="text-xs text-white/60">{copy.trips.from}</div>
+                    <div className="font-display text-2xl font-bold drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
+                      {trip.fromPrice.toLocaleString()} <span className="text-base font-medium">THB</span>
+                    </div>
+                    <div className="text-xs text-white/55">{copy.trips.perDiver}</div>
+                  </div>
+                  <button
+                    onClick={() => reserve(trip.id)}
+                    className={`mt-5 w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] ${
+                      trip.recommended
+                        ? "bg-gradient-to-r from-ocean-mid to-ocean-light text-ocean-deep shadow-lg"
+                        : "border border-white/25 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
                     }`}
                   >
-                    {text.badge}
-                  </span>
-                )}
-                <h3 className="mt-2 font-display text-2xl font-semibold">{text?.name}</h3>
-                <p className="mt-1 text-sm text-ocean-light/90">{text?.meta}</p>
-                <p className="mt-3 flex-1 text-sm text-ocean-surface/75">{text?.route}</p>
-                <div className="mt-5">
-                  <div className="text-xs text-white/50">{copy.trips.from}</div>
-                  <div className="font-display text-2xl font-bold">
-                    {trip.fromPrice.toLocaleString()} <span className="text-base font-medium">THB</span>
-                  </div>
-                  <div className="text-xs text-white/45">{copy.trips.perDiver}</div>
+                    {copy.trips.reserve}
+                  </button>
                 </div>
-                <button
-                  onClick={() => reserve(trip.id)}
-                  className={`mt-5 w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] ${
-                    trip.recommended
-                      ? "bg-gradient-to-r from-ocean-mid to-ocean-light text-ocean-deep shadow-lg"
-                      : "border border-white/20 bg-white/5 text-white hover:bg-white/10"
-                  }`}
-                >
-                  {copy.trips.reserve}
-                </button>
               </motion.div>
             );
           })}

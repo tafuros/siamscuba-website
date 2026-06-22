@@ -31,6 +31,8 @@ export interface GateCopy {
 }
 
 export const WELCOME_HEADLINE = "Welcome to Siam Scuba Dive Center";
+// Split into visual lines for the per-line headline fade.
+export const WELCOME_LINES = ["Welcome to Siam Scuba", "Dive Center"];
 
 export const gateContent: Record<Language, GateCopy> = {
   en: {
@@ -48,8 +50,8 @@ export const gateContent: Record<Language, GateCopy> = {
     kohTao: {
       title: "Freediving or scuba diving?",
       options: [
-        { key: "freediving", label: "Freediving", sub: "One breath, deep blue" },
         { key: "scuba", label: "Scuba diving", sub: "Tanks, reefs & courses" },
+        { key: "freediving", label: "Freediving", sub: "One breath, deep blue" },
       ],
     },
     kohPhangan: {
@@ -82,8 +84,8 @@ export const gateContent: Record<Language, GateCopy> = {
     kohTao: {
       title: "צלילה חופשית או צלילת מיכלים?",
       options: [
-        { key: "freediving", label: "צלילה חופשית", sub: "נשימה אחת, כחול עמוק" },
         { key: "scuba", label: "צלילת מיכלים", sub: "מיכלים, שוניות וקורסים" },
+        { key: "freediving", label: "צלילה חופשית", sub: "נשימה אחת, כחול עמוק" },
       ],
     },
     kohPhangan: {
@@ -116,8 +118,8 @@ export const gateContent: Record<Language, GateCopy> = {
     kohTao: {
       title: "¿Apnea o buceo con botella?",
       options: [
-        { key: "freediving", label: "Apnea", sub: "Una respiración, azul profundo" },
         { key: "scuba", label: "Buceo con botella", sub: "Botellas, arrecifes y cursos" },
+        { key: "freediving", label: "Apnea", sub: "Una respiración, azul profundo" },
       ],
     },
     kohPhangan: {
@@ -150,8 +152,8 @@ export const gateContent: Record<Language, GateCopy> = {
     kohTao: {
       title: "Apnée ou plongée bouteille ?",
       options: [
-        { key: "freediving", label: "Apnée", sub: "Une respiration, le grand bleu" },
         { key: "scuba", label: "Plongée bouteille", sub: "Bouteilles, récifs et cours" },
+        { key: "freediving", label: "Apnée", sub: "Une respiration, le grand bleu" },
       ],
     },
     kohPhangan: {

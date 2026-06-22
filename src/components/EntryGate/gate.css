@@ -9,32 +9,75 @@
   pointer-events: none;
   mix-blend-mode: screen;
 }
+/* The single light source: all rays originate here, near the top. `left` is set
+   inline (and eased toward the cursor on desktop); the transition keeps the
+   drift smooth even between rAF updates. */
+.god-ray-source {
+  position: absolute;
+  top: -6%;
+  width: 0;
+  height: 0;
+  transform-origin: center top;
+  transition: transform 0.7s ease-out;
+}
+/* Soft sun glow right at the source point. */
+.god-ray-sun {
+  position: absolute;
+  left: -110px;
+  top: -150px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(210, 240, 255, 0.5) 0%, rgba(170, 215, 255, 0.18) 35%, transparent 70%);
+  filter: blur(14px);
+  animation: god-sun-pulse 6s ease-in-out infinite;
+}
 .god-ray {
   position: absolute;
-  top: -25%;
-  left: var(--ray-left, 50%);
-  width: var(--ray-width, 120px);
-  height: 150%;
+  top: 0;
+  left: 0;
+  width: var(--ray-width, 36px);
+  height: 165vh;
+  margin-left: calc(var(--ray-width, 36px) / -2);
   background: linear-gradient(
     to bottom,
-    rgba(190, 230, 255, 0.22),
-    rgba(150, 210, 255, 0.08) 45%,
-    transparent 80%
+    rgba(205, 240, 255, 0.55),
+    rgba(160, 215, 255, 0.14) 38%,
+    transparent 72%
   );
   transform-origin: top center;
-  transform: rotate(var(--ray-rot, 8deg)) translateX(0) scaleX(1);
-  filter: blur(10px);
+  transform: rotate(var(--ray-rot, 0deg)) scaleX(0.9);
+  filter: blur(5px);
   opacity: 0;
   will-change: opacity, transform;
-  animation: god-ray-flicker var(--ray-dur, 9s) ease-in-out infinite;
+  animation: god-ray-shimmer var(--ray-dur, 6s) ease-in-out infinite;
   animation-delay: var(--ray-delay, 0s);
 }
-@keyframes god-ray-flicker {
-  0%, 100% { opacity: 0.12; transform: rotate(var(--ray-rot, 8deg)) translateX(-8px) scaleX(0.92); }
-  50%      { opacity: 0.5;  transform: rotate(var(--ray-rot, 8deg)) translateX(8px) scaleX(1.08); }
+/* Thin shimmer: rays pulse in brightness, breathe in width, and sway a couple
+   of degrees so they're always in motion (desynced by per-ray duration/delay). */
+@keyframes god-ray-shimmer {
+  0%, 100% { opacity: 0.1; transform: rotate(calc(var(--ray-rot, 0deg) - 1.5deg)) scaleX(0.72); }
+  50%      { opacity: 0.55; transform: rotate(calc(var(--ray-rot, 0deg) + 2.5deg)) scaleX(1.14); }
+}
+@keyframes god-sun-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.92); }
+  50%      { opacity: 1; transform: scale(1.08); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .god-ray { animation: none !important; opacity: 0.16 !important; transform: rotate(var(--ray-rot, 8deg)) !important; }
+  .god-ray { animation: none !important; opacity: 0.16 !important; transform: rotate(var(--ray-rot, 0deg)) !important; }
+  .god-ray-sun { animation: none !important; }
+}
+
+/* Welcome headline - per-line downward fade: each line's letters are filled
+   white at the top, dissolving into soft ocean-blue at the bottom. */
+.gate-title-line {
+  display: block;
+  background: linear-gradient(to bottom, #ffffff 0%, #ffffff 38%, rgba(196, 228, 255, 0.72) 82%, rgba(150, 202, 247, 0.4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 16px rgba(0, 0, 0, 0.35));
 }
 
 .gate-bubbles {

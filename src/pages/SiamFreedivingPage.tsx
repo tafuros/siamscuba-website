@@ -7,8 +7,8 @@ import GateBubbles from "@/components/EntryGate/GateBubbles";
 import GodRays from "@/components/EntryGate/GodRays";
 import "@/components/EntryGate/gate.css";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { phuketCopy, PHUKET_PRODUCTS } from "@/components/phuket/phuketContent";
-import PhuketBookingForm from "@/components/phuket/PhuketBookingForm";
+import { freedivingCopy, FREEDIVING_COURSES } from "@/components/freediving/freedivingContent";
+import FreedivingBookingForm from "@/components/freediving/FreedivingBookingForm";
 
 const OCEAN_BG =
   "radial-gradient(120% 90% at 50% 0%, #0a3a66 0%, #08315a 36%, #051f3a 70%, #03152a 100%)";
@@ -16,21 +16,21 @@ const OCEAN_BG =
 // Card image fade: full opacity at the top, dissolving to 0 at the bottom.
 const CARD_IMG_FADE = "linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%)";
 
-const SiamPhuketPage = () => {
+const SiamFreedivingPage = () => {
   const { language, isRTL } = useLanguage();
-  const copy = phuketCopy[language];
-  const productText = copy.products.items;
+  const copy = freedivingCopy[language];
+  const courseText = copy.courses.items;
   const [searchParams] = useSearchParams();
 
   const initialId = useMemo(() => {
-    const p = searchParams.get("product");
-    if (p && PHUKET_PRODUCTS.some((x) => x.id === p)) return p;
-    return PHUKET_PRODUCTS.find((x) => x.recommended)?.id ?? PHUKET_PRODUCTS[0].id;
+    const c = searchParams.get("course");
+    if (c && FREEDIVING_COURSES.some((x) => x.id === c)) return c;
+    return FREEDIVING_COURSES.find((x) => x.recommended)?.id ?? FREEDIVING_COURSES[0].id;
   }, [searchParams]);
 
   const [selectedId, setSelectedId] = useState(initialId);
   const bookingRef = useRef<HTMLDivElement>(null);
-  const productsRef = useRef<HTMLDivElement>(null);
+  const coursesRef = useRef<HTMLDivElement>(null);
 
   const reserve = (id: string) => {
     setSelectedId(id);
@@ -40,9 +40,9 @@ const SiamPhuketPage = () => {
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="relative min-h-screen overflow-hidden text-white" style={{ background: OCEAN_BG }}>
       <Seo
-        title="Diving from Phuket - Day Trips, Fun Dives & Courses | Siam Scuba"
-        description="Day diving from Phuket on the Andaman coast - guided fun dives, Discover Scuba, refreshers and Open Water courses. Book now, pay later with Siam Scuba."
-        canonical="https://siamscuba.com/phuket-diving"
+        title="Siam Freediving - Freediving Courses on Koh Tao | Siam Scuba"
+        description="Freediving on Koh Tao - PADI & AIDA courses from Discover Freediving to instructor. Small groups, record-holding instructors. Book with Siam Scuba."
+        canonical="https://siamscuba.com/freediving"
       />
 
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[70vh]">
@@ -91,45 +91,44 @@ const SiamPhuketPage = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mx-auto mt-4 flex items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-ocean-light/90 sm:text-sm"
         >
-          <span aria-hidden="true">🌊</span>
+          <span aria-hidden="true">🐬</span>
           <span>{copy.hero.note}</span>
         </motion.p>
 
         <button
-          onClick={() => productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+          onClick={() => coursesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
           className="mt-8 rounded-xl bg-gradient-to-r from-ocean-mid to-ocean-light px-7 py-3 font-semibold text-ocean-deep shadow-lg transition-transform hover:scale-[1.03]"
         >
           {copy.hero.cta}
         </button>
       </section>
 
-      {/* Products */}
-      <section ref={productsRef} className="relative z-[1] mx-auto max-w-6xl px-5 py-12 scroll-mt-6">
+      {/* Courses */}
+      <section ref={coursesRef} className="relative z-[1] mx-auto max-w-6xl px-5 py-12 scroll-mt-6">
         <div className="text-center">
-          <h2 className="font-display text-3xl font-semibold sm:text-4xl">{copy.products.title}</h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-ocean-surface/70">{copy.products.subtitle}</p>
+          <h2 className="font-display text-3xl font-semibold sm:text-4xl">{copy.courses.title}</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-ocean-surface/70">{copy.courses.subtitle}</p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {PHUKET_PRODUCTS.map((product, i) => {
-            const text = productText[product.id];
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {FREEDIVING_COURSES.map((course, i) => {
+            const text = courseText[course.id];
             return (
               <motion.div
-                key={product.id}
+                key={course.id}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.45, delay: i * 0.06 }}
                 className={`group relative flex min-h-[23rem] flex-col overflow-hidden rounded-3xl border p-6 ${
-                  product.recommended
+                  course.recommended
                     ? "border-ocean-light/60 shadow-[0_0_40px_-12px_rgba(125,211,252,0.5)]"
                     : "border-white/12"
                 }`}
               >
-                {/* Image background, fading from full opacity at the top to 0 at the bottom */}
                 <div className="pointer-events-none absolute inset-0 bg-ocean-deep">
                   <img
-                    src={product.image}
+                    src={course.image}
                     alt=""
                     aria-hidden="true"
                     loading="lazy"
@@ -143,7 +142,7 @@ const SiamPhuketPage = () => {
                   {text?.badge && (
                     <span
                       className={`mb-3 w-fit rounded-full px-3 py-1 text-[11px] font-semibold ${
-                        product.recommended ? "bg-ocean-light text-ocean-deep" : "bg-white/20 text-white backdrop-blur-sm"
+                        course.recommended ? "bg-ocean-light text-ocean-deep" : "bg-white/20 text-white backdrop-blur-sm"
                       }`}
                     >
                       {text.badge}
@@ -163,20 +162,21 @@ const SiamPhuketPage = () => {
                   </ul>
 
                   <div className="mt-5">
+                    <div className="text-xs text-white/60">{copy.courses.from}</div>
                     <div className="font-display text-2xl font-bold drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
-                      {product.price.toLocaleString()} <span className="text-base font-medium">THB</span>
+                      {course.price.toLocaleString()} <span className="text-base font-medium">THB</span>
                     </div>
-                    <div className="text-xs text-white/55">{copy.products.perPerson}</div>
+                    <div className="text-xs text-white/55">{copy.courses.perPerson}</div>
                   </div>
                   <button
-                    onClick={() => reserve(product.id)}
+                    onClick={() => reserve(course.id)}
                     className={`mt-5 w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] ${
-                      product.recommended
+                      course.recommended
                         ? "bg-gradient-to-r from-ocean-mid to-ocean-light text-ocean-deep shadow-lg"
                         : "border border-white/25 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
                     }`}
                   >
-                    {copy.products.reserve}
+                    {copy.courses.reserve}
                   </button>
                 </div>
               </motion.div>
@@ -206,18 +206,18 @@ const SiamPhuketPage = () => {
 
       {/* Booking */}
       <section ref={bookingRef} className="relative z-[1] mx-auto max-w-6xl px-5 py-12 scroll-mt-6">
-        <PhuketBookingForm
+        <FreedivingBookingForm
           copy={copy}
-          products={PHUKET_PRODUCTS}
-          productText={productText}
+          courses={FREEDIVING_COURSES}
+          courseText={courseText}
           selectedId={selectedId}
           onSelect={setSelectedId}
         />
       </section>
 
-      <div className="relative z-[1] pb-10 text-center text-xs text-white/40">Siam Scuba · Phuket</div>
+      <div className="relative z-[1] pb-10 text-center text-xs text-white/40">Siam Freediving · Siam Scuba</div>
     </div>
   );
 };
 
-export default SiamPhuketPage;
+export default SiamFreedivingPage;

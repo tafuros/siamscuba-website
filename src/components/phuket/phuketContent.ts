@@ -12,14 +12,15 @@ export interface PhuketProduct {
   leadCourse: string;
   waTopic: WhatsAppTopic;
   price: number; // THB per person
+  image: string;
   recommended?: boolean;
 }
 
 export const PHUKET_PRODUCTS: PhuketProduct[] = [
-  { id: "guided", leadCourse: "fun-dive", waTopic: "fun-dive", price: 4300, recommended: true },
-  { id: "discover", leadCourse: "discover-scuba", waTopic: "dsd", price: 5700 },
-  { id: "refresher", leadCourse: "fun-dive", waTopic: "refresher", price: 5700 },
-  { id: "course", leadCourse: "open-water", waTopic: "owd", price: 15900 },
+  { id: "guided", leadCourse: "fun-dive", waTopic: "fun-dive", price: 4300, image: "/similan/sites/koh-tachai.jpg", recommended: true },
+  { id: "discover", leadCourse: "discover-scuba", waTopic: "dsd", price: 5700, image: "/similan/sites/elephant.jpg" },
+  { id: "refresher", leadCourse: "fun-dive", waTopic: "refresher", price: 5700, image: "/similan/sites/koh-bon.jpg" },
+  { id: "course", leadCourse: "open-water", waTopic: "owd", price: 15900, image: "/similan/sites/richelieu.jpg" },
 ];
 
 export interface PhuketProductText {
@@ -65,8 +66,8 @@ export const phuketCopy: Record<Language, PhuketCopy> = {
     hero: {
       kicker: "Siam Scuba · Phuket",
       title: "Diving from Phuket",
-      subtitle: "Day trips on the Andaman coast - from your first breath underwater to guided dives for certified divers.",
-      note: "Day diving from Phuket year-round - best visibility November to April.",
+      subtitle: "Day diving on the Andaman coast - for first-timers and certified divers alike.",
+      note: "Year-round diving · best visibility Nov-Apr",
       cta: "See the day trips",
     },
     products: {
@@ -145,8 +146,8 @@ export const phuketCopy: Record<Language, PhuketCopy> = {
     hero: {
       kicker: "Siam Scuba · פוקט",
       title: "צלילות מפוקט",
-      subtitle: "טיולי יום בחוף האנדמן - מהנשימה הראשונה מתחת למים ועד צלילות מודרכות למוסמכים.",
-      note: "צלילות יום מפוקט כל השנה - הניראות הטובה ביותר בין נובמבר לאפריל.",
+      subtitle: "צלילות יום בחוף האנדמן - למתחילים ולמוסמכים כאחד.",
+      note: "צלילה כל השנה · ניראות מיטבית נוב׳-אפר׳",
       cta: "לכל טיולי היום",
     },
     products: {
@@ -225,8 +226,8 @@ export const phuketCopy: Record<Language, PhuketCopy> = {
     hero: {
       kicker: "Siam Scuba · Phuket",
       title: "Buceo desde Phuket",
-      subtitle: "Salidas de día en la costa del Andamán - desde tu primera respiración bajo el agua hasta inmersiones guiadas para buceadores certificados.",
-      note: "Buceo de día desde Phuket todo el año - mejor visibilidad de noviembre a abril.",
+      subtitle: "Buceo de día en la costa del Andamán - para principiantes y certificados por igual.",
+      note: "Buceo todo el año · mejor visibilidad nov-abr",
       cta: "Ver las salidas",
     },
     products: {
@@ -305,8 +306,8 @@ export const phuketCopy: Record<Language, PhuketCopy> = {
     hero: {
       kicker: "Siam Scuba · Phuket",
       title: "Plonger depuis Phuket",
-      subtitle: "Sorties à la journée sur la côte de l'Andaman - de votre première respiration sous l'eau aux plongées guidées pour brevetés.",
-      note: "Plongée à la journée depuis Phuket toute l'année - meilleure visibilité de novembre à avril.",
+      subtitle: "Plongée à la journée sur la côte de l'Andaman - débutants et brevetés bienvenus.",
+      note: "Plongée toute l'année · meilleure visibilité nov-avr",
       cta: "Voir les sorties",
     },
     products: {

@@ -14,7 +14,8 @@ export type GateAction =
 const ACTIONS: Record<WhereKey, Record<string, GateAction>> = {
   kohTao: {
     scuba: { type: "enter-site" },
-    freediving: { type: "whatsapp", topic: "kt-freediving" },
+    // Freediving -> curated Siam Freediving page (Kaizen courses, re-branded).
+    freediving: { type: "navigate", path: "/freediving" },
   },
   kohPhangan: {
     licensed: { type: "whatsapp", topic: "kp-licensed" },

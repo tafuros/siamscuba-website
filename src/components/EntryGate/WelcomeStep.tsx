@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import type { Language } from "@/i18n/translations";
-import { gateContent, WELCOME_HEADLINE } from "./gateContent";
+import { gateContent, WELCOME_LINES } from "./gateContent";
 import FlagRow from "./FlagRow";
 
 interface WelcomeStepProps {
@@ -14,7 +14,7 @@ const WelcomeStep = ({ onPickLanguage, reducedMotion = false }: WelcomeStepProps
   const d = (delay: number) => (reducedMotion ? 0 : delay);
 
   return (
-    <div className="flex w-full max-w-3xl flex-col items-center px-6 text-center">
+    <div className="flex w-full max-w-3xl flex-col items-center px-4 text-center sm:px-6">
       <motion.p
         initial={reducedMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -28,9 +28,13 @@ const WelcomeStep = ({ onPickLanguage, reducedMotion = false }: WelcomeStepProps
         initial={reducedMotion ? false : { opacity: 0, y: 16, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 1.1, delay: d(1.2), ease: "easeOut" }}
-        className="font-display text-3xl font-bold leading-tight text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)] sm:text-5xl md:text-6xl"
+        className="font-display text-3xl font-bold leading-tight sm:text-5xl md:text-6xl"
       >
-        {WELCOME_HEADLINE}
+        {WELCOME_LINES.map((line) => (
+          <span key={line} className="gate-title-line">
+            {line}
+          </span>
+        ))}
       </motion.h1>
 
       <motion.p

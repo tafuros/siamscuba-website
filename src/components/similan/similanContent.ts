@@ -15,14 +15,15 @@ export interface SimilanTrip {
   id: string;
   course: SimilanCourse;
   fromPrice: number; // THB per diver, lowest cabin "from"
+  image: string;
   recommended?: boolean;
 }
 
 // Neutral facts; per-language wording lives in `similanCopy[lang].trips.items[id]`.
 export const SIMILAN_TRIPS: SimilanTrip[] = [
-  { id: "similan", course: "similan-safari", fromPrice: 29000, recommended: true },
-  { id: "andaman", course: "similan-safari", fromPrice: 44000 },
-  { id: "south", course: "similan-safari", fromPrice: 22000 },
+  { id: "similan", course: "similan-safari", fromPrice: 29000, image: "/similan/sites/koh-bon.jpg", recommended: true },
+  { id: "andaman", course: "similan-safari", fromPrice: 44000, image: "/similan/sites/richelieu.jpg" },
+  { id: "south", course: "similan-safari", fromPrice: 22000, image: "/similan/sites/koh-tachai.jpg" },
 ];
 
 export interface SimilanBoat {

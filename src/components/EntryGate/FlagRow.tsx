@@ -38,7 +38,7 @@ const FlagRow = ({ onPick }: FlagRowProps) => {
               style={{ WebkitMaskImage: FADE, maskImage: FADE }}
             />
           </span>
-          <span className="text-[11px] font-medium tracking-wide text-white/55 transition-colors group-hover:text-white group-focus-visible:text-white sm:text-xs">
+          <span className="text-xs font-semibold tracking-wide text-white/90 drop-shadow-[0_1px_5px_rgba(0,0,0,0.85)] transition-colors group-hover:text-white sm:text-sm">
             {languageNames[lang]}
           </span>
         </button>
