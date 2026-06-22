@@ -515,7 +515,7 @@ export const translations: Record<Language, TranslationStrings> = {
     courses_get_price: "קבל מחיר",
     courses_more_details: "פרטים נוספים",
 
-    course_dsd: "גלה צלילה",
+    course_dsd: "צלילת היכרות",
     course_ow: "צוללן מים פתוחים",
     course_bubble: "באבל מייקר",
     course_aow: "צוללן מים פתוחים מתקדם",

@@ -16,6 +16,14 @@ import { captureUtmFromUrl, captureGclidFromUrl } from "@/utils/utm";
 // after hydration instead of blocking it.
 const NemoChat = lazy(() => import("@/components/NemoChat"));
 
+// Premium "gate" intro overlay. Dormant in production: when VITE_ENTRY_GATE is
+// not "on", this constant folds to false and Rollup tree-shakes the dynamic
+// import away entirely - the gate chunk is never emitted and the bundle + SSG
+// output are identical to today. Flip the flag in Vercel to go live.
+// See plans/mellow-soaring-zebra.md.
+const ENTRY_GATE_ON = import.meta.env.VITE_ENTRY_GATE === "on";
+const EntryGate = ENTRY_GATE_ON ? lazy(() => import("@/components/EntryGate")) : null;
+
 const queryClient = new QueryClient();
 
 const RouteTracker = () => {
@@ -63,6 +71,11 @@ const App = () => (
           </Suspense>
         </main>
         <AccessibilityMenu />
+        {ENTRY_GATE_ON && EntryGate && (
+          <Suspense fallback={null}>
+            <EntryGate />
+          </Suspense>
+        )}
         <Suspense fallback={null}>
           <NemoChat />
         </Suspense>

@@ -59,6 +59,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
     { loc: "/es/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
     { loc: "/he/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
+    // Entry-gate split pages (multilingual single URL - all langs on one URL).
+    { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
+    { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },
+    { loc: "/freediving", changefreq: "weekly", priority: 0.9, lastmod: today },
   ];
 
   for (const post of blogPosts) {
