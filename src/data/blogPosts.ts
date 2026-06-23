@@ -436,7 +436,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Day tripper / try diving: ฿2,600 for the Discover Scuba dive + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
-          "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿3,000 = ฿26,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
+          "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿2,000 = ฿25,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
           "Pro pathway: ฿38,500 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿80,000-฿120,000 over 6-8 weeks. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",
           "Total instructor pipeline (Open Water → Instructor): roughly ฿120,000-฿180,000 in course fees over 3-4 months. Possibly the cheapest route to a globally portable scuba instructor career on the planet.",
         ],
