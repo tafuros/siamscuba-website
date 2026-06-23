@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/siam-logo.png";
+import logo from "@/assets/siam-logo.webp";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import SiteSearch from "@/components/SiteSearch";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -64,7 +64,7 @@ const Navbar = () => {
             }}
             className="flex items-center shrink-0"
           >
-            <img src={logo} alt="Siam Scuba" width={227} height={256} className="h-16 md:h-20 lg:h-24 w-auto" />
+            <img src={logo} alt="Siam Scuba" width={640} height={640} className="h-16 md:h-20 lg:h-24 w-auto" />
           </Link>
 
           {/* Desktop: all nav items in a single row to the right */}

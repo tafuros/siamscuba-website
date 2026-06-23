@@ -68,6 +68,31 @@
   .god-ray-sun { animation: none !important; }
 }
 
+/* Brand logo - large and fully opaque on the welcome step, then shrinks and
+   dims to a quiet watermark at the top once a language is chosen. Width animates
+   in px (clamp resolves to px) so the column reflows smoothly. */
+.gate-logo {
+  display: block;
+  margin: 0 auto;
+  height: auto;
+  width: clamp(160px, 44vw, 280px);
+  opacity: 1;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 22px rgba(120, 200, 255, 0.22));
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: width 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s ease;
+}
+.gate-logo--compact {
+  width: 72px;
+  opacity: 0.5;
+}
+@media (min-width: 640px) {
+  .gate-logo--compact { width: 90px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gate-logo { transition: none; }
+}
+
 /* Welcome headline - per-line downward fade: each line's letters are filled
    white at the top, dissolving into soft ocean-blue at the bottom. */
 .gate-title-line {

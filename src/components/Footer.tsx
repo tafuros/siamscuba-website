@@ -1,6 +1,6 @@
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "@/assets/siam-logo.png";
+import logo from "@/assets/siam-logo.webp";
 import padi from "@/assets/padi-logo.png";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -19,7 +19,7 @@ const Footer = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <img src={logo} alt="Siam Scuba" width={227} height={256} className="h-10 w-auto mb-3" />
+            <img src={logo} alt="Siam Scuba" width={640} height={640} className="h-12 w-auto mb-3" />
             <p className="text-sm text-background/50 mb-3">{t("footer_desc")}</p>
             <img src={padi} alt="PADI Dive Center" className="h-8 w-auto opacity-70" />
           </div>

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { Language } from "@/i18n/translations";
+import gateLogo from "@/assets/siam-logo.webp";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 import { gateContent, type WhereKey } from "./gateContent";
 import {
@@ -117,17 +118,23 @@ const EntryGate = () => {
       <div className="relative z-[1] flex min-h-[100dvh] w-full flex-col">
         {/* Top bar - Back from the language step onward, kept out of the content
             flow so it never overlaps the cards. */}
-        <div className="flex h-16 shrink-0 items-center px-5">
+        <div className="relative flex shrink-0 items-center justify-center px-5 pt-4 pb-1">
           {state.step !== "welcome" && (
             <button
               type="button"
               onClick={() => dispatch({ type: "BACK" })}
-              className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-white/15"
+              className="absolute top-4 ltr:left-5 rtl:right-5 flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-white/15"
             >
               <span aria-hidden="true">{isRTL ? "→" : "←"}</span>
               {copy.back}
             </button>
           )}
+          <img
+            src={gateLogo}
+            alt="Siam Scuba"
+            draggable={false}
+            className={`gate-logo${state.step === "welcome" ? "" : " gate-logo--compact"}`}
+          />
         </div>
         <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-10">
           <AnimatePresence mode="wait">

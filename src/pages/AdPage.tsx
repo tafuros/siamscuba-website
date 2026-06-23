@@ -2,7 +2,7 @@ import { useRef } from "react";
 import html2canvas from "html2canvas-pro";
 import adBackground from "@/assets/ad-background.jpg";
 import seaCreatures from "@/assets/sea-creatures-nobg.webp";
-import siamLogo from "@/assets/siam-logo.png";
+import siamLogo from "@/assets/siam-logo.webp";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import Seo from "@/components/Seo";
@@ -47,7 +47,7 @@ const AdPage = () => {
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center h-full px-8 py-6 text-center" dir="rtl">
           {/* Logo */}
-          <img src={siamLogo} alt="Siam Scuba" className="w-20 h-20 rounded-full mb-2 shadow-lg border-2 border-white/60" />
+          <img src={siamLogo} alt="Siam Scuba" className="w-24 h-24 object-contain mb-2 drop-shadow-lg" />
 
           {/* Title */}
           <h1

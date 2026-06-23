@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "@/assets/siam-logo.png";
+import logo from "@/assets/siam-logo.webp";
 
 interface LanderNavProps {
   homePath?: string;
@@ -11,7 +11,7 @@ const LanderNav = ({ homePath = "/" }: LanderNavProps) => {
       <div className="container mx-auto px-4">
         <div className="flex items-center py-3">
           <Link to={homePath} aria-label="Siam Scuba" className="flex items-center shrink-0">
-            <img src={logo} alt="Siam Scuba" width={227} height={256} className="h-14 md:h-16 w-auto" />
+            <img src={logo} alt="Siam Scuba" width={640} height={640} className="h-14 md:h-16 w-auto" />
           </Link>
         </div>
       </div>
