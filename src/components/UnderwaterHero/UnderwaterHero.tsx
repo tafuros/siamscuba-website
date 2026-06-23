@@ -45,7 +45,7 @@ const UnderwaterHero = ({ courseHeading }: UnderwaterHeroProps) => {
             alt="Green sea turtle gliding near the surface in clear tropical water at Koh Tao"
             className="absolute inset-0 w-full h-full object-cover object-top md:[object-position:35%_center]"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             decoding="async"
             width={1920}
             height={1126}

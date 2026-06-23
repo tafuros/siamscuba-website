@@ -181,7 +181,7 @@ const BlogPostPage = () => {
           src={post.coverImage}
           alt={post.title}
           className="w-full h-full object-cover"
-          fetchPriority="high"
+          fetchpriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
       </div>

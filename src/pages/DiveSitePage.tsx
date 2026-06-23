@@ -101,7 +101,7 @@ const DiveSitePage = () => {
       <main>
         {/* Hero */}
         <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
-          <img src={site.photo} alt={`${site.name} dive site, Koh Tao`} className="w-full h-full object-cover" fetchPriority="high" />
+          <img src={site.photo} alt={`${site.name} dive site, Koh Tao`} className="w-full h-full object-cover" fetchpriority="high" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         </div>
 
