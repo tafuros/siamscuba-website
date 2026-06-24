@@ -58,7 +58,7 @@ const UnderwaterHero = ({ courseHeading }: UnderwaterHeroProps) => {
           into the turtle photo above. On mobile this isn't needed because the
           mobile <source> already serves a pre-composited image. */}
       <img
-        src="/hero/desktop-extension.jpg"
+        src="/hero/koh-tao-underwater-hero-desktop.jpg"
         alt=""
         aria-hidden="true"
         className="hidden md:block absolute bottom-0 left-0 right-0 w-full h-[40%] object-cover z-[1] pointer-events-none [mask-image:linear-gradient(to_bottom,transparent_0%,black_40%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_40%)]"

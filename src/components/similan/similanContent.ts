@@ -32,9 +32,9 @@ export interface SimilanBoat {
 }
 
 export const SIMILAN_BOATS: SimilanBoat[] = [
-  { id: "raga", image: "/similan/raga.jpg" },
-  { id: "gentle", image: "/similan/gentle-giant.jpg" },
-  { id: "aqua", image: "/similan/aqua.png" },
+  { id: "raga", image: "/similan/liveaboard-raga.jpg" },
+  { id: "gentle", image: "/similan/liveaboard-gentle-giant.jpg" },
+  { id: "aqua", image: "/similan/liveaboard-aqua.png" },
 ];
 
 export interface SimilanSite {

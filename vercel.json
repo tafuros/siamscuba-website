@@ -8,7 +8,17 @@
     { "source": "/contact-us", "destination": "/", "permanent": true },
     { "source": "/zero-to-hero-dive-master-internship", "destination": "/divemaster", "permanent": true },
     { "source": "/nemo", "destination": "https://wa.me/66825068898?text=Hi%20Nemo!%20%F0%9F%A4%BF%0AI'd%20love%20to%20hear%20about%20your%20dive%20courses%20and%20trips", "permanent": false },
-    { "source": "/nemo-mizrahnik", "destination": "https://wa.me/66825068898?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%9E%D7%95%20%D7%9E%D7%94%20%D7%94%D7%9E%D7%A6%D7%91%3F%0A%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%9E%D7%96%D7%A8%D7%97%D7%A0%D7%99%D7%A7%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%90%D7%95%D7%9C%20%D7%A2%D7%9C%20%D7%A6%D7%9C%D7%99%D7%9C%D7%95%D7%AA", "permanent": false }
+    { "source": "/nemo-mizrahnik", "destination": "https://wa.me/66825068898?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%9E%D7%95%20%D7%9E%D7%94%20%D7%94%D7%9E%D7%A6%D7%91%3F%0A%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%9E%D7%96%D7%A8%D7%97%D7%A0%D7%99%D7%A7%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%90%D7%95%D7%9C%20%D7%A2%D7%9C%20%D7%A6%D7%9C%D7%99%D7%9C%D7%95%D7%AA", "permanent": false },
+    { "source": "/kokhav-rishon-cover.jpg", "destination": "/blog/open-water-course-koh-tao.jpg", "permanent": true },
+    { "source": "/freediving/discover.jpg", "destination": "/freediving/discover-freediving-koh-tao.jpg", "permanent": true },
+    { "source": "/freediving/beginner.jpg", "destination": "/freediving/beginner-freediving-course-koh-tao.jpg", "permanent": true },
+    { "source": "/freediving/advanced.jpg", "destination": "/freediving/advanced-freediving-course-koh-tao.jpg", "permanent": true },
+    { "source": "/freediving/instructor.jpg", "destination": "/freediving/freediving-instructor-course-koh-tao.jpg", "permanent": true },
+    { "source": "/freediving/zerohero.jpg", "destination": "/freediving/freediving-zero-to-hero-koh-tao.jpg", "permanent": true },
+    { "source": "/similan/raga.jpg", "destination": "/similan/liveaboard-raga.jpg", "permanent": true },
+    { "source": "/similan/gentle-giant.jpg", "destination": "/similan/liveaboard-gentle-giant.jpg", "permanent": true },
+    { "source": "/similan/aqua.png", "destination": "/similan/liveaboard-aqua.png", "permanent": true },
+    { "source": "/hero/desktop-extension.jpg", "destination": "/hero/koh-tao-underwater-hero-desktop.jpg", "permanent": true }
   ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }

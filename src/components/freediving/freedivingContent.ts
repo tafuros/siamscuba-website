@@ -15,11 +15,11 @@ export interface FreedivingCourse {
 }
 
 export const FREEDIVING_COURSES: FreedivingCourse[] = [
-  { id: "discover", price: 3800, image: "/freediving/discover.jpg" },
-  { id: "beginner", price: 8000, image: "/freediving/beginner.jpg", recommended: true },
-  { id: "advanced", price: 10500, image: "/freediving/advanced.jpg" },
-  { id: "instructor", price: 45000, image: "/freediving/instructor.jpg" },
-  { id: "zerohero", price: 68000, image: "/freediving/zerohero.jpg" },
+  { id: "discover", price: 3800, image: "/freediving/discover-freediving-koh-tao.jpg" },
+  { id: "beginner", price: 8000, image: "/freediving/beginner-freediving-course-koh-tao.jpg", recommended: true },
+  { id: "advanced", price: 10500, image: "/freediving/advanced-freediving-course-koh-tao.jpg" },
+  { id: "instructor", price: 45000, image: "/freediving/freediving-instructor-course-koh-tao.jpg" },
+  { id: "zerohero", price: 68000, image: "/freediving/freediving-zero-to-hero-koh-tao.jpg" },
 ];
 
 export interface FreedivingCourseText {
