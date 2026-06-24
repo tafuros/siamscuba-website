@@ -115,6 +115,22 @@ export interface LanderCopy {
   dayTimeline?: ScheduleStep[];
   /** Closing-section headline templated with the next boat date. */
   closingDateHeadline?: string;
+  /** Name + phone lead-capture form (Sail Rock lander only). */
+  leadForm?: LeadFormCopy;
+}
+
+/** Copy for the compact name + phone lead-capture form on the Sail Rock lander. */
+export interface LeadFormCopy {
+  title: string;
+  subtitle: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  phoneLabel: string;
+  phonePlaceholder: string;
+  submit: string;
+  sending: string;
+  success: string;
+  error: string;
 }
 
 // ---------- DSD (Discover Scuba Diving) ----------
@@ -1743,6 +1759,18 @@ const SAIL_ROCK_EN: LanderCopy = {
   closingDateHeadline: "The next boat leaves {date}",
   closingCtaSubhead:
     "Spots on the Sail Rock boat are limited and fill fast. Reserve yours now.",
+  leadForm: {
+    title: "Want us to hold a spot?",
+    subtitle: "Leave your name and phone - we'll message you about the next Sail Rock boat.",
+    nameLabel: "Name",
+    namePlaceholder: "Your name",
+    phoneLabel: "Phone / WhatsApp",
+    phonePlaceholder: "+66 81 234 5678",
+    submit: "Request a callback",
+    sending: "Sending...",
+    success: "Got it! We'll be in touch shortly about the next Sail Rock boat.",
+    error: "Something went wrong. Please try WhatsApp or try again.",
+  },
 };
 
 const SAIL_ROCK_ES: LanderCopy = {
@@ -1844,6 +1872,18 @@ const SAIL_ROCK_ES: LanderCopy = {
   closingDateHeadline: "El próximo barco sale el {date}",
   closingCtaSubhead:
     "Las plazas en el barco de Sail Rock son limitadas y se llenan rápido. Reserva la tuya ahora.",
+  leadForm: {
+    title: "¿Quieres que te guardemos plaza?",
+    subtitle: "Déjanos tu nombre y teléfono - te escribimos sobre el próximo barco a Sail Rock.",
+    nameLabel: "Nombre",
+    namePlaceholder: "Tu nombre",
+    phoneLabel: "Teléfono / WhatsApp",
+    phonePlaceholder: "+66 81 234 5678",
+    submit: "Pide que te llamemos",
+    sending: "Enviando...",
+    success: "¡Recibido! Te contactamos enseguida sobre el próximo barco a Sail Rock.",
+    error: "Algo salió mal. Prueba por WhatsApp o inténtalo de nuevo.",
+  },
 };
 
 const SAIL_ROCK_HE: LanderCopy = {
@@ -1945,6 +1985,18 @@ const SAIL_ROCK_HE: LanderCopy = {
   closingDateHeadline: "הסירה הבאה יוצאת ב-{date}",
   closingCtaSubhead:
     "המקומות על סירת סייל רוק מוגבלים ומתמלאים מהר. שריינו את שלכם עכשיו.",
+  leadForm: {
+    title: "רוצים שנשמור לכם מקום?",
+    subtitle: "השאירו שם וטלפון - נחזור אליכם לגבי הסירה הבאה לסייל רוק.",
+    nameLabel: "שם",
+    namePlaceholder: "השם שלכם",
+    phoneLabel: "טלפון / WhatsApp",
+    phonePlaceholder: "+66 81 234 5678",
+    submit: "בקשו שנחזור אליכם",
+    sending: "שולח...",
+    success: "קיבלנו! נהיה בקשר בקרוב לגבי הסירה הבאה לסייל רוק.",
+    error: "משהו השתבש. נסו ב-WhatsApp או שלחו שוב.",
+  },
 };
 
 export const LANDER_COPY: Record<Offer, Record<Lang, LanderCopy>> = {

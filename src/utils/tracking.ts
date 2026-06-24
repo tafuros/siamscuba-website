@@ -304,6 +304,10 @@ export interface ChatLeadInput {
   course?: string | null;
   dates?: string | null;
   message?: string | null;
+  // Where the lead came from. Defaults to "website-chat" (the chat console).
+  // Landers pass "lander" so DiveOS can attribute the source. DiveOS de-dupes
+  // by phone within 24h regardless of source.
+  source?: string | null;
   // Chat session id - lets DiveOS link this lead back to the conversation that
   // produced it (the same id is sent on the chat-log calls). See chat-console
   // contract.
@@ -325,7 +329,7 @@ export interface ChatLeadResult {
 export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResult> {
   const utm: UtmParams = getStoredUtm();
   const payload = {
-    source: "website-chat" as const,
+    source: input.source ?? "website-chat",
     phone: input.phone || null,
     name: input.name ?? null,
     lang: input.lang,
