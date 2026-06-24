@@ -233,6 +233,11 @@ const NemoChat = () => {
   const copy = COPY[language] ?? COPY.en;
   const isRtl = language === "he";
   const isKohTao = /koh-tao-diving/.test(location.pathname);
+  // On the Fun Dive booking page the form lives in a full-height DiveOS iframe
+  // whose Next/Back buttons sit bottom-right - exactly where the Nemo pill
+  // floats. Collapse Nemo to just the fish avatar (and suppress the teaser)
+  // there so it never overlaps the form's action buttons on mobile.
+  const isBooking = /fun-dive-booking/.test(location.pathname);
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -272,7 +277,7 @@ const NemoChat = () => {
   // Show a small, dismissible teaser after dwell time (or 50% scroll), once per
   // session. On koh-tao landers fire faster with koh-tao copy.
   useEffect(() => {
-    if (open) return;
+    if (open || isBooking) return;
     let dismissed = false;
     try {
       dismissed = sessionStorage.getItem(TEASER_DISMISSED_KEY) === "1";
@@ -300,7 +305,7 @@ const NemoChat = () => {
       window.clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [open, isKohTao]);
+  }, [open, isKohTao, isBooking]);
 
   const dismissTeaser = useCallback(() => {
     setShowTeaser(false);
@@ -456,10 +461,14 @@ const NemoChat = () => {
             <button
               onClick={() => openChat("pill")}
               aria-label={copy.pill}
-              className="flex items-center gap-2 rounded-full border border-border bg-white py-2 pl-2 pr-4 shadow-lg transition-shadow hover:shadow-xl"
+              className={
+                isBooking
+                  ? "rounded-full shadow-lg transition-shadow hover:shadow-xl"
+                  : "flex items-center gap-2 rounded-full border border-border bg-white py-2 pl-2 pr-4 shadow-lg transition-shadow hover:shadow-xl"
+              }
             >
-              <NemoAvatar size={40} />
-              <span className="text-sm font-bold text-ocean-deep">{copy.pill}</span>
+              <NemoAvatar size={isBooking ? 48 : 40} />
+              {!isBooking && <span className="text-sm font-bold text-ocean-deep">{copy.pill}</span>}
             </button>
           </motion.div>
         )}
