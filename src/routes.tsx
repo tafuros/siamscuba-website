@@ -47,11 +47,6 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/FunDiveBookingPage.tsx",
       },
       {
-        path: "booking-confirmed",
-        lazy: lazyDefault(() => import("./pages/BookingConfirmed")),
-        entry: "src/pages/BookingConfirmed.tsx",
-      },
-      {
         path: "blog",
         lazy: lazyDefault(() => import("./pages/BlogPage")),
         entry: "src/pages/BlogPage.tsx",

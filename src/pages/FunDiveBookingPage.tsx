@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
@@ -24,7 +24,12 @@ const ALLOWED_ORIGINS = [
 
 const FunDiveBookingPage = () => {
   const [loaded, setLoaded] = useState(false);
-  const navigate = useNavigate();
+  // Auto-sized iframe height. The DiveOS wizard posts SIAM_BOOKING_HEIGHT on
+  // every content-height change so we can grow the iframe to fit its content -
+  // this kills the iOS Safari inner-scroll momentum trap (tall content used to
+  // scroll INSIDE a fixed-height iframe). Null until the first message arrives;
+  // the iframe falls back to a viewport-based height so it is never collapsed.
+  const [reportedHeight, setReportedHeight] = useState<number | null>(null);
   const location = useLocation();
 
   // Forward booking context + attribution into the DiveOS wizard iframe.
@@ -89,6 +94,21 @@ const FunDiveBookingPage = () => {
       const data = event.data;
       if (!data || typeof data !== "object") return;
 
+      // AUTO-SIZE: the wizard reports its content height so we can grow the
+      // iframe to fit. Validate it's a finite positive number and clamp to a
+      // sane range (a bogus 0 / NaN / huge value must never collapse or blow up
+      // the layout). We update state inside this one stable listener; the
+      // listener itself never depends on reportedHeight (see effect deps).
+      // Contract: { type: "SIAM_BOOKING_HEIGHT", height: <px>, schemaVersion: 1 }
+      if (data.type === "SIAM_BOOKING_HEIGHT") {
+        const rawHeight = data.height;
+        if (typeof rawHeight === "number" && Number.isFinite(rawHeight) && rawHeight > 0) {
+          const clamped = Math.min(6000, Math.max(400, Math.round(rawHeight)));
+          setReportedHeight(clamped);
+        }
+        return;
+      }
+
       // CANONICAL CONTRACT (matches diveos customer-wizard emitter):
       // Lead:     { type: "SIAM_BOOKING_LEAD", product?, courseStartDate?, email?, phone?, schemaVersion: 1 }
       // Complete: { type: "SIAM_BOOKING_COMPLETE", bookingId?, value?, currency?, email?, phone?, lead?, schemaVersion: 1 }
@@ -134,7 +154,12 @@ const FunDiveBookingPage = () => {
 
       if (data.type === "SIAM_BOOKING_COMPLETE") {
         console.log("Booking complete:", data);
-        // Fire conversion before navigation so the ping is sent even if routing fails.
+        // Fire the conversion only. We intentionally do NOT navigate away: the
+        // DiveOS wizard renders its own completion screen inside the iframe
+        // (email-focused confirmation + in-wizard cert-photo upload), which is
+        // the single source of truth for the confirmation message. Navigating
+        // to a separate /booking-confirmed page produced a duplicate (and now
+        // obsolete "WhatsApp your photos") confirmation, so it was removed.
         const rawValue = data.value;
         const numericValue =
           typeof rawValue === "number"
@@ -177,13 +202,12 @@ const FunDiveBookingPage = () => {
             phone: ecPhone,
           });
         }
-        navigate("/booking-confirmed", { state: data.lead ?? null });
       }
     };
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-ocean-surface">
@@ -215,8 +239,20 @@ const FunDiveBookingPage = () => {
           <iframe
             src={iframeSrc}
             title="Siam Scuba Booking Form"
-            className="w-full border-0"
-            style={{ height: "calc(100vh - 100px)", minHeight: "600px" }}
+            className="block w-full border-0"
+            // Auto-size to the wizard's reported content height so the iframe
+            // never scrolls internally (the parent page scrolls instead - this
+            // avoids the iOS Safari momentum-scroll trap). Before the first
+            // SIAM_BOOKING_HEIGHT arrives - or if DiveOS hasn't deployed the
+            // emitter yet - fall back to a viewport-based height so the iframe
+            // is never collapsed.
+            style={{
+              height: reportedHeight ? `${reportedHeight}px` : "calc(100vh - 100px)",
+              minHeight: "600px",
+              width: "100%",
+              border: 0,
+            }}
+            scrolling="no"
             allow="camera;microphone"
             loading="eager"
             onLoad={() => setLoaded(true)}
