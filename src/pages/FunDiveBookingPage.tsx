@@ -247,8 +247,13 @@ const FunDiveBookingPage = () => {
             // emitter yet - fall back to a viewport-based height so the iframe
             // is never collapsed.
             style={{
+              // Once the wizard reports its true content height we honour it
+              // exactly (down to a 400px safety floor that matches the clamp),
+              // so short steps - e.g. the Accommodation yes/no - no longer leave
+              // a tall white gap below the card. Before the first message we
+              // fall back to a viewport height so the iframe is never collapsed.
               height: reportedHeight ? `${reportedHeight}px` : "calc(100vh - 100px)",
-              minHeight: "600px",
+              minHeight: reportedHeight ? "400px" : "600px",
               width: "100%",
               border: 0,
             }}
