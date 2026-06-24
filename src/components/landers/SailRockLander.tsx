@@ -11,6 +11,7 @@ import {
 import Footer from "@/components/Footer";
 import TripAdvisorSection from "@/components/TripAdvisorSection";
 import LanderNav from "@/components/landers/LanderNav";
+import SailRockLeadForm from "@/components/landers/SailRockLeadForm";
 import { LANDER_COPY, type Lang } from "@/lib/landerCopy";
 import { getUpcomingSailRockDates, toIsoDate } from "@/lib/sailRockDates";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
@@ -233,6 +234,18 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
           </ul>
         </div>
       </section>
+
+      {/* ── LEAD CAPTURE (name + phone → DiveOS) ── */}
+      {copy.leadForm && (
+        <section className="container mx-auto px-4 max-w-5xl py-6 md:py-8">
+          <SailRockLeadForm
+            copy={copy.leadForm}
+            lang={lang}
+            course={OFFER}
+            nextIso={nextIso}
+          />
+        </section>
+      )}
 
       {/* ── DAY ON THE BOAT ── */}
       {copy.dayTimeline && (
