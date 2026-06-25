@@ -72,18 +72,12 @@ const Footer = () => {
 
         <div className="mt-5 flex justify-center">
           <a
-            href="https://tafuros.com"
+            href="https://tafuros.com/?ref=siamscuba"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-background/40 transition-colors hover:text-primary"
+            className="text-xs text-background/40 transition-colors hover:text-primary"
             aria-label="Built by Tafuros"
           >
-            <span
-              className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[9px] font-semibold leading-none"
-              aria-hidden="true"
-            >
-              c
-            </span>
             Built by Tafuros
           </a>
         </div>
