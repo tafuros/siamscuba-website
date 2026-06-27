@@ -41,6 +41,8 @@ export interface DiveSite {
   body: string[];
   thingsToSee: ThingToSee[];
   gettingThere: string;
+  /** Full-day trip price per diver, e.g. "4,000 THB". Shown on the dive-site page when set. */
+  tripPrice?: string;
   /** Footnote shown when any seasonal sighting is listed (e.g. whale-shark months). */
   seasonNote?: string;
   /** Path under public/, e.g. "/dive-sites/sail-rock.webp". */
@@ -165,6 +167,7 @@ export const diveSites: DiveSite[] = [
     ],
     gettingThere:
       "Reached on a full-day trip from Koh Tao. The Chimney swim-through calls for confident buoyancy and is best kept for experienced divers.",
+    tripPrice: "4,000 THB",
     seasonNote: "Whale sharks are seasonal and never guaranteed.",
     photo: "/dive-sites/sail-rock.webp",
     mapSvg: sailRockMap,

@@ -1,4 +1,3 @@
-import padiOpenWaterCover from "@/assets/padi-open-water-cover.webp";
 
 export interface BlogSection {
   heading?: string;
@@ -189,7 +188,7 @@ export const blogPosts: BlogPost[] = [
     title: "Top Beaches & Viewpoints on Koh Tao",
     category: "Beaches",
     excerpt: "Crystal-clear bays, dramatic cliff viewpoints, and hidden coves — discover Koh Tao's most beautiful spots above water.",
-    coverImage: "/blog/koh-tao-beaches-viewpoints.webp",
+    coverImage: "/blog/tanote-bay-koh-tao.webp",
     date: "2026-03-01",
     sections: [
       {
@@ -273,7 +272,7 @@ export const blogPosts: BlogPost[] = [
     title: "Things to Do on Koh Tao Besides Diving",
     category: "Activities",
     excerpt: "Rock climbing, jungle hikes, Muay Thai, cooking classes — Koh Tao has way more than just diving.",
-    coverImage: new URL("../assets/koh-tao-real-viewpoint.webp", import.meta.url).href,
+    coverImage: "/blog/love-koh-tao-viewpoint.webp",
     date: "2026-02-28",
     sections: [
       {
@@ -626,7 +625,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "When Is the Best Time to Dive Koh Tao? Month-by-Month Conditions and Wildlife Guide",
     category: "Diving",
     excerpt: "Honest month-by-month guide to diving conditions on Koh Tao - water temp, visibility, sea state, weather, and which months actually have the worst diving.",
-    coverImage: "/blog/best-time-to-dive-koh-tao-reef.webp",
+    coverImage: "/blog/whale-shark-koh-tao.webp",
     date: "2026-05-09",
     sections: [
       {
@@ -709,7 +708,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "PADI Open Water Course on Koh Tao: The Complete 2026 Guide",
     category: "Diving",
     excerpt: "Comprehensive guide to the PADI Open Water Diver course on Koh Tao - what you actually learn, the 4 ocean dives, group size, gear, health requirements, and how to book your spot.",
-    coverImage: "/blog/padi-open-water-course-koh-tao.webp",
+    coverImage: "/blog/scuba-diver-coral-reef-koh-tao.webp",
     date: "2026-05-09",
     sections: [
       {
@@ -800,7 +799,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "What a PADI Divemaster Internship in Koh Tao Actually Looks Like (Week by Week)",
     category: "Diving",
     excerpt: "Detailed week-by-week walkthrough of the PADI Divemaster internship on Koh Tao - the training arc, the assist work, the lifestyle, and the realistic outcomes.",
-    coverImage: "/blog/divemaster-internship-koh-tao.webp",
+    coverImage: "/blog/school-of-fish-koh-tao.webp",
     date: "2026-05-09",
     sections: [
       {
@@ -880,7 +879,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "PADI vs SSI on Koh Tao — Which Course Should You Choose?",
     category: "Diving",
     excerpt: "Thinking about getting your dive certification on Koh Tao? Here's an honest comparison of PADI and SSI so you can make the right choice.",
-    coverImage: "/blog/padi-vs-ssi-koh-tao.webp",
+    coverImage: "/blog/coral-reef-koh-tao.webp",
     date: "2026-03-10",
     sections: [
       {
@@ -993,7 +992,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "PADI Open Water Course on Koh Tao — What to Expect",
     category: "Diving",
     excerpt: "Never dived before? Here's exactly what happens during your PADI Open Water Diver course on Koh Tao — day by day.",
-    coverImage: padiOpenWaterCover,
+    coverImage: "/blog/padi-5-star-idc-koh-tao.webp",
     date: "2026-03-20",
     sections: [
       {
@@ -1044,7 +1043,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "How to Become a PADI Divemaster on Koh Tao",
     category: "Diving",
     excerpt: "Thinking about turning your passion for diving into a career? Here's everything you need to know about the PADI Divemaster course on Koh Tao.",
-    coverImage: "/blog/padi-divemaster-koh-tao.webp",
+    coverImage: "/blog/bannerfish-coral-reef-koh-tao.webp",
     date: "2026-03-25",
     sections: [
       {
@@ -1094,7 +1093,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "Curso de Buceo Open Water en Koh Tao: La Guía Completa en Español",
     category: "Diving",
     excerpt: "Todo sobre el curso PADI Open Water en Koh Tao en español: qué aprenderás, las 4 inmersiones en mar abierto, el precio (12.000 THB), y cómo reservar sin depósito.",
-    coverImage: "/blog/curso-buceo-open-water-koh-tao.webp",
+    coverImage: "/blog/whale-shark-divers-koh-tao.webp",
     date: "2026-05-09",
     sections: [
       {
@@ -1173,7 +1172,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "PADI Divemaster en Koh Tao: La Guía Completa al Camino Profesional (en Español)",
     category: "Diving",
     excerpt: "El curso PADI Divemaster en Koh Tao explicado en español: estructura semana a semana, requisitos, precio (38.500 THB), y qué viene después con la carrera de buceo profesional.",
-    coverImage: "/blog/divemaster-koh-tao-espanol.webp",
+    coverImage: "/blog/yellowtail-fish-school-koh-tao.webp",
     date: "2026-05-09",
     sections: [
       {

@@ -160,6 +160,15 @@ const DiveSitePage = () => {
             <div className="mt-12 rounded-2xl border border-border bg-card p-6">
               <h2 className="font-display text-xl font-semibold text-foreground mb-3">Getting there</h2>
               <p className="text-foreground/75 leading-relaxed">{site.gettingThere}</p>
+              {site.tripPrice && (
+                <div className="mt-5 flex items-center justify-between gap-3 rounded-xl border border-primary/30 bg-primary/5 px-4 py-3">
+                  <span className="text-sm font-medium text-foreground/80">Full-day trip</span>
+                  <span className="text-xl font-bold text-foreground">
+                    {site.tripPrice}
+                    <span className="ml-1.5 text-xs font-normal text-muted-foreground">per diver</span>
+                  </span>
+                </div>
+              )}
             </div>
 
             {(hasSeasonal || site.seasonNote) && site.seasonNote && (
