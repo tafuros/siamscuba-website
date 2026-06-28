@@ -508,9 +508,9 @@ export const translations: Record<Language, TranslationStrings> = {
     courses_more_details: "פרטים נוספים",
 
     course_dsd: "צלילת היכרות",
-    course_ow: "צוללן מים פתוחים",
+    course_ow: "צוללן מים פתוחים (כוכב ראשון)",
     course_bubble: "באבל מייקר",
-    course_aow: "צוללן מים פתוחים מתקדם",
+    course_aow: "צוללן מים פתוחים מתקדם (כוכב שני)",
     course_rescue: "צוללן חילוץ",
     course_efr: "עזרה ראשונה (EFR)",
     course_dm: "דייבמאסטר",

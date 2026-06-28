@@ -11,8 +11,7 @@ import {
   initialGateState,
   resolveAction,
 } from "./gateMachine";
-import GateBubbles from "./GateBubbles";
-import GodRays from "./GodRays";
+import Seascape from "./Seascape";
 import WelcomeStep from "./WelcomeStep";
 import QuestionStep from "./QuestionStep";
 import "./gate.css";
@@ -89,7 +88,7 @@ const EntryGate = () => {
       className="fixed inset-0 z-[100] overflow-hidden"
       style={{
         background:
-          "radial-gradient(120% 100% at 50% 0%, #0a3a66 0%, #08315a 38%, #051f3a 72%, #03152a 100%)",
+          "radial-gradient(120% 85% at 86% -8%, rgba(255,250,232,0.5) 0%, rgba(176,224,255,0.28) 30%, transparent 60%), linear-gradient(to bottom, #1f73ab 0%, #2f8cc4 34%, #6fc0e8 54%, #2b87bf 60%, #15659c 74%, #0c4f80 100%)",
       }}
       role="dialog"
       aria-modal="true"
@@ -105,13 +104,12 @@ const EntryGate = () => {
         transition={{ duration: 0.9, ease: "easeOut" }}
         className="absolute inset-0"
       >
-        <GodRays reducedMotion={prefersReduced} />
-      <GateBubbles reducedMotion={prefersReduced} />
+        <Seascape reducedMotion={prefersReduced} />
 
-      {/* Soft vignette for depth */}
+      {/* Soft vignette for depth - light so the bright scene stays bright */}
       <div
         className="pointer-events-none absolute inset-0"
-        style={{ boxShadow: "inset 0 0 240px 60px rgba(0,0,0,0.55)" }}
+        style={{ boxShadow: "inset 0 0 150px 40px rgba(3,28,52,0.30)" }}
         aria-hidden="true"
       />
 
@@ -136,7 +134,7 @@ const EntryGate = () => {
             className={`gate-logo${state.step === "welcome" ? "" : " gate-logo--compact"}`}
           />
         </div>
-        <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-10">
+        <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-[32vh]">
           <AnimatePresence mode="wait">
           {state.step === "welcome" && (
             <motion.div

@@ -19,7 +19,7 @@ const WelcomeStep = ({ onPickLanguage, reducedMotion = false }: WelcomeStepProps
         initial={reducedMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: d(1.0) }}
-        className="mb-3 text-xs font-medium uppercase tracking-[0.35em] text-ocean-light/80"
+        className="mb-3 text-xs font-medium uppercase tracking-[0.34em] text-white/85"
       >
         Koh Tao · Thailand
       </motion.p>
@@ -28,10 +28,10 @@ const WelcomeStep = ({ onPickLanguage, reducedMotion = false }: WelcomeStepProps
         initial={reducedMotion ? false : { opacity: 0, y: 16, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 1.1, delay: d(1.2), ease: "easeOut" }}
-        className="font-display text-3xl font-bold leading-tight sm:text-5xl md:text-6xl"
+        className="gate-ink font-display text-4xl font-medium leading-[1.1] sm:text-5xl md:text-6xl"
       >
         {WELCOME_LINES.map((line) => (
-          <span key={line} className="gate-title-line">
+          <span key={line} className="block">
             {line}
           </span>
         ))}
@@ -41,7 +41,7 @@ const WelcomeStep = ({ onPickLanguage, reducedMotion = false }: WelcomeStepProps
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: d(1.9) }}
-        className="mt-4 font-display text-base italic text-ocean-surface/85 sm:text-lg"
+        className="mt-3 font-display text-base italic text-white/90 sm:text-lg"
       >
         {gateContent.en.tagline}
       </motion.p>
@@ -50,9 +50,9 @@ const WelcomeStep = ({ onPickLanguage, reducedMotion = false }: WelcomeStepProps
         initial={reducedMotion ? false : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: d(2.5) }}
-        className="mt-12 flex flex-col items-center gap-5"
+        className="mt-10 flex flex-col items-center gap-4"
       >
-        <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-white/55">
+        <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-white/75">
           {gateContent.en.chooseLanguage}
         </span>
         <FlagRow onPick={onPickLanguage} />

@@ -31,8 +31,8 @@ export interface GateCopy {
 }
 
 export const WELCOME_HEADLINE = "Welcome to Siam Scuba Dive Center";
-// Split into visual lines for the per-line headline fade.
-export const WELCOME_LINES = ["Welcome to Siam Scuba", "Dive Center"];
+// Split into visual lines for the headline.
+export const WELCOME_LINES = ["Welcome to", "Siam Scuba"];
 
 export const gateContent: Record<Language, GateCopy> = {
   en: {

@@ -23,7 +23,7 @@
           c.id = "gate-preload-cover";
           c.setAttribute("aria-hidden", "true");
           c.style.cssText =
-            "position:fixed;inset:0;z-index:99;background:radial-gradient(120% 100% at 50% 0%,#0a3a66 0%,#08315a 38%,#051f3a 72%,#03152a 100%)";
+            "position:fixed;inset:0;z-index:99;background:linear-gradient(to bottom,#1f73ab 0%,#2f8cc4 34%,#3a9bd2 60%,#15659c 80%,#0c4f80 100%)";
           (document.body || document.documentElement).appendChild(c);
           setTimeout(function () { var e = document.getElementById("gate-preload-cover"); if (e) e.remove(); }, 6000);
         } catch (e) {}
