@@ -168,3 +168,53 @@
     transform: none !important;
   }
 }
+
+/* ---- Over-under hero VIDEO background (and reduced-motion poster still) ----
+   The marketing-approved clip: real god-ray sky + the dive boat + a fish
+   school, persistent behind every gate step. Center-cover crop; the legibility
+   scrim sits OVER the media and UNDER the gate content. On narrow/portrait
+   screens cover crops the sides - object-position is biased slightly up so the
+   boat + waterline stay in frame. */
+.gate-photo-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+@media (max-width: 767px) {
+  .gate-photo-bg { object-position: 50% 38%; }
+}
+.gate-photo-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(8,22,40,.52) 0%,
+    rgba(8,22,40,.26) 20%,
+    rgba(8,28,50,.14) 38%,
+    rgba(8,28,50,.20) 54%,
+    rgba(8,22,40,.06) 72%,
+    rgba(8,22,40,0) 100%);
+}
+
+/* ---- gate typography: white -> light-blue ink; Playfair (LTR) / Heebo (RTL) ---- */
+.gate-ink {
+  background: linear-gradient(180deg,#ffffff 0%,#f3faff 24%,#d6ecfd 56%,#a9d2f1 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+  filter: drop-shadow(0 2px 12px rgba(0,30,60,.5));
+}
+[dir="rtl"] .gate-ink { font-family:'Heebo', sans-serif; font-weight:600; }
+
+/* ---- frosted brightness bump for the gate's question cards ---- */
+.gate-card {
+  border:1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 6px 20px rgba(0,30,60,.25);
+}
+.gate-card:hover, .gate-card:focus-visible {
+  border-color: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.16);
+}
+[dir="rtl"] .gate-card-label { font-family:'Heebo', sans-serif; }

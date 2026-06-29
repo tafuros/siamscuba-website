@@ -5,13 +5,18 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import type { Language } from "@/i18n/translations";
 import gateLogo from "@/assets/siam-logo.webp";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
+
+// Hero video lives in /public (streamed media, not Vite-imported) so the browser
+// can range-request it. Poster doubles as the reduced-motion still fallback.
+const GATE_HERO_POSTER = "/gate/gate-hero-poster.jpg";
+const GATE_HERO_WEBM = "/gate/gate-hero-1080.webm";
+const GATE_HERO_MP4 = "/gate/gate-hero-1080.mp4";
 import { gateContent, type WhereKey } from "./gateContent";
 import {
   gateReducer,
   initialGateState,
   resolveAction,
 } from "./gateMachine";
-import Seascape from "./Seascape";
 import WelcomeStep from "./WelcomeStep";
 import QuestionStep from "./QuestionStep";
 import "./gate.css";
@@ -94,17 +99,45 @@ const EntryGate = () => {
       aria-modal="true"
       aria-label="Siam Scuba welcome"
     >
-      {/* The solid dark background above appears instantly - it covers the live
-          homepage the moment the gate mounts. Only the SCENE below rises in over
-          it (no flash of the production site), which also reads as "something is
-          about to happen". */}
+      {/* The radial-gradient backdrop above appears instantly - it covers the
+          live homepage the moment the gate mounts and serves as the anti-flash
+          backdrop until the hero video's first frame paints. The SCENE below
+          fades in over it (no flash of the production site). */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.9, ease: "easeOut" }}
         className="absolute inset-0"
       >
-        <Seascape reducedMotion={prefersReduced} />
+        {/* Persistent over-under hero VIDEO background, mounted ONCE when the
+            gate opens and shared across all steps (welcome -> where -> branch);
+            it never unmounts or restarts between steps. Center-cover crop with a
+            legibility scrim over it and under the content. Reduced-motion users
+            get the poster still instead of the video. */}
+        <div className="absolute inset-0" aria-hidden="true">
+          {prefersReduced ? (
+            <img
+              src={GATE_HERO_POSTER}
+              alt=""
+              draggable={false}
+              className="gate-photo-bg"
+            />
+          ) : (
+            <video
+              className="gate-photo-bg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster={GATE_HERO_POSTER}
+            >
+              <source src={GATE_HERO_WEBM} type="video/webm" />
+              <source src={GATE_HERO_MP4} type="video/mp4" />
+            </video>
+          )}
+          <div className="gate-photo-scrim" />
+        </div>
 
       {/* Soft vignette for depth - light so the bright scene stays bright */}
       <div
