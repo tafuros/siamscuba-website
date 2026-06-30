@@ -24,6 +24,8 @@ export interface GateCopy {
   /** Tiny neutral prompt above the flag row. */
   chooseLanguage: string;
   back: string;
+  /** Unobtrusive "skip the intro and go straight to the site" affordance. */
+  skip: string;
   where: GateQuestion;
   kohTao: GateQuestion;
   kohPhangan: GateQuestion;
@@ -39,6 +41,7 @@ export const gateContent: Record<Language, GateCopy> = {
     tagline: "Your dive adventure starts here",
     chooseLanguage: "Choose your language",
     back: "Back",
+    skip: "Skip",
     where: {
       title: "Where do you want to dive?",
       options: [
@@ -73,6 +76,7 @@ export const gateContent: Record<Language, GateCopy> = {
     tagline: "הרפתקת הצלילה שלכם מתחילה כאן",
     chooseLanguage: "בחרו שפה",
     back: "חזרה",
+    skip: "דלג",
     where: {
       title: "איפה תרצו לצלול?",
       options: [
@@ -107,6 +111,7 @@ export const gateContent: Record<Language, GateCopy> = {
     tagline: "Tu aventura de buceo empieza aquí",
     chooseLanguage: "Elige tu idioma",
     back: "Atrás",
+    skip: "Omitir",
     where: {
       title: "¿Dónde quieres bucear?",
       options: [
@@ -141,6 +146,7 @@ export const gateContent: Record<Language, GateCopy> = {
     tagline: "Votre aventure sous-marine commence ici",
     chooseLanguage: "Choisissez votre langue",
     back: "Retour",
+    skip: "Passer",
     where: {
       title: "Où voulez-vous plonger ?",
       options: [

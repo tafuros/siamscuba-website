@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -7,10 +7,27 @@ import gateLogo from "@/assets/siam-logo.webp";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 
 // Hero video lives in /public (streamed media, not Vite-imported) so the browser
-// can range-request it. Poster doubles as the reduced-motion still fallback.
-const GATE_HERO_POSTER = "/gate/gate-hero-poster.jpg";
+// can range-request it. Poster (optimized, ~87KB) is the instant LCP paint and
+// doubles as the reduced-motion still fallback. Mobile gets the lighter 720p mp4
+// so iOS Safari (which can't use the webm) downloads ~0.7MB instead of ~1.75MB.
+const GATE_HERO_POSTER = "/gate/gate-poster.jpg";
 const GATE_HERO_WEBM = "/gate/gate-hero-1080.webm";
 const GATE_HERO_MP4 = "/gate/gate-hero-1080.mp4";
+const GATE_HERO_MP4_720 = "/gate/gate-hero-720.mp4";
+
+// Returning-visitor memory: once the gate is passed, skip the intro for this
+// long. Keep in sync with the same check in index.html's cover script so the
+// pre-paint cover and the gate agree on whether to show.
+const GATE_SEEN_KEY = "siam_gate_seen";
+const GATE_SEEN_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days
+const gateSeenRecently = () => {
+  try {
+    const t = Number(localStorage.getItem(GATE_SEEN_KEY));
+    return t > 0 && Date.now() - t < GATE_SEEN_TTL;
+  } catch {
+    return false;
+  }
+};
 import { gateContent, type WhereKey } from "./gateContent";
 import {
   gateReducer,
@@ -34,14 +51,79 @@ const EntryGate = () => {
   const prefersReduced = useReducedMotion() ?? false;
 
   const [active, setActive] = useState(false);
+  // While we navigate from the gate to a separate lander (freediving / similan /
+  // phuket), keep the gate backdrop up as a cover so the homepage ("/") never
+  // flashes behind it during the lazy-route load. Cleared once the new route is
+  // the active path (see the effect below).
+  const [leaving, setLeaving] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  // Only reveal the video once it is genuinely playing. Until then (and forever,
+  // if iOS blocks autoplay - e.g. Private Browsing or Low Power Mode) the poster
+  // still shows underneath, so the native play-button overlay is never visible.
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const [state, dispatch] = useReducer(gateReducer, initialGateState);
 
-  // Client-only reveal: show on the homepage unless explicitly skipped (?gate=0).
+  // Client-only reveal: show on the homepage unless explicitly skipped (?gate=0)
+  // or already seen recently (returning visitors skip the intro - see GATE_SEEN).
   useEffect(() => {
     if (pathname !== "/") return;
     const skip = new URLSearchParams(window.location.search).get("gate") === "0";
-    if (!skip) setActive(true);
+    if (skip || gateSeenRecently()) {
+      // The index.html cover only paints when it too sees no recent visit, so on
+      // a remembered skip there is normally nothing to remove - but clear it just
+      // in case (e.g. flag written this session after the cover painted).
+      document.getElementById("gate-preload-cover")?.remove();
+      return;
+    }
+    setActive(true);
   }, [pathname]);
+
+  // Once a "navigate" answer lands on its destination route, drop the cover.
+  // The router only changes pathname after the lazy chunk has resolved, so by
+  // this point the lander is mounted - fading the cover reveals it directly with
+  // no intermediate homepage frame.
+  useEffect(() => {
+    if (!leaving || pathname === "/") return;
+    const id = requestAnimationFrame(() => close());
+    return () => cancelAnimationFrame(id);
+  }, [leaving, pathname]);
+
+  // Prefetch the lazy lander chunks once the branch step is shown, so a navigate
+  // answer commits near-instantly (shorter cover, snappier transition).
+  useEffect(() => {
+    if (state.step !== "branch") return;
+    import("@/pages/SiamFreedivingPage").catch(() => {});
+    import("@/pages/SiamSimilansPage").catch(() => {});
+    import("@/pages/SiamPhuketPage").catch(() => {});
+  }, [state.step]);
+
+  // Drive inline autoplay ourselves and only reveal the video once it is truly
+  // playing. React sets the `muted` ATTRIBUTE but not the property, so iOS can
+  // treat the video as unmuted and block autoplay; force the property + call
+  // play(). If autoplay is allowed, "playing"/timeupdate flips videoPlaying and
+  // the video fades in over the matching poster. If it is blocked (iOS Private
+  // Browsing / Low Power Mode), videoPlaying stays false and the poster remains -
+  // so the native play-button overlay never shows.
+  useEffect(() => {
+    if (!active || prefersReduced) return;
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.playsInline = true;
+    const markPlaying = () => {
+      if (!v.paused && v.currentTime > 0) setVideoPlaying(true);
+    };
+    const tryPlay = () => v.play().then(markPlaying).catch(() => {});
+    tryPlay();
+    v.addEventListener("playing", markPlaying);
+    v.addEventListener("timeupdate", markPlaying);
+    v.addEventListener("loadedmetadata", tryPlay, { once: true });
+    return () => {
+      v.removeEventListener("playing", markPlaying);
+      v.removeEventListener("timeupdate", markPlaying);
+      v.removeEventListener("loadedmetadata", tryPlay);
+    };
+  }, [active, prefersReduced]);
 
   // Lock body scroll while the gate is up.
   useEffect(() => {
@@ -60,6 +142,12 @@ const EntryGate = () => {
   const close = () => {
     // Drop the pre-paint cover (index.html) so the homepage / destination shows.
     if (typeof document !== "undefined") document.getElementById("gate-preload-cover")?.remove();
+    // Remember the visit so the intro is skipped on return (see gateSeenRecently).
+    try {
+      localStorage.setItem(GATE_SEEN_KEY, String(Date.now()));
+    } catch {
+      /* private mode / blocked storage - just show the gate again next time */
+    }
     setActive(false);
   };
 
@@ -78,8 +166,16 @@ const EntryGate = () => {
     if (action.type === "whatsapp") {
       const url = buildWhatsAppLink({ topic: action.topic, lang: normalizeLang(language) });
       window.open(url, "_blank", "noopener,noreferrer");
-    } else if (action.type === "navigate") {
+      // Stays on "/"; close onto the homepage that was always beneath.
+      close();
+      return;
+    }
+    if (action.type === "navigate") {
+      // Keep the gate backdrop as a cover THROUGH the route change so "/" never
+      // flashes behind it; the leaving-effect closes it once the lander mounts.
+      setLeaving(true);
       navigate(action.path);
+      return;
     }
     // "enter-site" just closes the gate onto the homepage that was always beneath.
     close();
@@ -115,23 +211,31 @@ const EntryGate = () => {
             legibility scrim over it and under the content. Reduced-motion users
             get the poster still instead of the video. */}
         <div className="absolute inset-0" aria-hidden="true">
-          {prefersReduced ? (
-            <img
-              src={GATE_HERO_POSTER}
-              alt=""
-              draggable={false}
-              className="gate-photo-bg"
-            />
-          ) : (
+          {/* Poster still is always the base layer (instant, matches the pre-React
+              cover). The video fades in over it only once it is actually playing,
+              so iOS never shows a play-button overlay on a non-playing video. */}
+          <img
+            src={GATE_HERO_POSTER}
+            alt=""
+            draggable={false}
+            className="gate-photo-bg"
+          />
+          {!prefersReduced && (
             <video
+              ref={videoRef}
               className="gate-photo-bg"
+              style={{ opacity: videoPlaying ? 1 : 0, transition: "opacity 0.5s ease" }}
               autoPlay
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster={GATE_HERO_POSTER}
             >
+              {/* Small screens (most of our traffic): the lighter 720p mp4.
+                  Listed first so phones - incl. iOS Safari, which skips the
+                  webm - pick ~0.7MB instead of the 1.3-1.75MB desktop files. */}
+              <source src={GATE_HERO_MP4_720} type="video/mp4" media="(max-width: 767px)" />
               <source src={GATE_HERO_WEBM} type="video/webm" />
               <source src={GATE_HERO_MP4} type="video/mp4" />
             </video>
@@ -146,6 +250,9 @@ const EntryGate = () => {
         aria-hidden="true"
       />
 
+      {/* Hidden while leaving so only the video backdrop covers the route change
+          to a lander - the question cards don't linger over the new page. */}
+      {!leaving && (
       <div className="relative z-[1] flex min-h-[100dvh] w-full flex-col">
         {/* Top bar - Back from the language step onward, kept out of the content
             flow so it never overlaps the cards. */}
@@ -166,6 +273,16 @@ const EntryGate = () => {
             draggable={false}
             className={`gate-logo${state.step === "welcome" ? "" : " gate-logo--compact"}`}
           />
+          {/* Always-available escape hatch: intent-driven visitors (esp. from
+              ads) bypass the intro straight to the site instead of the quiz. */}
+          <button
+            type="button"
+            onClick={close}
+            className="absolute top-4 ltr:right-5 rtl:left-5 flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-md transition-colors hover:bg-white/15 hover:text-white"
+          >
+            {copy.skip}
+            <span aria-hidden="true">{isRTL ? "←" : "→"}</span>
+          </button>
         </div>
         <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-[32vh]">
           <AnimatePresence mode="wait">
@@ -219,6 +336,7 @@ const EntryGate = () => {
           </AnimatePresence>
         </div>
       </div>
+      )}
       </motion.div>
     </div>
   );

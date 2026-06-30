@@ -24,10 +24,8 @@ const FloatingBookNow = () => {
       style={{ y }}
       className="fixed right-4 top-24 z-40 md:hidden"
     >
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 rounded-full bg-primary/40 animate-ping"
-      />
+      {/* No perpetual ping - a constantly pulsing ring competes with the content
+          for attention. The solid FAB + ring is visible enough on its own. */}
       <Link
         to={BOOKING_PATH}
         onClick={handleClick}

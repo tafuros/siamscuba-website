@@ -7,7 +7,14 @@
          so page load / reload eases into the dark hero instead of flashing white.
          Inline + before the app stylesheet so it applies on the earliest paint. -->
     <meta name="theme-color" content="#0a335c" />
-    <style>html{background-color:#0a335c}</style>
+    <style>
+      html{background-color:#0a335c}
+      /* Pre-React gate cover poster framing - must match .gate-photo-bg in
+         seascape/gate styles exactly so the background does not jump when the
+         React gate mounts over it. */
+      #gate-preload-cover>img{object-position:50% 42%}
+      @media (max-width:767px){#gate-preload-cover>img{object-position:50% 38%}}
+    </style>
     <!-- Entry gate: paint an instant deep-ocean cover BEFORE the homepage body
          renders, so a hard reload eases straight into the gate instead of
          flashing the live site for a few frames. Gated by the build flag (no-op
@@ -16,17 +23,54 @@
     <script>
       (function () {
         try {
-          if ("%VITE_ENTRY_GATE%" !== "on") return;
-          if (location.pathname !== "/") return;
-          if (new URLSearchParams(location.search).get("gate") === "0") return;
+          // Will the entry gate show on this load? (build flag on + homepage +
+          // not ?gate=0 + not seen in the last 7 days). Stashed so the hero-image
+          // preload below can skip itself when the gate covers the hero -
+          // otherwise the 182KB hero competes with the gate poster/video for the
+          // first bandwidth on mobile. The "seen" window must match GATE_SEEN_TTL
+          // in EntryGate.tsx so the cover and the gate agree.
+          var seen = false;
+          try {
+            var t = Number(localStorage.getItem("siam_gate_seen"));
+            seen = t > 0 && Date.now() - t < 604800000; // 7 days
+          } catch (e) {}
+          window.__siamGate =
+            "%VITE_ENTRY_GATE%" === "on" &&
+            location.pathname === "/" &&
+            new URLSearchParams(location.search).get("gate") !== "0" &&
+            !seen;
+          if (!window.__siamGate) return;
           var c = document.createElement("div");
           c.id = "gate-preload-cover";
           c.setAttribute("aria-hidden", "true");
           c.style.cssText =
             "position:fixed;inset:0;z-index:99;background:linear-gradient(to bottom,#1f73ab 0%,#2f8cc4 34%,#3a9bd2 60%,#15659c 80%,#0c4f80 100%)";
+          // Paint the poster as a real <img> in the pre-React cover. The gate is a
+          // client-rendered overlay, so without this the first real frame (and the
+          // LCP) waits for the JS bundle + GTM to execute and React to mount - ~11s
+          // on throttled mobile. As an <img> in the instant cover it is the LCP and
+          // paints as soon as the (preloaded) poster decodes. The React gate mounts
+          // the same poster/video on top, so the handoff is seamless.
+          var im = document.createElement("img");
+          im.src = "/gate/gate-poster.jpg";
+          im.alt = "";
+          im.setAttribute("aria-hidden", "true");
+          im.setAttribute("fetchpriority", "high");
+          im.decoding = "async";
+          // object-position is set via the #gate-preload-cover stylesheet rule
+          // below so it can be responsive and exactly match the React gate's
+          // .gate-photo-bg framing (no vertical jump when React takes over).
+          im.style.cssText =
+            "position:absolute;inset:0;width:100%;height:100%;object-fit:cover";
+          c.appendChild(im);
           (document.body || document.documentElement).appendChild(c);
+          // Also preload it so the fetch starts before this script appends the img.
+          var p = document.createElement("link");
+          p.rel = "preload"; p.as = "image"; p.href = "/gate/gate-poster.jpg";
+          p.setAttribute("fetchpriority", "high");
+          document.head.appendChild(p);
           setTimeout(function () { var e = document.getElementById("gate-preload-cover"); if (e) e.remove(); }, 6000);
-        } catch (e) {}
+        } catch (e) { window.__siamGate = false; }
       })();
     </script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -54,25 +98,28 @@
 
     <!--
       LCP hero preload. Mirrors the <picture> sources in UnderwaterHero so the
-      browser starts fetching the responsive hero image before JS parses,
-      which moves LCP earlier on slower connections. Update if hero changes.
+      browser starts fetching the responsive hero image before JS parses, which
+      moves LCP earlier on slower connections. Injected via JS and SKIPPED when
+      the entry gate is showing (window.__siamGate) - the gate hides the hero, so
+      preloading it there only steals bandwidth from the gate poster/video.
+      Update the srcsets here if the hero changes.
     -->
-    <link
-      rel="preload"
-      as="image"
-      type="image/avif"
-      imagesrcset="/hero/turtle-768.avif 768w, /hero/turtle-1280.avif 1280w, /hero/turtle-1920.avif 1920w"
-      imagesizes="100vw"
-      fetchpriority="high"
-    />
-    <link
-      rel="preload"
-      as="image"
-      type="image/webp"
-      imagesrcset="/hero/turtle-768.webp 768w, /hero/turtle-1280.webp 1280w, /hero/turtle-1920.webp 1920w"
-      imagesizes="100vw"
-      fetchpriority="high"
-    />
+    <script>
+      (function () {
+        try {
+          if (window.__siamGate) return; // gate covers the hero; don't preload it
+          var add = function (type, srcset) {
+            var l = document.createElement("link");
+            l.rel = "preload"; l.as = "image"; l.type = type;
+            l.imageSrcset = srcset; l.imageSizes = "100vw";
+            l.setAttribute("fetchpriority", "high");
+            document.head.appendChild(l);
+          };
+          add("image/avif", "/hero/turtle-768.avif 768w, /hero/turtle-1280.avif 1280w, /hero/turtle-1920.avif 1920w");
+          add("image/webp", "/hero/turtle-768.webp 768w, /hero/turtle-1280.webp 1280w, /hero/turtle-1920.webp 1920w");
+        } catch (e) {}
+      })();
+    </script>
 
     <!--
       Per-page <title>, <meta name="description">, OG, Twitter, and canonical
