@@ -161,24 +161,41 @@
         'wait_for_update': 500
       });
     </script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TN3SM66Q');</script>
+    <!-- Google Tag Manager - container script load DEFERRED to first interaction
+         or a short timeout (see the loader near </head>), so the ~600KB of tag
+         JS stays off the initial main thread and lets the (client-rendered) page
+         paint sooner. dataLayer + Consent Mode above run immediately; queued
+         events fire the moment gtm.js arrives. -->
+    <script>
+      window.__loadGtm = function () {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = document.getElementsByTagName('script')[0],
+            j = document.createElement('script');
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TN3SM66Q';
+        f.parentNode.insertBefore(j, f);
+      };
+    </script>
     <!-- End Google Tag Manager -->
 
     <!-- Meta Pixel — consent revoked by default to mirror Google Consent Mode v2.
-         Auto-PageView is suppressed; CookieConsent fires it on grant. -->
+         Auto-PageView is suppressed; CookieConsent fires it on grant. The fbq
+         stub + consent + init run immediately and QUEUE; the fbevents.js library
+         load is DEFERRED to first interaction / timeout (loader near </head>),
+         then the queue flushes. -->
     <script>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window,document,'script');
       fbq('consent', 'revoke');
       fbq('init', '1422856882983398'); // Meta dataset "Siam Scuba Web"
+      window.__loadFbq = function () {
+        var t = document.createElement('script'); t.async = true;
+        t.src = 'https://connect.facebook.net/en_US/fbevents.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      };
     </script>
     <!-- End Meta Pixel (noscript fallback lives in <body> below) -->
 
@@ -355,11 +372,47 @@
       ]
     }
     </script>
-    <!-- Google Ads Tag -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18050429438"></script>
+    <!-- Google Ads Tag - gtag.js load DEFERRED (loader below). The gtag('js') /
+         gtag('config') calls run now and QUEUE in dataLayer; gtag.js processes
+         the queue the moment it loads, so the Ads config + enhanced conversions
+         are preserved. -->
     <script>
       gtag('js', new Date());
       gtag('config', 'AW-18050429438', { allow_enhanced_conversions: true });
+      window.__loadGtag = function () {
+        var g = document.createElement('script'); g.async = true;
+        g.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18050429438';
+        document.head.appendChild(g);
+      };
+    </script>
+
+    <!-- Deferred marketing-tag loader. Loads GTM, Google Ads gtag, and the Meta
+         Pixel library on the visitor's FIRST interaction (tap/scroll/key) or
+         after 3.5s, whichever comes first - keeping ~600KB of tag JS off the
+         initial main thread so the client-rendered page/gate paints sooner. All
+         consent defaults and gtag/fbq stubs above run immediately and queue
+         events, which flush as soon as the scripts arrive. Tracking is intact
+         for any visitor who stays or interacts; only an instant (<3.5s)
+         no-interaction bounce is not recorded. -->
+    <script>
+      (function () {
+        var fired = false;
+        var evs = ['pointerdown', 'keydown', 'touchstart', 'scroll', 'mousemove'];
+        var opts = { passive: true };
+        function cleanup() {
+          evs.forEach(function (e) { window.removeEventListener(e, fire, opts); });
+          clearTimeout(timer);
+        }
+        function fire() {
+          if (fired) return; fired = true;
+          cleanup();
+          if (window.__loadGtm) window.__loadGtm();
+          if (window.__loadGtag) window.__loadGtag();
+          if (window.__loadFbq) window.__loadFbq();
+        }
+        evs.forEach(function (e) { window.addEventListener(e, fire, opts); });
+        var timer = setTimeout(fire, 3500);
+      })();
     </script>
   </head>
 
