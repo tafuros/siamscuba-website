@@ -137,7 +137,14 @@ const EntryGate = () => {
 
   if (!active) return null;
 
-  const copy = gateContent[language];
+  // The welcome screen (pre-language-pick) is always English/LTR (see
+  // WelcomeStep). Keep the gate chrome - Skip button label + layout direction -
+  // English/LTR too until the visitor actually picks a language; otherwise a
+  // Hebrew-default browser renders "דלג" (and a mirrored bar) over the English
+  // welcome step. Once a language is chosen, later steps follow it (already correct).
+  const onWelcome = state.step === "welcome";
+  const copy = gateContent[onWelcome ? "en" : language];
+  const gateRTL = onWelcome ? false : isRTL;
 
   const close = () => {
     // Drop the pre-paint cover (index.html) so the homepage / destination shows.
@@ -185,7 +192,7 @@ const EntryGate = () => {
 
   return (
     <div
-      dir={isRTL ? "rtl" : "ltr"}
+      dir={gateRTL ? "rtl" : "ltr"}
       className="fixed inset-0 z-[100] overflow-hidden"
       style={{
         background:
@@ -263,7 +270,7 @@ const EntryGate = () => {
               onClick={() => dispatch({ type: "BACK" })}
               className="absolute top-4 ltr:left-5 rtl:right-5 flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-white/15"
             >
-              <span aria-hidden="true">{isRTL ? "→" : "←"}</span>
+              <span aria-hidden="true">{gateRTL ? "→" : "←"}</span>
               {copy.back}
             </button>
           )}
@@ -278,10 +285,10 @@ const EntryGate = () => {
           <button
             type="button"
             onClick={close}
-            className="absolute top-4 ltr:right-5 rtl:left-5 flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-md transition-colors hover:bg-white/15 hover:text-white"
+            className={`absolute top-4 ${gateRTL ? "left-5" : "right-5"} flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-md transition-colors hover:bg-white/15 hover:text-white`}
           >
             {copy.skip}
-            <span aria-hidden="true">{isRTL ? "←" : "→"}</span>
+            <span aria-hidden="true">{gateRTL ? "←" : "→"}</span>
           </button>
         </div>
         <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-[32vh]">
