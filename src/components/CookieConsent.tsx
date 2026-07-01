@@ -8,6 +8,7 @@ declare global {
     dataLayer: unknown[];
     gtag: (...args: unknown[]) => void;
     fbq?: (...args: unknown[]) => void;
+    clarity?: (...args: unknown[]) => void;
   }
 }
 
@@ -20,6 +21,10 @@ function updateConsent(granted: boolean) {
     analytics_storage: value,
   });
   window.fbq?.("consent", granted ? "grant" : "revoke");
+  // Microsoft Clarity consent, gated to the same analytics_storage state. Safe
+  // as a no-op if Clarity hasn't loaded yet (deferred); __loadClarity re-reads
+  // the stored consent on load so a returning granted visitor still records.
+  window.clarity?.("consent", granted);
   if (granted) {
     // Fire the suppressed PageView for the current route now that consent landed.
     window.fbq?.("track", "PageView");

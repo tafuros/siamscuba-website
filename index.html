@@ -182,6 +182,48 @@
     </script>
     <!-- End Meta Pixel (noscript fallback lives in <body> below) -->
 
+    <!-- Microsoft Clarity (heatmaps + session replay). Installed as a DIRECT
+         snippet - NOT via GTM (we have no admin on container GTM-TN3SM66Q). The
+         tag load is DEFERRED (fires on the visitor's first interaction or after
+         3.5s, whichever is first) so ~40KB of replay JS stays off the critical
+         path and does not regress the hard-won hero/gate LCP. Consent-gated to
+         mirror Google Consent Mode v2: Clarity starts at consent=denied and only
+         records once the visitor accepts cookies. __loadClarity re-reads the
+         stored consent on load so a returning visitor who already accepted starts
+         granted; CookieConsent.updateConsent() flips it live on accept/decline.
+         The deferred trigger is purely ADDITIVE - it only appends Clarity's own
+         script and never touches the app stylesheet or the eager GTM/Ads/Pixel
+         tags above (unlike the reverted whole-page tag-defer). -->
+    <script>
+      window.__loadClarity = function () {
+        if (window.__clarityLoaded) return;
+        window.__clarityLoaded = true;
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "xfh01pm237");
+        // Default denied; grant only if the visitor already accepted cookies.
+        var consented = false;
+        try { consented = localStorage.getItem("cookie_consent") === "granted"; } catch (e) {}
+        window.clarity && window.clarity("consent", consented);
+      };
+      (function () {
+        var fired = false;
+        var evs = ["pointerdown", "keydown", "touchstart", "scroll"];
+        var opts = { passive: true };
+        function fire() {
+          if (fired) return; fired = true;
+          evs.forEach(function (e) { window.removeEventListener(e, fire, opts); });
+          clearTimeout(timer);
+          if (window.__loadClarity) window.__loadClarity();
+        }
+        evs.forEach(function (e) { window.addEventListener(e, fire, opts); });
+        var timer = setTimeout(fire, 3500);
+      })();
+    </script>
+    <!-- End Microsoft Clarity -->
+
     <!-- Structured Data: LocalBusiness + Courses -->
     <script type="application/ld+json">
     {
