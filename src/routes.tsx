@@ -147,6 +147,11 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/landers/FunDiveHePage.tsx",
       },
       {
+        path: "fr/fun-dives",
+        lazy: lazyDefault(() => import("./pages/landers/FunDiveFrPage")),
+        entry: "src/pages/landers/FunDiveFrPage.tsx",
+      },
+      {
         path: "koh-tao-diving",
         lazy: lazyDefault(() => import("./pages/landers/KohTaoEnPage")),
         entry: "src/pages/landers/KohTaoEnPage.tsx",
