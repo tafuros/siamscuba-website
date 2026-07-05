@@ -238,6 +238,9 @@ const NemoChat = () => {
   // floats. Collapse Nemo to just the fish avatar (and suppress the teaser)
   // there so it never overlaps the form's action buttons on mobile.
   const isBooking = /fun-dive-booking/.test(location.pathname);
+  // The fun-dives lander has a sticky bottom booking bar on mobile (< md).
+  // Lift the pill above it there so neither covers the other.
+  const isFunDivesLander = /^\/(en\/|es\/|he\/|fr\/)?fun-dives(\/|$)/.test(location.pathname);
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -428,7 +431,9 @@ const NemoChat = () => {
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 10 }}
-            className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2"
+            className={`fixed right-4 z-50 flex flex-col items-end gap-2 ${
+              isFunDivesLander ? "bottom-24 md:bottom-4" : "bottom-4"
+            }`}
           >
             {/* Teaser bubble */}
             <AnimatePresence>

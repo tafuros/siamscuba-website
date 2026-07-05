@@ -1,31 +1,27 @@
 import Seo from "@/components/Seo";
-import CampaignLander from "@/components/landers/CampaignLander";
+import FunDiveLander from "@/components/landers/FunDiveLander";
 import {
-  LANDER_COPY,
-  buildLanderJsonLd,
-  landerHreflangAlternates,
-  landerUrl,
-} from "@/lib/landerCopy";
+  FUN_DIVE_COPY,
+  buildFunDiveJsonLd,
+  funDiveHreflangAlternates,
+  funDiveUrl,
+} from "@/lib/funDiveCopy";
 
-const OFFER = "fun-dive" as const;
 const LANG = "he" as const;
 
 const FunDiveHePage = () => {
-  const copy = LANDER_COPY[OFFER][LANG];
+  const copy = FUN_DIVE_COPY[LANG];
   return (
     <>
       <Seo
         title={copy.seoTitle}
         description={copy.seoDescription}
-        canonical={landerUrl(OFFER, LANG)}
-        hreflangAlternates={landerHreflangAlternates(OFFER)}
-        jsonLd={buildLanderJsonLd(OFFER, LANG)}
-        breadcrumbs={[
-          { name: "בית", path: "/" },
-          { name: "צלילות פאן" },
-        ]}
+        canonical={funDiveUrl(LANG)}
+        hreflangAlternates={funDiveHreflangAlternates()}
+        jsonLd={buildFunDiveJsonLd(LANG)}
+        breadcrumbs={[{ name: "בית", path: "/" }, { name: "צלילות כיף" }]}
       />
-      <CampaignLander offer={OFFER} lang={LANG} />
+      <FunDiveLander lang={LANG} />
     </>
   );
 };

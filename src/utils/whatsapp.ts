@@ -115,7 +115,7 @@ const PATH_TO_TOPIC: { test: RegExp; topic: WhatsAppTopic }[] = [
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?idc(\/|$)/i, topic: "idc" },
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?discover-scuba(-diving)?(\/|$)/i, topic: "dsd" },
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?scuba-review(\/|$)/i, topic: "refresher" },
-  { test: /^\/(en\/|es\/|he\/)?fun-dives?(\/|$)/i, topic: "fun-dive" },
+  { test: /^\/(en\/|es\/|he\/|fr\/)?fun-dives?(\/|$)/i, topic: "fun-dive" },
   { test: /^\/(en\/|es\/|he\/)?koh-tao-diving(\/|$)/i, topic: "koh-tao" },
 ];
 

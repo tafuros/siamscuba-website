@@ -7,9 +7,9 @@ import {
   funDiveUrl,
 } from "@/lib/funDiveCopy";
 
-const LANG = "es" as const;
+const LANG = "fr" as const;
 
-const FunDiveEsPage = () => {
+const FunDiveFrPage = () => {
   const copy = FUN_DIVE_COPY[LANG];
   return (
     <>
@@ -19,11 +19,11 @@ const FunDiveEsPage = () => {
         canonical={funDiveUrl(LANG)}
         hreflangAlternates={funDiveHreflangAlternates()}
         jsonLd={buildFunDiveJsonLd(LANG)}
-        breadcrumbs={[{ name: "Inicio", path: "/" }, { name: "Fun Dives" }]}
+        breadcrumbs={[{ name: "Accueil", path: "/" }, { name: "Plongées Fun" }]}
       />
       <FunDiveLander lang={LANG} />
     </>
   );
 };
 
-export default FunDiveEsPage;
+export default FunDiveFrPage;
