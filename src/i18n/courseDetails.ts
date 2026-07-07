@@ -86,7 +86,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { time: "16:00", description: "Activity ends - back on land as an underwater explorer! 🎯" },
       ],
       included: [
-        "2 dives at two different dive sites 🐠🐟",
+        "First ocean dive included - optional 2nd dive at another site for 1,000 THB 🐠🐟",
         "Personal instructor by your side the whole way 🫶",
         "Instructors in multiple languages: Hebrew, English, Spanish 🇮🇱🇬🇧🇪🇸",
         "Basic theory session - learn how diving works 🌊",
@@ -429,7 +429,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { time: "16:00", description: "הפעילות מסתיימת - חוזרים ליבשה כחוקרי מעמקים! 🎯" },
       ],
       included: [
-        "2 צלילות בשני אתרי צלילה שונים 🐠🐟",
+        "צלילה ראשונה כלולה במחיר - אפשר להוסיף צלילה שנייה באתר אחר ב-1,000 THB 🐠🐟",
         "מדריך אישי לצידכם לאורך כל הדרך 🫶",
         "מדריכים בכמה שפות: עברית, אנגלית, ספרדית 🇮🇱🇬🇧🇪🇸",
         "מפגש תיאוריה בסיסי - לומדים איך הצלילה עובדת 🌊",
@@ -772,7 +772,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { time: "16:00", description: "Termina la actividad: ¡de vuelta en tierra como explorador submarino! 🎯" },
       ],
       included: [
-        "2 inmersiones en dos puntos de buceo diferentes 🐠🐟",
+        "Primera inmersión incluida - 2.ª inmersión opcional en otro punto por 1,000 THB 🐠🐟",
         "Instructor personal a tu lado en todo momento 🫶",
         "Instructores en varios idiomas: hebreo, inglés, español 🇮🇱🇬🇧🇪🇸",
         "Sesión de teoría básica: aprende cómo funciona el buceo 🌊",
@@ -1115,7 +1115,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { time: "16h00", description: "Fin de l'activité : de retour sur terre en explorateur sous-marin ! 🎯" },
       ],
       included: [
-        "2 plongées sur deux sites différents 🐠🐟",
+        "Première plongée incluse - 2e plongée en option sur un autre site pour 1,000 THB 🐠🐟",
         "Un instructeur personnel à vos côtés tout du long 🫶",
         "Instructeurs en plusieurs langues : hébreu, anglais, espagnol 🇮🇱🇬🇧🇪🇸",
         "Séance de théorie de base : comprenez comment fonctionne la plongée 🌊",

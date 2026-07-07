@@ -153,8 +153,8 @@ const HebrewLanding = () => {
             </p>
             <ul className="space-y-2 mr-4 list-disc">
               <li>
-                <strong>Discover Scuba Diving (טעימה):</strong> 2,600 בת. יום אחד, ללא הסמכה. שתי צלילות ים
-                רגועות. מתאים אם אתם לא בטוחים שאתם רוצים לצלול בכלל.
+                <strong>Discover Scuba Diving (טעימה):</strong> 2,600 בת. יום אחד, ללא הסמכה. צלילת ים רגועה
+                אחת (צלילה שנייה בתוספת 1,000 בת). מתאים אם אתם לא בטוחים שאתם רוצים לצלול בכלל.
               </li>
               <li>
                 <strong>PADI Bubble Maker (לילדים מגיל 8):</strong> 3,800 בת. צלילה במים רדודים ומוגנים, בליווי מדריך PADI.
