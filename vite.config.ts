@@ -38,11 +38,15 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
           // Pass the shared lead token from the loaded env so the KB overlay +
           // conversation logging can reach DiveOS during local testing too.
           const leadToken = env.LEAD_CAPTURE_TOKEN || env.VITE_LEAD_TOKEN || undefined;
+          // Pass the Nemo brain token so the shared voice/facts/teach can be
+          // fetched during local testing (loadEnv does not populate process.env).
+          const nemoToken = env.NEMO_KB_TOKEN || undefined;
           const reply = await generateReply(
             body.messages ?? [],
             body.lang ?? "en",
             env.ANTHROPIC_API_KEY,
             leadToken,
+            nemoToken,
           );
           // Persist BEFORE responding (mirrors the prod handler): a post-response
           // await is unreliable on Vercel where the instance can freeze once the
