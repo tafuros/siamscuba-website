@@ -164,7 +164,7 @@ const SiamFreedivingPage = () => {
                   <div className="mt-5">
                     <div className="text-xs text-white/60">{copy.courses.from}</div>
                     <div className="font-display text-2xl font-bold drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
-                      {course.price.toLocaleString()} <span className="text-base font-medium">THB</span>
+                      {course.price.toLocaleString("en-US")} <span className="text-base font-medium">THB</span>
                     </div>
                     <div className="text-xs text-white/55">{copy.courses.perPerson}</div>
                   </div>

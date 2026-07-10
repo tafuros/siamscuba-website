@@ -164,7 +164,7 @@ const SiamPhuketPage = () => {
 
                   <div className="mt-5">
                     <div className="font-display text-2xl font-bold drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
-                      {product.price.toLocaleString()} <span className="text-base font-medium">THB</span>
+                      {product.price.toLocaleString("en-US")} <span className="text-base font-medium">THB</span>
                     </div>
                     <div className="text-xs text-white/55">{copy.products.perPerson}</div>
                   </div>

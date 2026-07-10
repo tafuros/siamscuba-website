@@ -1,10 +1,17 @@
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Sun, Sunset, Anchor, Clock, Ship, Camera, CheckCircle2, Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { format } from "date-fns";
-import { getUpcomingSailRockDates } from "@/lib/sailRockDates";
+import { useUpcomingSailRockDates } from "@/lib/sailRockDates";
+
+// Departure dates are UTC midnights - format them in UTC so the label is the
+// same calendar day for every viewer (and matches the SSG HTML - see
+// sailRockDates.ts hydration contract).
+const fmtSailRockDate = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+});
 
 /* ── Schedule row component ── */
 interface TimelineStep {
@@ -42,7 +49,7 @@ const IncludedItem = ({ text }: { text: string }) => (
 
 /* ── Main component ── */
 const DiveSchedule = () => {
-  const sailRockDates = useMemo(() => getUpcomingSailRockDates(4), []);
+  const sailRockDates = useUpcomingSailRockDates(4);
 
   const morningSchedule: TimelineStep[] = [
     { time: "06:00", label: "Meet at the dive center" },
@@ -196,7 +203,7 @@ const DiveSchedule = () => {
               key={d.toISOString()}
               className="text-xs bg-primary/10 text-primary font-medium px-2 py-0.5 rounded-full"
             >
-              {format(d, "MMM d")}
+              {fmtSailRockDate.format(d)}
             </span>
           ))}
         </div>

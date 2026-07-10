@@ -13,7 +13,7 @@ import TripAdvisorSection from "@/components/TripAdvisorSection";
 import LanderNav from "@/components/landers/LanderNav";
 import SailRockLeadForm from "@/components/landers/SailRockLeadForm";
 import { LANDER_COPY, type Lang } from "@/lib/landerCopy";
-import { getUpcomingSailRockDates, toIsoDate } from "@/lib/sailRockDates";
+import { useUpcomingSailRockDates, toIsoDate } from "@/lib/sailRockDates";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
 import sailRockHero from "@/assets/sail-rock-chimney.webp";
@@ -53,7 +53,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
     trackViewContent({ offer: OFFER, lang, value: 4000 });
   }, [lang]);
 
-  const departures = useMemo(() => getUpcomingSailRockDates(4), []);
+  const departures = useUpcomingSailRockDates(4);
   const nextDate = departures[0];
   const nextIso = nextDate ? toIsoDate(nextDate) : undefined;
 
@@ -65,12 +65,15 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
   const onWhatsApp = (location: string) => () =>
     trackWhatsAppClick({ location, url: whatsappHref });
 
+  // Departure dates are UTC midnights - format in UTC so every viewer (and the
+  // SSG HTML) shows the same calendar day; viewer-local formatting shifted the
+  // day for negative-UTC-offset visitors and broke hydration.
   const fmtLong = (d: Date) =>
-    new Intl.DateTimeFormat(locale, { weekday: "short", month: "short", day: "numeric" }).format(d);
+    new Intl.DateTimeFormat(locale, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" }).format(d);
   const fmtDay = (d: Date) =>
-    new Intl.DateTimeFormat(locale, { day: "2-digit" }).format(d);
+    new Intl.DateTimeFormat(locale, { day: "2-digit", timeZone: "UTC" }).format(d);
   const fmtMonth = (d: Date) =>
-    new Intl.DateTimeFormat(locale, { month: "short" }).format(d);
+    new Intl.DateTimeFormat(locale, { month: "short", timeZone: "UTC" }).format(d);
 
   const heroCtaHref = bookingHref(nextIso);
 

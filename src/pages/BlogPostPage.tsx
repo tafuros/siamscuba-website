@@ -208,10 +208,14 @@ const BlogPostPage = () => {
 
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                 <span>
+                  {/* timeZone UTC: post.date parses as UTC midnight - local
+                      formatting shifted it a day back for negative-UTC-offset
+                      viewers, mismatching the SSG HTML (hydration error). */}
                   {new Date(post.date).toLocaleDateString(dateLocaleMap[language] || "en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
+                    timeZone: "UTC",
                   })}
                 </span>
                 <span aria-hidden="true">·</span>

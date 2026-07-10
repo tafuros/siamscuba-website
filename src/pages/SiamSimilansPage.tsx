@@ -167,7 +167,7 @@ const SiamSimilansPage = () => {
                   <div className="mt-5">
                     <div className="text-xs text-white/60">{copy.trips.from}</div>
                     <div className="font-display text-2xl font-bold drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
-                      {trip.fromPrice.toLocaleString()} <span className="text-base font-medium">THB</span>
+                      {trip.fromPrice.toLocaleString("en-US")} <span className="text-base font-medium">THB</span>
                     </div>
                     <div className="text-xs text-white/55">{copy.trips.perDiver}</div>
                   </div>
