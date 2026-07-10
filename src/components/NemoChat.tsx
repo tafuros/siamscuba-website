@@ -3,13 +3,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Send, X, MessageCircle, Sailboat, GraduationCap } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { buildWhatsAppLink, normalizeLang, WHATSAPP_NUMBER } from "@/utils/whatsapp";
+import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 import {
   trackWhatsAppClick,
   trackChatOpen,
   trackChatEngaged,
   trackChatCtaClick,
-  submitChatLead,
 } from "@/utils/tracking";
 
 type Msg = { role: "user" | "assistant"; content: string };
@@ -26,17 +25,9 @@ type Copy = {
   ctaFunDive: string;
   ctaWhatsApp: string;
   ctaCourses: string;
-  // Lead capture
-  leadPrompt: string;
-  leadCta: string;
-  leadName: string;
-  leadPhone: string;
-  leadSubmit: string;
-  leadSuccess: string;
-  leadError: string;
-  // Prefill for the WhatsApp fallback link when the lead POST fails
-  // (customer voice - the visitor sends this to the team).
-  leadWaText: string;
+  // Registration nudge - straight to the regular booking form, no in-chat
+  // detail collection (Ben 2026-07-10: never ask for details in the chat).
+  registerCta: string;
   // Teaser bubble
   teaser: string;
   teaserKohTao: string;
@@ -59,14 +50,7 @@ const COPY: Record<string, Copy> = {
     ctaFunDive: "Book a fun dive",
     ctaWhatsApp: "WhatsApp",
     ctaCourses: "See courses",
-    leadPrompt: "Want us to hold a spot? Leave your name and WhatsApp number and the team will reach out.",
-    leadCta: "Leave your WhatsApp number",
-    leadName: "Your name",
-    leadPhone: "WhatsApp number (e.g. +66...)",
-    leadSubmit: "Send to the team",
-    leadSuccess: "Got it! 🐠 The team will message you on WhatsApp shortly.",
-    leadError: "Couldn't send that. Tap here to reach the team on WhatsApp instead 🫧",
-    leadWaText: "Hi Siam Scuba! I'd like to book a spot.",
+    registerCta: "Save your spot - booking form 🤿",
     teaser: "Diving in Koh Tao? I can help 🐠",
     teaserKohTao: "Diving Koh Tao? I can check dates 🤿",
   },
@@ -86,14 +70,7 @@ const COPY: Record<string, Copy> = {
     ctaFunDive: "הזמנת צלילה",
     ctaWhatsApp: "וואטסאפ",
     ctaCourses: "קורסים",
-    leadPrompt: "רוצים שנשמור לכם מקום? השאירו שם ומספר וואטסאפ והצוות יחזור אליכם.",
-    leadCta: "השאירו מספר וואטסאפ",
-    leadName: "השם שלכם",
-    leadPhone: "מספר וואטסאפ (למשל +972...)",
-    leadSubmit: "שליחה לצוות",
-    leadSuccess: "קיבלנו! 🐠 הצוות יכתוב לכם בוואטסאפ בקרוב.",
-    leadError: "לא הצלחנו לשלוח. לחצו כאן לכתוב לצוות בוואטסאפ 🫧",
-    leadWaText: "היי סיאם סקובה! אשמח לשמור מקום.",
+    registerCta: "לשמירת מקום - טופס הרשמה 🤿",
     teaser: "צוללים בקוטאו? אני אשמח לעזור 🐠",
     teaserKohTao: "צוללים בקוטאו? אני יכול לבדוק תאריכים 🤿",
   },
@@ -113,37 +90,18 @@ const COPY: Record<string, Copy> = {
     ctaFunDive: "Reserva una inmersión",
     ctaWhatsApp: "WhatsApp",
     ctaCourses: "Ver cursos",
-    leadPrompt: "¿Quieres que te guardemos una plaza? Deja tu nombre y número de WhatsApp y el equipo te escribirá.",
-    leadCta: "Deja tu número de WhatsApp",
-    leadName: "Tu nombre",
-    leadPhone: "Número de WhatsApp (p. ej. +34...)",
-    leadSubmit: "Enviar al equipo",
-    leadSuccess: "¡Listo! 🐠 El equipo te escribirá por WhatsApp en breve.",
-    leadError: "No se pudo enviar. Toca aquí para escribir al equipo por WhatsApp 🫧",
-    leadWaText: "¡Hola Siam Scuba! Me gustaría reservar una plaza.",
+    registerCta: "Reserva tu plaza - formulario 🤿",
     teaser: "¿Buceo en Koh Tao? Puedo ayudarte 🐠",
     teaserKohTao: "¿Buceo en Koh Tao? Puedo mirar fechas 🤿",
   },
 };
 
-// Per-route course hint for the lead payload, so a lead captured on a specific
-// lander carries the right course tag for DiveOS + offline-conversion upload.
-function courseFromPath(pathname: string): string | null {
-  const p = pathname.toLowerCase();
-  if (/open-water/.test(p)) return "open-water";
-  if (/discover-scuba/.test(p)) return "discover-scuba";
-  if (/fun-dive/.test(p)) return "fun-dive";
-  if (/sail-rock/.test(p)) return "sail-rock";
-  if (/koh-tao-diving/.test(p)) return "fun-dive";
-  return null;
-}
-
 const TEASER_DISMISSED_KEY = "nemo_teaser_dismissed";
 
-// One stable id per chat session, shared by the chat-log and the lead capture so
-// DiveOS can link a conversation to the lead it produced (see chat-console
-// contract). Persisted in sessionStorage so reopening the widget continues the
-// same conversation row rather than starting a new one.
+// One stable id per chat session, sent on the chat-log calls so DiveOS groups
+// the conversation into one row (see chat-console contract). Persisted in
+// sessionStorage so reopening the widget continues the same conversation row
+// rather than starting a new one.
 const CHAT_SESSION_KEY = "nemo_chat_session_id";
 // Conversation history + open-state survive page navigations and reloads
 // (the navbar and in-chat CTAs can trigger full page loads on this SSG site,
@@ -305,12 +263,6 @@ const NemoChat = () => {
   // Teaser bubble (dismissible, once per session).
   const [showTeaser, setShowTeaser] = useState(false);
 
-  // Lead-capture mini-form state.
-  const [showLeadForm, setShowLeadForm] = useState(false);
-  const [leadName, setLeadName] = useState("");
-  const [leadPhone, setLeadPhone] = useState("");
-  const [leadStatus, setLeadStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-
   // Fired-once guards.
   const engagedRef = useRef(false);
 
@@ -328,7 +280,7 @@ const NemoChat = () => {
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, loading, showLeadForm]);
+  }, [messages, loading]);
 
   // Restore any conversation/open-state from a prior page load. Runs once on
   // mount, after hydration - see the HYDRATION CONTRACT note on the state
@@ -338,7 +290,7 @@ const NemoChat = () => {
     if (storedOpen) setOpen(true);
     const storedMessages = loadStoredMessages();
     if (storedMessages.length) setMessages(storedMessages);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []);
 
   // Mirror conversation + open-state to sessionStorage so navigation (SPA or
@@ -456,9 +408,6 @@ const NemoChat = () => {
       setInput("");
       setLoading(true);
 
-      // Lead form is opened ONLY by explicit user click on the nudge button
-      // below - never auto-popped, so the conversation never feels pressured.
-
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
@@ -499,36 +448,6 @@ const NemoChat = () => {
     };
     window.setTimeout(tick, 150);
   }, [location.pathname, navigate]);
-
-  const lastUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content ?? null;
-
-  // If the lead POST fails, the error line becomes a WhatsApp link carrying the
-  // visitor's name + question - a failed lead never dead-ends.
-  const leadFallbackHref = (() => {
-    const details = [leadName.trim(), lastUserMessage].filter(Boolean).join(" - ");
-    const text = details ? `${copy.leadWaText} ${details}` : copy.leadWaText;
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-  })();
-
-  const submitLead = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (leadStatus === "sending") return;
-      const phone = leadPhone.trim();
-      if (!phone) return;
-      setLeadStatus("sending");
-      const result = await submitChatLead({
-        phone,
-        name: leadName.trim() || null,
-        lang: normalizeLang(language),
-        course: courseFromPath(location.pathname),
-        message: lastUserMessage,
-        sessionId: getSessionId(),
-      });
-      setLeadStatus(result.ok ? "sent" : "error");
-    },
-    [leadStatus, leadPhone, leadName, language, location.pathname, lastUserMessage, getSessionId],
-  );
 
   return (
     <div dir={isRtl ? "rtl" : "ltr"}>
@@ -692,67 +611,22 @@ const NemoChat = () => {
                 </div>
               )}
 
-              {/* Lead-capture mini-form (inline, in the message stream) */}
-              {showLeadForm && leadStatus !== "sent" && (
-                <div className="me-auto w-[92%] rounded-2xl rounded-bl-sm border border-coral/40 bg-coral/5 p-3 shadow-sm">
-                  <p className="mb-2 text-[12.5px] font-medium leading-snug text-ocean-deep">
-                    {copy.leadPrompt}
-                  </p>
-                  <form onSubmit={submitLead} className="space-y-2">
-                    <input
-                      value={leadName}
-                      onChange={(e) => setLeadName(e.target.value)}
-                      placeholder={copy.leadName}
-                      aria-label={copy.leadName}
-                      className="w-full rounded-lg border border-border bg-white px-2.5 py-2 text-[13px] text-foreground outline-none focus:border-coral"
-                    />
-                    <input
-                      value={leadPhone}
-                      onChange={(e) => setLeadPhone(e.target.value)}
-                      placeholder={copy.leadPhone}
-                      aria-label={copy.leadPhone}
-                      inputMode="tel"
-                      className="w-full rounded-lg border border-border bg-white px-2.5 py-2 text-[13px] text-foreground outline-none focus:border-coral"
-                    />
-                    {leadStatus === "error" && (
-                      <a
-                        href={leadFallbackHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() =>
-                          trackWhatsAppClick({ location: "nemo-lead-fallback", url: leadFallbackHref })
-                        }
-                        className="block text-[12px] font-medium text-red-600 underline underline-offset-2"
-                      >
-                        {copy.leadError}
-                      </a>
-                    )}
-                    <button
-                      type="submit"
-                      disabled={!leadPhone.trim() || leadStatus === "sending"}
-                      className="w-full rounded-lg bg-coral py-2 text-[13px] font-bold text-white transition-opacity disabled:opacity-40"
-                    >
-                      {copy.leadSubmit}
-                    </button>
-                  </form>
-                </div>
-              )}
-
-              {leadStatus === "sent" && (
-                <div className="me-auto max-w-[85%] rounded-2xl rounded-bl-sm border border-coral/40 bg-coral/5 px-3 py-2 text-[13px] font-medium text-ocean-deep shadow-sm">
-                  {copy.leadSuccess}
-                </div>
-              )}
             </div>
 
-            {/* Soft lead-capture nudge (shown before the form auto-opens) */}
-            {!showLeadForm && leadStatus === "idle" && messages.length > 0 && (
-              <button
-                onClick={() => setShowLeadForm(true)}
-                className="mx-3 mb-1 rounded-[13px] border border-dashed border-coral/50 py-2 text-[12.5px] font-semibold text-coral transition-colors hover:bg-coral/5"
+            {/* Registration nudge - straight to the regular booking form. No
+                in-chat detail collection. Panel closes so the visitor sees the
+                form; chat history persists for when they come back. */}
+            {messages.length > 0 && !isBooking && (
+              <Link
+                to="/fun-dive-booking"
+                onClick={() => {
+                  trackChatCtaClick("fun_dive");
+                  setOpen(false);
+                }}
+                className="mx-3 mb-1 rounded-[13px] border border-dashed border-coral/50 py-2 text-center text-[12.5px] font-semibold text-coral transition-colors hover:bg-coral/5"
               >
-                {copy.leadCta}
-              </button>
+                {copy.registerCta}
+              </Link>
             )}
 
             {/* input */}
