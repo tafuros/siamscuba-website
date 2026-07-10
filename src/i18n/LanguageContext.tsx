@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  startTransition,
   type ReactNode,
 } from "react";
 import { translations, rtlLanguages, type Language } from "./translations";
@@ -40,7 +41,14 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   useIsomorphicLayoutEffect(() => {
     if (!isBrowser) return;
     const saved = window.localStorage.getItem("siam-lang");
-    if (isKnownLanguage(saved) && saved !== "en") setLanguageState(saved);
+    // startTransition: this effect fires while lazy-route Suspense boundaries
+    // are still hydrating. A synchronous setState here forces those dehydrated
+    // boundaries to client-render and throws React #421 (3x per page for
+    // returning he visitors). Marking the adoption as a transition lets React
+    // finish hydrating first, then apply the language switch.
+    if (isKnownLanguage(saved) && saved !== "en") {
+      startTransition(() => setLanguageState(saved));
+    }
   }, []);
 
   const setLanguage = useCallback((lang: Language) => {
