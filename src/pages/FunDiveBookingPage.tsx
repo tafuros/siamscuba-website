@@ -24,6 +24,14 @@ const ALLOWED_ORIGINS = [
 
 const FunDiveBookingPage = () => {
   const [loaded, setLoaded] = useState(false);
+  // Mount the iframe only after hydration. Its src depends on the query string
+  // (?product/?date/utm_*/gclid), which the SSG HTML can't know - hydrating a
+  // param-carrying ad click against the static param-less iframe was a React
+  // prop mismatch, and React keeps the SERVER attribute on mismatch, silently
+  // stripping attribution off the wizard URL. First client render now matches
+  // the static HTML (spinner only), then the iframe mounts with the full src.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   // Auto-sized iframe height. The DiveOS wizard posts SIAM_BOOKING_HEIGHT on
   // every content-height change so we can grow the iframe to fit its content -
   // this kills the iOS Safari inner-scroll momentum trap (tall content used to
@@ -236,6 +244,7 @@ const FunDiveBookingPage = () => {
             </div>
           )}
 
+          {mounted && (
           <iframe
             src={iframeSrc}
             title="Siam Scuba Booking Form"
@@ -262,6 +271,9 @@ const FunDiveBookingPage = () => {
             loading="eager"
             onLoad={() => setLoaded(true)}
           />
+          )}
+          {/* Reserve the iframe's height pre-mount so the loader box doesn't collapse. */}
+          {!mounted && <div style={{ height: "calc(100vh - 100px)", minHeight: "600px" }} />}
         </div>
       </motion.main>
     </div>

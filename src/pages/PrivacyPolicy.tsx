@@ -12,7 +12,10 @@ const PrivacyPolicy = () => {
       <Navbar />
       <div className="container mx-auto px-4 pt-36 pb-16 max-w-3xl">
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-8">Privacy Policy</h1>
-        <p className="text-muted-foreground text-sm mb-8">Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
+        {/* Build-day stamp, not `new Date()`: render time differs between the SSG
+            build and the visit, which broke hydration - and "last updated" should
+            reflect when the site was built anyway. UTC keeps it viewer-independent. */}
+        <p className="text-muted-foreground text-sm mb-8">Last updated: {new Date(`${__SSG_BUILD_DATE__}T00:00:00Z`).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })}</p>
 
         <div className="prose prose-sm max-w-none text-foreground/80 space-y-6">
           <section>

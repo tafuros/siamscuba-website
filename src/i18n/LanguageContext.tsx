@@ -1,4 +1,12 @@
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  type ReactNode,
+} from "react";
 import { translations, rtlLanguages, type Language } from "./translations";
 
 interface LanguageContextType {
@@ -12,12 +20,28 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const isBrowser = typeof window !== "undefined";
 
+// Layout effect on the client (runs synchronously after hydration, before
+// paint), plain effect during SSG rendering (where useLayoutEffect warns).
+const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
+
+const isKnownLanguage = (value: string | null): value is Language =>
+  value !== null && value in translations;
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (!isBrowser) return "en";
+  // HYDRATION CONTRACT: the first client render MUST match the SSG HTML, which
+  // is always built with "en". Reading localStorage in the useState initializer
+  // made returning he/es/fr visitors render different text on first paint,
+  // which threw React #418/#425 and forced a full client re-render (#423) on
+  // EVERY page load. So: start at "en", then adopt the saved language in a
+  // layout effect - it runs before the browser paints, so there is no visible
+  // English flash, and hydration always succeeds.
+  const [language, setLanguageState] = useState<Language>("en");
+
+  useIsomorphicLayoutEffect(() => {
+    if (!isBrowser) return;
     const saved = window.localStorage.getItem("siam-lang");
-    return (saved as Language) || "en";
-  });
+    if (isKnownLanguage(saved) && saved !== "en") setLanguageState(saved);
+  }, []);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);

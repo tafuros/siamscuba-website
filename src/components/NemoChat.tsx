@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Send, X, MessageCircle, Sailboat, GraduationCap } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
+import { buildWhatsAppLink, normalizeLang, WHATSAPP_NUMBER } from "@/utils/whatsapp";
 import {
   trackWhatsAppClick,
   trackChatOpen,
@@ -34,6 +34,9 @@ type Copy = {
   leadSubmit: string;
   leadSuccess: string;
   leadError: string;
+  // Prefill for the WhatsApp fallback link when the lead POST fails
+  // (customer voice - the visitor sends this to the team).
+  leadWaText: string;
   // Teaser bubble
   teaser: string;
   teaserKohTao: string;
@@ -62,7 +65,8 @@ const COPY: Record<string, Copy> = {
     leadPhone: "WhatsApp number (e.g. +66...)",
     leadSubmit: "Send to the team",
     leadSuccess: "Got it! 🐠 The team will message you on WhatsApp shortly.",
-    leadError: "Couldn't send that. Please try WhatsApp instead 🫧",
+    leadError: "Couldn't send that. Tap here to reach the team on WhatsApp instead 🫧",
+    leadWaText: "Hi Siam Scuba! I'd like to book a spot.",
     teaser: "Diving in Koh Tao? I can help 🐠",
     teaserKohTao: "Diving Koh Tao? I can check dates 🤿",
   },
@@ -88,7 +92,8 @@ const COPY: Record<string, Copy> = {
     leadPhone: "מספר וואטסאפ (למשל +972...)",
     leadSubmit: "שליחה לצוות",
     leadSuccess: "קיבלנו! 🐠 הצוות יכתוב לכם בוואטסאפ בקרוב.",
-    leadError: "לא הצלחנו לשלוח. נסו דרך וואטסאפ 🫧",
+    leadError: "לא הצלחנו לשלוח. לחצו כאן לכתוב לצוות בוואטסאפ 🫧",
+    leadWaText: "היי סיאם סקובה! אשמח לשמור מקום.",
     teaser: "צוללים בקוטאו? אני אשמח לעזור 🐠",
     teaserKohTao: "צוללים בקוטאו? אני יכול לבדוק תאריכים 🤿",
   },
@@ -114,7 +119,8 @@ const COPY: Record<string, Copy> = {
     leadPhone: "Número de WhatsApp (p. ej. +34...)",
     leadSubmit: "Enviar al equipo",
     leadSuccess: "¡Listo! 🐠 El equipo te escribirá por WhatsApp en breve.",
-    leadError: "No se pudo enviar. Prueba por WhatsApp 🫧",
+    leadError: "No se pudo enviar. Toca aquí para escribir al equipo por WhatsApp 🫧",
+    leadWaText: "¡Hola Siam Scuba! Me gustaría reservar una plaza.",
     teaser: "¿Buceo en Koh Tao? Puedo ayudarte 🐠",
     teaserKohTao: "¿Buceo en Koh Tao? Puedo mirar fechas 🤿",
   },
@@ -139,6 +145,45 @@ const TEASER_DISMISSED_KEY = "nemo_teaser_dismissed";
 // contract). Persisted in sessionStorage so reopening the widget continues the
 // same conversation row rather than starting a new one.
 const CHAT_SESSION_KEY = "nemo_chat_session_id";
+// Conversation history + open-state survive page navigations and reloads
+// (the navbar and in-chat CTAs can trigger full page loads on this SSG site,
+// which used to wipe the chat and lose the visitor mid-conversation).
+const CHAT_MESSAGES_KEY = "nemo_chat_messages";
+const CHAT_OPEN_KEY = "nemo_chat_open";
+const MAX_STORED_MESSAGES = 40;
+
+const isBrowser = typeof window !== "undefined";
+// Layout effect on the client (runs before paint, after hydration commits),
+// plain effect during SSG rendering (where useLayoutEffect warns).
+const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
+
+function loadStoredOpen(): boolean {
+  try {
+    return sessionStorage.getItem(CHAT_OPEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function loadStoredMessages(): Msg[] {
+  try {
+    const raw = sessionStorage.getItem(CHAT_MESSAGES_KEY);
+    if (!raw) return [];
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter(
+        (m): m is Msg =>
+          !!m &&
+          typeof m === "object" &&
+          ((m as Msg).role === "user" || (m as Msg).role === "assistant") &&
+          typeof (m as Msg).content === "string",
+      )
+      .slice(-MAX_STORED_MESSAGES);
+  } catch {
+    return [];
+  }
+}
 function randomId(): string {
   try {
     return crypto.randomUUID();
@@ -242,6 +287,15 @@ const NemoChat = () => {
   // Lift the pill above it there so neither covers the other.
   const isFunDivesLander = /^\/(en\/|es\/|he\/|fr\/)?fun-dives(\/|$)/.test(location.pathname);
 
+  const navigate = useNavigate();
+  // HYDRATION CONTRACT: the SSG HTML always renders the widget closed with no
+  // messages. Reading sessionStorage in the useState initializer made a
+  // returning-mid-session visitor's first client render differ from that
+  // static HTML (open panel + message DOM the server never produced), which
+  // is exactly the #418/#425/#423 mismatch this branch fixes elsewhere. So:
+  // start closed/empty (matching SSG), then restore from sessionStorage in a
+  // layout effect - it runs before paint, so there's no flash, and it happens
+  // after hydration's comparison pass so it can never mismatch.
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -275,6 +329,34 @@ const NemoChat = () => {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading, showLeadForm]);
+
+  // Restore any conversation/open-state from a prior page load. Runs once on
+  // mount, after hydration - see the HYDRATION CONTRACT note on the state
+  // initializers above for why this can't happen in the initializers instead.
+  useIsomorphicLayoutEffect(() => {
+    const storedOpen = loadStoredOpen();
+    if (storedOpen) setOpen(true);
+    const storedMessages = loadStoredMessages();
+    if (storedMessages.length) setMessages(storedMessages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Mirror conversation + open-state to sessionStorage so navigation (SPA or
+  // full reload) never loses the visitor's chat.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(CHAT_MESSAGES_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
+    } catch {
+      /* storage unavailable - chat still works, just won't survive reloads */
+    }
+  }, [messages]);
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(CHAT_OPEN_KEY, open ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+  }, [open]);
 
   // ── Teaser bubble trigger ──────────────────────────────────────────────────
   // Show a small, dismissible teaser after dwell time (or 50% scroll), once per
@@ -400,7 +482,33 @@ const NemoChat = () => {
     [messages, loading, language, copy.error, getSessionId, location.pathname],
   );
 
+  // SPA navigation to the homepage courses section - no full page reload (a
+  // reload used to wipe the conversation). Closes the panel so the visitor
+  // actually sees the courses; history persists, so reopening continues.
+  const goToCourses = useCallback(() => {
+    trackChatCtaClick("courses");
+    setOpen(false);
+    if (location.pathname !== "/") navigate("/");
+    // The homepage sections mount lazily - retry until #courses exists. The
+    // initial delay also lets the body scroll-lock cleanup run first.
+    let tries = 0;
+    const tick = () => {
+      const el = document.getElementById("courses");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      else if (++tries < 20) window.setTimeout(tick, 100);
+    };
+    window.setTimeout(tick, 150);
+  }, [location.pathname, navigate]);
+
   const lastUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content ?? null;
+
+  // If the lead POST fails, the error line becomes a WhatsApp link carrying the
+  // visitor's name + question - a failed lead never dead-ends.
+  const leadFallbackHref = (() => {
+    const details = [leadName.trim(), lastUserMessage].filter(Boolean).join(" - ");
+    const text = details ? `${copy.leadWaText} ${details}` : copy.leadWaText;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  })();
 
   const submitLead = useCallback(
     async (e: React.FormEvent) => {
@@ -507,7 +615,12 @@ const NemoChat = () => {
             <div className="grid grid-cols-3 gap-1.5 border-b border-border bg-secondary/30 px-2.5 py-2">
               <Link
                 to="/fun-dive-booking"
-                onClick={() => trackChatCtaClick("fun_dive")}
+                onClick={() => {
+                  trackChatCtaClick("fun_dive");
+                  // Close so the visitor sees the booking page - history is
+                  // persisted, so reopening the chat continues the conversation.
+                  setOpen(false);
+                }}
                 className="flex flex-col items-center gap-1 rounded-lg border border-border bg-white px-1 py-1.5 text-center text-[11px] font-semibold leading-tight text-ocean-deep transition-colors hover:border-coral hover:bg-coral/5"
               >
                 <Sailboat className="h-4 w-4 text-coral" />
@@ -526,14 +639,14 @@ const NemoChat = () => {
                 <MessageCircle className="h-4 w-4 text-[#25D366]" />
                 {copy.ctaWhatsApp}
               </a>
-              <a
-                href="/#courses"
-                onClick={() => trackChatCtaClick("courses")}
+              <button
+                type="button"
+                onClick={goToCourses}
                 className="flex flex-col items-center gap-1 rounded-lg border border-border bg-white px-1 py-1.5 text-center text-[11px] font-semibold leading-tight text-ocean-deep transition-colors hover:border-coral hover:bg-coral/5"
               >
                 <GraduationCap className="h-4 w-4 text-coral" />
                 {copy.ctaCourses}
-              </a>
+              </button>
             </div>
 
             {/* body */}
@@ -602,7 +715,17 @@ const NemoChat = () => {
                       className="w-full rounded-lg border border-border bg-white px-2.5 py-2 text-[13px] text-foreground outline-none focus:border-coral"
                     />
                     {leadStatus === "error" && (
-                      <p className="text-[12px] font-medium text-red-600">{copy.leadError}</p>
+                      <a
+                        href={leadFallbackHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() =>
+                          trackWhatsAppClick({ location: "nemo-lead-fallback", url: leadFallbackHref })
+                        }
+                        className="block text-[12px] font-medium text-red-600 underline underline-offset-2"
+                      >
+                        {copy.leadError}
+                      </a>
                     )}
                     <button
                       type="submit"

@@ -118,6 +118,13 @@ function googleAdsPulseDevApi(env: Record<string, string>): Plugin {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
+  // Build-day stamp (UTC yyyy-mm-dd), baked identically into the SSG bundle and
+  // the client bundle. Time-rolling UI (Sail Rock departures) renders its FIRST
+  // pass from this stamp so client hydration always matches the SSG HTML, then
+  // refreshes to the real "today" in an effect. See src/lib/sailRockDates.ts.
+  define: {
+    __SSG_BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
+  },
   server: {
     host: "::",
     port: 8080,
