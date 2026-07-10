@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
+import WhatsAppFastPathStrip from "@/components/WhatsAppFastPathStrip";
 import {
   trackGenerateLead,
   trackPurchase,
@@ -39,6 +40,27 @@ const FunDiveBookingPage = () => {
   // the iframe falls back to a viewport-based height so it is never collapsed.
   const [reportedHeight, setReportedHeight] = useState<number | null>(null);
   const location = useLocation();
+
+  // Trip context for the WhatsApp fast-path strip's prefill message. Starts
+  // EMPTY so the first client render matches the SSG HTML (the query string is
+  // unknown at prerender time - same hydration rule as the iframe src above),
+  // then enriches in effects: first from the URL's product/date params, then
+  // from the wizard's SIAM_BOOKING_LEAD postMessages as the visitor progresses.
+  const [wizardContext, setWizardContext] = useState<{
+    product?: string;
+    date?: string;
+  }>({});
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const product = params.get("product") ?? undefined;
+    const date = params.get("date") ?? undefined;
+    if (product || date) {
+      setWizardContext((prev) => ({
+        product: product ?? prev.product,
+        date: date ?? prev.date,
+      }));
+    }
+  }, [location.search]);
 
   // Forward booking context + attribution into the DiveOS wizard iframe.
   // - `product` + `date` let the wizard pre-select the trip & departure
@@ -143,14 +165,23 @@ const FunDiveBookingPage = () => {
 
       if (data.type === "SIAM_BOOKING_LEAD") {
         console.log("Booking lead:", data);
-        if (leadFiredRef.current) return;
-        leadFiredRef.current = true;
         const product =
           typeof data.product === "string" ? data.product : undefined;
         const diveDate =
           typeof data.courseStartDate === "string"
             ? data.courseStartDate
             : undefined;
+        // Keep the WhatsApp fast-path prefill in sync with the wizard even on
+        // re-emits (a customer editing their trip mid-wizard re-fires LEAD;
+        // only the CONVERSION below is once-per-session).
+        if (product || diveDate) {
+          setWizardContext((prev) => ({
+            product: product ?? prev.product,
+            date: diveDate ?? prev.date,
+          }));
+        }
+        if (leadFiredRef.current) return;
+        leadFiredRef.current = true;
         trackGenerateLead({
           form_name: "booking_wizard",
           dive_date: diveDate,
@@ -236,6 +267,13 @@ const FunDiveBookingPage = () => {
           <ArrowLeft className="h-4 w-4" />
           Back to home
         </Link>
+
+        {/* WhatsApp fast path - above the wizard, visible without scrolling on
+            mobile. Secondary visual weight: a fast path, not a bail-out. */}
+        <WhatsAppFastPathStrip
+          product={wizardContext.product}
+          date={wizardContext.date}
+        />
 
         <div className="relative w-full rounded-xl overflow-hidden border border-border/50 shadow-lg bg-card">
           {!loaded && (
