@@ -255,6 +255,12 @@ type TranslationStrings = {
   cd_requirements: string;
   cd_payment: string;
   cd_price: string;
+
+  // WhatsApp fast-path strip (booking page). VISIBLE copy only - the wa.me
+  // prefill message stays English in all languages (Nemo mid-form matching).
+  wa_strip_headline: string;
+  wa_strip_subline: string;
+  wa_strip_chat: string;
 };
 
 export const translations: Record<Language, TranslationStrings> = {
@@ -476,6 +482,10 @@ export const translations: Record<Language, TranslationStrings> = {
     cd_requirements: "Requirements",
     cd_payment: "Payment & Terms",
     cd_price: "Price",
+
+    wa_strip_headline: "Have questions?",
+    wa_strip_subline: "Send us a WhatsApp message - instant reply",
+    wa_strip_chat: "Chat",
   },
   he: {
     nav_courses: "קורסים",
@@ -695,6 +705,10 @@ export const translations: Record<Language, TranslationStrings> = {
     cd_requirements: "דרישות קדם",
     cd_payment: "תשלום ותנאים",
     cd_price: "מחיר",
+
+    wa_strip_headline: "יש לך שאלות?",
+    wa_strip_subline: "שלח לנו הודעה בווטסאפ",
+    wa_strip_chat: "צ'אט",
   },
   es: {
     nav_courses: "Cursos",
@@ -914,6 +928,10 @@ export const translations: Record<Language, TranslationStrings> = {
     cd_requirements: "Requisitos",
     cd_payment: "Pago y condiciones",
     cd_price: "Precio",
+
+    wa_strip_headline: "¿Tienes preguntas?",
+    wa_strip_subline: "Escríbenos por WhatsApp - respuesta al instante",
+    wa_strip_chat: "Chat",
   },
   fr: {
     nav_courses: "Cours",
@@ -1133,5 +1151,9 @@ export const translations: Record<Language, TranslationStrings> = {
     cd_requirements: "Prérequis",
     cd_payment: "Paiement et conditions",
     cd_price: "Prix",
+
+    wa_strip_headline: "Des questions ?",
+    wa_strip_subline: "Écrivez-nous sur WhatsApp - réponse immédiate",
+    wa_strip_chat: "Chat",
   },
 };
