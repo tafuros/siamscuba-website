@@ -12,6 +12,7 @@ declare global {
     gtag?: (...args: unknown[]) => void;
     fbq?: (...args: unknown[]) => void;
     dataLayer?: unknown[];
+    clarity?: (...args: unknown[]) => void;
   }
 }
 
@@ -114,6 +115,48 @@ export function trackWhatsAppClick(params: WhatsAppClickParams): void {
     });
   }
   fbq("track", "Contact", { location: params.location });
+}
+
+export interface WhatsAppFastPathClickParams {
+  /** Wizard product code when known (e.g. "SAILROCK"). */
+  product?: string;
+  /** Selected dive date when known (ISO). */
+  date?: string;
+  /** The wa.me href that was clicked (carries the prefill). */
+  url?: string;
+}
+
+/**
+ * Fired when the visitor taps the WhatsApp fast-path strip on the booking
+ * page (funnel-fix spec Part 2). A SIGNAL, not a conversion - no Google Ads
+ * send_to, so it never inflates conversion counts. Fires to:
+ * - GTM/GA4 via a plain dataLayer push (GTM custom-event triggers key on it)
+ * - gtag (GA4 event stream)
+ * - Microsoft Clarity custom event (filterable in recordings/heatmaps)
+ * - Meta as a custom event (house rule: GA and Meta stay paired)
+ */
+export function trackWhatsAppFastPathClick(
+  params: WhatsAppFastPathClickParams,
+): void {
+  if (typeof window !== "undefined") {
+    window.dataLayer?.push({
+      event: "whatsapp_fastpath_click",
+      product: params.product,
+      dive_date: params.date,
+      url: params.url,
+    });
+    if (typeof window.clarity === "function") {
+      window.clarity("event", "whatsapp_fastpath_click");
+    }
+  }
+  gtag("event", "whatsapp_fastpath_click", {
+    event_category: "engagement",
+    event_label: "booking_page_strip",
+    product: params.product,
+    dive_date: params.date,
+    ...utmFields(),
+  });
+  fbq("trackCustom", "WhatsAppFastPathClick", { product: params.product });
 }
 
 export interface GenerateLeadParams {
