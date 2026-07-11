@@ -8,6 +8,7 @@ import {
   trackGenerateLead,
   trackPurchase,
   trackBookingPayLater,
+  trackBookingStep,
 } from "@/utils/tracking";
 import { getStoredUtm, getStoredGclid } from "@/utils/utm";
 
@@ -113,6 +114,10 @@ const FunDiveBookingPage = () => {
   // edits their contact details mid-wizard (re-emitting SIAM_BOOKING_LEAD)
   // doesn't double-count in Google Ads / Meta.
   const leadFiredRef = useRef(false);
+  // Report each wizard step to analytics once per page session. A visitor
+  // bouncing back and forth (5 -> 4 -> 5) must not double-count step 5 in the
+  // funnel; only the FIRST arrival at each step index is tracked.
+  const reportedStepsRef = useRef<Set<number>>(new Set());
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -140,9 +145,37 @@ const FunDiveBookingPage = () => {
       }
 
       // CANONICAL CONTRACT (matches diveos customer-wizard emitter):
+      // Step:     { type: "SIAM_BOOKING_STEP", step: 1-7, direction: "forward"|"back", schemaVersion: 1 }
       // Lead:     { type: "SIAM_BOOKING_LEAD", product?, courseStartDate?, email?, phone?, schemaVersion: 1 }
       // Complete: { type: "SIAM_BOOKING_COMPLETE", bookingId?, value?, currency?, email?, phone?, lead?, schemaVersion: 1 }
       // All conversion fields are read from the TOP LEVEL of the message.
+      //
+      // STEP SEMANTICS - trip-first wizard order (DiveOS deploy 2026-07-08):
+      // 1 trip, 2 contact, 3 personal, 4 medical, 5 waiver, 6 accommodation,
+      // 7 review (deposit). SIAM_BOOKING_LEAD fires at step 2 (contact) - NOT
+      // at the old "step 1 personal details" - and carries product +
+      // courseStartDate, which feed the WhatsApp strip context below.
+
+      // FUNNEL STEP: forward each step change to analytics with a readable
+      // step NAME (dashboards must never see a bare number - the numbering
+      // changed once already). Validate the index and dedupe per session.
+      if (data.type === "SIAM_BOOKING_STEP") {
+        const rawStep = data.step;
+        if (
+          typeof rawStep === "number" &&
+          Number.isInteger(rawStep) &&
+          rawStep >= 1 &&
+          rawStep <= 7 &&
+          !reportedStepsRef.current.has(rawStep)
+        ) {
+          reportedStepsRef.current.add(rawStep);
+          trackBookingStep({
+            step: rawStep,
+            direction: data.direction === "back" ? "back" : "forward",
+          });
+        }
+        return;
+      }
       //
       // ENHANCED CONVERSIONS: email + phone are passed through to the Google Ads
       // conversion (gtag user_data) so Google can hash + match the conversion to
