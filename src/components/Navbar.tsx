@@ -55,12 +55,15 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between w-full py-2 gap-3">
-          {/* Logo (far left) — navigates home */}
+          {/* Logo (far left) — from another page it navigates home; on the
+              homepage it reopens the welcome gate (and scrolls to top), so the
+              brand mark doubles as the way back to the "front door". */}
           <Link
             to="/"
             onClick={() => {
               if (location.pathname === "/") {
                 window.scrollTo({ top: 0, behavior: "smooth" });
+                openGate();
               }
             }}
             className="flex items-center shrink-0"
