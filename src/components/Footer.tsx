@@ -27,9 +27,32 @@ const Footer = () => {
           <div>
             <h2 className="font-display text-sm font-semibold text-background mb-3">{t("footer_contact")}</h2>
             <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> Sairee Beach, Koh Tao</li>
-              <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +66 82 506 8898</li>
-              <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> info@siamscuba.com</li>
+              <li>
+                <a
+                  href="https://maps.app.goo.gl/U3JzU7fcJsdqVR768"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-primary transition-colors"
+                >
+                  <MapPin className="h-4 w-4 text-primary" /> Sairee Beach, Koh Tao
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+66825068898"
+                  className="flex items-center gap-2 hover:text-primary transition-colors"
+                >
+                  <Phone className="h-4 w-4 text-primary" /> +66 82 506 8898
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:info@siamscuba.com"
+                  className="flex items-center gap-2 hover:text-primary transition-colors"
+                >
+                  <Mail className="h-4 w-4 text-primary" /> info@siamscuba.com
+                </a>
+              </li>
             </ul>
           </div>
 
