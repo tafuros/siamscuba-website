@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
-import padi5StarBadge from "@/assets/padi-5star-badge.png";
+import padi5StarBadge from "@/assets/padi-5star-badge.webp";
 
 interface UnderwaterHeroProps {
   /** When set (course landing pages), the H1 becomes "<courseHeading> in Koh Tao"

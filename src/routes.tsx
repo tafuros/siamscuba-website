@@ -1,5 +1,6 @@
 import type { RouteRecord } from "vite-react-ssg";
 import App from "./App";
+import RouteErrorBoundary from "./components/RouteErrorBoundary";
 import Index from "./pages/Index";
 import { blogPosts } from "./data/blogPosts";
 import { diveSites } from "./data/diveSites";
@@ -18,6 +19,9 @@ export const routes: RouteRecord[] = [
   {
     path: "/",
     element: <App />,
+    // Catches stale-deploy navigation failures (old tab + new deploy) and
+    // auto-reloads once; see RouteErrorBoundary for the full story.
+    errorElement: <RouteErrorBoundary />,
     entry: "src/App.tsx",
     children: [
       { index: true, element: <Index />, entry: "src/pages/Index.tsx" },
