@@ -156,9 +156,9 @@ export const gateContent: Record<Language, GateCopy> = {
       ],
     },
     kohTao: {
-      title: "Apnée ou plongée bouteille ?",
+      title: "Apnée ou plongée en bouteille ?",
       options: [
-        { key: "scuba", label: "Plongée bouteille", sub: "Bouteilles, récifs et cours" },
+        { key: "scuba", label: "Plongée en bouteille", sub: "Expérience d'un jour ou cours complet - tout est là" },
         { key: "freediving", label: "Apnée", sub: "Une respiration, le grand bleu" },
       ],
     },
