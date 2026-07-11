@@ -53,7 +53,7 @@ export const gateContent: Record<Language, GateCopy> = {
     kohTao: {
       title: "Freediving or scuba diving?",
       options: [
-        { key: "scuba", label: "Scuba diving", sub: "Tanks, reefs & courses" },
+        { key: "scuba", label: "Scuba diving", sub: "A fun dive for a day or all the way to pro - it all happens here" },
         { key: "freediving", label: "Freediving", sub: "One breath, deep blue" },
       ],
     },
@@ -88,7 +88,7 @@ export const gateContent: Record<Language, GateCopy> = {
     kohTao: {
       title: "צלילה חופשית או צלילת מיכלים?",
       options: [
-        { key: "scuba", label: "צלילת מיכלים", sub: "מיכלים, שוניות וקורסים" },
+        { key: "scuba", label: "צלילת מיכלים", sub: "צלילה ליום אחד או הדרך לצולל מקצועי - הכל קורה מכאן" },
         { key: "freediving", label: "צלילה חופשית", sub: "נשימה אחת, כחול עמוק" },
       ],
     },
@@ -123,7 +123,7 @@ export const gateContent: Record<Language, GateCopy> = {
     kohTao: {
       title: "¿Apnea o buceo con botella?",
       options: [
-        { key: "scuba", label: "Buceo con botella", sub: "Botellas, arrecifes y cursos" },
+        { key: "scuba", label: "Buceo con botella", sub: "Un día de buceo o hasta hacerte profesional - todo pasa aquí" },
         { key: "freediving", label: "Apnea", sub: "Una respiración, azul profundo" },
       ],
     },
