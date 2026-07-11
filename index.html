@@ -34,11 +34,14 @@
             var t = Number(localStorage.getItem("siam_gate_seen"));
             seen = t > 0 && Date.now() - t < 604800000; // 7 days
           } catch (e) {}
+          // ?gate=0 skips; ?gate=1 forces (even for remembered visitors).
+          // Must stay in sync with the show-decision in EntryGate.tsx.
+          var q = new URLSearchParams(location.search).get("gate");
           window.__siamGate =
             "%VITE_ENTRY_GATE%" === "on" &&
             location.pathname === "/" &&
-            new URLSearchParams(location.search).get("gate") !== "0" &&
-            !seen;
+            q !== "0" &&
+            (q === "1" || !seen);
           if (!window.__siamGate) return;
           var c = document.createElement("div");
           c.id = "gate-preload-cover";

@@ -26,6 +26,7 @@ type TranslationStrings = {
   nav_koh_tao_guide: string;
   nav_about: string;
   nav_book_now: string;
+  nav_welcome: string;
 
   // Hero
   hero_badge: string;
@@ -272,6 +273,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_koh_tao_guide: "Koh Tao Guide",
     nav_about: "About Us",
     nav_book_now: "Book Now",
+    nav_welcome: "Welcome menu",
 
     hero_badge: "Koh Tao, Thailand",
     hero_title_1: "Your Dive Adventure",
@@ -495,6 +497,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_koh_tao_guide: "מדריך קוטאו",
     nav_about: "אודות",
     nav_book_now: "הזמן עכשיו",
+    nav_welcome: "תפריט פתיחה",
 
     hero_badge: "קוטאו, תאילנד",
     hero_title_1: "הרפתקת הצלילה שלך",
@@ -718,6 +721,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_koh_tao_guide: "Guía Koh Tao",
     nav_about: "Sobre Nosotros",
     nav_book_now: "Reservar",
+    nav_welcome: "Menú de bienvenida",
 
     hero_badge: "Koh Tao, Tailandia",
     hero_title_1: "Tu Aventura de Buceo",
@@ -941,6 +945,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_koh_tao_guide: "Guide Koh Tao",
     nav_about: "À Propos",
     nav_book_now: "Réserver",
+    nav_welcome: "Menu d'accueil",
 
     hero_badge: "Koh Tao, Thaïlande",
     hero_title_1: "Votre Aventure de Plongée",

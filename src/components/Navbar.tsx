@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Compass, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/siam-logo.webp";
@@ -8,6 +8,7 @@ import SiteSearch from "@/components/SiteSearch";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
+import { openGate } from "@/utils/gateBus";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -81,6 +82,18 @@ const Navbar = () => {
               )
             )}
             <SiteSearch />
+            {/* Reopen the welcome gate (language/destination selector) - the
+                site remembers returning visitors for 7 days, so this is their
+                only way back to it. */}
+            <button
+              type="button"
+              onClick={openGate}
+              aria-label={t("nav_welcome")}
+              title={t("nav_welcome")}
+              className="p-2 rounded-full text-foreground backdrop-blur-md bg-white/15 border border-white/25 shadow-[0_2px_12px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.3)] hover:bg-white/30 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <Compass className="h-4 w-4" />
+            </button>
             <LanguageSwitcher />
             <Button asChild size="sm" className="rounded-full px-6 bg-accent/80 backdrop-blur-md hover:bg-accent/95 text-accent-foreground border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.2)] hover:-translate-y-0.5 whitespace-nowrap">
               <Link to="/fun-dive-booking">{t("nav_book_now")}</Link>
@@ -99,6 +112,17 @@ const Navbar = () => {
           {/* Mobile + tablet: hamburger + utilities on the right */}
           <div className="lg:hidden flex items-center gap-2">
             <SiteSearch />
+            <button
+              type="button"
+              onClick={() => {
+                setMobileOpen(false);
+                openGate();
+              }}
+              aria-label={t("nav_welcome")}
+              className="p-1.5 text-foreground"
+            >
+              <Compass className="h-5 w-5" />
+            </button>
             <LanguageSwitcher />
             <button
               className="text-foreground"

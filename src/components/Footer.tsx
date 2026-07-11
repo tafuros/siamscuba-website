@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/siam-logo.webp";
 import padi from "@/assets/padi-logo.png";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { openGate } from "@/utils/gateBus";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -79,6 +80,11 @@ const Footer = () => {
                   </button>
                 </li>
               ))}
+              <li>
+                <button onClick={openGate} className="hover:text-primary transition-colors">
+                  {t("nav_welcome")}
+                </button>
+              </li>
             </ul>
           </div>
         </div>

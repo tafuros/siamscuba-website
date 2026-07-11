@@ -5,6 +5,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import type { Language } from "@/i18n/translations";
 import gateLogo from "@/assets/siam-logo.webp";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
+import { OPEN_GATE_EVENT } from "@/utils/gateBus";
 
 // Hero video lives in /public (streamed media, not Vite-imported) so the browser
 // can range-request it. Poster (optimized, ~87KB) is the instant LCP paint and
@@ -67,21 +68,57 @@ const EntryGate = () => {
   // the scene until then, so nobody sees the difference except the waterfall.
   const [videoOn, setVideoOn] = useState(false);
   const [state, dispatch] = useReducer(gateReducer, initialGateState);
+  // Was the index.html pre-React poster cover on screen when this activation
+  // happened? If so the visitor is ALREADY looking at the exact poster the gate
+  // renders - so the gate must appear instantly opaque (poster-to-poster,
+  // seamless). Fading in over the cover shows the light gradient backdrop
+  // through the semi-transparent scene for ~1s = a visible "milky" flicker.
+  // On a manual reopen (no cover), the fade is what hides the live page - keep it.
+  const coverPresentRef = useRef(false);
 
   // Client-only reveal: show on the homepage unless explicitly skipped (?gate=0)
   // or already seen recently (returning visitors skip the intro - see GATE_SEEN).
+  // ?gate=1 forces the gate even for remembered visitors (mirrored in the
+  // index.html cover script so the pre-paint cover agrees).
   useEffect(() => {
     if (pathname !== "/") return;
-    const skip = new URLSearchParams(window.location.search).get("gate") === "0";
-    if (skip || gateSeenRecently()) {
+    const q = new URLSearchParams(window.location.search).get("gate");
+    if (q === "0" || (q !== "1" && gateSeenRecently())) {
       // The index.html cover only paints when it too sees no recent visit, so on
       // a remembered skip there is normally nothing to remove - but clear it just
       // in case (e.g. flag written this session after the cover painted).
       document.getElementById("gate-preload-cover")?.remove();
       return;
     }
+    coverPresentRef.current = !!document.getElementById("gate-preload-cover");
     setActive(true);
   }, [pathname]);
+
+  // Reopen on demand from anywhere in the app (navbar compass, footer
+  // "Welcome menu") - returning visitors otherwise have no way back to the
+  // gate within the 7-day remember window.
+  useEffect(() => {
+    const reopen = () => {
+      coverPresentRef.current = false; // live page beneath - fade in over it
+      dispatch({ type: "RESET" });
+      setLeaving(false);
+      setActive(true);
+    };
+    window.addEventListener(OPEN_GATE_EVENT, reopen);
+    return () => window.removeEventListener(OPEN_GATE_EVENT, reopen);
+  }, []);
+
+  // Once the gate has painted (two frames in), the pre-React cover beneath is
+  // redundant - drop it right away instead of leaning on its 6s safety timeout.
+  useEffect(() => {
+    if (!active) return;
+    const id = requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        document.getElementById("gate-preload-cover")?.remove();
+      }),
+    );
+    return () => cancelAnimationFrame(id);
+  }, [active]);
 
   // Once a "navigate" answer lands on its destination route, drop the cover.
   // The router only changes pathname after the lazy chunk has resolved, so by
@@ -224,7 +261,7 @@ const EntryGate = () => {
           backdrop until the hero video's first frame paints. The SCENE below
           fades in over it (no flash of the production site). */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: coverPresentRef.current ? 1 : 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.9, ease: "easeOut" }}
         className="absolute inset-0"

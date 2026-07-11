@@ -42,7 +42,10 @@ export interface GateState {
 export type GateEvent =
   | { type: "PICK_LANGUAGE" }
   | { type: "PICK_WHERE"; where: WhereKey }
-  | { type: "BACK" };
+  | { type: "BACK" }
+  // Back to the welcome step - used when the gate is reopened manually
+  // (navbar compass / footer link) after a previous run-through.
+  | { type: "RESET" };
 
 export const initialGateState: GateState = { step: "welcome", where: null };
 
@@ -56,6 +59,8 @@ export function gateReducer(state: GateState, event: GateEvent): GateState {
       if (state.step === "branch") return { step: "where", where: null };
       if (state.step === "where") return { step: "welcome", where: null };
       return state;
+    case "RESET":
+      return initialGateState;
     default:
       return state;
   }
