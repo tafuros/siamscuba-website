@@ -61,6 +61,11 @@ const EntryGate = () => {
   // if iOS blocks autoplay - e.g. Private Browsing or Low Power Mode) the poster
   // still shows underneath, so the native play-button overlay is never visible.
   const [videoPlaying, setVideoPlaying] = useState(false);
+  // Defer MOUNTING the <video> until the browser is idle (or ~2.5s). Mounted
+  // eagerly it starts its 0.7-1.7MB download immediately and competes with the
+  // poster + app bundle for first-load bandwidth on mobile - the poster covers
+  // the scene until then, so nobody sees the difference except the waterfall.
+  const [videoOn, setVideoOn] = useState(false);
   const [state, dispatch] = useReducer(gateReducer, initialGateState);
 
   // Client-only reveal: show on the homepage unless explicitly skipped (?gate=0)
@@ -104,6 +109,18 @@ const EntryGate = () => {
   // the video fades in over the matching poster. If it is blocked (iOS Private
   // Browsing / Low Power Mode), videoPlaying stays false and the poster remains -
   // so the native play-button overlay never shows.
+  // Idle-mount the video once the gate is up (see videoOn above).
+  useEffect(() => {
+    if (!active || prefersReduced || videoOn) return;
+    const start = () => setVideoOn(true);
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(start, { timeout: 2500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const t = window.setTimeout(start, 2000);
+    return () => window.clearTimeout(t);
+  }, [active, prefersReduced, videoOn]);
+
   useEffect(() => {
     if (!active || prefersReduced) return;
     const v = videoRef.current;
@@ -123,7 +140,7 @@ const EntryGate = () => {
       v.removeEventListener("timeupdate", markPlaying);
       v.removeEventListener("loadedmetadata", tryPlay);
     };
-  }, [active, prefersReduced]);
+  }, [active, prefersReduced, videoOn]);
 
   // Lock body scroll while the gate is up.
   useEffect(() => {
@@ -227,7 +244,7 @@ const EntryGate = () => {
             draggable={false}
             className="gate-photo-bg"
           />
-          {!prefersReduced && (
+          {!prefersReduced && videoOn && (
             <video
               ref={videoRef}
               className="gate-photo-bg"
