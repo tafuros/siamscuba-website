@@ -92,6 +92,15 @@ const EntryGate = () => {
       return;
     }
     coverPresentRef.current = !!document.getElementById("gate-preload-cover");
+    // ALWAYS reset the funnel when the gate activates. EntryGate stays mounted
+    // across client-side routes, so its reducer survives a run-through: after
+    // the gate hands a visitor to a lander it just closes, leaving the state
+    // parked on the step they left from. Coming back via a "/?gate=1" link (the
+    // Similan page's logo) re-opened the gate on THAT step - no flags, no
+    // welcome, apparently frozen until a hard refresh remounted the component.
+    // The OPEN_GATE_EVENT path already resets; this is the URL path.
+    dispatch({ type: "RESET" });
+    setLeaving(false);
     setActive(true);
   }, [pathname]);
 
