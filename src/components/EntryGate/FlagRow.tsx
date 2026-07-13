@@ -6,8 +6,8 @@ import { languageNames } from "@/i18n/translations";
 // water rather than sitting as hard rectangles. Each flag is a real <button>
 // with an aria-label; hover/focus lifts it and removes the fade for clarity.
 
-// Left -> right: IL, FR, ES, GB.
-const ORDER: Language[] = ["he", "fr", "es", "en"];
+// Left -> right: EN, ES, FR, IL (English leads, Hebrew anchors the right edge).
+const ORDER: Language[] = ["en", "es", "fr", "he"];
 
 // Top stays fully solid, bottom dissolves to 0 opacity -> the gradient effect.
 const FADE = "linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.4) 75%, transparent 100%)";

@@ -1,11 +1,11 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { Language } from "@/i18n/translations";
 import gateLogo from "@/assets/siam-logo.webp";
-import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 import { OPEN_GATE_EVENT } from "@/utils/gateBus";
+import { trackGateAnswer } from "@/utils/tracking";
 
 // Hero video lives in /public (streamed media, not Vite-imported) so the browser
 // can range-request it. Poster (optimized, ~87KB) is the instant LCP paint and
@@ -29,10 +29,11 @@ const gateSeenRecently = () => {
     return false;
   }
 };
-import { gateContent, type WhereKey } from "./gateContent";
+import { gateContent, type LevelKey, type LocationKey } from "./gateContent";
 import {
   gateReducer,
   initialGateState,
+  needsLocation,
   resolveAction,
 } from "./gateMachine";
 import WelcomeStep from "./WelcomeStep";
@@ -130,14 +131,32 @@ const EntryGate = () => {
     return () => cancelAnimationFrame(id);
   }, [leaving, pathname]);
 
-  // Prefetch the lazy lander chunks once the branch step is shown, so a navigate
-  // answer commits near-instantly (shorter cover, snappier transition).
+  // Prefetch the lazy lander chunks once the location step is shown, so a
+  // navigate answer commits near-instantly (shorter cover, snappier transition).
+  // Only the "certified + fun dives" level navigates away, and only these three
+  // pages are reachable from it.
   useEffect(() => {
-    if (state.step !== "branch") return;
-    import("@/pages/SiamFreedivingPage").catch(() => {});
+    if (state.step !== "location" || state.level !== "funDives") return;
     import("@/pages/SiamSimilansPage").catch(() => {});
-    import("@/pages/SiamPhuketPage").catch(() => {});
-  }, [state.step]);
+    // The fun-dive + Sail Rock landers are one page file per language.
+    switch (language) {
+      case "he":
+        import("@/pages/landers/FunDiveHePage").catch(() => {});
+        import("@/pages/landers/SailRockHePage").catch(() => {});
+        break;
+      case "es":
+        import("@/pages/landers/FunDiveEsPage").catch(() => {});
+        import("@/pages/landers/SailRockEsPage").catch(() => {});
+        break;
+      case "fr":
+        import("@/pages/landers/FunDiveFrPage").catch(() => {});
+        import("@/pages/landers/SailRockEnPage").catch(() => {});
+        break;
+      default:
+        import("@/pages/landers/FunDiveEnPage").catch(() => {});
+        import("@/pages/landers/SailRockEnPage").catch(() => {});
+    }
+  }, [state.step, state.level, language]);
 
   // Drive inline autoplay ourselves and only reveal the video once it is truly
   // playing. React sets the `muted` ATTRIBUTE but not the property, so iOS can
@@ -217,20 +236,13 @@ const EntryGate = () => {
     dispatch({ type: "PICK_LANGUAGE" });
   };
 
-  const handlePickWhere = (where: WhereKey) => {
-    dispatch({ type: "PICK_WHERE", where });
-  };
+  // Resolve a completed answer (level, and location when it was asked) to its
+  // destination, report it, and commit.
+  const commit = (level: LevelKey, location: LocationKey | null) => {
+    const action = resolveAction(level, location, language);
+    const destination = action.type === "navigate" ? action.path : "/";
+    trackGateAnswer({ level, location, destination });
 
-  const handleFinalAnswer = (answerKey: string) => {
-    if (!state.where) return;
-    const action = resolveAction(state.where, answerKey);
-    if (action.type === "whatsapp") {
-      const url = buildWhatsAppLink({ topic: action.topic, lang: normalizeLang(language) });
-      window.open(url, "_blank", "noopener,noreferrer");
-      // Stays on "/"; close onto the homepage that was always beneath.
-      close();
-      return;
-    }
     if (action.type === "navigate") {
       // Keep the gate backdrop as a cover THROUGH the route change so "/" never
       // flashes behind it; the leaving-effect closes it once the lander mounts.
@@ -242,7 +254,20 @@ const EntryGate = () => {
     close();
   };
 
-  const branchQuestion = state.where ? copy[state.where] : null;
+  const handlePickLevel = (level: LevelKey) => {
+    // A total beginner only ever starts with us on Koh Tao - no location step,
+    // and crucially they never see Similan (a certified-diver arena).
+    if (!needsLocation(level)) {
+      commit(level, null);
+      return;
+    }
+    dispatch({ type: "PICK_LEVEL", level });
+  };
+
+  const handlePickLocation = (location: LocationKey) => {
+    if (!state.level) return;
+    commit(state.level, location);
+  };
 
   return (
     <div
@@ -346,13 +371,18 @@ const EntryGate = () => {
           </button>
         </div>
         <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-[32vh]">
-          <AnimatePresence mode="wait">
+          {/* NO AnimatePresence here, deliberately. With mode="wait" (framer 12)
+              the exiting welcome step never reported its exit as complete - it
+              carries long staggered child entrance animations (delays to ~2.5s) -
+              so the next step was never mounted and the gate dead-ended right
+              after the language pick. Each step is a keyed motion.div that just
+              fades itself IN on mount: no exit callback to hang on, no dead end.
+              Remounting on `key` keeps the entrance animation per step. */}
           {state.step === "welcome" && (
             <motion.div
               key="welcome"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.5 }}
               className="flex w-full justify-center"
             >
@@ -360,41 +390,37 @@ const EntryGate = () => {
             </motion.div>
           )}
 
-          {state.step === "where" && (
+          {state.step === "level" && (
             <motion.div
-              key="where"
+              key="level"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.45 }}
               className="flex w-full justify-center"
             >
               <QuestionStep
-                question={copy.where}
-                onPick={(key) => handlePickWhere(key as WhereKey)}
+                question={copy.level}
+                onPick={(key) => handlePickLevel(key as LevelKey)}
                 reducedMotion={prefersReduced}
               />
             </motion.div>
           )}
 
-          {state.step === "branch" && branchQuestion && (
+          {state.step === "location" && (
             <motion.div
-              key={`branch-${state.where}`}
+              key="location"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.45 }}
               className="flex w-full justify-center"
             >
               <QuestionStep
-                question={branchQuestion}
-                onPick={handleFinalAnswer}
+                question={copy.location}
+                onPick={(key) => handlePickLocation(key as LocationKey)}
                 reducedMotion={prefersReduced}
-                artByKey={state.where === "kohTao" ? { freediving: "freediver", scuba: "scuba" } : undefined}
               />
             </motion.div>
           )}
-          </AnimatePresence>
         </div>
       </div>
       )}

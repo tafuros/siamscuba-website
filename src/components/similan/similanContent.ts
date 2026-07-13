@@ -96,6 +96,8 @@ export interface SimilanCopy {
     whatsapp: string;
   };
   back: string;
+  /** Exit to the Phuket day-dives page for visitors who don't want a liveaboard. */
+  phuketExit: { label: string; cta: string };
 }
 
 export const similanCopy: Record<Language, SimilanCopy> = {
@@ -193,6 +195,10 @@ export const similanCopy: Record<Language, SimilanCopy> = {
       whatsapp: "Chat on WhatsApp",
     },
     back: "Back to Siam Scuba",
+    phuketExit: {
+      label: "Not a liveaboard person? Dive the Similans as day trips from Phuket.",
+      cta: "See Phuket day dives",
+    },
   },
   he: {
     hero: {
@@ -288,6 +294,10 @@ export const similanCopy: Record<Language, SimilanCopy> = {
       whatsapp: "שיחה בוואטסאפ",
     },
     back: "חזרה ל-Siam Scuba",
+    phuketExit: {
+      label: "לא בקטע של לישון על סירה? אפשר לצלול בסימילן גם בצלילות יומיות מפוקט.",
+      cta: "לצלילות היומיות מפוקט",
+    },
   },
   es: {
     hero: {
@@ -383,6 +393,10 @@ export const similanCopy: Record<Language, SimilanCopy> = {
       whatsapp: "Chatear por WhatsApp",
     },
     back: "Volver a Siam Scuba",
+    phuketExit: {
+      label: "¿No te va dormir a bordo? Bucea las Similan en salidas de día desde Phuket.",
+      cta: "Ver salidas de día desde Phuket",
+    },
   },
   fr: {
     hero: {
@@ -478,5 +492,9 @@ export const similanCopy: Record<Language, SimilanCopy> = {
       whatsapp: "Discuter sur WhatsApp",
     },
     back: "Retour à Siam Scuba",
+    phuketExit: {
+      label: "La croisière, ce n'est pas pour vous ? Plongez les Similan à la journée depuis Phuket.",
+      cta: "Voir les sorties à la journée",
+    },
   },
 };

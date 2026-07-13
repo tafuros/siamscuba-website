@@ -421,3 +421,34 @@ export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResu
     return { ok: false, error: err instanceof Error ? err.message : "network_error" };
   }
 }
+
+// ── Entry gate qualification ─────────────────────────────────────────────────
+// SIGNALS, not conversions (no Ads send_to). The gate now asks what the visitor
+// is here to do (level) and where (location) - that answer is the single most
+// valuable segmentation input we have at first touch, so it goes to GA4/Meta.
+
+export interface GateAnswerParams {
+  /** "beginner" | "funDives" | "training" */
+  level: string;
+  /** "kohTao" | "kohPhangan" | "similan" - absent when the level skips the step. */
+  location?: string | null;
+  /** Where the answer sent them: a route path, or "/" when the gate just closed. */
+  destination: string;
+}
+
+/** Fired once the gate resolves the visitor's answer to a destination. */
+export function trackGateAnswer(params: GateAnswerParams): void {
+  gtag("event", "gate_answer", {
+    event_category: "engagement",
+    event_label: params.level,
+    gate_level: params.level,
+    gate_location: params.location ?? undefined,
+    gate_destination: params.destination,
+    ...utmFields(),
+  });
+  fbq("trackCustom", "GateAnswer", {
+    level: params.level,
+    location: params.location ?? undefined,
+    destination: params.destination,
+  });
+}

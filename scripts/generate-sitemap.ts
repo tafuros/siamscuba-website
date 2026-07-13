@@ -63,7 +63,8 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     // Entry-gate split pages (multilingual single URL - all langs on one URL).
     { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
     { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },
-    { loc: "/freediving", changefreq: "weekly", priority: 0.9, lastmod: today },
+    // /freediving retired 2026-07-13 (301 -> "/"): must NOT be in the sitemap,
+    // or Google keeps re-crawling a redirect we told it to forget.
   ];
 
   for (const post of blogPosts) {

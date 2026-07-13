@@ -16,8 +16,9 @@ export type WhatsAppTopic =
   | "fun-dive"
   | "koh-tao"
   | "refresher"
-  // Entry-gate funnel branches (destinations not yet built - phase B).
-  | "kt-freediving"
+  // Legacy entry-gate branches. The gate no longer routes to WhatsApp (it is
+  // scuba-only + lander-first since 2026-07-13), but these prefills are still
+  // reachable from lander/nav CTAs, so the topics stay.
   | "kp-licensed"
   | "kp-beginner"
   | "similan-safari"
@@ -76,11 +77,6 @@ const PREFILLED_MESSAGES: Record<WhatsAppTopic, Record<Lang, string>> = {
     en: "Hi Siam Scuba! I haven't dived in a while — I'd like info on a refresher (PADI ReActivate).",
     es: "¡Hola Siam Scuba! Hace tiempo que no buceo — quisiera información sobre un refresher (PADI ReActivate).",
     he: "היי סיאם סקובה! לא צללתי הרבה זמן — אשמח לקבל מידע על ריענון (PADI ReActivate).",
-  },
-  "kt-freediving": {
-    en: "Hi Siam Scuba! I'd love to try freediving in Koh Tao - one breath, deep blue. What courses and sessions do you offer?",
-    es: "¡Hola Siam Scuba! Me encantaría probar la apnea en Koh Tao. ¿Qué cursos y sesiones ofrecéis?",
-    he: "היי סיאם סקובה! בא לי לנסות צלילה חופשית בקוטאו - נשימה אחת, כחול עמוק. אילו קורסים וסשנים יש לכם?",
   },
   "kp-licensed": {
     en: "Hi Siam Scuba! I'm a certified diver and I'd like to dive Koh Phangan - Sail Rock and the local reefs. What's available?",

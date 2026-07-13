@@ -195,11 +195,8 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/SiamPhuketPage")),
         entry: "src/pages/SiamPhuketPage.tsx",
       },
-      {
-        path: "freediving",
-        lazy: lazyDefault(() => import("./pages/SiamFreedivingPage")),
-        entry: "src/pages/SiamFreedivingPage.tsx",
-      },
+      // /freediving is retired (we no longer sell freediving). vercel.json 301s
+      // it to "/" so the inbound links + accrued SEO signal are not thrown away.
       {
         path: "accessibility",
         lazy: lazyDefault(() => import("./pages/Accessibility")),
