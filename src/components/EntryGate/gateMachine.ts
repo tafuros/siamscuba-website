@@ -29,36 +29,40 @@ const SAIL_ROCK_LANGS: readonly Language[] = ["es", "he"];
 /**
  * level (+ location) -> where the visitor lands.
  *
- * THE LOCATION DECIDES THE DESTINATION. The level only decides whether we ask
- * for a location at all. A certified diver who picks "Similan & Phuket" must
- * land on the Similan page - dropping them on the Koh Tao homepage answers a
- * question they did not ask and throws the intent away.
+ * Similan is the one location whose page serves BOTH certified levels, so it
+ * always wins: a diver who asked for Similan gets the Similan page, whether
+ * they came to fun-dive or to keep training. Dropping them on the Koh Tao
+ * homepage would answer a question they did not ask.
  *
- * Koh Tao is the one place where the level still matters, because Koh Tao is
- * where we both teach and run day dives: fun-divers get the fun-dive lander,
- * continuing-training divers get the homepage (which carries the courses).
+ * Koh Tao and Koh Phangan are level-dependent, because our landers there are
+ * fun-dive landers: only a fun-diver wants them. A diver who came to keep
+ * TRAINING gets the homepage instead - that is where the courses live, and it
+ * is the right answer for both islands (Ben, 2026-07-13).
  */
 export function resolveAction(
   level: LevelKey,
   location: LocationKey | null,
   lang: Language,
 ): GateAction {
-  switch (location) {
-    case "similan":
-      return { type: "navigate", path: "/similan" };
-    case "kohPhangan":
+  // Similan: same destination for both certified levels.
+  if (location === "similan") return { type: "navigate", path: "/similan" };
+
+  // Koh Tao / Koh Phangan: the fun-dive landers only serve fun-divers.
+  // Continuing-training divers go to the homepage (the courses).
+  if (level === "funDives") {
+    if (location === "kohTao") {
+      return { type: "navigate", path: localized("/fun-dives", lang, FUN_DIVES_LANGS) };
+    }
+    if (location === "kohPhangan") {
       return {
         type: "navigate",
         path: localized("/sail-rock-diving", lang, SAIL_ROCK_LANGS),
       };
-    case "kohTao":
-      return level === "funDives"
-        ? { type: "navigate", path: localized("/fun-dives", lang, FUN_DIVES_LANGS) }
-        : { type: "enter-site" };
-    default:
-      // No location asked (beginner) -> the homepage, where the courses live.
-      return { type: "enter-site" };
+    }
   }
+
+  // beginner (no location asked), and training + Koh Tao / Koh Phangan.
+  return { type: "enter-site" };
 }
 
 export type GateStep = "welcome" | "level" | "location";
