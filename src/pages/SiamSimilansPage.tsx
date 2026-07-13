@@ -7,6 +7,7 @@ import GateBubbles from "@/components/EntryGate/GateBubbles";
 import GodRays from "@/components/EntryGate/GodRays";
 import "@/components/EntryGate/gate.css";
 import { useLanguage } from "@/i18n/LanguageContext";
+import siamLogo from "@/assets/siam-logo.webp";
 import { similanCopy, SIMILAN_TRIPS, SIMILAN_BOATS, SIMILAN_SITES } from "@/components/similan/similanContent";
 import SimilanBookingForm from "@/components/similan/SimilanBookingForm";
 
@@ -55,11 +56,29 @@ const SiamSimilansPage = () => {
       <GateBubbles />
 
       {/* Top bar */}
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
-        <Link to="/" className="text-sm text-white/70 transition-colors hover:text-white">
-          <span aria-hidden="true">{isRTL ? "→" : "←"}</span> {copy.back}
+      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5">
+        <Link to="/" className="shrink-0 text-sm text-white/70 transition-colors hover:text-white">
+          <span aria-hidden="true">{isRTL ? "→" : "←"}</span>{" "}
+          <span className="hidden sm:inline">{copy.back}</span>
         </Link>
-        <LanguageSwitcher />
+        {/* The logo reopens the welcome gate on the homepage (?gate=1 forces it
+            even for visitors inside the 7-day remember window), mirroring the
+            navbar's logo-click-reopens-gate behaviour on "/". */}
+        <Link
+          to="/?gate=1"
+          aria-label="Siam Scuba"
+          className="shrink-0 transition-transform duration-300 hover:scale-105"
+        >
+          <img
+            src={siamLogo}
+            alt="Siam Scuba"
+            draggable={false}
+            className="h-11 w-auto drop-shadow-[0_4px_14px_rgba(0,0,0,0.5)] sm:h-14"
+          />
+        </Link>
+        <div className="shrink-0">
+          <LanguageSwitcher />
+        </div>
       </header>
 
       {/* Hero */}
@@ -93,9 +112,9 @@ const SiamSimilansPage = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mx-auto mt-7 flex max-w-lg items-center justify-center gap-2.5 rounded-2xl border border-amber-300/45 bg-amber-300/15 px-5 py-3.5 text-sm font-semibold text-amber-50 shadow-[0_0_34px_-8px_rgba(252,211,77,0.55)] sm:text-base"
+          className="mx-auto mt-7 flex max-w-xl items-center justify-center gap-3 rounded-2xl border border-amber-300/45 bg-amber-300/15 px-6 py-4 text-base font-semibold text-amber-50 shadow-[0_0_34px_-8px_rgba(252,211,77,0.55)] sm:text-lg"
         >
-          <span aria-hidden="true" className="text-lg">🗓️</span>
+          <span aria-hidden="true" className="text-xl sm:text-2xl">🗓️</span>
           <span>{copy.hero.season}</span>
         </motion.div>
 
@@ -113,6 +132,24 @@ const SiamSimilansPage = () => {
             {copy.hero.sitesCta}
           </button>
         </div>
+
+        {/* Escape hatch to the Phuket day-dives page: the gate now sends every
+            "Similan & Phuket" visitor here, so liveaboard-averse divers need a
+            visible way across instead of a dead end. */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="mx-auto mt-7 flex max-w-xl flex-col items-center gap-2 text-sm text-ocean-surface/75 sm:flex-row sm:justify-center sm:gap-3"
+        >
+          <span>{copy.phuketExit.label}</span>
+          <Link
+            to="/phuket-diving"
+            className="whitespace-nowrap font-semibold text-ocean-light underline-offset-4 transition-colors hover:text-white hover:underline"
+          >
+            {copy.phuketExit.cta} <span aria-hidden="true">{isRTL ? "←" : "→"}</span>
+          </Link>
+        </motion.div>
       </section>
 
       {/* Trips */}
