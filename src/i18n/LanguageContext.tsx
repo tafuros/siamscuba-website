@@ -5,8 +5,10 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useRef,
   type ReactNode,
 } from "react";
+import { useLocation } from "react-router-dom";
 import { translations, rtlLanguages, type Language } from "./translations";
 
 interface LanguageContextType {
@@ -27,6 +29,18 @@ const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
 const isKnownLanguage = (value: string | null): value is Language =>
   value !== null && value in translations;
 
+// Locale URL prefixes that exist as real routes (see src/routes.tsx):
+// /es/* (Spanish blog + landers), /he + /he/* (Hebrew landing + landers),
+// /fr/* (French landers). On these pages the URL is the strongest signal of
+// the visitor's language - it MUST win over a (possibly stale) localStorage
+// value. Real bug this fixes: a visitor on /es/fun-dives with a leftover
+// siam-lang=he got Hebrew UI and a Hebrew Nemo chat.
+// (exported for tests)
+export const pathLanguage = (pathname: string): Language | null => {
+  const match = pathname.match(/^\/(es|he|fr)(\/|$)/);
+  return match ? (match[1] as Language) : null;
+};
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   // HYDRATION CONTRACT: the first client render MUST match the SSG HTML, which
   // is always built with "en". Reading localStorage in the useState initializer
@@ -37,11 +51,31 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   // English flash, and hydration always succeeds.
   const [language, setLanguageState] = useState<Language>("en");
 
+  // Locale prefix of the CURRENT route ("/es/..." -> "es"), reactive to SPA
+  // navigations. LanguageProvider renders inside the route element (App), so
+  // the router context is always available here.
+  const { pathname } = useLocation();
+  const urlLanguage = pathLanguage(pathname);
+  const didInitRef = useRef(false);
+
   useIsomorphicLayoutEffect(() => {
     if (!isBrowser) return;
+    const isFirstRun = !didInitRef.current;
+    didInitRef.current = true;
+    // On a locale-prefixed page the URL WINS over localStorage (see
+    // pathLanguage above). State only - we deliberately do NOT persist it, so
+    // following a /he link never traps an English visitor in Hebrew forever.
+    if (urlLanguage) {
+      setLanguageState(urlLanguage);
+      return;
+    }
+    // Unprefixed page: original behavior - adopt the saved language once, on
+    // mount. On later SPA navigations keep whatever the visitor is already
+    // reading in (e.g. /es/fun-dives -> / stays Spanish).
+    if (!isFirstRun) return;
     const saved = window.localStorage.getItem("siam-lang");
     if (isKnownLanguage(saved) && saved !== "en") setLanguageState(saved);
-  }, []);
+  }, [urlLanguage]);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);

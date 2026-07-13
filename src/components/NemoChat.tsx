@@ -94,6 +94,26 @@ const COPY: Record<string, Copy> = {
     teaser: "¿Buceo en Koh Tao? Puedo ayudarte 🐠",
     teaserKohTao: "¿Buceo en Koh Tao? Puedo mirar fechas 🤿",
   },
+  fr: {
+    pill: "Demande à Nemo",
+    title: "Salut, moi c'est Nemo !",
+    sub: "Pose-moi tes questions sur la plongée à Koh Tao 🌊",
+    placeholder: "Écris ta question...",
+    wa: "Parler à un humain sur WhatsApp",
+    error: "Désolé, petit souci 🫧 Réessaie ou écris-nous sur WhatsApp.",
+    suggestions: [
+      { emoji: "🐠", label: "Je peux plonger sans expérience ?" },
+      { emoji: "🤿", label: "Je suis certifié - je veux plonger" },
+      { emoji: "🌊", label: "Quels sites de plongée faites-vous ?" },
+      { emoji: "🔄", label: "Je n'ai pas plongé depuis longtemps" },
+    ],
+    ctaFunDive: "Réserver une plongée",
+    ctaWhatsApp: "WhatsApp",
+    ctaCourses: "Voir les cours",
+    registerCta: "Réserve ta place - formulaire 🤿",
+    teaser: "Plongée à Koh Tao ? Je peux t'aider 🐠",
+    teaserKohTao: "Plongée à Koh Tao ? Je peux vérifier les dates 🤿",
+  },
 };
 
 const TEASER_DISMISSED_KEY = "nemo_teaser_dismissed";
