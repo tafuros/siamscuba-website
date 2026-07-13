@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "last_updated": "2026-04-19",
+  "version": "1.0.1",
+  "last_updated": "2026-07-13",
   "courses": [
     {
       "id": "dsd",
@@ -29,9 +29,10 @@
       "name": "Scuba Review",
       "duration": "1 day",
       "price_thb": 2500,
+      "price_thb_pool_only": 1500,
       "certification": false,
       "requires_prior_cert": true,
-      "description": "Refresher for certified divers who haven't been in the water for 6+ months. Quick knowledge check, skill refresh, then 2 fun open-water dives with an instructor."
+      "description": "Refresher for certified divers who haven't been in the water for 6+ months. Quick knowledge check, skill refresh, then 2 fun open-water dives with an instructor. Pool-only refresher (no boat dives) available for 1,500 THB."
     },
     {
       "id": "owd",
@@ -94,7 +95,7 @@
       "id": "wreck",
       "name": "Wreck Diving",
       "duration": "2 days",
-      "price_thb": 9000,
+      "price_thb": 8500,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Advanced Open Water (typical)",
@@ -109,6 +110,16 @@
       "requires_prior_cert": true,
       "prerequisite": "Advanced Open Water",
       "description": "PADI deep specialty beyond 18m, gas management, deep dive planning."
+    },
+    {
+      "id": "nitrox",
+      "name": "Enriched Air Nitrox",
+      "duration": "1 day",
+      "price_thb": 5000,
+      "certification": true,
+      "requires_prior_cert": true,
+      "prerequisite": "Open Water Diver (or equivalent)",
+      "description": "PADI Enriched Air (Nitrox) specialty - dive with enriched air for longer no-decompression limits."
     },
     {
       "id": "dpv",
@@ -155,7 +166,7 @@
       "name": "IDC (Instructor Development Course)",
       "duration": "2 weeks (plus 2 days theory prep)",
       "price_thb": null,
-      "price_note": "Around 100k THB, varies by date and currency. Contact for current pricing.",
+      "price_note": "Price on request - contact for current pricing.",
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "PADI Divemaster, 100+ logged dives recommended, EFR within 24 months",
@@ -201,8 +212,13 @@
       "dive insurance"
     ]
   },
+  "snorkeling": {
+    "price_thb": 500,
+    "description": "Join the dive boat as a snorkeler - explore Koh Tao's reefs from the surface.",
+    "included": ["snorkeling equipment", "boat trip"]
+  },
   "sail_rock": {
-    "price_thb": 3800,
+    "price_thb": 4000,
     "dives_per_trip": 3,
     "frequency": "every 3 days",
     "departure_time": "07:30",
