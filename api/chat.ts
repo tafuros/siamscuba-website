@@ -81,10 +81,31 @@ const kbRecords = JSON.parse(
   readFileSync(join(process.cwd(), "api/_kb.json"), "utf8"),
 ) as { source: string; text: string }[];
 
-// Flatten the base KB into one reference document. Marked cache_control:ephemeral
-// so repeat calls within the 5-min window pay ~10% on the cached prefix. This is
-// the bundled, auto-generated base - DiveOS overrides merge on top at runtime.
-const BASE_KB_TEXT = kbRecords.map((r) => `### ${r.source}\n${r.text}`).join("\n\n");
+// Flatten the base KB into one reference document, EXCLUDING any records whose
+// source is REPLACED by an applicable DiveOS override (schema contract: an
+// override whose `source` exactly matches a base record replaces it - the stale
+// base text must not stay in the prompt, or it competes with the correction).
+//
+// CACHE CONSTRAINT: the result carries cache_control:ephemeral, so it must stay
+// byte-stable within the 5-min prompt-cache window. It therefore depends ONLY on
+// the SET of overridden sources (which changes rarely - add/remove/enable of an
+// override), never on override TEXT (edited often; that lives in the small
+// uncached corrections block after the cache breakpoint). Memoized per
+// source-set so repeated requests reuse the identical string.
+const baseKbCache = new Map<string, string>();
+function baseKbText(overriddenSources: string[]): string {
+  const excluded = new Set(overriddenSources.filter((s) => typeof s === "string" && s));
+  const key = [...excluded].sort().join("\n");
+  const hit = baseKbCache.get(key);
+  if (hit !== undefined) return hit;
+  const text = kbRecords
+    .filter((r) => !excluded.has(r.source))
+    .map((r) => `### ${r.source}\n${r.text}`)
+    .join("\n\n");
+  if (baseKbCache.size > 32) baseKbCache.clear(); // bound memory across override churn
+  baseKbCache.set(key, text);
+  return text;
+}
 
 // ── DiveOS KB-override overlay ───────────────────────────────────────────────
 // The base KB above is regenerated from site content on every deploy, so it
@@ -146,17 +167,24 @@ async function fetchOverrides(token: string | undefined): Promise<KbOverride[]> 
   }
 }
 
-// Build the authoritative CORRECTIONS block from the active overrides. It is placed
-// AFTER the base KB in the prompt and explicitly takes precedence, so a staff
-// correction (e.g. "for restaurants, point people to our vlog") reliably WINS over
-// whatever the auto-generated base KB says on that topic - without staff needing to
-// know or match internal source keys. Higher `priority` is listed first. `lang:null`
-// applies to every language; a set `lang` scopes the correction to that one.
-// Returns "" when there are no applicable corrections (-> bot runs on base KB only).
-function buildCorrections(lang: string, overrides: KbOverride[]): string {
-  const applicable = overrides
+// The overrides applicable to one request: `lang:null` applies to every
+// language; a set `lang` scopes the override to that one. Higher `priority`
+// first. Used both to build the corrections block AND to decide which base-KB
+// records the overrides replace - the two must always agree.
+function applicableOverrides(lang: string, overrides: KbOverride[]): KbOverride[] {
+  return overrides
     .filter((o) => o?.text && (o.lang == null || o.lang === lang))
     .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+}
+
+// Build the authoritative CORRECTIONS block from the applicable overrides. It is
+// placed AFTER the base KB in the prompt and explicitly takes precedence, so a staff
+// correction (e.g. "for restaurants, point people to our vlog") reliably WINS over
+// whatever the auto-generated base KB says on that topic - without staff needing to
+// know or match internal source keys. (When an override's source DOES match a base
+// record, that record is additionally dropped from the base text - see baseKbText.)
+// Returns "" when there are no applicable corrections (-> bot runs on base KB only).
+function buildCorrections(applicable: KbOverride[]): string {
   if (!applicable.length) return "";
   const items = applicable.map((o) => `### ${o.source}\n${o.text}`).join("\n\n");
   return (
@@ -168,10 +196,6 @@ function buildCorrections(lang: string, overrides: KbOverride[]): string {
   );
 }
 
-async function getCorrections(lang: string, token: string | undefined): Promise<string> {
-  return buildCorrections(lang, await fetchOverrides(token));
-}
-
 const LANG_NAME: Record<string, string> = {
   en: "English",
   he: "Hebrew",
@@ -179,8 +203,18 @@ const LANG_NAME: Record<string, string> = {
   fr: "French",
 };
 
-function systemBlocks(lang: string, corrections: string) {
+// Exported for tests (src/test/chat-kb-replace.test.ts) - not part of the API surface.
+export function systemBlocks(lang: string, overrides: KbOverride[]) {
   const langName = LANG_NAME[lang] ?? "the same language the user writes in";
+  // One applicability pass drives BOTH the base-KB filtering and the
+  // corrections block, so a replaced record can never survive in the base
+  // while its replacement sits in the corrections. Failure-open is preserved:
+  // when the override fetch failed, `overrides` is [] -> unfiltered base.
+  // Note: a lang-scoped override filters the base only for that lang's
+  // requests, so each lang gets its own (stable-within-window) cached prefix.
+  const applicable = applicableOverrides(lang, overrides);
+  const corrections = buildCorrections(applicable);
+  const kbText = baseKbText(applicable.map((o) => o.source));
   const instructions = `You are Nemo, the friendly dive buddy for Siam Scuba - a PADI 5-Star IDC dive school on Sairee Beach, Koh Tao, Thailand.
 
 Your job: help visitors discover diving in Koh Tao and gently guide them toward booking, using ONLY the Siam Scuba knowledge base below. siamscuba.com is your single source of truth.
@@ -216,13 +250,13 @@ The funnel (move people from interest to booking):
 - Beginners worried they cannot dive: reassure them - no experience needed, you do not have to be a strong swimmer - and point them to Discover Scuba Diving (try-dive) or the Open Water course.
 - Certified divers and dive-site questions: we dive 30+ sites around Koh Tao, rotating by weather, visibility and recent whale shark sightings. Give that one-line summary, then ask which site interests them or if they want to book a fun dive - do NOT list the sites.
 - A site's certification "level" is a RECOMMENDATION, not a hard rule. For deeper or advanced sites (Chumphon Pinnacle, Southwest Pinnacle, Sail Rock, HTMS Sattakut), say Advanced Open Water is preferred or recommended (currents can be stronger and it is deeper), but an Open Water diver is welcome to join too. NEVER tell anyone they "need", "must have" or "cannot dive without" a certain certification for a site. After describing a site, ask what diving certification they hold.
-- When someone wants to book, asks about dates, or wants to pay: hand them to a human on WhatsApp (a "Talk to a human on WhatsApp" button is shown in this chat).
+- When someone wants to book, asks about dates, or wants to pay: your DEFAULT call to action is the online registration form at https://siamscuba.com/fun-dive-booking (a booking button is also shown in this chat). Only hand them to WhatsApp when they explicitly ask to talk to a human or a real person (a "Talk to a human on WhatsApp" button is shown in this chat).
 
 Prices, facts and links:
 - All prices in Thai Baht, exact numbers from the knowledge base. NEVER convert to shekels, dollars or euros, and never change the currency symbol - even when replying in Hebrew or Spanish. Write amounts like "12,000 THB".
-- Booking requires a DEPOSIT to reserve and hold a spot. Any source text that says "no deposit", "pay only on arrival", "just show up", or "you owe us nothing" is OUTDATED and WRONG - never repeat it. Always tell guests that a deposit secures their place, and send them to WhatsApp to arrange it. Do not state a deposit amount unless it is in the knowledge base.
-- Never invent prices, dates, facts, or links. If something is not in the knowledge base (live availability, exact dates, personal medical questions, payment), say you will connect them to the team on WhatsApp - do not guess.
-- You may share a relevant siamscuba.com page that appears in the knowledge base (a course or dive-site page). To register or book, you can point them to https://dash.siamscuba.com/dive/ben or the WhatsApp button.
+- Booking requires a DEPOSIT to reserve and hold a spot. Any source text that says "no deposit", "pay only on arrival", "just show up", or "you owe us nothing" is OUTDATED and WRONG - never repeat it. Always tell guests that a deposit secures their place, and point them to the registration form at https://siamscuba.com/fun-dive-booking to arrange it. Do not state a deposit amount unless it is in the knowledge base.
+- Never invent prices, dates, facts, or links. If something is not in the knowledge base (live availability, exact dates, personal medical questions), say the team can confirm it when they register at https://siamscuba.com/fun-dive-booking - do not guess. Mention WhatsApp only if they ask for a human.
+- You may share a relevant siamscuba.com page that appears in the knowledge base (a course or dive-site page). To register or book, point them to https://siamscuba.com/fun-dive-booking.
 
 Boundaries:
 - Stay strictly on Siam Scuba, diving and Koh Tao. If asked for anything unrelated (poems, jokes, coding, homework, other businesses), politely decline in one short sentence and steer back to diving.
@@ -236,7 +270,7 @@ Boundaries:
     { type: "text", text: instructions },
     {
       type: "text",
-      text: `Siam Scuba knowledge base:\n\n${BASE_KB_TEXT}`,
+      text: `Siam Scuba knowledge base:\n\n${kbText}`,
       cache_control: { type: "ephemeral" },
     },
   ];
@@ -262,13 +296,13 @@ export async function generateReply(
 
   if (!trimmed.length) throw new Error("no messages");
 
-  // Authoritative DiveOS corrections (lazy, time-boxed, failure-open to base KB).
-  const corrections = await getCorrections(lang, leadToken);
+  // Authoritative DiveOS overrides (lazy, time-boxed, failure-open to base KB).
+  const overrides = await fetchOverrides(leadToken);
 
   const resp = await client.messages.create({
     model: MODEL,
     max_tokens: MAX_TOKENS,
-    system: systemBlocks(lang, corrections),
+    system: systemBlocks(lang, overrides),
     messages: trimmed,
   });
 
