@@ -159,6 +159,69 @@ export function trackWhatsAppFastPathClick(
   fbq("trackCustom", "WhatsAppFastPathClick", { product: params.product });
 }
 
+// ── Booking wizard step funnel ───────────────────────────────────────────────
+// The DiveOS customer wizard (embedded iframe on /fun-dive-booking) posts
+// SIAM_BOOKING_STEP on every step change. Step semantics are the TRIP-FIRST
+// order deployed 2026-07-08 (7 steps - supersedes the old 6-step order where
+// 1=personal, 2=activities, ... 6=deposit):
+//   1 trip · 2 contact (SIAM_BOOKING_LEAD fires here) · 3 personal ·
+//   4 medical · 5 waiver · 6 accommodation · 7 review (deposit)
+// We NEVER forward the raw number alone to analytics - every event carries the
+// step NAME so GA4/GTM/Clarity funnels stay readable even if DiveOS reorders
+// steps again (only this map would change).
+export const BOOKING_STEP_NAMES: Record<number, string> = {
+  1: "trip",
+  2: "contact",
+  3: "personal",
+  4: "medical",
+  5: "waiver",
+  6: "accommodation",
+  7: "review",
+};
+
+export interface BookingStepParams {
+  /** Wizard step index, 1-7 (trip-first order). */
+  step: number;
+  /** Navigation direction reported by the wizard. */
+  direction?: "forward" | "back";
+}
+
+/**
+ * Fired when the booking wizard advances to a step (once per step per page
+ * session - dedupe lives at the call site). A SIGNAL, not a conversion - no
+ * Google Ads send_to, so it never inflates conversion counts. Fires to:
+ * - GTM/GA4 via dataLayer push (GTM custom-event triggers key on it)
+ * - gtag (GA4 event stream) with step_number + step_name
+ * - Microsoft Clarity custom event (filterable per step in recordings)
+ * - Meta as a custom event (house rule: GA and Meta stay paired)
+ */
+export function trackBookingStep(params: BookingStepParams): void {
+  const stepName = BOOKING_STEP_NAMES[params.step] ?? `step_${params.step}`;
+  if (typeof window !== "undefined") {
+    window.dataLayer?.push({
+      event: "booking_step",
+      step_number: params.step,
+      step_name: stepName,
+      direction: params.direction,
+    });
+    if (typeof window.clarity === "function") {
+      window.clarity("event", `booking_step_${stepName}`);
+    }
+  }
+  gtag("event", "booking_step", {
+    event_category: "booking_funnel",
+    event_label: stepName,
+    step_number: params.step,
+    step_name: stepName,
+    direction: params.direction,
+    ...utmFields(),
+  });
+  fbq("trackCustom", "BookingStep", {
+    step_number: params.step,
+    step_name: stepName,
+  });
+}
+
 export interface GenerateLeadParams {
   form_name: "fun_dive_booking" | "booking_wizard" | "course_inquiry" | "contact";
   dive_date?: string;

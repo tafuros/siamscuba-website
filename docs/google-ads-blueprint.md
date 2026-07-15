@@ -13,7 +13,8 @@ Companion to `~/.claude/plans/glimmering-percolating-pebble.md` (code) and `~/.c
 | UTM capture (`src/utils/utm.ts`) + first-touch sessionStorage | SHIPPED |
 | `buildWhatsAppLink` with per-language messages + UTM passthrough | SHIPPED |
 | gtag + fbq paired in `src/utils/tracking.ts` | SHIPPED |
-| Lead event from booking iframe (`SIAM_BOOKING_STEP`) | SHIPPED |
+| Lead event from booking iframe (`SIAM_BOOKING_LEAD`) | SHIPPED (fires at wizard step 2 "contact" since the 2026-07-08 trip-first reorder) |
+| Step funnel from booking iframe (`SIAM_BOOKING_STEP` -> `booking_step` with names trip/contact/personal/medical/waiver/accommodation/review) | SHIPPED 2026-07-10 |
 | Landers in sitemap | **OFF** (commented out in `scripts/generate-sitemap.ts:46-48`, noindex'd at the page) — by design; restore at launch |
 | **Google Ads conversion labels** | SHIPPED 2026-05-25 - all 3 actions wired: Booking Confirmed (`9d1fCLb625gcEP7jjp9D`), Lead (`XvmFCNXAjrMcEP7jjp9D`), WhatsApp Click (`GDJZCNjAjrMcEP7jjp9D`). See §10. |
 | Meta Pixel ID | Placeholder (`YOUR_PIXEL_ID` ×2 in `index.html`) — Google-first means we can defer |
