@@ -41,11 +41,6 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/DataDeletion.tsx",
       },
       {
-        path: "privacy-policy",
-        lazy: lazyDefault(() => import("./pages/PrivacyPolicy")),
-        entry: "src/pages/PrivacyPolicy.tsx",
-      },
-      {
         path: "fun-dive-booking",
         lazy: lazyDefault(() => import("./pages/FunDiveBookingPage")),
         entry: "src/pages/FunDiveBookingPage.tsx",
@@ -155,21 +150,9 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/landers/FunDiveFrPage")),
         entry: "src/pages/landers/FunDiveFrPage.tsx",
       },
-      {
-        path: "koh-tao-diving",
-        lazy: lazyDefault(() => import("./pages/landers/KohTaoEnPage")),
-        entry: "src/pages/landers/KohTaoEnPage.tsx",
-      },
-      {
-        path: "es/koh-tao-diving",
-        lazy: lazyDefault(() => import("./pages/landers/KohTaoEsPage")),
-        entry: "src/pages/landers/KohTaoEsPage.tsx",
-      },
-      {
-        path: "he/koh-tao-diving",
-        lazy: lazyDefault(() => import("./pages/landers/KohTaoHePage")),
-        entry: "src/pages/landers/KohTaoHePage.tsx",
-      },
+      // /koh-tao-diving (+ es/he) retired 2026-07-15 — consolidated into
+      // /fun-dives. vercel.json 301s the old paths to the fun-dives twins so
+      // their SEO equity + stray links flow to the live target.
       {
         path: "sail-rock-diving",
         lazy: lazyDefault(() => import("./pages/landers/SailRockEnPage")),

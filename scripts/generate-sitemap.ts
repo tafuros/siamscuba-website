@@ -39,7 +39,6 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
       lastmod: today,
       hreflangs: ["he"],
     },
-    { loc: "/privacy-policy", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/privacy", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/data-deletion", changefreq: "yearly", priority: 0.2, lastmod: today },
@@ -57,9 +56,6 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/es/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
     { loc: "/he/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
     { loc: "/fr/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["fr"] },
-    { loc: "/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
-    { loc: "/es/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
-    { loc: "/he/koh-tao-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
     // Entry-gate split pages (multilingual single URL - all langs on one URL).
     { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
     { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },
