@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { trackWhatsAppFastPathClick } from "@/utils/tracking";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { WHATSAPP_NUMBER } from "@/utils/whatsapp";
 
 /**
  * WhatsApp fast-path strip for the fun-dive booking page.
@@ -17,10 +18,14 @@ import { useLanguage } from "@/i18n/LanguageContext";
  * matches the exact English markers. Do not translate BASE_MESSAGE.
  */
 
-// Fast-path number. Swaps to the dedicated Nemo number at cutover - change
-// this ONE line only. (Intentionally separate from WHATSAPP_NUMBER in
-// utils/whatsapp.ts, which stays on the shop line.)
-export const FASTPATH_WHATSAPP_NUMBER = "972528641581";
+// The strip dials WHATSAPP_NUMBER (utils/whatsapp.ts) - the one number this
+// site knows. There is no separate fast-path number: the shop line and Nemo
+// have been the same +66 line since the cutover on 2026-06-03, so a dedicated
+// constant here could only ever drift out of sync with the shared one. It did:
+// this file shipped on 2026-07-10 hardcoding the retired +972 line (dead since
+// June), and every click landed on an unanswered number until 2026-07-17.
+// If a genuinely different number is ever needed, add it in utils/whatsapp.ts
+// beside the shared one - do not reintroduce a private literal here.
 
 // Mid-form base message - Ben's exact requirement. Nemo pattern-matches on
 // "before I finish the booking form" to route this as a mid-form assist.
@@ -74,7 +79,7 @@ const WhatsAppFastPathStrip = ({ product, date }: WhatsAppFastPathStripProps) =>
     if (product) parts.push(PRODUCT_LABELS[product.toUpperCase()] ?? product);
     if (date) parts.push(formatDate(date));
     if (parts.length > 0) text += ` - I was booking ${parts.join(", ")}`;
-    return `https://wa.me/${FASTPATH_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
   }, [product, date]);
 
   return (
