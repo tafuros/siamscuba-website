@@ -9,9 +9,8 @@ import {
   trackPurchase,
   trackBookingPayLater,
 } from "@/utils/tracking";
-import { getStoredUtm, getStoredGclid } from "@/utils/utm";
+import { buildWizardIframeSrc } from "@/utils/bookingUrl";
 
-const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 // Accept messages from the iframe (dash.*) AND from the same site under
 // either apex or www. The dashboard currently posts with targetOrigin set
 // to the apex; if a user lands on www the browser drops that message
@@ -65,50 +64,25 @@ const FunDiveBookingPage = () => {
   // Forward booking context + attribution into the DiveOS wizard iframe.
   // - `product` + `date` let the wizard pre-select the trip & departure
   //   (e.g. ?product=SAILROCK&date=2026-06-22 from the Sail Rock lander).
-  // - utm_* and gclid are forwarded for attribution. When the caller sets
-  //   utm_passthrough=1 we also pull first-touch UTMs/gclid from sessionStorage
-  //   (captured on the lander) so attribution survives the in-app navigation.
+  // - utm_* and gclid are forwarded for attribution. First-touch UTMs/gclid are
+  //   ALSO pulled from sessionStorage (captured on the landing page by
+  //   App.tsx -> utils/utm.ts) so attribution survives in-app navigation.
+  //
+  // Passthrough is ON BY DEFAULT (opt-out via ?utm_passthrough=0), NOT opt-in.
+  // It used to require ?utm_passthrough=1, which only the three landers set -
+  // so every generic CTA (navbar Book Now, floating button, course cards, blog,
+  // dive-site pages, Nemo chat...) silently dropped the gclid at that hop and
+  // DiveOS recorded 390 leads all-time with zero attribution. Opt-in put the
+  // burden on each new CTA to remember a magic query param; the safe default
+  // means a CTA can never silently regress attribution again.
   // The DiveOS wizard reads these params (work done in parallel by the diveos
   // agent); we only deliver them on the iframe URL.
-  const iframeSrc = useMemo(() => {
-    const incoming = new URLSearchParams(location.search);
-    const out = new URLSearchParams();
-
-    const product = incoming.get("product");
-    if (product) out.set("product", product);
-    const date = incoming.get("date");
-    if (date) out.set("date", date);
-
-    // Explicit utm_* / gclid present on the incoming URL win.
-    for (const [key, value] of incoming.entries()) {
-      if (key.startsWith("utm_") && key !== "utm_passthrough" && value) {
-        out.set(key, value);
-      }
-    }
-    const incomingGclid = incoming.get("gclid");
-    if (incomingGclid) out.set("gclid", incomingGclid);
-
-    // Backfill from first-touch storage when asked, without clobbering explicit
-    // values already set above.
-    if (incoming.get("utm_passthrough") === "1") {
-      const utm = getStoredUtm();
-      const utmMap: Record<string, string | undefined> = {
-        utm_source: utm.source,
-        utm_medium: utm.medium,
-        utm_campaign: utm.campaign,
-        utm_content: utm.content,
-        utm_term: utm.term,
-      };
-      for (const [key, value] of Object.entries(utmMap)) {
-        if (value && !out.has(key)) out.set(key, value);
-      }
-      const storedGclid = getStoredGclid();
-      if (storedGclid && !out.has("gclid")) out.set("gclid", storedGclid);
-    }
-
-    const qs = out.toString();
-    return qs ? `${LEAD_FORM_URL}?${qs}` : LEAD_FORM_URL;
-  }, [location.search]);
+  // Built in src/utils/bookingUrl.ts (pure + unit-tested there). Safe to read
+  // sessionStorage here: the iframe only mounts after hydration (see `mounted`).
+  const iframeSrc = useMemo(
+    () => buildWizardIframeSrc(location.search),
+    [location.search],
+  );
   // Fire the lead conversion at most once per page session, so a customer who
   // edits their contact details mid-wizard (re-emitting SIAM_BOOKING_LEAD)
   // doesn't double-count in Google Ads / Meta.
