@@ -16,7 +16,14 @@ declare global {
   }
 }
 
-const GA_MEASUREMENT_ID = "AW-18050429438";
+// Google ADS conversion account (AW-…). NOT the GA4 property. gtag conversion
+// pings (send_to below) route here and power the 146 Google Ads conversions.
+// The GA4 property (G-5WHV1MM0DR) is a SEPARATE tag, loaded only via the GTM
+// container (GTM-TN3SM66Q); on-page gtag('event',…) calls do NOT reach it.
+// That is why GA4 (and any DiveOS screen reading GA4) shows 0 conversions.
+// The fix: mirror each key conversion onto the dataLayer via pushDataLayer()
+// so GTM GA4 Event tags relay it to G-5WHV1MM0DR. See docs/ga4-events-gtm-spec.md.
+const ADS_CONVERSION_ID = "AW-18050429438";
 const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
 // "Booking - Pay Later": a confirmed booking with no deposit paid yet.
 // Lower-tier conversion than a paid Purchase, fired WITHOUT a value.
@@ -39,6 +46,26 @@ function fbq(...args: unknown[]): void {
   if (typeof window !== "undefined" && typeof window.fbq === "function") {
     window.fbq(...args);
   }
+}
+
+/**
+ * Pushes a clean, GTM-facing custom event onto the dataLayer so GTM GA4 Event
+ * tags can relay it to the GA4 property (G-5WHV1MM0DR). This is the ONLY path
+ * that reaches GA4 - on-page gtag('event',…) calls only hit the Ads account
+ * (ADS_CONVERSION_ID). ADDITIVE: it does not touch the gtag() Ads pings above,
+ * so the 146 Google Ads conversions keep working while GA4 finally gets events.
+ * Undefined values are dropped so the dataLayer payload stays clean.
+ * The event names here map 1:1 to the GTM triggers in docs/ga4-events-gtm-spec.md
+ * (same convention as the existing whatsapp_fastpath_click push).
+ */
+function pushDataLayer(event: string, params: Record<string, unknown> = {}): void {
+  if (typeof window === "undefined") return;
+  const clean: Record<string, unknown> = { event };
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== undefined && v !== null) clean[k] = v;
+  }
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(clean);
 }
 
 function utmFields(): Record<string, string | undefined> {
@@ -103,6 +130,12 @@ export interface WhatsAppClickParams {
 }
 
 export function trackWhatsAppClick(params: WhatsAppClickParams): void {
+  // GA4 relay (via GTM). Separate from the Ads gtag ping below.
+  pushDataLayer("whatsapp_click", {
+    location: params.location,
+    url: params.url,
+    ...utmFields(),
+  });
   gtag("event", "whatsapp_click", {
     event_category: "engagement",
     event_label: params.location,
@@ -111,7 +144,7 @@ export function trackWhatsAppClick(params: WhatsAppClickParams): void {
   });
   if (WHATSAPP_CONVERSION_LABEL) {
     gtag("event", "conversion", {
-      send_to: `${GA_MEASUREMENT_ID}/${WHATSAPP_CONVERSION_LABEL}`,
+      send_to: `${ADS_CONVERSION_ID}/${WHATSAPP_CONVERSION_LABEL}`,
     });
   }
   fbq("track", "Contact", { location: params.location });
@@ -171,6 +204,14 @@ export interface GenerateLeadParams {
 export function trackGenerateLead(params: GenerateLeadParams): void {
   // Enhanced conversions: set user data BEFORE the conversion event (when present).
   setEnhancedConversionData({ email: params.email, phone: params.phone });
+  // GA4 relay (via GTM). Separate from the Ads gtag conversion below.
+  pushDataLayer("generate_lead", {
+    form_name: params.form_name,
+    product: params.product,
+    dive_date: params.dive_date,
+    currency: "THB",
+    ...utmFields(),
+  });
   gtag("event", "generate_lead", {
     event_category: "lead",
     form_name: params.form_name,
@@ -181,7 +222,7 @@ export function trackGenerateLead(params: GenerateLeadParams): void {
   });
   if (LEAD_CONVERSION_LABEL) {
     gtag("event", "conversion", {
-      send_to: `${GA_MEASUREMENT_ID}/${LEAD_CONVERSION_LABEL}`,
+      send_to: `${ADS_CONVERSION_ID}/${LEAD_CONVERSION_LABEL}`,
       currency: "THB",
     });
   }
@@ -201,7 +242,7 @@ export function trackPageView(params: PageViewParams): void {
   gtag("event", "page_view", {
     page_path: params.page_path,
     page_title: params.page_title ?? document.title,
-    send_to: GA_MEASUREMENT_ID,
+    send_to: ADS_CONVERSION_ID,
     ...utmFields(),
   });
   fbq("track", "PageView");
@@ -221,6 +262,14 @@ export function trackPurchase(params: PurchaseParams): void {
   // Enhanced conversions: set user data BEFORE the conversion event so gtag
   // attaches the hashed identifiers to the conversion ping.
   setEnhancedConversionData({ email: params.email, phone: params.phone });
+  // GA4 relay (via GTM). Separate from the Ads gtag conversion below.
+  pushDataLayer("purchase", {
+    transaction_id: params.transaction_id,
+    value: params.value,
+    currency: params.currency ?? "THB",
+    item_name: params.item_name,
+    ...utmFields(),
+  });
   gtag("event", "purchase", {
     transaction_id: params.transaction_id,
     value: params.value,
@@ -231,7 +280,7 @@ export function trackPurchase(params: PurchaseParams): void {
     ...utmFields(),
   });
   gtag("event", "conversion", {
-    send_to: `${GA_MEASUREMENT_ID}/${CONVERSION_LABEL}`,
+    send_to: `${ADS_CONVERSION_ID}/${CONVERSION_LABEL}`,
     value: params.value,
     currency: params.currency ?? "THB",
     transaction_id: params.transaction_id,
@@ -259,6 +308,12 @@ export interface BookingPayLaterParams {
 export function trackBookingPayLater(params: BookingPayLaterParams): void {
   // Enhanced conversions: set user data BEFORE the conversion event.
   setEnhancedConversionData({ email: params.email, phone: params.phone });
+  // GA4 relay (via GTM). Separate from the Ads gtag conversion below.
+  pushDataLayer("booking_pay_later", {
+    transaction_id: params.transaction_id,
+    product: params.product,
+    ...utmFields(),
+  });
   gtag("event", "booking_pay_later", {
     event_category: "booking",
     transaction_id: params.transaction_id,
@@ -266,7 +321,7 @@ export function trackBookingPayLater(params: BookingPayLaterParams): void {
     ...utmFields(),
   });
   gtag("event", "conversion", {
-    send_to: `${GA_MEASUREMENT_ID}/${BOOKING_PAY_LATER_LABEL}`,
+    send_to: `${ADS_CONVERSION_ID}/${BOOKING_PAY_LATER_LABEL}`,
     transaction_id: params.transaction_id,
   });
   fbq("track", "Schedule", {
