@@ -10,7 +10,6 @@ import { getStoredUtm, getStoredGclid, type UtmParams } from "@/utils/utm";
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
-    fbq?: (...args: unknown[]) => void;
     dataLayer?: unknown[];
     clarity?: (...args: unknown[]) => void;
   }
@@ -35,10 +34,33 @@ function gtag(...args: unknown[]): void {
   }
 }
 
-function fbq(...args: unknown[]): void {
-  if (typeof window !== "undefined" && typeof window.fbq === "function") {
-    window.fbq(...args);
-  }
+/**
+ * Meta Pixel events route through GTM (container GTM-TN3SM66Q) as dataLayer
+ * pushes - the site does NOT hard-code a pixel snippet, GTM owns the base tag
+ * and relays these to fbq(). Until those GTM tags exist this push is inert
+ * (exactly like the old window.fbq no-op). Tag wiring spec:
+ * docs/meta-pixel-gtm-spec.md
+ *
+ * meta_event_id is a per-event UUID so a future server-side CAPI layer
+ * (phase 2) can deduplicate against the browser pixel via eventID.
+ */
+function fbq(
+  command: "track" | "trackCustom",
+  eventName: string,
+  params?: Record<string, unknown>,
+): void {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "meta_event",
+    meta_event_type: command,
+    meta_event_name: eventName,
+    meta_event_params: params ?? {},
+    meta_event_id:
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  });
 }
 
 function utmFields(): Record<string, string | undefined> {
@@ -156,7 +178,12 @@ export function trackWhatsAppFastPathClick(
     dive_date: params.date,
     ...utmFields(),
   });
-  fbq("trackCustom", "WhatsAppFastPathClick", { product: params.product });
+  // Meta-side this is a standard Contact (click-to-WhatsApp), same family as
+  // trackWhatsAppClick - location distinguishes the booking-page strip.
+  fbq("track", "Contact", {
+    location: "booking_page_strip",
+    content_name: params.product,
+  });
 }
 
 export interface GenerateLeadParams {
@@ -280,6 +307,17 @@ export interface ViewContentParams {
   value?: number;
 }
 
+// Canonical live route slug per lander offer, used as Meta content_name so
+// Events Manager rows read like site URLs (meta-foundation-spec section 1).
+const OFFER_TO_SLUG: Record<string, string> = {
+  dsd: "discover-scuba-diving",
+  owd: "open-water-course",
+  aow: "advanced-open-water-course",
+  "fun-dive": "fun-dives",
+  "koh-tao": "koh-tao-diving",
+  "sail-rock": "sail-rock-diving",
+};
+
 export function trackViewContent(params: ViewContentParams): void {
   gtag("event", "view_item", {
     item_name: params.offer,
@@ -290,7 +328,7 @@ export function trackViewContent(params: ViewContentParams): void {
     ...utmFields(),
   });
   fbq("track", "ViewContent", {
-    content_name: params.offer,
+    content_name: OFFER_TO_SLUG[params.offer] ?? params.offer,
     content_category: "campaign_lander",
     value: params.value,
     currency: "THB",

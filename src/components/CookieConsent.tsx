@@ -7,7 +7,6 @@ declare global {
   interface Window {
     dataLayer: unknown[];
     gtag: (...args: unknown[]) => void;
-    fbq?: (...args: unknown[]) => void;
     clarity?: (...args: unknown[]) => void;
   }
 }
@@ -20,7 +19,6 @@ function updateConsent(granted: boolean) {
     ad_personalization: value,
     analytics_storage: value,
   });
-  window.fbq?.("consent", granted ? "grant" : "revoke");
   // Microsoft Clarity consentv2, gated to the same analytics_storage state.
   // Denied = cookieless no-consent recording (still captures heatmaps/replay,
   // no cookies); granted = first-party cookies + cross-session stitching. Safe
@@ -31,8 +29,11 @@ function updateConsent(granted: boolean) {
     analytics_Storage: value,
   });
   if (granted) {
-    // Fire the suppressed PageView for the current route now that consent landed.
-    window.fbq?.("track", "PageView");
+    // Meta Pixel consent gate: GTM's Meta base tag fires on this event (pixel
+    // init + the landing PageView), so the pixel only ever loads WITH ad
+    // consent. Fires on banner accept AND on mount for returning granted
+    // visitors - exactly once per page load. See docs/meta-pixel-gtm-spec.md.
+    window.dataLayer?.push({ event: "ads_consent_granted" });
   }
 }
 
