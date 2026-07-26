@@ -15,6 +15,13 @@ export function extractKbRecords(): KbRecord[] {
   const records: KbRecord[] = [];
 
   // ── blog posts: one record per section per post ────────────────────────────
+  // Paragraphs may carry minimal inline markup (see BlogRichText); strip it so
+  // the chatbot reads clean prose instead of "[label](https://…)".
+  const stripInline = (s: string) =>
+    s
+      .replace(/\[([^\]\n]+)\]\((?:https?:\/\/|\/|mailto:|tel:)[^)\s]+\)/g, "$1")
+      .replace(/\*\*([^*\n]+)\*\*/g, "$1");
+
   for (const post of blogPosts as any[]) {
     const lang = post.language ?? "en";
     const slugUrl = lang === "es" ? `/es/blog/${post.slug}` : `/blog/${post.slug}`;
@@ -22,7 +29,13 @@ export function extractKbRecords(): KbRecord[] {
     records.push({ source: `${slugUrl}#header`, text: header });
     for (let i = 0; i < (post.sections?.length ?? 0); i++) {
       const s = post.sections[i];
-      const parts = [s.heading, ...(s.paragraphs ?? [])].filter(Boolean);
+      const parts = [s.heading, ...(s.paragraphs ?? [])].filter(Boolean).map(stripInline);
+      // Fold table rows in as "label: value" so fares are answerable too.
+      if (s.table?.rows?.length) {
+        for (const row of s.table.rows as string[][]) {
+          if (row.length) parts.push(row.map(stripInline).join(": "));
+        }
+      }
       if (parts.length) records.push({ source: `${slugUrl}#s${i}`, text: parts.join("\n\n") });
     }
   }

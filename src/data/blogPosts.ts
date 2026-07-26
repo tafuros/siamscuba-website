@@ -1,9 +1,22 @@
 
 export interface BlogSection {
   heading?: string;
+  /**
+   * Body copy. Supports minimal inline markup (see BlogRichText):
+   *   [label](https://example.com) / [label](/internal-route) -> link
+   *   **bold** -> <strong>
+   */
   paragraphs: string[];
   image?: string;
+  /** Accessible alt text for `image`. Falls back to `heading` when omitted. */
+  imageAlt?: string;
+  /** Optional visible caption rendered under `image`. */
+  imageCaption?: string;
   mapLink?: string;
+  /** Call-to-action pills rendered under the section. First one is primary. */
+  links?: { label: string; url: string }[];
+  /** Optional data table (fares, prices, comparisons). */
+  table?: { head: string[]; rows: string[][]; caption?: string };
 }
 
 export interface BlogPost {
@@ -363,6 +376,155 @@ export const blogPosts: BlogPost[] = [
     tags: ["Nightlife"],
     relatedBlogSlugs: ["best-restaurants-koh-tao", "things-to-do-besides-diving"],
     readingTime: 5,
+  },
+  {
+    slug: "koh-tao-taxi-app",
+    title: "Getting Around Koh Tao: The Island Finally Has a Taxi App",
+    category: "Activities",
+    excerpt:
+      "No Grab, no Bolt - Koh Tao now has its own taxi app with fixed fares you read before you book. How it works, what a ride costs, and how to reach your dive shop.",
+    coverImage: "/blog/koh-tao-taxi-app-welovekohtao.webp",
+    date: "2026-07-26",
+    sections: [
+      {
+        heading: "Getting around Koh Tao has always been the awkward part",
+        paragraphs: [
+          "You land at Mae Haad pier with a backpack, a dive bag and no idea what a ride to your resort should cost. There is no Grab here. There is no Bolt. What there is: songthaew pickups parked at the pier, a taxi boat if you are heading somewhere with no road, and a price that depends entirely on how the negotiation goes.",
+          "It is the single most common question we get from students before they arrive - not \"what is the diving like\", but \"how do I get from the pier to you, and how much should I pay?\". For years the honest answer was \"ask, then agree the price before you get in\".",
+          "That changed. Koh Tao now has a real ride app, with the island mapped into zones and a fixed price you can read before you book anything.",
+        ],
+      },
+      {
+        heading: "We Love Koh Tao: the island's first taxi app",
+        paragraphs: [
+          "[We Love Koh Tao](https://welovekohtao.com/) is a ride app built specifically for this island - 21 km² of steep hills, dirt tracks and bays you can only reach by boat. Three ride types are live today: **taxi** (a car or pickup, priced per vehicle), **taxi boat** (for the bays with no road access) and **taxi bike** (a scooter ride, single passenger).",
+          "It was built by **Tafuros**, the same team behind this website, our course registration and booking systems, and [T-ink](https://shirts.siamscuba.com), our custom t-shirt printing app. On the island the service is operated by Lotus Group.",
+          "You do not need to install anything to try it - it runs in any mobile browser. iPhone users can also get it from the App Store. Two more sections, tours & dives and restaurants, are marked coming soon inside the app.",
+        ],
+        image: "/blog/welovekohtao-app-screens.webp",
+        imageAlt:
+          "Three We Love Koh Tao app screens: the ride-type menu with taxi, taxi boat and taxi bike, a fixed fare quote of 500 baht, and the island map with the booking sheet open.",
+        imageCaption:
+          "Pick a ride type, pick where you are going, and the fixed fare appears before you book.",
+        links: [
+          { label: "Open the app in your browser", url: "https://welovekohtao.com/app/" },
+          { label: "Get the iPhone app", url: "https://welovekohtao.com/get/" },
+        ],
+      },
+      {
+        heading: "Fixed fares: you read the price before you book",
+        paragraphs: [
+          "This is the part that matters. There are no meters and no surge pricing. The whole island is mapped into zones, and every zone pair has a set price. You see that number, in baht, before you tap the request button.",
+          "A taxi fare is **per vehicle, not per person** - up to 3 passengers are included, and it is 100 THB for each extra passenger after that. There is a **300 THB minimum** on any taxi ride, which is worth knowing before you book a two-minute hop.",
+          "Here are real fares from the app's own board, for a taxi with up to three people:",
+        ],
+        table: {
+          head: ["Route", "Fixed fare"],
+          rows: [
+            ["Mae Haad pier → Sairee Beach", "400 THB"],
+            ["Mae Haad pier → Chalok Baan Kao", "400 THB"],
+            ["Mae Haad pier → Freedom Beach", "400 THB"],
+            ["Mae Haad pier → Tanote Bay", "500 THB"],
+            ["Mae Haad pier → Hin Wong Bay", "600 THB"],
+            ["Sairee Beach → Chalok Baan Kao", "500 THB"],
+            ["Sairee Beach → Shark Bay (Haad Tien)", "500 THB"],
+            ["Sairee Beach → Tanote Bay", "600 THB"],
+          ],
+          caption:
+            "Taxi fares are per vehicle, up to 3 passengers. Prices as shown in the app in July 2026 - always confirm the quote on screen, which is the one that counts.",
+        },
+      },
+      {
+        heading: "Bikes, day hire and the bays with no road",
+        paragraphs: [
+          "A **taxi bike** is the cheap option if you are travelling alone and light: 200 THB minimum, then 20 THB per minute beyond that. Not the one to pick with a full dive bag.",
+          "If you want to loop the whole island - viewpoints, lunch, a swim, back again - there is a **full-day charter at 3,500 THB for up to 4 people**, plus 500 THB per extra person. You can also add waiting time to a normal booking, charged at 500 THB per 30-minute block, which is genuinely useful if you are stopping at a viewpoint on the way somewhere.",
+          "Several of the best spots on Koh Tao have no road at all - Mango Bay and Koh Nang Yuan among them. Those are **taxi boat** routes: you take a taxi to the departure point and continue by longtail. Boat routes are quoted inside the app rather than off a fixed road-zone board, so check the price on screen before you confirm.",
+        ],
+      },
+      {
+        heading: "How to book a ride, step by step",
+        paragraphs: [
+          "**1. Open the app.** On iPhone, install it from the App Store. On Android or anything else, open [welovekohtao.com/app](https://welovekohtao.com/app/) in your browser - it works as a web app, and you can add it to your home screen so it behaves like an installed one. There is no Android app on Google Play.",
+          "**2. Create an account.** Sign up with your email address; a verification code arrives by mail and you are in. It takes about a minute.",
+          "**3. Pick where you are going.** The destination list is grouped into hubs, beaches, dive clubs and restaurants, so you can usually just tap the name. You can also search any address or drop a pin on the map.",
+          "**4. Check the fare, then request.** The fixed price shows with distance and a rough duration. Adjust passengers if there are more than three of you, and optionally schedule a return trip, add waiting time, or switch to day hire. Then request the ride - the app matches you to the nearest available driver and you can follow them on the map.",
+          "**5. Pay the driver in cash on arrival.** Card payment is not live yet, so bring baht.",
+          "One honest note: this is a young service with a small driver pool, so at quiet hours there may be nobody online. If that happens the app hands you a WhatsApp fallback rather than leaving you stranded - but do not treat it as a guaranteed 24/7 fleet just yet.",
+        ],
+        image: "/blog/welovekohtao-fixed-fare-siam-scuba.webp",
+        imageAlt:
+          "The We Love Koh Tao booking screen showing a fixed island-route price of 500 baht for a ride to Siam Scuba, with passenger count, scheduled return and day-hire options.",
+        imageCaption: "The fare is shown - and locked - before you request the ride.",
+      },
+      {
+        heading: "Getting to Siam Scuba, and out to the dive sites",
+        paragraphs: [
+          "Siam Scuba is listed in the app under **dive clubs**, so you can select us as your destination by name instead of trying to describe where in Sairee we are. Pick us from the list, see the fare, and turn up.",
+          "**Book a course with us and your transfer from the pier is free.** That covers every course we run - [Discover Scuba](/discover-scuba), [Open Water](/open-water), [Advanced Open Water](/advanced-open-water), the [specialty courses](/courses), [Divemaster](/divemaster) and the [instructor course](/idc). Coming for fun dives instead, your pier transfer is 150 THB rather than the standard 400.",
+          "Either way, tell us which ferry you are on when you book and we will have the ride waiting - so your first Koh Tao taxi conversation is not a negotiation with a backpack on.",
+        ],
+        table: {
+          head: ["Arriving at Mae Haad pier", "Your transfer"],
+          rows: [
+            ["On any PADI course with us - Discover Scuba through to Instructor", "**Free**"],
+            ["Fun diving with us", "150 THB"],
+            ["Standard public fare", "400 THB"],
+          ],
+          caption:
+            "Course and fun-dive transfers are arranged by us - just tell us your ferry time when you book.",
+        },
+      },
+      {
+        heading: "Early starts, and reading the island off the map",
+        paragraphs: [
+          "Our boat mornings start early - club arrival time is 06:00. Booking the night before, or scheduling your return trip at the same time as the outbound one, saves a lot of standing around in the dark hoping something drives past.",
+          "The app also carries the island's hand-painted dive map - the one that hangs on dive-shop walls here. Every dive site, beach and viewpoint on it is tappable, so you can read what a site is like and book a fixed-fare ride to the bay it leaves from:",
+        ],
+        image: "/blog/koh-tao-hand-painted-dive-map.webp",
+        imageAlt:
+          "Hand-painted map of Koh Tao showing the island's dive sites, bays and beaches - Chumphon Pinnacle, Green Rock, White Rock, HTMS Sattakut, Koh Nang Yuan, Shark Bay, Tanote Bay and Hin Wong Bay - with Siam Scuba marked in Sairee.",
+        imageCaption:
+          "The island's hand-painted dive map. Every site, beach and viewpoint on it is tappable in the app.",
+        links: [
+          { label: "See our PADI courses", url: "/courses" },
+          { label: "Book a fun dive", url: "/fun-dive-booking" },
+        ],
+      },
+      {
+        heading: "Where the map actually takes you",
+        paragraphs: [
+          "If you are new to Koh Tao, the map is the fastest way to understand why the island punches so far above its size. The pinnacles off the north-west - Chumphon, Green Rock, White Rock - are the deep, big-fish sites. The [HTMS Sattakut wreck](/dive-sites) sits in easy recreational depth. [Koh Nang Yuan](/blog/best-snorkeling-spots-non-divers) is the three-islands-and-a-sandbar postcard everyone arrives having already seen.",
+          "Most of those you reach by dive boat with us rather than by taxi. The taxi part matters for everything else - getting to the pier for a 06:00 start, getting to Tanote or Hin Wong on a day off, getting home from Sairee at 01:00 without haggling.",
+          "Not booked your diving yet? Our [PADI courses](/courses) run from first breath underwater through to instructor, and if you are already certified you can [book a fun dive](/fun-dive-booking) with us directly.",
+        ],
+      },
+      {
+        heading: "What is not in the app yet",
+        paragraphs: [
+          "Being straight with you, because a half-finished picture is worse than no picture:",
+          "**Cash only.** Card payment is built but not switched on. Bring baht for the driver.",
+          "**No Android app.** iPhone has a native app; everyone else uses the browser version, which you can add to your home screen. Nothing is on Google Play.",
+          "**Tours, dives and restaurants are coming soon.** Those tiles exist in the app but are not live, so you cannot book a dive trip or a table through it today.",
+          "**Small driver pool.** This is an early, soft launch at island scale, not a city ride-hailing network. Availability at 03:00 is not guaranteed.",
+          "For what it is worth, that list is shrinking fast - and the core thing, knowing the price before you get in a vehicle on Koh Tao, works today.",
+        ],
+        links: [
+          { label: "Try it - open in your browser", url: "https://welovekohtao.com/app/" },
+          { label: "Get it on iPhone", url: "https://welovekohtao.com/get/" },
+        ],
+      },
+    ],
+    tags: ["Activities", "Local", "Transport", "Koh Tao"],
+    relatedCourses: ["open-water", "discover-scuba", "advanced-open-water"],
+    relatedBlogSlugs: [
+      "things-to-do-besides-diving",
+      "top-beaches-viewpoints-koh-tao",
+      "koh-tao-diving-cost-guide",
+    ],
+    relatedDiveSites: ["twins", "chumphon-pinnacle"],
+    featured: true,
+    readingTime: 8,
   },
 ];
 

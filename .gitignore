@@ -34,3 +34,8 @@ dist-ssr
 playwright-report/
 .playwright-mcp/
 .vercel
+
+# local-only scratch output (agent mockups / audit reports)
+mockups/
+reports/
+*.tmp.mjs

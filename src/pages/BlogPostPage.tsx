@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import RelatedCourses from "@/components/RelatedCourses";
 import RelatedPosts from "@/components/RelatedPosts";
 import DiveSiteCard from "@/components/DiveSiteCard";
+import { renderInline, SectionLinks, SectionTable } from "@/components/BlogRichText";
 import { blogPosts } from "@/data/blogPosts";
 import { findDiveSite } from "@/data/diveSites";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -239,9 +240,10 @@ const BlogPostPage = () => {
                       )}
                       {section.paragraphs.map((p, j) => (
                         <p key={j} className="text-foreground/80 leading-relaxed mb-3">
-                          {p}
+                          {renderInline(p)}
                         </p>
                       ))}
+                      {section.table && <SectionTable {...section.table} />}
                       {section.mapLink && (
                         <a
                           href={section.mapLink}
@@ -254,12 +256,23 @@ const BlogPostPage = () => {
                         </a>
                       )}
                       {section.image && (
-                        <img
-                          src={section.image}
-                          alt={section.heading || ""}
-                          className="rounded-lg w-full mt-4"
-                          loading="lazy"
-                        />
+                        <figure className="mt-6">
+                          <img
+                            src={section.image}
+                            alt={section.imageAlt || section.heading || ""}
+                            className="rounded-lg w-full"
+                            loading="lazy"
+                          />
+                          {section.imageCaption && (
+                            <figcaption className="mt-2 text-xs text-muted-foreground text-center">
+                              {section.imageCaption}
+                            </figcaption>
+                          )}
+                        </figure>
+                      )}
+                      {/* CTAs go last so they never interrupt copy -> media flow */}
+                      {section.links && section.links.length > 0 && (
+                        <SectionLinks links={section.links} />
                       )}
                     </div>
 
