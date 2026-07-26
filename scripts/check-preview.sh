@@ -40,11 +40,23 @@ else
   branch="$(git rev-parse --abbrev-ref HEAD)"
   [[ "$branch" == "main" ]] && die "On main - preview URLs are per-branch. Use PROD=1 to check production."
   command -v gh >/dev/null || die "gh CLI not found and no URL given."
-  info "Resolving preview URL for branch: $branch"
-  dep="$(gh api "repos/$REPO/deployments?ref=$branch&per_page=1" -q '.[0].id' 2>/dev/null || true)"
-  [[ -n "$dep" && "$dep" != "null" ]] || die "No deployment found for $branch. Push the branch first, then wait for Vercel."
-  BASE="$(gh api "repos/$REPO/deployments/$dep/statuses" -q '[.[] | select(.environment_url != null)][0].environment_url' 2>/dev/null || true)"
-  [[ -n "$BASE" && "$BASE" != "null" ]] || die "Deployment $dep has no environment_url yet - still building?"
+  # NOTE: Vercel registers GitHub deployments keyed by COMMIT SHA, not branch
+  # name - querying ?ref=<branch> always returns 0 results.
+  sha="$(git rev-parse HEAD)"
+  info "Resolving preview for $branch @ ${sha:0:8}"
+  BASE=""
+  for attempt in $(seq 1 "${PREVIEW_WAIT_TRIES:-10}"); do
+    dep="$(gh api "repos/$REPO/deployments?ref=$sha&per_page=1" -q '.[0].id' 2>/dev/null || true)"
+    if [[ -n "$dep" && "$dep" != "null" ]]; then
+      BASE="$(gh api "repos/$REPO/deployments/$dep/statuses?per_page=20" \
+        -q '[.[] | select(.environment_url != null and .environment_url != "")][0].environment_url' 2>/dev/null || true)"
+      [[ -n "$BASE" && "$BASE" != "null" ]] && break
+    fi
+    [[ "$attempt" == "1" ]] && info "Waiting for Vercel to publish a preview URL..."
+    sleep 15
+    BASE=""
+  done
+  [[ -n "$BASE" ]] || die "No preview URL for ${sha:0:8} after waiting. Is the branch pushed and has Vercel finished building?"
   BASE="${BASE%/}"
   USE_BYPASS=1
 fi
