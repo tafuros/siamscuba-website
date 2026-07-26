@@ -11,7 +11,7 @@ import RelatedCourses from "@/components/RelatedCourses";
 import RelatedPosts from "@/components/RelatedPosts";
 import DiveSiteCard from "@/components/DiveSiteCard";
 import { renderInline, SectionLinks, SectionTable } from "@/components/BlogRichText";
-import { blogPosts } from "@/data/blogPosts";
+import { blogPosts, blogPostPath } from "@/data/blogPosts";
 import { findDiveSite } from "@/data/diveSites";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -113,7 +113,7 @@ const BlogPostPage = () => {
   );
 
   const langCode = post.language ?? "en";
-  const articleUrl = `https://siamscuba.com${post.language === "es" ? "/es" : ""}/blog/${post.slug}`;
+  const articleUrl = `https://siamscuba.com${blogPostPath(post)}`;
 
   // ISO 8601 with Koh Tao timezone (ICT, no DST). Schema requires a full
   // datetime with timezone for datePublished / dateModified - bare YYYY-MM-DD

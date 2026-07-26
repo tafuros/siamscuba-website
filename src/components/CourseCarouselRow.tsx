@@ -1,12 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
-import CourseCard from "./CourseCard";
+import CourseCard, { type CourseCardData } from "./CourseCard";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 interface CourseCarouselRowProps {
-  courses: any[];
-  t: (key: any) => string;
+  courses: CourseCardData[];
+  t: (key: string) => string;
   setSelectedCourse: (key: string) => void;
 }
 

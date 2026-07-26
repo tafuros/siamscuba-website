@@ -39,3 +39,8 @@ playwright-report/
 mockups/
 reports/
 *.tmp.mjs
+
+# Local review pages from the retired buddy-check flow (superseded by the
+# review-artifact skill, which publishes Artifacts instead of local HTML).
+# docs/screenshots/*.png IS tracked - only stray HTML is ignored here.
+docs/screenshots/*.html

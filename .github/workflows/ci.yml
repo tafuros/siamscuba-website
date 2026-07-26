@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A newer push to the same branch cancels the older run - keeps queues short.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Blocking: these must pass before anything merges or deploys ────────────
+  verify:
+    name: typecheck · test · build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bunx tsc --noEmit
+
+      # Includes src/test/blog-internal-links.test.ts, which resolves every
+      # internal blog link against the real route table. This is the gate that
+      # catches dead links like the /courses 404 that reached production on
+      # 2026-07-26 - `vite preview` returns 200 for ANY path, so local review
+      # cannot detect a missing route.
+      - name: Unit tests
+        run: bun run test
+
+      # Catches SSG/prerender breakage and regenerates the chat KB + sitemap,
+      # so a content change that breaks the build fails here, not on Vercel.
+      - name: Production build
+        run: bun run build
+
+      # Resolves every internal href/src in the emitted HTML against the files
+      # the build produced, modelling Vercel's cleanUrls static resolution.
+      # Site-wide, not just blog data - it found two dead Spanish-post links
+      # on its first run.
+      - name: Dead internal links
+        run: bun run check:links
+
+      - name: Assert critical invariants survived the build
+        run: |
+          set -euo pipefail
+          fail() { echo "::error::$1"; exit 1; }
+
+          # SPA rewrite block must stay in vercel.json.
+          grep -q '"source": "/((?!api/).*)"' vercel.json \
+            || fail "vercel.json lost the SPA rewrites block"
+
+          # Analytics tags power live business tracking - never remove them.
+          grep -q 'GTM-TN3SM66Q'    index.html || fail "index.html lost the GTM container"
+          grep -q 'AW-18050429438'  index.html || fail "index.html lost the Google Ads tag"
+
+          # The prerender must actually emit pages and a sitemap.
+          test -f dist/index.html   || fail "build produced no dist/index.html"
+          test -f dist/sitemap.xml  || fail "build produced no sitemap"
+
+          echo "All critical invariants intact."
+
+  # Blocking. The error baseline was cleaned to 0 on 2026-07-26 (was 23), so any
+  # new error fails the build. 11 react-refresh warnings remain by design -
+  # they are inherent to files that export both a component and helpers, and
+  # eslint exits 0 on warnings.
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+      - run: bun install --frozen-lockfile
+      - run: bun run lint

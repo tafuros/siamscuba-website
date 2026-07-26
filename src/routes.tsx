@@ -185,6 +185,16 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/Accessibility")),
         entry: "src/pages/Accessibility.tsx",
       },
+      // Prerenders to dist/404.html, which Vercel serves (with a real 404
+      // status) for any path that matches no file. Without this the SPA
+      // rewrite in vercel.json never produces the NotFound page and visitors
+      // hitting an old or mistyped URL get Vercel's raw text error instead.
+      // Must stay ABOVE :courseSlug, or "404" is swallowed as a course slug.
+      {
+        path: "404",
+        lazy: lazyDefault(() => import("./pages/NotFound")),
+        entry: "src/pages/NotFound.tsx",
+      },
       {
         path: ":courseSlug",
         lazy: lazyDefault(() => import("./pages/CoursePage")),

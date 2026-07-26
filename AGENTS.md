@@ -77,14 +77,54 @@ The site ships with publishable values only; secrets live in `.env.local` (gitig
 
 ## Deploy Workflow
 
+**Never push straight to `main`.** `main` is production - the push IS the deploy.
+Work on a branch and let Ben review the Vercel **preview** deployment.
+
 ```
-1. Edit code locally
-2. Test with: bun run dev → check http://localhost:5173
-3. Optional: bun run lint and bun run build (catches issues before push)
-4. git add + git commit + git push
-5. Vercel auto-deploys main branch within ~60 seconds
-6. Verify on https://siamscuba.com
+1. Branch off main:      git checkout -b feat/<thing> origin/main
+2. Edit code
+3. Verify locally:       bun run test && bunx tsc --noEmit && bun run build
+                         bun run check:links      # dead internal links
+4. Push the branch:      git push -u origin feat/<thing>
+                         -> Vercel builds a PREVIEW URL for the branch
+5. Ben reviews the PREVIEW URL (not localhost - see the trap below)
+6. Run /deploy-check, get Ben's explicit go-ahead
+7. Merge to main -> Vercel deploys prod (~1-3 min)
+8. Verify on https://siamscuba.com (open ONCE via claude-in-chrome)
 ```
+
+CI (`.github/workflows/ci.yml`) runs on every PR and on main, and **all of it
+blocks**: typecheck, tests, lint, production build, dead-link check, and an
+invariant guard asserting `vercel.json` keeps the SPA rewrites block and
+`index.html` keeps the GTM/Ads tags.
+
+The lint error baseline was cleaned to **0** on 2026-07-26 (from 23), so any new
+error fails CI. 11 `react-refresh/only-export-components` warnings remain by
+design - unavoidable in files exporting both a component and helpers - and
+eslint exits 0 on warnings. Keep it at zero errors; don't reintroduce
+`continue-on-error`.
+
+### TRAP: localhost cannot tell you whether a route exists
+
+`vite preview` (and `bun run dev`) serve `index.html` for **any** path, so every
+URL returns 200 locally - including routes that do not exist. Vercel does the
+opposite: unmatched paths **hard-404**. A `/courses` link shipped to production
+on 2026-07-26 because it passed local review this way.
+
+So: never verify links or routes with curl against localhost. Use
+`bun run check:links` (resolves links against the emitted `dist/` files, the
+same way Vercel does) plus the `blog-internal-links` unit test, and do visual
+review on a Vercel preview URL.
+
+Related gotchas:
+- There is **no `/courses` route.** The courses list is the homepage `#courses`
+  section; individual course pages resolve through the `:courseSlug` catch-all
+  (`SLUG_TO_COURSE` in `src/lib/courseSlugMap.ts`).
+- Spanish blog posts exist **only** at `/es/blog/<slug>`. Always build blog links
+  with `blogPostPath(post)` from `src/data/blogPosts.ts`, never by interpolating
+  the slug.
+- Unmatched URLs are served `dist/404.html`, emitted by the `path: "404"` route
+  in `routes.tsx`. Keep that route above `:courseSlug`.
 
 If a deploy fails:
 - Check Vercel Dashboard → Deployments → click failed deploy → see build logs

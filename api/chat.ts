@@ -407,9 +407,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
     res.status(200).json({ reply });
     return;
-  } catch (err: any) {
-    console.error("[api/chat]", err?.message || err);
-    const status = err?.message === "ANTHROPIC_API_KEY is not set" ? 503 : 500;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[api/chat]", msg);
+    const status = msg === "ANTHROPIC_API_KEY is not set" ? 503 : 500;
     return res.status(status).json({ error: "chat_failed" });
   }
 }

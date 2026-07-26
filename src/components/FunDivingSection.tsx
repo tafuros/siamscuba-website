@@ -31,7 +31,11 @@ const FunDivingSection = () => {
                 const url = `${window.location.origin}/#fun-diving`;
                 const text = `Fun Diving — Siam Scuba Koh Tao`;
                 if (navigator.share) {
-                  try { await navigator.share({ title: text, url }); } catch {}
+                  try {
+                    await navigator.share({ title: text, url });
+                  } catch {
+                    // User dismissed the native share sheet - not an error.
+                  }
                 } else {
                   await navigator.clipboard.writeText(url);
                   toast.success(t("share_copied"));
