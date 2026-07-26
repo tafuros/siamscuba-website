@@ -41,6 +41,15 @@ export function renderInline(text: string): ReactNode {
           {bold}
         </strong>,
       );
+    } else if (href.startsWith("/") && href.includes("#")) {
+      // Hash targets use a real anchor, not <Link>: a full document load lets the
+      // browser natively scroll to the id. react-router would change the route
+      // without scrolling, landing the reader at the top of the page instead.
+      nodes.push(
+        <a key={key++} href={href} className={LINK_CLASS}>
+          {label}
+        </a>,
+      );
     } else if (href.startsWith("/")) {
       nodes.push(
         <Link key={key++} to={href} className={LINK_CLASS}>
@@ -79,18 +88,33 @@ export function SectionLinks({
   return (
     <div className="mt-5 flex flex-wrap gap-3">
       {links.map((link, i) => {
-        const internal = link.url.startsWith("/");
+        const isInternal = link.url.startsWith("/");
+        const isHash = isInternal && link.url.includes("#");
         const cls =
           "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold " +
           "transition-colors " +
           (i === 0
             ? "bg-primary text-primary-foreground hover:bg-primary/90"
             : "border border-primary/30 text-primary hover:bg-primary/10");
-        return internal ? (
-          <Link key={i} to={link.url} className={cls}>
-            {link.label}
-          </Link>
-        ) : (
+
+        // Internal route -> client-side Link.
+        if (isInternal && !isHash) {
+          return (
+            <Link key={i} to={link.url} className={cls}>
+              {link.label}
+            </Link>
+          );
+        }
+        // Internal hash -> plain anchor (same tab, indexable, native scroll-to).
+        if (isHash) {
+          return (
+            <a key={i} href={link.url} className={cls}>
+              {link.label}
+            </a>
+          );
+        }
+        // External -> new tab, nofollow.
+        return (
           <a
             key={i}
             href={link.url}

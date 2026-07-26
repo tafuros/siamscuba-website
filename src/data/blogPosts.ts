@@ -461,7 +461,7 @@ export const blogPosts: BlogPost[] = [
         heading: "Getting to Siam Scuba, and out to the dive sites",
         paragraphs: [
           "Siam Scuba is listed in the app under **dive clubs**, so you can select us as your destination by name instead of trying to describe where in Sairee we are. Pick us from the list, see the fare, and turn up.",
-          "**Book a course with us and your transfer from the pier is free.** That covers every course we run - [Discover Scuba](/discover-scuba), [Open Water](/open-water), [Advanced Open Water](/advanced-open-water), the [specialty courses](/courses), [Divemaster](/divemaster) and the [instructor course](/idc). Coming for fun dives instead, your pier transfer is 150 THB rather than the standard 400.",
+          "**Book a course with us and your transfer from the pier is free.** That covers every course we run - [Discover Scuba](/discover-scuba), [Open Water](/open-water), [Advanced Open Water](/advanced-open-water), the [specialty courses](/#courses), [Divemaster](/divemaster) and the [instructor course](/idc). Coming for fun dives instead, your pier transfer is 150 THB rather than the standard 400.",
           "Either way, tell us which ferry you are on when you book and we will have the ride waiting - so your first Koh Tao taxi conversation is not a negotiation with a backpack on.",
         ],
         table: {
@@ -487,7 +487,7 @@ export const blogPosts: BlogPost[] = [
         imageCaption:
           "The island's hand-painted dive map. Every site, beach and viewpoint on it is tappable in the app.",
         links: [
-          { label: "See our PADI courses", url: "/courses" },
+          { label: "See our PADI courses", url: "/#courses" },
           { label: "Book a fun dive", url: "/fun-dive-booking" },
         ],
       },
@@ -496,7 +496,7 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "If you are new to Koh Tao, the map is the fastest way to understand why the island punches so far above its size. The pinnacles off the north-west - Chumphon, Green Rock, White Rock - are the deep, big-fish sites. The [HTMS Sattakut wreck](/dive-sites) sits in easy recreational depth. [Koh Nang Yuan](/blog/best-snorkeling-spots-non-divers) is the three-islands-and-a-sandbar postcard everyone arrives having already seen.",
           "Most of those you reach by dive boat with us rather than by taxi. The taxi part matters for everything else - getting to the pier for a 06:00 start, getting to Tanote or Hin Wong on a day off, getting home from Sairee at 01:00 without haggling.",
-          "Not booked your diving yet? Our [PADI courses](/courses) run from first breath underwater through to instructor, and if you are already certified you can [book a fun dive](/fun-dive-booking) with us directly.",
+          "Not booked your diving yet? Our [PADI courses](/#courses) run from first breath underwater through to instructor, and if you are already certified you can [book a fun dive](/fun-dive-booking) with us directly.",
         ],
       },
       {
