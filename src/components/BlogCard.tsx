@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GlowCard } from "@/components/ui/spotlight-card";
-import type { BlogPost } from "@/data/blogPosts";
+import { blogPostPath, type BlogPost } from "@/data/blogPosts";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 interface BlogCardProps {
@@ -31,7 +31,7 @@ const BlogCard = ({ post, variant = "default" }: BlogCardProps) => {
   };
 
   return (
-    <Link to={`/blog/${post.slug}`} className="block h-full">
+    <Link to={blogPostPath(post)} className="block h-full">
       <GlowCard glowColor="blue" customSize className="h-full !p-0 !gap-0 !grid-rows-[1fr] !shadow-none">
         <Card className="overflow-hidden group cursor-pointer border-0 bg-transparent shadow-none hover:shadow-none transition-all duration-300 h-full">
           <div className={`overflow-hidden ${isHero ? "aspect-[16/9] lg:aspect-[16/10]" : "aspect-[16/10]"}`}>

@@ -43,6 +43,15 @@ export interface BlogPost {
   language?: "en" | "he" | "es";
 }
 
+/**
+ * Canonical in-app path for a post. Spanish posts are prerendered ONLY at
+ * /es/blog/<slug> (see routes.tsx getStaticPaths), so linking them at
+ * /blog/<slug> produces a hard 404 on Vercel. Always route blog links through
+ * this helper rather than interpolating the slug by hand.
+ */
+export const blogPostPath = (post: Pick<BlogPost, "slug" | "language">): string =>
+  `${post.language === "es" ? "/es" : ""}/blog/${post.slug}`;
+
 export const blogPosts: BlogPost[] = [
   {
     slug: "kokhav-rishon-koh-tao",
