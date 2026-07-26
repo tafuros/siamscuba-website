@@ -87,7 +87,8 @@ Work on a branch and let Ben review the Vercel **preview** deployment.
                          bun run check:links      # dead internal links
 4. Push the branch:      git push -u origin feat/<thing>
                          -> Vercel builds a PREVIEW URL for the branch
-5. Ben reviews the PREVIEW URL (not localhost - see the trap below)
+5. Verify the preview:   bun run check:preview     # automated, see below
+   Then Ben reviews it visually (not localhost - see the trap below)
 6. Run /deploy-check, get Ben's explicit go-ahead
 7. Merge to main -> Vercel deploys prod (~1-3 min)
 8. Verify on https://siamscuba.com (open ONCE via claude-in-chrome)
@@ -103,6 +104,38 @@ error fails CI. 11 `react-refresh/only-export-components` warnings remain by
 design - unavoidable in files exporting both a component and helpers - and
 eslint exits 0 on warnings. Keep it at zero errors; don't reintroduce
 `continue-on-error`.
+
+### Checking previews unattended
+
+Preview deployments sit behind Vercel **Deployment Protection (SSO)**, so a plain
+`curl` gets a 302 to `vercel.com/sso-api`. `bun run check:preview` gets past that
+using the project's *Protection Bypass for Automation* secret.
+
+```bash
+bun run check:preview                 # resolves the preview URL for the current branch
+bun run check:preview <preview-url>   # a specific deployment
+PROD=1 bun run check:preview          # production (needs no secret)
+```
+
+It asserts routing/status, that unmatched URLs hard-404 with the branded page,
+that the `/es/blog/*` posts resolve, that the GTM/Ads tags survived the build,
+and that the sitemap serves. Non-zero exit on any failure, so it is CI-usable.
+
+**One-time setup** (Ben, in his own terminal - the value must never enter a Claude
+session, a repo file, or a task board):
+
+1. Vercel → project **siam-website** → Settings → **Deployment Protection** →
+   *Protection Bypass for Automation* → **Generate**, then copy the value.
+2. Store it in the Keychain:
+   ```bash
+   security add-generic-password -a tafuros -s VERCEL_AUTOMATION_BYPASS_SECRET -w
+   ```
+   (`-w` with no value prompts silently; add `-U` to rotate an existing entry.)
+
+The script pipes the secret straight from the Keychain into a curl config on
+stdin, so it never appears in `argv` (i.e. not visible to `ps`), in a shell
+variable, or in output. Do not add any `echo` of the value. Do **not** disable
+Deployment Protection as a shortcut.
 
 ### TRAP: localhost cannot tell you whether a route exists
 

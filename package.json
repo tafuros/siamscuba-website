@@ -11,6 +11,7 @@
     "build:dev": "bun run scripts/generate-avif.ts && vite-react-ssg build --mode development && bun run scripts/generate-sitemap.ts",
     "sitemap": "bun run scripts/generate-sitemap.ts",
     "check:links": "bun run scripts/check-links.ts",
+    "check:preview": "bash scripts/check-preview.sh",
     "indexnow": "bun run scripts/indexnow-ping.ts",
     "avif": "bun run scripts/generate-avif.ts",
     "lint": "eslint .",
