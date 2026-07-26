@@ -68,16 +68,14 @@ jobs:
 
           echo "All critical invariants intact."
 
-  # ── Non-blocking: 23 pre-existing errors as of 2026-07-26 ─────────────────
-  # Mostly shadcn/ui boilerplate (empty interfaces, react-refresh export
-  # warnings) plus `any` in api/ and scripts/. Reported so regressions are
-  # visible, but not blocking or every PR would be red from day one.
-  # Once the baseline is clean, delete continue-on-error to make this a gate.
+  # Blocking. The error baseline was cleaned to 0 on 2026-07-26 (was 23), so any
+  # new error fails the build. 11 react-refresh warnings remain by design -
+  # they are inherent to files that export both a component and helpers, and
+  # eslint exits 0 on warnings.
   lint:
-    name: lint (advisory)
+    name: lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2

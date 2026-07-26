@@ -6,7 +6,28 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
 
-const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: any) => string; setSelectedCourse: (key: string) => void }) => {
+/** Shape of a course entry as built in CoursesSection. */
+export interface CourseCardData {
+  icon: LucideIcon;
+  title: string;
+  dialogKey: string;
+  subtitle?: string;
+  price: string;
+  duration: string;
+  highlights: string[];
+  featured?: boolean;
+  hasDetails?: boolean;
+}
+
+const CourseCard = ({
+  course,
+  t,
+  setSelectedCourse,
+}: {
+  course: CourseCardData;
+  t: (key: string) => string;
+  setSelectedCourse: (key: string) => void;
+}) => {
   const handleShare = async () => {
     const slug = COURSE_TO_SLUG[course.dialogKey];
     const shareUrl = slug
@@ -17,7 +38,9 @@ const CourseCard = ({ course, t, setSelectedCourse }: { course: any; t: (key: an
     if (navigator.share) {
       try {
         await navigator.share({ title: `${course.title} - Siam Scuba`, url: shareUrl });
-      } catch {}
+      } catch {
+        // User dismissed the native share sheet - not an error.
+      }
     } else {
       await navigator.clipboard.writeText(shareUrl);
       toast.success(t("share_copied"));

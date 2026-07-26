@@ -93,10 +93,16 @@ Work on a branch and let Ben review the Vercel **preview** deployment.
 8. Verify on https://siamscuba.com (open ONCE via claude-in-chrome)
 ```
 
-CI (`.github/workflows/ci.yml`) runs typecheck + tests + build + link check on every
-PR and on main. `lint` runs advisory-only: there are 23 pre-existing errors
-(mostly shadcn/ui boilerplate), so it does not block yet. Clean that baseline,
-then delete `continue-on-error` to make it a real gate.
+CI (`.github/workflows/ci.yml`) runs on every PR and on main, and **all of it
+blocks**: typecheck, tests, lint, production build, dead-link check, and an
+invariant guard asserting `vercel.json` keeps the SPA rewrites block and
+`index.html` keeps the GTM/Ads tags.
+
+The lint error baseline was cleaned to **0** on 2026-07-26 (from 23), so any new
+error fails CI. 11 `react-refresh/only-export-components` warnings remain by
+design - unavoidable in files exporting both a component and helpers - and
+eslint exits 0 on warnings. Keep it at zero errors; don't reintroduce
+`continue-on-error`.
 
 ### TRAP: localhost cannot tell you whether a route exists
 

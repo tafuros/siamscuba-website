@@ -58,9 +58,10 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
           );
           res.setHeader("Content-Type", "application/json");
           res.end(JSON.stringify({ reply }));
-        } catch (err: any) {
-          console.error("[dev /api/chat]", err?.message || err);
-          res.statusCode = err?.message === "ANTHROPIC_API_KEY is not set" ? 503 : 500;
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          console.error("[dev /api/chat]", msg);
+          res.statusCode = msg === "ANTHROPIC_API_KEY is not set" ? 503 : 500;
           res.end(JSON.stringify({ error: "chat_failed" }));
         }
       });
@@ -97,8 +98,8 @@ function googleAdsPulseDevApi(env: Record<string, string>): Plugin {
           const pulse = await getPulse(env);
           res.setHeader("Content-Type", "application/json");
           res.end(JSON.stringify(pulse));
-        } catch (err: any) {
-          const msg = err?.message || String(err);
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
           console.error("[dev /api/pulse]", msg);
           res.statusCode = msg.startsWith("missing_creds:") ? 503 : 502;
           res.end(

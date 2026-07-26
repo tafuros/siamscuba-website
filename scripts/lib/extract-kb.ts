@@ -4,7 +4,7 @@
 // Reads the structured data files (blogPosts, diveSites, translations, landerCopy)
 // and returns a flat list of {source, text} records.
 
-import { blogPosts } from "@/data/blogPosts";
+import { blogPosts, blogPostPath } from "@/data/blogPosts";
 import { diveSites } from "@/data/diveSites";
 import { translations } from "@/i18n/translations";
 import { LANDER_COPY } from "@/lib/landerCopy";
@@ -22,9 +22,8 @@ export function extractKbRecords(): KbRecord[] {
       .replace(/\[([^\]\n]+)\]\((?:https?:\/\/|\/|mailto:|tel:)[^)\s]+\)/g, "$1")
       .replace(/\*\*([^*\n]+)\*\*/g, "$1");
 
-  for (const post of blogPosts as any[]) {
-    const lang = post.language ?? "en";
-    const slugUrl = lang === "es" ? `/es/blog/${post.slug}` : `/blog/${post.slug}`;
+  for (const post of blogPosts) {
+    const slugUrl = blogPostPath(post);
     const header = `${post.title}\n${post.excerpt ?? ""}`.trim();
     records.push({ source: `${slugUrl}#header`, text: header });
     for (let i = 0; i < (post.sections?.length ?? 0); i++) {
@@ -41,7 +40,7 @@ export function extractKbRecords(): KbRecord[] {
   }
 
   // ── dive sites ─────────────────────────────────────────────────────────────
-  for (const site of diveSites as any[]) {
+  for (const site of diveSites as unknown as Record<string, unknown>[]) {
     const slug = site.slug ?? site.id ?? site.name?.toLowerCase().replace(/\s+/g, "-");
     const lines: string[] = [];
     for (const [k, v] of Object.entries(site)) {
@@ -49,7 +48,7 @@ export function extractKbRecords(): KbRecord[] {
       else if (Array.isArray(v) && v.every(x => typeof x === "string")) lines.push(`${k}: ${(v as string[]).join("; ")}`);
       else if (Array.isArray(v) && v.every(x => x && typeof x === "object")) {
         lines.push(`${k}:`);
-        for (const o of v as any[]) {
+        for (const o of v as Record<string, unknown>[]) {
           const inner = Object.entries(o).filter(([_, val]) => typeof val === "string").map(([kk, vv]) => `  ${kk}: ${vv}`).join("\n");
           if (inner) lines.push(inner);
         }
@@ -59,9 +58,9 @@ export function extractKbRecords(): KbRecord[] {
   }
 
   // ── translations: flatten leaf strings, group keys by topical prefix ───────
-  const flatten = (obj: any, prefix = ""): Array<[string, string]> => {
+  const flatten = (obj: unknown, prefix = ""): Array<[string, string]> => {
     const out: Array<[string, string]> = [];
-    for (const [k, v] of Object.entries(obj ?? {})) {
+    for (const [k, v] of Object.entries((obj ?? {}) as Record<string, unknown>)) {
       const key = prefix ? `${prefix}.${k}` : k;
       if (typeof v === "string") out.push([key, v]);
       else if (Array.isArray(v) && v.every(x => typeof x === "string")) out.push([key, (v as string[]).join("\n")]);
@@ -70,7 +69,7 @@ export function extractKbRecords(): KbRecord[] {
     return out;
   };
 
-  for (const [lang, dict] of Object.entries(translations as any)) {
+  for (const [lang, dict] of Object.entries(translations as Record<string, unknown>)) {
     const groups: { [topic: string]: string[] } = {};
     for (const [k, v] of flatten(dict)) {
       if (!v || v.length < 4) continue;
@@ -83,10 +82,10 @@ export function extractKbRecords(): KbRecord[] {
   }
 
   // ── lander copy: per-offer per-language, all string fields concatenated ────
-  for (const [offer, byLang] of Object.entries(LANDER_COPY as any)) {
-    for (const [lang, copy] of Object.entries(byLang as any)) {
+  for (const [offer, byLang] of Object.entries(LANDER_COPY as Record<string, unknown>)) {
+    for (const [lang, copy] of Object.entries(byLang as Record<string, unknown>)) {
       const parts: string[] = [];
-      const walk = (v: any) => {
+      const walk = (v: unknown) => {
         if (typeof v === "string") parts.push(v);
         else if (Array.isArray(v)) v.forEach(walk);
         else if (v && typeof v === "object") Object.values(v).forEach(walk);

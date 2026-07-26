@@ -66,6 +66,15 @@ function missingCreds(c: Creds): string[] {
 // Pull + sum spend/clicks/conversions for one date range. cost_micros / 1e6 = THB.
 // Dynamic import keeps the heavy gRPC client off the module-load path until a
 // real (authorized) request comes in.
+/** Minimal shape of a Google Ads search-stream metrics row. */
+type AdsMetricRow = {
+  metrics?: {
+    cost_micros?: number | string | null;
+    clicks?: number | string | null;
+    conversions?: number | string | null;
+  };
+};
+
 export async function getPulse(
   env: Record<string, string | undefined>,
 ): Promise<Pulse> {
@@ -96,7 +105,7 @@ export async function getPulse(
     let cost = 0;
     let clicks = 0;
     let conv = 0;
-    for (const r of rows as any[]) {
+    for (const r of rows as AdsMetricRow[]) {
       cost += Number(r.metrics?.cost_micros || 0);
       clicks += Number(r.metrics?.clicks || 0);
       conv += Number(r.metrics?.conversions || 0);
@@ -145,8 +154,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // to anyone without the secret.
     res.setHeader("Cache-Control", "private, max-age=300");
     return res.status(200).json(pulse);
-  } catch (err: any) {
-    const msg = err?.message || String(err);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
     console.error("[api/pulse]", msg);
     if (msg.startsWith("missing_creds:")) {
       return res.status(503).json({ error: "pulse_not_configured" });
