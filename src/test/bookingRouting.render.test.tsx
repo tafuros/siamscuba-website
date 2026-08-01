@@ -85,7 +85,7 @@ describe("booking page routing - campaign vs organic", () => {
 
   it("CAMPAIGN: a tagged visitor's iframe points at /dive/web, query string intact", () => {
     const src = wizardSrc(
-      "?utm_source=google&utm_medium=cpc&utm_campaign=ow-koh-tao&gclid=Cj0KCQ&product=OWD",
+      "?utm_source=google&utm_medium=cpc&utm_campaign=ow-koh-tao&gclid=Cj0KCQ&product=OW",
     );
 
     expect(src.origin + src.pathname).toBe(WEB_WIZARD_URL);
@@ -93,7 +93,9 @@ describe("booking page routing - campaign vs organic", () => {
     expect(src.searchParams.get("utm_source")).toBe("google");
     expect(src.searchParams.get("utm_medium")).toBe("cpc");
     expect(src.searchParams.get("utm_campaign")).toBe("ow-koh-tao");
-    expect(src.searchParams.get("product")).toBe("OWD");
+    // "OW", not "OWD": the fixture used the latter until 2026-08-01, which is
+    // not a real DiveOS Course.code. See landerProducts.test.ts.
+    expect(src.searchParams.get("product")).toBe("OW");
   });
 
   it("CAMPAIGN: first-touch storage alone still routes to /dive/web", () => {

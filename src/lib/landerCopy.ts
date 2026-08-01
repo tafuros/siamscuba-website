@@ -412,8 +412,8 @@ const OWD_EN: LanderCopy = {
   heroH1: "Get PADI certified in Koh Tao - 2.5 days, 12,000 THB, lifelong",
   heroSubhead:
     "Theory online and in our classroom, pool practice, then four real ocean dives - all in 2.5 days. You leave with a PADI card you can dive on anywhere in the world, forever.",
-  ctaPrimary: "Chat on WhatsApp",
-  ctaSecondary: "Ask about dates and discounts",
+  ctaPrimary: "Book your Open Water course",
+  ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why certify with Siam Scuba",
   uspTiles: [
     {
@@ -509,8 +509,8 @@ const OWD_ES: LanderCopy = {
   heroH1: "Certifícate PADI en Koh Tao - 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
     "Teoría online y en nuestra aula, prácticas en piscina y cuatro inmersiones reales en el mar - todo en 2,5 días. Te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
-  ctaPrimary: "Chatea por WhatsApp",
-  ctaSecondary: "Pregunta por fechas y descuentos",
+  ctaPrimary: "Reserva tu curso Open Water",
+  ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué certificarte con Siam Scuba",
   uspTiles: [
     {
@@ -606,8 +606,8 @@ const OWD_HE: LanderCopy = {
   heroH1: "כוכב ראשון ב-2.5 ימים בקו-טאו, 12,000 THB, לכל החיים",
   heroSubhead:
     "לימוד עיוני אונליין + שיעור במועדון, תרגול בבריכה, ואז ארבע צלילות אמיתיות בים - הכל ב-2.5 ימים. יוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
-  ctaPrimary: "שיחה ב-WhatsApp",
-  ctaSecondary: "שאלו על תאריכים והנחות",
+  ctaPrimary: "הזמינו את קורס ה-Open Water",
+  ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה להסמיך איתנו",
   uspTiles: [
     {
@@ -705,8 +705,8 @@ const AOW_EN: LanderCopy = {
   heroH1: "Go Advanced in Koh Tao - 1.5 days, 5 dives, 11,000 THB",
   heroSubhead:
     "Already Open Water certified? Push to 30m with five adventure dives - deep, wreck, night, navigation and buoyancy. No exams, no theory, just diving. One night's accommodation included.",
-  ctaPrimary: "Chat on WhatsApp",
-  ctaSecondary: "Ask about dates and combos",
+  ctaPrimary: "Book your Advanced course",
+  ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why go Advanced with Siam Scuba",
   uspTiles: [
     {
@@ -797,8 +797,8 @@ const AOW_ES: LanderCopy = {
   heroH1: "Sácate el Advanced en Koh Tao en Español!!! - 1.5 días, 5 inmersiones",
   heroSubhead:
     "¿Ya eres Open Water? Baja hasta 30m con cinco inmersiones de aventura - profunda, pecio, nocturna, navegación y flotabilidad. Sin exámenes, sin teoría, solo buceo. Una noche de alojamiento incluida.",
-  ctaPrimary: "Chatea por WhatsApp",
-  ctaSecondary: "Pregunta por fechas y combos",
+  ctaPrimary: "Reserva tu curso Advanced",
+  ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué hacer el Advanced con Siam Scuba",
   uspTiles: [
     {
@@ -889,8 +889,8 @@ const AOW_HE: LanderCopy = {
   heroH1: "כוכב שני בקוטאו בעברית!!! - יום וחצי, 5 צלילות, 11,000 THB",
   heroSubhead:
     "כבר מוסמכים Open Water? תרדו ל-30 מטר עם חמש צלילות הרפתקה - עומק, ספינה טרופה, לילה, ניווט וציפה. בלי מבחנים, בלי תיאוריה, רק צלילה. לילה לינה כלול.",
-  ctaPrimary: "שיחה ב-WhatsApp",
-  ctaSecondary: "שאלו על תאריכים וחבילות",
+  ctaPrimary: "הזמינו את קורס הכוכב השני",
+  ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה לעשות כוכב שני איתנו",
   uspTiles: [
     {

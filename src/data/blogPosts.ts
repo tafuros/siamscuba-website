@@ -568,7 +568,7 @@ const divingBlogPosts: BlogPost[] = [
           "Discover Scuba Diving: ฿2,600 for one dive, ฿3,600 for two - One day, no certification. An easy shallow-water start plus your ocean dives in calm water. Best if you're not sure you'll like diving.",
           "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
-          "PADI Open Water Diver: ฿12,000 - 3 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
+          "PADI Open Water Diver: ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
           "PADI Advanced Open Water: ฿11,000 - 2 days, 5 dives including deep and navigation. Takes you to 30m.",
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,500 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
@@ -681,7 +681,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Should you do AOW right after Open Water?",
         paragraphs: [
           "For most people, yes. Three reasons.",
-          "First, momentum. You've just spent 3 days getting comfortable underwater. Your buoyancy is starting to click, your gear feels normal, you're not fighting your mask anymore. Stopping for months and coming back later means rebuilding that comfort - usually you'll need a refresher dive at least.",
+          "First, momentum. You've just spent 2.5 days getting comfortable underwater. Your buoyancy is starting to click, your gear feels normal, you're not fighting your mask anymore. Stopping for months and coming back later means rebuilding that comfort - usually you'll need a refresher dive at least.",
           "Second, depth confidence. The first time you go past 18m is psychologically different than the first time at 12m. Doing it under instructor supervision while AOW skills are fresh is the safer way to make that jump.",
           "Third, it unlocks the actually-good dive sites. Doing OW + AOW back-to-back over 5-6 days means you spend the second half of your trip diving the legendary sites instead of the training reefs. The cost difference (11,000 THB) is small relative to the value of doing AOW now vs. flying home and coming back later.",
           "When NOT to do AOW immediately: if you didn't enjoy Open Water and aren't sure diving is for you, take a break. Forcing AOW right after a rough OW course is how people end up with bad memories and never dive again.",
@@ -914,10 +914,10 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "How long it takes",
         paragraphs: [
-          "Standard: 3 days on the island if you complete the eLearning theory component at home before you arrive (recommended).",
-          "Slower track: 4 days on the island if you do all theory in person.",
-          "Fastest: 2 days, but we don't recommend it. Rushing the course leaves you less comfortable in the water and makes the skills less automatic. The 2-day option is occasionally requested by tight-itinerary travellers; we only run it if the instructor judges the student ready.",
-          "If you have time, 4 days at a relaxed pace is the most enjoyable. Most students do 3 days.",
+          "Standard: 2.5 days on the island if you complete the eLearning theory component at home before you arrive (recommended). Day 1 is theory and pool, days 2 and 3 are your four ocean dives, and you are certified by late morning on the final day.",
+          "Slower track: add a day if you do all your theory in person on the island instead of online before you arrive.",
+          "We don't compress the course below 2.5 days. It is already an efficient schedule because the theory is done before you land - cutting it further leaves you less comfortable in the water and makes the skills less automatic.",
+          "If you have time, spreading the same course over an extra day at a relaxed pace is the most enjoyable way to do it.",
         ],
       },
       {
@@ -1272,7 +1272,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "El PADI Open Water Diver es la certificación de buceo más extendida del mundo. Más de 29 millones de buceadores certificados la tienen. Es vitalicia (no caduca), reconocida en unos 135 países, y te permite bucear hasta los 18 metros de profundidad acompañado de un compañero, en cualquier parte del mundo.",
           "Koh Tao, una pequeña isla en el golfo de Tailandia, es el lugar donde más certificaciones PADI Open Water se emiten cada año en todo el planeta. Esto se debe a una combinación de aguas cálidas (28-30°C todo el año), buena visibilidad, una gran cantidad de centros de buceo que compiten entre sí, y precios que son una fracción de lo que cuesta certificarse en el Caribe o Australia.",
-          "En Siam Scuba, el curso cuesta 12.000 THB (unos 310 EUR / 340 USD) y dura 3 días. Incluye todo el equipo, las inmersiones, los manuales, y la tarjeta de certificación oficial. No hay sorpresas en el precio.",
+          "En Siam Scuba, el curso cuesta 12.000 THB (unos 310 EUR / 340 USD) y dura 2,5 días. Incluye todo el equipo, las inmersiones, los manuales, y la tarjeta de certificación oficial. No hay sorpresas en el precio.",
         ],
       },
       {
