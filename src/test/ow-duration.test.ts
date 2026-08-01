@@ -100,6 +100,41 @@ describe("Open Water duration - visible copy agrees with the schema", () => {
   });
 });
 
+// The partner rate sheet going to the Bangkok Hebrew travel agencies prices
+// Open Water at 12,000 THB with a 1,200 THB commission. If an agent quotes
+// 12,000 and the customer finds a lower number on siamscuba.com, Siam loses the
+// argument and the margin. The homepage Course schema really did advertise
+// 11,000 (the AOW price) until 2026-08-01, so this is not hypothetical.
+describe("Open Water price is 12,000 THB on every surface", () => {
+  const OW_PRICE = "12,000";
+
+  for (const lang of ["en", "es", "he"] as const) {
+    it(`the ${lang} lander prices it at ${OW_PRICE} THB`, () => {
+      const blob = JSON.stringify(LANDER_COPY.owd[lang]);
+      expect(blob).toContain(OW_PRICE);
+      // 11,000 is Advanced Open Water and Rescue Diver. It must never appear
+      // on the Open Water lander in any language.
+      expect(blob, `${lang} OW lander shows 11,000 - that is the AOW price`).not.toContain(
+        "11,000",
+      );
+    });
+  }
+
+  it("the Hebrew guide page and Hebrew blog post both say 12,000", () => {
+    // /he is the page the Hebrew campaign (phase 2) would point at.
+    expect(read("src/pages/HebrewLanding.tsx")).toContain("12,000");
+    const he = read("src/data/blogPosts.ts");
+    expect(he).toContain("קורס Open Water Diver ב-Siam Scuba עולה 12,000");
+  });
+
+  it("the WhatsApp prefill quotes 12,000 in every language", () => {
+    const wa = read("src/utils/whatsapp.ts");
+    const owdBlock = wa.slice(wa.indexOf("owd: {"), wa.indexOf("aow: {"));
+    expect(owdBlock).toContain("12,000 THB");
+    expect(owdBlock).not.toContain("11,000");
+  });
+});
+
 describe("Open Water duration - blog posts do not contradict the landers", () => {
   // Statements about Koh Tao / the PADI standard in general, rather than about
   // Siam Scuba's own course. Left as written on purpose; listed here so the
