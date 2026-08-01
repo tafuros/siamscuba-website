@@ -77,11 +77,22 @@ const FunDiveBookingPage = () => {
   // means a CTA can never silently regress attribution again.
   // The DiveOS wizard reads these params (work done in parallel by the diveos
   // agent); we only deliver them on the iframe URL.
-  // Built in src/utils/bookingUrl.ts (pure + unit-tested there). Safe to read
-  // sessionStorage here: the iframe only mounts after hydration (see `mounted`).
+  //
+  // The same call also picks WHICH wizard: paid-campaign visitors get
+  // /dive/web (the zero-commission "Web" identity), everyone else keeps the
+  // familiar /dive/ben form with normal instructor/commission handling. See
+  // buildWizardIframeSrc for the rule. Both paths stay inside this page, so the
+  // postMessage conversion tracking below covers campaign AND organic bookings.
+  //
+  // includeStored is tied to `mounted` on purpose. The decision AND the params
+  // both depend on sessionStorage, which the prerendered HTML cannot have; a
+  // storage-derived src on the first client render is a hydration mismatch, and
+  // React keeps the SERVER attribute on mismatch - silently serving an
+  // unattributed link. The iframe already only renders post-hydration, and this
+  // makes that guarantee explicit rather than incidental.
   const iframeSrc = useMemo(
-    () => buildWizardIframeSrc(location.search),
-    [location.search],
+    () => buildWizardIframeSrc(location.search, { includeStored: mounted }),
+    [location.search, mounted],
   );
   // Fire the lead conversion at most once per page session, so a customer who
   // edits their contact details mid-wizard (re-emitting SIAM_BOOKING_LEAD)

@@ -407,11 +407,11 @@ const DSD_HE: LanderCopy = {
 const OWD_EN: LanderCopy = {
   seoTitle: "PADI Open Water Course in Koh Tao - 12,000 THB Lifelong Cert | Siam Scuba",
   seoDescription:
-    "Get PADI certified in 2.5 days on Koh Tao. Small groups (max 4), your first skills in shallow sheltered sea, then four ocean dives. 2 nights' accommodation included. Lifelong certification.",
+    "Get PADI certified in 2.5 days on Koh Tao. Small groups (max 4), classroom + pool + four ocean dives, 2 nights' accommodation included. Lifelong certification.",
   heroBadge: "PADI Open Water Diver",
   heroH1: "Get PADI certified in Koh Tao - 2.5 days, 12,000 THB, lifelong",
   heroSubhead:
-    "Theory online and in our classroom, your first skills in shallow sheltered sea, then four real ocean dives. All in 2.5 days, and you leave with a PADI card you can dive on anywhere in the world, forever.",
+    "Theory online and in our classroom, pool practice, then four real ocean dives - all in 2.5 days. You leave with a PADI card you can dive on anywhere in the world, forever.",
   ctaPrimary: "Chat on WhatsApp",
   ctaSecondary: "Ask about dates and discounts",
   uspHeadline: "Why certify with Siam Scuba",
@@ -440,7 +440,7 @@ const OWD_EN: LanderCopy = {
       "PADI eLearning + classroom theory at our club",
       "English-speaking PADI instructor for every session",
       "All gear, all dives, all materials",
-      "Confined-water session in shallow sheltered sea - a real reef from your first breath",
+      "Pool / confined-water session",
       "4 open-water dives at Koh Tao's best sites",
       "Dive insurance",
       "Boat refreshments: fruit, cookies, tea, coffee, water",
@@ -458,9 +458,9 @@ const OWD_EN: LanderCopy = {
   socialProofSubhead: "778 reviews and counting. Read what graduates say about their certification week.",
   whatYouDoHeadline: "Your 2.5-day path to certification",
   whatYouDoSubhead:
-    "Day 1 is theory and your first session in the sea. Days 2-3 are four real ocean dives, with a short final morning. Start the eLearning before you arrive and the classroom part flies by.",
+    "Day 1 is theory and pool. Days 2-3 are four real ocean dives, with a short final morning. Start the eLearning before you arrive and the classroom part flies by.",
   schedule: [
-    { time: "Day 1", label: "09:00 theory at the club · 11:00 first skills session in the bay" },
+    { time: "Day 1", label: "09:00 theory at the club · 11:00 pool practice" },
     { time: "Day 2", label: "Theory, then boat - sea drills and a dive to 12m, second dive at 14:00, back by 16:00" },
     { time: "Day 3", label: "06:00 dawn dive to 18m · 10:00 final dive · certified by 11:00 🎉" },
   ],
@@ -490,7 +490,7 @@ const OWD_EN: LanderCopy = {
     },
     {
       q: "Where does the confined-water training happen?",
-      a: "In a sheltered shallow bay you can stand up in - real salt water, real reef, real fish. It meets PADI's confined-water standard exactly, and it means your first proper dive holds no surprises.",
+      a: "In our pool. You learn every skill somewhere calm, clear and shallow enough to stand up in, with nothing else going on - so by the time you reach the ocean on day 2, the skills are already familiar.",
     },
     {
       q: "Can I add Advanced after?",
@@ -504,11 +504,11 @@ const OWD_EN: LanderCopy = {
 const OWD_ES: LanderCopy = {
   seoTitle: "Curso PADI Open Water en Koh Tao - Certificación de por Vida 12,000 THB | Siam Scuba",
   seoDescription:
-    "Sácate el PADI en 2,5 días en Koh Tao. Grupos pequeños (máx. 4), tus primeras habilidades en mar poco profundo y resguardado, y luego cuatro inmersiones. 2 noches de alojamiento incluidas. Certificación de por vida.",
+    "Sácate el PADI en 2,5 días en Koh Tao. Grupos pequeños (máx. 4), teoría + piscina + cuatro inmersiones, 2 noches de alojamiento incluidas. Certificación de por vida.",
   heroBadge: "PADI Open Water Diver",
   heroH1: "Certifícate PADI en Koh Tao - 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
-    "Teoría online y en nuestra aula, tus primeras habilidades en mar poco profundo y resguardado, y luego cuatro inmersiones reales. Todo en 2,5 días, y te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
+    "Teoría online y en nuestra aula, prácticas en piscina y cuatro inmersiones reales en el mar - todo en 2,5 días. Te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
   ctaPrimary: "Chatea por WhatsApp",
   ctaSecondary: "Pregunta por fechas y descuentos",
   uspHeadline: "Por qué certificarte con Siam Scuba",
@@ -537,7 +537,7 @@ const OWD_ES: LanderCopy = {
       "Teoría online + clase en nuestro club",
       "Instructor PADI de habla inglesa en cada sesión",
       "Equipo profesional, inmersiones y material completo",
-      "Sesión de aguas confinadas en mar poco profundo y resguardado - arrecife real desde la primera respiración",
+      "Sesión en piscina / aguas confinadas",
       "4 inmersiones en los mejores sitios de Koh Tao",
       "Seguro de buceo",
       "Tentempiés en el barco: fruta, galletas, té, café y agua",
@@ -555,9 +555,9 @@ const OWD_ES: LanderCopy = {
   socialProofSubhead: "778 reseñas y subiendo. Lee lo que dicen los graduados de su semana de certificación.",
   whatYouDoHeadline: "Tu camino a la certificación en 2,5 días",
   whatYouDoSubhead:
-    "Día 1 teoría y tu primera sesión en el mar. Días 2-3 cuatro inmersiones reales, con una última mañana corta. Empieza el eLearning antes de llegar y la parte teórica será pan comido.",
+    "Día 1 teoría y piscina. Días 2-3 cuatro inmersiones reales, con una última mañana corta. Empieza el eLearning antes de llegar y la parte teórica será pan comido.",
   schedule: [
-    { time: "Día 1", label: "09:00 teoría en el club · 11:00 primera sesión de habilidades en la bahía" },
+    { time: "Día 1", label: "09:00 teoría en el club · 11:00 prácticas en piscina" },
     { time: "Día 2", label: "Teoría y barco - prácticas en el mar e inmersión a 12m, segunda inmersión a las 14:00, vuelta a las 16:00" },
     { time: "Día 3", label: "06:00 inmersión al amanecer a 18m · 10:00 última inmersión · certificado a las 11:00 🎉" },
   ],
@@ -587,7 +587,7 @@ const OWD_ES: LanderCopy = {
     },
     {
       q: "¿Dónde se hace la sesión de aguas confinadas?",
-      a: "En una bahía resguardada y poco profunda donde haces pie: agua salada real, arrecife real, peces reales. Cumple exactamente el estándar de aguas confinadas de PADI, y hace que tu primera inmersión no te sorprenda en nada.",
+      a: "En nuestra piscina. Aprendes cada habilidad en un sitio tranquilo, claro y poco profundo donde haces pie, sin nada más alrededor - así, cuando llegas al mar el día 2, las habilidades ya te salen solas.",
     },
     {
       q: "¿Puedo añadir el Advanced después?",
@@ -601,11 +601,11 @@ const OWD_ES: LanderCopy = {
 const OWD_HE: LanderCopy = {
   seoTitle: "קורס PADI Open Water בקוטאו - הסמכה לכל החיים ב-12,000 THB | סיאם סקובה",
   seoDescription:
-    "תוסמכו ל-PADI ב-2.5 ימים בקוטאו. קבוצות קטנות (מקס׳ 4), המיומנויות הראשונות בים רדוד ומוגן, ואז ארבע צלילות בים. 2 לילות לינה כלולים. הסמכה לכל החיים.",
+    "תוסמכו ל-PADI ב-2.5 ימים בקוטאו. קבוצות קטנות (מקס׳ 4), תיאוריה + בריכה + ארבע צלילות בים, 2 לילות לינה כלולים. הסמכה לכל החיים.",
   heroBadge: "PADI כוכב ראשון - Open Water Diver",
   heroH1: "כוכב ראשון ב-2.5 ימים בקו-טאו, 12,000 THB, לכל החיים",
   heroSubhead:
-    "לימוד עיוני אונליין + שיעור במועדון, המיומנויות הראשונות בים רדוד ומוגן, ואז ארבע צלילות אמיתיות בים. הכל ב-2.5 ימים, ויוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
+    "לימוד עיוני אונליין + שיעור במועדון, תרגול בבריכה, ואז ארבע צלילות אמיתיות בים - הכל ב-2.5 ימים. יוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
   ctaPrimary: "שיחה ב-WhatsApp",
   ctaSecondary: "שאלו על תאריכים והנחות",
   uspHeadline: "למה להסמיך איתנו",
@@ -634,7 +634,7 @@ const OWD_HE: LanderCopy = {
       "לימוד עיוני אונליין + שיעור כיתה במועדון",
       "מדריכים ישראלים, דוברי עברית ואנגלית",
       "ציוד צלילה מלא ומקצועי, כל הצלילות והחומרים",
-      "מפגש מים מוגנים בים רדוד ושקט - שונית אמיתית כבר מהנשימה הראשונה",
+      "מפגש בריכה / מים רדודים",
       "4 צלילות באתרים הכי טובים של קוטאו",
       "ביטוח צלילה",
       "כיבוד על הסירה: פירות, עוגיות, תה, קפה ומים",
@@ -652,9 +652,9 @@ const OWD_HE: LanderCopy = {
   socialProofSubhead: "778 ביקורות וזה ממשיך. קראו מה בוגרים אומרים על שבוע ההסמכה שלהם.",
   whatYouDoHeadline: "הדרך שלכם להסמכה תוך 2.5 ימים",
   whatYouDoSubhead:
-    "יום 1 תיאוריה והמפגש הראשון בים. ימים 2-3 ארבע צלילות בים, כשהבוקר האחרון קצר. שווה להתחיל את הלימוד האונליין לפני שמגיעים.",
+    "יום 1 תיאוריה ובריכה. ימים 2-3 ארבע צלילות בים, כשהבוקר האחרון קצר. שווה להתחיל את הלימוד האונליין לפני שמגיעים.",
   schedule: [
-    { time: "יום 1", label: "09:00 תיאוריה במועדון · 11:00 מפגש מיומנויות ראשון במפרץ" },
+    { time: "יום 1", label: "09:00 תיאוריה במועדון · 11:00 תרגול בבריכה" },
     { time: "יום 2", label: "תיאוריה, ואז סירה - תרגול בים וצלילה עד 12 מ׳, צלילה שנייה ב-14:00, חזרה ב-16:00" },
     { time: "יום 3", label: "06:00 צלילת שחר עד 18 מ׳ · 10:00 צלילה אחרונה · מוסמכים ב-11:00 🎉" },
   ],
@@ -684,7 +684,7 @@ const OWD_HE: LanderCopy = {
     },
     {
       q: "איפה מתקיים תרגול המים המוגנים?",
-      a: "במפרץ רדוד ומוגן שאפשר לעמוד בו - מים מלוחים אמיתיים, שונית אמיתית, דגים אמיתיים. זה עומד בדיוק בתקן המים המוגנים של PADI, וזה אומר שהצלילה הראשונה שלכם לא מפתיעה בכלום.",
+      a: "בבריכה שלנו. לומדים כל מיומנות במקום רגוע, צלול ורדוד מספיק כדי לעמוד בו, בלי שום דבר אחר מסביב - כך שכשמגיעים לים ביום 2, המיומנויות כבר מוכרות.",
     },
     {
       q: "אפשר להוסיף Advanced אחרי?",
@@ -2047,10 +2047,19 @@ export function landerHreflangAlternates(offer: Offer): Partial<Record<Lang, str
   };
 }
 
-// JSON-LD pricing - uses the lower tier as the headline price (with availability/options
-// detailed in copy). Schema.org Offer expects a single number per Offer.
-const PRICES: Record<Offer, { price: string; currency: string; duration: string }> = {
-  dsd: { price: "2600", currency: "THB", duration: "P1D" },
+// JSON-LD pricing. `price` is the headline (lowest) tier. When an offer has a
+// SECOND tier, set `highPrice` and the JSON-LD emits an AggregateOffer spanning
+// the range instead of a single Offer - otherwise the rich result advertises a
+// price the customer cannot actually buy the advertised product for.
+//
+// DSD is exactly that case: 2,600 THB buys ONE dive, 3,600 THB buys TWO, and the
+// visible lander copy has always said both. Emitting a bare 2,600 Offer next to
+// an H1 reading "2 dives, 3,600 THB" is a mismatch Google can flag.
+const PRICES: Record<
+  Offer,
+  { price: string; highPrice?: string; currency: string; duration: string }
+> = {
+  dsd: { price: "2600", highPrice: "3600", currency: "THB", duration: "P1D" },
   owd: { price: "12000", currency: "THB", duration: "P2DT12H" },
   aow: { price: "11000", currency: "THB", duration: "P1DT12H" },
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
@@ -2076,6 +2085,25 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
   const url = landerUrl(offer, lang);
   const meta = PRICES[offer];
 
+  // A two-tier offer becomes an AggregateOffer so the range is machine-readable.
+  const offers: Record<string, unknown> = meta.highPrice
+    ? {
+        "@type": "AggregateOffer",
+        lowPrice: meta.price,
+        highPrice: meta.highPrice,
+        offerCount: 2,
+        priceCurrency: meta.currency,
+        availability: "https://schema.org/InStock",
+        url,
+      }
+    : {
+        "@type": "Offer",
+        price: meta.price,
+        priceCurrency: meta.currency,
+        availability: "https://schema.org/InStock",
+        url,
+      };
+
   const primary: Record<string, unknown> =
     offer === "fun-dive" || offer === "koh-tao" || offer === "sail-rock"
       ? {
@@ -2086,13 +2114,7 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
           url,
           provider: { "@type": "Organization", name: "Siam Scuba", "@id": `${SITE}/#organization` },
           areaServed: { "@type": "Place", name: "Koh Tao" },
-          offers: {
-            "@type": "Offer",
-            price: meta.price,
-            priceCurrency: meta.currency,
-            availability: "https://schema.org/InStock",
-            url,
-          },
+          offers,
         }
       : {
           "@context": "https://schema.org",
@@ -2106,13 +2128,7 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
             courseMode: "onsite",
             duration: meta.duration,
           },
-          offers: {
-            "@type": "Offer",
-            price: meta.price,
-            priceCurrency: meta.currency,
-            availability: "https://schema.org/InStock",
-            url,
-          },
+          offers,
         };
 
   return [primary, buildFaqJsonLd(offer, lang)];

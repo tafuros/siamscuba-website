@@ -115,14 +115,14 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 Accommodation available - 500 THB per night",
         "📸 Underwater video & photos - 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "Loved it? Continue to Open Water course - just 2 more days of diving to get certified! 🐠💙",
     },
     "Open Water Diver": {
       header: "⭐ Your First Diving Course - PADI Certified for Life!",
       intro: "No experience needed! In just 2.5 days you'll earn a PADI Open Water certification - recognized worldwide, valid for life. Dive to 18 meters with instructors in multiple languages.",
       itinerary: [
-        { day: "Day 1", description: "09:00 - Meet at the club for theory. Break. 11:00 - Confined-water session in the shallow sheltered bay for practical skills." },
+        { day: "Day 1", description: "09:00 - Meet at the club for theory. Break. 11:00 - Pool session for practical skills." },
         { day: "Day 2", description: "09:00 - Second theory session. 11:00 - Boat departure. Ocean drills + first dive to 12m. Lunch break. 14:00 - Second dive at another site. 16:00 - Return to club." },
         { day: "Day 3", description: "06:30 - First dive to 18m. 09:00 - Break. 10:00 - Final dive. 11:00 - Back to the club 🎉" },
       ],
@@ -134,7 +134,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       included: [
         "4 open-water dives at stunning sites",
         "Full professional diving equipment 🥽",
-        "Theory sessions + safety drills in shallow sheltered sea",
+        "Theory sessions + pool safety drills",
         "Diving insurance",
         "Boat snacks - fruit, water, cookies, tea & coffee ☕",
         "2 nights accommodation - on us! 🎁",
@@ -458,14 +458,14 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 לינה זמינה - 500 THB ללילה",
         "📸 וידאו ותמונות מתחת למים - 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "אהבתם? המשיכו לקורס Open Water - רק עוד יומיים של צלילה כדי לקבל הסמכה! 🐠💙",
     },
     "Open Water Diver": {
       header: "⭐ קורס הצלילה הראשון שלכם - הסמכת PADI לכל החיים!",
       intro: "לא נדרש ניסיון קודם! תוך 2.5 ימים בלבד תקבלו הסמכת PADI Open Water - מוכרת בכל העולם, תקפה לכל החיים. צוללים עד 18 מטר עם מדריכים בכמה שפות.",
       itinerary: [
-        { day: "יום 1", description: "09:00 - מפגש במועדון לתיאוריה. הפסקה. 11:00 - מפגש מים מוגנים במפרץ הרדוד לתרגול מיומנויות." },
+        { day: "יום 1", description: "09:00 - מפגש במועדון לתיאוריה. הפסקה. 11:00 - אימון בבריכה לתרגול מיומנויות." },
         { day: "יום 2", description: "09:00 - מפגש תיאוריה שני. 11:00 - יציאה בסירה. תרגולים בים + צלילה ראשונה עד 12 מ'. הפסקת צהריים. 14:00 - צלילה שנייה באתר אחר. 16:00 - חזרה למועדון." },
         { day: "יום 3", description: "06:30 - צלילה ראשונה עד 18 מ'. 09:00 - הפסקה. 10:00 - צלילה אחרונה. 11:00 - חזרה למועדון 🎉" },
       ],
@@ -477,7 +477,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       included: [
         "4 צלילות במים פתוחים באתרים מרהיבים",
         "ציוד צלילה מקצועי מלא 🥽",
-        "מפגשי תיאוריה + תרגולי בטיחות בים רדוד ומוגן",
+        "מפגשי תיאוריה + תרגולי בטיחות בבריכה",
         "ביטוח צלילה",
         "כיבוד על הסירה - פירות, מים, עוגיות, תה וקפה ☕",
         "2 לילות לינה - עלינו! 🎁",
@@ -801,14 +801,14 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 Alojamiento disponible: 500 THB por noche",
         "📸 Vídeo y fotos submarinas: 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "¿Te encantó? Continúa con el curso Open Water: ¡solo 2 días más de buceo para certificarte! 🐠💙",
     },
     "Open Water Diver": {
       header: "⭐ Tu primer curso de buceo: ¡certificación PADI de por vida!",
       intro: "¡No se necesita experiencia! En solo 2,5 días obtendrás la certificación PADI Open Water, reconocida en todo el mundo y válida de por vida. Bucea hasta 18 metros con instructores en varios idiomas.",
       itinerary: [
-        { day: "Día 1", description: "09:00 - Encuentro en el club para la teoría. Descanso. 11:00 - Sesión de aguas confinadas en la bahía poco profunda para habilidades prácticas." },
+        { day: "Día 1", description: "09:00 - Encuentro en el club para la teoría. Descanso. 11:00 - Sesión de piscina para habilidades prácticas." },
         { day: "Día 2", description: "09:00 - Segunda sesión de teoría. 11:00 - Salida en barco. Ejercicios en el mar + primera inmersión a 12 m. Pausa para comer. 14:00 - Segunda inmersión en otro punto. 16:00 - Regreso al club." },
         { day: "Día 3", description: "06:30 - Primera inmersión a 18 m. 09:00 - Descanso. 10:00 - Inmersión final. 11:00 - De vuelta al club 🎉" },
       ],
@@ -820,7 +820,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       included: [
         "4 inmersiones en mar abierto en sitios espectaculares",
         "Equipo de buceo profesional completo 🥽",
-        "Sesiones de teoría + prácticas de seguridad en mar poco profundo",
+        "Sesiones de teoría + prácticas de seguridad en piscina",
         "Seguro de buceo",
         "Snacks a bordo: fruta, agua, galletas, té y café ☕",
         "2 noches de alojamiento, ¡invita la casa! 🎁",
@@ -1144,7 +1144,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 Hébergement disponible - 500 THB par nuit",
         "📸 Vidéo et photos sous-marines - 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "Vous avez adoré ? Poursuivez avec le cours Open Water : seulement 2 jours de plongée de plus pour être certifié ! 🐠💙",
     },
     "Open Water Diver": {

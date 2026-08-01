@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import BookNowLink from "@/components/BookNowLink";
 import Footer from "@/components/Footer";
 import TripAdvisorSection from "@/components/TripAdvisorSection";
 import LanderNav from "@/components/landers/LanderNav";
@@ -36,11 +35,10 @@ const ICONS: Record<UspTile["icon"], typeof Shield> = {
 
 const FUN_DIVE_BOOKING_PATH = "/fun-dive-booking";
 
-// DiveOS wizard product codes for the offers that hand off to the web wizard.
-const WIZARD_PRODUCT: Partial<Record<Offer, string>> = { owd: "OWD" };
-
-const WEB_WIZARD_CTA =
-  "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm md:text-base font-semibold text-accent-foreground bg-accent hover:bg-accent/90 shadow-lg transition-all hover:-translate-y-0.5";
+// DiveOS wizard product codes, preselected on the booking wrapper. Offers with
+// no entry (aow, and the dive-site offers whose trip is picked in the wizard)
+// simply open the wizard without a preselect.
+const WIZARD_PRODUCT: Partial<Record<Offer, string>> = { owd: "OWD", dsd: "DSD" };
 
 // Dive-site photos that live in /public/dive-sites. To add a photo later, drop
 // the file in that folder and add one line here keyed by the exact site name.
@@ -64,38 +62,42 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
     [offer, lang]
   );
 
-  // Landers whose primary CTA routes through the booking iframe page, where the
-  // postMessage->lead/purchase conversion tracking is wired so a deposit fires a
-  // valued Purchase in Google Ads:
+  // Landers whose primary CTA routes through the /fun-dive-booking wrapper,
+  // where the postMessage -> lead/purchase conversion tracking is wired so a
+  // deposit fires a valued Purchase in Google Ads:
   //   - fun-dive + koh-tao (certified divers, generic fun-dive booking)
-  //   - dsd (Discover Scuba) -> booking with product=DSD so a deposit fires the
-  //     full ~3,600 THB Purchase value instead of a valueless WhatsApp tap.
-  // For these, WhatsApp stays as the SECONDARY CTA. Other offers (owd) keep both
-  // CTAs on WhatsApp since they have no self-serve booking.
+  //   - dsd  -> product=DSD, so a deposit fires the real Purchase value
+  //   - owd  -> product=OWD (moved here 2026-08-01, see below)
   //
-  // The Open Water lander is the exception: it had NO booking CTA at all (both
-  // buttons went to WhatsApp), which for a 12,000 THB product carrying paid
-  // traffic is the most expensive gap on the site. It now hands off directly to
-  // the DiveOS web wizard on dash.siamscuba.com via BookNowLink, which forwards
-  // the full utm/gclid query string across the host boundary.
+  // ONE WRAPPER FOR EVERY PRODUCT (Ben's rule, 2026-08-01). The wrapper page
+  // decides at runtime which DiveOS wizard the iframe loads: paid-campaign
+  // visitors get /dive/web, everyone else keeps the familiar /dive/ben form
+  // with normal instructor/commission handling. See utils/bookingUrl.ts ->
+  // buildWizardIframeSrc. Routing every product through the same page means a
+  // single place owns that decision AND every product keeps the postMessage
+  // conversion signal.
   //
-  // dsd/fun-dive/koh-tao deliberately stay on the embedded-iframe route: that
-  // flow is live, converting, and has the postMessage -> Purchase tracking
-  // wired. Move them only once /dive/web is deployed and verified.
+  // Open Water used to hand off DIRECTLY to dash.siamscuba.com/dive/web via
+  // BookNowLink, which meant it was the only product with no client-side
+  // conversion signal at all - on a 12,000 THB course about to take ~330
+  // THB/day of paid traffic. The wrapper restores the signal; the conditional
+  // src preserves the paid-traffic identity it was getting from the direct link.
+  //
+  // aow still has no self-serve booking product code, so both its CTAs stay on
+  // WhatsApp. It is the last lander with no booking CTA - flagged, not fixed.
   const usesBookingIframe =
-    offer === "fun-dive" || offer === "koh-tao" || offer === "dsd";
-  const usesWebWizard = offer === "owd";
-  // DSD pre-selects its product in the DiveOS wizard; date-based offers (Sail
-  // Rock) carry a date instead, but DSD has no per-trip date strip - just the
-  // product. utm_passthrough=1 forwards the lander's first-touch UTMs/gclid.
+    offer === "fun-dive" || offer === "koh-tao" || offer === "dsd" || offer === "owd";
+  // utm_passthrough=1 forwards the lander's first-touch UTMs/gclid. It is a
+  // no-op now that passthrough defaults to ON; it stays as documented intent.
   const bookingParams = new URLSearchParams({ utm_passthrough: "1" });
-  if (offer === "dsd") bookingParams.set("product", "DSD");
+  const wizardProduct = WIZARD_PRODUCT[offer];
+  if (wizardProduct) bookingParams.set("product", wizardProduct);
   const primaryHref = usesBookingIframe
     ? `${FUN_DIVE_BOOKING_PATH}?${bookingParams.toString()}`
     : whatsappHref;
   // "external" here means "the primary CTA is the green WhatsApp button", which
-  // is true only when neither booking path applies.
-  const primaryIsExternal = !usesBookingIframe && !usesWebWizard;
+  // is true only when the booking wrapper does not apply.
+  const primaryIsExternal = !usesBookingIframe;
 
   // Per-offer WhatsApp click locations. The koh-tao conquest lander reports its
   // own slug-prefixed locations (e.g. koh_tao_diving_hero) so its conquest
@@ -159,14 +161,6 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                   <MessageCircle className="h-4 w-4" />
                   {copy.ctaPrimary}
                 </a>
-              ) : usesWebWizard ? (
-                <BookNowLink
-                  location={`lander_${offer}_hero`}
-                  product={WIZARD_PRODUCT[offer]}
-                  className={WEB_WIZARD_CTA}
-                >
-                  {copy.ctaPrimary}
-                </BookNowLink>
               ) : (
                 <Button asChild size="lg" className="rounded-full px-6 bg-accent hover:bg-accent/90">
                   <Link to={primaryHref}>{copy.ctaPrimary}</Link>
@@ -357,24 +351,14 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
               </a>
             ) : (
               <>
-                {usesWebWizard ? (
-                  <BookNowLink
-                    location={`lander_${offer}_cta_strip`}
-                    product={WIZARD_PRODUCT[offer]}
-                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm md:text-base font-semibold bg-background text-foreground hover:bg-background/90 shadow-lg transition-all hover:-translate-y-0.5"
-                  >
-                    {copy.ctaPrimary}
-                  </BookNowLink>
-                ) : (
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="secondary"
-                    className="rounded-full px-6"
-                  >
-                    <Link to={primaryHref}>{copy.ctaPrimary}</Link>
-                  </Button>
-                )}
+                <Button
+                  asChild
+                  size="lg"
+                  variant="secondary"
+                  className="rounded-full px-6"
+                >
+                  <Link to={primaryHref}>{copy.ctaPrimary}</Link>
+                </Button>
                 <a
                   href={whatsappHref}
                   target="_blank"
@@ -424,19 +408,9 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
             </a>
           ) : (
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              {usesWebWizard ? (
-                <BookNowLink
-                  location={`lander_${offer}_closing`}
-                  product={WIZARD_PRODUCT[offer]}
-                  className={`${WEB_WIZARD_CTA} px-8`}
-                >
-                  {copy.ctaPrimary}
-                </BookNowLink>
-              ) : (
-                <Button asChild size="lg" className="rounded-full px-8 bg-accent hover:bg-accent/90">
-                  <Link to={primaryHref}>{copy.ctaPrimary}</Link>
-                </Button>
-              )}
+              <Button asChild size="lg" className="rounded-full px-8 bg-accent hover:bg-accent/90">
+                <Link to={primaryHref}>{copy.ctaPrimary}</Link>
+              </Button>
               <a
                 href={whatsappHref}
                 target="_blank"

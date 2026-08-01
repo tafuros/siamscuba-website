@@ -79,20 +79,20 @@ export const blogPosts: BlogPost[] = [
         heading: "כוכב ראשון עם Siam Scuba — מה מיוחד אצלנו?",
         paragraphs: [
           "ב-Siam Scuba אנחנו עובדים בקבוצות קטנות של עד 4 תלמידים למדריך אחד. זה לא מקרי — זה מדיניות. אנחנו מאמינים שצלילה ראשונה צריכה להיות חוויה אישית, לא טיול קבוצתי של 12 אנשים.",
-          "הקורס מתפרס על פני 3.5 ימים: לימוד תיאוריה (אפשר לסיים חלק ממנה אונליין לפני הנסיעה), תרגול מיומנויות בים רדוד ומוגן, ואז 4 צלילות בים הפתוח. בסיום תקבלו כרטיס הסמכה PADI שמוכר בכל מקום בעולם — לכל החיים.",
+          "הקורס מתפרס על פני 3.5 ימים: לימוד תיאוריה (אפשר לסיים חלק ממנה אונליין לפני הנסיעה), תרגול בבריכה, ואז 4 צלילות בים הפתוח. בסיום תקבלו כרטיס הסמכה PADI שמוכר בכל מקום בעולם — לכל החיים.",
         ],
       },
       {
         heading: "מה כולל הקורס ומה המחיר?",
         paragraphs: [
-          "קורס Open Water Diver ב-Siam Scuba עולה 12,000 בת (כ-1,200 שקל) וכולל: כל הציוד (מסכה, כנפיים, רגולטור, חליפה), ספרי לימוד PADI, 4 צלילות בים הפתוח, 2 מפגשי מיומנויות בים רדוד ומוגן, מדריך אישי, כרטיס הסמכה בינלאומי, ומימון מלא לסירות הצלילה שלנו.",
+          "קורס Open Water Diver ב-Siam Scuba עולה 12,000 בת (כ-1,200 שקל) וכולל: כל הציוד (מסכה, כנפיים, רגולטור, חליפה), ספרי לימוד PADI, 4 צלילות בים הפתוח, 2 צלילות בבריכה, מדריך אישי, כרטיס הסמכה בינלאומי, ומימון מלא לסירות הצלילה שלנו.",
           "אין הפתעות במחיר — מה שרואים זה מה שמשלמים. ניתן לרכוש את חוברות הלימוד של PADI אונליין מראש (eLearning) ולחסוך זמן יקר בקוטאו.",
         ],
       },
       {
         heading: "יום ראשון בקורס — מה קורה?",
         paragraphs: [
-          "מגיעים לקליניקה שלנו ב-Mae Haad, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים למפרץ הרדוד לתרגול ראשוני — הנשימות הראשונות שלכם מתחת למים קורות במים מלוחים מעל שונית אמיתית. שם לומדים לנשום מתחת למים, לפנות מסכה ממים ועוד כישורי בסיס.",
+          "מגיעים לקליניקה שלנו ב-Mae Haad, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים לבריכה לתרגול ראשוני — שם לומדים לנשום מתחת למים, לפנות מסכה ממים ועוד כישורי בסיס.",
           "ביום השני והשלישי יוצאים לים בסירות הצלילה שלנו — ה-Siam Explorer וה-Siam Pearl — לאתרי צלילה כמו Japanese Gardens ו-Twin Peaks, עם ריף אלמוגים מרהיב ושפע של חיים ימיים.",
         ],
       },
@@ -565,7 +565,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Honest price breakdown for every PADI course on Koh Tao",
         paragraphs: [
           "Here's what each course costs at Siam Scuba in 2026. Every price below includes all gear rental, boat trips, certification fees, and tax. No surcharges added at the shop.",
-          "Discover Scuba Diving: ฿2,600 - One day, no certification. An easy shallow-water start plus 1-2 ocean dives in calm water. Best if you're not sure you'll like diving.",
+          "Discover Scuba Diving: ฿2,600 for one dive, ฿3,600 for two - One day, no certification. An easy shallow-water start plus your ocean dives in calm water. Best if you're not sure you'll like diving.",
           "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
           "PADI Open Water Diver: ฿12,000 - 3 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
@@ -604,7 +604,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "Total budget by goal: from try-dive to professional",
         paragraphs: [
-          "Day tripper / try diving: ฿2,600 for the Discover Scuba dive + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
+          "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (฿3,600 for two dives) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
           "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿2,000 = ฿25,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
           "Pro pathway: ฿38,500 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿80,000-฿120,000 over 6-8 weeks. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",
@@ -896,7 +896,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "The 4 components of the course",
         paragraphs: [
           "Theory: 5 modules covering physics, physiology, equipment, dive planning, and the underwater environment. You can do this as eLearning at home before you arrive (saves a day on the island), or in classroom sessions with us.",
-          "Confined water sessions: 5 sets of skills practiced in a shallow, protected area of the sea. Mask clearing, regulator recovery, alternate air source use, weight handling, neutral buoyancy basics. This is where you build the muscle memory.",
+          "Confined water sessions: 5 sets of skills practiced in a pool. Mask clearing, regulator recovery, alternate air source use, weight handling, neutral buoyancy basics. This is where you build the muscle memory.",
           "Open water dives: 4 dives in the ocean. You demonstrate the same skills you learned in confined water, plus you do a small navigation exercise.",
           "Final exam: 50 multiple-choice questions, 75% pass mark. If you fail one section you re-do that section only, not the full exam.",
         ],
@@ -1064,7 +1064,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "The PADI Open Water Course",
         paragraphs: [
           "PADI (Professional Association of Diving Instructors) is the world's largest dive training organisation, certifying over 1 million divers every year. Their Open Water Diver course is the most recognised beginner certification on the planet.",
-          "The PADI course consists of three parts: knowledge development (theory), confined water dives (with us, in a shallow sheltered bay), and open water dives (four dives in the ocean). On Koh Tao, the full Open Water course typically takes 3–4 days.",
+          "The PADI course consists of three parts: knowledge development (theory), confined water dives (with us, in our pool), and open water dives (four dives in the ocean). On Koh Tao, the full Open Water course typically takes 3–4 days.",
           "One key thing to know: PADI materials (the printed or digital manual) are an additional cost on top of your course fee — usually around 800–1,000 THB extra. At Siam Scuba, we include everything in one transparent price so there are no surprises.",
         ],
       },
@@ -1174,10 +1174,10 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
       {
-        heading: "Day 1 — Theory and Your First Skills in the Sea",
+        heading: "Day 1 — Theory and Pool",
         paragraphs: [
           "You'll start with theory: either through the PADI eLearning platform (which you can complete online before arriving on Koh Tao) or with your instructor using the PADI manual. The theory covers dive physics, equipment, hand signals, safety procedures, and dive planning.",
-          "In the afternoon, you head to a shallow, protected bay for your first confined water dives. This is where you practice the core skills: clearing your mask, breathing from a regulator underwater, and hovering neutrally. Most students are surprised by how natural it feels within an hour.",
+          "In the afternoon, you head to the pool for your first confined water dives. This is where you practice the core skills: clearing your mask, breathing from a regulator underwater, and hovering neutrally. Most students are surprised by how natural it feels within an hour.",
         ],
       },
       {
@@ -1276,9 +1276,9 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
       {
-        heading: "El curso paso a paso: teoría, mar poco profundo y mar abierto",
+        heading: "El curso paso a paso: teoría, piscina y mar abierto",
         paragraphs: [
-          "Día 1: Teoría y primeras habilidades en el mar. Llegas por la mañana a nuestra base en Mae Haad. Repasas la teoría con tu instructor (puedes haber hecho la parte online en casa, recomendado, para ahorrar tiempo). Por la tarde bajas a una bahía poco profunda y resguardada con todo el equipo y practicas las habilidades fundamentales: respirar bajo el agua, despejar la máscara, recuperar el regulador, control de flotabilidad básico.",
+          "Día 1: Teoría y piscina. Llegas por la mañana a nuestra base en Mae Haad. Repasas la teoría con tu instructor (puedes haber hecho la parte online en casa, recomendado, para ahorrar tiempo). Por la tarde bajas a la piscina con todo el equipo y practicas las habilidades fundamentales: respirar bajo el agua, despejar la máscara, recuperar el regulador, control de flotabilidad básico.",
           "Día 2: Dos inmersiones en mar abierto. Salimos en nuestro barco (Siam Explorer o Siam Pearl) hacia un sitio de buceo cercano. La primera inmersión es a 8-12 metros - una zona de coral suave con peces tropicales. La segunda baja a 12-15 metros, donde verás más vida marina, posiblemente tortugas.",
           "Día 3: Dos inmersiones más, esta vez con más profundidad (hasta 18 metros) y un pequeño ejercicio de navegación con brújula. El examen final teórico (50 preguntas tipo test, 75% para aprobar) lo haces antes o después de las inmersiones, según prefieras.",
           "Al final del Día 3 sales con la certificación. La tarjeta física llega por correo en 1-2 semanas, pero el certificado digital queda activo inmediatamente.",

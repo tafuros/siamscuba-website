@@ -7,12 +7,14 @@
       "name": "Discover Scuba Diving",
       "duration": "1 day (half day option)",
       "price_thb": 2600,
+      "price_thb_one_dive": 2600,
+      "price_thb_two_dives": 3600,
       "price_thb_extra_dive": 1000,
       "certification": false,
       "requires_prior_cert": false,
       "max_depth_m": 12,
-      "description": "First-time dive experience for people with no prior scuba background. One day at the dive center: briefing, gear intro, 4 basic skills in shallow water, then a dive to 12m. Optional second dive same day for 1,000 THB extra. Personal instructor throughout.",
-      "included": ["2 dives at different sites", "personal instructor", "full equipment", "dive insurance", "boat snacks"],
+      "description": "First-time dive experience for people with no prior scuba background. One day at the dive center: briefing, gear intro, 4 basic skills in shallow sheltered sea, then a dive to 12m. 2,600 THB for one dive, 3,600 THB for two dives the same day. Personal instructor throughout.",
+      "included": ["1 or 2 ocean dives (your choice)", "personal instructor", "full equipment", "dive insurance", "boat snacks"],
       "not_included": ["meals", "transport to dive center"]
     },
     {

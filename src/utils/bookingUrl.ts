@@ -14,6 +14,15 @@ export const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 // paid traffic.
 export const WEB_WIZARD_URL = "https://dash.siamscuba.com/dive/web";
 
+/**
+ * utm_medium values that mean "this visitor cost us money".
+ *
+ * Lower-cased on comparison. Google Ads auto-tagging sends `cpc`; the Meta and
+ * manual-tagged campaigns use the other three. Anything else - organic, direct,
+ * referral, email, the walk-in QR codes - is NOT campaign traffic.
+ */
+const PAID_MEDIUMS = new Set(["cpc", "ppc", "paidsearch", "paid_social"]);
+
 /** Params that carry paid-traffic attribution, in the order we emit them. */
 const UTM_KEYS = [
   "utm_source",
@@ -104,12 +113,99 @@ export function buildBookingUrl(search: string, options: BookingUrlOptions = {})
   return qs ? `${baseUrl}?${qs}` : baseUrl;
 }
 
+export interface CampaignTrafficOptions {
+  /**
+   * Consult first-touch sessionStorage. Must be false anywhere the answer is
+   * rendered on the server or on the first client render - see buildBookingUrl.
+   */
+  includeStored?: boolean;
+}
+
+/**
+ * Did this visitor arrive from a PAID campaign?
+ *
+ * This is a BUSINESS decision, not a tracking one. It selects which DiveOS
+ * identity takes the booking (see buildWizardIframeSrc), which decides whether
+ * an instructor earns commission on it. Widening this predicate takes
+ * commission away from organic leads, so it stays deliberately narrow:
+ * a Google click id, or an explicitly paid utm_medium. Nothing else.
+ *
+ * Both signals are read from the incoming URL first and then, unless the caller
+ * opts out, from the first-touch sessionStorage capture (App.tsx ->
+ * utils/utm.ts). The storage read is what makes the decision survive in-site
+ * navigation: ad click -> lander -> course page -> /fun-dive-booking, where the
+ * booking page's own URL carries nothing at all.
+ */
+export function isCampaignTraffic(
+  search: string,
+  options: CampaignTrafficOptions = {},
+): boolean {
+  const { includeStored = true } = options;
+  const incoming = new URLSearchParams(search);
+
+  if (incoming.get("gclid")) return true;
+  const medium = incoming.get("utm_medium");
+  if (medium && PAID_MEDIUMS.has(medium.trim().toLowerCase())) return true;
+
+  if (!includeStored) return false;
+  if (getStoredGclid()) return true;
+  const storedMedium = getStoredUtm().medium;
+  return Boolean(storedMedium && PAID_MEDIUMS.has(storedMedium.trim().toLowerCase()));
+}
+
+export interface WizardIframeOptions extends BookingUrlOptions {
+  /** Override the campaign-traffic target. Tests only. */
+  campaignBaseUrl?: string;
+  /** Override the organic target. Tests only. */
+  organicBaseUrl?: string;
+}
+
 /**
  * Build the src for the DiveOS wizard iframe on /fun-dive-booking.
- * Thin alias over buildBookingUrl pinned to the legacy embedded form.
+ *
+ * BEN'S ROUTING RULE (2026-08-01): every product that arrives through a paid
+ * campaign goes through the same process. Anything that did not come from a
+ * campaign stays on the familiar link the site has always used.
+ *
+ *   campaign traffic -> WEB_WIZARD_URL  (/dive/web, the zero-commission "Web"
+ *                                        identity built for paid traffic)
+ *   everything else  -> LEAD_FORM_URL   (/dive/ben, UNCHANGED - normal
+ *                                        instructor/commission handling)
+ *
+ * Only the iframe's src flips. The visitor is on /fun-dive-booking either way,
+ * so the postMessage -> generate_lead / Purchase tracking in
+ * pages/FunDiveBookingPage.tsx keeps working for BOTH paths. That is the whole
+ * reason Open Water moved off its direct dash.siamscuba.com link onto this
+ * wrapper: a 12,000 THB product taking paid traffic had no client-side
+ * conversion signal at all.
+ *
+ * Do NOT widen the campaign side to "has any utm_source" or similar. Sending an
+ * organic lead to /dive/web silently strips an instructor's commission.
+ *
+ * The storage opt-out (?utm_passthrough=0) suppresses the stored-value half of
+ * the decision as well as the passthrough itself, so the two can never
+ * disagree - which would otherwise route a visitor to the paid wizard carrying
+ * no attribution at all, the worst of both outcomes.
  */
-export function buildWizardIframeSrc(search: string, baseUrl = LEAD_FORM_URL): string {
-  return buildBookingUrl(search, { baseUrl });
+export function buildWizardIframeSrc(
+  search: string,
+  options: WizardIframeOptions = {},
+): string {
+  const {
+    includeStored = true,
+    campaignBaseUrl = WEB_WIZARD_URL,
+    organicBaseUrl = LEAD_FORM_URL,
+    ...rest
+  } = options;
+
+  const optedOut = new URLSearchParams(search).get("utm_passthrough") === "0";
+  const consultStorage = includeStored && !optedOut;
+
+  const baseUrl = isCampaignTraffic(search, { includeStored: consultStorage })
+    ? campaignBaseUrl
+    : organicBaseUrl;
+
+  return buildBookingUrl(search, { ...rest, baseUrl, includeStored });
 }
 
 /**
