@@ -173,12 +173,12 @@ describe("buildWizardIframeSrc - conditional booking destination", () => {
 
   it("CAMPAIGN: a tagged visitor reaches /dive/web with the full query string intact", () => {
     const adClick =
-      "?utm_source=google&utm_medium=cpc&utm_campaign=ow-koh-tao&utm_content=learn-to-dive-rsa&utm_term=learn+to+dive&gclid=Cj0KCQjw_ADHESIVE123&product=OWD";
+      "?utm_source=google&utm_medium=cpc&utm_campaign=ow-koh-tao&utm_content=learn-to-dive-rsa&utm_term=learn+to+dive&gclid=Cj0KCQjw_ADHESIVE123&product=OW";
     const url = new URL(buildWizardIframeSrc(adClick));
 
     expect(url.origin + url.pathname).toBe(WEB_WIZARD_URL);
     expect(Object.fromEntries(url.searchParams.entries())).toEqual({
-      product: "OWD",
+      product: "OW",
       utm_source: "google",
       utm_medium: "cpc",
       utm_campaign: "ow-koh-tao",
@@ -274,11 +274,11 @@ describe("buildBookingUrl - handoff to the DiveOS web wizard", () => {
   it("forwards a full real ad query string across the host boundary", () => {
     const adClick =
       "?utm_source=google&utm_medium=cpc&utm_campaign=ow-koh-tao&utm_content=learn-to-dive-rsa&utm_term=learn+to+dive&gclid=Cj0KCQjw_ADHESIVE123";
-    const url = new URL(buildBookingUrl(adClick, { product: "OWD" }));
+    const url = new URL(buildBookingUrl(adClick, { product: "OW" }));
 
     expect(url.origin + url.pathname).toBe(WEB_WIZARD_URL);
     expect(Object.fromEntries(url.searchParams.entries())).toEqual({
-      product: "OWD",
+      product: "OW",
       utm_source: "google",
       utm_medium: "cpc",
       utm_campaign: "ow-koh-tao",
@@ -293,14 +293,14 @@ describe("buildBookingUrl - handoff to the DiveOS web wizard", () => {
     // Visitor lands on /open-water-course?gclid=..., clicks through to another
     // page (clean URL) and back, then hits Book. The CTA sees NO query string.
     seedFirstTouch();
-    const p = paramsOf(buildBookingUrl("", { product: "OWD" }));
+    const p = paramsOf(buildBookingUrl("", { product: "OW" }));
     expect(p.gclid).toBe("GCL_ABC123");
     expect(p.utm_source).toBe("google");
-    expect(p.product).toBe("OWD");
+    expect(p.product).toBe("OW");
   });
 
   it("lets an explicit URL product override the CTA's preselect", () => {
-    expect(paramsOf(buildBookingUrl("?product=DSD", { product: "OWD" })).product).toBe("DSD");
+    expect(paramsOf(buildBookingUrl("?product=DSD", { product: "OW" })).product).toBe("DSD");
   });
 
   it("omits stored attribution for the SSG/first-client render", () => {
@@ -308,8 +308,8 @@ describe("buildBookingUrl - handoff to the DiveOS web wizard", () => {
     // BookNowLink renders this href on the server and on the first client
     // render; reading sessionStorage there is a hydration mismatch, and React
     // keeps the SERVER attribute on mismatch - silently unattributing the link.
-    expect(buildBookingUrl("", { product: "OWD", includeStored: false })).toBe(
-      `${WEB_WIZARD_URL}?product=OWD`,
+    expect(buildBookingUrl("", { product: "OW", includeStored: false })).toBe(
+      `${WEB_WIZARD_URL}?product=OW`,
     );
   });
 });

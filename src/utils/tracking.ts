@@ -189,7 +189,7 @@ export function trackWhatsAppFastPathClick(
 export interface BookNowClickParams {
   /** Where on the page the CTA sits, e.g. "no_pool_hero". */
   location: string;
-  /** Wizard product code when the CTA preselects one (e.g. "OWD"). */
+  /** Wizard product code when the CTA preselects one (e.g. "OW"). */
   product?: string;
   /** The wizard URL that was clicked, including forwarded attribution. */
   url?: string;
