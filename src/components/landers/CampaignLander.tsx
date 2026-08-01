@@ -87,9 +87,12 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
   // about to start. Its DiveOS code was unknown when the wrapper was built;
   // it is "AOW", confirmed against the live catalog. See WIZARD_PRODUCT.
   //
-  // Every lander that maps to a bookable product is now on the wrapper. The
-  // remaining WhatsApp-primary landers (sail-rock) are trips whose departure is
-  // chosen inside the wizard, not products with a fixed preselect.
+  // With aow added, EVERY offer this component actually serves (dsd, owd, aow)
+  // is on the wrapper - no lander it renders is WhatsApp-only any more. The
+  // fun-dive and sail-rock landers are separate components (FunDiveLander,
+  // SailRockLander) that already post to the same wrapper; koh-tao is retired
+  // and 301'd in vercel.json. Their entries in the predicate are kept so the
+  // rule stays readable as one list rather than splitting across three files.
   //
   // The decision + the product codes live in lib/landerBooking.ts so they can be
   // asserted without rendering this component; see landerProducts.test.ts.
