@@ -85,6 +85,24 @@ export const routes: RouteRecord[] = [
       },
       // Paid-campaign landers — must come BEFORE :courseSlug (which is a greedy
       // dynamic match). 5 offers × 3 languages.
+      // The "no pool, we train you in sheltered sea" argument page. Top-of-funnel
+      // for the paid campaigns: it is the one claim no other shop on Koh Tao
+      // makes, and it routes onward to the three course landers.
+      {
+        path: "no-pool",
+        lazy: lazyDefault(() => import("./pages/landers/NoPoolEnPage")),
+        entry: "src/pages/landers/NoPoolEnPage.tsx",
+      },
+      {
+        path: "es/no-pool",
+        lazy: lazyDefault(() => import("./pages/landers/NoPoolEsPage")),
+        entry: "src/pages/landers/NoPoolEsPage.tsx",
+      },
+      {
+        path: "he/no-pool",
+        lazy: lazyDefault(() => import("./pages/landers/NoPoolHePage")),
+        entry: "src/pages/landers/NoPoolHePage.tsx",
+      },
       {
         path: "discover-scuba-diving",
         lazy: lazyDefault(() => import("./pages/landers/DsdEnPage")),

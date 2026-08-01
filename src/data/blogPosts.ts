@@ -79,20 +79,20 @@ export const blogPosts: BlogPost[] = [
         heading: "כוכב ראשון עם Siam Scuba — מה מיוחד אצלנו?",
         paragraphs: [
           "ב-Siam Scuba אנחנו עובדים בקבוצות קטנות של עד 4 תלמידים למדריך אחד. זה לא מקרי — זה מדיניות. אנחנו מאמינים שצלילה ראשונה צריכה להיות חוויה אישית, לא טיול קבוצתי של 12 אנשים.",
-          "הקורס מתפרס על פני 3.5 ימים: לימוד תיאוריה (אפשר לסיים חלק ממנה אונליין לפני הנסיעה), תרגול בבריכה, ואז 4 צלילות בים הפתוח. בסיום תקבלו כרטיס הסמכה PADI שמוכר בכל מקום בעולם — לכל החיים.",
+          "הקורס מתפרס על פני 3.5 ימים: לימוד תיאוריה (אפשר לסיים חלק ממנה אונליין לפני הנסיעה), תרגול מיומנויות בים רדוד ומוגן (אין לנו בריכה), ואז 4 צלילות בים הפתוח. בסיום תקבלו כרטיס הסמכה PADI שמוכר בכל מקום בעולם — לכל החיים.",
         ],
       },
       {
         heading: "מה כולל הקורס ומה המחיר?",
         paragraphs: [
-          "קורס Open Water Diver ב-Siam Scuba עולה 12,000 בת (כ-1,200 שקל) וכולל: כל הציוד (מסכה, כנפיים, רגולטור, חליפה), ספרי לימוד PADI, 4 צלילות בים הפתוח, 2 צלילות בבריכה, מדריך אישי, כרטיס הסמכה בינלאומי, ומימון מלא לסירות הצלילה שלנו.",
+          "קורס Open Water Diver ב-Siam Scuba עולה 12,000 בת (כ-1,200 שקל) וכולל: כל הציוד (מסכה, כנפיים, רגולטור, חליפה), ספרי לימוד PADI, 4 צלילות בים הפתוח, 2 מפגשי מיומנויות בים רדוד ומוגן, מדריך אישי, כרטיס הסמכה בינלאומי, ומימון מלא לסירות הצלילה שלנו.",
           "אין הפתעות במחיר — מה שרואים זה מה שמשלמים. ניתן לרכוש את חוברות הלימוד של PADI אונליין מראש (eLearning) ולחסוך זמן יקר בקוטאו.",
         ],
       },
       {
         heading: "יום ראשון בקורס — מה קורה?",
         paragraphs: [
-          "מגיעים לקליניקה שלנו ב-Mae Haad, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים לבריכה לתרגול ראשוני — שם לומדים לנשום מתחת למים, לפנות מסכה מים ועוד כישורי בסיס.",
+          "מגיעים לקליניקה שלנו ב-Mae Haad, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים למפרץ הרדוד לתרגול ראשוני — אין לנו בריכה, ולכן הנשימות הראשונות שלכם מתחת למים קורות במים מלוחים מעל שונית אמיתית. שם לומדים לנשום מתחת למים, לפנות מסכה ממים ועוד כישורי בסיס.",
           "ביום השני והשלישי יוצאים לים בסירות הצלילה שלנו — ה-Siam Explorer וה-Siam Pearl — לאתרי צלילה כמו Japanese Gardens ו-Twin Peaks, עם ריף אלמוגים מרהיב ושפע של חיים ימיים.",
         ],
       },
@@ -566,7 +566,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Here's what each course costs at Siam Scuba in 2026. Every price below includes all gear rental, boat trips, certification fees, and tax. No surcharges added at the shop.",
           "Discover Scuba Diving: ฿2,600 - One day, no certification. An easy shallow-water start plus 1-2 ocean dives in calm water. Best if you're not sure you'll like diving.",
-          "PADI Bubble Maker (kids 8+): ฿3,800 - Pool-based scuba intro for children, with a PADI instructor.",
+          "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
           "PADI Open Water Diver: ฿12,000 - 3 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
           "PADI Advanced Open Water: ฿11,000 - 2 days, 5 dives including deep and navigation. Takes you to 30m.",

@@ -122,7 +122,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       header: "⭐ Your First Diving Course - PADI Certified for Life!",
       intro: "No experience needed! In just 2.5 days you'll earn a PADI Open Water certification - recognized worldwide, valid for life. Dive to 18 meters with instructors in multiple languages.",
       itinerary: [
-        { day: "Day 1", description: "09:00 - Meet at the club for theory. Break. 11:00 - Pool session for practical skills." },
+        { day: "Day 1", description: "09:00 - Meet at the club for theory. Break. 11:00 - Confined-water session in the shallow sheltered bay for practical skills." },
         { day: "Day 2", description: "09:00 - Second theory session. 11:00 - Boat departure. Ocean drills + first dive to 12m. Lunch break. 14:00 - Second dive at another site. 16:00 - Return to club." },
         { day: "Day 3", description: "06:30 - First dive to 18m. 09:00 - Break. 10:00 - Final dive. 11:00 - Back to the club 🎉" },
       ],
@@ -134,7 +134,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       included: [
         "4 open-water dives at stunning sites",
         "Full professional diving equipment 🥽",
-        "Theory sessions + pool safety drills",
+        "Theory sessions + safety drills in shallow sheltered sea",
         "Diving insurance",
         "Boat snacks - fruit, water, cookies, tea & coffee ☕",
         "2 nights accommodation - on us! 🎁",
@@ -347,7 +347,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       learns: [
         "Day 1 of IE: 5 Theory Exams (12 questions each, 90 min) + 1 PADI Standards Exam (50 questions, open book)",
-        "Day 1 Afternoon: Pool - teach a skill from a PADI course + 5-skill demonstration workshop",
+        "Day 1 Afternoon: Confined water - teach a skill from a PADI course + 5-skill demonstration workshop",
         "Day 2 Morning: Classroom - teach your group about a missed question from a PADI course",
         "Day 2 Midday: Boat - teach/evaluate your group on 2 skills from PADI courses",
         "The IE evaluates you on exactly what you practised during the IDC - no surprises.",
@@ -465,7 +465,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       header: "⭐ קורס הצלילה הראשון שלכם - הסמכת PADI לכל החיים!",
       intro: "לא נדרש ניסיון קודם! תוך 2.5 ימים בלבד תקבלו הסמכת PADI Open Water - מוכרת בכל העולם, תקפה לכל החיים. צוללים עד 18 מטר עם מדריכים בכמה שפות.",
       itinerary: [
-        { day: "יום 1", description: "09:00 - מפגש במועדון לתיאוריה. הפסקה. 11:00 - אימון בבריכה לתרגול מיומנויות." },
+        { day: "יום 1", description: "09:00 - מפגש במועדון לתיאוריה. הפסקה. 11:00 - מפגש מים מוגנים במפרץ הרדוד לתרגול מיומנויות." },
         { day: "יום 2", description: "09:00 - מפגש תיאוריה שני. 11:00 - יציאה בסירה. תרגולים בים + צלילה ראשונה עד 12 מ'. הפסקת צהריים. 14:00 - צלילה שנייה באתר אחר. 16:00 - חזרה למועדון." },
         { day: "יום 3", description: "06:30 - צלילה ראשונה עד 18 מ'. 09:00 - הפסקה. 10:00 - צלילה אחרונה. 11:00 - חזרה למועדון 🎉" },
       ],
@@ -477,7 +477,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       included: [
         "4 צלילות במים פתוחים באתרים מרהיבים",
         "ציוד צלילה מקצועי מלא 🥽",
-        "מפגשי תיאוריה + תרגולי בטיחות בבריכה",
+        "מפגשי תיאוריה + תרגולי בטיחות בים רדוד ומוגן",
         "ביטוח צלילה",
         "כיבוד על הסירה - פירות, מים, עוגיות, תה וקפה ☕",
         "2 לילות לינה - עלינו! 🎁",
@@ -690,7 +690,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       learns: [
         "יום 1 של ה-IE: 5 מבחני תיאוריה (12 שאלות כל אחד, 90 דק') + מבחן תקני PADI אחד (50 שאלות, חומר פתוח)",
-        "יום 1 אחה\"צ: בריכה - מלמדים מיומנות מתוך קורס PADI + סדנת הדגמה של 5 מיומנויות",
+        "יום 1 אחה\"צ: מים מוגנים - מלמדים מיומנות מתוך קורס PADI + סדנת הדגמה של 5 מיומנויות",
         "יום 2 בוקר: כיתה - מלמדים את הקבוצה שלכם על שאלה שנכשלה מתוך קורס PADI",
         "יום 2 בצהריים: סירה - מלמדים/מעריכים את הקבוצה ב-2 מיומנויות מתוך קורסי PADI",
         "ה-IE בודק אתכם בדיוק על מה שתרגלתם ב-IDC - בלי הפתעות.",
@@ -808,7 +808,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       header: "⭐ Tu primer curso de buceo: ¡certificación PADI de por vida!",
       intro: "¡No se necesita experiencia! En solo 2,5 días obtendrás la certificación PADI Open Water, reconocida en todo el mundo y válida de por vida. Bucea hasta 18 metros con instructores en varios idiomas.",
       itinerary: [
-        { day: "Día 1", description: "09:00 - Encuentro en el club para la teoría. Descanso. 11:00 - Sesión de piscina para habilidades prácticas." },
+        { day: "Día 1", description: "09:00 - Encuentro en el club para la teoría. Descanso. 11:00 - Sesión de aguas confinadas en la bahía poco profunda para habilidades prácticas." },
         { day: "Día 2", description: "09:00 - Segunda sesión de teoría. 11:00 - Salida en barco. Ejercicios en el mar + primera inmersión a 12 m. Pausa para comer. 14:00 - Segunda inmersión en otro punto. 16:00 - Regreso al club." },
         { day: "Día 3", description: "06:30 - Primera inmersión a 18 m. 09:00 - Descanso. 10:00 - Inmersión final. 11:00 - De vuelta al club 🎉" },
       ],
@@ -820,7 +820,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       included: [
         "4 inmersiones en mar abierto en sitios espectaculares",
         "Equipo de buceo profesional completo 🥽",
-        "Sesiones de teoría + prácticas de seguridad en piscina",
+        "Sesiones de teoría + prácticas de seguridad en mar poco profundo",
         "Seguro de buceo",
         "Snacks a bordo: fruta, agua, galletas, té y café ☕",
         "2 noches de alojamiento, ¡invita la casa! 🎁",
@@ -1033,7 +1033,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       learns: [
         "Día 1 del IE: 5 exámenes de teoría (12 preguntas cada uno, 90 min) + 1 examen de estándares PADI (50 preguntas, a libro abierto)",
-        "Día 1 por la tarde: piscina - enseña una habilidad de un curso PADI + taller de demostración de 5 habilidades",
+        "Día 1 por la tarde: aguas confinadas - enseña una habilidad de un curso PADI + taller de demostración de 5 habilidades",
         "Día 2 por la mañana: aula - enseña a tu grupo sobre una pregunta fallada de un curso PADI",
         "Día 2 al mediodía: barco - enseña/evalúa a tu grupo en 2 habilidades de cursos PADI",
         "El IE te evalúa exactamente sobre lo que practicaste durante el IDC: sin sorpresas.",

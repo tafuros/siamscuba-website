@@ -186,6 +186,47 @@ export function trackWhatsAppFastPathClick(
   });
 }
 
+export interface BookNowClickParams {
+  /** Where on the page the CTA sits, e.g. "no_pool_hero". */
+  location: string;
+  /** Wizard product code when the CTA preselects one (e.g. "OWD"). */
+  product?: string;
+  /** The wizard URL that was clicked, including forwarded attribution. */
+  url?: string;
+}
+
+/**
+ * Fired when a lander CTA hands the visitor off to the DiveOS web wizard on
+ * dash.siamscuba.com. A SIGNAL, not a conversion - deliberately no Google Ads
+ * send_to, because the real conversion fires inside the wizard. It exists so we
+ * can measure the handoff itself (CTA click -> wizard arrival) and spot the day
+ * attribution silently breaks at the host boundary.
+ */
+export function trackBookNowClick(params: BookNowClickParams): void {
+  if (typeof window !== "undefined") {
+    window.dataLayer?.push({
+      event: "book_now_click",
+      location: params.location,
+      product: params.product,
+      url: params.url,
+    });
+    if (typeof window.clarity === "function") {
+      window.clarity("event", "book_now_click");
+    }
+  }
+  gtag("event", "book_now_click", {
+    event_category: "engagement",
+    event_label: params.location,
+    product: params.product,
+    url: params.url,
+    ...utmFields(),
+  });
+  fbq("track", "InitiateCheckout", {
+    content_name: params.product,
+    location: params.location,
+  });
+}
+
 export interface GenerateLeadParams {
   form_name: "fun_dive_booking" | "booking_wizard" | "course_inquiry" | "contact";
   dive_date?: string;

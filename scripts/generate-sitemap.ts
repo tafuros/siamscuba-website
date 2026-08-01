@@ -42,6 +42,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/privacy", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/data-deletion", changefreq: "yearly", priority: 0.2, lastmod: today },
+    // The "no pool - we train you in sheltered sea" differentiator page.
+    { loc: "/no-pool", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
+    { loc: "/es/no-pool", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
+    { loc: "/he/no-pool", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
     // Paid-campaign landers (restored 2026-05-25 for campaign launch).
     { loc: "/discover-scuba-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
     { loc: "/es/discover-scuba-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },

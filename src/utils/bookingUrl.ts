@@ -6,33 +6,70 @@ import { getStoredUtm, getStoredGclid } from "@/utils/utm";
 // which is what this builder produces.
 export const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 
+// The public self-serve booking wizard, built by the diveos agent for the paid
+// campaigns. This is the CTA target for the campaign landers - a full-page
+// wizard on a different host, so attribution can only reach it on the URL.
+//
+// NOT /dive/shop: that slug is the office walk-in form and must never receive
+// paid traffic.
+export const WEB_WIZARD_URL = "https://dash.siamscuba.com/dive/web";
+
+/** Params that carry paid-traffic attribution, in the order we emit them. */
+const UTM_KEYS = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+] as const;
+
+export interface BookingUrlOptions {
+  /** Wizard base URL. Defaults to the public web wizard. */
+  baseUrl?: string;
+  /**
+   * Trip preselect used only when the incoming URL does not already carry one
+   * (an explicit ?product= on the page URL is a deliberate override and wins).
+   */
+  product?: string;
+  date?: string;
+  /**
+   * Read first-touch UTMs/gclid from sessionStorage. Must be false for the
+   * server render and the first client render of any SSG page - see
+   * components/BookNowLink.tsx for why.
+   */
+  includeStored?: boolean;
+}
+
 /**
- * Build the wizard iframe src from the booking page's own query string plus
- * first-touch attribution held in sessionStorage.
+ * Build a wizard URL carrying every attribution param we hold.
  *
- * Precedence: explicit params on the incoming URL always win over stored
- * first-touch values (an explicit ?utm_source=x is a deliberate override).
+ * Sources, in precedence order:
+ *   1. explicit params on the incoming URL  (a deliberate override)
+ *   2. first-touch utm params + gclid in sessionStorage (captured on the landing page
+ *      by App.tsx -> utils/utm.ts, which is what makes attribution survive
+ *      in-site navigation: lander -> course page -> CTA)
+ *   3. the caller's product/date preselect
  *
- * Passthrough of stored first-touch UTMs/gclid is ON BY DEFAULT. Callers may
- * opt out with ?utm_passthrough=0. It was previously opt-in via
- * ?utm_passthrough=1, which only the landers set - every generic CTA linking to
- * a bare /fun-dive-booking silently dropped the gclid, and DiveOS recorded 390
- * leads all-time with zero attribution. Defaulting to ON means a newly added
- * CTA cannot regress attribution by forgetting a magic param.
+ * Passthrough of stored first-touch values is ON BY DEFAULT; callers opt out
+ * with ?utm_passthrough=0. It used to be opt-in via ?utm_passthrough=1, which
+ * only the landers set - every generic CTA silently dropped the gclid, and
+ * DiveOS recorded 390 leads all-time with zero attribution. Defaulting to ON
+ * means a newly added CTA cannot regress attribution by forgetting a param.
  *
  * Emitted contract (all params optional, flat, string-valued):
  *   product, date, utm_source, utm_medium, utm_campaign, utm_content,
  *   utm_term, gclid
- * `utm_passthrough` is a parent-side control flag and is never forwarded.
+ * `utm_passthrough` is a caller-side control flag and is never forwarded.
  */
-export function buildWizardIframeSrc(search: string, baseUrl = LEAD_FORM_URL): string {
+export function buildBookingUrl(search: string, options: BookingUrlOptions = {}): string {
+  const { baseUrl = WEB_WIZARD_URL, product, date, includeStored = true } = options;
   const incoming = new URLSearchParams(search);
   const out = new URLSearchParams();
 
-  const product = incoming.get("product");
-  if (product) out.set("product", product);
-  const date = incoming.get("date");
-  if (date) out.set("date", date);
+  const incomingProduct = incoming.get("product") || product;
+  if (incomingProduct) out.set("product", incomingProduct);
+  const incomingDate = incoming.get("date") || date;
+  if (incomingDate) out.set("date", incomingDate);
 
   // Explicit utm_* / gclid present on the incoming URL win.
   for (const [key, value] of incoming.entries()) {
@@ -46,16 +83,17 @@ export function buildWizardIframeSrc(search: string, baseUrl = LEAD_FORM_URL): s
   // Backfill from first-touch storage unless explicitly opted out, without
   // clobbering explicit values already set above. The landers still send
   // utm_passthrough=1; that is now a no-op that documents intent.
-  if (incoming.get("utm_passthrough") !== "0") {
+  if (includeStored && incoming.get("utm_passthrough") !== "0") {
     const utm = getStoredUtm();
-    const utmMap: Record<string, string | undefined> = {
+    const stored: Record<string, string | undefined> = {
       utm_source: utm.source,
       utm_medium: utm.medium,
       utm_campaign: utm.campaign,
       utm_content: utm.content,
       utm_term: utm.term,
     };
-    for (const [key, value] of Object.entries(utmMap)) {
+    for (const key of UTM_KEYS) {
+      const value = stored[key];
       if (value && !out.has(key)) out.set(key, value);
     }
     const storedGclid = getStoredGclid();
@@ -64,4 +102,36 @@ export function buildWizardIframeSrc(search: string, baseUrl = LEAD_FORM_URL): s
 
   const qs = out.toString();
   return qs ? `${baseUrl}?${qs}` : baseUrl;
+}
+
+/**
+ * Build the src for the DiveOS wizard iframe on /fun-dive-booking.
+ * Thin alias over buildBookingUrl pinned to the legacy embedded form.
+ */
+export function buildWizardIframeSrc(search: string, baseUrl = LEAD_FORM_URL): string {
+  return buildBookingUrl(search, { baseUrl });
+}
+
+/**
+ * Append the current attribution params to an INTERNAL path so a click-through
+ * (lander -> course page) keeps them visible on the URL.
+ *
+ * sessionStorage first-touch already survives in-site navigation, so this is
+ * belt-and-braces - it matters when the visitor opens an internal link in a NEW
+ * TAB, which starts a fresh sessionStorage and would otherwise arrive
+ * unattributed.
+ */
+export function withAttribution(path: string, search: string): string {
+  const incoming = new URLSearchParams(search);
+  const out = new URLSearchParams();
+  for (const key of UTM_KEYS) {
+    const value = incoming.get(key);
+    if (value) out.set(key, value);
+  }
+  const gclid = incoming.get("gclid");
+  if (gclid) out.set("gclid", gclid);
+
+  const qs = out.toString();
+  if (!qs) return path;
+  return path.includes("?") ? `${path}&${qs}` : `${path}?${qs}`;
 }
