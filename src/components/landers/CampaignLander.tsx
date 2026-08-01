@@ -264,36 +264,6 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
         </div>
       </section>
 
-      {/* No-pool differentiator strip. Only the entry-level offers set this;
-          it is the one claim no other shop on Koh Tao makes, so it sits
-          immediately after the USP tiles and routes to the full argument. */}
-      {copy.noPoolNote && (
-        <section className="py-10 md:py-14 bg-background border-y border-border">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <div className="rounded-2xl border-2 border-accent/60 bg-card p-6 md:p-8 shadow-sm">
-              <div className="flex gap-4">
-                <Waves className="h-8 w-8 shrink-0 text-accent" aria-hidden="true" />
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-2">
-                    {copy.noPoolNote.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-muted-foreground mb-4">
-                    {copy.noPoolNote.body}
-                  </p>
-                  <Link
-                    to={copy.noPoolNote.linkPath}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline"
-                  >
-                    {copy.noPoolNote.linkLabel}
-                    <span aria-hidden="true">{isRtl ? "←" : "→"}</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Pricing */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 max-w-3xl">

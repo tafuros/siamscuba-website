@@ -49,7 +49,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "bubble-maker": {
     title: "PADI Bubble Maker for Kids in Koh Tao | Siam Scuba",
     description:
-      "Safe, supervised first scuba experience for children aged 8+ in Koh Tao. PADI Bubble Maker: in shallow sheltered sea (we have no pool), with a PADI instructor, fun and confidence-building. ฿3,800.",
+      "Safe, supervised first scuba experience for children aged 8+ in Koh Tao. PADI Bubble Maker: in shallow sheltered sea, with a PADI instructor, fun and confidence-building. ฿3,800.",
     h1: "PADI Bubble Maker for Kids",
   },
   "scuba-review": {

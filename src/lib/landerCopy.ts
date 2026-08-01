@@ -90,13 +90,6 @@ export interface LanderCopy {
   closingCtaHeadline: string;
   closingCtaSubhead: string;
 
-  /**
-   * "We have no pool - you train in sheltered sea" strip, linking to /no-pool.
-   * Set on the entry-level offers (DSD, OWD) where confined water is part of
-   * the product. Omitted elsewhere; the strip simply doesn't render.
-   */
-  noPoolNote?: NoPoolNote;
-
   // ── Sail Rock lander extras (optional; only the dedicated SailRockLander
   //    component reads these — the shared CampaignLander ignores them). ──
   /** Pill/eyebrow above the hero H1 (e.g. "The Best Dive in the Gulf"). */
@@ -126,18 +119,6 @@ export interface LanderCopy {
   leadForm?: LeadFormCopy;
 }
 
-/**
- * The differentiator strip: Siam Scuba has NO swimming pool and trains in
- * sheltered shallow sea instead. `linkPath` points at the /no-pool argument
- * page in the matching language.
- */
-export interface NoPoolNote {
-  title: string;
-  body: string;
-  linkLabel: string;
-  linkPath: string;
-}
-
 /** Copy for the compact name + phone lead-capture form on the Sail Rock lander. */
 export interface LeadFormCopy {
   title: string;
@@ -161,7 +142,7 @@ const DSD_EN: LanderCopy = {
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Try scuba diving in Koh Tao - 2 dives, 3,600 THB",
   heroSubhead:
-    "No certification needed. A PADI instructor takes you from your first breath underwater to two real ocean dives on Koh Tao's reefs - all in one day. Want just one dive? 2,600 THB.",
+    "No certification needed. A PADI instructor takes you from your first breath in shallow sheltered sea to two real ocean dives on Koh Tao's reefs - all in one day. Want just one dive? 2,600 THB.",
   ctaPrimary: "Book your Discover Scuba day",
   ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why try diving with Siam Scuba",
@@ -190,7 +171,7 @@ const DSD_EN: LanderCopy = {
     includes: [
       "Full day with a PADI instructor (English, Spanish, Hebrew spoken)",
       "All scuba gear (mask, fins, wetsuit, BCD, weights, regulator, 12L tank)",
-      "Confined-water session in shallow sheltered sea - we have no pool",
+      "Confined-water session in shallow sheltered sea - a real reef from your first breath",
       "1 or 2 ocean dives on the reef (your choice)",
       "Boat snacks: fresh fruit, cookies, tea, coffee, water",
       "Dive insurance",
@@ -210,7 +191,7 @@ const DSD_EN: LanderCopy = {
   schedule: [
     { time: "Day before", label: "Register at the shop by 18:00" },
     { time: "10:30", label: "Briefing, gear intro, expectations and safety" },
-    { time: "Dive 1", label: "4 basic skills in shallow water, then descend to max 12m" },
+    { time: "Dive 1", label: "4 basic skills in shallow sheltered sea, then descend to max 12m" },
     { time: "Dive 2", label: "Just enjoy - no skills, max 12m" },
     { time: "16:00", label: "Activity ends" },
   ],
@@ -241,12 +222,6 @@ const DSD_EN: LanderCopy = {
   ],
   closingCtaHeadline: "Two dives, one day, 3,600 THB.",
   closingCtaSubhead: "Or one dive for 2,600 THB. WhatsApp us - we'll find you a slot this week.",
-  noPoolNote: {
-    title: "We don't have a swimming pool",
-    body: "Your first breaths underwater will not be in chlorine above a painted floor. They happen in a sheltered shallow bay on a real reef - which is why people who try scuba with us tend to come back for the full course.",
-    linkLabel: "Why that's better for you",
-    linkPath: "/no-pool",
-  },
 };
 
 const DSD_ES: LanderCopy = {
@@ -256,7 +231,7 @@ const DSD_ES: LanderCopy = {
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Prueba el buceo en Koh Tao - 2 inmersiones, 3,600 THB",
   heroSubhead:
-    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración bajo el agua hasta dos inmersiones reales en los arrecifes de Koh Tao, todo en un día. ¿Solo una inmersión? 2,600 THB.",
+    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración en mar poco profundo y resguardado hasta dos inmersiones reales en los arrecifes de Koh Tao, todo en un día. ¿Solo una inmersión? 2,600 THB.",
   ctaPrimary: "Reserva tu día de buceo",
   ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué bucear con Siam Scuba",
@@ -285,7 +260,7 @@ const DSD_ES: LanderCopy = {
     includes: [
       "Día completo con instructor PADI (hablamos español)",
       "Equipo completo (máscara, aletas, traje, chaleco, plomos, regulador, botella de 12 L)",
-      "Sesión de aguas confinadas en mar poco profundo - no tenemos piscina",
+      "Sesión de aguas confinadas en mar poco profundo y resguardado - arrecife real desde la primera respiración",
       "1 o 2 inmersiones en el arrecife (tú eliges)",
       "Tentempiés en el barco: fruta fresca, galletas, té, café y agua",
       "Seguro de buceo",
@@ -305,7 +280,7 @@ const DSD_ES: LanderCopy = {
   schedule: [
     { time: "Día antes", label: "Regístrate en la tienda antes de las 18:00" },
     { time: "10:30", label: "Briefing, presentación del equipo, expectativas y seguridad" },
-    { time: "Inmersión 1", label: "4 habilidades básicas en aguas poco profundas, luego hasta 12m" },
+    { time: "Inmersión 1", label: "4 habilidades básicas en mar poco profundo y resguardado, luego hasta 12m" },
     { time: "Inmersión 2", label: "Solo disfrutar - sin habilidades, hasta 12m" },
     { time: "16:00", label: "Fin de la actividad" },
   ],
@@ -336,12 +311,6 @@ const DSD_ES: LanderCopy = {
   ],
   closingCtaHeadline: "Dos inmersiones, un día, 3,600 THB.",
   closingCtaSubhead: "O una inmersión por 2,600 THB. Escríbenos por WhatsApp - te buscamos hueco esta semana.",
-  noPoolNote: {
-    title: "No tenemos piscina",
-    body: "Tus primeras respiraciones bajo el agua no serán en cloro sobre un suelo pintado, sino en una bahía resguardada y poco profunda sobre arrecife real. Por eso quien prueba el buceo con nosotros suele volver a por el curso completo.",
-    linkLabel: "Por qué eso es mejor para ti",
-    linkPath: "/es/no-pool",
-  },
 };
 
 const DSD_HE: LanderCopy = {
@@ -351,7 +320,7 @@ const DSD_HE: LanderCopy = {
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "צלילת היכרות בקוטאו - שתי צלילות, 3,600 THB",
   heroSubhead:
-    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה מתחת למים עד שתי צלילות אמיתיות בשונית של קוטאו - הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
+    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה בים רדוד ומוגן עד שתי צלילות אמיתיות בשונית של קוטאו - הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
   ctaPrimary: "הזמינו צלילת היכרות",
   ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה לצלול איתנו",
@@ -380,7 +349,7 @@ const DSD_HE: LanderCopy = {
     includes: [
       "יום שלם עם מדריך PADI דובר עברית",
       "כל ציוד הצלילה (מסכה, סנפירים, חליפה, מאזן ציפה, משקולות, רגולטור, מיכל אוויר 12 ליטר)",
-      "תרגול מיומנויות בים רדוד ומוגן - אין לנו בריכה",
+      "תרגול מיומנויות בים רדוד ומוגן - שונית אמיתית כבר מהנשימה הראשונה",
       "1 או 2 צלילות בשונית (לבחירתכם)",
       "נשנושים בסירה: פירות טריים, עוגיות, תה, קפה ומים",
       "ביטוח צלילה",
@@ -400,7 +369,7 @@ const DSD_HE: LanderCopy = {
   schedule: [
     { time: "יום לפני", label: "רישום במועדון עד 18:00" },
     { time: "10:30", label: "תדריך, היכרות עם הציוד, תיאום ציפיות ובטיחות" },
-    { time: "צלילה 1", label: "4 תרגילים בסיסיים במים רדודים, ואז צלילה לעומק עד 12 מ׳" },
+    { time: "צלילה 1", label: "4 תרגילים בסיסיים בים רדוד ומוגן, ואז צלילה לעומק עד 12 מ׳" },
     { time: "צלילה 2", label: "פשוט נהנים - בלי תרגילים, עומק עד 12 מ׳" },
     { time: "16:00", label: "סיום הפעילות" },
   ],
@@ -431,12 +400,6 @@ const DSD_HE: LanderCopy = {
   ],
   closingCtaHeadline: "שתי צלילות, יום אחד, 3,600 THB.",
   closingCtaSubhead: "או צלילה אחת ב-2,600 THB. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
-  noPoolNote: {
-    title: "אין לנו בריכה",
-    body: "הנשימות הראשונות שלכם מתחת למים לא יהיו בכלור מעל רצפה צבועה, אלא במפרץ רדוד ומוגן מעל שונית אמיתית. זו הסיבה שמי שמנסה צלילה איתנו נוטה לחזור לקורס המלא.",
-    linkLabel: "למה זה עדיף לכם",
-    linkPath: "/he/no-pool",
-  },
 };
 
 // ---------- OWD (PADI Open Water Diver) ----------
@@ -444,19 +407,19 @@ const DSD_HE: LanderCopy = {
 const OWD_EN: LanderCopy = {
   seoTitle: "PADI Open Water Course in Koh Tao - 12,000 THB Lifelong Cert | Siam Scuba",
   seoDescription:
-    "Get PADI certified in 2.5 days on Koh Tao. No swimming pool - you train in shallow sheltered sea, then four ocean dives. 2 nights' accommodation included. Lifelong certification.",
+    "Get PADI certified in 2.5 days on Koh Tao. Small groups (max 4), your first skills in shallow sheltered sea, then four ocean dives. 2 nights' accommodation included. Lifelong certification.",
   heroBadge: "PADI Open Water Diver",
   heroH1: "Get PADI certified in Koh Tao - 2.5 days, 12,000 THB, lifelong",
   heroSubhead:
-    "Theory online and in our classroom, your first skills in shallow sheltered sea - not a swimming pool - then four real ocean dives. All in 2.5 days, and you leave with a PADI card you can dive on anywhere in the world, forever.",
+    "Theory online and in our classroom, your first skills in shallow sheltered sea, then four real ocean dives. All in 2.5 days, and you leave with a PADI card you can dive on anywhere in the world, forever.",
   ctaPrimary: "Chat on WhatsApp",
   ctaSecondary: "Ask about dates and discounts",
   uspHeadline: "Why certify with Siam Scuba",
   uspTiles: [
     {
-      icon: "waves",
-      title: "No swimming pool - you learn in the sea",
-      body: "Your first breaths underwater are in a sheltered shallow bay on a real reef, so dive one is never a shock. Small groups throughout.",
+      icon: "users",
+      title: "Max 4 students per instructor",
+      body: "More water time, more skills practice, less waiting around.",
     },
     {
       icon: "calendar",
@@ -477,7 +440,7 @@ const OWD_EN: LanderCopy = {
       "PADI eLearning + classroom theory at our club",
       "English-speaking PADI instructor for every session",
       "All gear, all dives, all materials",
-      "Confined-water session in shallow sheltered sea (we have no pool)",
+      "Confined-water session in shallow sheltered sea - a real reef from your first breath",
       "4 open-water dives at Koh Tao's best sites",
       "Dive insurance",
       "Boat refreshments: fruit, cookies, tea, coffee, water",
@@ -526,8 +489,8 @@ const OWD_EN: LanderCopy = {
       a: "Minimum 10 (Junior Open Water - limited to 12m). 15+ for the full Open Water Diver cert.",
     },
     {
-      q: "Do you have a swimming pool?",
-      a: "No, deliberately. Your confined-water training happens in a sheltered shallow bay you can stand up in - real salt water, real reef, real fish. PADI's own definition of confined water covers exactly this, the standards are identical, and it means dive one holds no surprises.",
+      q: "Where does the confined-water training happen?",
+      a: "In a sheltered shallow bay you can stand up in - real salt water, real reef, real fish. It meets PADI's confined-water standard exactly, and it means your first proper dive holds no surprises.",
     },
     {
       q: "Can I add Advanced after?",
@@ -536,30 +499,24 @@ const OWD_EN: LanderCopy = {
   ],
   closingCtaHeadline: "PADI cert. 2.5 days. 12,000 THB.",
   closingCtaSubhead: "Two nights' accommodation included. WhatsApp us your dates - we start courses every day.",
-  noPoolNote: {
-    title: "We don't have a swimming pool",
-    body: "Every other school teaches your first underwater skills in chlorinated water above a painted floor. We teach them in shallow sheltered sea, on a real reef - so by your first proper dive nothing about the environment is new.",
-    linkLabel: "Why that's better for you",
-    linkPath: "/no-pool",
-  },
 };
 
 const OWD_ES: LanderCopy = {
   seoTitle: "Curso PADI Open Water en Koh Tao - Certificación de por Vida 12,000 THB | Siam Scuba",
   seoDescription:
-    "Sácate el PADI en 2,5 días en Koh Tao. Sin piscina: entrenas en mar poco profundo y resguardado, y luego cuatro inmersiones. 2 noches de alojamiento incluidas. Certificación de por vida.",
+    "Sácate el PADI en 2,5 días en Koh Tao. Grupos pequeños (máx. 4), tus primeras habilidades en mar poco profundo y resguardado, y luego cuatro inmersiones. 2 noches de alojamiento incluidas. Certificación de por vida.",
   heroBadge: "PADI Open Water Diver",
   heroH1: "Certifícate PADI en Koh Tao - 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
-    "Teoría online y en nuestra aula, tus primeras habilidades en mar poco profundo y resguardado - no en una piscina - y luego cuatro inmersiones reales. Todo en 2,5 días, y te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
+    "Teoría online y en nuestra aula, tus primeras habilidades en mar poco profundo y resguardado, y luego cuatro inmersiones reales. Todo en 2,5 días, y te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
   ctaPrimary: "Chatea por WhatsApp",
   ctaSecondary: "Pregunta por fechas y descuentos",
   uspHeadline: "Por qué certificarte con Siam Scuba",
   uspTiles: [
     {
-      icon: "waves",
-      title: "Sin piscina: aprendes en el mar",
-      body: "Tus primeras respiraciones bajo el agua son en una bahía resguardada y poco profunda, sobre arrecife real, así la primera inmersión nunca es un shock. Grupos pequeños siempre.",
+      icon: "users",
+      title: "Máximo 4 alumnos por instructor",
+      body: "Más tiempo bajo el agua, más práctica, menos esperas.",
     },
     {
       icon: "calendar",
@@ -580,7 +537,7 @@ const OWD_ES: LanderCopy = {
       "Teoría online + clase en nuestro club",
       "Instructor PADI de habla inglesa en cada sesión",
       "Equipo profesional, inmersiones y material completo",
-      "Sesión de aguas confinadas en mar poco profundo (no tenemos piscina)",
+      "Sesión de aguas confinadas en mar poco profundo y resguardado - arrecife real desde la primera respiración",
       "4 inmersiones en los mejores sitios de Koh Tao",
       "Seguro de buceo",
       "Tentempiés en el barco: fruta, galletas, té, café y agua",
@@ -629,8 +586,8 @@ const OWD_ES: LanderCopy = {
       a: "10 años para el Junior Open Water (máx. 12m). 15+ para el Open Water Diver completo.",
     },
     {
-      q: "¿Tenéis piscina?",
-      a: "No, a propósito. Tu formación en aguas confinadas es en una bahía resguardada y poco profunda donde haces pie: agua salada real, arrecife real, peces reales. La propia definición de aguas confinadas de PADI cubre exactamente esto, los estándares son idénticos, y significa que la primera inmersión no te sorprende en nada.",
+      q: "¿Dónde se hace la sesión de aguas confinadas?",
+      a: "En una bahía resguardada y poco profunda donde haces pie: agua salada real, arrecife real, peces reales. Cumple exactamente el estándar de aguas confinadas de PADI, y hace que tu primera inmersión no te sorprenda en nada.",
     },
     {
       q: "¿Puedo añadir el Advanced después?",
@@ -639,30 +596,24 @@ const OWD_ES: LanderCopy = {
   ],
   closingCtaHeadline: "Cert PADI. 2,5 días. 12,000 THB.",
   closingCtaSubhead: "2 noches de alojamiento incluidas. WhatsApp con tus fechas - abrimos cursos cada día.",
-  noPoolNote: {
-    title: "No tenemos piscina",
-    body: "Las demás escuelas enseñan tus primeras habilidades bajo el agua en agua clorada sobre un suelo pintado. Nosotros las enseñamos en mar poco profundo y resguardado, sobre arrecife real, así que al llegar a tu primera inmersión nada del entorno es nuevo.",
-    linkLabel: "Por qué eso es mejor para ti",
-    linkPath: "/es/no-pool",
-  },
 };
 
 const OWD_HE: LanderCopy = {
   seoTitle: "קורס PADI Open Water בקוטאו - הסמכה לכל החיים ב-12,000 THB | סיאם סקובה",
   seoDescription:
-    "תוסמכו ל-PADI ב-2.5 ימים בקוטאו. בלי בריכה - מתאמנים בים רדוד ומוגן, ואז ארבע צלילות בים. 2 לילות לינה כלולים. הסמכה לכל החיים.",
+    "תוסמכו ל-PADI ב-2.5 ימים בקוטאו. קבוצות קטנות (מקס׳ 4), המיומנויות הראשונות בים רדוד ומוגן, ואז ארבע צלילות בים. 2 לילות לינה כלולים. הסמכה לכל החיים.",
   heroBadge: "PADI כוכב ראשון - Open Water Diver",
   heroH1: "כוכב ראשון ב-2.5 ימים בקו-טאו, 12,000 THB, לכל החיים",
   heroSubhead:
-    "לימוד עיוני אונליין + שיעור במועדון, המיומנויות הראשונות בים רדוד ומוגן - לא בבריכה - ואז ארבע צלילות אמיתיות בים. הכל ב-2.5 ימים, ויוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
+    "לימוד עיוני אונליין + שיעור במועדון, המיומנויות הראשונות בים רדוד ומוגן, ואז ארבע צלילות אמיתיות בים. הכל ב-2.5 ימים, ויוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
   ctaPrimary: "שיחה ב-WhatsApp",
   ctaSecondary: "שאלו על תאריכים והנחות",
   uspHeadline: "למה להסמיך איתנו",
   uspTiles: [
     {
-      icon: "waves",
-      title: "בלי בריכה - לומדים בים",
-      body: "הנשימות הראשונות שלכם מתחת למים הן במפרץ רדוד ומוגן מעל שונית אמיתית, כך שהצלילה הראשונה אף פעם לא מפתיעה. קבוצות קטנות לאורך כל הדרך.",
+      icon: "users",
+      title: "מקסימום 4 חניכים למדריך",
+      body: "יותר זמן מתחת למים, יותר תרגול, פחות המתנה.",
     },
     {
       icon: "calendar",
@@ -683,7 +634,7 @@ const OWD_HE: LanderCopy = {
       "לימוד עיוני אונליין + שיעור כיתה במועדון",
       "מדריכים ישראלים, דוברי עברית ואנגלית",
       "ציוד צלילה מלא ומקצועי, כל הצלילות והחומרים",
-      "מפגש מים מוגנים בים רדוד ומוגן (אין לנו בריכה)",
+      "מפגש מים מוגנים בים רדוד ושקט - שונית אמיתית כבר מהנשימה הראשונה",
       "4 צלילות באתרים הכי טובים של קוטאו",
       "ביטוח צלילה",
       "כיבוד על הסירה: פירות, עוגיות, תה, קפה ומים",
@@ -732,8 +683,8 @@ const OWD_HE: LanderCopy = {
       a: "10 שנים ל-Junior Open Water (מקס׳ 12 מטר). 15+ לקורס המלא.",
     },
     {
-      q: "יש לכם בריכה?",
-      a: "לא, ובכוונה. אימון המים המוגנים שלכם מתרחש במפרץ רדוד ומוגן שאפשר לעמוד בו - מים מלוחים אמיתיים, שונית אמיתית, דגים אמיתיים. ההגדרה של PADI עצמה למים מוגנים מכסה בדיוק את זה, התקנים זהים, וזה אומר שהצלילה הראשונה לא מפתיעה בכלום.",
+      q: "איפה מתקיים תרגול המים המוגנים?",
+      a: "במפרץ רדוד ומוגן שאפשר לעמוד בו - מים מלוחים אמיתיים, שונית אמיתית, דגים אמיתיים. זה עומד בדיוק בתקן המים המוגנים של PADI, וזה אומר שהצלילה הראשונה שלכם לא מפתיעה בכלום.",
     },
     {
       q: "אפשר להוסיף Advanced אחרי?",
@@ -742,12 +693,6 @@ const OWD_HE: LanderCopy = {
   ],
   closingCtaHeadline: "הסמכת PADI. 2.5 ימים. 12,000 THB.",
   closingCtaSubhead: "2 לילות לינה כלולים. WhatsApp עם התאריכים - פותחים קורסים כל יום.",
-  noPoolNote: {
-    title: "אין לנו בריכה",
-    body: "כל בית ספר אחר מלמד את המיומנויות הראשונות שלכם מתחת למים במים מוכלרים מעל רצפה צבועה. אנחנו מלמדים אותן בים רדוד ומוגן, מעל שונית אמיתית - כך שבצלילה האמיתית הראשונה שום דבר בסביבה אינו חדש.",
-    linkLabel: "למה זה עדיף לכם",
-    linkPath: "/he/no-pool",
-  },
 };
 
 // ---------- AOW (PADI Advanced Open Water Diver) ----------

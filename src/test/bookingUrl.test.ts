@@ -104,7 +104,7 @@ describe("buildBookingUrl - handoff to the DiveOS web wizard", () => {
 
   it("forwards a full real ad query string across the host boundary", () => {
     const adClick =
-      "?utm_source=google&utm_medium=cpc&utm_campaign=ow-koh-tao&utm_content=no-pool-rsa&utm_term=learn+to+dive&gclid=Cj0KCQjw_ADHESIVE123";
+      "?utm_source=google&utm_medium=cpc&utm_campaign=ow-koh-tao&utm_content=learn-to-dive-rsa&utm_term=learn+to+dive&gclid=Cj0KCQjw_ADHESIVE123";
     const url = new URL(buildBookingUrl(adClick, { product: "OWD" }));
 
     expect(url.origin + url.pathname).toBe(WEB_WIZARD_URL);
@@ -113,7 +113,7 @@ describe("buildBookingUrl - handoff to the DiveOS web wizard", () => {
       utm_source: "google",
       utm_medium: "cpc",
       utm_campaign: "ow-koh-tao",
-      utm_content: "no-pool-rsa",
+      utm_content: "learn-to-dive-rsa",
       // "+" in a query string decodes to a space - Google sends keywords this way.
       utm_term: "learn to dive",
       gclid: "Cj0KCQjw_ADHESIVE123",
@@ -121,8 +121,8 @@ describe("buildBookingUrl - handoff to the DiveOS web wizard", () => {
   });
 
   it("survives in-site navigation: params reach the CTA from storage alone", () => {
-    // Visitor lands on /no-pool?gclid=..., clicks through to /open-water-course
-    // (clean URL), then hits Book. The CTA sees NO query string at all.
+    // Visitor lands on /open-water-course?gclid=..., clicks through to another
+    // page (clean URL) and back, then hits Book. The CTA sees NO query string.
     seedFirstTouch();
     const p = paramsOf(buildBookingUrl("", { product: "OWD" }));
     expect(p.gclid).toBe("GCL_ABC123");
