@@ -31,7 +31,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       label: t("courses_basic"),
       description: t("courses_basic_desc"),
       courses: [
-        { icon: Fish, title: t("course_dsd"), dialogKey: "Discover Scuba Diving", subtitle: "One Day Experience", price: "2,600", duration: t("dur_1_day"), highlights: [t("hl_no_exp"), t("hl_dsd_dives"), t("hl_padi_instructor")], hasDetails: true },
+        { icon: Fish, title: t("course_dsd"), dialogKey: "Discover Scuba Diving", subtitle: "One Day Experience", price: "2,600 / 3,600", duration: t("dur_1_day"), highlights: [t("hl_no_exp"), t("hl_dsd_dives"), t("hl_padi_instructor")], hasDetails: true },
         { icon: BookOpen, title: t("course_ow"), dialogKey: "Open Water Diver", price: "12,000", duration: t("dur_2_5_days"), highlights: [t("hl_18m"), t("hl_lifetime"), t("hl_4_dives")], featured: true, hasDetails: true },
         { icon: Fish, title: t("course_bubble"), dialogKey: "Bubble Maker", price: "3,800", duration: t("dur_1_day"), highlights: [t("hl_children"), t("hl_fun_intro"), t("hl_safe")], hasDetails: true },
         { icon: Waves, title: t("course_review"), dialogKey: "Scuba Review", price: "2,500", duration: t("dur_1_day"), highlights: [t("hl_review_refresh"), t("hl_review_2dives"), t("hl_review_instructor")], hasDetails: true },
@@ -41,7 +41,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       label: t("courses_advanced"),
       description: t("courses_advanced_desc"),
       courses: [
-        { icon: Star, title: t("course_aow"), dialogKey: "Advanced Open Water", price: "11,000", duration: t("dur_2_days"), highlights: [t("hl_30m"), t("hl_5_adventure"), t("hl_deep_nav")], featured: true, hasDetails: true },
+        { icon: Star, title: t("course_aow"), dialogKey: "Advanced Open Water", price: "11,000", duration: t("dur_1_5_days"), highlights: [t("hl_30m"), t("hl_5_adventure"), t("hl_deep_nav")], featured: true, hasDetails: true },
         { icon: ShieldCheck, title: t("course_rescue"), dialogKey: "Rescue Diver", price: "11,000", duration: t("dur_3_days"), highlights: [t("hl_emergency"), t("hl_rescue_tech"), t("hl_stress")], hasDetails: true },
         { icon: Heart, title: t("course_efr"), dialogKey: "Emergency First Response (EFR)", price: "5,000", duration: t("dur_1_day"), highlights: [t("hl_cpr"), t("hl_intl_cert"), t("hl_life_saving")], hasDetails: true },
       ],

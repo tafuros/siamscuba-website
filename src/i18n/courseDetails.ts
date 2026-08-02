@@ -115,7 +115,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 Accommodation available - 500 THB per night",
         "📸 Underwater video & photos - 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "Loved it? Continue to Open Water course - just 2 more days of diving to get certified! 🐠💙",
     },
     "Open Water Diver": {
@@ -165,7 +165,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water - Level Up Your Diving!",
-      intro: "Your second PADI certification! A 100% practical course - no exams, no theory. In just 2 days you'll complete 5 specialty dives and become a stronger, more confident diver. This is the natural next step after Open Water.",
+      intro: "Your second PADI certification! A 100% practical course - no exams, no theory. In just 1.5 days you'll complete 5 specialty dives and become a stronger, more confident diver. This is the natural next step after Open Water.",
       dives: [
         { name: "Deep Dive", description: "Descend to 30 meters." },
         { name: "Wreck Dive", description: "Explore a sunken ship." },
@@ -347,7 +347,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       learns: [
         "Day 1 of IE: 5 Theory Exams (12 questions each, 90 min) + 1 PADI Standards Exam (50 questions, open book)",
-        "Day 1 Afternoon: Pool - teach a skill from a PADI course + 5-skill demonstration workshop",
+        "Day 1 Afternoon: Confined water - teach a skill from a PADI course + 5-skill demonstration workshop",
         "Day 2 Morning: Classroom - teach your group about a missed question from a PADI course",
         "Day 2 Midday: Boat - teach/evaluate your group on 2 skills from PADI courses",
         "The IE evaluates you on exactly what you practised during the IDC - no surprises.",
@@ -458,7 +458,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 לינה זמינה - 500 THB ללילה",
         "📸 וידאו ותמונות מתחת למים - 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "אהבתם? המשיכו לקורס Open Water - רק עוד יומיים של צלילה כדי לקבל הסמכה! 🐠💙",
     },
     "Open Water Diver": {
@@ -508,7 +508,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water - מעלים רמה בצלילה!",
-      intro: "הסמכת ה-PADI השנייה שלכם! קורס 100% מעשי - בלי מבחנים, בלי תיאוריה. תוך יומיים בלבד תשלימו 5 צלילות התמחות ותהפכו לצוללים חזקים ובטוחים יותר. זהו הצעד הבא הטבעי אחרי Open Water.",
+      intro: "הסמכת ה-PADI השנייה שלכם! קורס 100% מעשי - בלי מבחנים, בלי תיאוריה. תוך יום וחצי בלבד תשלימו 5 צלילות התמחות ותהפכו לצוללים חזקים ובטוחים יותר. זהו הצעד הבא הטבעי אחרי Open Water.",
       dives: [
         { name: "צלילה עמוקה", description: "יורדים עד 30 מטר." },
         { name: "צלילת מבנה טבוע", description: "חוקרים ספינה טבועה." },
@@ -690,7 +690,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       learns: [
         "יום 1 של ה-IE: 5 מבחני תיאוריה (12 שאלות כל אחד, 90 דק') + מבחן תקני PADI אחד (50 שאלות, חומר פתוח)",
-        "יום 1 אחה\"צ: בריכה - מלמדים מיומנות מתוך קורס PADI + סדנת הדגמה של 5 מיומנויות",
+        "יום 1 אחה\"צ: מים מוגנים - מלמדים מיומנות מתוך קורס PADI + סדנת הדגמה של 5 מיומנויות",
         "יום 2 בוקר: כיתה - מלמדים את הקבוצה שלכם על שאלה שנכשלה מתוך קורס PADI",
         "יום 2 בצהריים: סירה - מלמדים/מעריכים את הקבוצה ב-2 מיומנויות מתוך קורסי PADI",
         "ה-IE בודק אתכם בדיוק על מה שתרגלתם ב-IDC - בלי הפתעות.",
@@ -801,7 +801,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 Alojamiento disponible: 500 THB por noche",
         "📸 Vídeo y fotos submarinas: 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "¿Te encantó? Continúa con el curso Open Water: ¡solo 2 días más de buceo para certificarte! 🐠💙",
     },
     "Open Water Diver": {
@@ -851,7 +851,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water: ¡sube de nivel tu buceo!",
-      intro: "¡Tu segunda certificación PADI! Un curso 100% práctico: sin exámenes ni teoría. En solo 2 días completarás 5 inmersiones de especialidad y te convertirás en un buceador más fuerte y seguro. Es el paso natural después de Open Water.",
+      intro: "¡Tu segunda certificación PADI! Un curso 100% práctico: sin exámenes ni teoría. En solo 1,5 días completarás 5 inmersiones de especialidad y te convertirás en un buceador más fuerte y seguro. Es el paso natural después de Open Water.",
       dives: [
         { name: "Inmersión profunda", description: "Desciende hasta 30 metros." },
         { name: "Inmersión en pecio", description: "Explora un barco hundido." },
@@ -1033,7 +1033,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       learns: [
         "Día 1 del IE: 5 exámenes de teoría (12 preguntas cada uno, 90 min) + 1 examen de estándares PADI (50 preguntas, a libro abierto)",
-        "Día 1 por la tarde: piscina - enseña una habilidad de un curso PADI + taller de demostración de 5 habilidades",
+        "Día 1 por la tarde: aguas confinadas - enseña una habilidad de un curso PADI + taller de demostración de 5 habilidades",
         "Día 2 por la mañana: aula - enseña a tu grupo sobre una pregunta fallada de un curso PADI",
         "Día 2 al mediodía: barco - enseña/evalúa a tu grupo en 2 habilidades de cursos PADI",
         "El IE te evalúa exactamente sobre lo que practicaste durante el IDC: sin sorpresas.",
@@ -1144,7 +1144,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "🛌 Hébergement disponible - 500 THB par nuit",
         "📸 Vidéo et photos sous-marines - 1,300-2,000 THB",
       ],
-      price: "2,600 THB",
+      price: "2,600 / 3,600 THB",
       nextStep: "Vous avez adoré ? Poursuivez avec le cours Open Water : seulement 2 jours de plongée de plus pour être certifié ! 🐠💙",
     },
     "Open Water Diver": {
@@ -1194,7 +1194,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water - passez au niveau supérieur !",
-      intro: "Votre deuxième certification PADI ! Un cours 100% pratique : pas d'examens, pas de théorie. En seulement 2 jours, vous réaliserez 5 plongées de spécialité et deviendrez un plongeur plus fort et plus sûr de vous. C'est la suite naturelle après l'Open Water.",
+      intro: "Votre deuxième certification PADI ! Un cours 100% pratique : pas d'examens, pas de théorie. En seulement 1,5 jour, vous réaliserez 5 plongées de spécialité et deviendrez un plongeur plus fort et plus sûr de vous. C'est la suite naturelle après l'Open Water.",
       dives: [
         { name: "Plongée profonde", description: "Descendez jusqu'à 30 mètres." },
         { name: "Plongée sur épave", description: "Explorez un navire coulé." },

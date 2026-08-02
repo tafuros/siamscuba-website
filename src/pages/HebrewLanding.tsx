@@ -153,8 +153,8 @@ const HebrewLanding = () => {
             </p>
             <ul className="space-y-2 mr-4 list-disc">
               <li>
-                <strong>Discover Scuba Diving (טעימה):</strong> 2,600 בת. יום אחד, ללא הסמכה. צלילת ים רגועה
-                אחת (צלילה שנייה בתוספת 1,000 בת). מתאים אם אתם לא בטוחים שאתם רוצים לצלול בכלל.
+                <strong>Discover Scuba Diving (טעימה):</strong> 2,600 בת לצלילה אחת, 3,600 בת לשתיים. יום אחד,
+                ללא הסמכה. מתאים אם אתם לא בטוחים שאתם רוצים לצלול בכלל.
               </li>
               <li>
                 <strong>PADI Bubble Maker (לילדים מגיל 8):</strong> 3,800 בת. צלילה במים רדודים ומוגנים, בליווי מדריך PADI.
@@ -163,7 +163,7 @@ const HebrewLanding = () => {
                 <strong>Scuba Review (רענון לצוללנים מוסמכים):</strong> 2,500 בת. יום אחד עם 2 צלילות בים בליווי מדריך.
               </li>
               <li>
-                <strong>PADI Open Water Diver (כוכב ראשון):</strong> 12,000 בת. 3 ימים, הסמכה לכל החיים, מקסימום 4
+                <strong>PADI Open Water Diver (כוכב ראשון):</strong> 12,000 בת. 2.5 ימים, הסמכה לכל החיים, מקסימום 4
                 תלמידים למדריך. מאפשר לכם לצלול עד עומק 18 מטר בכל מקום בעולם.
               </li>
               <li>
@@ -232,7 +232,7 @@ const HebrewLanding = () => {
 
           <Section id="living-costs" title="עלויות חיים אם אתם נשארים יותר זמן">
             <p>
-              אם אתם מתכננים לעשות גם את ה-Advanced Open Water (יומיים נוספים) או Divemaster (4-8 שבועות), כדאי
+              אם אתם מתכננים לעשות גם את ה-Advanced Open Water (יום וחצי נוסף) או Divemaster (4-8 שבועות), כדאי
               לדעת את עלויות החיים החודשיות:
             </p>
             <ul className="space-y-2 mr-4 list-disc">

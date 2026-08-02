@@ -92,7 +92,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "יום ראשון בקורס — מה קורה?",
         paragraphs: [
-          "מגיעים לקליניקה שלנו ב-Mae Haad, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים לבריכה לתרגול ראשוני — שם לומדים לנשום מתחת למים, לפנות מסכה מים ועוד כישורי בסיס.",
+          "מגיעים לקליניקה שלנו ב-Mae Haad, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים לבריכה לתרגול ראשוני — שם לומדים לנשום מתחת למים, לפנות מסכה ממים ועוד כישורי בסיס.",
           "ביום השני והשלישי יוצאים לים בסירות הצלילה שלנו — ה-Siam Explorer וה-Siam Pearl — לאתרי צלילה כמו Japanese Gardens ו-Twin Peaks, עם ריף אלמוגים מרהיב ושפע של חיים ימיים.",
         ],
       },
@@ -565,11 +565,11 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Honest price breakdown for every PADI course on Koh Tao",
         paragraphs: [
           "Here's what each course costs at Siam Scuba in 2026. Every price below includes all gear rental, boat trips, certification fees, and tax. No surcharges added at the shop.",
-          "Discover Scuba Diving: ฿2,600 - One day, no certification. An easy shallow-water start plus 1-2 ocean dives in calm water. Best if you're not sure you'll like diving.",
-          "PADI Bubble Maker (kids 8+): ฿3,800 - Pool-based scuba intro for children, with a PADI instructor.",
+          "Discover Scuba Diving: ฿2,600 for one dive, ฿3,600 for two - One day, no certification. An easy shallow-water start plus your ocean dives in calm water. Best if you're not sure you'll like diving.",
+          "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
-          "PADI Open Water Diver: ฿12,000 - 3 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
-          "PADI Advanced Open Water: ฿11,000 - 2 days, 5 dives including deep and navigation. Takes you to 30m.",
+          "PADI Open Water Diver: ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
+          "PADI Advanced Open Water: ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,500 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver / Deep Diver / Sidemount / DPV: each runs ฿7,000-฿9,500 depending on dive count.",
@@ -604,7 +604,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "Total budget by goal: from try-dive to professional",
         paragraphs: [
-          "Day tripper / try diving: ฿2,600 for the Discover Scuba dive + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
+          "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (฿3,600 for two dives) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
           "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿2,000 = ฿25,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
           "Pro pathway: ฿38,500 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿80,000-฿120,000 over 6-8 weeks. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",
@@ -636,7 +636,7 @@ const divingBlogPosts: BlogPost[] = [
   },
   {
     slug: "padi-advanced-open-water-koh-tao",
-    title: "PADI Advanced Open Water on Koh Tao: The Complete 2-Day Course Guide",
+    title: "PADI Advanced Open Water on Koh Tao: The Complete 1.5-Day Course Guide",
     category: "Diving",
     excerpt: "Everything about the PADI Advanced Open Water course on Koh Tao - the 5 dives, the deeper sites you unlock, prerequisites, and whether to do it right after Open Water.",
     coverImage: "/blog/padi-advanced-open-water-koh-tao.webp",
@@ -653,7 +653,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "The 5 adventure dives explained",
         paragraphs: [
-          "AOW is structured as 5 adventure dives over 2 days. Two are mandatory, three are your pick.",
+          "AOW is structured as 5 adventure dives over 1.5 days. Two are mandatory, three are your pick.",
           "Mandatory dives: Deep Adventure (typically to 30m at Chumphon Pinnacle or Shark Island) and Underwater Navigation Adventure (compass work plus natural-feature navigation, usually at Twins or Japanese Gardens).",
           "Pick 3 from: Wreck Adventure (HTMS Sattakut), Peak Performance Buoyancy, Photography, Naturalist (fish ID), Search and Recovery, Night Diver, Drift, Boat Diver, Underwater Videographer. Each adventure dive counts toward the corresponding full specialty later, if you want to complete one.",
           "Most students pick Wreck + Peak Performance Buoyancy + Photography because they're the most useful for everyday diving. The Wreck Adventure on the HTMS Sattakut is the single most popular AOW dive on the island.",
@@ -674,16 +674,16 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "You need a PADI Open Water certification (or recognized equivalent from another agency - SSI, NAUI, BSAC, etc. all qualify). No minimum logged dives required by PADI standards, though we recommend you have 5-10 dives under your belt for comfort.",
           "AOW at Siam Scuba is 11,000 THB. That includes all gear rental, 5 boat dives, dive computer rental, certification card processing, and tax. No surcharges for dive site access (Sail Rock has a small marine fee that's already included).",
-          "2 days standard. Min age 12 for Junior AOW, 15 for full AOW (Junior gets a depth-restricted card that converts to full AOW automatically when they turn 15).",
+          "1.5 days standard. Min age 12 for Junior AOW, 15 for full AOW (Junior gets a depth-restricted card that converts to full AOW automatically when they turn 15).",
         ],
       },
       {
         heading: "Should you do AOW right after Open Water?",
         paragraphs: [
           "For most people, yes. Three reasons.",
-          "First, momentum. You've just spent 3 days getting comfortable underwater. Your buoyancy is starting to click, your gear feels normal, you're not fighting your mask anymore. Stopping for months and coming back later means rebuilding that comfort - usually you'll need a refresher dive at least.",
+          "First, momentum. You've just spent 2.5 days getting comfortable underwater. Your buoyancy is starting to click, your gear feels normal, you're not fighting your mask anymore. Stopping for months and coming back later means rebuilding that comfort - usually you'll need a refresher dive at least.",
           "Second, depth confidence. The first time you go past 18m is psychologically different than the first time at 12m. Doing it under instructor supervision while AOW skills are fresh is the safer way to make that jump.",
-          "Third, it unlocks the actually-good dive sites. Doing OW + AOW back-to-back over 5-6 days means you spend the second half of your trip diving the legendary sites instead of the training reefs. The cost difference (11,000 THB) is small relative to the value of doing AOW now vs. flying home and coming back later.",
+          "Third, it unlocks the actually-good dive sites. Doing OW + AOW back-to-back over 4-5 days means you spend the second half of your trip diving the legendary sites instead of the training reefs. The cost difference (11,000 THB) is small relative to the value of doing AOW now vs. flying home and coming back later.",
           "When NOT to do AOW immediately: if you didn't enjoy Open Water and aren't sure diving is for you, take a break. Forcing AOW right after a rough OW course is how people end up with bad memories and never dive again.",
         ],
       },
@@ -700,7 +700,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Booking and next steps",
         paragraphs: [
           "Same booking flow as Open Water. WhatsApp us with your dates, we confirm within an hour during daytime. A deposit secures your spot, and you settle the balance once you arrive on Koh Tao and meet the team.",
-          "If you're considering OW + AOW together, mention it in the message. We can schedule them back-to-back so you finish in 5-6 days rather than spreading across two trips.",
+          "If you're considering OW + AOW together, mention it in the message. We can schedule them back-to-back so you finish in 4-5 days rather than spreading across two trips.",
           "Where AOW leads: Rescue Diver is the natural next step (most divers say it changes how they dive). Then Divemaster if you want to go pro. We have the full pathway in-house, same shop, same instructors.",
         ],
       },
@@ -896,7 +896,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "The 4 components of the course",
         paragraphs: [
           "Theory: 5 modules covering physics, physiology, equipment, dive planning, and the underwater environment. You can do this as eLearning at home before you arrive (saves a day on the island), or in classroom sessions with us.",
-          "Confined water sessions: 5 sets of skills practiced in a pool or shallow ocean area. Mask clearing, regulator recovery, alternate air source use, weight handling, neutral buoyancy basics. This is where you build the muscle memory.",
+          "Confined water sessions: 5 sets of skills practiced in a pool. Mask clearing, regulator recovery, alternate air source use, weight handling, neutral buoyancy basics. This is where you build the muscle memory.",
           "Open water dives: 4 dives in the ocean. You demonstrate the same skills you learned in confined water, plus you do a small navigation exercise.",
           "Final exam: 50 multiple-choice questions, 75% pass mark. If you fail one section you re-do that section only, not the full exam.",
         ],
@@ -914,10 +914,10 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "How long it takes",
         paragraphs: [
-          "Standard: 3 days on the island if you complete the eLearning theory component at home before you arrive (recommended).",
-          "Slower track: 4 days on the island if you do all theory in person.",
-          "Fastest: 2 days, but we don't recommend it. Rushing the course leaves you less comfortable in the water and makes the skills less automatic. The 2-day option is occasionally requested by tight-itinerary travellers; we only run it if the instructor judges the student ready.",
-          "If you have time, 4 days at a relaxed pace is the most enjoyable. Most students do 3 days.",
+          "Standard: 2.5 days on the island if you complete the eLearning theory component at home before you arrive (recommended). Day 1 is theory and pool, days 2 and 3 are your four ocean dives, and you are certified by late morning on the final day.",
+          "Slower track: add a day if you do all your theory in person on the island instead of online before you arrive.",
+          "We don't compress the course below 2.5 days. It is already an efficient schedule because the theory is done before you land - cutting it further leaves you less comfortable in the water and makes the skills less automatic.",
+          "If you have time, spreading the same course over an extra day at a relaxed pace is the most enjoyable way to do it.",
         ],
       },
       {
@@ -1064,7 +1064,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "The PADI Open Water Course",
         paragraphs: [
           "PADI (Professional Association of Diving Instructors) is the world's largest dive training organisation, certifying over 1 million divers every year. Their Open Water Diver course is the most recognised beginner certification on the planet.",
-          "The PADI course consists of three parts: knowledge development (theory), confined water dives (in a pool or shallow bay), and open water dives (four dives in the ocean). On Koh Tao, the full Open Water course typically takes 3–4 days.",
+          "The PADI course consists of three parts: knowledge development (theory), confined water dives (with us, in our pool), and open water dives (four dives in the ocean). On Koh Tao, the full Open Water course typically takes 3–4 days.",
           "One key thing to know: PADI materials (the printed or digital manual) are an additional cost on top of your course fee — usually around 800–1,000 THB extra. At Siam Scuba, we include everything in one transparent price so there are no surprises.",
         ],
       },
@@ -1177,7 +1177,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Day 1 — Theory and Pool",
         paragraphs: [
           "You'll start with theory: either through the PADI eLearning platform (which you can complete online before arriving on Koh Tao) or with your instructor using the PADI manual. The theory covers dive physics, equipment, hand signals, safety procedures, and dive planning.",
-          "In the afternoon, you head to the pool or a shallow, protected bay for your first confined water dives. This is where you practice the core skills: clearing your mask, breathing from a regulator underwater, and hovering neutrally. Most students are surprised by how natural it feels within an hour.",
+          "In the afternoon, you head to the pool for your first confined water dives. This is where you practice the core skills: clearing your mask, breathing from a regulator underwater, and hovering neutrally. Most students are surprised by how natural it feels within an hour.",
         ],
       },
       {
@@ -1272,7 +1272,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "El PADI Open Water Diver es la certificación de buceo más extendida del mundo. Más de 29 millones de buceadores certificados la tienen. Es vitalicia (no caduca), reconocida en unos 135 países, y te permite bucear hasta los 18 metros de profundidad acompañado de un compañero, en cualquier parte del mundo.",
           "Koh Tao, una pequeña isla en el golfo de Tailandia, es el lugar donde más certificaciones PADI Open Water se emiten cada año en todo el planeta. Esto se debe a una combinación de aguas cálidas (28-30°C todo el año), buena visibilidad, una gran cantidad de centros de buceo que compiten entre sí, y precios que son una fracción de lo que cuesta certificarse en el Caribe o Australia.",
-          "En Siam Scuba, el curso cuesta 12.000 THB (unos 310 EUR / 340 USD) y dura 3 días. Incluye todo el equipo, las inmersiones, los manuales, y la tarjeta de certificación oficial. No hay sorpresas en el precio.",
+          "En Siam Scuba, el curso cuesta 12.000 THB (unos 310 EUR / 340 USD) y dura 2,5 días. Incluye todo el equipo, las inmersiones, los manuales, y la tarjeta de certificación oficial. No hay sorpresas en el precio.",
         ],
       },
       {

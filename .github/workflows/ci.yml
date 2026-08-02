@@ -60,7 +60,7 @@ jobs:
 
           # Analytics tags power live business tracking - never remove them.
           grep -q 'GTM-TN3SM66Q'    index.html || fail "index.html lost the GTM container"
-          grep -q 'AW-18050429438'  index.html || fail "index.html lost the Google Ads tag"
+          grep -q 'AW-18357382437'  index.html || fail "index.html lost the Google Ads tag"
 
           # The prerender must actually emit pages and a sitemap.
           test -f dist/index.html   || fail "build produced no dist/index.html"

@@ -13,7 +13,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "discover-scuba": {
     title: "Discover Scuba Diving in Koh Tao – Try Diving | Siam Scuba",
     description:
-      "Try scuba diving in Koh Tao with no experience needed. One-day intro with PADI instructor: an easy shallow-water start plus 1-2 ocean dives in calm tropical water. ฿2,600.",
+      "Try scuba diving in Koh Tao with no experience needed. One-day intro with PADI instructor: an easy shallow-water start plus 1-2 ocean dives in calm tropical water. ฿2,600 for one dive, ฿3,600 for two.",
     h1: "Discover Scuba Diving",
   },
   "open-water": {
@@ -23,9 +23,9 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
     h1: "PADI Open Water Diver Course",
   },
   "advanced-open-water": {
-    title: "PADI Advanced Open Water Course Koh Tao – 2 Days | Siam Scuba",
+    title: "PADI Advanced Open Water Course Koh Tao – 1.5 Days | Siam Scuba",
     description:
-      "Advance to 30m depth with the PADI Advanced Open Water course in Koh Tao. 2 days, 5 adventure dives, deep diving and navigation. ฿11,000 with Siam Scuba.",
+      "Advance to 30m depth with the PADI Advanced Open Water course in Koh Tao. 1.5 days, 5 adventure dives, deep diving and navigation. ฿11,000 with Siam Scuba.",
     h1: "PADI Advanced Open Water Course",
   },
   "rescue-diver": {
@@ -49,7 +49,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "bubble-maker": {
     title: "PADI Bubble Maker for Kids in Koh Tao | Siam Scuba",
     description:
-      "Safe, supervised first scuba experience for children aged 8+ in Koh Tao. PADI Bubble Maker: pool-based, with PADI instructor, fun and confidence-building. ฿3,800.",
+      "Safe, supervised first scuba experience for children aged 8+ in Koh Tao. PADI Bubble Maker: in shallow sheltered sea, with a PADI instructor, fun and confidence-building. ฿3,800.",
     h1: "PADI Bubble Maker for Kids",
   },
   "scuba-review": {

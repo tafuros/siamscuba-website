@@ -15,6 +15,7 @@ import TripAdvisorSection from "@/components/TripAdvisorSection";
 import LanderNav from "@/components/landers/LanderNav";
 import padiLogo from "@/assets/padi-logo.png";
 import { LANDER_COPY, type Lang, type Offer, type UspTile } from "@/lib/landerCopy";
+import { WIZARD_PRODUCT, usesBookingWrapper } from "@/lib/landerBooking";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
 
@@ -30,6 +31,7 @@ const ICONS: Record<UspTile["icon"], typeof Shield> = {
   calendar: Calendar,
   award: Award,
   heart: Heart,
+  waves: Waves,
 };
 
 const FUN_DIVE_BOOKING_PATH = "/fun-dive-booking";
@@ -56,24 +58,55 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
     [offer, lang]
   );
 
-  // Landers whose primary CTA routes through the booking iframe page, where the
-  // postMessage->lead/purchase conversion tracking is wired so a deposit fires a
-  // valued Purchase in Google Ads:
+  // Landers whose primary CTA routes through the /fun-dive-booking wrapper,
+  // where the postMessage -> lead/purchase conversion tracking is wired so a
+  // deposit fires a valued Purchase in Google Ads:
   //   - fun-dive + koh-tao (certified divers, generic fun-dive booking)
-  //   - dsd (Discover Scuba) -> booking with product=DSD so a deposit fires the
-  //     full ~3,600 THB Purchase value instead of a valueless WhatsApp tap.
-  // For these, WhatsApp stays as the SECONDARY CTA. Other offers (owd) keep both
-  // CTAs on WhatsApp since they have no self-serve booking.
-  const usesBookingIframe =
-    offer === "fun-dive" || offer === "koh-tao" || offer === "dsd";
-  // DSD pre-selects its product in the DiveOS wizard; date-based offers (Sail
-  // Rock) carry a date instead, but DSD has no per-trip date strip - just the
-  // product. utm_passthrough=1 forwards the lander's first-touch UTMs/gclid.
+  //   - dsd  -> product=DSD, so a deposit fires the real Purchase value
+  //   - owd  -> product=OW  (moved here 2026-08-01, see below)
+  //   - aow  -> product=AOW (moved here 2026-08-01, see below)
+  //
+  // ONE WRAPPER FOR EVERY PRODUCT (Ben's rule, 2026-08-01). The wrapper page
+  // decides at runtime which DiveOS wizard the iframe loads: paid-campaign
+  // visitors get /dive/web, everyone else keeps the familiar /dive/ben form
+  // with normal instructor/commission handling. See utils/bookingUrl.ts ->
+  // buildWizardIframeSrc. Routing every product through the same page means a
+  // single place owns that decision AND every product keeps the postMessage
+  // conversion signal.
+  //
+  // Open Water used to hand off DIRECTLY to dash.siamscuba.com/dive/web via
+  // BookNowLink, which meant it was the only product with no client-side
+  // conversion signal at all - on a 12,000 THB course about to take ~330
+  // THB/day of paid traffic. The wrapper restores the signal; the conditional
+  // src preserves the paid-traffic identity it was getting from the direct link.
+  //
+  // aow joined on 2026-08-01. It was the LAST lander with no booking CTA at all
+  // - both buttons went to WhatsApp - which is how Open Water used to leak, and
+  // Advanced Open Water is the second-biggest earner in the business
+  // (1,178,000 THB over 115 bookings, ~10,243 THB each) with its own campaign
+  // about to start. Its DiveOS code was unknown when the wrapper was built;
+  // it is "AOW", confirmed against the live catalog. See WIZARD_PRODUCT.
+  //
+  // With aow added, EVERY offer this component actually serves (dsd, owd, aow)
+  // is on the wrapper - no lander it renders is WhatsApp-only any more. The
+  // fun-dive and sail-rock landers are separate components (FunDiveLander,
+  // SailRockLander) that already post to the same wrapper; koh-tao is retired
+  // and 301'd in vercel.json. Their entries in the predicate are kept so the
+  // rule stays readable as one list rather than splitting across three files.
+  //
+  // The decision + the product codes live in lib/landerBooking.ts so they can be
+  // asserted without rendering this component; see landerProducts.test.ts.
+  const usesBookingIframe = usesBookingWrapper(offer);
+  // utm_passthrough=1 forwards the lander's first-touch UTMs/gclid. It is a
+  // no-op now that passthrough defaults to ON; it stays as documented intent.
   const bookingParams = new URLSearchParams({ utm_passthrough: "1" });
-  if (offer === "dsd") bookingParams.set("product", "DSD");
+  const wizardProduct = WIZARD_PRODUCT[offer];
+  if (wizardProduct) bookingParams.set("product", wizardProduct);
   const primaryHref = usesBookingIframe
     ? `${FUN_DIVE_BOOKING_PATH}?${bookingParams.toString()}`
     : whatsappHref;
+  // "external" here means "the primary CTA is the green WhatsApp button", which
+  // is true only when the booking wrapper does not apply.
   const primaryIsExternal = !usesBookingIframe;
 
   // Per-offer WhatsApp click locations. The koh-tao conquest lander reports its

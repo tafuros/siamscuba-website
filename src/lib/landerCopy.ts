@@ -49,7 +49,7 @@ export interface FeatureCard {
 }
 
 export interface UspTile {
-  icon: "shield" | "users" | "boat" | "calendar" | "award" | "heart";
+  icon: "shield" | "users" | "boat" | "calendar" | "award" | "heart" | "waves";
   // When set, the tile renders this brand badge image instead of the lucide icon.
   badge?: "padi5star";
   // When set, the tile renders this colorful emoji instead of the monochrome
@@ -142,7 +142,7 @@ const DSD_EN: LanderCopy = {
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Try scuba diving in Koh Tao - 2 dives, 3,600 THB",
   heroSubhead:
-    "No certification needed. A PADI instructor takes you from your first breath underwater to two real ocean dives on Koh Tao's reefs - all in one day. Want just one dive? 2,600 THB.",
+    "No certification needed. A PADI instructor takes you from your first breath in shallow sheltered sea to two real ocean dives on Koh Tao's reefs - all in one day. Want just one dive? 2,600 THB.",
   ctaPrimary: "Book your Discover Scuba day",
   ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why try diving with Siam Scuba",
@@ -171,7 +171,7 @@ const DSD_EN: LanderCopy = {
     includes: [
       "Full day with a PADI instructor (English, Spanish, Hebrew spoken)",
       "All scuba gear (mask, fins, wetsuit, BCD, weights, regulator, 12L tank)",
-      "Confined-water training session",
+      "Confined-water session in shallow sheltered sea - a real reef from your first breath",
       "1 or 2 ocean dives on the reef (your choice)",
       "Boat snacks: fresh fruit, cookies, tea, coffee, water",
       "Dive insurance",
@@ -191,7 +191,7 @@ const DSD_EN: LanderCopy = {
   schedule: [
     { time: "Day before", label: "Register at the shop by 18:00" },
     { time: "10:30", label: "Briefing, gear intro, expectations and safety" },
-    { time: "Dive 1", label: "4 basic skills in shallow water, then descend to max 12m" },
+    { time: "Dive 1", label: "4 basic skills in shallow sheltered sea, then descend to max 12m" },
     { time: "Dive 2", label: "Just enjoy - no skills, max 12m" },
     { time: "16:00", label: "Activity ends" },
   ],
@@ -231,7 +231,7 @@ const DSD_ES: LanderCopy = {
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Prueba el buceo en Koh Tao - 2 inmersiones, 3,600 THB",
   heroSubhead:
-    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración bajo el agua hasta dos inmersiones reales en los arrecifes de Koh Tao, todo en un día. ¿Solo una inmersión? 2,600 THB.",
+    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración en mar poco profundo y resguardado hasta dos inmersiones reales en los arrecifes de Koh Tao, todo en un día. ¿Solo una inmersión? 2,600 THB.",
   ctaPrimary: "Reserva tu día de buceo",
   ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué bucear con Siam Scuba",
@@ -260,7 +260,7 @@ const DSD_ES: LanderCopy = {
     includes: [
       "Día completo con instructor PADI (hablamos español)",
       "Equipo completo (máscara, aletas, traje, chaleco, plomos, regulador, botella de 12 L)",
-      "Sesión en aguas confinadas",
+      "Sesión de aguas confinadas en mar poco profundo y resguardado - arrecife real desde la primera respiración",
       "1 o 2 inmersiones en el arrecife (tú eliges)",
       "Tentempiés en el barco: fruta fresca, galletas, té, café y agua",
       "Seguro de buceo",
@@ -280,7 +280,7 @@ const DSD_ES: LanderCopy = {
   schedule: [
     { time: "Día antes", label: "Regístrate en la tienda antes de las 18:00" },
     { time: "10:30", label: "Briefing, presentación del equipo, expectativas y seguridad" },
-    { time: "Inmersión 1", label: "4 habilidades básicas en aguas poco profundas, luego hasta 12m" },
+    { time: "Inmersión 1", label: "4 habilidades básicas en mar poco profundo y resguardado, luego hasta 12m" },
     { time: "Inmersión 2", label: "Solo disfrutar - sin habilidades, hasta 12m" },
     { time: "16:00", label: "Fin de la actividad" },
   ],
@@ -320,7 +320,7 @@ const DSD_HE: LanderCopy = {
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "צלילת היכרות בקוטאו - שתי צלילות, 3,600 THB",
   heroSubhead:
-    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה מתחת למים עד שתי צלילות אמיתיות בשונית של קוטאו - הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
+    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה בים רדוד ומוגן עד שתי צלילות אמיתיות בשונית של קוטאו - הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
   ctaPrimary: "הזמינו צלילת היכרות",
   ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה לצלול איתנו",
@@ -349,7 +349,7 @@ const DSD_HE: LanderCopy = {
     includes: [
       "יום שלם עם מדריך PADI דובר עברית",
       "כל ציוד הצלילה (מסכה, סנפירים, חליפה, מאזן ציפה, משקולות, רגולטור, מיכל אוויר 12 ליטר)",
-      "תרגול מיומנויות במים רדודים",
+      "תרגול מיומנויות בים רדוד ומוגן - שונית אמיתית כבר מהנשימה הראשונה",
       "1 או 2 צלילות בשונית (לבחירתכם)",
       "נשנושים בסירה: פירות טריים, עוגיות, תה, קפה ומים",
       "ביטוח צלילה",
@@ -369,7 +369,7 @@ const DSD_HE: LanderCopy = {
   schedule: [
     { time: "יום לפני", label: "רישום במועדון עד 18:00" },
     { time: "10:30", label: "תדריך, היכרות עם הציוד, תיאום ציפיות ובטיחות" },
-    { time: "צלילה 1", label: "4 תרגילים בסיסיים במים רדודים, ואז צלילה לעומק עד 12 מ׳" },
+    { time: "צלילה 1", label: "4 תרגילים בסיסיים בים רדוד ומוגן, ואז צלילה לעומק עד 12 מ׳" },
     { time: "צלילה 2", label: "פשוט נהנים - בלי תרגילים, עומק עד 12 מ׳" },
     { time: "16:00", label: "סיום הפעילות" },
   ],
@@ -412,8 +412,8 @@ const OWD_EN: LanderCopy = {
   heroH1: "Get PADI certified in Koh Tao - 2.5 days, 12,000 THB, lifelong",
   heroSubhead:
     "Theory online and in our classroom, pool practice, then four real ocean dives - all in 2.5 days. You leave with a PADI card you can dive on anywhere in the world, forever.",
-  ctaPrimary: "Chat on WhatsApp",
-  ctaSecondary: "Ask about dates and discounts",
+  ctaPrimary: "Book your Open Water course",
+  ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why certify with Siam Scuba",
   uspTiles: [
     {
@@ -489,6 +489,10 @@ const OWD_EN: LanderCopy = {
       a: "Minimum 10 (Junior Open Water - limited to 12m). 15+ for the full Open Water Diver cert.",
     },
     {
+      q: "Where does the confined-water training happen?",
+      a: "In our pool. You learn every skill somewhere calm, clear and shallow enough to stand up in, with nothing else going on - so by the time you reach the ocean on day 2, the skills are already familiar.",
+    },
+    {
       q: "Can I add Advanced after?",
       a: "Yes, and we discount it heavily if you book together. Ask on WhatsApp.",
     },
@@ -505,8 +509,8 @@ const OWD_ES: LanderCopy = {
   heroH1: "Certifícate PADI en Koh Tao - 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
     "Teoría online y en nuestra aula, prácticas en piscina y cuatro inmersiones reales en el mar - todo en 2,5 días. Te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
-  ctaPrimary: "Chatea por WhatsApp",
-  ctaSecondary: "Pregunta por fechas y descuentos",
+  ctaPrimary: "Reserva tu curso Open Water",
+  ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué certificarte con Siam Scuba",
   uspTiles: [
     {
@@ -582,6 +586,10 @@ const OWD_ES: LanderCopy = {
       a: "10 años para el Junior Open Water (máx. 12m). 15+ para el Open Water Diver completo.",
     },
     {
+      q: "¿Dónde se hace la sesión de aguas confinadas?",
+      a: "En nuestra piscina. Aprendes cada habilidad en un sitio tranquilo, claro y poco profundo donde haces pie, sin nada más alrededor - así, cuando llegas al mar el día 2, las habilidades ya te salen solas.",
+    },
+    {
       q: "¿Puedo añadir el Advanced después?",
       a: "Sí, y con descuento importante si lo reservas junto. Pregúntanos por WhatsApp.",
     },
@@ -598,8 +606,8 @@ const OWD_HE: LanderCopy = {
   heroH1: "כוכב ראשון ב-2.5 ימים בקו-טאו, 12,000 THB, לכל החיים",
   heroSubhead:
     "לימוד עיוני אונליין + שיעור במועדון, תרגול בבריכה, ואז ארבע צלילות אמיתיות בים - הכל ב-2.5 ימים. יוצאים עם כרטיס PADI שצוללים איתו בכל מקום בעולם, לכל החיים.",
-  ctaPrimary: "שיחה ב-WhatsApp",
-  ctaSecondary: "שאלו על תאריכים והנחות",
+  ctaPrimary: "הזמינו את קורס ה-Open Water",
+  ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה להסמיך איתנו",
   uspTiles: [
     {
@@ -675,6 +683,10 @@ const OWD_HE: LanderCopy = {
       a: "10 שנים ל-Junior Open Water (מקס׳ 12 מטר). 15+ לקורס המלא.",
     },
     {
+      q: "איפה מתקיים תרגול המים המוגנים?",
+      a: "בבריכה שלנו. לומדים כל מיומנות במקום רגוע, צלול ורדוד מספיק כדי לעמוד בו, בלי שום דבר אחר מסביב - כך שכשמגיעים לים ביום 2, המיומנויות כבר מוכרות.",
+    },
+    {
       q: "אפשר להוסיף Advanced אחרי?",
       a: "כן, ובהנחה משמעותית אם מזמינים יחד. שאלו ב-WhatsApp.",
     },
@@ -693,8 +705,8 @@ const AOW_EN: LanderCopy = {
   heroH1: "Go Advanced in Koh Tao - 1.5 days, 5 dives, 11,000 THB",
   heroSubhead:
     "Already Open Water certified? Push to 30m with five adventure dives - deep, wreck, night, navigation and buoyancy. No exams, no theory, just diving. One night's accommodation included.",
-  ctaPrimary: "Chat on WhatsApp",
-  ctaSecondary: "Ask about dates and combos",
+  ctaPrimary: "Book your Advanced course",
+  ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why go Advanced with Siam Scuba",
   uspTiles: [
     {
@@ -785,8 +797,8 @@ const AOW_ES: LanderCopy = {
   heroH1: "Sácate el Advanced en Koh Tao en Español!!! - 1.5 días, 5 inmersiones",
   heroSubhead:
     "¿Ya eres Open Water? Baja hasta 30m con cinco inmersiones de aventura - profunda, pecio, nocturna, navegación y flotabilidad. Sin exámenes, sin teoría, solo buceo. Una noche de alojamiento incluida.",
-  ctaPrimary: "Chatea por WhatsApp",
-  ctaSecondary: "Pregunta por fechas y combos",
+  ctaPrimary: "Reserva tu curso Advanced",
+  ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué hacer el Advanced con Siam Scuba",
   uspTiles: [
     {
@@ -877,8 +889,8 @@ const AOW_HE: LanderCopy = {
   heroH1: "כוכב שני בקוטאו בעברית!!! - יום וחצי, 5 צלילות, 11,000 THB",
   heroSubhead:
     "כבר מוסמכים Open Water? תרדו ל-30 מטר עם חמש צלילות הרפתקה - עומק, ספינה טרופה, לילה, ניווט וציפה. בלי מבחנים, בלי תיאוריה, רק צלילה. לילה לינה כלול.",
-  ctaPrimary: "שיחה ב-WhatsApp",
-  ctaSecondary: "שאלו על תאריכים וחבילות",
+  ctaPrimary: "הזמינו את קורס הכוכב השני",
+  ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה לעשות כוכב שני איתנו",
   uspTiles: [
     {
@@ -2035,10 +2047,19 @@ export function landerHreflangAlternates(offer: Offer): Partial<Record<Lang, str
   };
 }
 
-// JSON-LD pricing - uses the lower tier as the headline price (with availability/options
-// detailed in copy). Schema.org Offer expects a single number per Offer.
-const PRICES: Record<Offer, { price: string; currency: string; duration: string }> = {
-  dsd: { price: "2600", currency: "THB", duration: "P1D" },
+// JSON-LD pricing. `price` is the headline (lowest) tier. When an offer has a
+// SECOND tier, set `highPrice` and the JSON-LD emits an AggregateOffer spanning
+// the range instead of a single Offer - otherwise the rich result advertises a
+// price the customer cannot actually buy the advertised product for.
+//
+// DSD is exactly that case: 2,600 THB buys ONE dive, 3,600 THB buys TWO, and the
+// visible lander copy has always said both. Emitting a bare 2,600 Offer next to
+// an H1 reading "2 dives, 3,600 THB" is a mismatch Google can flag.
+const PRICES: Record<
+  Offer,
+  { price: string; highPrice?: string; currency: string; duration: string }
+> = {
+  dsd: { price: "2600", highPrice: "3600", currency: "THB", duration: "P1D" },
   owd: { price: "12000", currency: "THB", duration: "P2DT12H" },
   aow: { price: "11000", currency: "THB", duration: "P1DT12H" },
   "fun-dive": { price: "2000", currency: "THB", duration: "PT4H" },
@@ -2064,6 +2085,25 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
   const url = landerUrl(offer, lang);
   const meta = PRICES[offer];
 
+  // A two-tier offer becomes an AggregateOffer so the range is machine-readable.
+  const offers: Record<string, unknown> = meta.highPrice
+    ? {
+        "@type": "AggregateOffer",
+        lowPrice: meta.price,
+        highPrice: meta.highPrice,
+        offerCount: 2,
+        priceCurrency: meta.currency,
+        availability: "https://schema.org/InStock",
+        url,
+      }
+    : {
+        "@type": "Offer",
+        price: meta.price,
+        priceCurrency: meta.currency,
+        availability: "https://schema.org/InStock",
+        url,
+      };
+
   const primary: Record<string, unknown> =
     offer === "fun-dive" || offer === "koh-tao" || offer === "sail-rock"
       ? {
@@ -2074,13 +2114,7 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
           url,
           provider: { "@type": "Organization", name: "Siam Scuba", "@id": `${SITE}/#organization` },
           areaServed: { "@type": "Place", name: "Koh Tao" },
-          offers: {
-            "@type": "Offer",
-            price: meta.price,
-            priceCurrency: meta.currency,
-            availability: "https://schema.org/InStock",
-            url,
-          },
+          offers,
         }
       : {
           "@context": "https://schema.org",
@@ -2094,13 +2128,7 @@ export function buildLanderJsonLd(offer: Offer, lang: Lang): Record<string, unkn
             courseMode: "onsite",
             duration: meta.duration,
           },
-          offers: {
-            "@type": "Offer",
-            price: meta.price,
-            priceCurrency: meta.currency,
-            availability: "https://schema.org/InStock",
-            url,
-          },
+          offers,
         };
 
   return [primary, buildFaqJsonLd(offer, lang)];

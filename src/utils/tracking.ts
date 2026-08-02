@@ -15,7 +15,14 @@ declare global {
   }
 }
 
-const GA_MEASUREMENT_ID = "AW-18050429438";
+// Google Ads account 934-806-2676 (Thai billing) - swapped in 2026-08-02,
+// replacing retired AW-18050429438 (account 977-785-8115, Israel billing).
+const GA_MEASUREMENT_ID = "AW-18357382437";
+// TODO(new-account labels): ALL four conversion labels below were minted by
+// the OLD account (AW-18050429438) and do NOT exist in AW-18357382437 yet.
+// Until Ben creates the conversion actions in the new account and pastes the
+// new labels here, these send_to pings are silently ignored by Google Ads.
+// The plain gtag/GA4 + Meta events still fire either way.
 const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
 // "Booking - Pay Later": a confirmed booking with no deposit paid yet.
 // Lower-tier conversion than a paid Purchase, fired WITHOUT a value.
@@ -183,6 +190,47 @@ export function trackWhatsAppFastPathClick(
   fbq("track", "Contact", {
     location: "booking_page_strip",
     content_name: params.product,
+  });
+}
+
+export interface BookNowClickParams {
+  /** Where on the page the CTA sits, e.g. "no_pool_hero". */
+  location: string;
+  /** Wizard product code when the CTA preselects one (e.g. "OW"). */
+  product?: string;
+  /** The wizard URL that was clicked, including forwarded attribution. */
+  url?: string;
+}
+
+/**
+ * Fired when a lander CTA hands the visitor off to the DiveOS web wizard on
+ * dash.siamscuba.com. A SIGNAL, not a conversion - deliberately no Google Ads
+ * send_to, because the real conversion fires inside the wizard. It exists so we
+ * can measure the handoff itself (CTA click -> wizard arrival) and spot the day
+ * attribution silently breaks at the host boundary.
+ */
+export function trackBookNowClick(params: BookNowClickParams): void {
+  if (typeof window !== "undefined") {
+    window.dataLayer?.push({
+      event: "book_now_click",
+      location: params.location,
+      product: params.product,
+      url: params.url,
+    });
+    if (typeof window.clarity === "function") {
+      window.clarity("event", "book_now_click");
+    }
+  }
+  gtag("event", "book_now_click", {
+    event_category: "engagement",
+    event_label: params.location,
+    product: params.product,
+    url: params.url,
+    ...utmFields(),
+  });
+  fbq("track", "InitiateCheckout", {
+    content_name: params.product,
+    location: params.location,
   });
 }
 
@@ -445,7 +493,7 @@ export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResu
 
     // Fire the lead conversion only after a successful POST so the conversion
     // count matches stored leads. trackGenerateLead handles GA + Meta + the
-    // Google Ads generate_lead conversion (AW-18050429438/XvmFCNXAjrMcEP7jjp9D).
+    // Google Ads generate_lead conversion (GA_MEASUREMENT_ID/LEAD_CONVERSION_LABEL).
     trackGenerateLead({
       form_name: "course_inquiry",
       product: input.course ?? undefined,
