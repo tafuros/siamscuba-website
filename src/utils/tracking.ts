@@ -15,7 +15,14 @@ declare global {
   }
 }
 
-const GA_MEASUREMENT_ID = "AW-18050429438";
+// Google Ads account 934-806-2676 (Thai billing) - swapped in 2026-08-02,
+// replacing retired AW-18050429438 (account 977-785-8115, Israel billing).
+const GA_MEASUREMENT_ID = "AW-18357382437";
+// TODO(new-account labels): ALL four conversion labels below were minted by
+// the OLD account (AW-18050429438) and do NOT exist in AW-18357382437 yet.
+// Until Ben creates the conversion actions in the new account and pastes the
+// new labels here, these send_to pings are silently ignored by Google Ads.
+// The plain gtag/GA4 + Meta events still fire either way.
 const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
 // "Booking - Pay Later": a confirmed booking with no deposit paid yet.
 // Lower-tier conversion than a paid Purchase, fired WITHOUT a value.
@@ -486,7 +493,7 @@ export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResu
 
     // Fire the lead conversion only after a successful POST so the conversion
     // count matches stored leads. trackGenerateLead handles GA + Meta + the
-    // Google Ads generate_lead conversion (AW-18050429438/XvmFCNXAjrMcEP7jjp9D).
+    // Google Ads generate_lead conversion (GA_MEASUREMENT_ID/LEAD_CONVERSION_LABEL).
     trackGenerateLead({
       form_name: "course_inquiry",
       product: input.course ?? undefined,

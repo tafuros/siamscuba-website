@@ -54,8 +54,10 @@ index.html          ← entry point - CONTAINS Google Tag Manager + Google Ads t
 ### 1. Google Tag Manager + Google Ads
 `index.html` contains analytics tracking:
 - GTM container: `GTM-TN3SM66Q`
-- Google Ads conversion: `AW-18050429438`
-- Conversion event for `booking-confirmed`: `AW-18050429438/9d1fCLb625gcEP7jjp9D`
+- Google Ads conversion: `AW-18357382437` (account 934-806-2676, Thai billing;
+  replaced retired `AW-18050429438` / 977-785-8115 on 2026-08-02)
+- Conversion labels in `src/utils/tracking.ts` are still the OLD account's -
+  new-account conversion actions + labels pending (see TODO in that file)
 
 NEVER remove or modify these tags. They power live business tracking.
 

@@ -122,7 +122,7 @@ expect "/es/blog/divemaster-koh-tao-padi-espanol"   200
 
 info "Critical analytics tags must survive the build"
 expect "/"                                          200 "GTM-TN3SM66Q"
-expect "/"                                          200 "AW-18050429438"
+expect "/"                                          200 "AW-18357382437"
 
 info "Sitemap"
 expect "/sitemap.xml"                               200 "<loc>"

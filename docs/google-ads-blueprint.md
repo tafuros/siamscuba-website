@@ -1,5 +1,12 @@
 # Google Ads Campaign Blueprint - Siam Scuba (2026-W22 launch)
 
+> **STALE ACCOUNT NOTICE (2026-08-02):** everything below references the retired
+> account `AW-18050429438` (977-785-8115, Israel billing, campaigns paused). The
+> site now loads `AW-18357382437` (account 934-806-2676, Thai billing). All
+> conversion labels in this doc belong to the old account; new conversion
+> actions + labels must be created in the new account and wired into
+> `src/utils/tracking.ts` (see the TODO there).
+
 Companion to `~/.claude/plans/glimmering-percolating-pebble.md` (code) and `~/.claude/plans/tranquil-seeking-scott.md` (campaign source). This doc is the Google-side execution sheet. Meta is parked until Business Verification clears.
 
 ---
