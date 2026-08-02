@@ -232,7 +232,7 @@ const HebrewLanding = () => {
 
           <Section id="living-costs" title="עלויות חיים אם אתם נשארים יותר זמן">
             <p>
-              אם אתם מתכננים לעשות גם את ה-Advanced Open Water (יומיים נוספים) או Divemaster (4-8 שבועות), כדאי
+              אם אתם מתכננים לעשות גם את ה-Advanced Open Water (יום וחצי נוסף) או Divemaster (4-8 שבועות), כדאי
               לדעת את עלויות החיים החודשיות:
             </p>
             <ul className="space-y-2 mr-4 list-disc">

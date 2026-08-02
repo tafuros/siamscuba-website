@@ -569,7 +569,7 @@ const divingBlogPosts: BlogPost[] = [
           "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
           "PADI Open Water Diver: ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
-          "PADI Advanced Open Water: ฿11,000 - 2 days, 5 dives including deep and navigation. Takes you to 30m.",
+          "PADI Advanced Open Water: ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,500 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver / Deep Diver / Sidemount / DPV: each runs ฿7,000-฿9,500 depending on dive count.",
@@ -636,7 +636,7 @@ const divingBlogPosts: BlogPost[] = [
   },
   {
     slug: "padi-advanced-open-water-koh-tao",
-    title: "PADI Advanced Open Water on Koh Tao: The Complete 2-Day Course Guide",
+    title: "PADI Advanced Open Water on Koh Tao: The Complete 1.5-Day Course Guide",
     category: "Diving",
     excerpt: "Everything about the PADI Advanced Open Water course on Koh Tao - the 5 dives, the deeper sites you unlock, prerequisites, and whether to do it right after Open Water.",
     coverImage: "/blog/padi-advanced-open-water-koh-tao.webp",
@@ -653,7 +653,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "The 5 adventure dives explained",
         paragraphs: [
-          "AOW is structured as 5 adventure dives over 2 days. Two are mandatory, three are your pick.",
+          "AOW is structured as 5 adventure dives over 1.5 days. Two are mandatory, three are your pick.",
           "Mandatory dives: Deep Adventure (typically to 30m at Chumphon Pinnacle or Shark Island) and Underwater Navigation Adventure (compass work plus natural-feature navigation, usually at Twins or Japanese Gardens).",
           "Pick 3 from: Wreck Adventure (HTMS Sattakut), Peak Performance Buoyancy, Photography, Naturalist (fish ID), Search and Recovery, Night Diver, Drift, Boat Diver, Underwater Videographer. Each adventure dive counts toward the corresponding full specialty later, if you want to complete one.",
           "Most students pick Wreck + Peak Performance Buoyancy + Photography because they're the most useful for everyday diving. The Wreck Adventure on the HTMS Sattakut is the single most popular AOW dive on the island.",
@@ -674,7 +674,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "You need a PADI Open Water certification (or recognized equivalent from another agency - SSI, NAUI, BSAC, etc. all qualify). No minimum logged dives required by PADI standards, though we recommend you have 5-10 dives under your belt for comfort.",
           "AOW at Siam Scuba is 11,000 THB. That includes all gear rental, 5 boat dives, dive computer rental, certification card processing, and tax. No surcharges for dive site access (Sail Rock has a small marine fee that's already included).",
-          "2 days standard. Min age 12 for Junior AOW, 15 for full AOW (Junior gets a depth-restricted card that converts to full AOW automatically when they turn 15).",
+          "1.5 days standard. Min age 12 for Junior AOW, 15 for full AOW (Junior gets a depth-restricted card that converts to full AOW automatically when they turn 15).",
         ],
       },
       {
@@ -683,7 +683,7 @@ const divingBlogPosts: BlogPost[] = [
           "For most people, yes. Three reasons.",
           "First, momentum. You've just spent 2.5 days getting comfortable underwater. Your buoyancy is starting to click, your gear feels normal, you're not fighting your mask anymore. Stopping for months and coming back later means rebuilding that comfort - usually you'll need a refresher dive at least.",
           "Second, depth confidence. The first time you go past 18m is psychologically different than the first time at 12m. Doing it under instructor supervision while AOW skills are fresh is the safer way to make that jump.",
-          "Third, it unlocks the actually-good dive sites. Doing OW + AOW back-to-back over 5-6 days means you spend the second half of your trip diving the legendary sites instead of the training reefs. The cost difference (11,000 THB) is small relative to the value of doing AOW now vs. flying home and coming back later.",
+          "Third, it unlocks the actually-good dive sites. Doing OW + AOW back-to-back over 4-5 days means you spend the second half of your trip diving the legendary sites instead of the training reefs. The cost difference (11,000 THB) is small relative to the value of doing AOW now vs. flying home and coming back later.",
           "When NOT to do AOW immediately: if you didn't enjoy Open Water and aren't sure diving is for you, take a break. Forcing AOW right after a rough OW course is how people end up with bad memories and never dive again.",
         ],
       },
@@ -700,7 +700,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Booking and next steps",
         paragraphs: [
           "Same booking flow as Open Water. WhatsApp us with your dates, we confirm within an hour during daytime. A deposit secures your spot, and you settle the balance once you arrive on Koh Tao and meet the team.",
-          "If you're considering OW + AOW together, mention it in the message. We can schedule them back-to-back so you finish in 5-6 days rather than spreading across two trips.",
+          "If you're considering OW + AOW together, mention it in the message. We can schedule them back-to-back so you finish in 4-5 days rather than spreading across two trips.",
           "Where AOW leads: Rescue Diver is the natural next step (most divers say it changes how they dive). Then Divemaster if you want to go pro. We have the full pathway in-house, same shop, same instructors.",
         ],
       },

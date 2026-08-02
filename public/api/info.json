@@ -51,7 +51,7 @@
     {
       "id": "aowd",
       "name": "Advanced Open Water",
-      "duration": "1.5-2 days",
+      "duration": "1.5 days",
       "price_thb": 11000,
       "certification": true,
       "requires_prior_cert": true,

@@ -23,9 +23,9 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
     h1: "PADI Open Water Diver Course",
   },
   "advanced-open-water": {
-    title: "PADI Advanced Open Water Course Koh Tao – 2 Days | Siam Scuba",
+    title: "PADI Advanced Open Water Course Koh Tao – 1.5 Days | Siam Scuba",
     description:
-      "Advance to 30m depth with the PADI Advanced Open Water course in Koh Tao. 2 days, 5 adventure dives, deep diving and navigation. ฿11,000 with Siam Scuba.",
+      "Advance to 30m depth with the PADI Advanced Open Water course in Koh Tao. 1.5 days, 5 adventure dives, deep diving and navigation. ฿11,000 with Siam Scuba.",
     h1: "PADI Advanced Open Water Course",
   },
   "rescue-diver": {

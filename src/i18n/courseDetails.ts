@@ -165,7 +165,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water - Level Up Your Diving!",
-      intro: "Your second PADI certification! A 100% practical course - no exams, no theory. In just 2 days you'll complete 5 specialty dives and become a stronger, more confident diver. This is the natural next step after Open Water.",
+      intro: "Your second PADI certification! A 100% practical course - no exams, no theory. In just 1.5 days you'll complete 5 specialty dives and become a stronger, more confident diver. This is the natural next step after Open Water.",
       dives: [
         { name: "Deep Dive", description: "Descend to 30 meters." },
         { name: "Wreck Dive", description: "Explore a sunken ship." },
@@ -508,7 +508,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water - מעלים רמה בצלילה!",
-      intro: "הסמכת ה-PADI השנייה שלכם! קורס 100% מעשי - בלי מבחנים, בלי תיאוריה. תוך יומיים בלבד תשלימו 5 צלילות התמחות ותהפכו לצוללים חזקים ובטוחים יותר. זהו הצעד הבא הטבעי אחרי Open Water.",
+      intro: "הסמכת ה-PADI השנייה שלכם! קורס 100% מעשי - בלי מבחנים, בלי תיאוריה. תוך יום וחצי בלבד תשלימו 5 צלילות התמחות ותהפכו לצוללים חזקים ובטוחים יותר. זהו הצעד הבא הטבעי אחרי Open Water.",
       dives: [
         { name: "צלילה עמוקה", description: "יורדים עד 30 מטר." },
         { name: "צלילת מבנה טבוע", description: "חוקרים ספינה טבועה." },
@@ -851,7 +851,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water: ¡sube de nivel tu buceo!",
-      intro: "¡Tu segunda certificación PADI! Un curso 100% práctico: sin exámenes ni teoría. En solo 2 días completarás 5 inmersiones de especialidad y te convertirás en un buceador más fuerte y seguro. Es el paso natural después de Open Water.",
+      intro: "¡Tu segunda certificación PADI! Un curso 100% práctico: sin exámenes ni teoría. En solo 1,5 días completarás 5 inmersiones de especialidad y te convertirás en un buceador más fuerte y seguro. Es el paso natural después de Open Water.",
       dives: [
         { name: "Inmersión profunda", description: "Desciende hasta 30 metros." },
         { name: "Inmersión en pecio", description: "Explora un barco hundido." },
@@ -1194,7 +1194,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     },
     "Advanced Open Water": {
       header: "⭐⭐ Advanced Open Water - passez au niveau supérieur !",
-      intro: "Votre deuxième certification PADI ! Un cours 100% pratique : pas d'examens, pas de théorie. En seulement 2 jours, vous réaliserez 5 plongées de spécialité et deviendrez un plongeur plus fort et plus sûr de vous. C'est la suite naturelle après l'Open Water.",
+      intro: "Votre deuxième certification PADI ! Un cours 100% pratique : pas d'examens, pas de théorie. En seulement 1,5 jour, vous réaliserez 5 plongées de spécialité et deviendrez un plongeur plus fort et plus sûr de vous. C'est la suite naturelle après l'Open Water.",
       dives: [
         { name: "Plongée profonde", description: "Descendez jusqu'à 30 mètres." },
         { name: "Plongée sur épave", description: "Explorez un navire coulé." },
