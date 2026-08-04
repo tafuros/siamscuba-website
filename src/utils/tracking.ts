@@ -18,22 +18,19 @@ declare global {
 // Google Ads account 934-806-2676 (Thai billing) - swapped in 2026-08-02,
 // replacing retired AW-18050429438 (account 977-785-8115, Israel billing).
 const GA_MEASUREMENT_ID = "AW-18357382437";
-// TODO(new-account labels): ALL four conversion labels below were minted by
-// the OLD account (AW-18050429438) and do NOT exist in AW-18357382437 yet.
-// Until Ben creates the conversion actions in the new account and pastes the
-// new labels here, these send_to pings are silently ignored by Google Ads.
-// The plain gtag/GA4 + Meta events still fire either way.
-const CONVERSION_LABEL = "u_9ACKH36KMcEP7jjp9D";
-// "Booking - Pay Later": a confirmed booking with no deposit paid yet.
+// Labels minted in AW-18357382437 on 2026-08-03 (all four actions created in
+// the new account: Purchase + Pay-Later = Primary, Lead + WhatsApp = Secondary,
+// Count One, 90-day click window, data-driven attribution).
+// Source of truth: Creative/Documents/campaign-plans/google-2026-08-launch/LABELS.md
+// "Booking Confirmed (Purchase)": paid booking confirmation.
+const CONVERSION_LABEL = "L28ECPzAwdocEKXavbFE";
+// "Booking Pay-Later": a confirmed booking with no deposit paid yet.
 // Lower-tier conversion than a paid Purchase, fired WITHOUT a value.
-const BOOKING_PAY_LATER_LABEL = "9WY5CICH4rscEP7jjp9D";
+const BOOKING_PAY_LATER_LABEL = "Z3F7CP_AwdocEKXavbFE";
 
-// Per-event Google Ads conversion labels. Fill in real labels from
-// Google Ads → Goals → Conversions after creating the actions. Until set,
-// the events still fire as gtag events (and to GA4) but won't count as
-// Google Ads conversions. See docs/google-ads-blueprint.md §10.
-const LEAD_CONVERSION_LABEL: string | null = "XvmFCNXAjrMcEP7jjp9D";
-const WHATSAPP_CONVERSION_LABEL: string | null = "GDJZCNjAjrMcEP7jjp9D";
+// Per-event Google Ads conversion labels (Secondary actions - observation only).
+const LEAD_CONVERSION_LABEL: string | null = "r_l0CILBwdocEKXavbFE";
+const WHATSAPP_CONVERSION_LABEL: string | null = "K2d4CIXBwdocEKXavbFE";
 
 function gtag(...args: unknown[]): void {
   if (typeof window !== "undefined" && typeof window.gtag === "function") {
