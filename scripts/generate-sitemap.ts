@@ -39,6 +39,13 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
       lastmod: today,
       hreflangs: ["he"],
     },
+    {
+      loc: "/es",
+      changefreq: "monthly",
+      priority: 0.85,
+      lastmod: today,
+      hreflangs: ["es"],
+    },
     { loc: "/privacy", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/data-deletion", changefreq: "yearly", priority: 0.2, lastmod: today },

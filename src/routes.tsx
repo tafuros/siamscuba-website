@@ -78,6 +78,14 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/HebrewLanding")),
         entry: "src/pages/HebrewLanding.tsx",
       },
+      // Spanish index. The /es/* sub-routes (landers + blog) shipped long
+      // before this did, so /es itself fell through to :courseSlug and served
+      // NotFound - the entry point of the language with the most traffic.
+      {
+        path: "es",
+        lazy: lazyDefault(() => import("./pages/SpanishLanding")),
+        entry: "src/pages/SpanishLanding.tsx",
+      },
       {
         path: "ad",
         lazy: lazyDefault(() => import("./pages/AdPage")),
