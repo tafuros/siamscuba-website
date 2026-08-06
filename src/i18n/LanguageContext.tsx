@@ -6,6 +6,7 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
+  startTransition,
   type ReactNode,
 } from "react";
 import { useLocation } from "react-router-dom";
@@ -62,11 +63,24 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     if (!isBrowser) return;
     const isFirstRun = !didInitRef.current;
     didInitRef.current = true;
+
+    // React #421. On the FIRST run this effect fires while the lazy-route
+    // Suspense boundaries are still hydrating. A synchronous setState here
+    // forces those dehydrated boundaries to client-render instead, which throws
+    // #421 - three times per page load for every returning he/es/fr visitor.
+    // Marking the adoption as a transition lets React finish hydrating first
+    // and then apply the language switch. Later runs (SPA navigations) are not
+    // hydration, so they stay synchronous - no needless deferral of the swap.
+    const adopt = (lang: Language) => {
+      if (isFirstRun) startTransition(() => setLanguageState(lang));
+      else setLanguageState(lang);
+    };
+
     // On a locale-prefixed page the URL WINS over localStorage (see
     // pathLanguage above). State only - we deliberately do NOT persist it, so
     // following a /he link never traps an English visitor in Hebrew forever.
     if (urlLanguage) {
-      setLanguageState(urlLanguage);
+      adopt(urlLanguage);
       return;
     }
     // Unprefixed page: original behavior - adopt the saved language once, on
@@ -74,7 +88,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     // reading in (e.g. /es/fun-dives -> / stays Spanish).
     if (!isFirstRun) return;
     const saved = window.localStorage.getItem("siam-lang");
-    if (isKnownLanguage(saved) && saved !== "en") setLanguageState(saved);
+    if (isKnownLanguage(saved) && saved !== "en") adopt(saved);
   }, [urlLanguage]);
 
   const setLanguage = useCallback((lang: Language) => {
