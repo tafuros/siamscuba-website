@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
+import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
 
 const SPANISH_WHATSAPP_HREF = buildWhatsAppLink({ offer: "general", lang: "es" });
 
@@ -57,11 +58,7 @@ const SpanishLanding = () => {
         description="Guía en español para bucear en Koh Tao: cursos PADI desde 2,600 THB, máximo 4 alumnos por instructor, sin depósito, barcos propios. Instructores que hablan español."
         ogType="article"
         jsonLd={articleSchema}
-        hreflangAlternates={{
-          en: "https://siamscuba.com/",
-          es: "https://siamscuba.com/es",
-          he: "https://siamscuba.com/he",
-        }}
+        hreflangAlternates={HOME_HREFLANG_ALTERNATES}
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Buceo en Koh Tao" },
