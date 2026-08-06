@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
+import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
 
 const HEBREW_WHATSAPP_HREF = buildWhatsAppLink({ offer: "general", lang: "he" });
 
@@ -57,6 +58,7 @@ const HebrewLanding = () => {
         description="מדריך הצלילה הישראלי לקוטאו - מחירי קורסי PADI מ-2,600 בת, יחס מדריך 1:4, ללא דמי קדימה, סירות צלילה פרטיות. ספרי PADI גם בעברית."
         ogType="article"
         jsonLd={articleSchema}
+        hreflangAlternates={HOME_HREFLANG_ALTERNATES}
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "צלילה בקוטאו" },

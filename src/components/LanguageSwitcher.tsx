@@ -1,4 +1,5 @@
 import { Globe } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,11 +8,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { languageNames, languageFlags, type Language } from "@/i18n/translations";
+import { localizedPath } from "@/lib/localeRoutes";
 
 const languages: Language[] = ["en", "he", "es", "fr"];
 
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  // Picking a language has to move the URL, not just the strings. Locale
+  // content lives on its own routes (/es, /he/fun-dives, /fr/fun-dives ...),
+  // and setLanguage() alone left every one of them unreachable through the UI.
+  // It also fought the URL-wins rule in LanguageContext: on a /es/* page the
+  // pathname re-asserts Spanish, so a silent in-place switch could not stick.
+  const handlePick = (lang: Language) => {
+    setLanguage(lang);
+    const target = localizedPath(pathname, lang);
+    // No translated twin (blog posts, dive sites, booking): stay put and let
+    // the i18n context translate the page in place. Navigating to a guessed
+    // path would hard-404 on Vercel.
+    if (target && target !== pathname) navigate(target);
+  };
 
   return (
     <DropdownMenu>
@@ -25,7 +43,7 @@ const LanguageSwitcher = () => {
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang}
-            onClick={() => setLanguage(lang)}
+            onClick={() => handlePick(lang)}
             className={`flex items-center gap-2 cursor-pointer ${
               lang === language ? "bg-accent/20 font-semibold" : ""
             }`}

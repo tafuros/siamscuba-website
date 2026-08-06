@@ -7,6 +7,7 @@ describe("pathLanguage", () => {
   it("detects real locale prefixes", () => {
     expect(pathLanguage("/es/fun-dives")).toBe("es");
     expect(pathLanguage("/es/blog/mejores-sitios")).toBe("es");
+    expect(pathLanguage("/es")).toBe("es");
     expect(pathLanguage("/he")).toBe("he");
     expect(pathLanguage("/he/open-water-course")).toBe("he");
     expect(pathLanguage("/fr/fun-dives")).toBe("fr");

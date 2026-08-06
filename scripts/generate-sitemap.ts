@@ -17,6 +17,12 @@ interface SitemapEntry {
    * If undefined, the page is multi-language (i18n switcher) and gets all SUPPORTED_LANGS.
    */
   hreflangs?: string[];
+  /**
+   * Absolute per-language URLs, for pages whose translations live at DIFFERENT
+   * URLs rather than on this one. Takes precedence over `hreflangs`, which can
+   * only ever point a language back at `loc` itself.
+   */
+  alternates?: Record<string, string>;
 }
 
 async function loadRoutes(): Promise<SitemapEntry[]> {
@@ -24,11 +30,17 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   const { blogPosts } = await import("../src/data/blogPosts");
   const { diveSites } = await import("../src/data/diveSites");
   const { SLUG_TO_COURSE } = await import("../src/lib/courseSlugMap");
+  // Same object the three pages render into their <head>. Google merges the
+  // sitemap and HTML annotations and errors out when they disagree, so the
+  // cluster is defined once (src/lib/localeRoutes.ts) and consumed by both.
+  const { HOME_HREFLANG_ALTERNATES } = await import("../src/lib/localeRoutes");
 
   const today = new Date().toISOString().slice(0, 10);
 
   const entries: SitemapEntry[] = [
-    { loc: "/", changefreq: "weekly", priority: 1.0, lastmod: today },
+    // "/" used to claim he/es/fr as alternates pointing at ITSELF, which
+    // contradicted /he and /es once they became real pages.
+    { loc: "/", changefreq: "weekly", priority: 1.0, lastmod: today, alternates: HOME_HREFLANG_ALTERNATES },
     { loc: "/blog", changefreq: "weekly", priority: 0.8, lastmod: today },
     { loc: "/dive-sites", changefreq: "monthly", priority: 0.8, lastmod: today },
     { loc: "/fun-dive-booking", changefreq: "monthly", priority: 0.9, lastmod: today },
@@ -37,7 +49,14 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
       changefreq: "monthly",
       priority: 0.85,
       lastmod: today,
-      hreflangs: ["he"],
+      alternates: HOME_HREFLANG_ALTERNATES,
+    },
+    {
+      loc: "/es",
+      changefreq: "monthly",
+      priority: 0.85,
+      lastmod: today,
+      alternates: HOME_HREFLANG_ALTERNATES,
     },
     { loc: "/privacy", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
@@ -100,10 +119,15 @@ function buildXml(entries: SitemapEntry[]): string {
   const urls = entries
     .map((e) => {
       const loc = `${SITE_URL}${e.loc}`;
-      const langs = e.hreflangs ?? SUPPORTED_LANGS;
-      const alternates = langs
-        .map((lang) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${loc}" />`)
+      const pairs: [string, string][] = e.alternates
+        ? Object.entries(e.alternates)
+        : (e.hreflangs ?? SUPPORTED_LANGS).map((lang) => [lang, loc]);
+      const alternates = pairs
+        .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`)
         .join("\n");
+      // x-default is the language-agnostic entry point: the English URL when the
+      // page belongs to a cluster, otherwise the page itself.
+      const xDefault = e.alternates?.en ?? loc;
       return [
         "  <url>",
         `    <loc>${loc}</loc>`,
@@ -111,7 +135,7 @@ function buildXml(entries: SitemapEntry[]): string {
         e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
         e.priority !== undefined ? `    <priority>${e.priority.toFixed(1)}</priority>` : null,
         alternates,
-        `    <xhtml:link rel="alternate" hreflang="x-default" href="${loc}" />`,
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${xDefault}" />`,
         "  </url>",
       ]
         .filter(Boolean)

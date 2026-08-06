@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Seo from "@/components/Seo";
 import { COURSE_SEO } from "@/lib/courseSeoData";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
+import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
 import Navbar from "@/components/Navbar";
 import UnderwaterHero from "@/components/UnderwaterHero";
 import CoursesSection from "@/components/CoursesSection";
@@ -47,6 +48,12 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
       <Seo
         title={seo.title}
         description={seo.description}
+        // Only the bare homepage is the English member of the "/" + /he + /es
+        // cluster. CoursePage renders this same component for /:courseSlug, and
+        // those URLs have no locale twins - declaring the cluster there would
+        // point hreflang at pages that never point back, which is exactly the
+        // non-reciprocal annotation Google throws away.
+        hreflangAlternates={courseOverride ? undefined : HOME_HREFLANG_ALTERNATES}
         breadcrumbs={
           courseOverride
             ? [
