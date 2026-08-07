@@ -26,8 +26,8 @@ const localized = (base: string, lang: Language, langs: readonly Language[]): st
 
 const FUN_DIVES_LANGS: readonly Language[] = ["es", "he", "fr"];
 const SAIL_ROCK_LANGS: readonly Language[] = ["es", "he"];
-// English-only for now - the conservation page has no localized twins yet.
-const CONSERVATION_LANGS: readonly Language[] = [];
+// All three twins shipped 2026-08-07, so every gate language routes to its own.
+const CONSERVATION_LANGS: readonly Language[] = ["he", "es", "fr"];
 
 /**
  * level (+ location) -> where the visitor lands.
@@ -52,8 +52,6 @@ export function resolveAction(
   lang: Language,
 ): GateAction {
   // Conservation: one destination, no location question, all languages.
-  // The page is English-only for now; add localized twins to CONSERVATION_LANGS
-  // as they ship and this starts routing to them automatically.
   if (level === "conservation") {
     return { type: "navigate", path: localized("/conservation", lang, CONSERVATION_LANGS) };
   }

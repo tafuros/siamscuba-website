@@ -6,7 +6,7 @@ import {
   conservationHreflangAlternates,
 } from "@/lib/conservationCopy";
 
-const LANG = "en" as const;
+const LANG = "fr" as const;
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -23,7 +23,7 @@ const pageSchema = {
   },
 };
 
-const ConservationPage = () => {
+const ConservationFrPage = () => {
   const copy = CONSERVATION_COPY[LANG];
   return (
     <>
@@ -41,4 +41,4 @@ const ConservationPage = () => {
   );
 };
 
-export default ConservationPage;
+export default ConservationFrPage;

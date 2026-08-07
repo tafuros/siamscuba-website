@@ -4,9 +4,10 @@ import logo from "@/assets/siam-logo.webp";
 import padi from "@/assets/padi-logo.png";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { openGate } from "@/utils/gateBus";
+import { conservationPath } from "@/lib/conservationCopy";
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const quickLinks = [
     { label: t("nav_courses"), id: "courses" },
@@ -72,9 +73,13 @@ const Footer = () => {
               </li>
               {/* Site-wide entry point to /conservation. Without it the page is
                   reachable only from the entry gate, which leaves it orphaned
-                  from the internal link graph the way the campaign landers are. */}
+                  from the internal link graph the way the campaign landers are.
+                  Points at the visitor's own language twin - all four exist. */}
               <li>
-                <Link to="/conservation" className="hover:text-primary transition-colors">
+                <Link
+                  to={conservationPath(language)}
+                  className="hover:text-primary transition-colors"
+                >
                   {t("nav_conservation")}
                 </Link>
               </li>

@@ -43,9 +43,9 @@ describe("conservation WhatsApp routing", () => {
     expect(buildWhatsAppLink()).toContain(SHOP);
   });
 
-  it("wires the conservation page itself to Paul, not the shop", () => {
+  it("wires the conservation page body to Paul, not the shop", () => {
     const src = readFileSync(
-      resolve(__dirname, "../pages/ConservationPage.tsx"),
+      resolve(__dirname, "../components/ConservationContent.tsx"),
       "utf-8",
     );
     // One link builder on the page, and it carries the override.

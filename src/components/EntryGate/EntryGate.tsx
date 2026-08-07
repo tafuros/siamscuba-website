@@ -149,8 +149,20 @@ const EntryGate = () => {
   // navigate lands on an empty Suspense.
   useEffect(() => {
     if (state.step !== "level") return;
-    import("@/pages/ConservationPage").catch(() => {});
-  }, [state.step]);
+    switch (language) {
+      case "he":
+        import("@/pages/ConservationHePage").catch(() => {});
+        break;
+      case "es":
+        import("@/pages/ConservationEsPage").catch(() => {});
+        break;
+      case "fr":
+        import("@/pages/ConservationFrPage").catch(() => {});
+        break;
+      default:
+        import("@/pages/ConservationPage").catch(() => {});
+    }
+  }, [state.step, language]);
 
   useEffect(() => {
     if (state.step !== "location" || state.level !== "funDives") return;

@@ -41,16 +41,22 @@ describe("entry gate - conservation", () => {
     });
   });
 
-  it("sends every language to the English page until localized twins ship", () => {
-    // Regression guard: the day /he/conservation exists it must be added to
-    // CONSERVATION_LANGS, and this expectation should change with it. Until
-    // then a Hebrew visitor must land on a real page, not a 404.
-    for (const lang of ["he", "es", "fr"] as const) {
-      expect(resolveAction("conservation", null, lang)).toEqual({
-        type: "navigate",
-        path: "/conservation",
-      });
-    }
+  it("routes he/es/fr to their own conservation twin", () => {
+    // All four twins shipped 2026-08-07. Every path asserted here is also
+    // checked against routes.tsx by locale-routes.test.ts, so a typo cannot
+    // reach production as a Vercel hard-404.
+    expect(resolveAction("conservation", null, "he")).toEqual({
+      type: "navigate",
+      path: "/he/conservation",
+    });
+    expect(resolveAction("conservation", null, "es")).toEqual({
+      type: "navigate",
+      path: "/es/conservation",
+    });
+    expect(resolveAction("conservation", null, "fr")).toEqual({
+      type: "navigate",
+      path: "/fr/conservation",
+    });
   });
 });
 

@@ -33,7 +33,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   // Same object the three pages render into their <head>. Google merges the
   // sitemap and HTML annotations and errors out when they disagree, so the
   // cluster is defined once (src/lib/localeRoutes.ts) and consumed by both.
-  const { HOME_HREFLANG_ALTERNATES } = await import("../src/lib/localeRoutes");
+  const { HOME_HREFLANG_ALTERNATES, hreflangAlternatesFor } = await import("../src/lib/localeRoutes");
+  // Same cluster the HTML emits - Google drops BOTH annotations when the
+  // sitemap and the page disagree, so this must stay derived, not written out.
+  const CONSERVATION_ALTERNATES = hreflangAlternatesFor("/conservation");
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -75,8 +78,11 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/es/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
     { loc: "/he/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
     { loc: "/fr/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["fr"] },
-    // Conservation hub (entry-gate card 4). English-only for now.
-    { loc: "/conservation", changefreq: "monthly", priority: 0.8, lastmod: today, hreflangs: ["en"] },
+    // Conservation hub (entry-gate card 4), full 4-language cluster.
+    { loc: "/conservation", changefreq: "monthly", priority: 0.8, lastmod: today, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/he/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/es/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/fr/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
     // Entry-gate split pages (multilingual single URL - all langs on one URL).
     { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
     { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },
