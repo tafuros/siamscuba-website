@@ -70,6 +70,14 @@ const Footer = () => {
                   {t("nav_koh_tao_guide")}
                 </Link>
               </li>
+              {/* Site-wide entry point to /conservation. Without it the page is
+                  reachable only from the entry gate, which leaves it orphaned
+                  from the internal link graph the way the campaign landers are. */}
+              <li>
+                <Link to="/conservation" className="hover:text-primary transition-colors">
+                  {t("nav_conservation")}
+                </Link>
+              </li>
               {quickLinks.map((link) => (
                 <li key={link.id}>
                   <button

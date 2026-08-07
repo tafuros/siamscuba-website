@@ -144,6 +144,14 @@ const EntryGate = () => {
   // navigate answer commits near-instantly (shorter cover, snappier transition).
   // Only the "certified + fun dives" level navigates away, and only these three
   // pages are reachable from it.
+  // Conservation commits straight from the level step (no location question), so
+  // its chunk has to be warmed as soon as the level cards are on screen or the
+  // navigate lands on an empty Suspense.
+  useEffect(() => {
+    if (state.step !== "level") return;
+    import("@/pages/ConservationPage").catch(() => {});
+  }, [state.step]);
+
   useEffect(() => {
     if (state.step !== "location" || state.level !== "funDives") return;
     import("@/pages/SiamSimilansPage").catch(() => {});
@@ -379,7 +387,17 @@ const EntryGate = () => {
             <span aria-hidden="true">{gateRTL ? "←" : "→"}</span>
           </button>
         </div>
-        <div className="flex flex-1 items-center justify-center overflow-y-auto px-2 pb-[32vh]">
+        {/* The 32vh bottom padding lifts the welcome/location content clear of the
+            shoal in the lower third of the backdrop. The LEVEL step cannot afford
+            it: since 2026-08-07 it is a 2x2 of four cards (roughly double the
+            height of the old single row of three), and at 32vh the whole grid was
+            pushed below the fold - the visitor landed on an empty ocean and had to
+            scroll to discover there were any answers at all. */}
+        <div
+          className={`flex flex-1 items-center justify-center overflow-y-auto px-2 ${
+            state.step === "level" ? "pb-[8vh] pt-4" : "pb-[32vh]"
+          }`}
+        >
           {/* NO AnimatePresence here, deliberately. With mode="wait" (framer 12)
               the exiting welcome step never reported its exit as complete - it
               carries long staggered child entrance animations (delays to ~2.5s) -

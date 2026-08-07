@@ -12,7 +12,8 @@ export type GateAction =
 // Which levels actually need the location question. A total beginner only ever
 // learns with us on Koh Tao, so asking is friction with a single answer - and
 // Similan/Phuket is a certified-diver arena we must NOT show them. Certified
-// divers (fun or training) do get asked.
+// divers (fun or training) do get asked. Conservation is deliberately absent:
+// its destination does not vary by island.
 export const LEVELS_WITH_LOCATION: readonly LevelKey[] = ["funDives", "training"];
 
 export const needsLocation = (level: LevelKey): boolean =>
@@ -25,6 +26,8 @@ const localized = (base: string, lang: Language, langs: readonly Language[]): st
 
 const FUN_DIVES_LANGS: readonly Language[] = ["es", "he", "fr"];
 const SAIL_ROCK_LANGS: readonly Language[] = ["es", "he"];
+// English-only for now - the conservation page has no localized twins yet.
+const CONSERVATION_LANGS: readonly Language[] = [];
 
 /**
  * level (+ location) -> where the visitor lands.
@@ -38,12 +41,23 @@ const SAIL_ROCK_LANGS: readonly Language[] = ["es", "he"];
  * fun-dive landers: only a fun-diver wants them. A diver who came to keep
  * TRAINING gets the homepage instead - that is where the courses live, and it
  * is the right answer for both islands (Ben, 2026-07-13).
+ *
+ * Conservation is an interest rather than a level, so it never reaches the
+ * location question and always resolves to the conservation page - the answer
+ * is the same whichever island they had in mind (2026-08-07).
  */
 export function resolveAction(
   level: LevelKey,
   location: LocationKey | null,
   lang: Language,
 ): GateAction {
+  // Conservation: one destination, no location question, all languages.
+  // The page is English-only for now; add localized twins to CONSERVATION_LANGS
+  // as they ship and this starts routing to them automatically.
+  if (level === "conservation") {
+    return { type: "navigate", path: localized("/conservation", lang, CONSERVATION_LANGS) };
+  }
+
   // Similan: same destination for both certified levels.
   if (location === "similan") return { type: "navigate", path: "/similan" };
 

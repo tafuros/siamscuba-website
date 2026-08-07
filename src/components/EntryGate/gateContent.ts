@@ -9,9 +9,16 @@ import type { Language } from "@/i18n/translations";
 // location -> destination. The old location-first funnel (Koh Tao / Koh Phangan
 // / Similan as Q1, with a freediving branch and two WhatsApp exits) scattered
 // visitors instead of qualifying them; freediving is no longer sold.
+//
+// 2026-08-07: a fourth option (conservation / PADI AWARE) joined Q1. It is an
+// INTEREST, not a certification level, so the question was reworded from
+// "What's your diving level?" to "What brings you to our ocean?" in all four
+// languages - otherwise the conservation card does not answer the question it
+// sits under. The `level` field name and the gate_level analytics param are
+// unchanged, so historical GA4 data still lines up.
 
 /** What the visitor is here to do - the first real question. */
-export type LevelKey = "beginner" | "funDives" | "training";
+export type LevelKey = "beginner" | "funDives" | "training" | "conservation";
 /** Where they want to do it - only asked when it actually changes the answer. */
 export type LocationKey = "kohTao" | "kohPhangan" | "similan";
 
@@ -19,6 +26,12 @@ export interface GateOption {
   key: string;
   label: string;
   sub: string;
+  /**
+   * Tiny caps pill above the label, naming the product family the card belongs
+   * to (PADI AWARE, PADI COURSES, DAY TRIPS...). It should add information, not
+   * repeat the label underneath it. Colour follows the card's tone.
+   */
+  eyebrow?: string;
 }
 
 export interface GateQuestion {
@@ -49,22 +62,31 @@ export const gateContent: Record<Language, GateCopy> = {
     back: "Back",
     skip: "Skip",
     level: {
-      title: "What's your diving level?",
+      title: "What brings you to our ocean?",
       options: [
         {
           key: "beginner",
           label: "Complete beginner",
           sub: "I've never dived - I want to try it",
+          eyebrow: "TRY DIVING",
         },
         {
           key: "funDives",
           label: "I'm certified - fun dives",
           sub: "Just take me diving",
+          eyebrow: "DAY TRIPS",
         },
         {
           key: "training",
           label: "I'm certified - keep training",
           sub: "Take me to the next level",
+          eyebrow: "PADI COURSES",
+        },
+        {
+          key: "conservation",
+          label: "Protect what you love",
+          sub: "Conservation diving & PADI AWARE",
+          eyebrow: "PADI AWARE",
         },
       ],
     },
@@ -83,22 +105,31 @@ export const gateContent: Record<Language, GateCopy> = {
     back: "חזרה",
     skip: "דלג",
     level: {
-      title: "מה רמת ההכשרה שלכם?",
+      title: "מה מביא אתכם לאוקיינוס שלנו?",
       options: [
         {
           key: "beginner",
           label: "מתחיל/ה לגמרי",
           sub: "לא צללתי מעולם - רוצה לגלות",
+          eyebrow: "צלילת ניסיון",
         },
         {
           key: "funDives",
           label: "יש לי רישיון - צלילות כיף",
           sub: "פשוט קחו אותי לצלול",
+          eyebrow: "יציאות יומיות",
         },
         {
           key: "training",
           label: "יש לי רישיון - להמשיך הכשרה",
           sub: "קחו אותי לשלב הבא",
+          eyebrow: "קורסי PADI",
+        },
+        {
+          key: "conservation",
+          label: "לשמור על מה שאוהבים",
+          sub: "צלילות שימור ו-PADI AWARE",
+          eyebrow: "PADI AWARE",
         },
       ],
     },
@@ -117,22 +148,31 @@ export const gateContent: Record<Language, GateCopy> = {
     back: "Atrás",
     skip: "Omitir",
     level: {
-      title: "¿Cuál es tu nivel de buceo?",
+      title: "¿Qué te trae a nuestro océano?",
       options: [
         {
           key: "beginner",
           label: "Principiante total",
           sub: "Nunca he buceado - quiero probarlo",
+          eyebrow: "BAUTISMO",
         },
         {
           key: "funDives",
           label: "Tengo licencia - buceo recreativo",
           sub: "Llévame a bucear",
+          eyebrow: "SALIDAS DIARIAS",
         },
         {
           key: "training",
           label: "Tengo licencia - seguir formándome",
           sub: "Llévame al siguiente nivel",
+          eyebrow: "CURSOS PADI",
+        },
+        {
+          key: "conservation",
+          label: "Protege lo que amas",
+          sub: "Buceo de conservación y PADI AWARE",
+          eyebrow: "PADI AWARE",
         },
       ],
     },
@@ -151,22 +191,31 @@ export const gateContent: Record<Language, GateCopy> = {
     back: "Retour",
     skip: "Passer",
     level: {
-      title: "Quel est votre niveau de plongée ?",
+      title: "Qu'est-ce qui vous amène dans notre océan ?",
       options: [
         {
           key: "beginner",
           label: "Grand débutant",
           sub: "Je n'ai jamais plongé - je veux essayer",
+          eyebrow: "BAPTÊME",
         },
         {
           key: "funDives",
           label: "J'ai un brevet - plongées loisir",
           sub: "Emmenez-moi plonger",
+          eyebrow: "SORTIES DU JOUR",
         },
         {
           key: "training",
           label: "J'ai un brevet - continuer ma formation",
           sub: "Passez-moi au niveau suivant",
+          eyebrow: "COURS PADI",
+        },
+        {
+          key: "conservation",
+          label: "Protéger ce que vous aimez",
+          sub: "Plongée de conservation et PADI AWARE",
+          eyebrow: "PADI AWARE",
         },
       ],
     },

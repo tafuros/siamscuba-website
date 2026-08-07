@@ -22,7 +22,8 @@ export type WhatsAppTopic =
   | "kp-licensed"
   | "kp-beginner"
   | "similan-safari"
-  | "similan-daytrip";
+  | "similan-daytrip"
+  | "conservation";
 
 // Back-compat alias — callers passing the narrower Offer keep working.
 export type WhatsAppOffer = Offer | "general";
@@ -32,6 +33,11 @@ const PREFILLED_MESSAGES: Record<WhatsAppTopic, Record<Lang, string>> = {
     en: "Hi Siam Scuba! I'd like to know more about diving in Koh Tao.",
     es: "¡Hola Siam Scuba! Me gustaría saber más sobre el buceo en Koh Tao.",
     he: "היי סיאם סקובה! אשמח לקבל מידע על צלילה בקוטאו.",
+  },
+  conservation: {
+    en: "Hi! I found the conservation page on siamscuba.com - I'd like to know more about the conservation courses.",
+    es: "¡Hola! He visto la página de conservación en siamscuba.com y me gustaría saber más sobre los cursos de conservación.",
+    he: "היי! ראיתי את עמוד השימור הימי באתר siamscuba.com ואשמח לשמוע עוד על קורסי השימור.",
   },
   dsd: {
     en: "Hi Siam Scuba! I'm interested in Discover Scuba Diving (from 2,600 THB / 3,600 THB for 2 dives). Could you share availability?",
@@ -130,7 +136,21 @@ export interface WhatsAppLinkOpts {
   /** Pathname to derive topic from (used by global buttons). */
   pathname?: string;
   lang?: Lang;
+  /**
+   * Send this conversation to a number OTHER than the shop line. Digits only,
+   * country code first, no "+". Only pass this where a specific person owns the
+   * enquiry end to end - see CONSERVATION_WHATSAPP_NUMBER. Everything else must
+   * keep the default so it lands in the shop's shared inbox.
+   */
+  number?: string;
 }
+
+/**
+ * Paul's direct line. Conservation enquiries go to him rather than the shop
+ * inbox: he owns the conservation programme and wrote the page's content
+ * (Ben, 2026-08-07). A UK number, so it is deliberately NOT the +66 shop line.
+ */
+export const CONSERVATION_WHATSAPP_NUMBER = "447467160704";
 
 // Maps app-wide Language ("en" | "he" | "es" | "fr") down to lander Lang.
 // French falls back to English; we don't have FR campaign assets.
@@ -140,11 +160,11 @@ export function normalizeLang(lang: string | undefined): Lang {
 }
 
 export function buildWhatsAppLink(opts: WhatsAppLinkOpts = {}): string {
-  const { topic, offer, pathname, lang = "en" } = opts;
+  const { topic, offer, pathname, lang = "en", number = WHATSAPP_NUMBER } = opts;
   const resolvedTopic: WhatsAppTopic =
     topic ?? offer ?? (pathname ? topicFromPath(pathname) : "general");
   // Customer-facing prefill only — no tracking/routing tags appended, since
   // wa.me text is sent by the customer and any tag would be visible to them.
   const text = PREFILLED_MESSAGES[resolvedTopic][lang];
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 }

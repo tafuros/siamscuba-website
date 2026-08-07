@@ -72,6 +72,16 @@
           p.rel = "preload"; p.as = "image"; p.href = "/gate/gate-poster.jpg";
           p.setAttribute("fetchpriority", "high");
           document.head.appendChild(p);
+          // The four language flags are the gate's first interactive element and
+          // live inside the lazy gate chunk, so without this their fetch cannot
+          // start until the app bundle parses. ~1.2KB total - preloading them here
+          // costs nothing and takes them off the critical path entirely.
+          ["en", "es", "fr", "he"].forEach(function (l) {
+            var f = document.createElement("link");
+            f.rel = "preload"; f.as = "image"; f.type = "image/svg+xml";
+            f.href = "/flags/" + l + ".svg";
+            document.head.appendChild(f);
+          });
           setTimeout(function () { var e = document.getElementById("gate-preload-cover"); if (e) e.remove(); }, 6000);
         } catch (e) { window.__siamGate = false; }
       })();

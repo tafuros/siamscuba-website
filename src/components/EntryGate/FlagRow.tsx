@@ -34,6 +34,13 @@ const FlagRow = ({ onPick }: FlagRowProps) => {
               alt=""
               aria-hidden="true"
               loading="eager"
+              // These four SVGs are ~1.2KB total but are the first thing a visitor
+              // must click. Intrinsic size prevents a layout jitter as they decode,
+              // and high priority keeps them ahead of the background video's data.
+              width={96}
+              height={64}
+              decoding="async"
+              fetchPriority="high"
               className="h-full w-full rounded-xl object-cover drop-shadow-[0_6px_14px_rgba(0,0,0,0.45)] transition-[filter] duration-300 group-hover:brightness-110"
               style={{ WebkitMaskImage: FADE, maskImage: FADE }}
             />

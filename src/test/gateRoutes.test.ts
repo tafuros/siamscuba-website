@@ -12,6 +12,7 @@ import { resolveAction, needsLocation } from "@/components/EntryGate/gateMachine
 //   certified / training  -> Koh Tao      -> homepage (the courses live there)
 //                         -> Koh Phangan  -> homepage
 //                         -> Similan      -> /similan
+//   conservation          -> no location step at all -> /conservation
 
 describe("entry gate - location step", () => {
   it("never asks a total beginner where to dive", () => {
@@ -23,6 +24,33 @@ describe("entry gate - location step", () => {
   it("asks both certified levels where to dive", () => {
     expect(needsLocation("funDives")).toBe(true);
     expect(needsLocation("training")).toBe(true);
+  });
+
+  it("never asks the conservation visitor where to dive", () => {
+    // The conservation page is the same answer for every island, so the
+    // question would be friction with a single outcome.
+    expect(needsLocation("conservation")).toBe(false);
+  });
+});
+
+describe("entry gate - conservation", () => {
+  it("goes straight to the conservation page", () => {
+    expect(resolveAction("conservation", null, "en")).toEqual({
+      type: "navigate",
+      path: "/conservation",
+    });
+  });
+
+  it("sends every language to the English page until localized twins ship", () => {
+    // Regression guard: the day /he/conservation exists it must be added to
+    // CONSERVATION_LANGS, and this expectation should change with it. Until
+    // then a Hebrew visitor must land on a real page, not a 404.
+    for (const lang of ["he", "es", "fr"] as const) {
+      expect(resolveAction("conservation", null, lang)).toEqual({
+        type: "navigate",
+        path: "/conservation",
+      });
+    }
   });
 });
 

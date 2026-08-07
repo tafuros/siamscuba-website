@@ -188,6 +188,14 @@ export const routes: RouteRecord[] = [
       },
       // /freediving is retired (we no longer sell freediving). vercel.json 301s
       // it to "/" so the inbound links + accrued SEO signal are not thrown away.
+      // Destination of the entry gate's fourth card (conservation / PADI AWARE).
+      // English-only for now; localized twins would join LOCALE_FAMILIES and
+      // CONSERVATION_LANGS in gateMachine.ts together.
+      {
+        path: "conservation",
+        lazy: lazyDefault(() => import("./pages/ConservationPage")),
+        entry: "src/pages/ConservationPage.tsx",
+      },
       {
         path: "accessibility",
         lazy: lazyDefault(() => import("./pages/Accessibility")),

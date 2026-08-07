@@ -209,12 +209,111 @@
 
 /* ---- frosted brightness bump for the gate's question cards ---- */
 .gate-card {
+  position: relative;
+  isolation: isolate;
   border:1px solid rgba(255,255,255,.22);
   background: rgba(255,255,255,.10);
   box-shadow: 0 6px 20px rgba(0,30,60,.25);
+  transition: border-color .3s ease, background-color .3s ease, box-shadow .3s ease;
 }
 .gate-card:hover, .gate-card:focus-visible {
   border-color: rgba(255,255,255,.5);
   background: rgba(255,255,255,.16);
 }
 [dir="rtl"] .gate-card-label { font-family:'Heebo', sans-serif; }
+
+/* ---- per-card tint (2026-08-07) ----------------------------------------
+   The four Q1 cards share one material: same blur, same white frosting, same
+   border weight. Only the hue drifting through the glass changes, so they read
+   as one system at four temperatures - not four different components.
+
+   The tint is a ::before wash rather than a background swap, so the white
+   frosting on .gate-card underneath is untouched and the glass keeps its depth.
+   Kept deliberately faint (.10-.22 alpha); the hover state is where the colour
+   actually asserts itself. `isolation:isolate` + z-index keep the wash behind
+   the label without needing a stacking context on every child.
+------------------------------------------------------------------------- */
+.gate-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .85;
+  transition: opacity .3s ease;
+  background: var(--gate-tint, none);
+}
+.gate-card:hover::before, .gate-card:focus-visible::before { opacity: 1; }
+
+.gate-card--cyan {
+  --gate-tint: linear-gradient(150deg, rgba(94,234,212,.20) 0%, rgba(94,234,212,.06) 58%, rgba(255,255,255,0) 100%);
+  --gate-pill-fg: #ccfbf1;
+  --gate-pill-bg: rgba(45,212,191,.22);
+  --gate-pill-border: rgba(153,246,228,.40);
+  --gate-pill-bg-hover: rgba(45,212,191,.34);
+  --gate-pill-border-hover: rgba(153,246,228,.66);
+  border-color: rgba(153,246,228,.30);
+}
+.gate-card--cyan:hover, .gate-card--cyan:focus-visible { border-color: rgba(153,246,228,.62); }
+
+.gate-card--azure {
+  --gate-tint: linear-gradient(150deg, rgba(96,165,250,.22) 0%, rgba(96,165,250,.07) 58%, rgba(255,255,255,0) 100%);
+  --gate-pill-fg: #dbeafe;
+  --gate-pill-bg: rgba(96,165,250,.22);
+  --gate-pill-border: rgba(147,197,253,.40);
+  --gate-pill-bg-hover: rgba(96,165,250,.34);
+  --gate-pill-border-hover: rgba(147,197,253,.66);
+  border-color: rgba(147,197,253,.30);
+}
+.gate-card--azure:hover, .gate-card--azure:focus-visible { border-color: rgba(147,197,253,.62); }
+
+.gate-card--indigo {
+  --gate-tint: linear-gradient(150deg, rgba(167,139,250,.22) 0%, rgba(167,139,250,.07) 58%, rgba(255,255,255,0) 100%);
+  --gate-pill-fg: #ede9fe;
+  --gate-pill-bg: rgba(167,139,250,.22);
+  --gate-pill-border: rgba(196,181,253,.40);
+  --gate-pill-bg-hover: rgba(167,139,250,.34);
+  --gate-pill-border-hover: rgba(196,181,253,.66);
+  border-color: rgba(196,181,253,.30);
+}
+.gate-card--indigo:hover, .gate-card--indigo:focus-visible { border-color: rgba(196,181,253,.62); }
+
+/* The conservation card is the odd one out on purpose - it is the only card
+   that is not a certification level, so it carries PADI AWARE's sea-green and a
+   slightly stronger wash + glow to earn its place at the top of the grid. */
+.gate-card--aware {
+  --gate-tint: linear-gradient(150deg, rgba(52,211,153,.26) 0%, rgba(16,185,129,.10) 56%, rgba(255,255,255,0) 100%);
+  --gate-pill-fg: #d1fae5;
+  --gate-pill-bg: rgba(16,185,129,.24);
+  --gate-pill-border: rgba(110,231,183,.42);
+  --gate-pill-bg-hover: rgba(16,185,129,.36);
+  --gate-pill-border-hover: rgba(110,231,183,.68);
+  border-color: rgba(110,231,183,.38);
+  box-shadow: 0 6px 20px rgba(0,30,60,.25), 0 0 22px -8px rgba(52,211,153,.45);
+}
+.gate-card--aware:hover, .gate-card--aware:focus-visible {
+  border-color: rgba(110,231,183,.70);
+  box-shadow: 0 10px 26px rgba(0,30,60,.28), 0 0 30px -6px rgba(52,211,153,.6);
+}
+
+/* The category pill above each card's label (PADI AWARE, PADI COURSES, ...).
+   Set as type rather than an image: crisp at any density, and no asset request
+   from inside the lazy gate chunk. Colour comes from the card's own tone via
+   custom properties, so the pill and its card always agree. */
+.gate-card-eyebrow {
+  color: var(--gate-pill-fg, #e2f3ff);
+  background: var(--gate-pill-bg, rgba(255,255,255,.16));
+  border: 1px solid var(--gate-pill-border, rgba(255,255,255,.32));
+  text-shadow: 0 1px 4px rgba(0,0,0,.5);
+  transition: background-color .3s ease, border-color .3s ease;
+}
+.gate-card:hover .gate-card-eyebrow,
+.gate-card:focus-visible .gate-card-eyebrow {
+  background: var(--gate-pill-bg-hover, rgba(255,255,255,.24));
+  border-color: var(--gate-pill-border-hover, rgba(255,255,255,.5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate-card, .gate-card::before { transition: none; }
+}

@@ -23,6 +23,7 @@ type TranslationStrings = {
   nav_fun_diving: string;
   nav_boats: string;
   nav_dive_sites: string;
+  nav_conservation: string;
   nav_koh_tao_guide: string;
   nav_about: string;
   nav_book_now: string;
@@ -270,6 +271,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_fun_diving: "Fun Diving",
     nav_boats: "The Boats",
     nav_dive_sites: "Dive Sites",
+    nav_conservation: "Conservation",
     nav_koh_tao_guide: "Koh Tao Guide",
     nav_about: "About Us",
     nav_book_now: "Book Now",
@@ -494,6 +496,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_fun_diving: "צלילות כיף",
     nav_boats: "הסירות",
     nav_dive_sites: "אתרי צלילה",
+    nav_conservation: "שימור ימי",
     nav_koh_tao_guide: "מדריך קוטאו",
     nav_about: "אודות",
     nav_book_now: "הזמן עכשיו",
@@ -718,6 +721,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_fun_diving: "Buceo Recreativo",
     nav_boats: "Los Barcos",
     nav_dive_sites: "Sitios de Buceo",
+    nav_conservation: "Conservación",
     nav_koh_tao_guide: "Guía Koh Tao",
     nav_about: "Sobre Nosotros",
     nav_book_now: "Reservar",
@@ -942,6 +946,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_fun_diving: "Plongée Loisir",
     nav_boats: "Les Bateaux",
     nav_dive_sites: "Sites de Plongée",
+    nav_conservation: "Conservation",
     nav_koh_tao_guide: "Guide Koh Tao",
     nav_about: "À Propos",
     nav_book_now: "Réserver",
