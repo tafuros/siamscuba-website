@@ -158,28 +158,31 @@ export default defineConfig(({ mode }) => {
   },
   build: {
     chunkSizeWarningLimit: 600,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (!id.includes("node_modules")) return;
-          if (id.includes("react-router")) return "router";
-          if (
-            id.includes("/react/") ||
-            id.includes("/react-dom/") ||
-            id.includes("/scheduler/")
-          ) {
-            return "react-vendor";
-          }
-          if (id.includes("@radix-ui")) return "radix";
-          if (id.includes("framer-motion") || id.includes("motion-")) return "framer";
-          if (id.includes("@tanstack")) return "tanstack";
-          if (id.includes("lucide-react")) return "icons";
-          if (id.includes("date-fns")) return "date";
-          if (id.includes("recharts") || id.includes("d3-")) return "charts";
-          return "vendor";
-        },
-      },
-    },
+    // NO manualChunks. The hand-rolled splitter that used to live here
+    // (react-vendor / router / radix / framer / tanstack / icons / date /
+    // charts / vendor) emitted a CIRCULAR chunk graph:
+    //
+    //   vendor <-> react-vendor,  vendor <-> radix,  vendor <-> router
+    //
+    // The catch-all `vendor` bucket swallowed transitive dependencies of the
+    // libraries it was splitting out - @remix-run/router (a dependency of
+    // react-router, which went to `router`), the Radix satellites
+    // (react-remove-scroll, aria-hidden, @floating-ui), and Rollup's own
+    // virtual CJS interop helpers (not under node_modules, so the first line
+    // returned undefined and Rollup parked them in `vendor`). Those same
+    // buckets are in turn imported BY vendor members (vite-react-ssg imports
+    // react-router; vaul/cmdk import @radix-ui) - hence the cycles.
+    //
+    // In a circular ESM graph the browser has to evaluate one side first, and
+    // whichever const binding is touched before its own chunk body has run
+    // throws "Cannot access 'X' before initialization" - the minified error
+    // Clarity recorded on 11.76% of erroring production sessions. It is
+    // load-order dependent, which is why it was intermittent rather than
+    // total.
+    //
+    // Rollup's default chunking is acyclic by construction. Keep it that way:
+    // do not reintroduce a manualChunks function without checking the emitted
+    // graph for cycles (scripts/check-chunk-cycles.ts asserts this in CI).
   },
   };
 });

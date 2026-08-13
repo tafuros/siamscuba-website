@@ -49,6 +49,12 @@ jobs:
       - name: Dead internal links
         run: bun run check:links
 
+      # A circular chunk graph ships "Cannot access 'X' before initialization"
+      # to real users and Rollup emits it silently. This was 11.76% of the
+      # site's production JS errors until 2026-08-13.
+      - name: Circular chunk dependencies
+        run: bun run check:chunks
+
       - name: Assert critical invariants survived the build
         run: |
           set -euo pipefail
