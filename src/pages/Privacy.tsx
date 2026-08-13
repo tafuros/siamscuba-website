@@ -13,7 +13,7 @@ const Privacy = () => {
       <Navbar />
       <div className="container mx-auto px-4 pt-36 pb-16 max-w-3xl">
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">Privacy Policy</h1>
-        <p className="text-muted-foreground text-sm mb-8"><strong>Last updated:</strong> 22 April 2026</p>
+        <p className="text-muted-foreground text-sm mb-8"><strong>Last updated:</strong> 13 August 2026</p>
 
         <div className="prose prose-sm max-w-none text-foreground/80 space-y-6">
           <p>
@@ -41,6 +41,7 @@ const Privacy = () => {
               <li><strong>Booking data</strong> — course or trip selected, dates, accommodation preference, payment method.</li>
               <li><strong>Messages</strong> — the content of conversations with our assistant Nemo (on WhatsApp and in the website chat) and any email you send us. We store website chat conversations for support and quality purposes.</li>
               <li><strong>Technical data</strong> — IP address, browser type, pages visited, referral source (via standard web analytics).</li>
+              <li><strong>Usage and interaction data</strong> — how you move through the site: clicks, taps, scrolling, mouse movement, and the pages and sequence you viewed. See section 5 on session replay.</li>
             </ul>
             <p>We never collect payment-card details directly; payments are processed by our third-party payment provider.</p>
           </section>
@@ -68,10 +69,61 @@ const Privacy = () => {
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-foreground">5. Who we share data with</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">5. Website analytics and session replay</h2>
+            <p>
+              We use <strong>Microsoft Clarity</strong> to understand how visitors use siamscuba.com. Clarity records
+              usage and interaction data — clicks, taps, scrolling, mouse movement, and the pages you viewed and in
+              what order — and combines it into heatmaps and session replays. A session replay is a reconstruction of
+              how a page was used, not a video recording of your screen or camera.
+            </p>
+            <p>
+              Clarity masks sensitive content before it leaves your browser: the contents of input boxes and drop-down
+              menus are masked in every configuration and are not uploaded. We use Clarity to find usability problems
+              and errors, not to identify individual visitors.
+            </p>
+            <p>
+              Microsoft processes this data as described in the{" "}
+              <a
+                href="https://privacy.microsoft.com/privacystatement"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Microsoft Privacy Statement
+              </a>
+              . Clarity retains session recordings for 30 days; recordings that are marked as favourites, and a
+              randomly selected sample, are retained for up to 9 months.
+            </p>
+            <p>
+              <strong>How to opt out.</strong> You can opt out of Clarity through the Digital Advertising Alliance's{" "}
+              <a
+                href="https://optout.aboutads.info/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                opt-out page
+              </a>{" "}
+              by selecting Microsoft. Clarity also honours the{" "}
+              <a
+                href="https://globalprivacycontrol.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Global Privacy Control
+              </a>{" "}
+              signal, so enabling GPC in your browser applies automatically. Declining cookies on our cookie banner
+              keeps Clarity in its cookieless mode, in which it sets no cookies and does not link your visits together.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-xl font-semibold text-foreground">6. Who we share data with</h2>
             <ul className="list-disc pl-6 space-y-1">
               <li><strong>Meta Platforms, Inc.</strong> — as the operator of WhatsApp Business Cloud API.</li>
               <li><strong>Google LLC</strong> — as the operator of the Gemini AI service.</li>
+              <li><strong>Microsoft Corporation</strong> — as the operator of Microsoft Clarity, our website analytics and session-replay provider (see section 5).</li>
               <li><strong>Our payment, email, and hosting providers</strong> — strictly to deliver the service you requested.</li>
               <li><strong>Thai authorities</strong> — where required by law.</li>
             </ul>
@@ -79,16 +131,17 @@ const Privacy = () => {
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-foreground">6. How long we keep it</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">7. How long we keep it</h2>
             <ul className="list-disc pl-6 space-y-1">
               <li>Booking and certification records: <strong>7 years</strong> (Thai tax and PADI training standards).</li>
               <li>WhatsApp conversation history: <strong>24 months</strong> or until you ask us to delete it.</li>
               <li>Website analytics: <strong>14 months</strong>.</li>
+              <li>Session replays (Microsoft Clarity): <strong>30 days</strong>, except favourited recordings and a random sample, which Microsoft retains for up to <strong>9 months</strong>.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-foreground">7. Your rights</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">8. Your rights</h2>
             <p>You have the right to:</p>
             <ul className="list-disc pl-6 space-y-1">
               <li>access the personal data we hold about you;</li>
@@ -102,15 +155,15 @@ const Privacy = () => {
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-foreground">8. International transfers</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">9. International transfers</h2>
             <p>
-              Our service providers (Meta, Google, hosting) process data outside Thailand. We rely on their standard
-              contractual safeguards.
+              Our service providers (Meta, Google, Microsoft, hosting) process data outside Thailand. We rely on their
+              standard contractual safeguards.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-foreground">9. Children</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">10. Children</h2>
             <p>
               Our services are aimed at divers aged 10 and over. Divers under 18 require parental consent, which we
               collect as part of the booking process.
@@ -118,12 +171,12 @@ const Privacy = () => {
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-foreground">10. Changes to this policy</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">11. Changes to this policy</h2>
             <p>We will post material changes on this page and update the "Last updated" date above.</p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-foreground">11. Contact</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">12. Contact</h2>
             <p>Questions or complaints: <strong>info@siamscuba.com</strong></p>
           </section>
         </div>
