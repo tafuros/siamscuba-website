@@ -136,13 +136,13 @@ export interface LeadFormCopy {
 // ---------- DSD (Discover Scuba Diving) ----------
 
 const DSD_EN: LanderCopy = {
-  seoTitle: "Discover Scuba Diving in Koh Tao - Two Dives 3,600 THB | Siam Scuba",
+  seoTitle: "Discover Scuba Diving in Koh Tao - from 2,600 THB | Siam Scuba",
   seoDescription:
-    "Try scuba diving in Koh Tao - 2 dives 3,600 THB, all gear and PADI instructor included. Or 1 dive 2,600 THB. Small groups, two custom boats, no certification needed.",
+    "Try scuba diving in Koh Tao - 2,600 THB for your first ocean dive, all gear and PADI instructor included. Add a second dive the same day for 3,600 THB total. Small groups, two custom boats, no certification needed.",
   heroBadge: "PADI Discover Scuba Diving",
-  heroH1: "Try scuba diving in Koh Tao - 2 dives, 3,600 THB",
+  heroH1: "Try scuba diving in Koh Tao - 2,600 THB",
   heroSubhead:
-    "No certification needed. A PADI instructor takes you from your first breath in shallow sheltered sea to two real ocean dives on Koh Tao's reefs - all in one day. Want just one dive? 2,600 THB.",
+    "No certification needed. A PADI instructor takes you from your first breath in shallow sheltered sea to a real ocean dive on Koh Tao's reefs - all in one day. Want a second dive the same day? 3,600 THB total.",
   ctaPrimary: "Book your Discover Scuba day",
   ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why try diving with Siam Scuba",
@@ -220,18 +220,18 @@ const DSD_EN: LanderCopy = {
       a: "Yes - your DSD dives count toward your first confined-water dive if you continue with us within 6 months.",
     },
   ],
-  closingCtaHeadline: "Two dives, one day, 3,600 THB.",
-  closingCtaSubhead: "Or one dive for 2,600 THB. WhatsApp us - we'll find you a slot this week.",
+  closingCtaHeadline: "One day, one dive, 2,600 THB.",
+  closingCtaSubhead: "Or two dives for 3,600 THB. WhatsApp us - we'll find you a slot this week.",
 };
 
 const DSD_ES: LanderCopy = {
-  seoTitle: "Discover Scuba Diving en Koh Tao - Dos Inmersiones 3,600 THB | Siam Scuba",
+  seoTitle: "Discover Scuba Diving en Koh Tao - desde 2,600 THB | Siam Scuba",
   seoDescription:
-    "Prueba el buceo en Koh Tao - 2 inmersiones 3,600 THB, equipo e instructor PADI incluidos. O 1 inmersión 2,600 THB. Grupos pequeños, dos barcos propios, sin certificación previa.",
+    "Prueba el buceo en Koh Tao - 2,600 THB tu primera inmersión en el mar, equipo e instructor PADI incluidos. Añade una segunda inmersión el mismo día por 3,600 THB en total. Grupos pequeños, dos barcos propios, sin certificación previa.",
   heroBadge: "PADI Discover Scuba Diving",
-  heroH1: "Prueba el buceo en Koh Tao - 2 inmersiones, 3,600 THB",
+  heroH1: "Prueba el buceo en Koh Tao - 2,600 THB",
   heroSubhead:
-    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración en mar poco profundo y resguardado hasta dos inmersiones reales en los arrecifes de Koh Tao, todo en un día. ¿Solo una inmersión? 2,600 THB.",
+    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración en mar poco profundo y resguardado hasta una inmersión real en los arrecifes de Koh Tao, todo en un día. ¿Quieres una segunda inmersión el mismo día? 3,600 THB en total.",
   ctaPrimary: "Reserva tu día de buceo",
   ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué bucear con Siam Scuba",
@@ -309,18 +309,18 @@ const DSD_ES: LanderCopy = {
       a: "Sí - tus inmersiones de DSD cuentan como tu primera inmersión confinada si continúas con nosotros en 6 meses.",
     },
   ],
-  closingCtaHeadline: "Dos inmersiones, un día, 3,600 THB.",
-  closingCtaSubhead: "O una inmersión por 2,600 THB. Escríbenos por WhatsApp - te buscamos hueco esta semana.",
+  closingCtaHeadline: "Un día, una inmersión, 2,600 THB.",
+  closingCtaSubhead: "O dos inmersiones por 3,600 THB. Escríbenos por WhatsApp - te buscamos hueco esta semana.",
 };
 
 const DSD_HE: LanderCopy = {
-  seoTitle: "צלילת היכרות בקוטאו - שתי צלילות ב-3,600 THB | סיאם סקובה",
+  seoTitle: "צלילת היכרות בקוטאו - החל מ-2,600 THB | סיאם סקובה",
   seoDescription:
-    "תנסו צלילה בקוטאו - 2 צלילות ב-3,600 THB, כל הציוד ומדריך PADI כלולים. או צלילה אחת ב-2,600 THB. קבוצות קטנות, שתי סירות פרטיות, ללא הסמכה קודמת.",
+    "תנסו צלילה בקוטאו - 2,600 THB לצלילה הראשונה בים, כל הציוד ומדריך PADI כלולים. אפשר להוסיף צלילה שנייה באותו יום ב-3,600 THB סה\"כ. קבוצות קטנות, שתי סירות פרטיות, ללא הסמכה קודמת.",
   heroBadge: "PADI Discover Scuba Diving",
-  heroH1: "צלילת היכרות בקוטאו - שתי צלילות, 3,600 THB",
+  heroH1: "צלילת היכרות בקוטאו - 2,600 THB",
   heroSubhead:
-    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה בים רדוד ומוגן עד שתי צלילות אמיתיות בשונית של קוטאו - הכל ביום אחד. רוצים רק צלילה אחת? 2,600 THB.",
+    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה בים רדוד ומוגן עד צלילה אמיתית בשונית של קוטאו - הכל ביום אחד. רוצים צלילה שנייה באותו יום? 3,600 THB סה\"כ.",
   ctaPrimary: "הזמינו צלילת היכרות",
   ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה לצלול איתנו",
@@ -398,8 +398,8 @@ const DSD_HE: LanderCopy = {
       a: "כן - צלילות ההיכרות נחשבות לצלילת התרגול הראשונה אם תמשיכו איתנו תוך 6 חודשים.",
     },
   ],
-  closingCtaHeadline: "שתי צלילות, יום אחד, 3,600 THB.",
-  closingCtaSubhead: "או צלילה אחת ב-2,600 THB. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
+  closingCtaHeadline: "יום אחד, צלילה אחת, 2,600 THB.",
+  closingCtaSubhead: "או שתי צלילות ב-3,600 THB. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
 };
 
 // ---------- OWD (PADI Open Water Diver) ----------
@@ -2053,8 +2053,10 @@ export function landerHreflangAlternates(offer: Offer): Partial<Record<Lang, str
 // price the customer cannot actually buy the advertised product for.
 //
 // DSD is exactly that case: 2,600 THB buys ONE dive, 3,600 THB buys TWO, and the
-// visible lander copy has always said both. Emitting a bare 2,600 Offer next to
-// an H1 reading "2 dives, 3,600 THB" is a mismatch Google can flag.
+// visible lander copy says both. The H1 leads with 2,600 (the entry tier, matching
+// `price` below) and the subhead upsells 3,600 (matching `highPrice`), so the rich
+// result and the visible page advertise the same two tiers - keep it that way, a
+// headline price the customer cannot actually buy the product for is flaggable.
 const PRICES: Record<
   Offer,
   { price: string; highPrice?: string; currency: string; duration: string }
