@@ -21,6 +21,15 @@ export type ConservationLang = Language;
 export interface ConservationLearn {
   short: string;
   long: string;
+  /**
+   * Shown in the popover when the card is opened.
+   *
+   * Ben watched Clarity recordings of visitors tapping these cards, which are
+   * not links and did nothing. The tap is curiosity, not booking intent, so
+   * sending it to the booking form would misread it - the card answers instead,
+   * and sells only by naming the specialty that covers the subject.
+   */
+  detail: string;
 }
 
 export interface ConservationSpecialty {
@@ -54,6 +63,8 @@ export interface ConservationCopy {
   whyTitleB: string;
   whyBody: string;
   learn: ConservationLearn[];
+  /** Hint on the learn cards that there is more behind the tap. */
+  learnMore: string;
 
   bandQuote: string;
 
@@ -132,13 +143,44 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     whyBody:
       "Our instructors don't simply teach from manuals - they apply sustainable diving practices on every dive and expect every student to dive responsibly from day one. The goal isn't to certify divers. It's to create divers who become ambassadors for the ocean.",
     learn: [
-      { short: "Marine life", long: "Responsible interaction with the animals you meet" },
-      { short: "Technique", long: "Environmentally friendly diving from the first minute" },
-      { short: "Buoyancy", long: "The control that keeps fins and gauges off the coral" },
-      { short: "Reef health", long: "Reading the difference between a healthy and a stressed reef" },
-      { short: "Footprint", long: "Practical ways to cut your own environmental impact" },
-      { short: "Afterwards", long: "How divers keep contributing long after certification" },
+      {
+        short: "Marine life",
+        long: "Responsible interaction with the animals you meet",
+        detail:
+          "Most reef damage is accidental and well-meant - a hand on a turtle's shell, a photo taken too close, a cleaning station interrupted. You'll learn the distances that keep an encounter calm, and the behaviours that mean you are too close.",
+      },
+      {
+        short: "Technique",
+        long: "Environmentally friendly diving from the first minute",
+        detail:
+          "Environmentally friendly diving is a set of habits, not a rule sheet: how you enter, where your gauges sit, how you turn. We build them from your first breath, so they are automatic long before you are near fragile coral.",
+      },
+      {
+        short: "Buoyancy",
+        long: "The control that keeps fins and gauges off the coral",
+        detail:
+          "A diver who can hover cannot break anything - which makes buoyancy the single most protective skill there is. It also keeps you calmer and uses noticeably less air. It is the whole subject of Peak Performance Buoyancy.",
+      },
+      {
+        short: "Reef health",
+        long: "Reading the difference between a healthy and a stressed reef",
+        detail:
+          "A reef under stress says so before it dies: bleaching, algae gaining ground, missing grazers, broken structure. Once you can read those signs you stop seeing 'nice coral' and start seeing a system.",
+      },
+      {
+        short: "Footprint",
+        long: "Practical ways to cut your own environmental impact",
+        detail:
+          "The dive is a few hours - the rest of the trip is the bigger number. Reef-safe sunscreen, refusing single-use plastic on the boat, how you rinse and store gear, what you buy on the island.",
+      },
+      {
+        short: "Afterwards",
+        long: "How divers keep contributing long after certification",
+        detail:
+          "The certification card is not the point. Divers who keep going log debris surveys, join cleanups and choose dive shops by how they actually operate. Dive Against Debris is the easiest place to start.",
+      },
     ],
+    learnMore: "Tap to read more",
 
     bandQuote: "The best divers don't just explore the ocean - they protect it.",
 
@@ -259,13 +301,44 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     whyBody:
       "המדריכים שלנו לא רק מלמדים מהספר - הם מיישמים צלילה בת-קיימא בכל צלילה, ומצפים מכל תלמיד לצלול באחריות מהיום הראשון. המטרה היא לא להסמיך צוללים. המטרה היא ליצור צוללים שהופכים לשגרירים של האוקיינוס.",
     learn: [
-      { short: "חיים בים", long: "אינטראקציה אחראית עם בעלי החיים שתפגשו" },
-      { short: "טכניקה", long: "צלילה ידידותית לסביבה כבר מהדקה הראשונה" },
-      { short: "ציפה", long: "השליטה ששומרת על סנפירים ומדים הרחק מהאלמוגים" },
-      { short: "בריאות השונית", long: "לזהות את ההבדל בין שונית בריאה לשונית במצוקה" },
-      { short: "טביעת רגל", long: "דרכים מעשיות לצמצם את ההשפעה הסביבתית שלכם" },
-      { short: "אחר כך", long: "איך צוללים ממשיכים לתרום הרבה אחרי ההסמכה" },
+      {
+        short: "חיים בים",
+        long: "אינטראקציה אחראית עם בעלי החיים שתפגשו",
+        detail:
+          "רוב הנזק לשונית נגרם בטעות ומתוך כוונה טובה - יד על שריון של צב, תמונה מקרוב מדי, תחנת ניקוי שהופרעה. תלמדו את המרחקים ששומרים על מפגש רגוע, ואת הסימנים שאומרים שאתם קרובים מדי.",
+      },
+      {
+        short: "טכניקה",
+        long: "צלילה ידידותית לסביבה כבר מהדקה הראשונה",
+        detail:
+          "צלילה ידידותית לסביבה היא אוסף הרגלים, לא דף חוקים: איך נכנסים למים, איפה יושבים המדים, איך מסתובבים. אנחנו בונים אותם מהנשימה הראשונה, כדי שיהיו אוטומטיים הרבה לפני שתתקרבו לאלמוג שביר.",
+      },
+      {
+        short: "ציפה",
+        long: "השליטה ששומרת על סנפירים ומדים הרחק מהאלמוגים",
+        detail:
+          "צולל שיודע לרחף לא יכול לשבור כלום - ולכן ציפה היא המיומנות המגינה ביותר שיש. היא גם משאירה אתכם רגועים יותר וצורכת פחות אוויר. זה כל הנושא של Peak Performance Buoyancy.",
+      },
+      {
+        short: "בריאות השונית",
+        long: "לזהות את ההבדל בין שונית בריאה לשונית במצוקה",
+        detail:
+          "שונית במצוקה מסמנת את זה לפני שהיא מתה: הלבנה, אצות שמשתלטות, דגי מרעה שנעלמו, מבנה שבור. ברגע שתדעו לקרוא את הסימנים, תפסיקו לראות 'אלמוג יפה' ותתחילו לראות מערכת.",
+      },
+      {
+        short: "טביעת רגל",
+        long: "דרכים מעשיות לצמצם את ההשפעה הסביבתית שלכם",
+        detail:
+          "הצלילה היא כמה שעות - שאר הטיול הוא המספר הגדול. קרם הגנה ידידותי לשונית, ויתור על פלסטיק חד-פעמי בסירה, איך שוטפים ומאחסנים ציוד, ומה קונים באי.",
+      },
+      {
+        short: "אחר כך",
+        long: "איך צוללים ממשיכים לתרום הרבה אחרי ההסמכה",
+        detail:
+          "תעודת ההסמכה היא לא המטרה. צוללים שממשיכים מתעדים סקרי פסולת, מצטרפים לניקויים, ובוחרים מרכזי צלילה לפי איך שהם באמת פועלים. Dive Against Debris היא הדרך הקלה להתחיל.",
+      },
     ],
+    learnMore: "הקישו לפרטים",
 
     bandQuote: "הצוללים הטובים לא רק חוקרים את האוקיינוס - הם שומרים עליו.",
 
@@ -386,13 +459,44 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     whyBody:
       "Nuestros instructores no se limitan a enseñar del manual - aplican prácticas de buceo sostenible en cada inmersión y esperan que cada alumno bucee de forma responsable desde el primer día. El objetivo no es certificar buceadores. Es crear buceadores que se conviertan en embajadores del océano.",
     learn: [
-      { short: "Vida marina", long: "Interacción responsable con los animales que encuentres" },
-      { short: "Técnica", long: "Buceo respetuoso con el medio desde el primer minuto" },
-      { short: "Flotabilidad", long: "El control que mantiene aletas y manómetros lejos del coral" },
-      { short: "Salud del arrecife", long: "Distinguir un arrecife sano de uno bajo estrés" },
-      { short: "Huella", long: "Formas prácticas de reducir tu propio impacto ambiental" },
-      { short: "Después", long: "Cómo los buceadores siguen aportando mucho después del curso" },
+      {
+        short: "Vida marina",
+        long: "Interacción responsable con los animales que encuentres",
+        detail:
+          "La mayor parte del daño al arrecife es accidental y bienintencionado: una mano sobre el caparazón de una tortuga, una foto demasiado cerca, una estación de limpieza interrumpida. Aprenderás las distancias que mantienen el encuentro tranquilo y las señales de que estás demasiado cerca.",
+      },
+      {
+        short: "Técnica",
+        long: "Buceo respetuoso con el medio desde el primer minuto",
+        detail:
+          "Bucear de forma respetuosa es un conjunto de hábitos, no una hoja de normas: cómo entras, dónde llevas los manómetros, cómo giras. Los construimos desde tu primera respiración, para que sean automáticos mucho antes de acercarte a coral frágil.",
+      },
+      {
+        short: "Flotabilidad",
+        long: "El control que mantiene aletas y manómetros lejos del coral",
+        detail:
+          "Un buceador que sabe mantenerse suspendido no puede romper nada, y por eso la flotabilidad es la habilidad que más protege. También te mantiene más tranquilo y consume bastante menos aire. Es el tema completo de Peak Performance Buoyancy.",
+      },
+      {
+        short: "Salud del arrecife",
+        long: "Distinguir un arrecife sano de uno bajo estrés",
+        detail:
+          "Un arrecife bajo estrés lo avisa antes de morir: blanqueamiento, algas ganando terreno, herbívoros ausentes, estructura rota. Cuando sabes leer esas señales dejas de ver 'coral bonito' y empiezas a ver un sistema.",
+      },
+      {
+        short: "Huella",
+        long: "Formas prácticas de reducir tu propio impacto ambiental",
+        detail:
+          "La inmersión son unas horas; el resto del viaje es la cifra grande. Protector solar seguro para el arrecife, rechazar plástico de un solo uso en el barco, cómo enjuagas y guardas el equipo, qué compras en la isla.",
+      },
+      {
+        short: "Después",
+        long: "Cómo los buceadores siguen aportando mucho después del curso",
+        detail:
+          "El certificado no es el objetivo. Quienes siguen buceando registran residuos, se unen a limpiezas y eligen centro según cómo trabaja de verdad. Dive Against Debris es la forma más fácil de empezar.",
+      },
     ],
+    learnMore: "Toca para saber más",
 
     bandQuote: "Los mejores buceadores no solo exploran el océano - lo protegen.",
 
@@ -513,13 +617,44 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     whyBody:
       "Nos instructeurs ne se contentent pas d'enseigner d'après le manuel - ils appliquent des pratiques de plongée durable à chaque plongée et attendent de chaque élève qu'il plonge de manière responsable dès le premier jour. L'objectif n'est pas de certifier des plongeurs. C'est de créer des plongeurs qui deviennent des ambassadeurs de l'océan.",
     learn: [
-      { short: "Vie marine", long: "Une interaction responsable avec les animaux rencontrés" },
-      { short: "Technique", long: "Une plongée respectueuse de l'environnement dès la première minute" },
-      { short: "Flottabilité", long: "Le contrôle qui garde palmes et manomètres loin du corail" },
-      { short: "Santé du récif", long: "Distinguer un récif en bonne santé d'un récif en souffrance" },
-      { short: "Empreinte", long: "Des moyens concrets de réduire votre impact environnemental" },
-      { short: "Ensuite", long: "Comment les plongeurs continuent d'agir bien après la certification" },
+      {
+        short: "Vie marine",
+        long: "Une interaction responsable avec les animaux rencontrés",
+        detail:
+          "L'essentiel des dégâts sur le récif est accidentel et bien intentionné : une main sur la carapace d'une tortue, une photo prise de trop près, une station de nettoyage interrompue. Vous apprendrez les distances qui gardent la rencontre calme, et les signes qui disent que vous êtes trop près.",
+      },
+      {
+        short: "Technique",
+        long: "Une plongée respectueuse de l'environnement dès la première minute",
+        detail:
+          "Plonger proprement, ce sont des habitudes, pas une liste de règles : comment vous entrez, où sont vos manomètres, comment vous tournez. Nous les construisons dès la première respiration, pour qu'elles soient automatiques bien avant le corail fragile.",
+      },
+      {
+        short: "Flottabilité",
+        long: "Le contrôle qui garde palmes et manomètres loin du corail",
+        detail:
+          "Un plongeur capable de rester en suspension ne casse rien : la flottabilité est donc la compétence la plus protectrice qui soit. Elle vous garde aussi plus détendu et consomme nettement moins d'air. C'est tout le sujet du Peak Performance Buoyancy.",
+      },
+      {
+        short: "Santé du récif",
+        long: "Distinguer un récif en bonne santé d'un récif en souffrance",
+        detail:
+          "Un récif en souffrance le dit avant de mourir : blanchissement, algues qui gagnent, brouteurs absents, structure cassée. Dès que vous savez lire ces signes, vous ne voyez plus du joli corail mais un système.",
+      },
+      {
+        short: "Empreinte",
+        long: "Des moyens concrets de réduire votre impact environnemental",
+        detail:
+          "La plongée dure quelques heures ; le reste du voyage pèse bien plus. Crème solaire sans danger pour le récif, refus du plastique jetable sur le bateau, rinçage et rangement du matériel, ce que vous achetez sur l'île.",
+      },
+      {
+        short: "Ensuite",
+        long: "Comment les plongeurs continuent d'agir bien après la certification",
+        detail:
+          "La carte de certification n'est pas le but. Ceux qui continuent recensent les déchets, rejoignent des nettoyages et choisissent leur centre selon sa façon de travailler. Dive Against Debris est le point de départ le plus simple.",
+      },
     ],
+    learnMore: "Touchez pour en savoir plus",
 
     bandQuote: "Les meilleurs plongeurs ne font pas qu'explorer l'océan - ils le protègent.",
 
