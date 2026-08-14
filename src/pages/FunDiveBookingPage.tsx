@@ -8,6 +8,7 @@ import {
   trackGenerateLead,
   trackPurchase,
   trackBookingPayLater,
+  trackWizardStep,
 } from "@/utils/tracking";
 import { buildWizardIframeSrc } from "@/utils/bookingUrl";
 
@@ -121,6 +122,24 @@ const FunDiveBookingPage = () => {
           const clamped = Math.min(6000, Math.max(400, Math.round(rawHeight)));
           setReportedHeight(clamped);
         }
+        return;
+      }
+
+      // STEP FUNNEL: the wizard reports which step it reached so we can see
+      // where people fall out between "Book" and a paid deposit. Clarity is
+      // deliberately NOT installed on dash.siamscuba.com (the wizard collects a
+      // medical questionnaire whose answers survive Clarity's text-only
+      // masking), so this message is the entire substitute for recording it -
+      // and firing here keeps the step inside the same Clarity session as the
+      // Book click, which a separate-origin recording could not do.
+      // Contract: { type: "SIAM_BOOKING_STEP", step: 1..7|"payment"|"done",
+      //             direction: "forward"|"back", schemaVersion: 1 }
+      // `step` is the ONLY field read, and trackWizardStep drops anything that
+      // is not one of the nine known ids. `direction` is deliberately ignored:
+      // the funnel question is "did they ever reach this step", so the event
+      // fires once per step per page session either way.
+      if (data.type === "SIAM_BOOKING_STEP") {
+        trackWizardStep(data.step);
         return;
       }
 
