@@ -53,7 +53,7 @@ const LearnCard = ({
   const [open, setOpen] = useState(false);
   const panelId = useId();
   return (
-    <div className="h-full">
+    <div className="relative h-full">
       <button
         type="button"
         aria-expanded={open}
@@ -65,7 +65,7 @@ const LearnCard = ({
           // rather than a flat grey box.
           "group relative h-full w-full overflow-hidden rounded-2xl border border-white/15 " +
           "bg-gradient-to-br from-white/[0.14] via-white/[0.07] to-white/[0.03] " +
-          "p-5 text-start backdrop-blur-xl " +
+          "p-4 text-start backdrop-blur-xl " +
           "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.22),0_8px_24px_-12px_rgba(0,0,0,0.55)] " +
           "transition-all duration-300 hover:border-teal-300/40 hover:from-white/[0.2] hover:via-white/[0.1] " +
           "hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),0_14px_34px_-14px_rgba(0,0,0,0.65)] " +
@@ -94,45 +94,44 @@ const LearnCard = ({
             <Plus className="h-3.5 w-3.5" />
           </span>
         </span>
-        <span className="mt-2 block leading-relaxed text-white/80">{item.long}</span>
-        <span className="mt-3 block text-[11px] font-medium text-teal-300/80 transition-opacity motion-safe:opacity-0 motion-safe:group-hover:opacity-100 motion-safe:group-focus-visible:opacity-100">
-          {moreLabel}
-        </span>
+        <span className="mt-2 block text-[15px] leading-relaxed text-white/80">{item.long}</span>
+        {/*
+          Screen-reader only. As a visible line it cost a full row of height on
+          every one of the six cards, which Ben flagged as taking too much of the
+          screen - and the + badge already carries the affordance visually. Kept
+          in the accessible name so the button still announces what it does.
+        */}
+        <span className="sr-only">{moreLabel}</span>
       </button>
 
       {/*
-        The detail copy stays in the MARKUP and is only collapsed visually.
-        A Radix Popover was the first attempt and it renders through a portal,
-        which the prerenderer never captures - grepping the built
-        dist/conservation.html found 0 of these strings, in all four languages.
-        They are the richest keyword content on the page, so hiding them from
-        Google to gain a floating bubble was the wrong trade.
+        The detail copy stays in the MARKUP and is only hidden when closed, so
+        the prerenderer captures it. A Radix Popover was the first attempt and
+        renders through a portal the prerenderer never sees - grepping the built
+        dist/conservation.html found 0 of these strings in all four languages,
+        and they are the richest keyword content on the page.
 
-        Collapsed with grid-template-rows 0fr -> 1fr rather than max-height, so
-        the animation is exact at any text length instead of guessing a ceiling.
+        ABSOLUTE, not in flow. Ben's screenshots showed why: expanding inside
+        the grid cell grew the whole row, which both inflated the untouched
+        sibling cards with empty space and pushed the panel down into the turtle
+        band below. Floating it over the page leaves the grid untouched, which
+        is also what makes it read as a bubble rather than an accordion.
       */}
       <div
         id={panelId}
+        hidden={!open}
         className={
-          "grid transition-all duration-300 ease-out motion-reduce:transition-none " +
-          (open ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0")
+          "absolute inset-x-0 top-full z-30 mt-2 rounded-2xl border border-white/20 " +
+          "bg-[#0f3c46]/95 p-4 backdrop-blur-2xl " +
+          "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_18px_44px_-12px_rgba(0,0,0,0.75)] " +
+          "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:zoom-in-95 motion-safe:duration-200"
         }
       >
-        <div className="overflow-hidden">
-          <div
-            className={
-              "relative rounded-2xl border border-white/20 bg-[#0f3c46]/85 p-4 " +
-              "backdrop-blur-2xl " +
-              "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_18px_44px_-16px_rgba(0,0,0,0.7)]"
-            }
-          >
-            <span
-              aria-hidden
-              className="absolute -top-1.5 start-6 h-3 w-3 rotate-45 border-s border-t border-white/20 bg-[#0f3c46]/85"
-            />
-            <p className="text-sm leading-relaxed text-white/85">{item.detail}</p>
-          </div>
-        </div>
+        <span
+          aria-hidden
+          className="absolute -top-1.5 start-6 h-3 w-3 rotate-45 border-s border-t border-white/20 bg-[#0f3c46]/95"
+        />
+        <p className="text-sm leading-relaxed text-white/85">{item.detail}</p>
       </div>
     </div>
   );
