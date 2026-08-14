@@ -1,8 +1,65 @@
 import { motion } from "framer-motion";
 import { Sun, Sunset, Anchor, Clock, Ship, Camera, CheckCircle2, Calendar as CalendarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { trackBookNowClick } from "@/utils/tracking";
+import { TRIP_CARD_PRODUCT } from "@/lib/landerBooking";
 import { useUpcomingSailRockDates } from "@/lib/sailRockDates";
+
+// Clarity recorded taps landing on these cards' decorative header icons - a
+// person tapping the "Afternoon Dives" icon is telling us which trip they want.
+// Two things were dropping that intent on the floor: the tap did nothing, and
+// the card's own Book Now was a bare <Link to="/fun-dive-booking"> with no
+// product, so the wizard opened on a blank chooser and made them pick again.
+//
+// Fixed by (a) TripCta below, which carries the product preselect and fires
+// book_now_click, and (b) the stretched-link pattern, which turns the whole
+// card into that CTA's tap target.
+//
+// Codes are the live DiveOS catalogue's (`/api/leads/courses-public`), which is
+// the only thing the wizard matches on - `courses.find(c => c.code === product)`
+// in Wizard.tsx:308. An unknown code is ignored there, so a drift in this
+// constant degrades to today's behaviour rather than breaking the booking.
+const FUN_DIVE_PRODUCT = TRIP_CARD_PRODUCT.funDive; // "FD" - Fun Dive, 2,000 THB
+const SAIL_ROCK_PRODUCT = TRIP_CARD_PRODUCT.sailRock; // "SAILROCK" - 4,000 THB
+
+/**
+ * Stretched link: the anchor's ::after covers the whole (position:relative)
+ * card, so tapping anywhere on the card follows this one link. Deliberately ONE
+ * real anchor rather than an onClick on the card div - it keeps keyboard focus,
+ * middle-click, right-click "open in new tab" and screen-reader semantics that
+ * a div handler would silently destroy.
+ */
+const CARD = "relative rounded-2xl border border-border bg-card p-6 flex flex-col transition-shadow hover:shadow-lg focus-within:shadow-lg";
+const CTA =
+  "inline-flex items-center justify-center rounded-full bg-accent hover:bg-accent/90 text-accent-foreground px-6 h-10 text-sm font-medium transition-colors " +
+  "after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+
+/**
+ * Deliberately NOT BookNowLink. That component targets the standalone wizard on
+ * dash.siamscuba.com, which is correct for the campaign landers but wrong here:
+ * it would take homepage visitors off-domain AND skip /fun-dive-booking, which
+ * is where the SIAM_BOOKING_STEP listener lives - so the step funnel would go
+ * blind for exactly the traffic these cards send.
+ *
+ * A react-router Link also keeps the SPA navigation these cards already had; a
+ * plain anchor would force a full reload.
+ *
+ * Attribution still survives: the booking page rebuilds the iframe src from
+ * first-touch sessionStorage, and an explicit ?product= on the incoming URL
+ * wins over stored values by design (buildBookingUrl precedence rule 1).
+ */
+const TripCta = ({ product, slot }: { product: string; slot: string }) => {
+  const to = `/fun-dive-booking?product=${encodeURIComponent(product)}`;
+  return (
+    <Link
+      to={to}
+      className={CTA}
+      onClick={() => trackBookNowClick({ location: slot, product, url: to })}
+    >
+      Book Now
+    </Link>
+  );
+};
 
 // Departure dates are UTC midnights - format them in UTC so the label is the
 // same calendar day for every viewer (and matches the SSG HTML - see
@@ -103,7 +160,7 @@ const DiveSchedule = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="rounded-2xl border border-border bg-card p-6 flex flex-col"
+        className={CARD}
       >
         <div className="flex items-center gap-3 mb-4">
           <div className="w-11 h-11 rounded-xl bg-sand flex items-center justify-center">
@@ -128,9 +185,7 @@ const DiveSchedule = () => {
             <span className="text-2xl font-bold text-foreground font-display">฿2,000</span>
             <span className="text-sm text-muted-foreground ml-1">/ person</span>
           </div>
-          <Button asChild className="rounded-full bg-accent hover:bg-accent/90 text-accent-foreground px-6">
-            <Link to="/fun-dive-booking">Book Now</Link>
-          </Button>
+          <TripCta slot="morning_dives" product={FUN_DIVE_PRODUCT} />
         </div>
       </motion.div>
 
@@ -140,7 +195,7 @@ const DiveSchedule = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className="rounded-2xl border border-border bg-card p-6 flex flex-col"
+        className={CARD}
       >
         <div className="flex items-center gap-3 mb-4">
           <div className="w-11 h-11 rounded-xl bg-sand flex items-center justify-center">
@@ -165,9 +220,7 @@ const DiveSchedule = () => {
             <span className="text-2xl font-bold text-foreground font-display">฿2,000</span>
             <span className="text-sm text-muted-foreground ml-1">/ person</span>
           </div>
-          <Button asChild className="rounded-full bg-accent hover:bg-accent/90 text-accent-foreground px-6">
-            <Link to="/fun-dive-booking">Book Now</Link>
-          </Button>
+          <TripCta slot="afternoon_dives" product={FUN_DIVE_PRODUCT} />
         </div>
       </motion.div>
 
@@ -177,7 +230,7 @@ const DiveSchedule = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="rounded-2xl border-2 border-primary/30 bg-gradient-to-b from-primary/5 to-card p-6 flex flex-col relative overflow-hidden"
+        className="rounded-2xl border-2 border-primary/30 bg-gradient-to-b from-primary/5 to-card p-6 flex flex-col relative overflow-hidden transition-shadow hover:shadow-lg focus-within:shadow-lg"
       >
         {/* crown badge */}
         <div className="absolute top-3 right-3 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
@@ -225,9 +278,7 @@ const DiveSchedule = () => {
             <span className="text-2xl font-bold text-foreground font-display">฿4,000</span>
             <span className="text-sm text-muted-foreground ml-1">/ person</span>
           </div>
-          <Button asChild className="rounded-full bg-accent hover:bg-accent/90 text-accent-foreground px-6">
-            <Link to="/fun-dive-booking">Book Now</Link>
-          </Button>
+          <TripCta slot="sail_rock" product={SAIL_ROCK_PRODUCT} />
         </div>
       </motion.div>
     </div>

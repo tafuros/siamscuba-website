@@ -14,6 +14,7 @@
 import { describe, it, expect } from "vitest";
 import {
   WIZARD_PRODUCT,
+  TRIP_CARD_PRODUCT,
   DIVEOS_COURSE_CODES,
   usesBookingWrapper,
 } from "../lib/landerBooking";
@@ -46,6 +47,35 @@ describe("lander -> DiveOS product codes", () => {
     expect(WIZARD_PRODUCT.owd).toBe("OW");
     expect(WIZARD_PRODUCT.aow).toBe("AOW");
     expect(WIZARD_PRODUCT.dsd).toBe("DSD");
+  });
+});
+
+describe("homepage trip cards -> DiveOS product codes", () => {
+  // Same silent failure as the landers: an unknown code makes the wizard's
+  // `courses.find` miss, the preselect quietly does nothing, and the customer
+  // is asked to choose the trip they already chose on the card.
+  it("every trip-card code is a real DiveOS Course.code", () => {
+    const known = new Set<string>(DIVEOS_COURSE_CODES);
+    for (const [card, code] of Object.entries(TRIP_CARD_PRODUCT)) {
+      expect(known, `trip card "${card}" preselects unknown code "${code}"`).toContain(
+        code,
+      );
+    }
+  });
+
+  it("codes are exact - no lowercase or padding", () => {
+    for (const [card, code] of Object.entries(TRIP_CARD_PRODUCT)) {
+      expect(code, `trip card "${card}"`).toBe(code.trim());
+      expect(code, `trip card "${card}"`).toBe(code.toUpperCase());
+    }
+  });
+
+  it("Sail Rock and the fun dives preselect different products", () => {
+    // Morning and Afternoon share "FD" on purpose - they are one product that
+    // differs by departure time - but the flagship must not collapse into it.
+    expect(TRIP_CARD_PRODUCT.funDive).toBe("FD");
+    expect(TRIP_CARD_PRODUCT.sailRock).toBe("SAILROCK");
+    expect(TRIP_CARD_PRODUCT.funDive).not.toBe(TRIP_CARD_PRODUCT.sailRock);
   });
 });
 
