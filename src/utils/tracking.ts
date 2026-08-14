@@ -190,6 +190,76 @@ export function trackWhatsAppFastPathClick(
   });
 }
 
+/**
+ * Wizard step identifiers, mirroring the DiveOS `SIAM_BOOKING_STEP` contract
+ * (Dive-OS/webapp/src/features/customer-wizard/postMessage.ts).
+ *
+ *   1 trip · 2 contact · 3 personal · 4 medical · 5 waiver
+ *   6 accommodation · 7 deposit
+ *
+ * Step 1 is only emitted on a BACK transition into it - the wizard emits on
+ * transition, not on mount (Wizard.tsx:378) - so the funnel's denominator is
+ * the Clarity pageview on /fun-dive-booking, not step 1.
+ *
+ * "payment" and "done" are accepted defensively but are NOT in the DiveOS
+ * contract today: `StepIndex = 1|2|3|4|5|6|7` (customer-wizard/types.ts:6).
+ * They cost nothing to allow and mean a later DiveOS step rename lands in the
+ * funnel instead of being silently dropped. The end of the flow is already
+ * covered by the separate SIAM_BOOKING_DEPOSIT / _COMPLETE messages.
+ */
+const WIZARD_STEP_IDS = new Set<string>([
+  "1", "2", "3", "4", "5", "6", "7", "payment", "done",
+]);
+
+/** Steps already reported this page session - one Clarity event per step. */
+const firedWizardSteps = new Set<string>();
+
+/**
+ * Fired when the DiveOS booking wizard - a cross-origin iframe on
+ * /fun-dive-booking that Clarity cannot see into - reports a step transition.
+ * This is the ONLY visibility we have into the money step.
+ *
+ * WHY IT LOOKS LIKE THIS. Clarity is deliberately NOT installed on
+ * dash.siamscuba.com: the wizard collects a PADI medical questionnaire whose
+ * answers are encoded in element classNames, and Clarity masks text but
+ * replays classes and stylesheets, so no masking configuration can protect
+ * them - and Clarity has no API to pause recording. So instead of recording
+ * the wizard, the wizard tells us only WHICH step it reached, and the event
+ * fires here, on the parent, inside the visitor's existing Clarity session.
+ * That also stitches the step to the "Book" click that started it, which a
+ * separate-origin recording could not have done.
+ *
+ * The step id is the entire payload. Anything that is not one of the nine
+ * known ids is dropped rather than passed through, so a future change on the
+ * DiveOS side cannot start piping a field value into Clarity by accident.
+ *
+ * Clarity-only on purpose: this is a diagnostic funnel signal, not a
+ * conversion. The conversions (Lead / Purchase / Pay-Later) already fire from
+ * SIAM_BOOKING_LEAD and SIAM_BOOKING_COMPLETE, and sending ~8 extra events per
+ * booking to Google Ads and Meta would be noise in the ad accounts.
+ *
+ * @returns true when an event was fired (first arrival at a valid step).
+ */
+export function trackWizardStep(step: unknown): boolean {
+  const id = typeof step === "number" || typeof step === "string" ? String(step) : "";
+  if (!WIZARD_STEP_IDS.has(id)) return false;
+  // Once per step per page session. The wizard already fires once per
+  // transition, but a visitor stepping back and forth would otherwise
+  // re-report steps they have already reached.
+  if (firedWizardSteps.has(id)) return false;
+  firedWizardSteps.add(id);
+
+  if (typeof window !== "undefined" && typeof window.clarity === "function") {
+    window.clarity("event", `wizard_step_${id}`);
+  }
+  return true;
+}
+
+/** Test seam - the fired-step memo is module state, not React state. */
+export function __resetWizardStepTracking(): void {
+  firedWizardSteps.clear();
+}
+
 export interface BookNowClickParams {
   /** Where on the page the CTA sits, e.g. "no_pool_hero". */
   location: string;
