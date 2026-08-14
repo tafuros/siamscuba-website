@@ -91,14 +91,24 @@ const SEARCH_DOMAINS = [
 
 const INTERNAL_DOMAINS = ["siamscuba.com"];
 
-/** Android surfaces report a package name, not a URL. */
-const APP_PACKAGE_SOURCES: Record<string, TrafficSource> = {
-  "com.google.android.googlequicksearchbox": "search",
-  "com.google.android.gm": "referral",
-  "com.instagram.android": "social",
-  "com.facebook.katana": "social",
-  "com.whatsapp": "whatsapp",
-};
+/**
+ * Android surfaces report a package name, not a URL.
+ *
+ * A Map, NOT an object literal. Plain-object lookup falls through to
+ * Object.prototype, so a referrer whose hostname is `constructor`, `toString`,
+ * `valueOf` or `hasOwnProperty` - all valid hostnames that `new URL()` parses
+ * happily - returned a native function. That is truthy, so it escaped this
+ * function as if it were a TrafficSource and would have been handed to
+ * Clarity, breaking the one guarantee this module makes: that only a fixed
+ * label ever leaves the browser. A Map has no prototype chain to fall through.
+ */
+const APP_PACKAGE_SOURCES = new Map<string, TrafficSource>([
+  ["com.google.android.googlequicksearchbox", "search"],
+  ["com.google.android.gm", "referral"],
+  ["com.instagram.android", "social"],
+  ["com.facebook.katana", "social"],
+  ["com.whatsapp", "whatsapp"],
+]);
 
 /** `a.b.example.com` matches `example.com`, but `notexample.com` does not. */
 function hostMatches(host: string, domain: string): boolean {
@@ -140,7 +150,7 @@ export function classifyReferrer(
   const host = hostOf(referrer ?? "");
   if (!host) return "direct";
 
-  const pkg = APP_PACKAGE_SOURCES[host];
+  const pkg = APP_PACKAGE_SOURCES.get(host);
   if (pkg) return pkg;
 
   const self = (currentHost ?? "").toLowerCase().replace(/^www\./, "");

@@ -98,6 +98,35 @@ describe("classifyReferrer", () => {
     expect(classifyReferrer("https://tripadvisor.com/x", SITE)).toBe("referral");
   });
 
+  it.each(["constructor", "toString", "valueOf", "hasOwnProperty", "__proto__"])(
+    "returns a real label for the Object.prototype hostname %s",
+    (host) => {
+      // These are all valid hostnames - `new URL("http://constructor/")` parses.
+      // With a plain-object package lookup they returned a native FUNCTION,
+      // which is truthy and escaped as if it were a TrafficSource, so a
+      // function would have been handed to Clarity. The lookup is a Map now.
+      const result = classifyReferrer(`http://${host}/`, SITE);
+      expect(typeof result).toBe("string");
+      expect(result).toBe("referral");
+    },
+  );
+
+  it("only ever returns one of the eight known labels", () => {
+    const allowed = new Set([
+      "whatsapp", "ai_assistant", "search", "social",
+      "referral_spam", "internal", "referral", "direct",
+    ]);
+    const hostile = [
+      "http://constructor/", "http://__proto__/", "http://toString/",
+      "https://l.wl.co/x", "https://cntravel.infotopstream.com/", "",
+      "com.whatsapp", "not a url at all", "javascript:alert(1)",
+      "https://siamscuba.com/", "https://claude.ai/", "https://google.co.th/",
+    ];
+    for (const referrer of hostile) {
+      expect(allowed.has(classifyReferrer(referrer, SITE))).toBe(true);
+    }
+  });
+
   it("does not match a domain that merely ends with the same letters", () => {
     // "notwhatsapp.com" must not match "whatsapp.com".
     expect(classifyReferrer("https://notwhatsapp.com/", SITE)).toBe("referral");
