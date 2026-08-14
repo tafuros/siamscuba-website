@@ -6,6 +6,7 @@
  */
 
 import { getStoredUtm, getStoredGclid, type UtmParams } from "@/utils/utm";
+import { classifyReferrer } from "@/utils/trafficSource";
 
 declare global {
   interface Window {
@@ -258,6 +259,57 @@ export function trackWizardStep(step: unknown): boolean {
 /** Test seam - the fired-step memo is module state, not React state. */
 export function __resetWizardStepTracking(): void {
   firedWizardSteps.clear();
+}
+
+// ── Clarity traffic-source tag ───────────────────────────────────────────────
+// Clarity's own referrer data is visible but not selectable: its Referrer panel
+// lists `l.wl.co` with 14 sessions, while filtering "Referring site" on that
+// exact value returns 0. So we classify the referrer ourselves and send the
+// result as a custom tag, which DOES appear under Clarity's "Custom filters"
+// and can be both selected and excluded.
+//
+// Only the fixed label leaves the browser - never `document.referrer` itself,
+// which can carry a query string a third party controls.
+
+/**
+ * Clarity is loaded lazily (index.html: first interaction, or a 3.5s timer), so
+ * `window.clarity` does not exist at mount. It becomes a queueing stub the
+ * instant `__loadClarity` runs, so we simply retry until it appears; anything
+ * pushed then is replayed when the real script arrives.
+ */
+const CLARITY_TAG_RETRY_MS = 1000;
+const CLARITY_TAG_MAX_ATTEMPTS = 15; // ~15s - covers the 3.5s auto-load + fetch
+
+let trafficSourceTagged = false;
+
+/**
+ * Tag the session with where the visitor came from. Call once per page session
+ * (first-touch, alongside the UTM capture) - not per route change, since the
+ * referrer of an in-site navigation is us.
+ */
+export function tagTrafficSource(): void {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  if (trafficSourceTagged) return;
+  trafficSourceTagged = true;
+
+  const source = classifyReferrer(document.referrer, window.location.hostname);
+
+  let attempts = 0;
+  const send = (): void => {
+    if (typeof window.clarity === "function") {
+      window.clarity("set", "traffic_source", source);
+      return;
+    }
+    attempts += 1;
+    if (attempts >= CLARITY_TAG_MAX_ATTEMPTS) return; // visitor never engaged
+    window.setTimeout(send, CLARITY_TAG_RETRY_MS);
+  };
+  send();
+}
+
+/** Test seam - the once-per-session latch is module state, not React state. */
+export function __resetTrafficSourceTag(): void {
+  trafficSourceTagged = false;
 }
 
 export interface BookNowClickParams {
