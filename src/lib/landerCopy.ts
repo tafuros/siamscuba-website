@@ -774,7 +774,7 @@ const AOW_EN: LanderCopy = {
     },
     {
       q: "Do I have to pay a deposit to book?",
-      a: "Yes - a 3,000 THB deposit secures your spot, and the balance is paid here on the island. Message us on WhatsApp and we'll arrange it in a minute.",
+      a: "Yes - a 2,000 THB deposit secures your spot, and the balance is paid here on the island. Message us on WhatsApp and we'll arrange it in a minute.",
     },
     {
       q: "Can I do it straight after my Open Water?",
@@ -866,7 +866,7 @@ const AOW_ES: LanderCopy = {
     },
     {
       q: "¿Tengo que pagar un depósito para reservar?",
-      a: "Sí - un depósito de 3,000 THB asegura tu plaza y el resto se paga aquí en la isla. Escríbenos por WhatsApp y lo arreglamos en un minuto.",
+      a: "Sí - un depósito de 2,000 THB asegura tu plaza y el resto se paga aquí en la isla. Escríbenos por WhatsApp y lo arreglamos en un minuto.",
     },
     {
       q: "¿Puedo hacerlo justo después del Open Water?",
@@ -958,7 +958,7 @@ const AOW_HE: LanderCopy = {
     },
     {
       q: "צריך לשלם מקדמה כדי להזמין?",
-      a: "כן - מקדמה של 3,000 THB שומרת לכם מקום, והיתרה משולמת כאן באי. כתבו לנו ב-WhatsApp ונסדר את זה תוך דקה.",
+      a: "כן - מקדמה של 2,000 THB שומרת לכם מקום, והיתרה משולמת כאן באי. כתבו לנו ב-WhatsApp ונסדר את זה תוך דקה.",
     },
     {
       q: "אפשר לעשות מיד אחרי Open Water?",

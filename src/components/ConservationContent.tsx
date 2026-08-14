@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MessageCircle, ArrowRight } from "lucide-react";
+import { MessageCircle, ArrowRight, Plus } from "lucide-react";
+import type { ConservationLearn } from "@/lib/conservationCopy";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { trackWhatsAppClick } from "@/utils/tracking";
@@ -28,6 +29,113 @@ import {
 //
 // Visual line: lighter turquoise than the blue dive landers, with owned photos
 // fading into the cards rather than blocks of running text (Ben, 2026-08-07).
+
+/**
+ * The six "what you'll actually learn" cards.
+ *
+ * Ben found Clarity recordings of visitors tapping these. They were plain <li>
+ * elements and did nothing, so the tap was answered with silence. The tap is
+ * curiosity - "tell me more about buoyancy" - NOT booking intent, so routing it
+ * to the booking form would misread it and annoy. The card answers instead, and
+ * sells only by naming the specialty that covers the subject.
+ *
+ * A real <button> with aria-expanded/aria-controls, so the affordance those
+ * visitors were responding to now genuinely exists: keyboard reachable, and it
+ * announces its state instead of looking tappable and doing nothing.
+ */
+const LearnCard = ({
+  item,
+  moreLabel,
+}: {
+  item: ConservationLearn;
+  moreLabel: string;
+}) => {
+  const [open, setOpen] = useState(false);
+  const panelId = useId();
+  return (
+    <div className="relative h-full">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((v) => !v)}
+        className={
+          // Liquid glass: a translucent pane over the page's own photography,
+          // with a diagonal sheen and a top highlight so it reads as a lit edge
+          // rather than a flat grey box.
+          "group relative h-full w-full overflow-hidden rounded-2xl border border-white/15 " +
+          "bg-gradient-to-br from-white/[0.14] via-white/[0.07] to-white/[0.03] " +
+          "p-4 text-start backdrop-blur-xl " +
+          "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.22),0_8px_24px_-12px_rgba(0,0,0,0.55)] " +
+          "transition-all duration-300 hover:border-teal-300/40 hover:from-white/[0.2] hover:via-white/[0.1] " +
+          "hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),0_14px_34px_-14px_rgba(0,0,0,0.65)] " +
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70 " +
+          "focus-visible:ring-offset-2 focus-visible:ring-offset-transparent " +
+          "motion-safe:hover:-translate-y-0.5"
+        }
+      >
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/50 to-transparent"
+        />
+        <span className="flex items-start justify-between gap-3">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-300">
+            {item.short}
+          </span>
+          <span
+            aria-hidden
+            className={
+              "mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border " +
+              "border-teal-300/30 bg-teal-300/10 text-teal-200 transition-all duration-300 " +
+              "group-hover:border-teal-300/60 group-hover:bg-teal-300/20 " +
+              (open ? "rotate-45" : "")
+            }
+          >
+            <Plus className="h-3.5 w-3.5" />
+          </span>
+        </span>
+        <span className="mt-2 block text-[15px] leading-relaxed text-white/80">{item.long}</span>
+        {/*
+          Screen-reader only. As a visible line it cost a full row of height on
+          every one of the six cards, which Ben flagged as taking too much of the
+          screen - and the + badge already carries the affordance visually. Kept
+          in the accessible name so the button still announces what it does.
+        */}
+        <span className="sr-only">{moreLabel}</span>
+      </button>
+
+      {/*
+        The detail copy stays in the MARKUP and is only hidden when closed, so
+        the prerenderer captures it. A Radix Popover was the first attempt and
+        renders through a portal the prerenderer never sees - grepping the built
+        dist/conservation.html found 0 of these strings in all four languages,
+        and they are the richest keyword content on the page.
+
+        ABSOLUTE, not in flow. Ben's screenshots showed why: expanding inside
+        the grid cell grew the whole row, which both inflated the untouched
+        sibling cards with empty space and pushed the panel down into the turtle
+        band below. Floating it over the page leaves the grid untouched, which
+        is also what makes it read as a bubble rather than an accordion.
+      */}
+      <div
+        id={panelId}
+        hidden={!open}
+        className={
+          "absolute inset-x-0 top-full z-30 mt-2 rounded-2xl border border-white/20 " +
+          "bg-[#0f3c46]/95 p-4 backdrop-blur-2xl " +
+          "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_18px_44px_-12px_rgba(0,0,0,0.75)] " +
+          "motion-safe:animate-in motion-safe:fade-in-0 motion-safe:zoom-in-95 motion-safe:duration-200"
+        }
+      >
+        <span
+          aria-hidden
+          className="absolute -top-1.5 start-6 h-3 w-3 rotate-45 border-s border-t border-white/20 bg-[#0f3c46]/95"
+        />
+        <p className="text-sm leading-relaxed text-white/85">{item.detail}</p>
+      </div>
+    </div>
+  );
+};
 
 interface ConservationContentProps {
   lang: ConservationLang;
@@ -173,14 +281,8 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
 
             <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {copy.learn.map((item) => (
-                <li
-                  key={item.short}
-                  className="rounded-xl border border-teal-300/15 bg-white/[0.05] p-5"
-                >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-300">
-                    {item.short}
-                  </p>
-                  <p className="mt-2 leading-relaxed text-white/80">{item.long}</p>
+                <li key={item.short}>
+                  <LearnCard item={item} moreLabel={copy.learnMore} />
                 </li>
               ))}
             </ul>

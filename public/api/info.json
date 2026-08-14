@@ -46,7 +46,7 @@
       "max_depth_m": 18,
       "description": "Entry-level PADI certification, valid for life, recognized worldwide. Theory, pool session, 4 open-water dives to 18m. 2 nights on-site accommodation included. Max 6 students per instructor.",
       "included": ["4 open-water dives", "full equipment", "theory + pool drills", "2 nights accommodation", "PADI certification card", "dive insurance"],
-      "deposit_thb": 3000
+      "deposit_thb": 2000
     },
     {
       "id": "aowd",
@@ -58,7 +58,7 @@
       "prerequisite": "Open Water Diver (or equivalent)",
       "max_depth_m": 30,
       "description": "Second PADI cert. 100% practical, no exams. 5 specialty dives: Deep (30m), Wreck, Night, Buoyancy or Photography, Navigation. 1 night accommodation included. Max 4 students per instructor.",
-      "deposit_thb": 3000,
+      "deposit_thb": 2000,
       "special_offer": "5% discount if continuing directly to Rescue Diver"
     },
     {

@@ -32,6 +32,20 @@ export const WIZARD_PRODUCT: Partial<Record<Offer, string>> = {
 };
 
 /**
+ * The homepage trip cards (components/DiveSchedule.tsx). Same silent-failure
+ * risk as WIZARD_PRODUCT above - the wizard resolves these with
+ * `courses.find(c => c.code === productParam)` and does nothing on a miss - so
+ * they live here to be covered by the same guard test.
+ *
+ * Morning and Afternoon are both the one "Fun Dive" product; they differ by
+ * departure time, which is chosen inside the wizard, not by product code.
+ */
+export const TRIP_CARD_PRODUCT = {
+  funDive: "FD",
+  sailRock: "SAILROCK",
+} as const;
+
+/**
  * The live DiveOS course codes, snapshotted 2026-08-01 so the guard test can run
  * offline (CI has no access to the dashboard).
  *
