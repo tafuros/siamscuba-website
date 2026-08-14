@@ -8,7 +8,7 @@ import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
-import { trackPageView } from "@/utils/tracking";
+import { trackPageView, tagTrafficSource } from "@/utils/tracking";
 import { captureUtmFromUrl, captureGclidFromUrl } from "@/utils/utm";
 
 // Floating chat widget - client-only, not SEO content. Lazy-load it so its
@@ -33,6 +33,9 @@ const RouteTracker = () => {
     if (!utmCapturedRef.current) {
       captureUtmFromUrl();
       captureGclidFromUrl();
+      // First-touch like the UTMs above: on an in-site navigation the referrer
+      // is us, so only the landing referrer is meaningful.
+      tagTrafficSource();
       utmCapturedRef.current = true;
     }
     trackPageView({ page_path: location.pathname + location.search });
