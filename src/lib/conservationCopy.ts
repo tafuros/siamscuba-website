@@ -72,6 +72,11 @@ export interface ConservationCopy {
   specTitle: string;
   specLede: string;
   specialties: ConservationSpecialty[];
+  /**
+   * CTA on each specialty card. These seven courses are not in the DiveOS
+   * catalogue, so there is nothing to book - the enquiry is the funnel.
+   */
+  ctaAskCourse: string;
 
   landEyebrow: string;
   landTitle: string;
@@ -229,6 +234,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "Better buoyancy means better diving - and healthier reefs.",
       },
     ],
+    ctaAskCourse: "Ask about this course",
 
     landEyebrow: "Sustainability beyond diving",
     landTitle: "Conservation starts on land",
@@ -387,6 +393,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "ציפה טובה יותר פירושה צלילה טובה יותר - ושוניות בריאות יותר.",
       },
     ],
+    ctaAskCourse: "שאלו על הקורס",
 
     landEyebrow: "קיימות מעבר לצלילה",
     landTitle: "השימור מתחיל על היבשה",
@@ -545,6 +552,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "Mejor flotabilidad significa mejor buceo - y arrecifes más sanos.",
       },
     ],
+    ctaAskCourse: "Pregunta por este curso",
 
     landEyebrow: "Sostenibilidad más allá del buceo",
     landTitle: "La conservación empieza en tierra",
@@ -703,6 +711,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "Une meilleure flottabilité, c'est une meilleure plongée - et des récifs en meilleure santé.",
       },
     ],
+    ctaAskCourse: "Renseignez-vous sur ce cours",
 
     landEyebrow: "La durabilité au-delà de la plongée",
     landTitle: "La conservation commence à terre",

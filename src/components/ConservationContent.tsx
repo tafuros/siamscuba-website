@@ -162,6 +162,15 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
   const onWhatsApp = (location: string) => () =>
     trackWhatsAppClick({ location, url: whatsappHref });
 
+  /** Same line as the rest of the page - Paul's, not the shop inbox. */
+  const courseHref = (courseName: string) =>
+    buildWhatsAppLink({
+      topic: "conservation",
+      lang: normalizeLang(lang),
+      number: CONSERVATION_WHATSAPP_NUMBER,
+      courseName,
+    });
+
   const eyebrow = (text: string) => (
     <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-teal-300">{text}</p>
   );
@@ -387,6 +396,27 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
                           {s.note}
                         </p>
                       )}
+
+                      {/*
+                        The enquiry IS the funnel here. None of these seven
+                        courses exists in the DiveOS catalogue - no product code,
+                        no published price - so there is nothing to send anyone
+                        into the wizard for. The prefill names the course because
+                        this lands on Paul's personal phone (Ben, 15.08: every
+                        WhatsApp destination on this page goes to Paul) and he
+                        needs to know which one at a glance.
+                      */}
+                      <a
+                        href={courseHref(s.name)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={onWhatsApp(`conservation_specialty_${i + 1}`)}
+                        className="mt-6 inline-flex items-center gap-2 rounded-full border border-teal-300/40 bg-teal-300/10 px-5 py-2.5 text-sm font-medium text-teal-100 transition-colors hover:border-teal-300/70 hover:bg-teal-300/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70"
+                      >
+                        <MessageCircle className="h-4 w-4" aria-hidden />
+                        {copy.ctaAskCourse}
+                        <span className="sr-only"> - {s.name}</span>
+                      </a>
                     </div>
                   </article>
                 );
@@ -407,11 +437,34 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
             </p>
 
             <div className="mt-12 grid gap-5 md:grid-cols-2">
-              {copy.land.map((block) => (
+              {copy.land.map((block, i) => (
+                /*
+                  Pinned notes, not buttons (Ben, 14.08). These four are things
+                  we DO, not things to click - reading as tappable cards was
+                  making the page promise an action it does not have. So: a
+                  brass pin, a faint paper tint, and a small alternating tilt,
+                  which is what stops four identical rectangles from reading as
+                  a button row.
+
+                  The tilt is decorative and motion-safe only; nothing here is
+                  interactive, so there is no focus or hit-target to protect.
+                */
                 <div
                   key={block.title}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-7"
+                  className={
+                    "relative rounded-[14px] border border-white/12 bg-gradient-to-br " +
+                    "from-white/[0.07] to-white/[0.03] p-7 pt-9 " +
+                    "shadow-[0_10px_30px_-18px_rgba(0,0,0,0.8)] " +
+                    "motion-safe:transition-transform motion-safe:duration-300 " +
+                    (i % 2 === 0
+                      ? "motion-safe:-rotate-[0.35deg] motion-safe:hover:rotate-0"
+                      : "motion-safe:rotate-[0.35deg] motion-safe:hover:rotate-0")
+                  }
                 >
+                  <span
+                    aria-hidden="true"
+                    className="absolute start-7 top-3 h-3 w-3 rounded-full bg-gradient-to-br from-amber-200 to-amber-500 shadow-[0_1px_3px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.7)]"
+                  />
                   <h3 className={`${displaySemi} text-lg text-white`}>{block.title}</h3>
                   <p className="mt-3 leading-relaxed text-white/75">{block.body}</p>
                   {block.list && (
