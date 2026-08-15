@@ -72,11 +72,38 @@ export interface ConservationCopy {
   specTitle: string;
   specLede: string;
   specialties: ConservationSpecialty[];
+  /**
+   * CTA on each specialty card. These seven courses are not in the DiveOS
+   * catalogue, so there is nothing to book - the enquiry is the funnel.
+   */
+  ctaAskCourse: string;
 
   landEyebrow: string;
   landTitle: string;
   landLede: string;
   land: ConservationLandBlock[];
+
+  /**
+   * The Friday beach cleanup. Facts are Ben's (15.08): every Friday 17:30, meet
+   * at the dive centre, clean the main beach at sunset, free, stay as long as
+   * you like, tell Paul you are coming.
+   *
+   * Deliberately says NOTHING about what to bring - Ben has not answered that
+   * yet and inventing "gloves provided" is the kind of small fiction that turns
+   * into a disappointed visitor standing on a beach.
+   */
+  cleanup: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    when: string;
+    where: string;
+    cost: string;
+    stay: string;
+    /** What to bring (Ben, 15.08). Deliberately warm, not logistical. */
+    bring: string;
+    cta: string;
+  };
 
   closeTitle: string;
   closeBody: string;
@@ -229,6 +256,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "Better buoyancy means better diving - and healthier reefs.",
       },
     ],
+    ctaAskCourse: "Ask about this course",
 
     landEyebrow: "Sustainability beyond diving",
     landTitle: "Conservation starts on land",
@@ -260,6 +288,26 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         body: "Every course is an opportunity to inspire. Whether you're learning to dive or completing an advanced specialty, conservation is part of the experience rather than a module bolted onto it.",
       },
     ],
+    cleanup: {
+      eyebrow:
+        "Every Friday",
+      title:
+        "We clean the beach at sunset",
+      body:
+        "Conservation is not only something we teach underwater. Every Friday we walk the main beach and clean it as the sun goes down - divers, non-divers, anyone staying on the island. Come for ten minutes or stay until it is dark.",
+      when:
+        "Fridays, 17:30",
+      where:
+        "Meet at the dive centre",
+      cost:
+        "Free, open to everyone",
+      stay:
+        "Stay as long as you like",
+      bring:
+        "Bring yourself, good energy and a smile - that is the whole kit list.",
+      cta:
+        "Tell Paul you are coming",
+    },
 
     closeTitle: "Join us in protecting Koh Tao",
     closeBody:
@@ -387,6 +435,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "ציפה טובה יותר פירושה צלילה טובה יותר - ושוניות בריאות יותר.",
       },
     ],
+    ctaAskCourse: "שאלו על הקורס",
 
     landEyebrow: "קיימות מעבר לצלילה",
     landTitle: "השימור מתחיל על היבשה",
@@ -418,6 +467,26 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         body: "כל קורס הוא הזדמנות להשפיע. בין אם אתם לומדים לצלול או משלימים התמחות מתקדמת, השימור הוא חלק מהחוויה ולא מודול שהודבק אליה.",
       },
     ],
+    cleanup: {
+      eyebrow:
+        "כל יום שישי",
+      title:
+        "מנקים את החוף בשקיעה",
+      body:
+        "שימור הוא לא רק משהו שמלמדים מתחת למים. כל יום שישי אנחנו עוברים על החוף המרכזי ומנקים אותו בזמן שהשמש שוקעת - צוללים, לא-צוללים, כל מי שנמצא באי. אפשר לבוא לעשר דקות ואפשר להישאר עד שיחשיך.",
+      when:
+        "ימי שישי, 17:30",
+      where:
+        "נפגשים במועדון הצלילה",
+      cost:
+        "בחינם, פתוח לכולם",
+      stay:
+        "נשארים כמה שרוצים",
+      bring:
+        "תביאו את עצמכם, אנרגיה טובה וחיוך - זו כל רשימת הציוד.",
+      cta:
+        "עדכנו את פול שאתם מגיעים",
+    },
 
     closeTitle: "בואו לשמור איתנו על קוֹ טאו",
     closeBody:
@@ -545,6 +614,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "Mejor flotabilidad significa mejor buceo - y arrecifes más sanos.",
       },
     ],
+    ctaAskCourse: "Pregunta por este curso",
 
     landEyebrow: "Sostenibilidad más allá del buceo",
     landTitle: "La conservación empieza en tierra",
@@ -576,6 +646,26 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         body: "Cada curso es una oportunidad para inspirar. Tanto si estás aprendiendo a bucear como si completas una especialidad avanzada, la conservación forma parte de la experiencia y no es un módulo añadido.",
       },
     ],
+    cleanup: {
+      eyebrow:
+        "Cada viernes",
+      title:
+        "Limpiamos la playa al atardecer",
+      body:
+        "La conservación no es solo algo que enseñamos bajo el agua. Cada viernes recorremos la playa principal y la limpiamos mientras se pone el sol - buceadores, no buceadores, cualquiera que esté en la isla. Ven diez minutos o quédate hasta que anochezca.",
+      when:
+        "Viernes, 17:30",
+      where:
+        "Quedamos en el centro de buceo",
+      cost:
+        "Gratis, abierto a todos",
+      stay:
+        "Quédate el tiempo que quieras",
+      bring:
+        "Trae tus ganas, buena energía y una sonrisa - esa es toda la lista de equipo.",
+      cta:
+        "Avisa a Paul de que vienes",
+    },
 
     closeTitle: "Únete a nosotros para proteger Koh Tao",
     closeBody:
@@ -703,6 +793,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         note: "Une meilleure flottabilité, c'est une meilleure plongée - et des récifs en meilleure santé.",
       },
     ],
+    ctaAskCourse: "Renseignez-vous sur ce cours",
 
     landEyebrow: "La durabilité au-delà de la plongée",
     landTitle: "La conservation commence à terre",
@@ -734,6 +825,26 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         body: "Chaque cours est une occasion d'inspirer. Que vous appreniez à plonger ou que vous complétiez une spécialité avancée, la conservation fait partie de l'expérience et n'est pas un module ajouté après coup.",
       },
     ],
+    cleanup: {
+      eyebrow:
+        "Chaque vendredi",
+      title:
+        "On nettoie la plage au coucher du soleil",
+      body:
+        "La conservation n'est pas seulement ce que nous enseignons sous l'eau. Chaque vendredi, nous parcourons la plage principale et la nettoyons pendant que le soleil se couche - plongeurs, non-plongeurs, toute personne de passage sur l'île. Venez dix minutes ou restez jusqu'à la nuit.",
+      when:
+        "Vendredis, 17h30",
+      where:
+        "Rendez-vous au centre de plongée",
+      cost:
+        "Gratuit, ouvert à tous",
+      stay:
+        "Restez aussi longtemps que vous voulez",
+      bring:
+        "Venez comme vous êtes, avec de la bonne énergie et le sourire - c'est toute la liste.",
+      cta:
+        "Dites à Paul que vous venez",
+    },
 
     closeTitle: "Rejoignez-nous pour protéger Koh Tao",
     closeBody:

@@ -143,6 +143,12 @@ export interface WhatsAppLinkOpts {
    * keep the default so it lands in the shop's shared inbox.
    */
   number?: string;
+  /**
+   * Name a specific conservation specialty in the prefill. Ignored unless the
+   * resolved topic is "conservation" - it is not a general-purpose text
+   * override, and the curated prefills stay curated.
+   */
+  courseName?: string;
 }
 
 /**
@@ -154,15 +160,41 @@ export const CONSERVATION_WHATSAPP_NUMBER = "447467160704";
 
 // Maps app-wide Language ("en" | "he" | "es" | "fr") down to lander Lang.
 // French falls back to English; we don't have FR campaign assets.
+/**
+ * Per-course conservation enquiry, used by the specialty cards on
+ * /conservation.
+ *
+ * These seven courses are NOT in the DiveOS catalogue - no product code, no
+ * published price - so they cannot be booked through the wizard at all. The
+ * enquiry IS the funnel, which is why the prefill names the course: it lands on
+ * Paul's personal phone and he needs to know which one at a glance.
+ *
+ * The course name stays in English in every language. It is the certification's
+ * registered name and what the card in the diver's hand will say - the same
+ * rule conservationCopy.ts follows for the headings.
+ */
+const CONSERVATION_COURSE_MESSAGES: Record<Lang, (course: string) => string> = {
+  en: (c) =>
+    `Hi! I found the conservation page on siamscuba.com - I'd like to know more about the ${c} course: price, dates and what it involves.`,
+  es: (c) =>
+    `¡Hola! He visto la página de conservación en siamscuba.com y me gustaría saber más sobre el curso ${c}: precio, fechas y en qué consiste.`,
+  he: (c) =>
+    `היי! ראיתי את עמוד השימור הימי באתר siamscuba.com ואשמח לשמוע עוד על הקורס ${c} - מחיר, תאריכים ומה הוא כולל.`,
+};
+
 export function normalizeLang(lang: string | undefined): Lang {
   if (lang === "es" || lang === "he") return lang;
   return "en";
 }
 
 export function buildWhatsAppLink(opts: WhatsAppLinkOpts = {}): string {
-  const { topic, offer, pathname, lang = "en", number = WHATSAPP_NUMBER } = opts;
+  const { topic, offer, pathname, lang = "en", number = WHATSAPP_NUMBER, courseName } = opts;
   const resolvedTopic: WhatsAppTopic =
     topic ?? offer ?? (pathname ? topicFromPath(pathname) : "general");
+  if (resolvedTopic === "conservation" && courseName) {
+    const msg = CONSERVATION_COURSE_MESSAGES[lang](courseName);
+    return `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
+  }
   // Customer-facing prefill only — no tracking/routing tags appended, since
   // wa.me text is sent by the customer and any tag would be visible to them.
   const text = PREFILLED_MESSAGES[resolvedTopic][lang];

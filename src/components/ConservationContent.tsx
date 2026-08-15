@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MessageCircle, ArrowRight, Plus } from "lucide-react";
+import { MessageCircle, ArrowRight, Plus, Clock, MapPin, Sunset, Users } from "lucide-react";
 import type { ConservationLearn } from "@/lib/conservationCopy";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -162,6 +162,15 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
   const onWhatsApp = (location: string) => () =>
     trackWhatsAppClick({ location, url: whatsappHref });
 
+  /** Same line as the rest of the page - Paul's, not the shop inbox. */
+  const courseHref = (courseName: string) =>
+    buildWhatsAppLink({
+      topic: "conservation",
+      lang: normalizeLang(lang),
+      number: CONSERVATION_WHATSAPP_NUMBER,
+      courseName,
+    });
+
   const eyebrow = (text: string) => (
     <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-teal-300">{text}</p>
   );
@@ -269,6 +278,71 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
       </header>
 
       <main>
+        {/* -------------------------------------------------- Friday beach clean */}
+        {/* Sits directly under the hero on Ben's call (15.08). It is the only
+            thing on this page anyone can join without booking, paying or being
+            certified, so it earns the first screen after the promise - the
+            courses still follow underneath. */}
+        <section id="beach-cleanup" className="scroll-mt-24 px-6 pt-16 pb-4 sm:pt-20 sm:pb-6">
+          <div className="mx-auto max-w-5xl">
+            {/*
+              The one thing on this page a visitor can join without booking
+              anything, so it gets its own block rather than a line in the land
+              notes. Facts only - Ben has not said what to bring, and inventing
+              "gloves provided" is how someone ends up standing on a beach
+              holding nothing.
+            */}
+            <div className="relative overflow-hidden rounded-2xl border border-teal-300/25 bg-gradient-to-br from-teal-300/[0.12] via-white/[0.05] to-white/[0.02] p-8 backdrop-blur-xl sm:p-10">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-teal-200/60 to-transparent"
+              />
+              {eyebrow(copy.cleanup.eyebrow)}
+              <h2 className={`${display} mt-4 text-2xl leading-tight text-white sm:text-3xl`}>
+                {copy.cleanup.title}
+              </h2>
+              <p className="mt-5 max-w-2xl leading-relaxed text-white/80">{copy.cleanup.body}</p>
+
+              <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {[
+                  { icon: Clock, text: copy.cleanup.when },
+                  { icon: MapPin, text: copy.cleanup.where },
+                  { icon: Users, text: copy.cleanup.cost },
+                  { icon: Sunset, text: copy.cleanup.stay },
+                ].map(({ icon: Icon, text }) => (
+                  <li key={text} className="flex items-start gap-3">
+                    <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-teal-300/30 bg-teal-300/10 text-teal-200">
+                      <Icon className="h-4 w-4" aria-hidden />
+                    </span>
+                    <span className="text-sm leading-relaxed text-white/85">{text}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/*
+                Ben's answer to "what do people bring?" was "yourselves, good
+                energy and a smile", so it reads as an invitation rather than a
+                kit list - which is why it sits here as a line and not as a
+                fifth icon in the row above.
+              */}
+              <p className="mt-7 text-[15px] italic leading-relaxed text-teal-100/90">
+                {copy.cleanup.bring}
+              </p>
+
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onWhatsApp("conservation_beach_cleanup")}
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm font-semibold text-[#0a3a4a] transition-colors hover:bg-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden />
+                {copy.cleanup.cta}
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* ------------------------------------------------------ Why with us */}
         <section className="px-6 py-20 sm:py-24">
           <div className="mx-auto max-w-5xl">
@@ -387,6 +461,27 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
                           {s.note}
                         </p>
                       )}
+
+                      {/*
+                        The enquiry IS the funnel here. None of these seven
+                        courses exists in the DiveOS catalogue - no product code,
+                        no published price - so there is nothing to send anyone
+                        into the wizard for. The prefill names the course because
+                        this lands on Paul's personal phone (Ben, 15.08: every
+                        WhatsApp destination on this page goes to Paul) and he
+                        needs to know which one at a glance.
+                      */}
+                      <a
+                        href={courseHref(s.name)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={onWhatsApp(`conservation_specialty_${i + 1}`)}
+                        className="mt-6 inline-flex items-center gap-2 rounded-full border border-teal-300/40 bg-teal-300/10 px-5 py-2.5 text-sm font-medium text-teal-100 transition-colors hover:border-teal-300/70 hover:bg-teal-300/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70"
+                      >
+                        <MessageCircle className="h-4 w-4" aria-hidden />
+                        {copy.ctaAskCourse}
+                        <span className="sr-only"> - {s.name}</span>
+                      </a>
                     </div>
                   </article>
                 );
@@ -407,11 +502,34 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
             </p>
 
             <div className="mt-12 grid gap-5 md:grid-cols-2">
-              {copy.land.map((block) => (
+              {copy.land.map((block, i) => (
+                /*
+                  Pinned notes, not buttons (Ben, 14.08). These four are things
+                  we DO, not things to click - reading as tappable cards was
+                  making the page promise an action it does not have. So: a
+                  brass pin, a faint paper tint, and a small alternating tilt,
+                  which is what stops four identical rectangles from reading as
+                  a button row.
+
+                  The tilt is decorative and motion-safe only; nothing here is
+                  interactive, so there is no focus or hit-target to protect.
+                */
                 <div
                   key={block.title}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-7"
+                  className={
+                    "relative rounded-[14px] border border-white/12 bg-gradient-to-br " +
+                    "from-white/[0.07] to-white/[0.03] p-7 pt-9 " +
+                    "shadow-[0_10px_30px_-18px_rgba(0,0,0,0.8)] " +
+                    "motion-safe:transition-transform motion-safe:duration-300 " +
+                    (i % 2 === 0
+                      ? "motion-safe:-rotate-[0.35deg] motion-safe:hover:rotate-0"
+                      : "motion-safe:rotate-[0.35deg] motion-safe:hover:rotate-0")
+                  }
                 >
+                  <span
+                    aria-hidden="true"
+                    className="absolute start-7 top-3 h-3 w-3 rounded-full bg-gradient-to-br from-amber-200 to-amber-500 shadow-[0_1px_3px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.7)]"
+                  />
                   <h3 className={`${displaySemi} text-lg text-white`}>{block.title}</h3>
                   <p className="mt-3 leading-relaxed text-white/75">{block.body}</p>
                   {block.list && (
