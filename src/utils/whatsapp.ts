@@ -119,6 +119,7 @@ const PATH_TO_TOPIC: { test: RegExp; topic: WhatsAppTopic }[] = [
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?scuba-review(\/|$)/i, topic: "refresher" },
   { test: /^\/(en\/|es\/|he\/|fr\/)?fun-dives?(\/|$)/i, topic: "fun-dive" },
   { test: /^\/(en\/|es\/|he\/)?koh-tao-diving(\/|$)/i, topic: "koh-tao" },
+  { test: /^\/(en\/|es\/|he\/|fr\/)?conservation(\/|$)/i, topic: "conservation" },
 ];
 
 export function topicFromPath(pathname: string): WhatsAppTopic {
@@ -188,15 +189,23 @@ export function normalizeLang(lang: string | undefined): Lang {
 }
 
 export function buildWhatsAppLink(opts: WhatsAppLinkOpts = {}): string {
-  const { topic, offer, pathname, lang = "en", number = WHATSAPP_NUMBER, courseName } = opts;
+  const { topic, offer, pathname, lang = "en", number, courseName } = opts;
   const resolvedTopic: WhatsAppTopic =
     topic ?? offer ?? (pathname ? topicFromPath(pathname) : "general");
+  // Ben, 2026-08-15: EVERY WhatsApp destination on the conservation pages goes
+  // to Paul, not the shop inbox - he owns that programme end to end. Deciding
+  // it from the topic (rather than at each call site) is what makes that true
+  // for the global Navbar and floating buttons too: they derive their topic
+  // from the pathname and never knew about Paul. An explicit `number` still
+  // wins, so nothing that already passes one changes behaviour.
+  const resolvedNumber =
+    number ?? (resolvedTopic === "conservation" ? CONSERVATION_WHATSAPP_NUMBER : WHATSAPP_NUMBER);
   if (resolvedTopic === "conservation" && courseName) {
     const msg = CONSERVATION_COURSE_MESSAGES[lang](courseName);
-    return `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
+    return `https://wa.me/${resolvedNumber}?text=${encodeURIComponent(msg)}`;
   }
   // Customer-facing prefill only — no tracking/routing tags appended, since
   // wa.me text is sent by the customer and any tag would be visible to them.
   const text = PREFILLED_MESSAGES[resolvedTopic][lang];
-  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${resolvedNumber}?text=${encodeURIComponent(text)}`;
 }

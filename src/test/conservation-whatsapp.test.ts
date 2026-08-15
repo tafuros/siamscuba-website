@@ -55,3 +55,38 @@ describe("conservation WhatsApp routing", () => {
     expect(src).not.toContain(SHOP);
   });
 });
+
+// Ben's 2026-08-15 ruling: EVERY WhatsApp destination on the conservation pages
+// goes to Paul. The page's own CTAs always did, because they pass the number
+// explicitly - but the GLOBAL buttons (Navbar, FloatingWhatsApp) derive their
+// topic from the pathname and knew nothing about Paul, so they were still
+// handing conservation visitors to the shop inbox. That shipped to production
+// on 2026-08-15 and was caught by grepping the live page for the shop number.
+describe("conservation pages route every WhatsApp to Paul", () => {
+  const PAUL = "447467160704";
+
+  it.each([
+    "/conservation",
+    "/conservation/",
+    "/he/conservation",
+    "/es/conservation",
+    "/fr/conservation",
+  ])("a pathname-derived link on %s goes to Paul, not the shop", (pathname) => {
+    const href = buildWhatsAppLink({ pathname });
+    expect(href).toContain(`wa.me/${PAUL}`);
+    expect(href).not.toContain(WHATSAPP_NUMBER);
+  });
+
+  it("leaves every other page on the shop line", () => {
+    for (const pathname of ["/", "/fun-dives", "/open-water-course", "/blog"]) {
+      expect(buildWhatsAppLink({ pathname })).toContain(`wa.me/${WHATSAPP_NUMBER}`);
+    }
+  });
+
+  it("an explicit number still wins over the topic default", () => {
+    // Nothing that already passes a number should change behaviour.
+    expect(
+      buildWhatsAppLink({ topic: "conservation", number: WHATSAPP_NUMBER }),
+    ).toContain(`wa.me/${WHATSAPP_NUMBER}`);
+  });
+});
