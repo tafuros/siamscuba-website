@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MessageCircle, ArrowRight, Plus } from "lucide-react";
+import { MessageCircle, ArrowRight, Plus, Clock, MapPin, Sunset, Users } from "lucide-react";
 import type { ConservationLearn } from "@/lib/conservationCopy";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -482,6 +482,57 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* -------------------------------------------------- Friday beach clean */}
+        <section id="beach-cleanup" className="scroll-mt-24 px-6 pb-20 sm:pb-24">
+          <div className="mx-auto max-w-5xl">
+            {/*
+              The one thing on this page a visitor can join without booking
+              anything, so it gets its own block rather than a line in the land
+              notes. Facts only - Ben has not said what to bring, and inventing
+              "gloves provided" is how someone ends up standing on a beach
+              holding nothing.
+            */}
+            <div className="relative overflow-hidden rounded-2xl border border-teal-300/25 bg-gradient-to-br from-teal-300/[0.12] via-white/[0.05] to-white/[0.02] p-8 backdrop-blur-xl sm:p-10">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-teal-200/60 to-transparent"
+              />
+              {eyebrow(copy.cleanup.eyebrow)}
+              <h2 className={`${display} mt-4 text-2xl leading-tight text-white sm:text-3xl`}>
+                {copy.cleanup.title}
+              </h2>
+              <p className="mt-5 max-w-2xl leading-relaxed text-white/80">{copy.cleanup.body}</p>
+
+              <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {[
+                  { icon: Clock, text: copy.cleanup.when },
+                  { icon: MapPin, text: copy.cleanup.where },
+                  { icon: Users, text: copy.cleanup.cost },
+                  { icon: Sunset, text: copy.cleanup.stay },
+                ].map(({ icon: Icon, text }) => (
+                  <li key={text} className="flex items-start gap-3">
+                    <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-teal-300/30 bg-teal-300/10 text-teal-200">
+                      <Icon className="h-4 w-4" aria-hidden />
+                    </span>
+                    <span className="text-sm leading-relaxed text-white/85">{text}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onWhatsApp("conservation_beach_cleanup")}
+                className="mt-9 inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm font-semibold text-[#0a3a4a] transition-colors hover:bg-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden />
+                {copy.cleanup.cta}
+              </a>
             </div>
           </div>
         </section>
