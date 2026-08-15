@@ -100,6 +100,8 @@ export interface ConservationCopy {
     where: string;
     cost: string;
     stay: string;
+    /** What to bring (Ben, 15.08). Deliberately warm, not logistical. */
+    bring: string;
     cta: string;
   };
 
@@ -301,6 +303,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         "Free, open to everyone",
       stay:
         "Stay as long as you like",
+      bring:
+        "Bring yourself, good energy and a smile - that is the whole kit list.",
       cta:
         "Tell Paul you are coming",
     },
@@ -478,6 +482,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         "בחינם, פתוח לכולם",
       stay:
         "נשארים כמה שרוצים",
+      bring:
+        "תביאו את עצמכם, אנרגיה טובה וחיוך - זו כל רשימת הציוד.",
       cta:
         "עדכנו את פול שאתם מגיעים",
     },
@@ -655,6 +661,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         "Gratis, abierto a todos",
       stay:
         "Quédate el tiempo que quieras",
+      bring:
+        "Trae tus ganas, buena energía y una sonrisa - esa es toda la lista de equipo.",
       cta:
         "Avisa a Paul de que vienes",
     },
@@ -832,6 +840,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
         "Gratuit, ouvert à tous",
       stay:
         "Restez aussi longtemps que vous voulez",
+      bring:
+        "Venez comme vous êtes, avec de la bonne énergie et le sourire - c'est toute la liste.",
       cta:
         "Dites à Paul que vous venez",
     },

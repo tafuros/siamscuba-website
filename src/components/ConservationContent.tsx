@@ -319,12 +319,22 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
                 ))}
               </ul>
 
+              {/*
+                Ben's answer to "what do people bring?" was "yourselves, good
+                energy and a smile", so it reads as an invitation rather than a
+                kit list - which is why it sits here as a line and not as a
+                fifth icon in the row above.
+              */}
+              <p className="mt-7 text-[15px] italic leading-relaxed text-teal-100/90">
+                {copy.cleanup.bring}
+              </p>
+
               <a
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={onWhatsApp("conservation_beach_cleanup")}
-                className="mt-9 inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm font-semibold text-[#0a3a4a] transition-colors hover:bg-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm font-semibold text-[#0a3a4a] transition-colors hover:bg-teal-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
               >
                 <MessageCircle className="h-4 w-4" aria-hidden />
                 {copy.cleanup.cta}
