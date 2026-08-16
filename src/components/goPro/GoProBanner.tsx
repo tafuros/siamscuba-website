@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { GO_PRO_COPY, IE_SCHEDULE, formatExamDate, goProPath, monthName } from "@/data/goPro";
+import {
+  GO_PRO_COPY,
+  IE_SCHEDULE,
+  formatExamDate,
+  goProPath,
+  monthName,
+} from "@/data/goPro";
 import PadiStars from "./PadiStars";
 import { useNextExam } from "./useNextExam";
 
@@ -28,12 +34,18 @@ const GoProBanner = () => {
   // season to believe the schedule is real, and a tall list here would push the
   // courses below the fold. Anchored on the next exam so it is never a list of
   // months already gone.
-  const startIndex = next ? IE_SCHEDULE.findIndex((e) => e.month === next.entry.month) : 0;
+  const startIndex = next
+    ? IE_SCHEDULE.findIndex((e) => e.month === next.entry.month)
+    : 0;
   const from = Math.max(0, startIndex);
   const rows = IE_SCHEDULE.slice(from, from + 4);
 
   return (
-    <section id="go-pro" dir={rtl ? "rtl" : "ltr"} className="bg-background px-4 py-10 sm:py-14">
+    <section
+      id="go-pro"
+      dir={rtl ? "rtl" : "ltr"}
+      className="bg-background px-4 py-10 sm:py-14"
+    >
       <div
         className="container mx-auto max-w-6xl overflow-hidden rounded-[26px] border border-[#419EBC]/25 bg-[#04090f] p-6 shadow-[0_30px_80px_-40px_rgba(4,20,45,0.75)] sm:rounded-[34px] sm:p-10 lg:p-12"
         style={{
@@ -41,82 +53,121 @@ const GoProBanner = () => {
             "radial-gradient(680px 320px at 12% -10%, rgba(2,112,182,0.20), transparent 62%)",
         }}
       >
-        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
-          {/* ---------------------------------------------------------- copy */}
-          <div>
-            <div className="mb-3 flex items-center gap-2.5">
-              <PadiStars />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#419EBC] sm:text-[11px] sm:tracking-[0.2em]">
-                {copy.kicker}
-              </span>
-            </div>
+        <div className="flex gap-4 sm:gap-7">
+          {/* The five stars stand in a column up the leading edge, the way they
+              actually sit in the PADI lockup. They align to the TOP so they run
+              beside the lockup and headline - the credential block - rather than
+              floating against the card's centre; and they keep a tight grouped
+              rhythm, because five evenly-scattered dots stop reading as "5 star"
+              and start reading as decoration. The flex row mirrors itself in
+              Hebrew, so the rail follows the reading direction. */}
+          <PadiStars
+            orientation="vertical"
+            className="h-[13px] w-[13px] sm:h-4 sm:w-4"
+            wrapperClassName="shrink-0 self-start pt-1"
+          />
 
-            {/* Stable stem + an appended countdown once the client knows the
+          <div className="grid min-w-0 flex-1 items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+            {/* ---------------------------------------------------------- copy */}
+            <div>
+              {/* The credential itself, as PADI issues it - not a typographic
+                imitation. Its black ground was converted to transparency so it
+                composites onto the card with no rectangle edge; the artwork is
+                otherwise untouched. */}
+              <img
+                src="/go-pro/padi-5star-idc-lockup.webp"
+                alt={copy.credential}
+                width={480}
+                height={319}
+                loading="lazy"
+                decoding="async"
+                className="mb-4 w-[136px] sm:w-[172px]"
+              />
+
+              {/* Stable stem + an appended countdown once the client knows the
                 date. The prerendered HTML carries no date, so it cannot go
                 stale - see useNextExam. */}
-            <h2 className="font-display text-[26px] leading-[1.15] text-white sm:text-4xl">
-              {copy.nextIe}
-              {next && <span className="text-[#A5C5D4]"> {copy.inDays(next.daysAway)}</span>}
-            </h2>
-
-            <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-white/60 sm:text-base">
-              {copy.calendarSub}
-            </p>
-
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <Link
-                to={goProPath(language)}
-                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#0270B6] px-7 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0286d8]"
-              >
-                {copy.ctaPrimary}
-                <ArrowRight className="h-4 w-4 rtl:rotate-180" />
-              </Link>
-              <Link
-                to={goProPath(language)}
-                className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-[#419EBC]/40 px-7 text-sm font-semibold text-[#A5C5D4] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A5C5D4]/70"
-              >
-                {copy.ctaSecondary}
-              </Link>
-            </div>
-          </div>
-
-          {/* ------------------------------------------------------ calendar */}
-          <div className="overflow-hidden rounded-2xl border border-[#419EBC]/25 bg-black/40">
-            <div className="flex items-center justify-between gap-3 border-b border-[#419EBC]/25 px-4 py-3">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#419EBC]">
+              <h2 className="font-display text-[26px] leading-[1.15] text-white sm:text-4xl">
                 {copy.nextIe}
-              </span>
-              <span className="font-display text-base text-white sm:text-lg">
-                {next ? formatExamDate(next.examDate, language) : "—"}
-              </span>
+                {next && (
+                  <span className="text-[#A5C5D4]">
+                    {" "}
+                    {copy.inDays(next.daysAway)}
+                  </span>
+                )}
+              </h2>
+
+              <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-white/60 sm:text-base">
+                {copy.calendarSub}
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <Link
+                  to={goProPath(language)}
+                  className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#0270B6] px-7 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0286d8]"
+                >
+                  {copy.ctaPrimary}
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" />
+                </Link>
+                <Link
+                  to={goProPath(language)}
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-[#419EBC]/40 px-7 text-sm font-semibold text-[#A5C5D4] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A5C5D4]/70"
+                >
+                  {copy.ctaSecondary}
+                </Link>
+              </div>
             </div>
 
-            {!seasonOver ? (
-              <ul className="grid sm:grid-cols-2">
-                {rows.map((e, i) => {
-                  // No highlight until the client knows which one is next.
-                  const isNext = next != null && e.month === next.entry.month;
-                  return (
-                    <li
-                      key={e.month}
-                      className={`flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-xs tabular-nums sm:py-2.5 ${
-                        // Rows 3-4 are desktop-only: two is enough on a phone.
-                        i > 1 ? "hidden sm:flex" : ""
-                      } ${isNext ? "bg-[#0270B6]/16 text-[#A5C5D4]" : "text-white/55"}`}
-                    >
-                      <span>{monthName(e.month, language)}</span>
-                      <span className={isNext ? "font-semibold text-white" : "text-white/75"}>
-                        {copy.colIdc} {e.idcDay} · {copy.colExam} {e.examDay}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              /* Only after the last exam of the season. Never an invented date
+            {/* ------------------------------------------------------ calendar */}
+            <div className="overflow-hidden rounded-2xl border border-[#419EBC]/25 bg-black/40">
+              {/* The label + date must survive a 320px screen. Letting the
+                  label truncate (rather than push the date out of the card) is
+                  the safe failure: the headline above already says "Next
+                  Instructor Exam", so the date is the part that must not go. */}
+              <div className="flex min-w-0 items-center justify-between gap-3 border-b border-[#419EBC]/25 px-4 py-3">
+                <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-[#419EBC] sm:tracking-[0.16em]">
+                  {copy.nextIe}
+                </span>
+                <span className="shrink-0 font-display text-base text-white sm:text-lg">
+                  {next ? formatExamDate(next.examDate, language) : "—"}
+                </span>
+              </div>
+
+              {!seasonOver ? (
+                <ul className="grid sm:grid-cols-2">
+                  {rows.map((e, i) => {
+                    // No highlight until the client knows which one is next.
+                    const isNext = next != null && e.month === next.entry.month;
+                    return (
+                      <li
+                        key={e.month}
+                        className={`flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-xs tabular-nums sm:py-2.5 ${
+                          // Rows 3-4 are desktop-only: two is enough on a phone.
+                          i > 1 ? "hidden sm:flex" : ""
+                        } ${isNext ? "bg-[#0270B6]/16 text-[#A5C5D4]" : "text-white/55"}`}
+                      >
+                        <span className="shrink-0">{monthName(e.month, language)}</span>
+                        <span
+                          className={
+                            isNext
+                              ? "font-semibold text-white"
+                              : "text-white/75"
+                          }
+                        >
+                          {copy.colIdc} {e.idcDay} · {copy.colExam} {e.examDay}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                /* Only after the last exam of the season. Never an invented date
                  for next year - see nextInstructorExam. */
-              <p className="px-4 py-5 text-sm text-white/55">{copy.seasonOver}</p>
-            )}
+                <p className="px-4 py-5 text-sm text-white/55">
+                  {copy.seasonOver}
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
