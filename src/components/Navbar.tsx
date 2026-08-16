@@ -9,6 +9,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 import { openGate } from "@/utils/gateBus";
+import { hotelPath } from "@/data/hotel";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -27,6 +28,16 @@ const Navbar = () => {
     { label: t("nav_dive_sites"), href: "/dive-sites" },
     { label: t("nav_koh_tao_guide"), href: "/blog" },
     { label: t("nav_about"), href: "#about" },
+    // Siam Hotel & Hostel - the sister property. Its own mini-site at /hotel,
+    // localized to whichever language the visitor is already reading.
+    //
+    // xlOnly: the desktop row is already over-stuffed - measured at 1032px of
+    // content against 884px available at the lg breakpoint, i.e. it overflows
+    // between 1024px and ~1140px BEFORE this link existed. Showing the pill
+    // only from xl (1280px), where there is real room, keeps this addition from
+    // widening that existing squeeze. It is still in the mobile/tablet menu
+    // below, so no width loses the link entirely.
+    { label: t("nav_hotel"), href: hotelPath(language), xlOnly: true },
   ];
 
   useEffect(() => {
@@ -73,17 +84,18 @@ const Navbar = () => {
 
           {/* Desktop: all nav items in a single row to the right */}
           <div className="hidden lg:flex items-center gap-3">
-            {navLinks.map((link) =>
-              link.href.startsWith("/") ? (
-                <Link key={link.href} to={link.href} className={glassClasses}>
+            {navLinks.map((link) => {
+              const cls = link.xlOnly ? `${glassClasses} hidden xl:block` : glassClasses;
+              return link.href.startsWith("/") ? (
+                <Link key={link.href} to={link.href} className={cls}>
                   {link.label}
                 </Link>
               ) : (
-                <button key={link.href} onClick={() => handleNav(link.href)} className={glassClasses}>
+                <button key={link.href} onClick={() => handleNav(link.href)} className={cls}>
                   {link.label}
                 </button>
-              )
-            )}
+              );
+            })}
             <SiteSearch />
             {/* Reopen the welcome gate (language/destination selector) - the
                 site remembers returning visitors for 7 days, so this is their

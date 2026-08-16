@@ -37,6 +37,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   // Same cluster the HTML emits - Google drops BOTH annotations when the
   // sitemap and the page disagree, so this must stay derived, not written out.
   const CONSERVATION_ALTERNATES = hreflangAlternatesFor("/conservation");
+  const HOTEL_ALTERNATES = hreflangAlternatesFor("/hotel");
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -83,6 +84,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/he/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
     { loc: "/es/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
     { loc: "/fr/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/hotel", changefreq: "weekly", priority: 0.8, lastmod: today, alternates: HOTEL_ALTERNATES },
+    { loc: "/he/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
+    { loc: "/es/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
+    { loc: "/fr/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
     // Entry-gate split pages (multilingual single URL - all langs on one URL).
     { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
     { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },

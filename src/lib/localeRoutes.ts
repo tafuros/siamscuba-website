@@ -38,6 +38,7 @@ export const LOCALE_FAMILIES: Partial<Record<Language, string>>[] = [
     es: "/es/conservation",
     fr: "/fr/conservation",
   },
+  { en: "/hotel", he: "/he/hotel", es: "/es/hotel", fr: "/fr/hotel" },
 ];
 
 const SITE_URL = "https://siamscuba.com";

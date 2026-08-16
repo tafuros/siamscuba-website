@@ -211,6 +211,29 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/ConservationFrPage")),
         entry: "src/pages/ConservationFrPage.tsx",
       },
+      // Siam Hotel & Hostel - the property's own mini-site. Standalone chrome
+      // (its own nav + footer), full en/he/es/fr cluster declared together in
+      // LOCALE_FAMILIES so hreflang stays reciprocal.
+      {
+        path: "hotel",
+        lazy: lazyDefault(() => import("./pages/HotelPage")),
+        entry: "src/pages/HotelPage.tsx",
+      },
+      {
+        path: "he/hotel",
+        lazy: lazyDefault(() => import("./pages/HotelHePage")),
+        entry: "src/pages/HotelHePage.tsx",
+      },
+      {
+        path: "es/hotel",
+        lazy: lazyDefault(() => import("./pages/HotelEsPage")),
+        entry: "src/pages/HotelEsPage.tsx",
+      },
+      {
+        path: "fr/hotel",
+        lazy: lazyDefault(() => import("./pages/HotelFrPage")),
+        entry: "src/pages/HotelFrPage.tsx",
+      },
       {
         path: "accessibility",
         lazy: lazyDefault(() => import("./pages/Accessibility")),
