@@ -20,6 +20,16 @@ import { useNextExam } from "./useNextExam";
  * on the page instead of a structural divider slicing it in half.
  *
  * Palette sampled from the authorized PADI 5 Star IDC artwork - see gate.css.
+ *
+ * SPACING: the hero is h-screen with vertically-centred content, so it ends in
+ * a few hundred pixels of empty fade. Rather than resize the hero stage (which
+ * would drag public/hero-video.html's centring into scope), the card is pulled
+ * up into that fade with a negative margin - it is pure background colour
+ * there, so the only visible effect is the gap closing. `relative z-10` is
+ * required with it: the hero's fade layer is z-[2] and would otherwise paint
+ * over a card that merely follows it in the DOM. The pull stays clear of the
+ * "Explore" hint, which is anchored to the hero's bottom edge and therefore
+ * keeps the same clearance at every viewport height.
  */
 const GoProBanner = () => {
   const { language } = useLanguage();
@@ -44,7 +54,7 @@ const GoProBanner = () => {
     <section
       id="go-pro"
       dir={rtl ? "rtl" : "ltr"}
-      className="bg-background px-4 py-10 sm:py-14"
+      className="relative z-10 -mt-12 bg-background px-4 pb-10 pt-2 sm:-mt-16 sm:pb-14 sm:pt-4"
     >
       <div
         className="container mx-auto max-w-6xl overflow-hidden rounded-[26px] border border-[#419EBC]/25 bg-[#04090f] p-6 shadow-[0_30px_80px_-40px_rgba(4,20,45,0.75)] sm:rounded-[34px] sm:p-10 lg:p-12"

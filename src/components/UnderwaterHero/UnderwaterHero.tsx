@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/i18n/LanguageContext";
-import padi5StarBadge from "@/assets/padi-5star-badge.webp";
 
 interface UnderwaterHeroProps {
   /** When set (course landing pages), the H1 becomes "<courseHeading> in Koh Tao"
@@ -141,24 +140,6 @@ const UnderwaterHero = ({ courseHeading }: UnderwaterHeroProps) => {
         >
           {t("hero_subtitle")}
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 1.2 }}
-          className="mt-4 md:mt-6 flex flex-col items-center gap-1.5 md:gap-2"
-        >
-          <img
-            src={padi5StarBadge}
-            alt="PADI 5 Star IDC Dive Center"
-            className="h-16 sm:h-20 md:h-32 w-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)]"
-            loading="lazy"
-            decoding="async"
-          />
-          <span className="text-primary-foreground font-display text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-            5 Star IDC Dive Center
-          </span>
-        </motion.div>
 
         {/* Explore scroll hint */}
         <motion.div
