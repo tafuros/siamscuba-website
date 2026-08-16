@@ -22,6 +22,8 @@ const TONE_CLASS: Record<string, string> = {
   funDives: "gate-card--azure",
   training: "gate-card--indigo",
   conservation: "gate-card--aware",
+  // The one card that replaces the shared white frosting instead of tinting it.
+  goPro: "gate-card--pro",
 };
 
 // Desktop 2x2 placement, per Ben (2026-08-07):
@@ -38,17 +40,35 @@ const DESKTOP_ORDER: Record<string, string> = {
   training: "sm:order-2",
   beginner: "sm:order-3",
   funDives: "sm:order-4",
+  goPro: "sm:order-5",
 };
 
+/**
+ * The five red stars from the PADI 5 Star IDC lockup. Drawn rather than imaged
+ * so they stay crisp at any size, and because the supplied artwork must not be
+ * recoloured or cropped - this is our own mark in PADI's red (#E72129, sampled
+ * from artwork 64192), not a modified copy of their logo.
+ */
+const PadiStars = () => (
+  <span className="flex items-center gap-[2px]" aria-hidden="true">
+    {[0, 1, 2, 3, 4].map((i) => (
+      <svg key={i} viewBox="0 0 24 24" className="h-2 w-2 fill-[#E72129]">
+        <path d="M12 .8l3.1 7.6 8.2.6-6.3 5.3 2 8-7-4.4-7 4.4 2-8L.7 9l8.2-.6z" />
+      </svg>
+    ))}
+  </span>
+);
+
 const QuestionStep = ({ question, onPick, reducedMotion = false, artByKey, swapOnMobile = false }: QuestionStepProps) => {
-  // 4 options sit as a 2x2; 3 stay in a single row; 2 split in half.
-  const cols =
-    question.options.length === 4
-      ? "sm:grid-cols-2"
-      : question.options.length >= 3
-        ? "sm:grid-cols-3"
-        : "sm:grid-cols-2";
-  const isQuad = question.options.length === 4;
+  // 4 or 5 options sit as a 2x2 (the 5th spanning both columns beneath it);
+  // 3 stay in a single row; 2 split in half.
+  const cardGrid = question.options.length === 4 || question.options.length === 5;
+  const cols = cardGrid
+    ? "sm:grid-cols-2"
+    : question.options.length >= 3
+      ? "sm:grid-cols-3"
+      : "sm:grid-cols-2";
+  const isQuad = cardGrid;
 
   return (
     <div className={`w-full px-4 ${isQuad ? "max-w-2xl" : "max-w-3xl"}`}>
@@ -76,6 +96,8 @@ const QuestionStep = ({ question, onPick, reducedMotion = false, artByKey, swapO
             : "";
           const orderClass = isQuad ? (DESKTOP_ORDER[opt.key] ?? "") : swapClass;
           const toneClass = TONE_CLASS[opt.key] ?? "";
+          // Go Pro is a tier, not a fifth peer: full width, under the 2x2.
+          const spanClass = opt.key === "goPro" ? "sm:col-span-2" : "";
           return (
             <motion.button
               key={opt.key}
@@ -86,7 +108,7 @@ const QuestionStep = ({ question, onPick, reducedMotion = false, artByKey, swapO
               transition={{ duration: 0.45, delay: reducedMotion ? 0 : 0.12 + i * 0.08 }}
               whileHover={reducedMotion ? undefined : { y: -4 }}
               dir={sideArt ? "ltr" : undefined}
-              className={`gate-card group flex min-h-[8.5rem] items-center justify-center rounded-2xl p-6 text-center backdrop-blur-md outline-none transition-colors ${sideArt ? "gap-4" : "flex-col gap-2"} ${toneClass} ${orderClass}`}
+              className={`gate-card group flex min-h-[8.5rem] items-center justify-center rounded-2xl p-6 text-center backdrop-blur-md outline-none transition-colors ${sideArt ? "gap-4" : "flex-col gap-2"} ${toneClass} ${orderClass} ${spanClass}`}
             >
               {art && (
                 <DiverArt
@@ -96,7 +118,8 @@ const QuestionStep = ({ question, onPick, reducedMotion = false, artByKey, swapO
               )}
               <div className="flex flex-col items-center gap-1">
                 {opt.eyebrow && (
-                  <span className="gate-card-eyebrow mb-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-[0.18em]">
+                  <span className="gate-card-eyebrow mb-1 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-[0.18em]">
+                    {opt.key === "goPro" && <PadiStars />}
                     {opt.eyebrow}
                   </span>
                 )}

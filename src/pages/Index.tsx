@@ -7,6 +7,7 @@ import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
 import Navbar from "@/components/Navbar";
 import UnderwaterHero from "@/components/UnderwaterHero";
 import CoursesSection from "@/components/CoursesSection";
+import GoProBanner from "@/components/goPro/GoProBanner";
 
 import FunDivingSection from "@/components/FunDivingSection";
 import DiveSitesSection from "@/components/DiveSitesSection";
@@ -66,6 +67,11 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
       />
       <Navbar />
       <UnderwaterHero courseHeading={courseSeo?.h1} />
+      {/* Go Pro sits between the hero and the courses (Ben, 2026-08-16): the
+          hero fades into the light background, and a rounded black card landing
+          there is the first thing after it - the premium item on the page,
+          before the course list rather than an afterthought below it. */}
+      <GoProBanner />
       <CoursesSection initialCourse={courseParam} />
       <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />

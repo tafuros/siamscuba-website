@@ -120,6 +120,18 @@ info "Language-namespaced blog posts"
 expect "/es/blog/curso-buceo-koh-tao"               200
 expect "/es/blog/divemaster-koh-tao-padi-espanol"   200
 
+info "Hotel mini-site - all four locales must resolve"
+expect "/hotel"                                     200 "Siam Hotel"
+expect "/he/hotel"                                  200
+expect "/es/hotel"                                  200
+expect "/fr/hotel"                                  200
+
+info "Go Pro - all four locales must resolve"
+expect "/go-pro"                                    200 "PADI Instructor"
+expect "/he/go-pro"                                 200
+expect "/es/go-pro"                                 200
+expect "/fr/go-pro"                                 200
+
 info "Critical analytics tags must survive the build"
 expect "/"                                          200 "GTM-TN3SM66Q"
 expect "/"                                          200 "AW-18357382437"

@@ -52,6 +52,24 @@ const SkipLink = () => {
   );
 };
 
+/**
+ * Nemo is the DIVE shop's assistant - its knowledge base is courses, boats and
+ * dive sites. On the hotel mini-site (a different brand, with its own WhatsApp
+ * CTA on every card) the bubble pitches diving at someone who came for a bed,
+ * so it stays off there. Delete this gate if Nemo ever learns the rooms.
+ */
+const NEMO_HIDDEN_PREFIXES = ["/hotel", "/he/hotel", "/es/hotel", "/fr/hotel"];
+
+const ChatWidget = () => {
+  const { pathname } = useLocation();
+  if (NEMO_HIDDEN_PREFIXES.includes(pathname.replace(/\/$/, ""))) return null;
+  return (
+    <Suspense fallback={null}>
+      <NemoChat />
+    </Suspense>
+  );
+};
+
 const PageFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-ocean-deep">
     <div className="w-8 h-8 border-2 border-ocean-light/30 border-t-ocean-light rounded-full animate-spin" />
@@ -79,9 +97,7 @@ const App = () => (
             <EntryGate />
           </Suspense>
         )}
-        <Suspense fallback={null}>
-          <NemoChat />
-        </Suspense>
+        <ChatWidget />
       </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
