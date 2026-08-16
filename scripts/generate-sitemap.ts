@@ -38,6 +38,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   // sitemap and the page disagree, so this must stay derived, not written out.
   const CONSERVATION_ALTERNATES = hreflangAlternatesFor("/conservation");
   const HOTEL_ALTERNATES = hreflangAlternatesFor("/hotel");
+  const GO_PRO_ALTERNATES = hreflangAlternatesFor("/go-pro");
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -88,6 +89,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/he/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
     { loc: "/es/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
     { loc: "/fr/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
+    { loc: "/go-pro", changefreq: "monthly", priority: 0.9, lastmod: today, alternates: GO_PRO_ALTERNATES },
+    { loc: "/he/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },
+    { loc: "/es/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },
+    { loc: "/fr/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },
     // Entry-gate split pages (multilingual single URL - all langs on one URL).
     { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
     { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },

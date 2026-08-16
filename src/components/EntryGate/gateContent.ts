@@ -1,4 +1,5 @@
 import type { Language } from "@/i18n/translations";
+import { GO_PRO_COPY } from "@/data/goPro";
 
 // All copy for the entry-gate flow, keyed by the site's four languages.
 // The WELCOME headline is the brand line and is rendered language-neutral
@@ -18,7 +19,7 @@ import type { Language } from "@/i18n/translations";
 // unchanged, so historical GA4 data still lines up.
 
 /** What the visitor is here to do - the first real question. */
-export type LevelKey = "beginner" | "funDives" | "training" | "conservation";
+export type LevelKey = "beginner" | "funDives" | "training" | "conservation" | "goPro";
 /** Where they want to do it - only asked when it actually changes the answer. */
 export type LocationKey = "kohTao" | "kohPhangan" | "similan";
 
@@ -88,6 +89,12 @@ export const gateContent: Record<Language, GateCopy> = {
           sub: "Conservation diving & PADI AWARE",
           eyebrow: "PADI AWARE",
         },
+        {
+          key: "goPro",
+          label: GO_PRO_COPY.en.gateLabel,
+          sub: GO_PRO_COPY.en.gateSub,
+          eyebrow: GO_PRO_COPY.en.kicker,
+        },
       ],
     },
     location: {
@@ -130,6 +137,12 @@ export const gateContent: Record<Language, GateCopy> = {
           label: "לשמור על מה שאוהבים",
           sub: "צלילות שימור ו-PADI AWARE",
           eyebrow: "PADI AWARE",
+        },
+        {
+          key: "goPro",
+          label: GO_PRO_COPY.he.gateLabel,
+          sub: GO_PRO_COPY.he.gateSub,
+          eyebrow: GO_PRO_COPY.he.kicker,
         },
       ],
     },
@@ -174,6 +187,12 @@ export const gateContent: Record<Language, GateCopy> = {
           sub: "Buceo de conservación y PADI AWARE",
           eyebrow: "PADI AWARE",
         },
+        {
+          key: "goPro",
+          label: GO_PRO_COPY.es.gateLabel,
+          sub: GO_PRO_COPY.es.gateSub,
+          eyebrow: GO_PRO_COPY.es.kicker,
+        },
       ],
     },
     location: {
@@ -216,6 +235,12 @@ export const gateContent: Record<Language, GateCopy> = {
           label: "Protéger ce que vous aimez",
           sub: "Plongée de conservation et PADI AWARE",
           eyebrow: "PADI AWARE",
+        },
+        {
+          key: "goPro",
+          label: GO_PRO_COPY.fr.gateLabel,
+          sub: GO_PRO_COPY.fr.gateSub,
+          eyebrow: GO_PRO_COPY.fr.kicker,
         },
       ],
     },

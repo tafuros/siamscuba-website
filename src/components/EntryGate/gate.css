@@ -297,6 +297,52 @@
   box-shadow: 0 10px 26px rgba(0,30,60,.28), 0 0 30px -6px rgba(52,211,153,.6);
 }
 
+/* ---- the Go Pro tier (2026-08-16) --------------------------------------
+   Every other card is the same white frosting at a different temperature.
+   This one is a DIFFERENT MATERIAL: it replaces the frosting with the near-black
+   of the PADI 5 Star IDC artwork, so it reads as a tier above the 2x2 rather
+   than a fifth colour in the family.
+
+   Every value here is sampled from the authorized artwork (product 64192):
+     #030409 ground · #0270B6 globe blue · #E72129 stars · #419EBC/#A5C5D4 IDC cyan
+   The cyan matters - it is close enough to the gate's existing turquoise that
+   the card belongs to the screen it lands on, while the black does the work of
+   saying "this is the professional route".
+
+   Because it overrides `background` (not just --gate-tint), it also has to
+   restate its own border and shadow - the shared .gate-card values assume a
+   light frosting behind them.
+------------------------------------------------------------------------- */
+.gate-card--pro {
+  --gate-tint: none;
+  --gate-pill-fg: #A5C5D4;
+  --gate-pill-bg: rgba(65,158,188,.14);
+  --gate-pill-border: rgba(65,158,188,.36);
+  --gate-pill-bg-hover: rgba(65,158,188,.26);
+  --gate-pill-border-hover: rgba(165,197,212,.62);
+  border-color: rgba(65,158,188,.36);
+  background: linear-gradient(158deg, rgba(3,4,9,.86) 0%, rgba(3,4,9,.68) 100%);
+  box-shadow: 0 12px 38px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.09);
+}
+.gate-card--pro:hover, .gate-card--pro:focus-visible {
+  border-color: rgba(165,197,212,.62);
+  background: linear-gradient(158deg, rgba(3,4,9,.92) 0%, rgba(3,4,9,.76) 100%);
+  box-shadow: 0 16px 44px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.14);
+}
+/* The cyan hairline across the top edge - the one decorative flourish, and the
+   same gradient as "INSTRUCTOR DEVELOPMENT CENTER" in the lockup. */
+.gate-card--pro::after {
+  content: "";
+  position: absolute;
+  left: 14%; right: 14%; top: 0;
+  height: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #419EBC, #A5C5D4, #419EBC, transparent);
+  opacity: .85;
+}
+.gate-card--pro:hover::after, .gate-card--pro:focus-visible::after { opacity: 1; }
+
 /* The category pill above each card's label (PADI AWARE, PADI COURSES, ...).
    Set as type rather than an image: crisp at any density, and no asset request
    from inside the lazy gate chunk. Colour comes from the card's own tone via

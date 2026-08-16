@@ -211,6 +211,29 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/ConservationFrPage")),
         entry: "src/pages/ConservationFrPage.tsx",
       },
+      // Go Pro (Divemaster + IDC) - destination of the entry gate's fifth card
+      // and the homepage band. Full en/he/es/fr cluster, declared together in
+      // LOCALE_FAMILIES so hreflang stays reciprocal.
+      {
+        path: "go-pro",
+        lazy: lazyDefault(() => import("./pages/GoProPage")),
+        entry: "src/pages/GoProPage.tsx",
+      },
+      {
+        path: "he/go-pro",
+        lazy: lazyDefault(() => import("./pages/GoProHePage")),
+        entry: "src/pages/GoProHePage.tsx",
+      },
+      {
+        path: "es/go-pro",
+        lazy: lazyDefault(() => import("./pages/GoProEsPage")),
+        entry: "src/pages/GoProEsPage.tsx",
+      },
+      {
+        path: "fr/go-pro",
+        lazy: lazyDefault(() => import("./pages/GoProFrPage")),
+        entry: "src/pages/GoProFrPage.tsx",
+      },
       // Siam Hotel & Hostel - the property's own mini-site. Standalone chrome
       // (its own nav + footer), full en/he/es/fr cluster declared together in
       // LOCALE_FAMILIES so hreflang stays reciprocal.

@@ -28,6 +28,8 @@ const FUN_DIVES_LANGS: readonly Language[] = ["es", "he", "fr"];
 const SAIL_ROCK_LANGS: readonly Language[] = ["es", "he"];
 // All three twins shipped 2026-08-07, so every gate language routes to its own.
 const CONSERVATION_LANGS: readonly Language[] = ["he", "es", "fr"];
+// /go-pro shipped with all four twins, same as conservation.
+const GO_PRO_LANGS: readonly Language[] = ["he", "es", "fr"];
 
 /**
  * level (+ location) -> where the visitor lands.
@@ -51,6 +53,12 @@ export function resolveAction(
   location: LocationKey | null,
   lang: Language,
 ): GateAction {
+  // Go Pro: like conservation, an intent rather than a level - the answer does
+  // not vary by island, so it never reaches the location question.
+  if (level === "goPro") {
+    return { type: "navigate", path: localized("/go-pro", lang, GO_PRO_LANGS) };
+  }
+
   // Conservation: one destination, no location question, all languages.
   if (level === "conservation") {
     return { type: "navigate", path: localized("/conservation", lang, CONSERVATION_LANGS) };

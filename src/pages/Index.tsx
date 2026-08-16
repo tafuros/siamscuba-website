@@ -7,6 +7,7 @@ import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
 import Navbar from "@/components/Navbar";
 import UnderwaterHero from "@/components/UnderwaterHero";
 import CoursesSection from "@/components/CoursesSection";
+import GoProBanner from "@/components/goPro/GoProBanner";
 
 import FunDivingSection from "@/components/FunDivingSection";
 import DiveSitesSection from "@/components/DiveSitesSection";
@@ -67,6 +68,10 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
       <Navbar />
       <UnderwaterHero courseHeading={courseSeo?.h1} />
       <CoursesSection initialCourse={courseParam} />
+      {/* Go Pro sits directly under the course list on purpose: it is the rung
+          above everything in that carousel, so it reads as "and then what?"
+          rather than as another course competing inside it. */}
+      <GoProBanner />
       <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />
       <DiveSitesSection />
