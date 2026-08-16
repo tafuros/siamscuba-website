@@ -67,11 +67,12 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
       />
       <Navbar />
       <UnderwaterHero courseHeading={courseSeo?.h1} />
-      <CoursesSection initialCourse={courseParam} />
-      {/* Go Pro sits directly under the course list on purpose: it is the rung
-          above everything in that carousel, so it reads as "and then what?"
-          rather than as another course competing inside it. */}
+      {/* Go Pro sits between the hero and the courses (Ben, 2026-08-16): the
+          hero fades into the light background, and a rounded black card landing
+          there is the first thing after it - the premium item on the page,
+          before the course list rather than an afterthought below it. */}
       <GoProBanner />
+      <CoursesSection initialCourse={courseParam} />
       <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
       <FunDivingSection />
       <DiveSitesSection />
