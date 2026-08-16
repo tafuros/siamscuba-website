@@ -27,7 +27,10 @@ import { useNextExam } from "./useNextExam";
  * up into that fade with a negative margin - it is pure background colour
  * there, so the only visible effect is the gap closing. `relative z-10` is
  * required with it: the hero's fade layer is z-[2] and would otherwise paint
- * over a card that merely follows it in the DOM. The pull stays clear of the
+ * over a card that merely follows it in the DOM. The section deliberately sets
+ * NO background of its own: body already carries bg-background, and a solid
+ * fill here would cut a hard horizontal line across the hero's fade at exactly
+ * the point the negative margin starts. The pull stays clear of the
  * "Explore" hint, which is anchored to the hero's bottom edge and therefore
  * keeps the same clearance at every viewport height.
  */
@@ -54,7 +57,7 @@ const GoProBanner = () => {
     <section
       id="go-pro"
       dir={rtl ? "rtl" : "ltr"}
-      className="relative z-10 -mt-12 bg-background px-4 pb-10 pt-2 sm:-mt-16 sm:pb-14 sm:pt-4"
+      className="relative z-10 -mt-12 px-4 pb-10 pt-2 sm:-mt-16 sm:pb-14 sm:pt-4"
     >
       <div
         className="container mx-auto max-w-6xl overflow-hidden rounded-[26px] border border-[#419EBC]/25 bg-[#04090f] p-6 shadow-[0_30px_80px_-40px_rgba(4,20,45,0.75)] sm:rounded-[34px] sm:p-10 lg:p-12"
