@@ -368,7 +368,14 @@ const EntryGate = () => {
       {/* Hidden while leaving so only the video backdrop covers the route change
           to a lander - the question cards don't linger over the new page. */}
       {!leaving && (
-      <div className="relative z-[1] flex min-h-[100dvh] w-full flex-col">
+      <div className="relative z-[1] flex h-[100dvh] w-full flex-col">
+        {/* h-[100dvh], NOT min-h-[100dvh].
+            `min-h` lets this column grow past the viewport, and then the flex-1
+            scroll area below grows with it instead of overflowing - so it never
+            becomes scrollable, and the content simply runs past the bottom of
+            the `fixed inset-0 overflow-hidden` root, which clips it with no way
+            to reach it. A definite height is what forces the scroll area to
+            bound its content and actually scroll. */}
         {/* Top bar - Back from the language step onward, kept out of the content
             flow so it never overlaps the cards. */}
         <div className="relative flex shrink-0 items-center justify-center px-5 pt-4 pb-1">
@@ -405,7 +412,12 @@ const EntryGate = () => {
             height of the old single row of three), and at 32vh the whole grid was
             pushed below the fold - the visitor landed on an empty ocean and had to
             scroll to discover there were any answers at all. */}
-        {/* SAFE CENTERING, not `items-center`.
+        {/* `min-h-0` is load-bearing. A flex item defaults to min-height:auto,
+            which refuses to shrink below its content - so `flex-1` +
+            `overflow-y-auto` sizes itself to the content and never scrolls. It
+            has to be allowed to shrink before overflow means anything.
+
+            SAFE CENTERING, not `items-center`.
             `items-center` + `overflow-y-auto` is the classic flexbox trap: when
             the step is taller than the box, align-items centres the child so it
             spills past BOTH edges, and a scroll container cannot scroll above
@@ -417,7 +429,7 @@ const EntryGate = () => {
             to 0 and every pixel stays scrollable. Auto cross-axis margins also
             win over align-self, so items-start here is just a safe base. */}
         <div
-          className={`gate-scroll flex flex-1 items-start justify-center overflow-y-auto overscroll-contain px-2 [&>*]:my-auto ${
+          className={`gate-scroll flex min-h-0 flex-1 items-start justify-center overflow-y-auto overscroll-contain px-2 [&>*]:my-auto ${
             state.step === "level"
               ? "pb-[calc(8vh+env(safe-area-inset-bottom))] pt-4"
               : "pb-[calc(32vh+env(safe-area-inset-bottom))]"
