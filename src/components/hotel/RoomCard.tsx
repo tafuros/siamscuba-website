@@ -115,7 +115,7 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
         <p className="text-sm leading-relaxed text-[#072a45]/70">{room.blurb[lang]}</p>
 
         <ul className="flex flex-wrap gap-1.5">
-          {room.amenities.slice(0, 5).map((key) => (
+          {room.amenities.map((key) => (
             <li
               key={key}
               className="rounded-full border border-white/70 bg-white/60 px-2.5 py-1 text-[11px] font-medium text-[#0b4a8f] backdrop-blur-sm"
@@ -136,7 +136,7 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
                 <span className="font-display text-2xl text-[#072a45]">
                   ฿{room.pricePerNight.toLocaleString()}
                   <span className="ms-1 font-body text-xs font-normal text-[#072a45]/50">
-                    {copy.perNight}
+                    {room.priceUnit === "bed" ? copy.perBed : copy.perNight}
                   </span>
                 </span>
               </>
