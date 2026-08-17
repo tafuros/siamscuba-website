@@ -68,6 +68,16 @@
   .god-ray-sun { animation: none !important; }
 }
 
+/* The step scroller. The gate is a `position: fixed` overlay and the body is
+   locked while it is open, so this element is the ONLY thing that may scroll.
+   iOS needs to be told that explicitly: without `touch-action: pan-y` a drag
+   inside a locked fixed overlay is frequently swallowed as a page-pan gesture
+   and the inner box never scrolls, which strands anything below the fold. */
+.gate-scroll {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Brand logo - large and fully opaque on the welcome step, then shrinks and
    dims to a quiet watermark at the top once a language is chosen.
    HEIGHT-driven, not width-driven: the artwork is the portrait lockup (mark +

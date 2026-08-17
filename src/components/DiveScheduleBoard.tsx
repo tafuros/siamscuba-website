@@ -215,6 +215,12 @@ const DiveScheduleBoard = () => {
     setTodayKey(names[new Date().getDay()]);
   }, []);
 
+  // The selected slot id is the single source of truth; the mobile day picker
+  // reads its day back out of it rather than keeping a second piece of state
+  // that could drift out of sync with the open panel.
+  const activeDay =
+    weeklySchedule.find((d) => selected.startsWith(`${d.key}-`)) ?? weeklySchedule[0];
+
   return (
     <div className="overflow-hidden rounded-3xl bg-gradient-to-b from-[#0f3163] to-[#071a33] p-4 shadow-2xl sm:p-6 lg:p-8">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
@@ -222,16 +228,74 @@ const DiveScheduleBoard = () => {
           <h3 className="font-display text-xl font-bold text-white sm:text-2xl">This week on the boat</h3>
           <p className="mt-1 flex items-center gap-1.5 text-xs text-sky-200/80">
             <Waves className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            Tap any trip for times, dive sites, what's included and the price
+            <span className="lg:hidden">Pick a day, then tap a trip for times, sites, price and booking</span>
+            <span className="hidden lg:inline">Tap any trip for times, dive sites, what's included and the price</span>
           </p>
         </div>
         <p className="text-xs text-white/50">{SCHEDULE_NOTES.season}</p>
       </div>
 
-      {/* Horizontal strip on small screens, seven true columns from lg up. */}
-      <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-7 lg:overflow-visible lg:px-0">
+      {/* MOBILE: an explicit day picker, not a swipe strip.
+          The first build put the week in a horizontally scrolling row. It read
+          as a single column with dead space next to it - nothing told the
+          visitor the other six days were off-screen, so nobody would swipe.
+          Seven short labels fit across the narrowest phone as a 7-up grid, so
+          the whole week is visible and tappable with no hidden gesture. */}
+      <div className="lg:hidden">
+        <div className="grid grid-cols-7 gap-1">
+          {weeklySchedule.map((day) => {
+            const isActiveDay = activeDay.key === day.key;
+            return (
+              <button
+                key={day.key}
+                type="button"
+                onClick={() => setSelected(slotKey(day.key, 0))}
+                aria-pressed={isActiveDay}
+                className={[
+                  "flex flex-col items-center rounded-lg px-0.5 py-2 text-[11px] font-bold transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70",
+                  isActiveDay
+                    ? "bg-sky-400/90 text-[#06213f]"
+                    : "bg-white/[0.07] text-white/70 hover:bg-white/[0.14]",
+                ].join(" ")}
+              >
+                <span>{day.short}</span>
+                <span
+                  aria-hidden="true"
+                  className={[
+                    "mt-1 h-1 w-1 rounded-full",
+                    todayKey === day.key ? (isActiveDay ? "bg-[#06213f]" : "bg-amber-300") : "bg-transparent",
+                  ].join(" ")}
+                />
+              </button>
+            );
+          })}
+        </div>
+
+        <p className="mt-3 text-center font-display text-base font-bold text-white">
+          {activeDay.label}
+          {todayKey === activeDay.key && <span className="ml-1.5 text-amber-300">· Today</span>}
+        </p>
+
+        <div className="mt-2 flex flex-col gap-2">
+          {activeDay.slots.map((slot, i) => (
+            <SlotButton
+              key={slotKey(activeDay.key, i)}
+              day={activeDay}
+              slot={slot}
+              index={i}
+              active={selected === slotKey(activeDay.key, i)}
+              isToday={todayKey === activeDay.key}
+              onSelect={() => setSelected(slotKey(activeDay.key, i))}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* DESKTOP: the whole week as seven real columns. */}
+      <div className="hidden lg:grid lg:grid-cols-7 lg:gap-3">
         {weeklySchedule.map((day) => (
-          <div key={day.key} className="w-[68vw] shrink-0 snap-start sm:w-[44vw] md:w-[30vw] lg:w-auto">
+          <div key={day.key}>
             <p className="mb-2 text-center font-display text-sm font-bold text-white">
               {day.label}
               {todayKey === day.key && <span className="ml-1 text-amber-300" aria-label="today">•</span>}

@@ -405,9 +405,22 @@ const EntryGate = () => {
             height of the old single row of three), and at 32vh the whole grid was
             pushed below the fold - the visitor landed on an empty ocean and had to
             scroll to discover there were any answers at all. */}
+        {/* SAFE CENTERING, not `items-center`.
+            `items-center` + `overflow-y-auto` is the classic flexbox trap: when
+            the step is taller than the box, align-items centres the child so it
+            spills past BOTH edges, and a scroll container cannot scroll above
+            its own origin - so the overflow is unreachable. That is what put the
+            5th level card (GO PRO / IDC + DM) out of reach on phones once the
+            2x2 grid became five stacked cards.
+            Auto margins centre only the FREE space: when the child fits they
+            behave exactly like items-center, and when it doesn't they collapse
+            to 0 and every pixel stays scrollable. Auto cross-axis margins also
+            win over align-self, so items-start here is just a safe base. */}
         <div
-          className={`flex flex-1 items-center justify-center overflow-y-auto px-2 ${
-            state.step === "level" ? "pb-[8vh] pt-4" : "pb-[32vh]"
+          className={`gate-scroll flex flex-1 items-start justify-center overflow-y-auto overscroll-contain px-2 [&>*]:my-auto ${
+            state.step === "level"
+              ? "pb-[calc(8vh+env(safe-area-inset-bottom))] pt-4"
+              : "pb-[calc(32vh+env(safe-area-inset-bottom))]"
           }`}
         >
           {/* NO AnimatePresence here, deliberately. With mode="wait" (framer 12)
