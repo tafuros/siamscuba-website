@@ -3,7 +3,7 @@ import { Compass, Clock, Users, Share2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import DiveSchedule from "./DiveSchedule";
+import DiveScheduleBoard from "./DiveScheduleBoard";
 import AmbientReviews from "@/components/AmbientReviews";
 
 const FunDivingSection = () => {
@@ -64,11 +64,11 @@ const FunDivingSection = () => {
           </div>
         </div>
 
-        {/* Dive Schedule Timetable */}
-        <DiveSchedule />
+        {/* Weekly board - the schedule, prices and inclusions live here */}
+        <DiveScheduleBoard />
 
         <p className="text-center text-xs text-muted-foreground mt-6">
-          ✳️ For certified divers only · Schedules may vary depending on weather conditions
+          ✳️ For certified divers · Snorkellers are welcome on the boat
         </p>
       </div>
     </section>

@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 
 // Sail Rock departs on a fixed 3-day cadence. This anchor + step is the single
-// source of truth for every "upcoming departures" UI on the site (DiveSchedule
-// strip, Sail Rock lander) so the dates never drift between surfaces.
+// source of truth for every "upcoming departures" UI on the site (currently the
+// Sail Rock lander) so the dates never drift between surfaces.
+//
+// The homepage board does NOT use this. Its Sail Rock slots sit on fixed
+// weekdays because that is how the boat is scheduled; this cadence stays for
+// the lander, and both are subject to weather - see SCHEDULE_NOTES.weather.
 //
 // HYDRATION CONTRACT: all departure Dates are UTC midnights and all math /
 // formatting is done in UTC. The first render (SSG *and* client hydration)

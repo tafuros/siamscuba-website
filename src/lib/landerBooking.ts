@@ -32,7 +32,7 @@ export const WIZARD_PRODUCT: Partial<Record<Offer, string>> = {
 };
 
 /**
- * The homepage trip cards (components/DiveSchedule.tsx). Same silent-failure
+ * The homepage trip board (components/DiveScheduleBoard.tsx). Same silent-failure
  * risk as WIZARD_PRODUCT above - the wizard resolves these with
  * `courses.find(c => c.code === productParam)` and does nothing on a miss - so
  * they live here to be covered by the same guard test.
