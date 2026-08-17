@@ -4,6 +4,7 @@ import Seo from "@/components/Seo";
 import { COURSE_SEO } from "@/lib/courseSeoData";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
 import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
+import { buildScheduleJsonLd } from "@/data/diveScheduleBoard";
 import Navbar from "@/components/Navbar";
 import UnderwaterHero from "@/components/UnderwaterHero";
 import CoursesSection from "@/components/CoursesSection";
@@ -55,6 +56,10 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
         // point hreflang at pages that never point back, which is exactly the
         // non-reciprocal annotation Google throws away.
         hreflangAlternates={courseOverride ? undefined : HOME_HREFLANG_ALTERNATES}
+        // Trip offers only on the bare homepage. /:courseSlug renders this same
+        // component, and repeating the board's ItemList on every course URL
+        // would duplicate the same six offers across a dozen pages.
+        jsonLd={courseOverride ? undefined : buildScheduleJsonLd()}
         breadcrumbs={
           courseOverride
             ? [

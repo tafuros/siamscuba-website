@@ -14,6 +14,7 @@ import { renderInline, SectionLinks, SectionTable } from "@/components/BlogRichT
 import { blogPosts, blogPostPath } from "@/data/blogPosts";
 import { findDiveSite } from "@/data/diveSites";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { ORG_LOGO } from "@/lib/brand";
 
 const categoryColors: Record<string, string> = {
   Diving: "bg-ocean-deep text-primary-foreground",
@@ -143,12 +144,7 @@ const BlogPostPage = () => {
       "@id": "https://siamscuba.com/#organization",
       name: "Siam Scuba",
       url: "https://siamscuba.com",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://siamscuba.com/favicon.png",
-        width: 512,
-        height: 512,
-      },
+      logo: ORG_LOGO,
     },
     mainEntityOfPage: {
       "@type": "WebPage",
