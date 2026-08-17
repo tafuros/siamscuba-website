@@ -487,7 +487,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "Early starts, and reading the island off the map",
         paragraphs: [
-          "Our boat mornings start early - club arrival time is 06:00. Booking the night before, or scheduling your return trip at the same time as the outbound one, saves a lot of standing around in the dark hoping something drives past.",
+          "Our boat mornings start early - club arrival time is 05:50. Booking the night before, or scheduling your return trip at the same time as the outbound one, saves a lot of standing around in the dark hoping something drives past.",
           "The app also carries the island's hand-painted dive map - the one that hangs on dive-shop walls here. Every dive site, beach and viewpoint on it is tappable, so you can read what a site is like and book a fixed-fare ride to the bay it leaves from:",
         ],
         image: "/blog/koh-tao-hand-painted-dive-map.webp",
@@ -504,7 +504,7 @@ export const blogPosts: BlogPost[] = [
         heading: "Where the map actually takes you",
         paragraphs: [
           "If you are new to Koh Tao, the map is the fastest way to understand why the island punches so far above its size. The pinnacles off the north-west - Chumphon, Green Rock, White Rock - are the deep, big-fish sites. The [HTMS Sattakut wreck](/dive-sites) sits in easy recreational depth. [Koh Nang Yuan](/blog/best-snorkeling-spots-non-divers) is the three-islands-and-a-sandbar postcard everyone arrives having already seen.",
-          "Most of those you reach by dive boat with us rather than by taxi. The taxi part matters for everything else - getting to the pier for a 06:00 start, getting to Tanote or Hin Wong on a day off, getting home from Sairee at 01:00 without haggling.",
+          "Most of those you reach by dive boat with us rather than by taxi. The taxi part matters for everything else - getting to the pier for a 05:50 start, getting to Tanote or Hin Wong on a day off, getting home from Sairee at 01:00 without haggling.",
           "Not booked your diving yet? Our [PADI courses](/#courses) run from first breath underwater through to instructor, and if you are already certified you can [book a fun dive](/fun-dive-booking) with us directly.",
         ],
       },

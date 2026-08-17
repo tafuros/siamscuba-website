@@ -462,7 +462,7 @@ const OWD_EN: LanderCopy = {
   schedule: [
     { time: "Day 1", label: "09:00 theory at the club · 11:00 pool practice" },
     { time: "Day 2", label: "Theory, then boat - sea drills and a dive to 12m, second dive at 14:00, back by 16:00" },
-    { time: "Day 3", label: "06:00 dawn dive to 18m · 10:00 final dive · certified by 11:00 🎉" },
+    { time: "Day 3", label: "05:50 dawn dive to 18m · 10:00 final dive · certified by 11:00 🎉" },
   ],
   ctaStripHeadline: "Start your course this week",
   ctaStripSubhead: "Send your travel dates on WhatsApp and we'll find a start day that fits.",
@@ -559,7 +559,7 @@ const OWD_ES: LanderCopy = {
   schedule: [
     { time: "Día 1", label: "09:00 teoría en el club · 11:00 prácticas en piscina" },
     { time: "Día 2", label: "Teoría y barco - prácticas en el mar e inmersión a 12m, segunda inmersión a las 14:00, vuelta a las 16:00" },
-    { time: "Día 3", label: "06:00 inmersión al amanecer a 18m · 10:00 última inmersión · certificado a las 11:00 🎉" },
+    { time: "Día 3", label: "05:50 inmersión al amanecer a 18m · 10:00 última inmersión · certificado a las 11:00 🎉" },
   ],
   ctaStripHeadline: "Empieza tu curso esta semana",
   ctaStripSubhead: "Envía tus fechas por WhatsApp y te buscamos un día de inicio que encaje.",
@@ -656,7 +656,7 @@ const OWD_HE: LanderCopy = {
   schedule: [
     { time: "יום 1", label: "09:00 תיאוריה במועדון · 11:00 תרגול בבריכה" },
     { time: "יום 2", label: "תיאוריה, ואז סירה - תרגול בים וצלילה עד 12 מ׳, צלילה שנייה ב-14:00, חזרה ב-16:00" },
-    { time: "יום 3", label: "06:00 צלילת שחר עד 18 מ׳ · 10:00 צלילה אחרונה · מוסמכים ב-11:00 🎉" },
+    { time: "יום 3", label: "05:50 צלילת שחר עד 18 מ׳ · 10:00 צלילה אחרונה · מוסמכים ב-11:00 🎉" },
   ],
   ctaStripHeadline: "התחילו את הקורס השבוע",
   ctaStripSubhead: "שלחו תאריכי טיול ב-WhatsApp ונמצא יום פתיחה שמתאים.",
@@ -753,7 +753,7 @@ const AOW_EN: LanderCopy = {
     "It's 100% practical - no exams, no classroom theory. Five dives across a day and a half, including a 30m deep dive and a night dive on the reef.",
   schedule: [
     { time: "Day 1", label: "10:00 meet at the club · 11:00 buoyancy dive · 14:00 navigation dive · 17:30 night dive" },
-    { time: "Day 2", label: "06:00 early boat for deep dive (30m) + wreck dive · 10:00 final dive" },
+    { time: "Day 2", label: "05:50 early boat for deep dive (30m) + wreck dive · 10:00 final dive" },
     { time: "Day 2", label: "11:30 back to the club - certified & celebrating 🎉" },
   ],
   ctaStripHeadline: "Start your Advanced this week",
@@ -845,7 +845,7 @@ const AOW_ES: LanderCopy = {
     "Es 100% práctico - sin exámenes ni teoría en aula. Cinco inmersiones en un día y medio, incluyendo una profunda a 30m y una nocturna en el arrecife.",
   schedule: [
     { time: "Día 1", label: "10:00 encuentro en el club · 11:00 inmersión de flotabilidad · 14:00 inmersión de navegación · 17:30 inmersión nocturna" },
-    { time: "Día 2", label: "06:00 barco temprano para inmersión profunda (30m) + pecio · 10:00 última inmersión" },
+    { time: "Día 2", label: "05:50 barco temprano para inmersión profunda (30m) + pecio · 10:00 última inmersión" },
     { time: "Día 2", label: "11:30 vuelta al club - certificado y celebrando 🎉" },
   ],
   ctaStripHeadline: "Empieza tu Advanced esta semana",
@@ -937,7 +937,7 @@ const AOW_HE: LanderCopy = {
     "זה 100% מעשי - בלי מבחנים ובלי תיאוריה בכיתה. חמש צלילות לאורך יום וחצי, כולל צלילת עומק ל-30 מטר וצלילת לילה בשונית.",
   schedule: [
     { time: "יום 1", label: "10:00 מפגש במועדון · 11:00 צלילת ציפה · 14:00 צלילת ניווט · 17:30 צלילת לילה" },
-    { time: "יום 2", label: "06:00 סירה מוקדמת לצלילת עומק (30 מ׳) + ספינה טרופה · 10:00 צלילה אחרונה" },
+    { time: "יום 2", label: "05:50 סירה מוקדמת לצלילת עומק (30 מ׳) + ספינה טרופה · 10:00 צלילה אחרונה" },
     { time: "יום 2", label: "11:30 חזרה למועדון - מוסמכים וחוגגים 🎉" },
   ],
   ctaStripHeadline: "התחילו את קורס כוכב שני השבוע",
