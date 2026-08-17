@@ -1,5 +1,6 @@
 import Seo from "@/components/Seo";
 import ConservationContent from "@/components/ConservationContent";
+import { ORG_LOGO } from "@/lib/brand";
 import {
   CONSERVATION_COPY,
   conservationUrl,
@@ -19,7 +20,7 @@ const pageSchema = {
   publisher: {
     "@type": "Organization",
     name: "Siam Scuba",
-    logo: { "@type": "ImageObject", url: "https://siamscuba.com/favicon.png" },
+    logo: ORG_LOGO,
   },
 };
 

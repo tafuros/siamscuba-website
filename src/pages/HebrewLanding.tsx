@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
 import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
+import { ORG_LOGO } from "@/lib/brand";
 
 const HEBREW_WHATSAPP_HREF = buildWhatsAppLink({ offer: "general", lang: "he" });
 
@@ -26,7 +27,7 @@ const articleSchema = {
   publisher: {
     "@type": "Organization",
     name: "Siam Scuba",
-    logo: { "@type": "ImageObject", url: "https://siamscuba.com/favicon.png" },
+    logo: ORG_LOGO,
   },
   mainEntityOfPage: { "@type": "WebPage", "@id": "https://siamscuba.com/he" },
 };
