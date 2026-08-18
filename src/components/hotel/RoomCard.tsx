@@ -7,10 +7,12 @@ import { trackWhatsAppClick } from "@/utils/tracking";
 /**
  * One room = one liquid-glass card: photos, price, book. Nothing else.
  *
- * The card has two states and picks between them from the data alone:
+ * The card has three states and picks between them from the data alone:
  * - `images` empty  -> placeholder panel ("photos coming soon")
  * - `pricePerNight` null -> "price on request" instead of a number
- * Both disappear on their own the moment src/data/hotel.ts gets real values.
+ * - `soldOut` -> "fully booked" badge, and the Book button becomes an inert
+ *   pill so guests don't open a WhatsApp inquiry for a blocked room
+ * All disappear on their own the moment src/data/hotel.ts changes.
  */
 
 interface RoomCardProps {
@@ -39,6 +41,11 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
 
       {/* Photos */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[#dceaf4]">
+        {room.soldOut && (
+          <span className="absolute start-3 top-3 z-10 rounded-full border border-white/40 bg-[#072a45]/85 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur-md">
+            {copy.fullyBooked}
+          </span>
+        )}
         {hasPhotos ? (
           <>
             {room.images.map((slug, i) => (
@@ -145,15 +152,21 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
             )}
           </div>
 
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackWhatsAppClick({ location: `hotel-room-${room.slug}`, url: waHref })}
-            className="shrink-0 rounded-full bg-[#0b4a8f] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgba(11,74,143,0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a3a6b]"
-          >
-            {copy.book}
-          </a>
+          {room.soldOut ? (
+            <span className="shrink-0 whitespace-nowrap rounded-full border border-[#072a45]/15 bg-[#072a45]/5 px-6 py-2.5 text-sm font-semibold text-[#072a45]/45">
+              {copy.fullyBooked}
+            </span>
+          ) : (
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick({ location: `hotel-room-${room.slug}`, url: waHref })}
+              className="shrink-0 rounded-full bg-[#0b4a8f] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgba(11,74,143,0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a3a6b]"
+            >
+              {copy.book}
+            </a>
+          )}
         </div>
       </div>
     </article>
