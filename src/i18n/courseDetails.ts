@@ -3,6 +3,17 @@ import type { Language } from "./translations";
 export interface CourseDetail {
   header: string;
   intro: string;
+  /** Optional "meet your instructor" block (photo + bio), e.g. Bob on the IDC. */
+  instructor?: {
+    title: string;
+    name: string;
+    role: string;
+    photo: string;
+    photoAlt: string;
+    paragraphs: string[];
+  };
+  /** Optional horizontal photo strip. Images are shared across languages; alts are translated. */
+  gallery?: { src: string; alt: string }[];
   schedule?: { time: string; description: string }[];
   itinerary?: { day: string; description: string }[];
   included?: string[];
@@ -327,6 +338,26 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     "IDC (Instructor Course)": {
       header: "🎓 IDC - Instructor Development Course",
       intro: "Our resident Course Director is Bob Murphy. He has been a CD for 19 years, he still goes fun diving, and he can answer just about any question you may have. In his time as an instructor and through his progression to CD, he has come across almost every obstacle that stands between your student and their progression through the PADI system - and he (almost) has a solution for all.",
+      instructor: {
+        title: "Meet your Course Director",
+        name: "Bob Murphy",
+        role: "PADI Course Director",
+        photo: "/idc/bob-murphy-course-director-koh-tao.webp",
+        photoAlt: "Bob Murphy, PADI Course Director at Siam Scuba, hovering in perfect trim over the sand",
+        paragraphs: [
+          "Bob Murphy is Siam Scuba's resident Course Director - and a lifelong petrol-head who loves taking motorbikes apart (breaking them, then fixing them better). That same curiosity grew into a deep passion for dive equipment: how it works, where it came from, and how to keep it running perfectly.",
+          "With more than a quarter of a century underwater and thousands of PADI courses taught, his stand-out favourite is the Instructor Development Course. Bob's IDC goes beyond the evaluation-style presentations you need to pass: he trains you for the moment that actually matters - standing in front of a genuine class of your own divers, and teaching them well.",
+          "And it doesn't end at the exam. Bob teaches most PADI specialties at instructor level, so once you're certified he'll help you expand your teaching toolbox, add specialty ratings, and start climbing the PADI career ladder early - keeping your diving life fun, varied, and thriving.",
+        ],
+      },
+      gallery: [
+        { src: "/idc/idc-classroom-bob-murphy-siam-scuba.webp", alt: "Bob Murphy teaching an IDC classroom session at Siam Scuba" },
+        { src: "/idc/idc-theory-session-koh-tao.webp", alt: "IDC candidates in a dive theory session on Koh Tao" },
+        { src: "/idc/idc-confined-water-teaching-koh-tao.webp", alt: "Instructor candidate practising teaching skills in confined water" },
+        { src: "/idc/idc-rescue-skills-practice-koh-tao.webp", alt: "Rescue skills workshop during instructor training" },
+        { src: "/idc/idc-nitrox-theory-whiteboard.webp", alt: "Nitrox theory on the whiteboard during the IDC" },
+        { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "Sidemount instructor diving over a Koh Tao reef" },
+      ],
       structure: [
         "The IDC is a 2-week program designed to finish just before monthly Instructor Examinations on Koh Tao.",
         "Prior to the IDC start date, we spend 2 short days covering dive theory refresher sessions.",
@@ -670,6 +701,26 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     "IDC (Instructor Course)": {
       header: "🎓 IDC - קורס פיתוח מדריכים",
       intro: "מנהל הקורסים שלנו הוא Bob Murphy. הוא משמש כ-Course Director כבר 19 שנה, עדיין יוצא לצלילות כיף, ויכול לענות כמעט על כל שאלה. במהלך שנותיו כמדריך ובדרכו ל-CD הוא נתקל כמעט בכל מכשול שעומד בין התלמיד שלכם להתקדמותו במערכת PADI - ויש לו (כמעט) פתרון לכולם.",
+      instructor: {
+        title: "הכירו את מנהל הקורסים",
+        name: "Bob Murphy",
+        role: "PADI Course Director",
+        photo: "/idc/bob-murphy-course-director-koh-tao.webp",
+        photoAlt: "בוב מרפי, PADI Course Director ב-Siam Scuba, מרחף בשיווי משקל מושלם מעל החול",
+        paragraphs: [
+          "בוב מרפי הוא מנהל הקורסים הקבוע של Siam Scuba - וגם חובב מנועים מושבע שאוהב לפרק אופנועים (לקלקל, ואז לתקן טוב יותר). מהסקרנות הזו צמחה אהבה אמיתית לציוד צלילה: איך הוא עובד, מאיפה הוא הגיע, ואיך לשמור עליו במצב מושלם.",
+          "אחרי יותר מרבע מאה מתחת למים ואלפי קורסים של PADI, הקורס האהוב עליו במיוחד הוא קורס המדריכים. ה-IDC של בוב הולך מעבר למצגות בסגנון מבחן שצריך כדי לעבור: הוא מכין אתכם לרגע שבאמת חשוב - לעמוד מול כיתה אמיתית של צוללים משלכם, וללמד אותם היטב.",
+          "וזה לא נגמר בבחינה. בוב מלמד את רוב ההתמחויות של PADI ברמת מדריך, כך שאחרי ההסמכה הוא יעזור לכם להרחיב את ארגז הכלים, להוסיף דירוגי התמחות ולהתחיל לטפס מוקדם בסולם הקריירה של PADI - עם חיי צלילה מהנים ומגוונים.",
+        ],
+      },
+      gallery: [
+        { src: "/idc/idc-classroom-bob-murphy-siam-scuba.webp", alt: "בוב מרפי מלמד שיעור IDC בכיתה של Siam Scuba" },
+        { src: "/idc/idc-theory-session-koh-tao.webp", alt: "מועמדי IDC בשיעור תיאוריית צלילה בקוֹ טאו" },
+        { src: "/idc/idc-confined-water-teaching-koh-tao.webp", alt: "מועמד להדרכה מתרגל מיומנויות הוראה במים מוגנים" },
+        { src: "/idc/idc-rescue-skills-practice-koh-tao.webp", alt: "סדנת מיומנויות חילוץ במהלך הכשרת מדריכים" },
+        { src: "/idc/idc-nitrox-theory-whiteboard.webp", alt: "תיאוריית נייטרוקס על הלוח במהלך ה-IDC" },
+        { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "מדריך סיידמאונט צולל מעל שונית בקוֹ טאו" },
+      ],
       structure: [
         "ה-IDC הוא תוכנית בת שבועיים שנבנתה להסתיים בדיוק לפני מבחני המדריכים החודשיים בקוֹ טאו.",
         "לפני מועד תחילת ה-IDC אנו מקדישים 2 ימים קצרים לרענון תיאוריית הצלילה.",
@@ -1013,6 +1064,26 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     "IDC (Instructor Course)": {
       header: "🎓 IDC - Curso de desarrollo de instructores",
       intro: "Nuestro Course Director residente es Bob Murphy. Lleva 19 años como CD, todavía sale a bucear por diversión y puede responder prácticamente cualquier pregunta que tengas. En su trayectoria como instructor y en su camino hasta CD se ha topado con casi todos los obstáculos que se interponen entre tu alumno y su progreso en el sistema PADI, y (casi) tiene una solución para todos.",
+      instructor: {
+        title: "Conoce a tu Course Director",
+        name: "Bob Murphy",
+        role: "PADI Course Director",
+        photo: "/idc/bob-murphy-course-director-koh-tao.webp",
+        photoAlt: "Bob Murphy, PADI Course Director de Siam Scuba, flotando en trimado perfecto sobre la arena",
+        paragraphs: [
+          "Bob Murphy es el Course Director residente de Siam Scuba - y un apasionado de los motores que disfruta desmontando motos (romperlas y luego arreglarlas mejor). Esa misma curiosidad se convirtió en una auténtica pasión por el equipo de buceo: cómo funciona, de dónde viene y cómo mantenerlo a punto.",
+          "Con más de un cuarto de siglo bajo el agua y miles de cursos PADI impartidos, su favorito indiscutible es el Instructor Development Course. El IDC de Bob va más allá de las presentaciones de estilo examen que necesitas para aprobar: te prepara para el momento que de verdad importa - estar frente a una clase real de tus propios buceadores y enseñarles bien.",
+          "Y no termina en el examen. Bob enseña la mayoría de las especialidades PADI a nivel de instructor, así que tras certificarte te ayudará a ampliar tu caja de herramientas, sumar especialidades y empezar pronto a escalar en la carrera PADI - manteniendo tu vida de buceo divertida y variada.",
+        ],
+      },
+      gallery: [
+        { src: "/idc/idc-classroom-bob-murphy-siam-scuba.webp", alt: "Bob Murphy impartiendo una sesión de aula del IDC en Siam Scuba" },
+        { src: "/idc/idc-theory-session-koh-tao.webp", alt: "Candidatos del IDC en una sesión de teoría de buceo en Koh Tao" },
+        { src: "/idc/idc-confined-water-teaching-koh-tao.webp", alt: "Candidato a instructor practicando habilidades de enseñanza en aguas confinadas" },
+        { src: "/idc/idc-rescue-skills-practice-koh-tao.webp", alt: "Taller de habilidades de rescate durante la formación de instructores" },
+        { src: "/idc/idc-nitrox-theory-whiteboard.webp", alt: "Teoría de Nitrox en la pizarra durante el IDC" },
+        { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "Instructor de sidemount buceando sobre un arrecife de Koh Tao" },
+      ],
       structure: [
         "El IDC es un programa de 2 semanas diseñado para terminar justo antes de los exámenes mensuales de instructor en Koh Tao.",
         "Antes de la fecha de inicio del IDC, dedicamos 2 días cortos a sesiones de repaso de teoría de buceo.",
@@ -1356,6 +1427,26 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
     "IDC (Instructor Course)": {
       header: "🎓 IDC - Cours de développement d'instructeur",
       intro: "Notre Course Director résident est Bob Murphy. CD depuis 19 ans, il plonge encore pour le plaisir et peut répondre à presque toutes vos questions. Au cours de sa carrière d'instructeur et de sa progression jusqu'à CD, il a rencontré presque tous les obstacles qui se dressent entre votre élève et sa progression dans le système PADI - et il a (presque) une solution pour chacun.",
+      instructor: {
+        title: "Rencontrez votre Course Director",
+        name: "Bob Murphy",
+        role: "PADI Course Director",
+        photo: "/idc/bob-murphy-course-director-koh-tao.webp",
+        photoAlt: "Bob Murphy, Course Director PADI chez Siam Scuba, en parfait équilibre au-dessus du sable",
+        paragraphs: [
+          "Bob Murphy est le Course Director résident de Siam Scuba - et un passionné de mécanique qui adore démonter des motos (les casser, puis les réparer en mieux). Cette curiosité est devenue une vraie passion pour le matériel de plongée : son fonctionnement, son histoire et son entretien.",
+          "Avec plus d'un quart de siècle sous l'eau et des milliers de cours PADI enseignés, son grand favori reste l'Instructor Development Course. L'IDC de Bob va au-delà des présentations de type examen nécessaires pour réussir : il vous prépare au moment qui compte vraiment - être debout devant une vraie classe de plongeurs, et bien leur enseigner.",
+          "Et cela ne s'arrête pas à l'examen. Bob enseigne la plupart des spécialités PADI au niveau instructeur : une fois certifié, il vous aidera à élargir votre boîte à outils, à ajouter des spécialités et à grimper tôt dans la carrière PADI - pour une vie de plongée fun et variée.",
+        ],
+      },
+      gallery: [
+        { src: "/idc/idc-classroom-bob-murphy-siam-scuba.webp", alt: "Bob Murphy animant une session de cours IDC chez Siam Scuba" },
+        { src: "/idc/idc-theory-session-koh-tao.webp", alt: "Candidats IDC lors d'une session de théorie de plongée à Koh Tao" },
+        { src: "/idc/idc-confined-water-teaching-koh-tao.webp", alt: "Candidat instructeur s'exerçant à l'enseignement en milieu protégé" },
+        { src: "/idc/idc-rescue-skills-practice-koh-tao.webp", alt: "Atelier de sauvetage pendant la formation d'instructeurs" },
+        { src: "/idc/idc-nitrox-theory-whiteboard.webp", alt: "Théorie Nitrox au tableau pendant l'IDC" },
+        { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "Instructeur sidemount plongeant au-dessus d'un récif de Koh Tao" },
+      ],
       structure: [
         "L'IDC est un programme de 2 semaines conçu pour se terminer juste avant les examens mensuels d'instructeur à Koh Tao.",
         "Avant la date de début de l'IDC, nous consacrons 2 courtes journées à des séances de remise à niveau en théorie de plongée.",

@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Clock, CheckCircle2, Gift, Tag, AlertCircle, MessageCircle, Fish, Anchor, XCircle, Backpack, CreditCard } from "lucide-react";
+import { Clock, CheckCircle2, Gift, Tag, AlertCircle, MessageCircle, Fish, Anchor, XCircle, Backpack, CreditCard, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { languageFlags, languageNames, type Language } from "@/i18n/translations";
@@ -60,6 +60,53 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 {detail.intro}
               </DialogDescription>
             </DialogHeader>
+
+            {/* Meet your instructor (IDC: Bob) - photo floats beside the bio so the
+                text wraps around it; float-start keeps it RTL-aware. */}
+            {detail.instructor && (
+              <div className="rounded-xl border border-border/60 bg-secondary/30 p-4 sm:p-5">
+                <h4 className="font-display font-semibold text-foreground flex items-center gap-2">
+                  <GraduationCap className="h-4 w-4 text-primary" /> {detail.instructor.title}
+                </h4>
+                <div className="mt-3 text-sm leading-relaxed text-foreground/80">
+                  <img
+                    src={detail.instructor.photo}
+                    alt={detail.instructor.photoAlt}
+                    width={608}
+                    height={1080}
+                    loading="lazy"
+                    className="float-start me-4 mb-1.5 w-28 sm:w-32 aspect-[3/4] rounded-lg border border-border/60 object-cover"
+                  />
+                  <p className="font-semibold text-foreground">
+                    {detail.instructor.name}
+                    <span className="block text-[11px] font-semibold uppercase tracking-wide text-primary">
+                      {detail.instructor.role}
+                    </span>
+                  </p>
+                  {detail.instructor.paragraphs.map((p) => (
+                    <p key={p} className="mt-2.5">{p}</p>
+                  ))}
+                  <div className="clear-both" />
+                </div>
+              </div>
+            )}
+
+            {/* Photo strip - horizontal snap scroll, bleeds to the dialog edges */}
+            {detail.gallery && (
+              <div className="-mx-6 flex snap-x snap-mandatory gap-2.5 overflow-x-auto overscroll-x-contain px-6 pb-1">
+                {detail.gallery.map((photo) => (
+                  <img
+                    key={photo.src}
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={608}
+                    height={1080}
+                    loading="lazy"
+                    className="h-52 w-auto shrink-0 snap-start rounded-lg border border-border/60 object-cover"
+                  />
+                ))}
+              </div>
+            )}
 
             {/* Top Highlights (Sail Rock) */}
             {detail.highlights && (
