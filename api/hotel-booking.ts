@@ -85,6 +85,27 @@ const DATA = JSON.parse(
 ) as HotelData;
 
 const PUBLIC_BASE = "https://siamscuba.com";
+
+// Links we mail out (the decide page, the guest registration page) must point at
+// the deployment that generated them. Hardcoding production made every preview
+// deployment emit a link into a production build where the function may not
+// exist yet - untestable before merge. Set per request, production as fallback.
+let linkBase = PUBLIC_BASE;
+
+function baseUrl(): string {
+  return linkBase;
+}
+
+function setLinkBase(req: VercelRequest): void {
+  const fwd = req.headers["x-forwarded-host"] ?? req.headers.host;
+  const host = Array.isArray(fwd) ? fwd[0] : fwd;
+  if (!host) {
+    linkBase = PUBLIC_BASE;
+    return;
+  }
+  const local = host.startsWith("localhost") || host.startsWith("127.0.0.1");
+  linkBase = `${local ? "http" : "https"}://${host}`;
+}
 const EMAIL_FROM = "Siam Hotel & Hostel <hotel@siamscuba.com>";
 const EMAIL_REPLY_TO = "hotel@siamscuba.com";
 const MAX_NIGHTS = 30;
@@ -645,7 +666,7 @@ async function createRequest(input: EngineInput, now: number): Promise<EngineOut
     lang: req.lang,
     exp: Date.parse(`${req.checkIn}T00:00:00Z`) + 2 * DAY_MS,
   });
-  const decideUrl = `${PUBLIC_BASE}/api/hotel-booking?t=${decideToken}`;
+  const decideUrl = `${baseUrl()}/api/hotel-booking?t=${decideToken}`;
 
   // 1) Provisional email to the guest - this one is allowed to fail the
   //    request (guest must know we got it; dedupe is stored only on success
@@ -757,7 +778,7 @@ async function decide(
       lang: p.lang,
       exp: Date.parse(`${p.checkOut}T00:00:00Z`) + DAY_MS,
     });
-    const registerUrl = `${PUBLIC_BASE}/hotel/book?ref=${guestToken}`;
+    const registerUrl = `${baseUrl()}/hotel/book?ref=${guestToken}`;
     try {
       const email = buildEmail("final", p.lang, req, { registerUrl });
       emailMode = await sendEmail(p.email, email.subject, email.html);
@@ -841,6 +862,7 @@ export function clientIp(req: VercelRequest): string {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
+    setLinkBase(req);
     const query: Record<string, string | undefined> = {};
     for (const [k, val] of Object.entries(req.query ?? {})) {
       query[k] = Array.isArray(val) ? val[0] : val;

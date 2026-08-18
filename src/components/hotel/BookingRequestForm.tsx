@@ -32,6 +32,10 @@ const LABEL = "mb-1 block text-xs font-medium text-[#072a45]/60";
 const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingRequestFormProps) => {
   const [status, setStatus] = useState<Status>("idle");
   const [ref, setRef] = useState("");
+  // The engine reports emailMode:"log" when no mail key is configured (preview
+  // and local dev). Saying "check your email" there sends the tester hunting
+  // for a mail that was only ever written to the function log.
+  const [logMode, setLogMode] = useState(false);
   const [checkIn, setCheckIn] = useState("");
   const openedAtRef = useRef(0);
   const waHref = hotelWhatsAppLink(lang, room.name[lang]);
@@ -71,6 +75,7 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
       const json = await res.json();
       if (!res.ok || !json.ok) throw new Error(json.error ?? `status ${res.status}`);
       setRef(json.ref);
+      setLogMode(json.emailMode === "log");
       setStatus("success");
     } catch {
       setStatus("error");
@@ -117,6 +122,11 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
               <CheckCircle2 className="h-10 w-10 text-emerald-500" strokeWidth={1.5} />
               <p className="font-display text-lg">{copy.bookSuccessTitle}</p>
               <p className="text-sm leading-relaxed text-[#072a45]/70">{copy.bookSuccessBody(ref)}</p>
+              {logMode ? (
+                <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-800">
+                  Test mode: no email was sent - the message was written to the deployment log.
+                </p>
+              ) : null}
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
