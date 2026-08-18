@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MapPin, Waves, MessageCircle, ArrowRight } from "lucide-react";
+import { MapPin, Waves, MessageCircle, ArrowRight, Info } from "lucide-react";
 import type { Language } from "@/i18n/translations";
 import {
   HOTEL_COPY,
@@ -185,6 +185,29 @@ const HotelContent = ({ lang }: HotelContentProps) => {
             {rooms.map((room) => (
               <RoomCard key={room.slug} room={room} copy={copy} lang={lang} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------- good to know */}
+      <section className="pb-4">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="rounded-[26px] border border-white/70 bg-white/60 p-7 backdrop-blur-xl">
+            <div className="mb-4 flex items-center gap-2 text-[#1fa8dd]">
+              <Info className="h-5 w-5" />
+              <h2 className="font-display text-xl text-[#072a45]">{copy.goodToKnowTitle}</h2>
+            </div>
+            <ul className="grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+              {copy.goodToKnowItems.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-sm text-[#072a45]/70">
+                  <span
+                    aria-hidden="true"
+                    className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#1fa8dd]"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
