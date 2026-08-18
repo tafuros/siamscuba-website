@@ -121,7 +121,21 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
             <div className="flex flex-col items-center gap-3 py-6 text-center">
               <CheckCircle2 className="h-10 w-10 text-emerald-500" strokeWidth={1.5} />
               <p className="font-display text-lg">{copy.bookSuccessTitle}</p>
-              <p className="text-sm leading-relaxed text-[#072a45]/70">{copy.bookSuccessBody(ref)}</p>
+              <p className="text-sm leading-relaxed text-[#072a45]/70">{copy.bookSuccessBody}</p>
+
+              {/* The reference gets its own chip: big, spaced and screenshot-friendly. */}
+              <div className="mt-1 w-full">
+                <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#072a45]/45">
+                  {copy.bookRefLabel}
+                </p>
+                <p
+                  dir="ltr"
+                  className="select-all rounded-2xl border border-[#0b4a8f]/25 bg-white px-5 py-3 font-mono text-2xl font-bold tabular-nums tracking-[0.16em] text-[#0b4a8f] shadow-[0_6px_18px_-12px_rgba(11,74,143,0.9)]"
+                >
+                  {ref}
+                </p>
+              </div>
+
               {logMode ? (
                 <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-800">
                   Test mode: no email was sent - the message was written to the deployment log.

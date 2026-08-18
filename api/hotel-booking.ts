@@ -204,13 +204,30 @@ export function verifyToken(token: string, key = secret(), now = Date.now()): Ve
   return { ok: true, payload };
 }
 
-/** `HB-<base36 timestamp>-<4 random base36 chars>`, e.g. HB-mek3q1v0-x7f2 */
+/**
+ * Reference alphabet: uppercase, with every character that gets misheard or
+ * misread over the phone removed - 0/O, 1/I/L and U are all gone.
+ */
+export const REF_ALPHABET = "23456789ABCDEFGHJKMNPQRSTVWXYZ"; // 30 chars
+
+/**
+ * `SH-MMDD-XXXX`, e.g. SH-0818-K7M2 - Siam Hotel, the request date in Koh Tao
+ * time, and 4 unambiguous random characters. Readable out loud, short enough to
+ * write on a paper booking sheet. Old `HB-...` refs stay valid inside already
+ * issued tokens; only the generator changed.
+ */
 export function makeRef(now = Date.now()): string {
+  const mmdd = bangkokToday(now).slice(5).replace("-", "");
+  const limit = 256 - (256 % REF_ALPHABET.length); // reject above this - no modulo bias
   let rand = "";
   while (rand.length < 4) {
-    rand += (randomBytes(1)[0] % 36).toString(36);
+    for (const byte of randomBytes(8)) {
+      if (byte >= limit) continue;
+      rand += REF_ALPHABET[byte % REF_ALPHABET.length];
+      if (rand.length === 4) break;
+    }
   }
-  return `HB-${now.toString(36)}-${rand}`;
+  return `SH-${mmdd}-${rand}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -487,11 +504,19 @@ function page(title: string, inner: string): string {
   textarea{width:100%;box-sizing:border-box;border:1px solid #d5e2ec;border-radius:12px;padding:10px 12px;font:inherit;font-size:14px;margin:0 0 10px;resize:vertical;}
   .note{font-size:12px;color:#8aa0b2;margin:16px 0 0;line-height:1.6;}
   .ok{color:#10b981;} .no{color:#b42318;}
+  .reflabel{margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#5b7386;text-align:center;}
+  .ref{display:block;margin:0 0 16px;padding:11px 14px;border:1.5px solid #cfe0ee;border-radius:12px;background:#f2f7fb;text-align:center;
+       font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:22px;font-weight:700;letter-spacing:.16em;color:#072a45;}
 </style></head><body><div class="card">${inner}</div></body></html>`;
 }
 
 function row(label: string, value: string): string {
   return value ? `<div class="row"><span>${escapeHtml(label)}</span><span>${escapeHtml(value)}</span></div>` : "";
+}
+
+/** The reference, big and letter-spaced - read it out to the guest on the phone. */
+function refBlock(ref: string, label = "Reference"): string {
+  return `<p class="reflabel">${escapeHtml(label)}</p><div class="ref">${escapeHtml(ref)}</div>`;
 }
 
 function summaryRows(p: TokenPayload): string {
@@ -509,8 +534,7 @@ function summaryRows(p: TokenPayload): string {
     row("Email", p.email) +
     row("Phone", p.phone ?? "") +
     row("Language", p.lang.toUpperCase()) +
-    row("Notes", p.notes ?? "") +
-    row("Ref", p.ref)
+    row("Notes", p.notes ?? "")
   );
 }
 
@@ -519,6 +543,7 @@ function decisionPageHtml(p: TokenPayload, token: string): string {
   return page(
     `Booking request ${p.ref}`,
     `<h1>Hotel booking request</h1><p class="sub">Siam Hotel &amp; Hostel · decide below, the guest gets emailed automatically</p>` +
+      refBlock(p.ref) +
       summaryRows(p) +
       `<form method="post" action="${base}&amp;action=approve" style="margin:20px 0 0;">
          <button type="submit" class="approve">Approve - room is available</button>
@@ -536,8 +561,9 @@ function decidedPage(action: string, at: string, ref: string): string {
   return page(
     `Already ${action}`,
     `<h1>Already <span class="${ok ? "ok" : "no"}">${escapeHtml(action)}</span></h1>
-     <p class="sub">Request ${escapeHtml(ref)}</p>
-     <div class="box">This request was ${escapeHtml(action)} at ${escapeHtml(at)}. No further email was sent to the guest.</div>`,
+     <p class="sub">Booking request</p>` +
+      refBlock(ref) +
+      `<div class="box">This request was ${escapeHtml(action)} at ${escapeHtml(at)}. No further email was sent to the guest.</div>`,
   );
 }
 
@@ -546,8 +572,9 @@ function donePage(action: "approved" | "declined", p: TokenPayload, emailMode: E
   return page(
     `Done - ${action}`,
     `<h1><span class="${ok ? "ok" : "no"}">${ok ? "Approved" : "Declined"}</span> - guest emailed</h1>
-     <p class="sub">Request ${escapeHtml(p.ref)}</p>
-     <div class="box">${escapeHtml(p.name)} (${escapeHtml(p.email)}) just received the ${
+     <p class="sub">Booking request</p>` +
+      refBlock(p.ref) +
+      `<div class="box">${escapeHtml(p.name)} (${escapeHtml(p.email)}) just received the ${
        ok ? "confirmation email with the registration link" : "no-availability email"
      }.${emailMode === "log" ? " <strong>(log-only mode - no real email was sent)</strong>" : ""}</div>`,
   );

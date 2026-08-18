@@ -13,7 +13,7 @@ const req = {
   name: "Test Guest",
   email: "guest@example.com",
   lang: "en" as Lang,
-  ref: "HB-test1234-abcd",
+  ref: "SH-0818-K7M2",
 };
 
 describe("renderTemplate", () => {
@@ -75,6 +75,34 @@ describe("email templates - all kinds x all languages", () => {
     const withoutAlt = buildEmail("decline", "en", req, {});
     expect(withoutAlt.html).not.toContain("instead");
     expect(withoutAlt.html).toContain("wa.me/66825068898");
+  });
+
+  it("shows the reference as its own highlighted band, not inline text", () => {
+    for (const lang of LANGS) {
+      const { html, subject } = buildEmail("provisional", lang, { ...req, lang }, {});
+      // the band: bordered, tinted, large and letter-spaced, forced LTR
+      expect(html).toContain("border:1.5px solid #cfe0ee");
+      expect(html).toMatch(
+        /<div dir="ltr" style="font-family:[^"]*monospace;font-size:24px;font-weight:700;letter-spacing:0\.16em;[^"]*">SH-0818-K7M2<\/div>/,
+      );
+      // no more "(ref ...)" parenthetical anywhere
+      expect(html).not.toContain(`(${req.ref})`);
+      // and the subject carries the ref in the new format
+      expect(subject).toContain(`· ${req.ref}`);
+    }
+  });
+
+  it("labels the reference band in the guest's language", () => {
+    const labels: Record<Lang, string> = {
+      en: "Your reference",
+      he: "מספר הבקשה שלך",
+      es: "Tu referencia",
+      fr: "Votre référence",
+    };
+    for (const lang of LANGS) {
+      const { html } = buildEmail("final", lang, { ...req, lang }, { registerUrl: "x" });
+      expect(html).toContain(labels[lang]);
+    }
   });
 
   it("escapes hostile guest input", () => {

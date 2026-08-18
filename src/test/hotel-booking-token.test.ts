@@ -3,6 +3,7 @@ import {
   signToken,
   verifyToken,
   makeRef,
+  REF_ALPHABET,
   type TokenPayload,
 } from "../../api/hotel-booking";
 
@@ -11,7 +12,7 @@ const NOW = Date.parse("2026-08-18T12:00:00Z");
 
 const payload: TokenPayload = {
   typ: "decide",
-  ref: "HB-test1234-abcd",
+  ref: "SH-0818-K7M2",
   room: "garden-bungalow",
   checkIn: "2026-09-01",
   checkOut: "2026-09-04",
@@ -60,13 +61,41 @@ describe("hotel booking tokens", () => {
       expect(v.ok).toBe(false);
     }
   });
+
+  // Refs issued before the SH-MMDD-XXXX format live on inside tokens that are
+  // still in guests' inboxes - opening one must keep working.
+  it("still verifies a token carrying a legacy HB- reference", () => {
+    const legacy = { ...payload, ref: "HB-msypmni4-kdno" };
+    const v = verifyToken(signToken(legacy, KEY), KEY, NOW);
+    expect(v.ok).toBe(true);
+    if (v.ok) expect(v.payload.ref).toBe("HB-msypmni4-kdno");
+  });
 });
 
+const REF_RE = /^SH-\d{4}-[23456789ABCDEFGHJKMNPQRSTVWXYZ]{4}$/;
+
 describe("makeRef", () => {
-  it("matches the HB-<base36 ts>-<4 chars> format", () => {
+  it("matches the SH-MMDD-XXXX format", () => {
     const ref = makeRef(NOW);
-    expect(ref).toMatch(/^HB-[0-9a-z]+-[0-9a-z]{4}$/);
-    expect(ref.startsWith(`HB-${NOW.toString(36)}-`)).toBe(true);
+    expect(ref).toMatch(REF_RE);
+    expect(ref).toHaveLength(12);
+    expect(ref).toBe(ref.toUpperCase());
+  });
+
+  it("dates the ref by the day in Koh Tao (UTC+7)", () => {
+    expect(makeRef(NOW).slice(0, 8)).toBe("SH-0818-");
+    // 18:00 UTC on 5 Jan is already the 6th at the hotel
+    expect(makeRef(Date.parse("2026-01-05T18:00:00Z")).slice(0, 8)).toBe("SH-0106-");
+  });
+
+  it("draws the tail only from the unambiguous alphabet", () => {
+    expect(REF_ALPHABET).toBe("23456789ABCDEFGHJKMNPQRSTVWXYZ");
+    const tails = Array.from({ length: 300 }, () => makeRef(NOW).slice(-4));
+    for (const tail of tails) {
+      for (const ch of tail) expect(REF_ALPHABET).toContain(ch);
+    }
+    // never the look-alikes: 0/O, 1/I/L, U
+    expect(tails.join("")).not.toMatch(/[01OILU]/);
   });
 
   it("produces distinct refs at the same timestamp (random suffix)", () => {

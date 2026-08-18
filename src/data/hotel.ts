@@ -493,7 +493,10 @@ export interface HotelCopy {
   bookSubmit: string;
   bookSending: string;
   bookSuccessTitle: string;
-  bookSuccessBody: (ref: string) => string;
+  /** Never carries the reference - the panel shows it as its own chip. */
+  bookSuccessBody: string;
+  /** Label above the reference chip (success panel, /hotel/book, emails). */
+  bookRefLabel: string;
   bookError: string;
   bookClose: string;
   photosSoon: string;
@@ -580,8 +583,9 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookSubmit: "Send request",
     bookSending: "Sending...",
     bookSuccessTitle: "Request sent!",
-    bookSuccessBody: (ref) =>
-      `Check your email - we sent you a confirmation of your request (ref ${ref}). We check availability personally, so your final answer usually arrives within a few hours.`,
+    bookSuccessBody:
+      "Check your email - we sent you a confirmation of your request. We check availability personally, so your final answer usually arrives within a few hours.",
+    bookRefLabel: "Your reference",
     bookError: "Something went wrong - please try again, or message us on WhatsApp.",
     bookClose: "Close",
     photosSoon: "Photos coming soon",
@@ -651,8 +655,9 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookSubmit: "שליחת בקשה",
     bookSending: "שולח...",
     bookSuccessTitle: "הבקשה נשלחה!",
-    bookSuccessBody: (ref) =>
-      `בדקו את המייל - שלחנו אישור על קבלת הבקשה (מספר ${ref}). אנחנו בודקים זמינות באופן אישי, כך שתשובה סופית מגיעה בדרך כלל תוך כמה שעות.`,
+    bookSuccessBody:
+      "בדקו את המייל - שלחנו אישור על קבלת הבקשה. אנחנו בודקים זמינות באופן אישי, כך שתשובה סופית מגיעה בדרך כלל תוך כמה שעות.",
+    bookRefLabel: "מספר הבקשה שלך",
     bookError: "משהו השתבש - נסו שוב, או כתבו לנו בוואטסאפ.",
     bookClose: "סגירה",
     photosSoon: "תמונות בקרוב",
@@ -746,8 +751,9 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookSubmit: "Enviar solicitud",
     bookSending: "Enviando...",
     bookSuccessTitle: "¡Solicitud enviada!",
-    bookSuccessBody: (ref) =>
-      `Revisa tu correo: te enviamos la confirmación de tu solicitud (ref ${ref}). Comprobamos la disponibilidad personalmente, así que la respuesta final suele llegar en unas horas.`,
+    bookSuccessBody:
+      "Revisa tu correo: te enviamos la confirmación de tu solicitud. Comprobamos la disponibilidad personalmente, así que la respuesta final suele llegar en unas horas.",
+    bookRefLabel: "Tu referencia",
     bookError: "Algo salió mal - inténtalo de nuevo o escríbenos por WhatsApp.",
     bookClose: "Cerrar",
     photosSoon: "Fotos muy pronto",
@@ -841,8 +847,9 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookSubmit: "Envoyer la demande",
     bookSending: "Envoi...",
     bookSuccessTitle: "Demande envoyée !",
-    bookSuccessBody: (ref) =>
-      `Vérifiez votre boîte mail - nous vous avons envoyé une confirmation de votre demande (réf ${ref}). Nous vérifions la disponibilité personnellement ; la réponse définitive arrive généralement en quelques heures.`,
+    bookSuccessBody:
+      "Vérifiez votre boîte mail - nous vous avons envoyé une confirmation de votre demande. Nous vérifions la disponibilité personnellement ; la réponse définitive arrive généralement en quelques heures.",
+    bookRefLabel: "Votre référence",
     bookError: "Un problème est survenu - réessayez, ou écrivez-nous sur WhatsApp.",
     bookClose: "Fermer",
     photosSoon: "Photos bientôt",

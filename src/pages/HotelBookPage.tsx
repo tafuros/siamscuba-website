@@ -44,6 +44,7 @@ interface BookPageCopy {
   title: string;
   subtitle: string;
   summaryTitle: string;
+  refLabel: string;
   nights: (n: number) => string;
   guests: (n: number) => string;
   arrivalTime: string;
@@ -66,6 +67,7 @@ const COPY: Record<Language, BookPageCopy> = {
     title: "Complete your registration",
     subtitle: "Your room is confirmed - these details make check-in quicker.",
     summaryTitle: "Your stay",
+    refLabel: "Your reference",
     nights: (n) => `${n} ${n === 1 ? "night" : "nights"}`,
     guests: (n) => `${n} ${n === 1 ? "guest" : "guests"}`,
     arrivalTime: "Approximate arrival time",
@@ -88,6 +90,7 @@ const COPY: Record<Language, BookPageCopy> = {
     title: "השלמת הרשמה",
     subtitle: "החדר שלך מאושר - הפרטים האלה מקצרים את הצ'ק-אין.",
     summaryTitle: "השהות שלך",
+    refLabel: "מספר הבקשה שלך",
     nights: (n) => (n === 1 ? "לילה אחד" : `${n} לילות`),
     guests: (n) => (n === 1 ? "אורח אחד" : `${n} אורחים`),
     arrivalTime: "שעת הגעה משוערת",
@@ -109,6 +112,7 @@ const COPY: Record<Language, BookPageCopy> = {
     title: "Completa tu registro",
     subtitle: "Tu habitación está confirmada; estos datos agilizan el check-in.",
     summaryTitle: "Tu estancia",
+    refLabel: "Tu referencia",
     nights: (n) => `${n} ${n === 1 ? "noche" : "noches"}`,
     guests: (n) => `${n} ${n === 1 ? "huésped" : "huéspedes"}`,
     arrivalTime: "Hora aproximada de llegada",
@@ -131,6 +135,7 @@ const COPY: Record<Language, BookPageCopy> = {
     title: "Complétez votre enregistrement",
     subtitle: "Votre chambre est confirmée - ces détails accélèrent le check-in.",
     summaryTitle: "Votre séjour",
+    refLabel: "Votre référence",
     nights: (n) => `${n} ${n === 1 ? "nuit" : "nuits"}`,
     guests: (n) => `${n} ${n === 1 ? "personne" : "personnes"}`,
     arrivalTime: "Heure d'arrivée approximative",
@@ -290,7 +295,18 @@ const HotelBookPage = () => {
                     {payload.checkIn} → {payload.checkOut} · {copy.nights(nights)} ·{" "}
                     {copy.guests(payload.guests)}
                   </p>
-                  <p className="text-xs text-[#072a45]/45">Ref {payload.ref}</p>
+                </div>
+
+                <div className="mt-3">
+                  <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#072a45]/45">
+                    {copy.refLabel}
+                  </p>
+                  <p
+                    dir="ltr"
+                    className="select-all rounded-2xl border border-[#0b4a8f]/25 bg-white px-5 py-3 text-center font-mono text-xl font-bold tabular-nums tracking-[0.16em] text-[#0b4a8f]"
+                  >
+                    {payload.ref}
+                  </p>
                 </div>
 
                 <form onSubmit={submit} className="mt-5 flex flex-col gap-3.5">

@@ -81,6 +81,23 @@ const BRAND = "#072a45";
 const BLUE = "#0b4a8f";
 const MUTED = "#5b7386";
 
+/**
+ * The reference, as its own highlighted band - table-based so Outlook and the
+ * mobile clients render the border, and dir="ltr" so the code never mirrors
+ * inside the Hebrew (RTL) mail.
+ */
+function refBand(lang: Language): string {
+  return (
+    `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin:26px 0 0;border-collapse:separate;">` +
+    `<tr><td align="center" style="border:1.5px solid #cfe0ee;border-radius:14px;background:#f2f7fb;padding:14px 18px;">` +
+    `<div style="margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:${MUTED};">` +
+    `${HOTEL_COPY[lang].bookRefLabel}</div>` +
+    `<div dir="ltr" style="font-family:'SF Mono',Menlo,Consolas,'Courier New',monospace;font-size:24px;font-weight:700;` +
+    `letter-spacing:0.16em;color:${BRAND};white-space:nowrap;">{{ref}}</div>` +
+    `</td></tr></table>`
+  );
+}
+
 /** Shared shell so all 12 emails look like one family. */
 function shell(lang: Language, inner: string): string {
   const dir = lang === "he" ? ' dir="rtl"' : "";
@@ -91,7 +108,7 @@ function shell(lang: Language, inner: string): string {
     `<p style="margin:0 0 2px;font-size:19px;font-weight:700;">Siam Hotel &amp; Hostel</p>` +
     `<p style="margin:0 0 22px;font-size:12px;color:${MUTED};">Sairee Beach · Koh Tao</p>` +
     inner +
-    `<p style="margin:26px 0 0;font-size:12px;color:#8aa0b2;">Ref {{ref}}</p>` +
+    refBand(lang) +
     `</div></div>`
   );
 }
@@ -121,7 +138,7 @@ const SMALL = `style="margin:0 0 8px;font-size:13px;line-height:1.6;color:${MUTE
 
 const provisional: Record<Language, Tpl> = {
   en: {
-    subject: "We got your request - Siam Hotel & Hostel ({{ref}})",
+    subject: "We got your request - Siam Hotel & Hostel · {{ref}}",
     html: shell(
       "en",
       `<p ${P}>Hi {{name}},</p>` +
@@ -133,7 +150,7 @@ const provisional: Record<Language, Tpl> = {
     ),
   },
   he: {
-    subject: "קיבלנו את הבקשה שלך - סיאם מלון והוסטל ({{ref}})",
+    subject: "קיבלנו את הבקשה שלך - סיאם מלון והוסטל · {{ref}}",
     html: shell(
       "he",
       `<p ${P}>היי {{name}},</p>` +
@@ -145,7 +162,7 @@ const provisional: Record<Language, Tpl> = {
     ),
   },
   es: {
-    subject: "Recibimos tu solicitud - Siam Hotel & Hostel ({{ref}})",
+    subject: "Recibimos tu solicitud - Siam Hotel & Hostel · {{ref}}",
     html: shell(
       "es",
       `<p ${P}>Hola {{name}}:</p>` +
@@ -157,7 +174,7 @@ const provisional: Record<Language, Tpl> = {
     ),
   },
   fr: {
-    subject: "Nous avons bien reçu votre demande - Siam Hotel & Hostel ({{ref}})",
+    subject: "Nous avons bien reçu votre demande - Siam Hotel & Hostel · {{ref}}",
     html: shell(
       "fr",
       `<p ${P}>Bonjour {{name}},</p>` +
@@ -172,7 +189,7 @@ const provisional: Record<Language, Tpl> = {
 
 const finalTpl: Record<Language, Tpl> = {
   en: {
-    subject: "Confirmed - {{roomName}}, {{checkIn}} ({{ref}})",
+    subject: "Confirmed - {{roomName}}, {{checkIn}} · {{ref}}",
     html: shell(
       "en",
       `<p ${P}>Hi {{name}}, good news - your room is confirmed!</p>` +
@@ -187,7 +204,7 @@ const finalTpl: Record<Language, Tpl> = {
     ),
   },
   he: {
-    subject: "מאושר - {{roomName}}, {{checkIn}} ({{ref}})",
+    subject: "מאושר - {{roomName}}, {{checkIn}} · {{ref}}",
     html: shell(
       "he",
       `<p ${P}>היי {{name}}, חדשות טובות - החדר שלך מאושר!</p>` +
@@ -202,7 +219,7 @@ const finalTpl: Record<Language, Tpl> = {
     ),
   },
   es: {
-    subject: "Confirmado - {{roomName}}, {{checkIn}} ({{ref}})",
+    subject: "Confirmado - {{roomName}}, {{checkIn}} · {{ref}}",
     html: shell(
       "es",
       `<p ${P}>Hola {{name}}: buenas noticias, ¡tu habitación está confirmada!</p>` +
@@ -217,7 +234,7 @@ const finalTpl: Record<Language, Tpl> = {
     ),
   },
   fr: {
-    subject: "Confirmé - {{roomName}}, {{checkIn}} ({{ref}})",
+    subject: "Confirmé - {{roomName}}, {{checkIn}} · {{ref}}",
     html: shell(
       "fr",
       `<p ${P}>Bonjour {{name}}, bonne nouvelle - votre chambre est confirmée !</p>` +
@@ -235,7 +252,7 @@ const finalTpl: Record<Language, Tpl> = {
 
 const decline: Record<Language, Tpl> = {
   en: {
-    subject: "About your request - Siam Hotel & Hostel ({{ref}})",
+    subject: "About your request - Siam Hotel & Hostel · {{ref}}",
     html: shell(
       "en",
       `<p ${P}>Hi {{name}},</p>` +
@@ -248,7 +265,7 @@ const decline: Record<Language, Tpl> = {
     ),
   },
   he: {
-    subject: "לגבי הבקשה שלך - סיאם מלון והוסטל ({{ref}})",
+    subject: "לגבי הבקשה שלך - סיאם מלון והוסטל · {{ref}}",
     html: shell(
       "he",
       `<p ${P}>היי {{name}},</p>` +
@@ -261,7 +278,7 @@ const decline: Record<Language, Tpl> = {
     ),
   },
   es: {
-    subject: "Sobre tu solicitud - Siam Hotel & Hostel ({{ref}})",
+    subject: "Sobre tu solicitud - Siam Hotel & Hostel · {{ref}}",
     html: shell(
       "es",
       `<p ${P}>Hola {{name}}:</p>` +
@@ -274,7 +291,7 @@ const decline: Record<Language, Tpl> = {
     ),
   },
   fr: {
-    subject: "À propos de votre demande - Siam Hotel & Hostel ({{ref}})",
+    subject: "À propos de votre demande - Siam Hotel & Hostel · {{ref}}",
     html: shell(
       "fr",
       `<p ${P}>Bonjour {{name}},</p>` +

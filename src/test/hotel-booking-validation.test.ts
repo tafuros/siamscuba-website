@@ -50,7 +50,7 @@ describe("create request - happy path (log-only mode)", () => {
     expect(out.status).toBe(200);
     const json = JSON.parse(out.body);
     expect(json.ok).toBe(true);
-    expect(json.ref).toMatch(/^HB-[0-9a-z]+-[0-9a-z]{4}$/);
+    expect(json.ref).toMatch(/^SH-\d{4}-[23456789ABCDEFGHJKMNPQRSTVWXYZ]{4}$/);
     expect(json.emailMode).toBe("log");
   });
 
@@ -80,7 +80,7 @@ describe("create request - anti-abuse", () => {
     expect(out.status).toBe(200);
     const json = JSON.parse(out.body);
     expect(json.ok).toBe(true);
-    expect(json.ref).toMatch(/^HB-/);
+    expect(json.ref).toMatch(/^SH-/);
     expect(logs.some((l) => l.includes("EMAIL"))).toBe(false);
     expect(logs.some((l) => l.includes('"event":"requested"'))).toBe(false);
   });
@@ -152,6 +152,8 @@ describe("create request - validation", () => {
 });
 
 describe("decision + registration flow (offline, log mode)", () => {
+  // Deliberately a LEGACY HB- ref: tokens issued before the SH-MMDD-XXXX
+  // format must keep opening and deciding normally.
   const decideToken = () =>
     signToken(
       {
@@ -183,6 +185,9 @@ describe("decision + registration flow (offline, log mode)", () => {
     expect(out.body).toContain("action=approve");
     expect(out.body).toContain("action=decline");
     expect(out.body).toContain("Flow Tester");
+    // the reference is its own emphasized block, not a line in the summary
+    expect(out.body).toContain('<div class="ref">HB-flow0001-test</div>');
+    expect(out.body).toContain('class="reflabel"');
   });
 
   it("GET with an expired token renders the expired page (410)", async () => {
@@ -209,6 +214,7 @@ describe("decision + registration flow (offline, log mode)", () => {
     });
     expect(out.status).toBe(200);
     expect(out.body).toContain("guest emailed");
+    expect(out.body).toContain('<div class="ref">HB-flow0001-test</div>');
 
     const emailLog = logs.find((l) => l.includes("EMAIL (log-only mode)"));
     expect(emailLog).toBeTruthy();
