@@ -1,17 +1,22 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Users, ImageOff } from "lucide-react";
+import { ChevronLeft, ChevronRight, Users, ImageOff, MessageCircle } from "lucide-react";
 import type { Language } from "@/i18n/translations";
 import { type HotelRoom, type HotelCopy, hotelWhatsAppLink } from "@/data/hotel";
 import { trackWhatsAppClick } from "@/utils/tracking";
+import BookingRequestForm from "./BookingRequestForm";
 
 /**
  * One room = one liquid-glass card: photos, price, book. Nothing else.
  *
+ * The primary action opens the booking-request form (two-stage booking flow,
+ * api/hotel-booking.ts) with the room preselected; WhatsApp stays as the
+ * secondary "or chat" path underneath.
+ *
  * The card has three states and picks between them from the data alone:
  * - `images` empty  -> placeholder panel ("photos coming soon")
  * - `pricePerNight` null -> "price on request" instead of a number
- * - `soldOut` -> "fully booked" badge, and the Book button becomes an inert
- *   pill so guests don't open a WhatsApp inquiry for a blocked room
+ * - `soldOut` -> "fully booked" badge, and the action area becomes an inert
+ *   pill so guests can't file a request for a blocked room
  * All disappear on their own the moment src/data/hotel.ts changes.
  */
 
@@ -23,6 +28,7 @@ interface RoomCardProps {
 
 const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
   const [index, setIndex] = useState(0);
+  const [formOpen, setFormOpen] = useState(false);
   const name = room.name[lang];
   const hasPhotos = room.images.length > 0;
   const multi = room.images.length > 1;
@@ -157,18 +163,39 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
               {copy.fullyBooked}
             </span>
           ) : (
-            <a
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick({ location: `hotel-room-${room.slug}`, url: waHref })}
-              className="shrink-0 rounded-full bg-[#0b4a8f] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgba(11,74,143,0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a3a6b]"
+            <button
+              type="button"
+              onClick={() => setFormOpen(true)}
+              className="shrink-0 rounded-full bg-[#0b4a8f] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgba(11,74,143,0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a3a6b]"
             >
-              {copy.book}
-            </a>
+              {copy.requestToBook}
+            </button>
           )}
         </div>
+
+        {!room.soldOut && (
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick({ location: `hotel-room-${room.slug}`, url: waHref })}
+            className="flex items-center justify-center gap-1.5 pt-1 text-xs font-medium text-[#072a45]/50 transition hover:text-[#0b4a8f]"
+          >
+            <MessageCircle className="h-3.5 w-3.5" />
+            {copy.orWhatsApp}
+          </a>
+        )}
       </div>
+
+      {!room.soldOut && (
+        <BookingRequestForm
+          room={room}
+          copy={copy}
+          lang={lang}
+          open={formOpen}
+          onOpenChange={setFormOpen}
+        />
+      )}
     </article>
   );
 };

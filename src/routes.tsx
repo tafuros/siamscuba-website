@@ -242,6 +242,14 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/HotelPage")),
         entry: "src/pages/HotelPage.tsx",
       },
+      // Registration completion for approved bookings (two-stage booking flow,
+      // api/hotel-booking.ts). Token arrives as ?ref= and is handled client-side
+      // only; the page is noindex - the shell just prerenders.
+      {
+        path: "hotel/book",
+        lazy: lazyDefault(() => import("./pages/HotelBookPage")),
+        entry: "src/pages/HotelBookPage.tsx",
+      },
       {
         path: "he/hotel",
         lazy: lazyDefault(() => import("./pages/HotelHePage")),

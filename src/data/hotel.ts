@@ -480,6 +480,22 @@ export interface HotelCopy {
   book: string;
   /** Badge + CTA replacement for `soldOut` rooms. */
   fullyBooked: string;
+  /** Booking request form (BookingRequestForm.tsx). */
+  requestToBook: string;
+  orWhatsApp: string;
+  bookCheckIn: string;
+  bookCheckOut: string;
+  bookGuests: string;
+  bookName: string;
+  bookEmail: string;
+  bookPhone: string;
+  bookNotes: string;
+  bookSubmit: string;
+  bookSending: string;
+  bookSuccessTitle: string;
+  bookSuccessBody: (ref: string) => string;
+  bookError: string;
+  bookClose: string;
   photosSoon: string;
   amenities: Record<AmenityKey, string>;
   goodToKnowTitle: string;
@@ -552,6 +568,22 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     sleeps: (n) => `Sleeps ${n}`,
     book: "Book",
     fullyBooked: "Fully booked",
+    requestToBook: "Request to book",
+    orWhatsApp: "or chat on WhatsApp",
+    bookCheckIn: "Check-in",
+    bookCheckOut: "Check-out",
+    bookGuests: "Guests",
+    bookName: "Full name",
+    bookEmail: "Email",
+    bookPhone: "Phone (optional)",
+    bookNotes: "Anything we should know? (optional)",
+    bookSubmit: "Send request",
+    bookSending: "Sending...",
+    bookSuccessTitle: "Request sent!",
+    bookSuccessBody: (ref) =>
+      `Check your email - we sent you a confirmation of your request (ref ${ref}). We check availability personally, so your final answer usually arrives within a few hours.`,
+    bookError: "Something went wrong - please try again, or message us on WhatsApp.",
+    bookClose: "Close",
     photosSoon: "Photos coming soon",
     amenities: AMENITIES_EN,
     goodToKnowTitle: "Good to know",
@@ -607,6 +639,22 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     sleeps: (n) => `עד ${n} אורחים`,
     book: "להזמנה",
     fullyBooked: "מלא - אין זמינות",
+    requestToBook: "בקשת הזמנה",
+    orWhatsApp: "או שיחה בוואטסאפ",
+    bookCheckIn: "צ'ק-אין",
+    bookCheckOut: "צ'ק-אאוט",
+    bookGuests: "אורחים",
+    bookName: "שם מלא",
+    bookEmail: "אימייל",
+    bookPhone: "טלפון (לא חובה)",
+    bookNotes: "משהו שכדאי שנדע? (לא חובה)",
+    bookSubmit: "שליחת בקשה",
+    bookSending: "שולח...",
+    bookSuccessTitle: "הבקשה נשלחה!",
+    bookSuccessBody: (ref) =>
+      `בדקו את המייל - שלחנו אישור על קבלת הבקשה (מספר ${ref}). אנחנו בודקים זמינות באופן אישי, כך שתשובה סופית מגיעה בדרך כלל תוך כמה שעות.`,
+    bookError: "משהו השתבש - נסו שוב, או כתבו לנו בוואטסאפ.",
+    bookClose: "סגירה",
     photosSoon: "תמונות בקרוב",
     amenities: {
       ac: "מיזוג אוויר",
@@ -686,6 +734,22 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     sleeps: (n) => `Para ${n} personas`,
     book: "Reservar",
     fullyBooked: "Completo",
+    requestToBook: "Solicitar reserva",
+    orWhatsApp: "o chatea por WhatsApp",
+    bookCheckIn: "Check-in",
+    bookCheckOut: "Check-out",
+    bookGuests: "Huéspedes",
+    bookName: "Nombre completo",
+    bookEmail: "Email",
+    bookPhone: "Teléfono (opcional)",
+    bookNotes: "¿Algo que debamos saber? (opcional)",
+    bookSubmit: "Enviar solicitud",
+    bookSending: "Enviando...",
+    bookSuccessTitle: "¡Solicitud enviada!",
+    bookSuccessBody: (ref) =>
+      `Revisa tu correo: te enviamos la confirmación de tu solicitud (ref ${ref}). Comprobamos la disponibilidad personalmente, así que la respuesta final suele llegar en unas horas.`,
+    bookError: "Algo salió mal - inténtalo de nuevo o escríbenos por WhatsApp.",
+    bookClose: "Cerrar",
     photosSoon: "Fotos muy pronto",
     amenities: {
       ac: "Aire acondicionado",
@@ -765,6 +829,22 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     sleeps: (n) => `Pour ${n} personnes`,
     book: "Réserver",
     fullyBooked: "Complet",
+    requestToBook: "Demander à réserver",
+    orWhatsApp: "ou discuter sur WhatsApp",
+    bookCheckIn: "Check-in",
+    bookCheckOut: "Check-out",
+    bookGuests: "Personnes",
+    bookName: "Nom complet",
+    bookEmail: "Email",
+    bookPhone: "Téléphone (facultatif)",
+    bookNotes: "Quelque chose à nous signaler ? (facultatif)",
+    bookSubmit: "Envoyer la demande",
+    bookSending: "Envoi...",
+    bookSuccessTitle: "Demande envoyée !",
+    bookSuccessBody: (ref) =>
+      `Vérifiez votre boîte mail - nous vous avons envoyé une confirmation de votre demande (réf ${ref}). Nous vérifions la disponibilité personnellement ; la réponse définitive arrive généralement en quelques heures.`,
+    bookError: "Un problème est survenu - réessayez, ou écrivez-nous sur WhatsApp.",
+    bookClose: "Fermer",
     photosSoon: "Photos bientôt",
     amenities: {
       ac: "Climatisation",

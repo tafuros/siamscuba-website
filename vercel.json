@@ -2,7 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "functions": {
-    "api/chat.ts": { "includeFiles": "api/_kb.json" }
+    "api/chat.ts": { "includeFiles": "api/_kb.json" },
+    "api/hotel-booking.ts": { "includeFiles": "api/_hotel-data.json" }
   },
   "redirects": [
     { "source": "/contact-us", "destination": "/", "permanent": true },

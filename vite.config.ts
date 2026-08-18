@@ -115,6 +115,57 @@ function googleAdsPulseDevApi(env: Record<string, string>): Plugin {
   };
 }
 
+// Dev-only: serve /api/hotel-booking (all methods/stages) from the same engine
+// Vercel uses in prod, so the whole two-stage booking flow works on `vite`
+// (port 8080) in log-only email mode without `vercel dev`. Mirrors the
+// nemo-chat-dev-api pattern: thin transport, logic via ssrLoadModule.
+function hotelBookingDevApi(): Plugin {
+  return {
+    name: "hotel-booking-dev-api",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use("/api/hotel-booking", async (req, res) => {
+        try {
+          // connect strips the mount path; the query string survives in req.url.
+          const url = new URL(req.url ?? "/", "http://localhost");
+          const query = Object.fromEntries(url.searchParams);
+
+          const chunks: Buffer[] = [];
+          for await (const c of req) chunks.push(c as Buffer);
+          const raw = Buffer.concat(chunks).toString("utf8");
+          const ct = req.headers["content-type"] ?? "";
+          let body: unknown = {};
+          if (ct.includes("application/json")) {
+            try {
+              body = JSON.parse(raw || "{}");
+            } catch {
+              body = {};
+            }
+          } else if (ct.includes("application/x-www-form-urlencoded")) {
+            body = Object.fromEntries(new URLSearchParams(raw));
+          }
+
+          const { processRequest } = await server.ssrLoadModule("/api/hotel-booking.ts");
+          const out = await processRequest({
+            method: req.method ?? "GET",
+            query,
+            body,
+            ip: req.socket?.remoteAddress ?? "dev",
+          });
+          res.statusCode = out.status;
+          res.setHeader("Content-Type", out.contentType);
+          res.end(out.body);
+        } catch (err) {
+          console.error("[dev /api/hotel-booking]", err instanceof Error ? err.message : err);
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ error: "internal_error" }));
+        }
+      });
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -138,6 +189,7 @@ export default defineConfig(({ mode }) => {
     mode === "development" && componentTagger(),
     mode === "development" && nemoChatDevApi(env),
     mode === "development" && googleAdsPulseDevApi(env),
+    mode === "development" && hotelBookingDevApi(),
     ViteImageOptimizer({
       png: { quality: 80, compressionLevel: 9 },
       jpeg: { quality: 78, mozjpeg: true },
