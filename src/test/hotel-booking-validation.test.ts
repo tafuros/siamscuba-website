@@ -6,8 +6,9 @@ import {
 } from "../../api/hotel-booking";
 
 // All of these run fully OFFLINE: with RESEND_API_KEY / HOTEL_NOTIFY_* unset
-// the engine is in log-only email mode and skips the n8n calls, so no network
-// is touched. HOTEL_BOOKING_SECRET is pinned for deterministic tokens.
+// the engine is in log-only email mode and skips the n8n calls, and with
+// PAYPAL_* unset the hold provider is the simulated one, so no network is
+// touched. HOTEL_BOOKING_SECRET is pinned for deterministic tokens.
 
 const NOW = Date.parse("2026-08-18T12:00:00Z"); // Bangkok "today" = 2026-08-18
 const SECRET = "test-secret";
@@ -26,14 +27,31 @@ const validBody = () => ({
   openedAt: NOW - 10_000,
 });
 
+/** Stage 1a - validate and open the hold. */
 const create = (body: Record<string, unknown>, ip = nextIp()) =>
-  processRequest({ method: "POST", query: {}, body, ip, now: NOW });
+  processRequest({ method: "POST", query: { action: "hold" }, body, ip, now: NOW });
+
+/** Stage 1a + 1b - the full path a guest who actually pays takes. */
+async function createAndPay(body: Record<string, unknown>, ip = nextIp()) {
+  const held = JSON.parse((await create(body, ip)).body);
+  if (!held.holdToken) return { held, confirmed: held };
+  const out = await processRequest({
+    method: "POST",
+    query: { action: "confirm-hold" },
+    body: { holdToken: held.holdToken, orderId: held.orderId },
+    ip,
+    now: NOW,
+  });
+  return { held, confirmed: JSON.parse(out.body), status: out.status };
+}
 
 beforeEach(() => {
   vi.stubEnv("HOTEL_BOOKING_SECRET", SECRET);
   vi.stubEnv("RESEND_API_KEY", "");
   vi.stubEnv("HOTEL_NOTIFY_URL", "");
   vi.stubEnv("HOTEL_NOTIFY_TOKEN", "");
+  vi.stubEnv("PAYPAL_CLIENT_ID", "");
+  vi.stubEnv("PAYPAL_SECRET", "");
   vi.spyOn(console, "log").mockImplementation(() => {});
   vi.spyOn(console, "warn").mockImplementation(() => {});
   __resetStateForTests();
@@ -46,12 +64,17 @@ afterEach(() => {
 
 describe("create request - happy path (log-only mode)", () => {
   it("accepts a valid request and returns a ref", async () => {
-    const out = await create(validBody());
-    expect(out.status).toBe(200);
-    const json = JSON.parse(out.body);
-    expect(json.ok).toBe(true);
-    expect(json.ref).toMatch(/^SH-\d{4}-[23456789ABCDEFGHJKMNPQRSTVWXYZ]{4}$/);
-    expect(json.emailMode).toBe("log");
+    const { confirmed, status } = await createAndPay(validBody());
+    expect(status).toBe(200);
+    expect(confirmed.ok).toBe(true);
+    expect(confirmed.ref).toMatch(/^SH-\d{4}-[23456789ABCDEFGHJKMNPQRSTVWXYZ]{4}$/);
+    expect(confirmed.emailMode).toBe("log");
+  });
+
+  it("keeps the ref issued at hold time all the way to the confirmed request", async () => {
+    const { held, confirmed } = await createAndPay(validBody());
+    expect(held.ref).toMatch(/^SH-/);
+    expect(confirmed.ref).toBe(held.ref);
   });
 
   it("logs the provisional email and the requested event with a decideUrl", async () => {
@@ -59,8 +82,8 @@ describe("create request - happy path (log-only mode)", () => {
     (console.log as ReturnType<typeof vi.fn>).mockImplementation((...args: unknown[]) => {
       logs.push(args.map(String).join(" "));
     });
-    const out = await create(validBody());
-    expect(out.status).toBe(200);
+    const { status } = await createAndPay(validBody());
+    expect(status).toBe(200);
     const emailLog = logs.find((l) => l.includes("EMAIL (log-only mode)"));
     expect(emailLog).toBeTruthy();
     expect(emailLog).toContain("hotel@siamscuba.com");
@@ -76,13 +99,15 @@ describe("create request - anti-abuse", () => {
     (console.log as ReturnType<typeof vi.fn>).mockImplementation((...args: unknown[]) => {
       logs.push(args.map(String).join(" "));
     });
-    const out = await create({ ...validBody(), website: "https://spam.example" });
-    expect(out.status).toBe(200);
-    const json = JSON.parse(out.body);
-    expect(json.ok).toBe(true);
-    expect(json.ref).toMatch(/^SH-/);
+    // Right through to confirm: the decoy hold must stay indistinguishable
+    // from a real one and still create nothing.
+    const { held, confirmed } = await createAndPay({ ...validBody(), website: "https://spam.example" });
+    expect(held.ok).toBe(true);
+    expect(held.ref).toMatch(/^SH-/);
+    expect(confirmed.ok).toBe(true);
     expect(logs.some((l) => l.includes("EMAIL"))).toBe(false);
     expect(logs.some((l) => l.includes('"event":"requested"'))).toBe(false);
+    expect(logs.some((l) => l.includes("HOLD (simulated mode) authorized"))).toBe(false);
   });
 
   it("rejects submits faster than 2s after form open", async () => {
@@ -101,9 +126,10 @@ describe("create request - anti-abuse", () => {
 
   it("dedupes the same email within the window - same ref, once", async () => {
     const body = validBody();
-    const first = JSON.parse((await create(body)).body);
-    const second = JSON.parse((await create(body)).body);
-    expect(second.ref).toBe(first.ref);
+    const first = await createAndPay(body);
+    const second = await createAndPay(body);
+    expect(second.confirmed.ref).toBe(first.confirmed.ref);
+    expect(second.confirmed.duplicate).toBe(true);
   });
 
   it("rate limits a bursting IP", async () => {

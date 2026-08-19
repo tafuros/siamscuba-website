@@ -6,21 +6,37 @@
 // shipped through vercel.json -> functions.includeFiles).
 //
 // Internal routing (method + query):
-//   POST                        (no query) create a booking request:
-//        validate -> provisional email to the guest (Resend) -> notify staff
-//        via n8n -> respond {ok, ref}. Honeypot + min-time-to-submit +
-//        per-email dedupe + per-IP rate limit.
+//   GET  ?action=payment-config  what the booking sheet needs to draw the
+//        payment step: provider, simulated flag, PayPal client id, amount.
+//   POST ?action=hold            stage 0 - validate the form, then open a
+//        1,000 THB AUTHORIZATION with the provider. Honeypot +
+//        min-time-to-submit + per-email dedupe + per-IP rate limit all run
+//        BEFORE any money is touched. Responds {holdToken, orderId}.
+//   POST ?action=confirm-hold    stage 1 - body {holdToken, orderId}. Turns the
+//        guest-approved order into a real authorization, and ONLY THEN creates
+//        the request: provisional email to the guest (Resend) -> notify staff
+//        via n8n -> respond {ok, ref}. A failed or abandoned payment creates
+//        nothing and emails nobody.
+//   POST                        (no query) rejected with `hold_required` - a
+//        request cannot exist without money behind it.
 //   GET  ?t=<decide-token>       Ben's decision page. STRICTLY read-only
 //        (email/WhatsApp link scanners must not be able to trigger a decision).
 //   POST ?t=<decide-token>&action=approve|decline
-//        idempotency check against the n8n status webhook, then final email
-//        (approve) or polite decline email, then log the event to n8n.
+//        idempotency check against the n8n status webhook, then CAPTURE (approve)
+//        or VOID (decline) the authorization, then the final / decline email,
+//        then log the event to n8n. Money moves before the promise is made: if
+//        capture or void fails the guest is NOT emailed and Ben sees why.
 //   POST ?action=register        guest registration completion
 //        body {token, details} - verify guest-token, log event to n8n.
 //
 // Tokens: HMAC-SHA256 (node:crypto), format base64url(payload).base64url(sig).
-//   decide-token: typ "decide", exp ~ check-in + 1 day
+//   hold-token:   typ "hold",   exp now + 30 min (carries the order nonce)
+//   decide-token: typ "decide", exp ~ check-in + 1 day (carries the auth id)
 //   guest-token:  typ "guest",  exp ~ check-out
+//
+// The system has no database. The authorization id therefore rides inside the
+// signed decide token - Ben's decision URL IS the record - and is mirrored into
+// the n8n audit log on the `requested` event.
 //
 // n8n contract (workflow built separately in the Nemo repo - keep in sync):
 //   POST ${HOTEL_NOTIFY_URL}                 header X-Hotel-Token
@@ -36,6 +52,12 @@
 //   HOTEL_BOOKING_SECRET unset -> dev fallback secret (fine locally; MUST be set
 //                        in prod before go-live or tokens are forgeable)
 //   HOTEL_NOTIFY_URL / HOTEL_NOTIFY_TOKEN  unset -> notify skipped (logged)
+//   PAYPAL_CLIENT_ID / PAYPAL_SECRET  either unset -> SIMULATED HOLD mode: the
+//                        authorize/capture/void calls are logged instead of
+//                        made, fake ids come back, and every response carries
+//                        {holdMode:"simulated"} so a tester can tell. The whole
+//                        flow stays exercisable locally and on previews.
+//   PAYPAL_ENV           "sandbox" (default) | "live" - which PayPal host to talk to
 
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -143,6 +165,7 @@ export function rateLimited(ip: string, now = Date.now()): boolean {
 export function __resetStateForTests(): void {
   ipHits.clear();
   recentByEmail.clear();
+  simHolds.clear();
 }
 
 // ---------------------------------------------------------------------------
@@ -150,7 +173,7 @@ export function __resetStateForTests(): void {
 // ---------------------------------------------------------------------------
 
 export interface TokenPayload {
-  typ: "decide" | "guest";
+  typ: "decide" | "guest" | "hold";
   ref: string;
   room: string;
   checkIn: string; // YYYY-MM-DD
@@ -162,6 +185,18 @@ export interface TokenPayload {
   notes?: string;
   lang: Lang;
   exp: number; // ms epoch
+
+  // -- hold tokens only --
+  /** Binds the token to the provider order we opened (PayPal custom_id). */
+  nonce?: string;
+  /** Honeypot decoy: looks and behaves like a real hold, moves no money. */
+  decoy?: boolean;
+
+  // -- decide tokens only --
+  /** Provider authorization id to capture on approve / void on decline. */
+  auth?: string;
+  /** The authorization came from the simulated provider (no real money). */
+  holdSim?: boolean;
 }
 
 function secret(): string {
@@ -371,15 +406,52 @@ function priceLine(room: string, lang: Lang): string {
 
 const waLink = () => `https://wa.me/${DATA.hotel.whatsapp}`;
 
-/** Compose one of the 3 emails in the guest's language. Exported for tests. */
+/**
+ * The hotel page on THIS deployment (preview or prod), in the guest's language.
+ * Used as the provider's return/cancel destination, so a guest who bails out of
+ * the payment lands back where they started rather than on production.
+ */
+function hotelPageUrl(lang: Lang): string {
+  const path = DATA.hotel.siteUrl[lang]?.replace(PUBLIC_BASE, "") || "/hotel";
+  return `${baseUrl()}${path}`;
+}
+
+/**
+ * Compose one of the 3 emails in the guest's language. Exported for tests.
+ *
+ * `prepaid` / `noPrepaid` / `released` are section switches, never printed:
+ * exactly one of the first two is set on the final email (a booking whose hold
+ * was captured says the 1,000 THB is credited against the bill; one without a
+ * hold - a legacy request, or an approval after the authorization lapsed - says
+ * the full amount is due at reception). `released` guards the decline email's
+ * "we let the hold go" paragraph the same way.
+ */
 export function buildEmail(
   kind: "provisional" | "final" | "decline",
   lang: Lang,
   req: BookingRequest & { ref: string },
-  extra: { registerUrl?: string; alternative?: string } = {},
+  extra: {
+    registerUrl?: string;
+    alternative?: string;
+    prepaid?: boolean;
+    released?: boolean;
+  } = {},
 ): { subject: string; html: string } {
   const tpl = DATA.emails[kind][lang];
+  // Grouped the way the guest's own locale writes it, so the email matches the
+  // booking sheet word for word (es "฿1.000", fr "฿1 000", en/he "฿1,000").
+  // useGrouping "always" is required: Spanish and French otherwise leave a
+  // four-digit number ungrouped ("1000"), which would not match the copy. The
+  // French separator is normalised from a narrow no-break space to a plain one
+  // so the string is identical to the hand-written copy in src/data/hotel.ts.
+  const holdAmount = `฿${new Intl.NumberFormat(LOCALE[lang], { useGrouping: "always" })
+    .format(HOLD_AMOUNT)
+    .replace(/[\u202f\u00a0]/g, " ")}`;
   const vars: Record<string, string | number | undefined> = {
+    holdAmount,
+    prepaid: extra.prepaid ? holdAmount : "",
+    noPrepaid: extra.prepaid ? "" : "1",
+    released: extra.released ? holdAmount : "",
     name: req.name,
     ref: req.ref,
     roomName: DATA.rooms[req.room]?.name[lang] ?? req.room,
@@ -434,6 +506,354 @@ async function sendEmail(to: string, subject: string, html: string): Promise<Ema
     return "sent";
   } finally {
     clearTimeout(timer);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Payment hold - the provider seam
+// ---------------------------------------------------------------------------
+// A guest puts 1,000 THB behind an availability request as an AUTHORIZATION.
+// Ben approves -> we CAPTURE it (a prepayment credited against the bill, not a
+// separate refundable deposit). Ben declines -> we VOID it and the guest was
+// never charged.
+//
+// Everything provider-specific lives between here and the end of this section.
+// Moving to a Thai provider later (Omise / PromptPay) means writing a third
+// HoldProvider and adding one line to getHoldProvider() - the booking flow
+// below never mentions PayPal.
+
+export const HOLD_AMOUNT = 1000;
+export const HOLD_CURRENCY = "THB";
+/** PayPal expects THB with 2 decimals. */
+const holdValue = () => HOLD_AMOUNT.toFixed(2);
+
+export type HoldFailure =
+  | "not_approved" // the guest never finished approving the order
+  | "expired" // 3-day honor period / 29-day validity elapsed
+  | "already_captured"
+  | "voided"
+  | "declined" // the issuer said no
+  | "provider_error"; // network, credentials, anything else
+
+export type HoldResult =
+  | { ok: true; id: string; simulated: boolean; already?: boolean }
+  | { ok: false; code: HoldFailure; message: string; simulated: boolean };
+
+export type StartHoldResult =
+  | { ok: true; orderId: string; approveUrl?: string; simulated: boolean }
+  | { ok: false; code: HoldFailure; message: string; simulated: boolean };
+
+export interface StartHoldInput {
+  /** Random value we also stamp on the provider order, so the order the guest
+   *  approved is provably the order this signed token was minted for. */
+  nonce: string;
+  ref: string;
+  description: string;
+  returnUrl: string;
+  cancelUrl: string;
+}
+
+export interface HoldProvider {
+  name: "paypal" | "simulated";
+  simulated: boolean;
+  /** Public identifier the browser SDK needs (PayPal client id). */
+  clientId?: string;
+  env?: string;
+  startHold(input: StartHoldInput): Promise<StartHoldResult>;
+  /** Guest-approved order -> a real authorization we can later capture/void. */
+  authorizeHold(orderId: string, nonce: string): Promise<HoldResult>;
+  captureHold(authId: string): Promise<HoldResult>;
+  voidHold(authId: string): Promise<HoldResult>;
+}
+
+// -- PayPal Orders v2 over plain fetch (no SDK - this file ships as raw ESM) --
+
+const PAYPAL_TIMEOUT_MS = 12_000;
+
+function paypalBase(): string {
+  return process.env.PAYPAL_ENV === "live"
+    ? "https://api-m.paypal.com"
+    : "https://api-m.sandbox.paypal.com";
+}
+
+/** Maps a PayPal error body onto our small failure vocabulary. */
+export function classifyPaypalError(status: number, body: unknown): { code: HoldFailure; message: string } {
+  const b = (body ?? {}) as { name?: string; message?: string; details?: { issue?: string; description?: string }[] };
+  const issue = b.details?.[0]?.issue ?? b.name ?? "";
+  const described = b.details?.[0]?.description ?? b.message ?? `status ${status}`;
+  const up = issue.toUpperCase();
+  if (up.includes("ALREADY_CAPTURED")) return { code: "already_captured", message: described };
+  if (up.includes("EXPIRED")) return { code: "expired", message: described };
+  if (up.includes("VOIDED")) return { code: "voided", message: described };
+  if (up.includes("DECLINED") || up.includes("INSTRUMENT_DECLINED")) {
+    return { code: "declined", message: described };
+  }
+  if (up.includes("ORDER_NOT_APPROVED") || up.includes("PAYER_ACTION_REQUIRED")) {
+    return { code: "not_approved", message: described };
+  }
+  return { code: "provider_error", message: `${issue || "paypal_error"}: ${described}` };
+}
+
+async function paypalFetch(
+  path: string,
+  init: { method: string; body?: unknown; requestId?: string },
+): Promise<{ ok: true; json: Record<string, unknown> } | { ok: false; code: HoldFailure; message: string }> {
+  const id = process.env.PAYPAL_CLIENT_ID;
+  const sec = process.env.PAYPAL_SECRET;
+  if (!id || !sec) return { ok: false, code: "provider_error", message: "paypal credentials missing" };
+
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), PAYPAL_TIMEOUT_MS);
+  try {
+    const auth = Buffer.from(`${id}:${sec}`).toString("base64");
+    const tokenRes = await fetch(`${paypalBase()}/v1/oauth2/token`, {
+      method: "POST",
+      headers: { Authorization: `Basic ${auth}`, "Content-Type": "application/x-www-form-urlencoded" },
+      body: "grant_type=client_credentials",
+      signal: ctrl.signal,
+    });
+    if (!tokenRes.ok) {
+      return { ok: false, code: "provider_error", message: `paypal auth status ${tokenRes.status}` };
+    }
+    const { access_token: accessToken } = (await tokenRes.json()) as { access_token?: string };
+    if (!accessToken) return { ok: false, code: "provider_error", message: "paypal auth returned no token" };
+
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    };
+    // Provider-side idempotency: PayPal replays the first result for a repeated
+    // request id instead of moving the money twice.
+    if (init.requestId) headers["PayPal-Request-Id"] = init.requestId;
+
+    const res = await fetch(`${paypalBase()}${path}`, {
+      method: init.method,
+      headers,
+      body: init.body === undefined ? undefined : JSON.stringify(init.body),
+      signal: ctrl.signal,
+    });
+    const text = await res.text();
+    let json: Record<string, unknown> = {};
+    if (text) {
+      try {
+        json = JSON.parse(text) as Record<string, unknown>;
+      } catch {
+        json = {};
+      }
+    }
+    if (!res.ok) return { ok: false, ...classifyPaypalError(res.status, json) };
+    return { ok: true, json };
+  } catch (err) {
+    return {
+      ok: false,
+      code: "provider_error",
+      message: err instanceof Error ? err.message : "paypal request failed",
+    };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function paypalProvider(): HoldProvider {
+  const fail = (r: { code: HoldFailure; message: string }): HoldResult => ({
+    ok: false,
+    code: r.code,
+    message: r.message,
+    simulated: false,
+  });
+
+  return {
+    name: "paypal",
+    simulated: false,
+    clientId: process.env.PAYPAL_CLIENT_ID,
+    env: process.env.PAYPAL_ENV === "live" ? "live" : "sandbox",
+
+    async startHold(input) {
+      const res = await paypalFetch("/v2/checkout/orders", {
+        method: "POST",
+        requestId: `order-${input.nonce}`,
+        body: {
+          intent: "AUTHORIZE",
+          purchase_units: [
+            {
+              custom_id: input.nonce,
+              invoice_id: input.ref,
+              description: input.description.slice(0, 127),
+              amount: { currency_code: HOLD_CURRENCY, value: holdValue() },
+            },
+          ],
+          payment_source: {
+            paypal: {
+              experience_context: {
+                shipping_preference: "NO_SHIPPING",
+                user_action: "PAY_NOW",
+                return_url: input.returnUrl,
+                cancel_url: input.cancelUrl,
+              },
+            },
+          },
+        },
+      });
+      if (!res.ok) return { ok: false, code: res.code, message: res.message, simulated: false };
+      const orderId = typeof res.json.id === "string" ? res.json.id : "";
+      if (!orderId) {
+        return { ok: false, code: "provider_error", message: "paypal returned no order id", simulated: false };
+      }
+      const links = Array.isArray(res.json.links) ? (res.json.links as { rel?: string; href?: string }[]) : [];
+      const approveUrl = links.find((l) => l.rel === "payer-action" || l.rel === "approve")?.href;
+      return { ok: true, orderId, approveUrl, simulated: false };
+    },
+
+    async authorizeHold(orderId, nonce) {
+      const res = await paypalFetch(`/v2/checkout/orders/${encodeURIComponent(orderId)}/authorize`, {
+        method: "POST",
+        requestId: `auth-${nonce}`,
+        body: {},
+      });
+      if (!res.ok) return fail(res);
+      const units = res.json.purchase_units as
+        | { custom_id?: string; payments?: { authorizations?: { id?: string; status?: string }[] } }[]
+        | undefined;
+      const unit = units?.[0];
+      // The order the guest approved must be the one this token was minted for.
+      if (unit?.custom_id && unit.custom_id !== nonce) {
+        return fail({ code: "provider_error", message: "authorization does not belong to this request" });
+      }
+      const authId = unit?.payments?.authorizations?.[0]?.id;
+      if (!authId) return fail({ code: "provider_error", message: "paypal returned no authorization id" });
+      return { ok: true, id: authId, simulated: false };
+    },
+
+    async captureHold(authId) {
+      const res = await paypalFetch(`/v2/payments/authorizations/${encodeURIComponent(authId)}/capture`, {
+        method: "POST",
+        requestId: `capture-${authId}`,
+        body: {
+          amount: { currency_code: HOLD_CURRENCY, value: holdValue() },
+          final_capture: true,
+        },
+      });
+      if (!res.ok) {
+        // Capturing an already-captured authorization is the double-tap case:
+        // the money is exactly where we wanted it, so this is a success.
+        if (res.code === "already_captured") {
+          return { ok: true, id: authId, simulated: false, already: true };
+        }
+        return fail(res);
+      }
+      const captureId = typeof res.json.id === "string" ? res.json.id : authId;
+      return { ok: true, id: captureId, simulated: false };
+    },
+
+    async voidHold(authId) {
+      const res = await paypalFetch(`/v2/payments/authorizations/${encodeURIComponent(authId)}/void`, {
+        method: "POST",
+        requestId: `void-${authId}`,
+      });
+      if (!res.ok) {
+        // Already void, or expired unused - either way the guest's money never
+        // moved, which is precisely what a decline needs to be true.
+        if (res.code === "voided" || res.code === "expired") {
+          return { ok: true, id: authId, simulated: false, already: true };
+        }
+        return fail(res);
+      }
+      return { ok: true, id: authId, simulated: false };
+    },
+  };
+}
+
+// -- Simulated provider (no credentials configured) ---------------------------
+
+type SimState = "authorized" | "captured" | "voided" | "expired";
+const simHolds = new Map<string, SimState>();
+
+/** Test hook - force a simulated authorization into a given provider state. */
+export function __setSimulatedHoldState(authId: string, state: SimState): void {
+  simHolds.set(authId, state);
+}
+
+const simLog = (what: string, detail: Record<string, unknown>) =>
+  console.log(`[hotel-booking] HOLD (simulated mode) ${what}`, JSON.stringify(detail));
+
+function simulatedProvider(): HoldProvider {
+  const bad = (code: HoldFailure, message: string): HoldResult => ({ ok: false, code, message, simulated: true });
+
+  return {
+    name: "simulated",
+    simulated: true,
+    env: "simulated",
+
+    async startHold(input) {
+      const orderId = `SIMORDER-${input.nonce}`;
+      simLog("would authorize", {
+        orderId,
+        amount: holdValue(),
+        currency: HOLD_CURRENCY,
+        ref: input.ref,
+        description: input.description,
+      });
+      return { ok: true, orderId, simulated: true };
+    },
+
+    async authorizeHold(orderId, nonce) {
+      if (orderId !== `SIMORDER-${nonce}`) {
+        return bad("provider_error", "simulated order does not match this request");
+      }
+      const authId = `SIMAUTH-${nonce}`;
+      simHolds.set(authId, "authorized");
+      simLog("authorized", { orderId, authId, amount: holdValue(), currency: HOLD_CURRENCY });
+      return { ok: true, id: authId, simulated: true };
+    },
+
+    async captureHold(authId) {
+      const state = simHolds.get(authId) ?? "authorized";
+      if (state === "captured") {
+        simLog("capture skipped - already captured", { authId });
+        return { ok: true, id: `SIMCAPTURE-${authId}`, simulated: true, already: true };
+      }
+      if (state === "expired") return bad("expired", "simulated authorization expired");
+      if (state === "voided") return bad("voided", "simulated authorization was voided");
+      simHolds.set(authId, "captured");
+      simLog("captured", { authId, amount: holdValue(), currency: HOLD_CURRENCY });
+      return { ok: true, id: `SIMCAPTURE-${authId}`, simulated: true };
+    },
+
+    async voidHold(authId) {
+      const state = simHolds.get(authId) ?? "authorized";
+      if (state === "captured") return bad("already_captured", "simulated authorization was already captured");
+      if (state === "voided" || state === "expired") {
+        simLog("void skipped - nothing held", { authId, state });
+        return { ok: true, id: authId, simulated: true, already: true };
+      }
+      simHolds.set(authId, "voided");
+      simLog("voided", { authId, amount: holdValue(), currency: HOLD_CURRENCY });
+      return { ok: true, id: authId, simulated: true };
+    },
+  };
+}
+
+export function getHoldProvider(): HoldProvider {
+  if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_SECRET) return paypalProvider();
+  console.warn("[hotel-booking] PAYPAL_CLIENT_ID/PAYPAL_SECRET unset - running in SIMULATED hold mode");
+  return simulatedProvider();
+}
+
+/** Ben-readable reason, for the decision page and the audit log. */
+export function holdFailureText(code: HoldFailure, verb: "capture" | "release"): string {
+  switch (code) {
+    case "expired":
+      return `The 1,000 THB authorization has expired (PayPal holds them for 3 days, 29 at the outside), so it could not be ${verb === "capture" ? "charged" : "released"}. The guest was never charged.`;
+    case "already_captured":
+      return "The 1,000 THB was already charged. Refund it in PayPal if this booking is not going ahead.";
+    case "voided":
+      return "The authorization was already released, so there is nothing left to charge.";
+    case "declined":
+      return "The guest's bank declined the charge.";
+    case "not_approved":
+      return "The guest never finished approving the payment, so there is no authorization to work with.";
+    default:
+      return `PayPal could not ${verb} the hold right now.`;
   }
 }
 
@@ -555,6 +975,20 @@ function summaryRows(p: TokenPayload): string {
   );
 }
 
+const holdText = () => `฿${HOLD_AMOUNT.toLocaleString("en-US")}`;
+
+/** The money banner on Ben's decision page - what tapping actually does. */
+function holdBanner(p: TokenPayload): string {
+  if (!p.auth) {
+    return `<div class="box">No payment hold on this request (it came in before deposits, or the guest paid nothing). Approving just sends the confirmation.</div>`;
+  }
+  const sim = p.holdSim ? " <strong>(simulated - no real money)</strong>" : "";
+  return (
+    `<div class="box"><strong>${escapeHtml(holdText())} held</strong> on the guest's card.${sim}<br/>` +
+    `Approve charges it now and credits it against their bill. Decline releases it - they are never charged.</div>`
+  );
+}
+
 function decisionPageHtml(p: TokenPayload, token: string): string {
   const base = `/api/hotel-booking?t=${encodeURIComponent(token)}`;
   return page(
@@ -562,6 +996,7 @@ function decisionPageHtml(p: TokenPayload, token: string): string {
     `<h1>Hotel booking request</h1><p class="sub">Siam Hotel &amp; Hostel · decide below, the guest gets emailed automatically</p>` +
       refBlock(p.ref) +
       summaryRows(p) +
+      holdBanner(p) +
       `<form method="post" action="${base}&amp;action=approve" style="margin:20px 0 0;">
          <button type="submit" class="approve">Approve - room is available</button>
        </form>
@@ -569,7 +1004,47 @@ function decisionPageHtml(p: TokenPayload, token: string): string {
          <textarea name="alternative" rows="2" maxlength="500" placeholder="Alternative to suggest (optional - goes into the decline email)"></textarea>
          <button type="submit" class="decline">Decline - no availability</button>
        </form>
-       <p class="note">Approve sends the confirmation + registration link. Decline sends a polite no-availability email (with your alternative, if written). Nothing is sent until you tap.</p>`,
+       <p class="note">Approve ${
+         p.auth ? `charges the ${escapeHtml(holdText())} hold, then sends` : "sends"
+       } the confirmation + registration link. Decline ${
+         p.auth ? "releases the hold, then sends" : "sends"
+       } a polite no-availability email (with your alternative, if written). Nothing is sent until you tap.</p>`,
+  );
+}
+
+/**
+ * Capture or void failed. Ben must not be told the guest was emailed, because
+ * the guest was not - so this page names the reason and, for an approve that
+ * could not take the money, offers to confirm the room anyway with the email
+ * wording that says nothing was charged.
+ */
+function holdFailurePage(
+  action: "approve" | "decline",
+  code: HoldFailure,
+  p: TokenPayload,
+  token: string,
+): string {
+  const base = `/api/hotel-booking?t=${encodeURIComponent(token)}`;
+  const heading = action === "approve" ? "Could not charge the hold" : "Could not release the hold";
+  const canOverride = action === "approve" && code !== "already_captured";
+  return page(
+    heading,
+    `<h1><span class="no">${escapeHtml(heading)}</span></h1>
+     <p class="sub">Nothing was sent to the guest</p>` +
+      refBlock(p.ref) +
+      `<div class="box">${escapeHtml(holdFailureText(code, action === "approve" ? "capture" : "release"))}</div>` +
+      `<div class="box">${escapeHtml(p.name)} (${escapeHtml(p.email)}) has <strong>not</strong> been emailed. ${
+        action === "approve"
+          ? "Decide what to do with the money first."
+          : "Sort the payment out in PayPal, then tell them yourself - or reload this link and try again."
+      }</div>` +
+      (canOverride
+        ? `<form method="post" action="${base}&amp;action=approve" style="margin:20px 0 0;">
+             <input type="hidden" name="nopay" value="1"/>
+             <button type="submit" class="approve">Approve anyway - no payment taken</button>
+           </form>
+           <p class="note">Sends the confirmation with the full amount due at reception, and says nothing about a prepayment. Use this when the hold lapsed but you still want the guest.</p>`
+        : `<p class="note">Reload this link once the payment side is sorted and decide again.</p>`),
   );
 }
 
@@ -584,13 +1059,27 @@ function decidedPage(action: string, at: string, ref: string): string {
   );
 }
 
-function donePage(action: "approved" | "declined", p: TokenPayload, emailMode: EmailMode): string {
+function donePage(
+  action: "approved" | "declined",
+  p: TokenPayload,
+  emailMode: EmailMode,
+  money: { captured: boolean; released: boolean },
+): string {
   const ok = action === "approved";
+  const sim = p.holdSim ? " (simulated - no real money moved)" : "";
+  const moneyLine = money.captured
+    ? `<div class="box"><strong>${escapeHtml(holdText())} charged${escapeHtml(sim)}</strong> - credited against their bill, the rest is due at reception.</div>`
+    : money.released
+      ? `<div class="box"><strong>${escapeHtml(holdText())} released${escapeHtml(sim)}</strong> - the guest was never charged.</div>`
+      : p.auth
+        ? `<div class="box"><strong>No payment taken.</strong> The full amount is due at reception, and the email says so.</div>`
+        : "";
   return page(
     `Done - ${action}`,
     `<h1><span class="${ok ? "ok" : "no"}">${ok ? "Approved" : "Declined"}</span> - guest emailed</h1>
      <p class="sub">Booking request</p>` +
       refBlock(p.ref) +
+      moneyLine +
       `<div class="box">${escapeHtml(p.name)} (${escapeHtml(p.email)}) just received the ${
        ok ? "confirmation email with the registration link" : "no-availability email"
      }.${emailMode === "log" ? " <strong>(log-only mode - no real email was sent)</strong>" : ""}</div>`,
@@ -638,34 +1127,84 @@ export async function processRequest(input: EngineInput): Promise<EngineOutput> 
   const action = input.query.action;
 
   if (method === "GET") {
+    if (action === "payment-config") return paymentConfig();
     if (!t) return json(400, { error: "missing_token" });
     return decisionPage(t, now);
   }
   if (method !== "POST") return json(405, { error: "method_not_allowed" });
 
   if (action === "register") return register(input.body, now);
+  if (action === "hold") return startHold(input, now);
+  if (action === "confirm-hold") return confirmHold(input, now);
   if (t) {
     if (action !== "approve" && action !== "decline") return json(400, { error: "invalid_action" });
     return decide(t, action, input.body, now);
   }
-  return createRequest(input, now);
+  // A request with no money behind it is exactly what this change removed.
+  return json(400, { error: "hold_required" });
 }
 
-// -- stage 1: guest request ---------------------------------------------------
+// -- stage 0: what the booking sheet needs to draw the payment step -----------
 
-async function createRequest(input: EngineInput, now: number): Promise<EngineOutput> {
+function paymentConfig(): EngineOutput {
+  const provider = getHoldProvider();
+  return json(200, {
+    provider: provider.name,
+    simulated: provider.simulated,
+    ...(provider.clientId && { clientId: provider.clientId }),
+    env: provider.env,
+    amount: HOLD_AMOUNT,
+    currency: HOLD_CURRENCY,
+  });
+}
+
+// -- stage 1a: validate, then open the authorization ---------------------------
+//
+// Order of operations matters and is the whole point of this endpoint: every
+// cheap rejection (rate limit, honeypot, bot timing, field validation, dedupe)
+// happens BEFORE the provider is contacted, and no request/email/notification
+// exists until the money is actually held in stage 1b.
+
+const HOLD_TOKEN_TTL_MS = 30 * 60_000;
+
+async function startHold(input: EngineInput, now: number): Promise<EngineOutput> {
   if (rateLimited(input.ip, now)) return json(429, { error: "rate_limited" });
 
   const body = (input.body ?? {}) as Record<string, unknown>;
   if (JSON.stringify(body).length > 20_000) return json(413, { error: "payload_too_large" });
 
-  const emailModeFlag = process.env.RESEND_API_KEY ? undefined : ("log" as const);
+  const provider = getHoldProvider();
+  const holdModeFlag = provider.simulated ? ({ holdMode: "simulated" } as const) : undefined;
 
-  // Honeypot: bots fill the invisible "website" field. Fake a success (same
-  // shape as the real one) so they can't tell they were caught. No email.
+  // Honeypot: bots fill the invisible "website" field. Hand back a decoy hold
+  // that looks exactly like a real one, so they cannot tell they were caught -
+  // but it never reaches a provider and confirming it sends nothing.
   if (typeof body.website === "string" && body.website.trim() !== "") {
     console.log("[hotel-booking] honeypot tripped from", input.ip);
-    return json(200, { ok: true, ref: makeRef(now), ...(emailModeFlag && { emailMode: emailModeFlag }) });
+    const decoyRef = makeRef(now);
+    return json(200, {
+      ok: true,
+      ref: decoyRef,
+      orderId: `SIMORDER-${randomBytes(9).toString("base64url")}`,
+      provider: "simulated",
+      simulated: true,
+      amount: HOLD_AMOUNT,
+      currency: HOLD_CURRENCY,
+      holdToken: signToken({
+        typ: "hold",
+        decoy: true,
+        ref: decoyRef,
+        room: "",
+        checkIn: "",
+        checkOut: "",
+        guests: 1,
+        name: "",
+        email: "",
+        lang: "en",
+        exp: now + HOLD_TOKEN_TTL_MS,
+      }),
+      ...holdModeFlag,
+    });
   }
 
   // Min time-to-submit: the form sends the timestamp it was opened at.
@@ -678,12 +1217,12 @@ async function createRequest(input: EngineInput, now: number): Promise<EngineOut
   if (!v.ok) return json(400, { error: v.error });
   const req = v.data;
 
-  // Per-email dedupe: double-submit within 10 min returns the same ref and
-  // does not re-email.
+  // Per-email dedupe: a double submit within 10 min returns the ref that was
+  // already issued and - crucially - opens no second authorization.
   const dedupeKey = req.email.toLowerCase();
   const recent = recentByEmail.get(dedupeKey);
   if (recent && now - recent.at < DEDUPE_WINDOW_MS) {
-    return json(200, { ok: true, ref: recent.ref, ...(emailModeFlag && { emailMode: emailModeFlag }) });
+    return json(200, { ok: true, duplicate: true, ref: recent.ref, ...holdModeFlag });
   }
   if (recentByEmail.size > 5000) {
     for (const [k, r] of recentByEmail) {
@@ -692,10 +1231,105 @@ async function createRequest(input: EngineInput, now: number): Promise<EngineOut
   }
 
   const ref = makeRef(now);
+  const nonce = randomBytes(12).toString("base64url");
+  const roomName = DATA.rooms[req.room]?.name.en ?? req.room;
+
+  const started = await provider.startHold({
+    nonce,
+    ref,
+    description: `${DATA.hotel.name} - ${roomName}, ${req.checkIn} to ${req.checkOut} (${ref})`,
+    returnUrl: hotelPageUrl(req.lang),
+    cancelUrl: hotelPageUrl(req.lang),
+  });
+  if (!started.ok) {
+    console.error("[hotel-booking] hold could not be opened:", started.code, started.message);
+    return json(502, { error: "hold_failed", code: started.code });
+  }
+
+  const holdToken = signToken({
+    typ: "hold",
+    nonce,
+    ref,
+    room: req.room,
+    checkIn: req.checkIn,
+    checkOut: req.checkOut,
+    guests: req.guests,
+    name: req.name,
+    email: req.email,
+    phone: req.phone,
+    notes: req.notes,
+    lang: req.lang,
+    exp: now + HOLD_TOKEN_TTL_MS,
+  });
+
+  return json(200, {
+    ok: true,
+    ref,
+    holdToken,
+    orderId: started.orderId,
+    ...(started.approveUrl && { approveUrl: started.approveUrl }),
+    provider: provider.name,
+    simulated: provider.simulated,
+    amount: HOLD_AMOUNT,
+    currency: HOLD_CURRENCY,
+    ...holdModeFlag,
+  });
+}
+
+// -- stage 1b: money is held -> the request may now exist ----------------------
+
+async function confirmHold(input: EngineInput, now: number): Promise<EngineOutput> {
+  const body = (input.body ?? {}) as Record<string, unknown>;
+  if (JSON.stringify(body).length > 20_000) return json(413, { error: "payload_too_large" });
+
+  const v = verifyToken(typeof body.holdToken === "string" ? body.holdToken : "", secret(), now);
+  if (!v.ok) return json(v.reason === "expired" ? 410 : 400, { error: `hold_${v.reason}` });
+  const p = v.payload;
+  if (p.typ !== "hold") return json(400, { error: "hold_invalid" });
+
+  const provider = getHoldProvider();
+  const holdModeFlag = provider.simulated ? ({ holdMode: "simulated" } as const) : undefined;
+  const emailModeFlag = process.env.RESEND_API_KEY ? undefined : ({ emailMode: "log" } as const);
+
+  // The honeypot decoy from stage 1a: same success shape, nothing happens.
+  if (p.decoy) return json(200, { ok: true, ref: p.ref, ...emailModeFlag, ...holdModeFlag });
+
+  const orderId = typeof body.orderId === "string" ? body.orderId.trim() : "";
+  if (!orderId || orderId.length > 100) return json(400, { error: "invalid_order" });
+
+  // Second dedupe read: a guest who double-approves inside the 10-minute window
+  // gets the ref they already have instead of a second request.
+  const dedupeKey = p.email.toLowerCase();
+  const recent = recentByEmail.get(dedupeKey);
+  if (recent && now - recent.at < DEDUPE_WINDOW_MS) {
+    return json(200, { ok: true, duplicate: true, ref: recent.ref, ...emailModeFlag, ...holdModeFlag });
+  }
+
+  const held = await provider.authorizeHold(orderId, p.nonce ?? "");
+  if (!held.ok) {
+    // No authorization means no request, no email to the guest, no ping to Ben.
+    console.error("[hotel-booking] authorization failed:", held.code, held.message);
+    return json(402, { error: "hold_not_authorized", code: held.code });
+  }
+
+  const req: BookingRequest = {
+    room: p.room,
+    checkIn: p.checkIn,
+    checkOut: p.checkOut,
+    nights: Math.round((Date.parse(`${p.checkOut}T00:00:00Z`) - Date.parse(`${p.checkIn}T00:00:00Z`)) / DAY_MS),
+    guests: p.guests,
+    name: p.name,
+    email: p.email,
+    phone: p.phone,
+    notes: p.notes,
+    lang: p.lang,
+  };
+  const ref = p.ref;
 
   // Decide-token stays valid until the day after check-in (Ben can still act
   // on a same-day request the next morning); +2d from check-in midnight UTC
-  // comfortably covers that in Bangkok time.
+  // comfortably covers that in Bangkok time. It carries the authorization id -
+  // with no database, this token IS the record of the held money.
   const decideToken = signToken({
     typ: "decide",
     ref,
@@ -708,6 +1342,8 @@ async function createRequest(input: EngineInput, now: number): Promise<EngineOut
     phone: req.phone,
     notes: req.notes,
     lang: req.lang,
+    auth: held.id,
+    ...(held.simulated && { holdSim: true }),
     exp: Date.parse(`${req.checkIn}T00:00:00Z`) + 2 * DAY_MS,
   });
   const decideUrl = `${baseUrl()}/api/hotel-booking?t=${decideToken}`;
@@ -724,7 +1360,9 @@ async function createRequest(input: EngineInput, now: number): Promise<EngineOut
     return json(502, { error: "email_failed" });
   }
 
-  // 2) Staff notification via n8n - never fails the request.
+  // 2) Staff notification via n8n - never fails the request. The authorization
+  //    id goes into the audit log here so the droplet's jsonl can reconcile
+  //    against PayPal even if the decide link is never opened.
   await notifyStaff({
     event: "requested",
     ref,
@@ -738,10 +1376,16 @@ async function createRequest(input: EngineInput, now: number): Promise<EngineOut
     lang: req.lang,
     notes: req.notes ?? null,
     decideUrl,
+    holdAuthId: held.id,
+    holdOrderId: orderId,
+    holdAmount: HOLD_AMOUNT,
+    holdCurrency: HOLD_CURRENCY,
+    holdProvider: provider.name,
+    holdSimulated: provider.simulated,
   });
 
   recentByEmail.set(dedupeKey, { ref, at: now });
-  return json(200, { ok: true, ref, ...(emailMode === "log" && { emailMode }) });
+  return json(200, { ok: true, ref, ...(emailMode === "log" && { emailMode }), ...holdModeFlag });
 }
 
 // -- stage 2: Ben decides -----------------------------------------------------
@@ -772,9 +1416,10 @@ async function decisionPage(token: string, now: number): Promise<EngineOutput> {
 async function decide(
   token: string,
   action: "approve" | "decline",
-  body: unknown,
+  rawBody: unknown,
   now: number,
 ): Promise<EngineOutput> {
+  const body = (rawBody ?? {}) as Record<string, unknown>;
   const v = verifyToken(token, secret(), now);
   if (!v.ok) {
     return html(
@@ -807,6 +1452,54 @@ async function decide(
   let emailMode: EmailMode;
   let alternative: string | undefined;
 
+  // ---- the money moves BEFORE the guest is told anything ----
+  //
+  // Tokens minted before deposits existed carry no `auth`; they decide exactly
+  // as they always did, and their emails render the no-money wording.
+  const provider = getHoldProvider();
+  const hasHold = typeof p.auth === "string" && p.auth.length > 0;
+  // "Approve anyway" - the only escape hatch, offered on the capture-failure
+  // page. It confirms the room and says plainly that nothing was charged.
+  const skipCapture = action === "approve" && body.nopay === "1";
+  let captured = false;
+  let released = false;
+
+  if (hasHold && !skipCapture) {
+    const outcome =
+      action === "approve" ? await provider.captureHold(p.auth!) : await provider.voidHold(p.auth!);
+
+    if (!outcome.ok) {
+      // Never claim the guest was emailed when the money step failed. Ben sees
+      // the real reason; the audit log gets it too.
+      await notifyStaff({
+        event: action === "approve" ? "capture_failed" : "void_failed",
+        ref: p.ref,
+        room: p.room,
+        checkIn: p.checkIn,
+        checkOut: p.checkOut,
+        name: p.name,
+        email: p.email,
+        lang: p.lang,
+        holdAuthId: p.auth,
+        holdAmount: HOLD_AMOUNT,
+        holdCurrency: HOLD_CURRENCY,
+        holdErrorCode: outcome.code,
+        holdErrorMessage: outcome.message,
+      });
+      console.error(
+        `[hotel-booking] ${action === "approve" ? "capture" : "void"} failed for ${p.ref}:`,
+        outcome.code,
+        outcome.message,
+      );
+      return html(
+        200,
+        holdFailurePage(action, outcome.code, p, token),
+      );
+    }
+    captured = action === "approve";
+    released = action === "decline";
+  }
+
   if (action === "approve") {
     // Guest token lets the guest open /hotel/book until their check-out day
     // has fully passed in Bangkok (+1d from check-out midnight UTC).
@@ -824,17 +1517,16 @@ async function decide(
     });
     const registerUrl = `${baseUrl()}/hotel/book?ref=${guestToken}`;
     try {
-      const email = buildEmail("final", p.lang, req, { registerUrl });
+      const email = buildEmail("final", p.lang, req, { registerUrl, prepaid: captured });
       emailMode = await sendEmail(p.email, email.subject, email.html);
     } catch (err) {
       console.error("[hotel-booking] final email failed:", err instanceof Error ? err.message : err);
       return html(502, errorPage("Email failed", "The confirmation email could not be sent. Tap back and try again."));
     }
   } else {
-    const b = (body ?? {}) as Record<string, unknown>;
-    alternative = typeof b.alternative === "string" ? b.alternative.trim().slice(0, 500) : undefined;
+    alternative = typeof body.alternative === "string" ? body.alternative.trim().slice(0, 500) : undefined;
     try {
-      const email = buildEmail("decline", p.lang, req, { alternative });
+      const email = buildEmail("decline", p.lang, req, { alternative, released });
       emailMode = await sendEmail(p.email, email.subject, email.html);
     } catch (err) {
       console.error("[hotel-booking] decline email failed:", err instanceof Error ? err.message : err);
@@ -855,9 +1547,17 @@ async function decide(
     email: p.email,
     lang: p.lang,
     ...(alternative ? { alternative } : {}),
+    holdAuthId: p.auth ?? null,
+    holdAmount: hasHold ? HOLD_AMOUNT : null,
+    holdCurrency: hasHold ? HOLD_CURRENCY : null,
+    holdOutcome: captured ? "captured" : released ? "voided" : skipCapture ? "skipped" : "none",
+    holdSimulated: p.holdSim === true || provider.simulated,
   });
 
-  return html(200, donePage(action === "approve" ? "approved" : "declined", p, emailMode));
+  return html(
+    200,
+    donePage(action === "approve" ? "approved" : "declined", p, emailMode, { captured, released }),
+  );
 }
 
 // -- stage 3: guest registration ---------------------------------------------
