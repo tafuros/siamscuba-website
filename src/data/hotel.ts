@@ -456,6 +456,15 @@ export const sortedRooms = () =>
 // Copy
 // ---------------------------------------------------------------------------
 
+/**
+ * Mirrors MAX_NIGHTS / MAX_GUESTS in api/hotel-booking.ts. Duplicated rather
+ * than imported because that module is a serverless function - pulling it into
+ * the bundle would ship the whole booking engine to the browser. A unit test
+ * asserts the two stay equal.
+ */
+export const HOTEL_MAX_NIGHTS = 30;
+export const HOTEL_MAX_GUESTS = 6;
+
 export interface HotelCopy {
   seoTitle: string;
   seoDescription: string;
@@ -496,7 +505,24 @@ export interface HotelCopy {
   bookSuccessBody: string;
   /** Label above the reference chip (success panel, /hotel/book, emails). */
   bookRefLabel: string;
+  /** Generic fallback - only for failures the guest cannot act on. */
   bookError: string;
+  /**
+   * Specific, fixable failures. Keyed to the API's validation codes
+   * (`validateRequest` in api/hotel-booking.ts) and to the identical checks the
+   * sheet runs on the client before anything is sent. Anything not in this list
+   * falls back to `bookError`.
+   */
+  bookErrDateOrder: string;
+  bookErrDatePast: string;
+  bookErrDatesInvalid: string;
+  bookErrMaxNights: (nights: number) => string;
+  bookErrGuests: (max: number) => string;
+  bookErrName: string;
+  bookErrEmail: string;
+  bookErrNotes: string;
+  bookErrRoom: string;
+  bookErrRate: string;
   bookClose: string;
   /**
    * Payment step (BookingRequestForm.tsx). A 1,000 THB hold is placed when the
@@ -606,6 +632,17 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
       "Check your email - we sent you a confirmation of your request. We check availability personally, so your final answer usually arrives within a few hours.",
     bookRefLabel: "Your reference",
     bookError: "Something went wrong - please try again, or message us on WhatsApp.",
+    bookErrDateOrder: "Check-out must be at least one night after check-in.",
+    bookErrDatePast: "Check-in cannot be in the past - please pick today or a later date.",
+    bookErrDatesInvalid: "Please pick a valid check-in and check-out date.",
+    bookErrMaxNights: (nights) =>
+      `We can only book up to ${nights} nights online - please shorten the stay, or message us on WhatsApp.`,
+    bookErrGuests: (max) => `Please pick between 1 and ${max} guests.`,
+    bookErrName: "Please enter your full name.",
+    bookErrEmail: "That email address does not look right - please check it and try again.",
+    bookErrNotes: "Your note is too long - please keep it under 300 characters.",
+    bookErrRoom: "This room is no longer available - please pick another room.",
+    bookErrRate: "Too many attempts from this device - please wait a minute and try again.",
     bookClose: "Close",
     payStepTitle: "Hold ฿1,000 to send your request",
     payStepIntro:
@@ -695,6 +732,17 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
       "בדקו את המייל - שלחנו אישור על קבלת הבקשה. אנחנו בודקים זמינות באופן אישי, כך שתשובה סופית מגיעה בדרך כלל תוך כמה שעות.",
     bookRefLabel: "מספר הבקשה שלך",
     bookError: "משהו השתבש - נסו שוב, או כתבו לנו בוואטסאפ.",
+    bookErrDateOrder: "הצ'ק-אאוט חייב להיות לפחות לילה אחד אחרי הצ'ק-אין.",
+    bookErrDatePast: "אי אפשר לבחור צ'ק-אין בעבר - בחרו את היום או תאריך מאוחר יותר.",
+    bookErrDatesInvalid: "בחרו תאריכי צ'ק-אין וצ'ק-אאוט תקינים.",
+    bookErrMaxNights: (nights) =>
+      `אפשר להזמין אונליין עד ${nights} לילות - קצרו את השהות, או כתבו לנו בוואטסאפ.`,
+    bookErrGuests: (max) => `בחרו בין אורח אחד ל-${max} אורחים.`,
+    bookErrName: "הזינו שם מלא.",
+    bookErrEmail: "כתובת האימייל לא נראית תקינה - בדקו אותה ונסו שוב.",
+    bookErrNotes: "ההערה ארוכה מדי - עד 300 תווים.",
+    bookErrRoom: "החדר הזה כבר לא זמין - בחרו חדר אחר.",
+    bookErrRate: "יותר מדי ניסיונות מהמכשיר הזה - המתינו דקה ונסו שוב.",
     bookClose: "סגירה",
     payStepTitle: "הקפאה של ฿1,000 כדי לשלוח את הבקשה",
     payStepIntro:
@@ -808,6 +856,17 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
       "Revisa tu correo: te enviamos la confirmación de tu solicitud. Comprobamos la disponibilidad personalmente, así que la respuesta final suele llegar en unas horas.",
     bookRefLabel: "Tu referencia",
     bookError: "Algo salió mal - inténtalo de nuevo o escríbenos por WhatsApp.",
+    bookErrDateOrder: "La salida debe ser al menos una noche después de la entrada.",
+    bookErrDatePast: "La entrada no puede ser en el pasado - elige hoy o una fecha posterior.",
+    bookErrDatesInvalid: "Elige fechas de entrada y salida válidas.",
+    bookErrMaxNights: (nights) =>
+      `Online podemos reservar hasta ${nights} noches - acorta la estancia o escríbenos por WhatsApp.`,
+    bookErrGuests: (max) => `Elige entre 1 y ${max} huéspedes.`,
+    bookErrName: "Escribe tu nombre completo.",
+    bookErrEmail: "Esa dirección de correo no parece correcta - revísala e inténtalo de nuevo.",
+    bookErrNotes: "Tu nota es demasiado larga - máximo 300 caracteres.",
+    bookErrRoom: "Esta habitación ya no está disponible - elige otra.",
+    bookErrRate: "Demasiados intentos desde este dispositivo - espera un minuto e inténtalo de nuevo.",
     bookClose: "Cerrar",
     payStepTitle: "Retén ฿1.000 para enviar tu solicitud",
     payStepIntro:
@@ -921,6 +980,17 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
       "Vérifiez votre boîte mail - nous vous avons envoyé une confirmation de votre demande. Nous vérifions la disponibilité personnellement ; la réponse définitive arrive généralement en quelques heures.",
     bookRefLabel: "Votre référence",
     bookError: "Un problème est survenu - réessayez, ou écrivez-nous sur WhatsApp.",
+    bookErrDateOrder: "Le départ doit être au moins une nuit après l'arrivée.",
+    bookErrDatePast: "L'arrivée ne peut pas être dans le passé - choisissez aujourd'hui ou une date ultérieure.",
+    bookErrDatesInvalid: "Choisissez des dates d'arrivée et de départ valides.",
+    bookErrMaxNights: (nights) =>
+      `En ligne, nous pouvons réserver jusqu'à ${nights} nuits - raccourcissez le séjour, ou écrivez-nous sur WhatsApp.`,
+    bookErrGuests: (max) => `Choisissez entre 1 et ${max} voyageurs.`,
+    bookErrName: "Saisissez votre nom complet.",
+    bookErrEmail: "Cette adresse e-mail semble incorrecte - vérifiez-la et réessayez.",
+    bookErrNotes: "Votre note est trop longue - 300 caractères maximum.",
+    bookErrRoom: "Cette chambre n'est plus disponible - choisissez-en une autre.",
+    bookErrRate: "Trop de tentatives depuis cet appareil - patientez une minute et réessayez.",
     bookClose: "Fermer",
     payStepTitle: "Bloquez ฿1 000 pour envoyer votre demande",
     payStepIntro:

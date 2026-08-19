@@ -147,10 +147,12 @@ describe("create request - validation", () => {
   const cases: [string, Record<string, unknown>, string][] = [
     ["unknown room", { room: "presidential-suite" }, "invalid_room"],
     ["sold-out room", { room: "superior-room" }, "invalid_room"],
-    ["check-in in the past", { checkIn: "2026-08-10", checkOut: "2026-08-20" }, "invalid_dates"],
-    ["check-out not after check-in", { checkIn: "2026-09-01", checkOut: "2026-09-01" }, "invalid_dates"],
-    ["check-out before check-in", { checkIn: "2026-09-04", checkOut: "2026-09-01" }, "invalid_dates"],
-    ["more than 30 nights", { checkIn: "2026-09-01", checkOut: "2026-10-15" }, "invalid_dates"],
+    // Each date failure carries its own code so the booking sheet can name the
+    // fix. The rejections are unchanged - only the code got more specific.
+    ["check-in in the past", { checkIn: "2026-08-10", checkOut: "2026-08-20" }, "checkin_in_past"],
+    ["check-out not after check-in", { checkIn: "2026-09-01", checkOut: "2026-09-01" }, "checkout_not_after_checkin"],
+    ["check-out before check-in", { checkIn: "2026-09-04", checkOut: "2026-09-01" }, "checkout_not_after_checkin"],
+    ["more than 30 nights", { checkIn: "2026-09-01", checkOut: "2026-10-15" }, "stay_too_long"],
     ["garbage date", { checkIn: "01/09/2026" }, "invalid_dates"],
     ["zero guests", { guests: 0 }, "invalid_guests"],
     ["too many guests", { guests: 7 }, "invalid_guests"],
