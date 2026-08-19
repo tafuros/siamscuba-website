@@ -130,8 +130,10 @@ function setLinkBase(req: VercelRequest): void {
 }
 const EMAIL_FROM = "Siam Hotel & Hostel <hotel@siamscuba.com>";
 const EMAIL_REPLY_TO = "hotel@siamscuba.com";
-const MAX_NIGHTS = 30;
-const MAX_GUESTS = 6;
+// Exported so the booking sheet's client-side copy can quote the same numbers.
+// The server stays the authority - the client only pre-empts the round trip.
+export const MAX_NIGHTS = 30;
+export const MAX_GUESTS = 6;
 const MIN_SUBMIT_MS = 2000; // form open -> submit faster than this = bot
 const DEDUPE_WINDOW_MS = 10 * 60_000; // same email within 10 min -> same ref, no re-email
 
@@ -304,13 +306,17 @@ export function validateRequest(body: Record<string, unknown>, now = Date.now())
 
   const checkIn = str(body.checkIn);
   const checkOut = str(body.checkOut);
+  // Each date failure gets its own code so the sheet can tell the guest what to
+  // fix instead of dumping them on "contact us". The rejections themselves are
+  // unchanged - this only splits one code into four.
   if (!DATE_RE.test(checkIn) || !DATE_RE.test(checkOut)) return { ok: false, error: "invalid_dates" };
   const ci = Date.parse(`${checkIn}T00:00:00Z`);
   const co = Date.parse(`${checkOut}T00:00:00Z`);
   if (!Number.isFinite(ci) || !Number.isFinite(co)) return { ok: false, error: "invalid_dates" };
-  if (checkIn < bangkokToday(now)) return { ok: false, error: "invalid_dates" };
+  if (checkIn < bangkokToday(now)) return { ok: false, error: "checkin_in_past" };
   const nights = Math.round((co - ci) / DAY_MS);
-  if (nights < 1 || nights > MAX_NIGHTS) return { ok: false, error: "invalid_dates" };
+  if (nights < 1) return { ok: false, error: "checkout_not_after_checkin" };
+  if (nights > MAX_NIGHTS) return { ok: false, error: "stay_too_long" };
 
   const guests = Number(body.guests);
   if (!Number.isInteger(guests) || guests < 1 || guests > MAX_GUESTS) {

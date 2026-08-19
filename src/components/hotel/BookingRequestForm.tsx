@@ -4,7 +4,8 @@ import { X, CheckCircle2, MessageCircle, ShieldCheck, ArrowLeft } from "lucide-r
 import type { Language } from "@/i18n/translations";
 import { type HotelRoom, type HotelCopy, hotelWhatsAppLink } from "@/data/hotel";
 import { trackWhatsAppClick } from "@/utils/tracking";
-import { loadPayPalSdk, type PayPalButtonsController } from "@/lib/paypalSdk";
+import { loadPayPalSdk, paypalLocale, type PayPalButtonsController } from "@/lib/paypalSdk";
+import { bangkokToday, bookingErrorMessage, validateStayDates } from "@/lib/hotelBookingErrors";
 
 /**
  * "Request to book" sheet - stages 0 and 1 of the booking flow.
@@ -24,6 +25,14 @@ import { loadPayPalSdk, type PayPalButtonsController } from "@/lib/paypalSdk";
  * Carries the same two silent anti-bot signals the API enforces: a honeypot
  * field ("website" - humans never see it) and the timestamp the form was opened
  * at (submits faster than 2s are rejected server-side).
+ *
+ * Failures the guest can fix (a same-day range, a past check-in, a stay over 30
+ * nights, a typo'd email) get their own inline message in the page's language,
+ * next to the field at fault - see src/lib/hotelBookingErrors.ts. The generic
+ * "message us on WhatsApp" line is now reserved for failures that are genuinely
+ * ours: network, provider, anything unmapped. The date rules also run here
+ * before the request goes out, so a two-second mistake never opens a hold; the
+ * server re-checks all of them and stays the authority.
  */
 
 interface BookingRequestFormProps {
@@ -34,7 +43,7 @@ interface BookingRequestFormProps {
   onOpenChange: (open: boolean) => void;
 }
 
-type Status = "idle" | "sending" | "success" | "error";
+type Status = "idle" | "sending" | "success";
 type PayState = "loading" | "ready" | "processing" | "error" | "cancelled";
 
 interface HoldSession {
@@ -65,12 +74,28 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
   // for a mail that was only ever written to the function log.
   const [logMode, setLogMode] = useState(false);
   const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  // Two error slots: one beside the date pair, one under the form. Only ever
+  // one of them is set, so the guest sees a single instruction at a time.
+  const [dateError, setDateError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
   const [hold, setHold] = useState<HoldSession | null>(null);
   const [payState, setPayState] = useState<PayState>("loading");
   const openedAtRef = useRef(0);
   const buttonsHostRef = useRef<HTMLDivElement>(null);
   const waHref = hotelWhatsAppLink(lang, room.name[lang]);
-  const today = new Date().toISOString().slice(0, 10);
+  // The hotel is in Thailand - "today" has to be Bangkok's, or a guest booking
+  // from Europe is offered a date the server already counts as the past.
+  const today = bangkokToday();
+
+  const showError = useCallback(
+    (code: string | null | undefined) => {
+      const { scope, message } = bookingErrorMessage(code, copy);
+      setDateError(scope === "dates" ? message : null);
+      setFormError(scope === "dates" ? null : message);
+    },
+    [copy],
+  );
 
   // The min-time-to-submit clock starts when the sheet opens, not on mount.
   useEffect(() => {
@@ -79,6 +104,8 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
       setStatus("idle");
       setHold(null);
       setPayState("loading");
+      setDateError(null);
+      setFormError(null);
     }
   }, [open]);
 
@@ -117,7 +144,11 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
     let cancelled = false;
     let controller: PayPalButtonsController | null = null;
 
-    loadPayPalSdk(hold.clientId, hold.currency)
+    // Explicit locale: left to guess, the SDK reads the browser and the IP and
+    // put Hebrew buttons on the English page. It follows `lang` now, and the
+    // loader keys its cached script by locale so a language switch without a
+    // reload really does redraw the buttons in the new language.
+    loadPayPalSdk(hold.clientId, hold.currency, paypalLocale(lang))
       .then((paypal) => {
         if (cancelled || !buttonsHostRef.current) return;
         controller = paypal.Buttons({
@@ -143,13 +174,27 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
         /* the SDK throws when closing an already-torn-down instance */
       }
     };
-  }, [hold, status, confirmHold]);
+  }, [hold, status, confirmHold, lang]);
 
   /** Stage 1a - validate the details and open the hold. No request exists yet. */
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === "sending") return;
     const form = new FormData(e.currentTarget);
+
+    // Same-day and backwards ranges are caught here, before any request and
+    // before any money is held - the guest fixes it in two seconds instead of
+    // being told to go and message us.
+    const ci = String(form.get("checkIn") ?? "");
+    const co = String(form.get("checkOut") ?? "");
+    const dateProblem = validateStayDates(ci, co, today);
+    if (dateProblem) {
+      showError(dateProblem);
+      return;
+    }
+
+    setDateError(null);
+    setFormError(null);
     setStatus("sending");
     try {
       const res = await fetch("/api/hotel-booking?action=hold", {
@@ -157,8 +202,8 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           room: room.slug,
-          checkIn: form.get("checkIn"),
-          checkOut: form.get("checkOut"),
+          checkIn: ci,
+          checkOut: co,
           guests: Number(form.get("guests")),
           name: form.get("name"),
           email: form.get("email"),
@@ -170,7 +215,13 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
         }),
       });
       const json = await res.json();
-      if (!res.ok || !json.ok) throw new Error(json.error ?? `status ${res.status}`);
+      if (!res.ok || !json.ok) {
+        // The API's validation code decides which message the guest sees; an
+        // unmapped one (hold_failed, too_fast, ...) lands on the generic line.
+        showError(typeof json.error === "string" ? json.error : null);
+        setStatus("idle");
+        return;
+      }
 
       // A double submit inside the dedupe window already has a request behind
       // it - go straight to the confirmation instead of holding money twice.
@@ -198,7 +249,9 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
       setPayState(json.simulated ? "ready" : "loading");
       setStatus("idle");
     } catch {
-      setStatus("error");
+      // Network or a malformed response - not the guest's to fix.
+      showError(null);
+      setStatus("idle");
     }
   };
 
@@ -366,35 +419,58 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
                 </label>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor={`ci-${room.slug}`} className={LABEL}>
-                    {copy.bookCheckIn}
-                  </label>
-                  <input
-                    id={`ci-${room.slug}`}
-                    name="checkIn"
-                    type="date"
-                    required
-                    min={today}
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    className={FIELD}
-                  />
+              <div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label htmlFor={`ci-${room.slug}`} className={LABEL}>
+                      {copy.bookCheckIn}
+                    </label>
+                    <input
+                      id={`ci-${room.slug}`}
+                      name="checkIn"
+                      type="date"
+                      required
+                      min={today}
+                      value={checkIn}
+                      onChange={(e) => {
+                        setCheckIn(e.target.value);
+                        setDateError(null);
+                      }}
+                      aria-invalid={dateError ? true : undefined}
+                      aria-describedby={dateError ? `dates-err-${room.slug}` : undefined}
+                      className={FIELD}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor={`co-${room.slug}`} className={LABEL}>
+                      {copy.bookCheckOut}
+                    </label>
+                    <input
+                      id={`co-${room.slug}`}
+                      name="checkOut"
+                      type="date"
+                      required
+                      min={checkIn || today}
+                      value={checkOut}
+                      onChange={(e) => {
+                        setCheckOut(e.target.value);
+                        setDateError(null);
+                      }}
+                      aria-invalid={dateError ? true : undefined}
+                      aria-describedby={dateError ? `dates-err-${room.slug}` : undefined}
+                      className={FIELD}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor={`co-${room.slug}`} className={LABEL}>
-                    {copy.bookCheckOut}
-                  </label>
-                  <input
-                    id={`co-${room.slug}`}
-                    name="checkOut"
-                    type="date"
-                    required
-                    min={checkIn || today}
-                    className={FIELD}
-                  />
-                </div>
+                {dateError && (
+                  <p
+                    id={`dates-err-${room.slug}`}
+                    role="alert"
+                    className="mt-1.5 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs leading-relaxed text-rose-700"
+                  >
+                    {dateError}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -462,9 +538,12 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
                 <textarea id={`nt-${room.slug}`} name="notes" rows={2} maxLength={300} className={FIELD} />
               </div>
 
-              {status === "error" && (
-                <p className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-sm text-rose-700">
-                  {copy.bookError}
+              {formError && (
+                <p
+                  role="alert"
+                  className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-sm text-rose-700"
+                >
+                  {formError}
                 </p>
               )}
 
