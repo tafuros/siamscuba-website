@@ -62,7 +62,12 @@ const NEMO_HIDDEN_PREFIXES = ["/hotel", "/he/hotel", "/es/hotel", "/fr/hotel"];
 
 const ChatWidget = () => {
   const { pathname } = useLocation();
-  if (NEMO_HIDDEN_PREFIXES.includes(pathname.replace(/\/$/, ""))) return null;
+  // Prefix, not exact match: /hotel/book is part of the hotel mini-site too, and
+  // an exact check let the bubble sit on top of its submit button.
+  const path = pathname.replace(/\/$/, "");
+  if (NEMO_HIDDEN_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
+    return null;
+  }
   return (
     <Suspense fallback={null}>
       <NemoChat />
