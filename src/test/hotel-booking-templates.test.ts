@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildEmail, renderTemplate, type Lang } from "../../api/hotel-booking";
+import { buildEmail, formatDecidedAt, renderTemplate, type Lang } from "../../api/hotel-booking";
 
 const LANGS: Lang[] = ["en", "he", "es", "fr"];
 const KINDS = ["provisional", "final", "decline"] as const;
@@ -117,5 +117,20 @@ describe("email templates - all kinds x all languages", () => {
     expect(one.html).not.toContain("1 nights");
     const he = buildEmail("provisional", "he", { ...req, nights: 3 });
     expect(he.html).toContain("3 לילות");
+  });
+});
+
+// The decided page once showed "approved at unknown time" for every repeat tap:
+// the workflow returns the instant as `at`, the engine read `decidedAt`.
+describe("formatDecidedAt", () => {
+  it("renders the instant in Koh Tao time", () => {
+    // 02:36 UTC is 09:36 in Asia/Bangkok
+    expect(formatDecidedAt("2026-08-19T02:36:58.967Z")).toContain("09:36");
+    expect(formatDecidedAt("2026-08-19T02:36:58.967Z")).toContain("19 Aug");
+  });
+
+  it("falls back instead of printing an empty or broken time", () => {
+    expect(formatDecidedAt(undefined)).toBe("an earlier time");
+    expect(formatDecidedAt("not-a-date")).toBe("an earlier time");
   });
 });

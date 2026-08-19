@@ -26,7 +26,7 @@
 //   POST ${HOTEL_NOTIFY_URL}                 header X-Hotel-Token
 //        body {event: "requested"|"approved"|"declined"|"registration_completed", ref, ...}
 //   GET  ${HOTEL_NOTIFY_URL}-status?ref=<ref> header X-Hotel-Token
-//        -> 200 {status: "requested"|"approved"|"declined", decidedAt?: string}
+//        -> 200 {status: "requested"|"approved"|"declined", at?: string}
 //   n8n being down NEVER fails a guest request (log + continue) and the status
 //   check fails OPEN (undecided) - the jsonl on the droplet is the audit trail.
 //
@@ -332,6 +332,21 @@ export function renderTemplate(tpl: string, vars: Record<string, string | number
 
 const LOCALE: Record<Lang, string> = { en: "en-GB", he: "he-IL", es: "es-ES", fr: "fr-FR" };
 
+// Decision timestamps come back as an ISO instant and are read by whoever is
+// standing at the desk, so they render in Koh Tao time, not UTC.
+export function formatDecidedAt(iso: string | undefined): string {
+  if (!iso) return "an earlier time";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "an earlier time";
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Bangkok",
+  }).format(d);
+}
+
 function formatDate(iso: string, lang: Lang): string {
   return new Intl.DateTimeFormat(LOCALE[lang], {
     weekday: "short",
@@ -465,9 +480,11 @@ async function fetchDecisionStatus(ref: string): Promise<DecisionStatus> {
       signal: ctrl.signal,
     });
     if (!res.ok) throw new Error(`status ${res.status}`);
-    const json = (await res.json()) as { status?: string; decidedAt?: string };
+    // The workflow names this field `at`; `decidedAt` is accepted too so an
+    // older or renamed payload still shows a real time instead of a blank.
+    const json = (await res.json()) as { status?: string; at?: string; decidedAt?: string };
     if (json?.status === "approved" || json?.status === "declined") {
-      return { decided: true, action: json.status, at: json.decidedAt ?? "unknown time" };
+      return { decided: true, action: json.status, at: formatDecidedAt(json.at ?? json.decidedAt) };
     }
     return { decided: false };
   } catch (err) {
