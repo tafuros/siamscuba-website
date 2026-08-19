@@ -15,6 +15,7 @@ import {
 } from "@/data/goPro";
 import PadiStars from "./PadiStars";
 import { useNextExam } from "./useNextExam";
+import { courseDetails } from "@/i18n/courseDetails";
 
 /**
  * /go-pro - the destination for the gate's black card and the homepage band.
@@ -45,6 +46,13 @@ const GoProContent = ({ lang }: GoProContentProps) => {
   const rtl = lang === "he";
   const waLang = normalizeLang(lang);
   const heroWa = buildWhatsAppLink({ topic: "idc", lang: waLang });
+
+  // Bob's bio + the IDC photo set live on the IDC course entry (translated
+  // en/he/es/fr) - reuse them here so there is a single source of truth.
+  const idcDetail =
+    courseDetails[lang]?.["IDC (Instructor Course)"] ?? courseDetails.en["IDC (Instructor Course)"];
+  const bob = idcDetail?.instructor;
+  const gallery = idcDetail?.gallery;
 
   return (
     <div dir={rtl ? "rtl" : "ltr"} className="min-h-screen bg-[#04090f] text-white">
@@ -193,6 +201,61 @@ const GoProContent = ({ lang }: GoProContentProps) => {
           <p className="mt-6 text-sm text-white/45">{copy.priceNote}</p>
         </div>
       </section>
+
+      {/* --------------------------------------------- your course director */}
+      {bob && (
+        <section className="border-t border-white/10 py-16 sm:py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-center">
+              <figure className="relative mx-auto w-full max-w-[340px] lg:mx-0">
+                <img
+                  src={bob.photo}
+                  alt={bob.photoAlt}
+                  width={608}
+                  height={1080}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover"
+                />
+                <figcaption className="mt-3 text-center text-xs text-white/45 lg:text-start">
+                  {bob.name} · {bob.role}
+                </figcaption>
+              </figure>
+
+              <div>
+                <div className="mb-4 flex items-center gap-2.5">
+                  <PadiStars className="h-3 w-3" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#419EBC]">
+                    {bob.title}
+                  </span>
+                </div>
+                <h2 className="font-display text-3xl text-white sm:text-4xl">{bob.name}</h2>
+                <p className="mt-1.5 text-sm font-semibold text-[#A5C5D4]">{bob.role}</p>
+                {bob.paragraphs.map((paragraph) => (
+                  <p key={paragraph} className="mt-4 max-w-[58ch] leading-relaxed text-white/65">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            {gallery && (
+              <div className="mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2">
+                {gallery.map((photo) => (
+                  <img
+                    key={photo.src}
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={608}
+                    height={1080}
+                    loading="lazy"
+                    className="h-64 w-auto shrink-0 snap-start rounded-xl border border-white/10 object-cover sm:h-72"
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ------------------------------------------------------ exam dates */}
       <section
