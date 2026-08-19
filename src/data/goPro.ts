@@ -271,7 +271,7 @@ export const GO_PRO_COPY: Record<Language, GoProCopy> = {
     credentialSub: "The rating PADI gives centres authorised to train new instructors.",
     tracksTitle: "Two courses, one route",
     tracksSub:
-      "Divemaster and the IDC are separate certifications with separate prerequisites. Take one, or book them back to back and do the whole route in a single trip.",
+      "Divemaster and the IDC are separate certifications with separate prerequisites. Take one, or book them back to back and become the complete professional in one visit.",
     forWhoLabel: "Who it's for",
     durationLabel: "Length",
     trackCta: "Ask about this",
@@ -309,7 +309,7 @@ export const GO_PRO_COPY: Record<Language, GoProCopy> = {
     credentialSub: "הדירוג ש-PADI נותנת למרכזים המורשים להכשיר מדריכים חדשים.",
     tracksTitle: "שני קורסים, מסלול אחד",
     tracksSub:
-      "דייבמאסטר ו-IDC הם הסמכות נפרדות עם תנאי קבלה נפרדים. אפשר לעשות אחד מהם, או להירשם לשניהם ברצף ולסיים את כל המסלול בנסיעה אחת.",
+      "דייבמאסטר ו-IDC הם הסמכות נפרדות עם תנאי קבלה נפרדים. אפשר לעשות אחד מהם, או להירשם לשניהם ברצף ולהפוך למקצוען השלם בביקור אחד.",
     forWhoLabel: "למי זה מתאים",
     durationLabel: "משך",
     trackCta: "לשאול על זה",
@@ -347,7 +347,7 @@ export const GO_PRO_COPY: Record<Language, GoProCopy> = {
     credentialSub: "La categoría que PADI da a los centros autorizados a formar nuevos instructores.",
     tracksTitle: "Dos cursos, una ruta",
     tracksSub:
-      "El Divemaster y el IDC son certificaciones separadas con requisitos distintos. Haz uno, o resérvalos seguidos y completa la ruta entera en un solo viaje.",
+      "El Divemaster y el IDC son certificaciones separadas con requisitos distintos. Haz uno, o resérvalos seguidos y conviértete en el profesional completo en una sola visita.",
     forWhoLabel: "Para quién es",
     durationLabel: "Duración",
     trackCta: "Preguntar por esto",
@@ -385,7 +385,7 @@ export const GO_PRO_COPY: Record<Language, GoProCopy> = {
     credentialSub: "Le statut que PADI accorde aux centres autorisés à former de nouveaux instructeurs.",
     tracksTitle: "Deux cours, un parcours",
     tracksSub:
-      "Le Divemaster et l'IDC sont deux certifications distinctes, avec des prérequis différents. Faites-en un, ou réservez-les à la suite et bouclez tout le parcours en un seul voyage.",
+      "Le Divemaster et l'IDC sont deux certifications distinctes, avec des prérequis différents. Faites-en un, ou réservez-les à la suite et devenez le professionnel complet en une seule visite.",
     forWhoLabel: "Pour qui",
     durationLabel: "Durée",
     trackCta: "Poser une question",
