@@ -490,7 +490,6 @@ export interface HotelCopy {
   bookEmail: string;
   bookPhone: string;
   bookNotes: string;
-  bookSubmit: string;
   bookSending: string;
   bookSuccessTitle: string;
   /** Never carries the reference - the panel shows it as its own chip. */
@@ -499,6 +498,27 @@ export interface HotelCopy {
   bookRefLabel: string;
   bookError: string;
   bookClose: string;
+  /**
+   * Payment step (BookingRequestForm.tsx). A 1,000 THB hold is placed when the
+   * guest sends the request and taken only if we confirm the room, where it is
+   * credited against the bill. It is NOT a separate refundable deposit and no
+   * string here may imply otherwise.
+   */
+  payStepTitle: string;
+  payStepIntro: string;
+  /** Exactly three: held now / charged only on confirmation / credited. */
+  payPoints: string[];
+  payAmountLabel: string;
+  payContinue: string;
+  payFormNote: string;
+  payProcessing: string;
+  payError: string;
+  payCancelled: string;
+  paySimulatedNote: string;
+  paySimulatedButton: string;
+  payBack: string;
+  /** Extra line on the success panel, once the hold is in place. */
+  bookSuccessHold: string;
   photosSoon: string;
   amenities: Record<AmenityKey, string>;
   goodToKnowTitle: string;
@@ -580,7 +600,6 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookEmail: "Email",
     bookPhone: "Phone (optional)",
     bookNotes: "Anything we should know? (optional)",
-    bookSubmit: "Send request",
     bookSending: "Sending...",
     bookSuccessTitle: "Request sent!",
     bookSuccessBody:
@@ -588,6 +607,24 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookRefLabel: "Your reference",
     bookError: "Something went wrong - please try again, or message us on WhatsApp.",
     bookClose: "Close",
+    payStepTitle: "Hold ฿1,000 to send your request",
+    payStepIntro:
+      "We check every room by hand, so a request only reaches us with a hold behind it. Here is exactly what happens to your money.",
+    payPoints: [
+      "฿1,000 is held on your card now - held, not charged.",
+      "If we confirm the room, we take it and it comes off your bill.",
+      "If we cannot, the hold is released and you pay nothing.",
+    ],
+    payAmountLabel: "Held now",
+    payContinue: "Continue to payment",
+    payFormNote: "Next step: a ฿1,000 hold. Nothing is charged until we confirm your room.",
+    payProcessing: "Confirming your hold...",
+    payError: "The payment did not go through - nothing was charged. Please try again.",
+    payCancelled: "Payment cancelled - nothing was charged and no request was sent.",
+    paySimulatedNote: "Test mode: no payment provider is configured, so no real money moves.",
+    paySimulatedButton: "Simulate the ฿1,000 hold",
+    payBack: "Back to your details",
+    bookSuccessHold: "฿1,000 is held on your card. We only take it if we confirm your room.",
     photosSoon: "Photos coming soon",
     amenities: AMENITIES_EN,
     goodToKnowTitle: "Good to know",
@@ -652,7 +689,6 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookEmail: "אימייל",
     bookPhone: "טלפון (לא חובה)",
     bookNotes: "משהו שכדאי שנדע? (לא חובה)",
-    bookSubmit: "שליחת בקשה",
     bookSending: "שולח...",
     bookSuccessTitle: "הבקשה נשלחה!",
     bookSuccessBody:
@@ -660,6 +696,24 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookRefLabel: "מספר הבקשה שלך",
     bookError: "משהו השתבש - נסו שוב, או כתבו לנו בוואטסאפ.",
     bookClose: "סגירה",
+    payStepTitle: "הקפאה של ฿1,000 כדי לשלוח את הבקשה",
+    payStepIntro:
+      "אנחנו בודקים כל חדר ידנית, ולכן בקשה מגיעה אלינו רק עם הקפאה מאחוריה. הנה בדיוק מה קורה לכסף שלכם.",
+    payPoints: [
+      "฿1,000 מוקפאים עכשיו בכרטיס - מוקפאים, לא נגבים.",
+      "אם נאשר את החדר, נגבה אותם והם יירדו מהחשבון שלכם.",
+      "אם לא נוכל, ההקפאה משוחררת ולא תשלמו כלום.",
+    ],
+    payAmountLabel: "מוקפא עכשיו",
+    payContinue: "מעבר לתשלום",
+    payFormNote: "בשלב הבא: הקפאה של ฿1,000. שום דבר לא נגבה עד שנאשר את החדר.",
+    payProcessing: "מאשרים את ההקפאה...",
+    payError: "התשלום לא עבר - לא נגבה כלום. נסו שוב בבקשה.",
+    payCancelled: "התשלום בוטל - לא נגבה כלום ולא נשלחה בקשה.",
+    paySimulatedNote: "מצב בדיקה: לא מוגדר ספק תשלומים, ולכן שום כסף אמיתי לא זז.",
+    paySimulatedButton: "הדמיית הקפאה של ฿1,000",
+    payBack: "חזרה לפרטים שלכם",
+    bookSuccessHold: "฿1,000 מוקפאים בכרטיס שלכם. נגבה אותם רק אם נאשר את החדר.",
     photosSoon: "תמונות בקרוב",
     amenities: {
       ac: "מיזוג אוויר",
@@ -748,7 +802,6 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookEmail: "Email",
     bookPhone: "Teléfono (opcional)",
     bookNotes: "¿Algo que debamos saber? (opcional)",
-    bookSubmit: "Enviar solicitud",
     bookSending: "Enviando...",
     bookSuccessTitle: "¡Solicitud enviada!",
     bookSuccessBody:
@@ -756,6 +809,24 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookRefLabel: "Tu referencia",
     bookError: "Algo salió mal - inténtalo de nuevo o escríbenos por WhatsApp.",
     bookClose: "Cerrar",
+    payStepTitle: "Retén ฿1.000 para enviar tu solicitud",
+    payStepIntro:
+      "Comprobamos cada habitación a mano, así que una solicitud solo nos llega con una retención detrás. Esto es exactamente lo que pasa con tu dinero.",
+    payPoints: [
+      "Se retienen ฿1.000 en tu tarjeta ahora: retenidos, no cobrados.",
+      "Si confirmamos la habitación, los cobramos y se descuentan de tu cuenta.",
+      "Si no podemos, la retención se libera y no pagas nada.",
+    ],
+    payAmountLabel: "Retenido ahora",
+    payContinue: "Continuar al pago",
+    payFormNote: "Siguiente paso: una retención de ฿1.000. No se cobra nada hasta que confirmemos tu habitación.",
+    payProcessing: "Confirmando la retención...",
+    payError: "El pago no se completó: no se ha cobrado nada. Inténtalo de nuevo.",
+    payCancelled: "Pago cancelado: no se ha cobrado nada y no se envió ninguna solicitud.",
+    paySimulatedNote: "Modo de prueba: no hay proveedor de pagos configurado, así que no se mueve dinero real.",
+    paySimulatedButton: "Simular la retención de ฿1.000",
+    payBack: "Volver a tus datos",
+    bookSuccessHold: "Hay ฿1.000 retenidos en tu tarjeta. Solo los cobramos si confirmamos tu habitación.",
     photosSoon: "Fotos muy pronto",
     amenities: {
       ac: "Aire acondicionado",
@@ -844,7 +915,6 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookEmail: "Email",
     bookPhone: "Téléphone (facultatif)",
     bookNotes: "Quelque chose à nous signaler ? (facultatif)",
-    bookSubmit: "Envoyer la demande",
     bookSending: "Envoi...",
     bookSuccessTitle: "Demande envoyée !",
     bookSuccessBody:
@@ -852,6 +922,24 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     bookRefLabel: "Votre référence",
     bookError: "Un problème est survenu - réessayez, ou écrivez-nous sur WhatsApp.",
     bookClose: "Fermer",
+    payStepTitle: "Bloquez ฿1 000 pour envoyer votre demande",
+    payStepIntro:
+      "Nous vérifions chaque chambre à la main : une demande ne nous parvient donc qu'avec un blocage derrière elle. Voici exactement ce qui arrive à votre argent.",
+    payPoints: [
+      "฿1 000 sont bloqués sur votre carte maintenant - bloqués, pas débités.",
+      "Si nous confirmons la chambre, nous les prélevons et ils sont déduits de votre note.",
+      "Si nous ne pouvons pas, le blocage est levé et vous ne payez rien.",
+    ],
+    payAmountLabel: "Bloqué maintenant",
+    payContinue: "Passer au paiement",
+    payFormNote: "Étape suivante : un blocage de ฿1 000. Rien n'est débité tant que nous n'avons pas confirmé la chambre.",
+    payProcessing: "Confirmation du blocage...",
+    payError: "Le paiement n'a pas abouti - rien n'a été débité. Merci de réessayer.",
+    payCancelled: "Paiement annulé - rien n'a été débité et aucune demande n'a été envoyée.",
+    paySimulatedNote: "Mode test : aucun prestataire de paiement n'est configuré, aucun argent réel ne bouge.",
+    paySimulatedButton: "Simuler le blocage de ฿1 000",
+    payBack: "Retour à vos informations",
+    bookSuccessHold: "฿1 000 sont bloqués sur votre carte. Nous ne les prélevons que si nous confirmons la chambre.",
     photosSoon: "Photos bientôt",
     amenities: {
       ac: "Climatisation",

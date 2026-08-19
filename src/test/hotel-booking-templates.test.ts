@@ -105,6 +105,85 @@ describe("email templates - all kinds x all languages", () => {
     }
   });
 
+  // The money wording is the part a guest can hold us to, so every language is
+  // checked for the same three truths rather than only English.
+  describe("the 1,000 THB hold reads honestly in all four languages", () => {
+    const heldNow: Record<Lang, string> = {
+      en: "is being held on your card - not charged",
+      he: "מוקפאים בכרטיס שלכם - לא נגבו",
+      es: "quedan retenidos en tu tarjeta, no cobrados",
+      fr: "sont bloqués sur votre carte, pas débités",
+    };
+    // Bolded and amount-carrying, so it cannot accidentally match the
+    // "Nothing has been charged" line of the opposite variant.
+    const charged: Record<Lang, string> = {
+      en: "<strong>฿1,000 has been charged</strong>",
+      he: "<strong>฿1,000 נגבו</strong>",
+      es: "<strong>Se han cobrado ฿1.000</strong>",
+      fr: "<strong>฿1 000 ont été débités</strong>",
+    };
+    /** The amount as the guest's own locale groups it. */
+    const amount: Record<Lang, string> = {
+      en: "฿1,000",
+      he: "฿1,000",
+      es: "฿1.000",
+      fr: "฿1 000",
+    };
+    const notCharged: Record<Lang, string> = {
+      en: "Nothing has been charged",
+      he: "לא נגבה שום תשלום",
+      es: "No se ha cobrado nada",
+      fr: "Rien n'a été débité",
+    };
+    const releasedWord: Record<Lang, string> = {
+      en: "has been released",
+      he: "שוחררה",
+      es: "ha sido liberada",
+      fr: "a été levé",
+    };
+
+    it.each(LANGS)("%s provisional says the money is held, not taken", (lang) => {
+      const { html } = buildEmail("provisional", lang, { ...req, lang });
+      expect(html).toContain(amount[lang]);
+      expect(html).toContain(heldNow[lang]);
+    });
+
+    it.each(LANGS)("%s final credits a captured hold against the bill", (lang) => {
+      const { html } = buildEmail("final", lang, { ...req, lang }, { registerUrl: "x", prepaid: true });
+      expect(html).toContain(amount[lang]);
+      expect(html).toContain(charged[lang]);
+      expect(html).not.toContain(notCharged[lang]);
+      // still a separate security deposit at check-in, unchanged
+      expect(html).toMatch(/3[,.\s]000/);
+    });
+
+    it.each(LANGS)("%s final says nothing was charged when no hold was captured", (lang) => {
+      const { html } = buildEmail("final", lang, { ...req, lang }, { registerUrl: "x", prepaid: false });
+      expect(html).toContain(notCharged[lang]);
+      expect(html).not.toContain(charged[lang]);
+    });
+
+    it.each(LANGS)("%s decline says the hold was released", (lang) => {
+      const { html } = buildEmail("decline", lang, { ...req, lang }, { released: true });
+      expect(html).toContain(amount[lang]);
+      expect(html).toContain(releasedWord[lang]);
+      // and points back at the hotel page for other dates / rooms
+      expect(html).toContain("/hotel");
+    });
+
+    it.each(LANGS)("%s decline claims no release when there was no hold", (lang) => {
+      const { html } = buildEmail("decline", lang, { ...req, lang }, { released: false });
+      expect(html).not.toContain(releasedWord[lang]);
+    });
+
+    it("never calls the prepayment a refundable deposit", () => {
+      for (const lang of LANGS) {
+        const { html } = buildEmail("final", lang, { ...req, lang }, { registerUrl: "x", prepaid: true });
+        expect(html.toLowerCase()).not.toMatch(/refundable (deposit|hold)/);
+      }
+    });
+  });
+
   it("escapes hostile guest input", () => {
     const { html } = buildEmail("provisional", "en", { ...req, name: '<script>alert(1)</script>' });
     expect(html).not.toContain("<script>");
