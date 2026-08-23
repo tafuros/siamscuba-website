@@ -508,7 +508,7 @@ const OWD_ES: LanderCopy = {
   heroBadge: "PADI Open Water Diver",
   heroH1: "Certifícate PADI en Koh Tao - 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
-    "Teoría online y en nuestra aula, prácticas en piscina y cuatro inmersiones reales en el mar - todo en 2,5 días. Te vas con una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
+    "Instructor que habla español, grupos de máximo 4 alumnos y 2 noches de alojamiento incluidas. Teoría, piscina y cuatro inmersiones reales en el mar en 2,5 días - y una tarjeta PADI válida en cualquier centro del mundo, para siempre.",
   ctaPrimary: "Reserva tu curso Open Water",
   ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué certificarte con Siam Scuba",
@@ -528,6 +528,11 @@ const OWD_ES: LanderCopy = {
       title: "Certificación PADI de por vida",
       body: "Reconocida en todos los centros del mundo. Tuya para siempre, sin renovaciones.",
     },
+    {
+      icon: "heart",
+      title: "2 noches de alojamiento incluidas",
+      body: "Incluidas en el precio del curso, no un extra aparte.",
+    },
   ],
   pricingHeadline: "Qué incluye",
   pricing: {
@@ -535,7 +540,7 @@ const OWD_ES: LanderCopy = {
     perWhat: "por persona, todo incluido",
     includes: [
       "Teoría online + clase en nuestro club",
-      "Instructor PADI de habla inglesa en cada sesión",
+      "Instructor PADI que habla español en cada sesión",
       "Equipo profesional, inmersiones y material completo",
       "Sesión en piscina / aguas confinadas",
       "4 inmersiones en los mejores sitios de Koh Tao",
