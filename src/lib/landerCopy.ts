@@ -519,11 +519,6 @@ const OWD_ES: LanderCopy = {
       body: "Más tiempo bajo el agua, más práctica, menos esperas.",
     },
     {
-      icon: "calendar",
-      title: "Empieza cualquier día",
-      body: "Abrimos cursos nuevos a diario, no tienes que planear tu viaje alrededor de nosotros.",
-    },
-    {
       icon: "award",
       title: "Certificación PADI de por vida",
       body: "Reconocida en todos los centros del mundo. Tuya para siempre, sin renovaciones.",
