@@ -26,10 +26,14 @@ import type { Language } from "@/i18n/translations";
  * WHATSAPP-ONLY (Ben, 2026-08-17): this number takes no voice calls. Never
  * render it as a tel: link anywhere on the hotel page - wa.me links only.
  *
- * NOTE: the prefilled messages below carry NO [ref:CODE] tag on purpose. Nemo's
- * n8n classifier routes on that tag and has no hotel branch yet, so an invented
- * code would land in a dead route; untagged messages fall through to the AI
- * bucket, which is the correct behaviour until a HOTEL node exists.
+ * NOTE: the prefilled messages below carry NO [ref:CODE] tag - same as every
+ * other WhatsApp CTA on the site since 01510da (Ben, 2026-05-31), which stripped
+ * the tag everywhere because the customer sends the prefill and the tag read as
+ * junk in their own message. Nemo gained an ai-hotel bucket on 2026-08-23, but
+ * it must key off the message TEXT, not a tag. Every prefill below names the
+ * property, so that phrase is the routing signal - keep it in any new copy.
+ * Careful: the Hebrew variant spells the name in Hebrew, so a matcher looking
+ * only for the Latin "Siam Hotel & Hostel" will miss HE bookings.
  */
 export const HOTEL_WHATSAPP_NUMBER = "66825068898";
 
