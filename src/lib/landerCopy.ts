@@ -790,13 +790,13 @@ const AOW_EN: LanderCopy = {
 };
 
 const AOW_ES: LanderCopy = {
-  seoTitle: "Curso PADI Advanced Open Water en Koh Tao - 1.5 Días, 11,000 THB | Siam Scuba",
+  seoTitle: "Curso PADI Advanced Open Water en Koh Tao - 1,5 Días, 11,000 THB | Siam Scuba",
   seoDescription:
-    "Sube de nivel con el curso PADI Advanced Open Water en Koh Tao. 1.5 días, 5 inmersiones de aventura hasta 30m incl. profunda, pecio, nocturna y navegación. Grupos pequeños (máx. 4), 1 noche de alojamiento incluida. 4,9 en Google (845), 5,0 en TripAdvisor (776).",
+    "Sube de nivel con el curso PADI Advanced Open Water en Koh Tao. 1,5 días, 5 inmersiones de aventura hasta 30m incl. profunda, pecio, nocturna y navegación. Grupos pequeños (máx. 4), 1 noche de alojamiento incluida. 4,9 en Google (845), 5,0 en TripAdvisor (776).",
   heroBadge: "PADI Advanced Open Water Diver",
-  heroH1: "Sácate el Advanced en Koh Tao en Español!!! - 1.5 días, 5 inmersiones",
+  heroH1: "Advanced Open Water en Koh Tao - 1,5 días, 5 inmersiones hasta 30m",
   heroSubhead:
-    "¿Ya eres Open Water? Baja hasta 30m con cinco inmersiones de aventura - profunda, pecio, nocturna, navegación y flotabilidad. Sin exámenes, sin teoría, solo buceo. Una noche de alojamiento incluida.",
+    "¿Ya eres Open Water? Baja hasta 30m con cinco inmersiones de aventura - profunda, pecio, nocturna, navegación y flotabilidad. Sin exámenes, sin teoría, solo buceo. Instructor que habla español y una noche de alojamiento incluida.",
   ctaPrimary: "Reserva tu curso Advanced",
   ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué hacer el Advanced con Siam Scuba",
@@ -840,7 +840,7 @@ const AOW_ES: LanderCopy = {
   },
   socialProofHeadline: "4,9 en Google (845) · 5,0 en TripAdvisor (776).",
   socialProofSubhead: "Lee lo que dicen los buceadores tras hacer el Advanced al estilo Siam Scuba.",
-  whatYouDoHeadline: "Tu camino al Advanced en 1.5 días",
+  whatYouDoHeadline: "Tu camino al Advanced en 1,5 días",
   whatYouDoSubhead:
     "Es 100% práctico - sin exámenes ni teoría en aula. Cinco inmersiones en un día y medio, incluyendo una profunda a 30m y una nocturna en el arrecife.",
   schedule: [
@@ -874,10 +874,10 @@ const AOW_ES: LanderCopy = {
     },
     {
       q: "¿Cuánto dura?",
-      a: "1.5 días, cinco inmersiones. Estás certificado a media mañana del segundo día.",
+      a: "1,5 días, cinco inmersiones. Estás certificado a media mañana del segundo día.",
     },
   ],
-  closingCtaHeadline: "Cert Advanced. 1.5 días. 11,000 THB.",
+  closingCtaHeadline: "Cert Advanced. 1,5 días. 11,000 THB.",
   closingCtaSubhead: "Una noche de alojamiento incluida. WhatsApp con tus fechas - abrimos cursos cada día.",
 };
 
