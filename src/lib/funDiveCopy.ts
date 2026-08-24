@@ -168,7 +168,7 @@ const EN: FunDiveCopy = {
   closingSub: "Book online in 2 minutes - or WhatsApp us your dates.",
   stickyPriceLabel: "2 dives all-in",
   stickyCta: "Book now",
-  waMessage: "Hi Siam Scuba! I'd like to book a guided fun dive. What's available this week?",
+  waMessage: "Hi Nemo, I'm getting in touch about fun diving. I'd love some more details.",
 };
 
 const ES: FunDiveCopy = {
@@ -263,7 +263,7 @@ const ES: FunDiveCopy = {
   stickyPriceLabel: "2 inmersiones todo incluido",
   stickyCta: "Reservar",
   waMessage:
-    "¡Hola Siam Scuba! Quisiera reservar una inmersión guiada. ¿Qué tienen disponible esta semana?",
+    "Hola Nemo, me pongo en contacto por buceo recreativo. Me encantaría recibir más detalles.",
 };
 
 const HE: FunDiveCopy = {
@@ -357,7 +357,7 @@ const HE: FunDiveCopy = {
   closingSub: "הזמינו אונליין ב-2 דקות - או שלחו לנו תאריכים בוואטסאפ.",
   stickyPriceLabel: "2 צלילות הכל כלול",
   stickyCta: "להזמנה",
-  waMessage: "היי סיאם סקובה! אני רוצה להזמין צלילת בילוי מודרכת. מה פנוי השבוע?",
+  waMessage: "היי נמו, אני פונה לגבי צלילות כיף. אשמח לקבל פרטים נוספים",
 };
 
 const FR: FunDiveCopy = {
@@ -452,7 +452,7 @@ const FR: FunDiveCopy = {
   stickyPriceLabel: "2 plongées tout compris",
   stickyCta: "Réserver",
   waMessage:
-    "Bonjour Siam Scuba ! Je souhaite réserver une plongée fun guidée. Quelles sont les disponibilités cette semaine ?",
+    "Bonjour Nemo, je vous contacte concernant la plongée loisir. J'aimerais avoir plus de détails.",
 };
 
 export const FUN_DIVE_COPY: Record<FunLang, FunDiveCopy> = {

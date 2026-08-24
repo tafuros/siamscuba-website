@@ -1,10 +1,19 @@
-import type { Lang, Offer } from "@/lib/landerCopy";
+import type { Offer } from "@/lib/landerCopy";
 
 export const WHATSAPP_NUMBER = "66825068898";
 
-// Topics map to the [ref:CODE] tag appended to every prefilled WhatsApp
-// message. n8n's Nemo bot reads the tag and routes to the matching S-node
-// or AI bucket. See build-workflow.js in n8n-nemo for the classifier side.
+/**
+ * Languages the wa.me PREFILL supports. Wider than lander `Lang`: French
+ * visitors used to be collapsed to English here, which meant Nemo never saw a
+ * French phrase and every FR lead routed as English. Prefills carry FR now.
+ */
+export type PrefillLang = "en" | "es" | "he" | "fr";
+
+// Topics select which prefilled WhatsApp message a CTA carries. They are NOT
+// emitted into the message: the [ref:CODE] routing tag this list once appended
+// was removed site-wide in 01510da (Ben, 2026-05-31) because the prefill is sent
+// by the CUSTOMER, so the tag showed up as log-like junk in their own outgoing
+// message. Nemo routes on the SENTENCE instead - see TOPIC_WORDS below.
 export type WhatsAppTopic =
   | "general"
   | "dsd"
@@ -25,90 +34,139 @@ export type WhatsAppTopic =
   | "similan-daytrip"
   | "conservation";
 
-// Back-compat alias — callers passing the narrower Offer keep working.
+// Back-compat alias - callers passing the narrower Offer keep working.
 export type WhatsAppOffer = Offer | "general";
 
-const PREFILLED_MESSAGES: Record<WhatsAppTopic, Record<Lang, string>> = {
+/**
+ * The one sentence shape every Nemo-bound prefill uses (Ben's template,
+ * 2026-08-24). It reads as a normal human sentence, which is the whole point:
+ * the ROUTING SIGNAL is the wording itself, so nothing machine-looking (bracket
+ * tags, attribution lines) may ever be appended again.
+ */
+const PREFILL_FRAME: Record<PrefillLang, (topic: string) => string> = {
+  en: (topic) => `Hi Nemo, I'm getting in touch about ${topic}. I'd love some more details.`,
+  he: (topic) => `היי נמו, אני פונה לגבי ${topic}. אשמח לקבל פרטים נוספים`,
+  es: (topic) => `Hola Nemo, me pongo en contacto por ${topic}. Me encantaría recibir más detalles.`,
+  fr: (topic) => `Bonjour Nemo, je vous contacte concernant ${topic}. J'aimerais avoir plus de détails.`,
+};
+
+/**
+ * THE ROUTING TABLE. Nemo matches leads on these words appearing in the
+ * customer's message, so they must survive VERBATIM into the sentence above.
+ *
+ * Two traps, both load-bearing:
+ *  - "Advanced Open Water" is tested BEFORE plain "Open Water". Shortening aow
+ *    to anything that drops either word (e.g. "Advanced course") silently
+ *    re-routes every advanced lead into the Open Water bucket.
+ *  - PADI course names stay in Latin script in EVERY language, Hebrew included.
+ *    Translating "Rescue Diver" would make that language unroutable.
+ *
+ * Editing any string here changes lead routing. Coordinate with the Nemo side.
+ */
+const TOPIC_WORDS: Record<Exclude<WhatsAppTopic, "conservation">, Record<PrefillLang, string>> = {
   general: {
-    en: "Hi Siam Scuba! I'd like to know more about diving in Koh Tao.",
-    es: "¡Hola Siam Scuba! Me gustaría saber más sobre el buceo en Koh Tao.",
-    he: "היי סיאם סקובה! אשמח לקבל מידע על צלילה בקוטאו.",
+    en: "diving in Koh Tao",
+    he: "צלילה בקוטאו",
+    es: "buceo en Koh Tao",
+    fr: "la plongée à Koh Tao",
   },
-  conservation: {
-    en: "Hi! I found the conservation page on siamscuba.com - I'd like to know more about the conservation courses.",
-    es: "¡Hola! He visto la página de conservación en siamscuba.com y me gustaría saber más sobre los cursos de conservación.",
-    he: "היי! ראיתי את עמוד השימור הימי באתר siamscuba.com ואשמח לשמוע עוד על קורסי השימור.",
+  // The /koh-tao-diving lander is the same intent as general, so it carries the
+  // same words on purpose - Nemo has one Koh Tao bucket, not two.
+  "koh-tao": {
+    en: "diving in Koh Tao",
+    he: "צלילה בקוטאו",
+    es: "buceo en Koh Tao",
+    fr: "la plongée à Koh Tao",
   },
   dsd: {
-    en: "Hi Siam Scuba! I'm interested in Discover Scuba Diving (from 2,600 THB / 3,600 THB for 2 dives). Could you share availability?",
-    es: "¡Hola Siam Scuba! Me interesa Discover Scuba Diving (desde 2,600 THB / 3,600 THB por 2 inmersiones). ¿Pueden compartir disponibilidad?",
-    he: "היי סיאם סקובה! אני מעוניין/ת בחוויית Discover Scuba Diving (מ-2,600 THB / 3,600 THB ל-2 צלילות). תוכלו לשתף זמינות?",
+    en: "a Discover Scuba dive",
+    he: "צלילת היכרות",
+    es: "un bautismo de buceo",
+    fr: "un baptême de plongée",
   },
   owd: {
-    en: "Hi Siam Scuba! I'd like to book the PADI Open Water course (12,000 THB). What dates are available?",
-    es: "¡Hola Siam Scuba! Quisiera reservar el curso PADI Open Water (12,000 THB). ¿Qué fechas tienen disponibles?",
-    he: "היי סיאם סקובה! אני רוצה להזמין קורס PADI Open Water (12,000 THB). אילו תאריכים פנויים?",
+    en: "the Open Water course",
+    he: "קורס Open Water",
+    es: "el curso Open Water",
+    fr: "le cours Open Water",
   },
   aow: {
-    en: "Hi Siam Scuba! I'd like to know more about the PADI Advanced Open Water course (11,000 THB).",
-    es: "¡Hola Siam Scuba! Me gustaría saber más sobre el curso PADI Advanced Open Water (11,000 THB).",
-    he: "היי סיאם סקובה! אני רוצה לקבל מידע על קורס PADI Advanced Open Water (11,000 THB).",
+    en: "the Advanced Open Water course",
+    he: "קורס Advanced Open Water",
+    es: "el curso Advanced Open Water",
+    fr: "le cours Advanced Open Water",
   },
   rescue: {
-    en: "Hi Siam Scuba! I'm interested in the PADI Rescue Diver course (11,000 THB). What are the prerequisites?",
-    es: "¡Hola Siam Scuba! Me interesa el curso PADI Rescue Diver (11,000 THB). ¿Cuáles son los requisitos?",
-    he: "היי סיאם סקובה! אני מעוניין/ת בקורס PADI Rescue Diver (11,000 THB). מה תנאי הקבלה?",
+    en: "the Rescue Diver course",
+    he: "קורס Rescue Diver",
+    es: "el curso Rescue Diver",
+    fr: "le cours Rescue Diver",
   },
   dm: {
-    en: "Hi Siam Scuba! I'd like to know more about the PADI Divemaster internship (38,500 THB).",
-    es: "¡Hola Siam Scuba! Me gustaría saber más sobre el internado PADI Divemaster (38,500 THB).",
-    he: "היי סיאם סקובה! אני רוצה לקבל מידע על תוכנית ה-PADI Divemaster (38,500 THB).",
+    en: "the Divemaster course",
+    he: "קורס Divemaster",
+    es: "el curso Divemaster",
+    fr: "le cours Divemaster",
   },
   idc: {
-    en: "Hi Siam Scuba! I'm interested in the PADI Instructor Development Course (IDC).",
-    es: "¡Hola Siam Scuba! Me interesa el PADI Instructor Development Course (IDC).",
-    he: "היי סיאם סקובה! אני מעוניין/ת ב-PADI Instructor Development Course (IDC).",
+    en: "the IDC instructor course",
+    he: "קורס מדריכים IDC",
+    es: "el curso de instructor IDC",
+    fr: "le cours d'instructeur IDC",
   },
   "fun-dive": {
-    en: "Hi Siam Scuba! I'd like to book a guided fun dive. What's available this week?",
-    es: "¡Hola Siam Scuba! Quisiera reservar una inmersión guiada. ¿Qué tienen disponible esta semana?",
-    he: "היי סיאם סקובה! אני רוצה להזמין צלילת בילוי מודרכת. מה פנוי השבוע?",
-  },
-  "koh-tao": {
-    en: "Hi Siam Scuba! I'd like to dive Koh Tao with you - small groups and your own boat. What's available?",
-    es: "¡Hola Siam Scuba! Quiero bucear en Koh Tao con vosotros - grupos pequeños y barco propio. ¿Qué tenéis disponible?",
-    he: "היי סיאם סקובה! אני רוצה לצלול בקוטאו אצלכם - קבוצות קטנות וסירה פרטית. מה פנוי?",
+    en: "fun diving",
+    he: "צלילות כיף",
+    es: "buceo recreativo",
+    fr: "la plongée loisir",
   },
   refresher: {
-    en: "Hi Siam Scuba! I haven't dived in a while — I'd like info on a refresher (PADI ReActivate).",
-    es: "¡Hola Siam Scuba! Hace tiempo que no buceo — quisiera información sobre un refresher (PADI ReActivate).",
-    he: "היי סיאם סקובה! לא צללתי הרבה זמן — אשמח לקבל מידע על ריענון (PADI ReActivate).",
+    en: "a refresher dive",
+    he: "צלילת רענון",
+    es: "un repaso",
+    fr: "une remise à niveau",
   },
+  // Legacy gate branches. Nemo has NO dedicated matcher for these four, so they
+  // land in the default bucket - correct for now, but if a Koh Phangan or
+  // Similan route is ever added, these are the words it should key on.
   "kp-licensed": {
-    en: "Hi Siam Scuba! I'm a certified diver and I'd like to dive Koh Phangan - Sail Rock and the local reefs. What's available?",
-    es: "¡Hola Siam Scuba! Tengo licencia y quiero bucear en Koh Phangan - Sail Rock y los arrecifes. ¿Qué disponibilidad hay?",
-    he: "היי סיאם סקובה! יש לי רישיון ואשמח לצלול בקוֹ פנגן - Sail Rock והשוניות המקומיות. מה פנוי?",
+    en: "diving in Koh Phangan - Sail Rock and the local reefs",
+    he: "צלילה בקו פנגן - Sail Rock והשוניות המקומיות",
+    es: "buceo en Koh Phangan - Sail Rock y los arrecifes",
+    fr: "la plongée à Koh Phangan - Sail Rock et les récifs",
   },
   "kp-beginner": {
-    en: "Hi Siam Scuba! I'm new to diving and interested in Koh Phangan. Can you guide me on how to start?",
-    es: "¡Hola Siam Scuba! Soy principiante y me interesa Koh Phangan. ¿Cómo puedo empezar?",
-    he: "היי סיאם סקובה! אני מתחיל/ה בצלילה ומתעניין/ת בקוֹ פנגן. איך מתחילים?",
+    en: "learning to dive in Koh Phangan",
+    he: "התחלת צלילה בקו פנגן",
+    es: "aprender a bucear en Koh Phangan",
+    fr: "l'apprentissage de la plongée à Koh Phangan",
   },
   "similan-safari": {
-    en: "Hi Siam Scuba! I'm interested in a Similan Islands liveaboard safari. What trips and dates do you have?",
-    es: "¡Hola Siam Scuba! Me interesa un safari liveaboard a las Islas Similan. ¿Qué viajes y fechas tenéis?",
-    he: "היי סיאם סקובה! אני מעוניין/ת בספארי לייב-אבורד לאיי סימילן. אילו טיולים ותאריכים יש?",
+    en: "a Similan Islands liveaboard safari",
+    he: "ספארי לייב-אבורד לאיי סימילן",
+    es: "un safari liveaboard a las Islas Similan",
+    fr: "une croisière plongée aux îles Similan",
   },
   "similan-daytrip": {
-    en: "Hi Siam Scuba! I'd like to do Similan Islands day trips. What's available and how does it work?",
-    es: "¡Hola Siam Scuba! Quiero hacer salidas de día a las Islas Similan. ¿Qué disponibilidad hay y cómo funciona?",
-    he: "היי סיאם סקובה! אני רוצה לעשות צלילות יומיות באיי סימילן. מה פנוי ואיך זה עובד?",
+    en: "Similan Islands day trips",
+    he: "צלילות יומיות באיי סימילן",
+    es: "salidas de día a las Islas Similan",
+    fr: "des sorties à la journée aux îles Similan",
   },
 };
 
-// Maps URL pathname to the WhatsApp topic. Used by global WhatsApp buttons
-// (Navbar, FloatingWhatsApp) to derive the right prefill + tag from the
-// current page the visitor is on.
+/**
+ * Conservation is deliberately NOT in the frame above. These enquiries go to
+ * Paul's personal phone, not the shop line, so Nemo never sees them - greeting
+ * a human by the bot's name would be plain wrong. Keep this wording human.
+ */
+const CONSERVATION_MESSAGES: Record<PrefillLang, string> = {
+  en: "Hi! I found the conservation page on siamscuba.com - I'd like to know more about the conservation courses.",
+  es: "¡Hola! He visto la página de conservación en siamscuba.com y me gustaría saber más sobre los cursos de conservación.",
+  he: "היי! ראיתי את עמוד השימור הימי באתר siamscuba.com ואשמח לשמוע עוד על קורסי השימור.",
+  fr: "Bonjour ! J'ai vu la page conservation sur siamscuba.com - j'aimerais en savoir plus sur les cours de conservation.",
+};
+
 const PATH_TO_TOPIC: { test: RegExp; topic: WhatsAppTopic }[] = [
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?open-water(-course)?(\/|$)/i, topic: "owd" },
   { test: /^\/(en\/|es\/|he\/)?(courses\/)?advanced-open-water(\/|$)/i, topic: "aow" },
@@ -136,7 +194,7 @@ export interface WhatsAppLinkOpts {
   offer?: WhatsAppTopic;
   /** Pathname to derive topic from (used by global buttons). */
   pathname?: string;
-  lang?: Lang;
+  lang?: PrefillLang;
   /**
    * Send this conversation to a number OTHER than the shop line. Digits only,
    * country code first, no "+". Only pass this where a specific person owns the
@@ -159,8 +217,6 @@ export interface WhatsAppLinkOpts {
  */
 export const CONSERVATION_WHATSAPP_NUMBER = "447467160704";
 
-// Maps app-wide Language ("en" | "he" | "es" | "fr") down to lander Lang.
-// French falls back to English; we don't have FR campaign assets.
 /**
  * Per-course conservation enquiry, used by the specialty cards on
  * /conservation.
@@ -174,17 +230,19 @@ export const CONSERVATION_WHATSAPP_NUMBER = "447467160704";
  * registered name and what the card in the diver's hand will say - the same
  * rule conservationCopy.ts follows for the headings.
  */
-const CONSERVATION_COURSE_MESSAGES: Record<Lang, (course: string) => string> = {
+const CONSERVATION_COURSE_MESSAGES: Record<PrefillLang, (course: string) => string> = {
   en: (c) =>
     `Hi! I found the conservation page on siamscuba.com - I'd like to know more about the ${c} course: price, dates and what it involves.`,
   es: (c) =>
     `¡Hola! He visto la página de conservación en siamscuba.com y me gustaría saber más sobre el curso ${c}: precio, fechas y en qué consiste.`,
   he: (c) =>
     `היי! ראיתי את עמוד השימור הימי באתר siamscuba.com ואשמח לשמוע עוד על הקורס ${c} - מחיר, תאריכים ומה הוא כולל.`,
+  fr: (c) =>
+    `Bonjour ! J'ai vu la page conservation sur siamscuba.com - j'aimerais en savoir plus sur le cours ${c} : prix, dates et ce qu'il comprend.`,
 };
 
-export function normalizeLang(lang: string | undefined): Lang {
-  if (lang === "es" || lang === "he") return lang;
+export function normalizeLang(lang: string | undefined): PrefillLang {
+  if (lang === "es" || lang === "he" || lang === "fr") return lang;
   return "en";
 }
 
@@ -204,8 +262,11 @@ export function buildWhatsAppLink(opts: WhatsAppLinkOpts = {}): string {
     const msg = CONSERVATION_COURSE_MESSAGES[lang](courseName);
     return `https://wa.me/${resolvedNumber}?text=${encodeURIComponent(msg)}`;
   }
-  // Customer-facing prefill only — no tracking/routing tags appended, since
-  // wa.me text is sent by the customer and any tag would be visible to them.
-  const text = PREFILLED_MESSAGES[resolvedTopic][lang];
+  if (resolvedTopic === "conservation") {
+    return `https://wa.me/${resolvedNumber}?text=${encodeURIComponent(CONSERVATION_MESSAGES[lang])}`;
+  }
+  // Human sentence only - no tag, no attribution line. The topic words inside
+  // it ARE the routing signal Nemo reads; see TOPIC_WORDS.
+  const text = PREFILL_FRAME[lang](TOPIC_WORDS[resolvedTopic][lang]);
   return `https://wa.me/${resolvedNumber}?text=${encodeURIComponent(text)}`;
 }

@@ -127,11 +127,15 @@ describe("Open Water price is 12,000 THB on every surface", () => {
     expect(he).toContain("קורס Open Water Diver ב-Siam Scuba עולה 12,000");
   });
 
-  it("the WhatsApp prefill quotes 12,000 in every language", () => {
+  // Until 2026-08-24 the prefill quoted "12,000 THB" and this asserted it.
+  // Ben's Nemo-routing template dropped prices from every prefill, so the
+  // undercut risk is now guarded the stronger way: the prefill names NO price
+  // at all, and therefore cannot contradict the partner rate sheet.
+  it("the WhatsApp prefill quotes no price in any language", () => {
     const wa = read("src/utils/whatsapp.ts");
-    const owdBlock = wa.slice(wa.indexOf("owd: {"), wa.indexOf("aow: {"));
-    expect(owdBlock).toContain("12,000 THB");
-    expect(owdBlock).not.toContain("11,000");
+    const table = wa.slice(wa.indexOf("const TOPIC_WORDS"), wa.indexOf("CONSERVATION_MESSAGES"));
+    expect(table).not.toMatch(/\d,\d{3}/);
+    expect(table).not.toContain("THB");
   });
 });
 
