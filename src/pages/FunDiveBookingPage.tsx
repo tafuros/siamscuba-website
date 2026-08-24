@@ -264,9 +264,14 @@ const FunDiveBookingPage = () => {
         transition={{ duration: 0.3, ease: "easeOut" }}
         className="container mx-auto px-4 py-6 max-w-5xl"
       >
+        {/* Back to home as a real pill button, pushed below the iOS status-bar
+            zone on phones. The old bare text link sat ~24px from the top of a
+            navbar-less page: on iPhone that's inside the status-bar strip,
+            where taps trigger scroll-to-top instead of the link - it looked
+            broken. min-h + padding give it a 44px tap target. */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
+          className="mb-4 mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-border/50 bg-card px-4 py-2 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground sm:mt-0"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to home
