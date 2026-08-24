@@ -4,9 +4,10 @@
 // file proves the PAGE actually renders that destination into the iframe - the
 // hop where this has broken before. Two failure modes are covered:
 //
-//   1. Wrong destination: a paid visitor served /dive/ben (commission handling
-//      applied to a campaign lead) or an organic visitor served /dive/web
-//      (an instructor silently loses commission on their own lead).
+//   1. Wrong destination: any visitor served /dive/ben. Since Ben's 2026-08-24
+//      ruling EVERY embed visitor - paid and organic alike - gets /dive/web,
+//      so organic bookings derive web_direct in DiveOS instead of being
+//      attributed to instructor Ben.
 //   2. Hydration: the page is prerendered by vite-react-ssg. Reading
 //      sessionStorage on the first client render is a prop mismatch, and React
 //      keeps the SERVER attribute on mismatch - which would serve an
@@ -112,19 +113,20 @@ describe("booking page routing - campaign vs organic", () => {
     expect(src.searchParams.get("gclid")).toBe("GCL_STORED");
   });
 
-  it("ORGANIC: an untagged visitor gets the UNCHANGED /dive/ben iframe", () => {
-    expect(wizardSrc("").href).toBe(LEAD_FORM_URL);
+  it("ORGANIC: an untagged visitor's iframe is /dive/web, never /dive/ben (2026-08-24 ruling)", () => {
+    expect(wizardSrc("").href).toBe(WEB_WIZARD_URL);
+    expect(wizardSrc("").href).not.toContain(LEAD_FORM_URL);
   });
 
-  it("ORGANIC: a plain product preselect does not switch wizards", () => {
+  it("ORGANIC: a plain product preselect rides along to /dive/web", () => {
     const src = wizardSrc("?product=DSD");
-    expect(src.origin + src.pathname).toBe(LEAD_FORM_URL);
+    expect(src.origin + src.pathname).toBe(WEB_WIZARD_URL);
     expect(src.searchParams.get("product")).toBe("DSD");
   });
 
-  it("ORGANIC: referral traffic keeps its attribution but not the paid wizard", () => {
+  it("ORGANIC: referral traffic keeps its attribution on the /dive/web iframe", () => {
     const src = wizardSrc("?utm_source=tripadvisor&utm_medium=referral");
-    expect(src.origin + src.pathname).toBe(LEAD_FORM_URL);
+    expect(src.origin + src.pathname).toBe(WEB_WIZARD_URL);
     expect(src.searchParams.get("utm_source")).toBe("tripadvisor");
   });
 

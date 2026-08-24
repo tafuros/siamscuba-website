@@ -70,7 +70,7 @@ describe("buildWizardIframeSrc", () => {
 
   it("honours an explicit opt-out", () => {
     seedFirstTouch();
-    expect(buildWizardIframeSrc("?utm_passthrough=0")).toBe(LEAD_FORM_URL);
+    expect(buildWizardIframeSrc("?utm_passthrough=0")).toBe(WEB_WIZARD_URL);
   });
 
   it("explicit URL params win over stored first-touch values", () => {
@@ -95,7 +95,7 @@ describe("buildWizardIframeSrc", () => {
   });
 
   it("emits no query string at all when there is nothing to attribute", () => {
-    expect(buildWizardIframeSrc("")).toBe(LEAD_FORM_URL);
+    expect(buildWizardIframeSrc("")).toBe(WEB_WIZARD_URL);
   });
 
   it("does not duplicate params when a value appears both explicitly and in storage", () => {
@@ -105,14 +105,15 @@ describe("buildWizardIframeSrc", () => {
   });
 });
 
-// BEN'S ROUTING RULE (2026-08-01): "every product that arrives through the
-// campaigns goes through the same process. If it doesn't come from a campaign it
-// stays normal on the familiar link on the site - /fun-dive-booking."
+// BEN'S ROUTING RULE (2026-08-01, amended 2026-08-24): every product that
+// arrives through the campaigns goes through the same process - and since
+// Ben's 2026-08-24 ruling, organic embed traffic goes to /dive/web as well,
+// so DiveOS derives web_direct for it instead of attributing the booking to
+// instructor Ben (/dive/ben, the pre-ruling organic target).
 //
-// This is BUSINESS logic, not tracking. /dive/web is the zero-commission "Web"
-// identity. Routing an organic lead there silently takes an instructor's
-// commission away, so the predicate must stay narrow in one direction and
-// complete in the other.
+// The paid/organic predicate no longer flips the production destination, but
+// it must stay narrow-and-complete anyway: it documents the paid boundary a
+// future re-split would inherit, and the tests below pin it.
 describe("isCampaignTraffic - who counts as paid traffic", () => {
   beforeEach(() => sessionStorage.clear());
 
@@ -131,9 +132,9 @@ describe("isCampaignTraffic - who counts as paid traffic", () => {
     expect(isCampaignTraffic("?utm_medium=%20Paid_Social%20")).toBe(true);
   });
 
-  it("ORGANIC IS NOT CAMPAIGN TRAFFIC - these must never reach /dive/web", () => {
-    // Each of these has real attribution but cost us nothing, so the booking
-    // must keep normal instructor/commission handling.
+  it("ORGANIC IS NOT CAMPAIGN TRAFFIC - the paid boundary stays narrow", () => {
+    // Each of these has real attribution but cost us nothing. They still
+    // reach /dive/web (2026-08-24 ruling), but must never be CLASSIFIED paid.
     for (const search of [
       "",
       "?utm_source=google&utm_medium=organic",
@@ -200,62 +201,76 @@ describe("buildWizardIframeSrc - conditional booking destination", () => {
     expect(url.searchParams.get("utm_medium")).toBe("cpc");
   });
 
-  it("ORGANIC: an untagged visitor keeps the UNCHANGED /dive/ben behaviour", () => {
-    expect(buildWizardIframeSrc("")).toBe(LEAD_FORM_URL);
+  it("ORGANIC: an untagged visitor now gets /dive/web too (2026-08-24 ruling)", () => {
+    // Ben ruled 2026-08-24: organic embed bookings derive web_direct in
+    // DiveOS, not instructor. /dive/ben is retired as the embed target.
+    expect(buildWizardIframeSrc("")).toBe(WEB_WIZARD_URL);
+    expect(buildWizardIframeSrc("")).not.toContain(LEAD_FORM_URL);
   });
 
-  it("ORGANIC: a product preselect alone does not make it paid traffic", () => {
+  it("ORGANIC: a product preselect rides along to /dive/web", () => {
     // Every generic CTA on the site (navbar, course cards, dive-site pages)
-    // lands here. None of them may strip an instructor's commission.
+    // lands here.
     const url = new URL(buildWizardIframeSrc("?product=DSD&date=2026-06-22"));
-    expect(url.origin + url.pathname).toBe(LEAD_FORM_URL);
+    expect(url.origin + url.pathname).toBe(WEB_WIZARD_URL);
     expect(url.searchParams.get("product")).toBe("DSD");
     expect(url.searchParams.get("date")).toBe("2026-06-22");
   });
 
-  it("ORGANIC: real non-paid attribution still routes to /dive/ben, params intact", () => {
+  it("ORGANIC: real non-paid attribution reaches /dive/web with params intact", () => {
     seedOrganicFirstTouch();
     const url = new URL(buildWizardIframeSrc(""));
-    expect(url.origin + url.pathname).toBe(LEAD_FORM_URL);
-    // The attribution still travels - we just don't change the booking identity.
+    expect(url.origin + url.pathname).toBe(WEB_WIZARD_URL);
+    // The attribution still travels with the booking.
     expect(url.searchParams.get("utm_source")).toBe("tripadvisor");
     expect(url.searchParams.get("utm_medium")).toBe("referral");
   });
 
-  it("never routes to /dive/web without carrying attribution with it", () => {
-    // The invariant that makes the whole thing safe: the destination and the
-    // params are decided from the same inputs under the same opt-out, so a
-    // visitor can never land on the paid wizard as an anonymous lead.
-    for (const search of ["", "?gclid=ABC", "?utm_medium=cpc", "?utm_passthrough=0"]) {
+  it("the embed NEVER routes to /dive/ben anymore (2026-08-24 ruling)", () => {
+    for (const search of ["", "?gclid=ABC", "?utm_medium=cpc", "?utm_passthrough=0", "?product=DSD"]) {
       for (const includeStored of [true, false]) {
         for (const seed of [seedFirstTouch, seedOrganicFirstTouch, () => {}]) {
           sessionStorage.clear();
           seed();
           const url = buildWizardIframeSrc(search, { includeStored });
-          if (url.startsWith(WEB_WIZARD_URL)) {
-            const params = new URL(url).searchParams;
-            expect(
-              Boolean(params.get("gclid") || params.get("utm_medium")),
-              `${url} reached the paid wizard with no attribution`,
-            ).toBe(true);
-          }
+          expect(url.startsWith(WEB_WIZARD_URL), `${url} left /dive/web`).toBe(true);
         }
       }
     }
   });
 
-  it("HYDRATION: the storage-free render is deterministic AND organic", () => {
-    // vite-react-ssg prerenders this page. If the first client render consulted
-    // sessionStorage it would be a prop mismatch, and React keeps the SERVER
-    // attribute on mismatch - silently serving the wrong wizard AND an
-    // unattributed link. FunDiveBookingPage ties includeStored to `mounted`.
+  it("CAMPAIGN traffic never reaches the wizard without its attribution", () => {
+    // The invariant that keeps paid measurement safe: the destination and the
+    // params are decided from the same inputs under the same opt-out, so a
+    // PAID visitor always arrives carrying the signal that classified them.
+    for (const search of ["?gclid=ABC", "?utm_medium=cpc"]) {
+      for (const includeStored of [true, false]) {
+        const url = new URL(buildWizardIframeSrc(search, { includeStored }));
+        expect(
+          Boolean(url.searchParams.get("gclid") || url.searchParams.get("utm_medium")),
+          `${url} reached the wizard with no attribution`,
+        ).toBe(true);
+      }
+    }
+    // ...and via storage alone (in-site navigation), when storage is consulted.
+    sessionStorage.clear();
     seedFirstTouch();
-    expect(buildWizardIframeSrc("", { includeStored: false })).toBe(LEAD_FORM_URL);
+    const url = new URL(buildWizardIframeSrc(""));
+    expect(url.searchParams.get("gclid")).toBe("GCL_ABC123");
   });
 
-  it("the opt-out suppresses the destination switch, not just the params", () => {
+  it("HYDRATION: the storage-free render is deterministic", () => {
+    // vite-react-ssg prerenders this page. If the first client render consulted
+    // sessionStorage it would be a prop mismatch, and React keeps the SERVER
+    // attribute on mismatch - silently serving an unattributed link.
+    // FunDiveBookingPage ties includeStored to `mounted`.
     seedFirstTouch();
-    expect(buildWizardIframeSrc("?utm_passthrough=0")).toBe(LEAD_FORM_URL);
+    expect(buildWizardIframeSrc("", { includeStored: false })).toBe(WEB_WIZARD_URL);
+  });
+
+  it("the opt-out strips the params but keeps the /dive/web destination", () => {
+    seedFirstTouch();
+    expect(buildWizardIframeSrc("?utm_passthrough=0")).toBe(WEB_WIZARD_URL);
   });
 });
 
