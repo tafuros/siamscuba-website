@@ -67,9 +67,10 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
   //   - aow  -> product=AOW (moved here 2026-08-01, see below)
   //
   // ONE WRAPPER FOR EVERY PRODUCT (Ben's rule, 2026-08-01). The wrapper page
-  // decides at runtime which DiveOS wizard the iframe loads: paid-campaign
-  // visitors get /dive/web, everyone else keeps the familiar /dive/ben form
-  // with normal instructor/commission handling. See utils/bookingUrl.ts ->
+  // owns which DiveOS wizard the iframe loads: since Ben's 2026-08-24 ruling
+  // every visitor - paid campaign AND organic - gets /dive/web (organic
+  // derives web_direct in DiveOS instead of attributing to instructor Ben;
+  // /dive/ben was the organic target before). See utils/bookingUrl.ts ->
   // buildWizardIframeSrc. Routing every product through the same page means a
   // single place owns that decision AND every product keeps the postMessage
   // conversion signal.

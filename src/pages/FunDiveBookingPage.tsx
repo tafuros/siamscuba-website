@@ -79,9 +79,10 @@ const FunDiveBookingPage = () => {
   // The DiveOS wizard reads these params (work done in parallel by the diveos
   // agent); we only deliver them on the iframe URL.
   //
-  // The same call also picks WHICH wizard: paid-campaign visitors get
-  // /dive/web (the zero-commission "Web" identity), everyone else keeps the
-  // familiar /dive/ben form with normal instructor/commission handling. See
+  // The same call also picks WHICH wizard. Since Ben's 2026-08-24 ruling BOTH
+  // paths target /dive/web (the "Web" identity): paid-campaign visitors as
+  // before, and organic visitors too - so DiveOS derives web_direct for them
+  // instead of attributing to instructor Ben (previously /dive/ben). See
   // buildWizardIframeSrc for the rule. Both paths stay inside this page, so the
   // postMessage conversion tracking below covers campaign AND organic bookings.
   //

@@ -1,9 +1,11 @@
 import { getStoredUtm, getStoredGclid } from "@/utils/utm";
 
-// The DiveOS customer wizard, embedded as a cross-origin iframe on
-// /fun-dive-booking. Cross-origin means it CANNOT read this site's
-// sessionStorage - attribution only reaches it via the iframe's query string,
-// which is what this builder produces.
+// Ben's personal instructor lead form. RETIRED as the embed target on
+// 2026-08-24 (Ben's ruling - see buildWizardIframeSrc): organic iframe
+// bookings now go to /dive/web too, so DiveOS derives `web_direct` instead of
+// attributing them to instructor Ben. Kept exported so the tests can assert
+// the embed never routes here anymore. Deliberate personal /dive/<slug>
+// instructor/affiliate links elsewhere are NOT covered by that ruling.
 export const LEAD_FORM_URL = "https://dash.siamscuba.com/dive/ben";
 
 // The public self-serve booking wizard, built by the diveos agent for the paid
@@ -124,11 +126,12 @@ export interface CampaignTrafficOptions {
 /**
  * Did this visitor arrive from a PAID campaign?
  *
- * This is a BUSINESS decision, not a tracking one. It selects which DiveOS
- * identity takes the booking (see buildWizardIframeSrc), which decides whether
- * an instructor earns commission on it. Widening this predicate takes
- * commission away from organic leads, so it stays deliberately narrow:
- * a Google click id, or an explicitly paid utm_medium. Nothing else.
+ * This is a BUSINESS decision, not a tracking one. It used to select which
+ * DiveOS identity takes the booking (see buildWizardIframeSrc) - since Ben's
+ * 2026-08-24 ruling both sides of that split default to /dive/web, so today
+ * the predicate only distinguishes the two base-url overrides in tests. It
+ * stays deliberately narrow anyway - a Google click id, or an explicitly paid
+ * utm_medium, nothing else - so a future re-split inherits a correct boundary.
  *
  * Both signals are read from the incoming URL first and then, unless the caller
  * opts out, from the first-touch sessionStorage capture (App.tsx ->
@@ -163,14 +166,18 @@ export interface WizardIframeOptions extends BookingUrlOptions {
 /**
  * Build the src for the DiveOS wizard iframe on /fun-dive-booking.
  *
- * BEN'S ROUTING RULE (2026-08-01): every product that arrives through a paid
- * campaign goes through the same process. Anything that did not come from a
- * campaign stays on the familiar link the site has always used.
+ * BEN'S ROUTING RULE (2026-08-01, amended 2026-08-24): every product that
+ * arrives through a paid campaign goes through the same process. Originally
+ * anything that did NOT come from a campaign stayed on the familiar
+ * /dive/ben link; Ben ruled on 2026-08-24 that organic embed traffic must
+ * stop being attributed to instructor Ben, so it now targets /dive/web too
+ * and DiveOS derives `web_direct` for it.
  *
  *   campaign traffic -> WEB_WIZARD_URL  (/dive/web, the zero-commission "Web"
- *                                        identity built for paid traffic)
- *   everything else  -> LEAD_FORM_URL   (/dive/ben, UNCHANGED - normal
- *                                        instructor/commission handling)
+ *                                        identity built for paid traffic -
+ *                                        UNCHANGED by the 2026-08-24 ruling)
+ *   everything else  -> WEB_WIZARD_URL  (/dive/web since 2026-08-24;
+ *                                        previously LEAD_FORM_URL /dive/ben)
  *
  * Only the iframe's src flips. The visitor is on /fun-dive-booking either way,
  * so the postMessage -> generate_lead / Purchase tracking in
@@ -179,13 +186,17 @@ export interface WizardIframeOptions extends BookingUrlOptions {
  * wrapper: a 12,000 THB product taking paid traffic had no client-side
  * conversion signal at all.
  *
- * Do NOT widen the campaign side to "has any utm_source" or similar. Sending an
- * organic lead to /dive/web silently strips an instructor's commission.
+ * COMMISSION NOTE: sending an organic lead to /dive/web strips an
+ * instructor's commission. This warning used to guard the organic side of the
+ * split; Ben ruled it EXPLICITLY on 2026-08-24 - the instructor in question
+ * is Ben himself, and organic embed bookings should derive `web_direct` in
+ * DiveOS, not `instructor`. The ruling covers ONLY this embed's default:
+ * deliberate personal /dive/<slug> instructor/affiliate links stay untouched.
  *
  * The storage opt-out (?utm_passthrough=0) suppresses the stored-value half of
  * the decision as well as the passthrough itself, so the two can never
- * disagree - which would otherwise route a visitor to the paid wizard carrying
- * no attribution at all, the worst of both outcomes.
+ * disagree - a visitor classified as campaign traffic always carries the
+ * attribution that classified them.
  */
 export function buildWizardIframeSrc(
   search: string,
@@ -194,7 +205,7 @@ export function buildWizardIframeSrc(
   const {
     includeStored = true,
     campaignBaseUrl = WEB_WIZARD_URL,
-    organicBaseUrl = LEAD_FORM_URL,
+    organicBaseUrl = WEB_WIZARD_URL,
     ...rest
   } = options;
 
