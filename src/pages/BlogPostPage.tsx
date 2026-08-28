@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Fragment, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, MessageCircle, MapPin, Clock } from "lucide-react";
+import { ArrowLeft, Clock, MapPin, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Seo from "@/components/Seo";
@@ -88,7 +88,8 @@ const BlogPostPage = () => {
         <div className="pt-36 pb-20 px-4 text-center">
           <h1 className="font-display text-3xl font-bold text-foreground">{t("blog_article_not_found")}</h1>
           <Link to="/blog" className="text-primary mt-4 inline-block hover:underline">
-            ← {t("blog_back_to_guide")}
+            <ArrowLeft className="h-[1.05em] w-[1.05em] rtl:rotate-180" aria-hidden="true" />{" "}
+            {t("blog_back_to_guide")}
           </Link>
         </div>
         <Footer />

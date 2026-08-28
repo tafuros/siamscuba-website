@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
+import { Check, MessageCircle, Star } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -108,7 +108,15 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
               {copy.heroSubhead}
             </p>
             {copy.ratingsLine && (
-              <p className="mt-4 text-sm md:text-base font-semibold text-white/95">{copy.ratingsLine}</p>
+              <p className="mt-4 flex items-center justify-center gap-1.5 text-sm md:text-base font-semibold text-white/95">
+                <Star
+                  className="h-[1.05em] w-[1.05em] shrink-0 text-amber-400"
+                  fill="currentColor"
+                  strokeWidth={0}
+                  aria-hidden="true"
+                />
+                {copy.ratingsLine}
+              </p>
             )}
             <div className="mt-6">
               <Link
@@ -229,9 +237,9 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
           </div>
           <ul className="grid gap-2">
             {copy.pricing.includes.map((item) => (
-              <li key={item} className="relative pl-7 text-sm md:text-base">
-                <span className="absolute left-0 font-extrabold text-accent">✓</span>
-                {item}
+              <li key={item} className="flex items-start gap-2 text-sm md:text-base">
+                <Check className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                <span>{item}</span>
               </li>
             ))}
           </ul>

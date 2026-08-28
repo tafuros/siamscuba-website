@@ -78,10 +78,10 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
           before the course list rather than an afterthought below it. */}
       <GoProBanner />
       <CoursesSection initialCourse={courseParam} />
-      <ScrollHint label="Fun Diving ↓" targetId="fun-diving" />
+      <ScrollHint label="Fun Diving" targetId="fun-diving" />
       <FunDivingSection />
       <DiveSitesSection />
-      <ScrollHint label="Our Boats ↓" targetId="boats" />
+      <ScrollHint label="Our Boats" targetId="boats" />
       <BoatsSection />
       <WhyChooseUs />
       <TripAdvisorSection />

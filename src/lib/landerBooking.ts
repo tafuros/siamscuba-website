@@ -89,11 +89,5 @@ export const DIVEOS_COURSE_CODES = [
  * signal, so paid traffic cannot be optimised against it.
  */
 export function usesBookingWrapper(offer: Offer): boolean {
-  return (
-    offer === "fun-dive" ||
-    offer === "koh-tao" ||
-    offer === "dsd" ||
-    offer === "owd" ||
-    offer === "aow"
-  );
+  return offer === "dsd" || offer === "owd" || offer === "aow";
 }

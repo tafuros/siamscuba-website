@@ -5,6 +5,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 import {
+  DIVE_LINE_ICONS,
+  ReefFishIcon,
+  type DiveLineIconName,
+} from "@/components/icons/DiveLineIcons";
+import {
   trackWhatsAppClick,
   trackChatOpen,
   trackChatEngaged,
@@ -13,6 +18,16 @@ import {
 
 type Msg = { role: "user" | "assistant"; content: string };
 
+/**
+ * Suggestion chips carry an icon KEY, not a character, so the four translations
+ * stay free of markup and every device draws the same mark. Sized to sit on the
+ * chip's cap-height rather than tower over the 13px label.
+ */
+function SuggestionIcon({ icon }: { icon: DiveLineIconName }) {
+  const Icon = DIVE_LINE_ICONS[icon];
+  return <Icon size={18} className="shrink-0 text-coral" />;
+}
+
 type Copy = {
   pill: string;
   title: string;
@@ -20,7 +35,7 @@ type Copy = {
   placeholder: string;
   wa: string;
   error: string;
-  suggestions: { emoji: string; label: string }[];
+  suggestions: { icon: DiveLineIconName; label: string }[];
   // Persistent CTA row
   ctaFunDive: string;
   ctaWhatsApp: string;
@@ -42,10 +57,10 @@ const COPY: Record<string, Copy> = {
     wa: "Talk to a human on WhatsApp",
     error: "Sorry, I had a hiccup 🫧 Please try again or message us on WhatsApp.",
     suggestions: [
-      { emoji: "🐠", label: "Can I dive with no experience?" },
-      { emoji: "🤿", label: "I'm certified - I want to dive" },
-      { emoji: "🌊", label: "Which dive sites do you go to?" },
-      { emoji: "🔄", label: "I haven't dived in a while" },
+      { icon: "fish", label: "Can I dive with no experience?" },
+      { icon: "mask", label: "I'm certified - I want to dive" },
+      { icon: "wave", label: "Which dive sites do you go to?" },
+      { icon: "refresh", label: "I haven't dived in a while" },
     ],
     ctaFunDive: "Book a fun dive",
     ctaWhatsApp: "WhatsApp",
@@ -62,10 +77,10 @@ const COPY: Record<string, Copy> = {
     wa: "לדבר עם נציג בוואטסאפ",
     error: "סליחה, הייתה תקלה קטנה 🫧 נסו שוב או כתבו לנו בוואטסאפ.",
     suggestions: [
-      { emoji: "🐠", label: "אפשר לצלול בלי ניסיון?" },
-      { emoji: "🤿", label: "יש לי רישיון ואני רוצה לצלול" },
-      { emoji: "🌊", label: "באיזה אתרים יוצאים לצלול?" },
-      { emoji: "🔄", label: "לא צללתי הרבה זמן" },
+      { icon: "fish", label: "אפשר לצלול בלי ניסיון?" },
+      { icon: "mask", label: "יש לי רישיון ואני רוצה לצלול" },
+      { icon: "wave", label: "באיזה אתרים יוצאים לצלול?" },
+      { icon: "refresh", label: "לא צללתי הרבה זמן" },
     ],
     ctaFunDive: "הזמנת צלילה",
     ctaWhatsApp: "וואטסאפ",
@@ -82,10 +97,10 @@ const COPY: Record<string, Copy> = {
     wa: "Habla con una persona por WhatsApp",
     error: "Lo siento, tuve un problemilla 🫧 Inténtalo de nuevo o escríbenos por WhatsApp.",
     suggestions: [
-      { emoji: "🐠", label: "¿Puedo bucear sin experiencia?" },
-      { emoji: "🤿", label: "Tengo licencia y quiero bucear" },
-      { emoji: "🌊", label: "¿A qué sitios de buceo vais?" },
-      { emoji: "🔄", label: "Hace tiempo que no buceo" },
+      { icon: "fish", label: "¿Puedo bucear sin experiencia?" },
+      { icon: "mask", label: "Tengo licencia y quiero bucear" },
+      { icon: "wave", label: "¿A qué sitios de buceo vais?" },
+      { icon: "refresh", label: "Hace tiempo que no buceo" },
     ],
     ctaFunDive: "Reserva una inmersión",
     ctaWhatsApp: "WhatsApp",
@@ -102,10 +117,10 @@ const COPY: Record<string, Copy> = {
     wa: "Parler à un humain sur WhatsApp",
     error: "Désolé, petit souci 🫧 Réessaie ou écris-nous sur WhatsApp.",
     suggestions: [
-      { emoji: "🐠", label: "Je peux plonger sans expérience ?" },
-      { emoji: "🤿", label: "Je suis certifié - je veux plonger" },
-      { emoji: "🌊", label: "Quels sites de plongée faites-vous ?" },
-      { emoji: "🔄", label: "Je n'ai pas plongé depuis longtemps" },
+      { icon: "fish", label: "Je peux plonger sans expérience ?" },
+      { icon: "mask", label: "Je suis certifié - je veux plonger" },
+      { icon: "wave", label: "Quels sites de plongée faites-vous ?" },
+      { icon: "refresh", label: "Je n'ai pas plongé depuis longtemps" },
     ],
     ctaFunDive: "Réserver une plongée",
     ctaWhatsApp: "WhatsApp",
@@ -229,7 +244,7 @@ function NemoAvatar({
       />
       <div className="absolute inset-0 flex items-center justify-center">
         {broken ? (
-          <span style={{ fontSize: size * 0.5 }} aria-hidden>🐠</span>
+          <ReefFishIcon size={size * 0.55} className="text-white" />
         ) : (
           <motion.img
             src="/nemo/nemo-avatar.webp"
@@ -596,9 +611,9 @@ const NemoChat = () => {
                     <button
                       key={s.label}
                       onClick={() => send(s.label)}
-                      className="block w-full rounded-[13px] border border-border bg-white px-3 py-2.5 text-start text-[13px] font-semibold text-ocean-deep transition-colors hover:border-coral hover:bg-coral/5"
+                      className="flex w-full items-center gap-2.5 rounded-[13px] border border-border bg-white px-3 py-2.5 text-start text-[13px] font-semibold text-ocean-deep transition-colors hover:border-coral hover:bg-coral/5"
                     >
-                      <span className="me-2">{s.emoji}</span>
+                      <SuggestionIcon icon={s.icon} />
                       {s.label}
                     </button>
                   ))}

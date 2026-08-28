@@ -12,6 +12,8 @@
 //      conversion signal at all. `aow` was in that state while being the
 //      second-biggest earner in the business.
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import {
   WIZARD_PRODUCT,
   TRIP_CARD_PRODUCT,
@@ -89,11 +91,25 @@ describe("lander booking CTAs", () => {
 
   it("the paid course landers all have a booking CTA", () => {
     // These take campaign budget. WhatsApp-only means no conversion signal.
-    for (const offer of ["owd", "aow", "dsd", "fun-dive"] as Offer[]) {
+    for (const offer of ["owd", "aow", "dsd"] as Offer[]) {
       expect(usesBookingWrapper(offer), `offer "${offer}" has no booking CTA`).toBe(
         true,
       );
     }
+  });
+
+  it("the fun-dives lander still routes its primary CTA to the booking wizard", () => {
+    // /fun-dives also takes campaign budget, but it is NOT a CampaignLander -
+    // it is served by FunDiveLander + funDiveCopy.ts, so usesBookingWrapper()
+    // cannot speak for it. This kept the guarantee when "fun-dive" was dropped
+    // from Offer on 2026-08-28 along with its dead LANDER_COPY entry.
+    const source = readFileSync(
+      resolve(process.cwd(), "src/components/landers/FunDiveLander.tsx"),
+      "utf-8",
+    );
+    expect(source, "FunDiveLander lost its /fun-dive-booking CTA").toContain(
+      "/fun-dive-booking",
+    );
   });
 
   it("a booking-wrapper lander never labels its primary CTA as WhatsApp", () => {

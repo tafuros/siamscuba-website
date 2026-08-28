@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, MessageCircle, Star } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -39,9 +39,17 @@ const GOD_RAYS: React.CSSProperties = {
   ].join(", "),
 };
 
-const Stars = ({ className = "" }: { className?: string }) => (
-  <span className={`text-amber-400 tracking-[.12em] ${className}`} aria-hidden="true">
-    ★★★★★
+// Five drawn stars rather than the ★ character, which picks up a different
+// shape (and often a different width) from whatever font the device falls back
+// to - the same inconsistency the emoji had.
+const Stars = ({ size = 17 }: { size?: number }) => (
+  <span
+    className="inline-flex items-center gap-[2px] align-[-.15em] text-amber-400"
+    aria-hidden="true"
+  >
+    {[0, 1, 2, 3, 4].map((i) => (
+      <Star key={i} size={size} fill="currentColor" strokeWidth={0} />
+    ))}
   </span>
 );
 
@@ -135,7 +143,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
 
           <div className="flex flex-col items-center gap-3">
             <Link to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
-              {copy.ctaBook} {isRtl ? "←" : "→"}
+              {copy.ctaBook} {isRtl ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
             </Link>
             <a
               href={whatsappHref}
@@ -252,7 +260,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         rel="noopener noreferrer"
         className="block border-y border-white/[.08] bg-white/[.04] px-5 py-12 text-center transition-colors hover:bg-white/[.07]"
       >
-        <Stars className="text-[26px] tracking-[.18em]" />
+        <Stars size={26} />
         <div className={`${display} mt-2 text-2xl`}>{copy.reviewQuote}</div>
         <div className="mt-1.5 text-[13.5px] text-white/60">{copy.reviewSrc}</div>
       </a>
@@ -289,7 +297,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         </h2>
         <p className="mb-7 text-[15px] text-white/65">{copy.closingSub}</p>
         <Link to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
-          {copy.ctaBook} {isRtl ? "←" : "→"}
+          {copy.ctaBook} {isRtl ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
         </Link>
       </section>
 

@@ -8,6 +8,7 @@ import { blogPosts, blogPostPath } from "@/data/blogPosts";
 import { diveSites } from "@/data/diveSites";
 import { translations } from "@/i18n/translations";
 import { LANDER_COPY } from "@/lib/landerCopy";
+import { FUN_DIVE_COPY } from "@/lib/funDiveCopy";
 
 export type KbRecord = { source: string; text: string };
 
@@ -93,6 +94,22 @@ export function extractKbRecords(): KbRecord[] {
       walk(copy);
       records.push({ source: `lander:${offer}:${lang}`, text: parts.join("\n") });
     }
+  }
+
+  // ── fun-dives lander: lives in its own module, not LANDER_COPY ────────────
+  // /fun-dives is a paid-traffic lander served by FunDiveLander + funDiveCopy,
+  // and it is the only one carrying French. It used to reach the KB through a
+  // stale LANDER_COPY["fun-dive"] entry; that copy was deleted 2026-08-28, so
+  // without this block Nemo would lose all grounding on a core product.
+  for (const [lang, copy] of Object.entries(FUN_DIVE_COPY)) {
+    const parts: string[] = [];
+    const walk = (v: unknown) => {
+      if (typeof v === "string") parts.push(v);
+      else if (Array.isArray(v)) v.forEach(walk);
+      else if (v && typeof v === "object") Object.values(v).forEach(walk);
+    };
+    walk(copy);
+    records.push({ source: `lander:fun-dive:${lang}`, text: parts.join("\n") });
   }
 
   return records;

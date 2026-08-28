@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Seo from "@/components/Seo";
@@ -58,7 +59,7 @@ const SiamSimilansPage = () => {
       {/* Top bar */}
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-5">
         <Link to="/" className="shrink-0 text-sm text-white/70 transition-colors hover:text-white">
-          <span aria-hidden="true">{isRTL ? "→" : "←"}</span>{" "}
+          {isRTL ? <ArrowRight className="h-[1.05em] w-[1.05em]" /> : <ArrowLeft className="h-[1.05em] w-[1.05em]" />}{" "}
           <span className="hidden sm:inline">{copy.back}</span>
         </Link>
         {/* The logo reopens the welcome gate on the homepage (?gate=1 forces it
@@ -147,7 +148,7 @@ const SiamSimilansPage = () => {
             to="/phuket-diving"
             className="whitespace-nowrap font-semibold text-ocean-light underline-offset-4 transition-colors hover:text-white hover:underline"
           >
-            {copy.phuketExit.cta} <span aria-hidden="true">{isRTL ? "←" : "→"}</span>
+            {copy.phuketExit.cta} {isRTL ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
           </Link>
         </motion.div>
       </section>

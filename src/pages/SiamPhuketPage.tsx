@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
@@ -53,7 +54,7 @@ const SiamPhuketPage = () => {
       {/* Top bar */}
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
         <Link to="/" className="text-sm text-white/70 transition-colors hover:text-white">
-          <span aria-hidden="true">{isRTL ? "→" : "←"}</span> {copy.back}
+          {isRTL ? <ArrowRight className="h-[1.05em] w-[1.05em]" /> : <ArrowLeft className="h-[1.05em] w-[1.05em]" />} {copy.back}
         </Link>
         <LanguageSwitcher />
       </header>
