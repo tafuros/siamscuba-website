@@ -7,6 +7,8 @@
 // landers must render the AD's language regardless of any returning-visitor
 // preference stored in localStorage.
 
+import type { DiveLineIconName } from "@/components/icons/DiveLineIcons";
+
 export type FunLang = "en" | "es" | "he" | "fr";
 
 export interface FunFact {
@@ -24,7 +26,7 @@ export interface FunSiteCard {
 }
 
 export interface FunWhyCard {
-  emoji: string;
+  icon: DiveLineIconName;
   title: string;
   body: string;
 }
@@ -81,7 +83,7 @@ const EN: FunDiveCopy = {
   seoTitle: "Fun Dives in Koh Tao - Guided Day Trips from 2,000 THB | Siam Scuba",
   seoDescription:
     "Certified divers - book guided fun dives in Koh Tao. Two morning or afternoon dives 2,000 THB all-in. Full-day Sail Rock 4,000 THB. Small groups, two custom boats.",
-  badge: "🤿 For certified divers · PADI 5★ center",
+  badge: "For certified divers · PADI 5★ center",
   h1a: "Fun dives in Koh Tao,",
   h1b: "done properly.",
   sub: "2 guided boat dives at the Gulf's best sites - Chumphon Pinnacle, Sail Rock, Shark Island. Gear, guide and insurance included. Just show up with your card.",
@@ -131,17 +133,17 @@ const EN: FunDiveCopy = {
   whySub: "And why they keep coming back.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "Two custom dive boats",
       body: "No shared boats with other shops. Our divers only - leaves on time, never packed.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "Max 6 per guide",
       body: "Real briefings, real attention. Your guide actually watches your air.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 years",
       body: "Certified dive center with instructors who've logged Koh Tao thousands of times.",
     },
@@ -175,7 +177,7 @@ const ES: FunDiveCopy = {
   seoTitle: "Inmersiones Guiadas en Koh Tao - Desde 2,000 THB | Siam Scuba",
   seoDescription:
     "Buceadores certificados - reserva inmersiones guiadas en Koh Tao. Dos inmersiones mañana o tarde por 2,000 THB todo incluido. Día completo en Sail Rock 4,000 THB. Grupos pequeños, barcos propios.",
-  badge: "🤿 Para buceadores certificados · Centro PADI 5★",
+  badge: "Para buceadores certificados · Centro PADI 5★",
   h1a: "Buceo en Koh Tao,",
   h1b: "como debe ser.",
   sub: "2 inmersiones guiadas en barco en los mejores sitios del Golfo - Chumphon Pinnacle, Sail Rock, Shark Island. Equipo, guía y seguro incluidos. Solo trae tu certificación.",
@@ -225,17 +227,17 @@ const ES: FunDiveCopy = {
   whySub: "Y por qué siempre vuelven.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "Dos barcos de buceo propios",
       body: "No compartimos barco con otros centros. Solo nuestros buceadores - sale puntual, nunca abarrotado.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "Máx. 6 por guía",
       body: "Briefings de verdad, atención de verdad. Tu guía realmente vigila tu aire.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 años",
       body: "Centro certificado con instructores que han buceado Koh Tao miles de veces.",
     },
@@ -270,7 +272,7 @@ const HE: FunDiveCopy = {
   seoTitle: "צלילות כיף בקוטאו - יציאות מודרכות מ-2,000 באט | סיאם סקובה",
   seoDescription:
     "צוללים מוסמכים - הזמינו צלילות מודרכות בקוטאו. שתי צלילות בוקר או צהריים ב-2,000 באט הכל כלול. יום שלם בסייל רוק 4,000 באט. קבוצות קטנות, שתי סירות פרטיות.",
-  badge: "🤿 לצוללים מוסמכים · מרכז PADI 5★",
+  badge: "לצוללים מוסמכים · מרכז PADI 5★",
   h1a: "צלילות כיף בקוטאו,",
   h1b: "כמו שצריך.",
   sub: "2 צלילות מודרכות מהסירה באתרים הכי טובים במפרץ - צ'ומפון פינקל, סייל רוק, שארק איילנד. ציוד, מדריך וביטוח כלולים. רק תביאו את הכרטיס.",
@@ -320,17 +322,17 @@ const HE: FunDiveCopy = {
   whySub: "ולמה הם חוזרים שוב ושוב.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "שתי סירות צלילה פרטיות",
       body: "בלי סירות משותפות עם מרכזים אחרים. רק הצוללים שלנו - יוצאים בזמן, אף פעם לא צפוף.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "מקסימום 6 למדריך",
       body: "תדריכים אמיתיים, תשומת לב אמיתית. המדריך באמת עוקב אחרי האוויר שלכם.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 שנים",
       body: "מרכז מוסמך עם מדריכים שצללו את קוטאו אלפי פעמים.",
     },
@@ -364,7 +366,7 @@ const FR: FunDiveCopy = {
   seoTitle: "Plongées Fun à Koh Tao - Sorties Guidées dès 2 000 THB | Siam Scuba",
   seoDescription:
     "Plongeurs certifiés - réservez vos plongées guidées à Koh Tao. Deux plongées matin ou après-midi pour 2 000 THB tout compris. Journée complète à Sail Rock 4 000 THB. Petits groupes, deux bateaux privés.",
-  badge: "🤿 Pour plongeurs certifiés · Centre PADI 5★",
+  badge: "Pour plongeurs certifiés · Centre PADI 5★",
   h1a: "Plongées fun à Koh Tao,",
   h1b: "dans les règles de l'art.",
   sub: "2 plongées guidées en bateau sur les meilleurs sites du Golfe - Chumphon Pinnacle, Sail Rock, Shark Island. Équipement, guide et assurance inclus. Venez juste avec votre carte.",
@@ -414,17 +416,17 @@ const FR: FunDiveCopy = {
   whySub: "Et pourquoi ils reviennent.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "Deux bateaux de plongée privés",
       body: "Pas de bateau partagé avec d'autres centres. Nos plongeurs uniquement - départ à l'heure, jamais surchargé.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "Max 6 par guide",
       body: "De vrais briefings, une vraie attention. Votre guide surveille vraiment votre air.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 ans",
       body: "Centre certifié avec des instructeurs qui connaissent Koh Tao par cœur.",
     },
