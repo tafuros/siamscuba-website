@@ -11,7 +11,8 @@ is NOT Ads: the GA4 property simply never received the manual conversion events.
 
 - `G-5WHV1MM0DR` is loaded ONLY through GTM container `GTM-TN3SM66Q`. There is no
   `gtag('config','G-5WHV1MM0DR')` anywhere on the page (index.html only configs the
-  Ads account `AW-18050429438`).
+  Ads account `AW-18357382437` - account 934-806-2676, Thai billing, which replaced
+  the retired `AW-18050429438` on 2026-08-02).
 - Every conversion in `src/utils/tracking.ts` fired via `gtag('event', …)` which
   routes to the on-page Ads account, plus `send_to: AW-…` conversion pings. None of
   it reaches the GTM-loaded GA4 property.
