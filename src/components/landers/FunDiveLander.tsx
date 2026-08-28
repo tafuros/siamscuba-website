@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import Footer from "@/components/Footer";
 import LanderNav from "@/components/landers/LanderNav";
+import { DIVE_LINE_ICONS } from "@/components/icons/DiveLineIcons";
 import { FUN_DIVE_COPY, type FunLang } from "@/lib/funDiveCopy";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { WHATSAPP_NUMBER } from "@/utils/whatsapp";
@@ -225,18 +226,21 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         </h2>
         <p className="mb-9 text-center text-[15px] text-white/65">{copy.whySub}</p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {copy.why.map((card) => (
+          {copy.why.map((card) => {
+            const Icon = DIVE_LINE_ICONS[card.icon];
+            return (
             <div
               key={card.title}
               className="rounded-[20px] border border-white/[.12] bg-white/[.05] p-7 text-center backdrop-blur-md"
             >
-              <div className="mb-3 text-[34px] leading-none" aria-hidden="true">
-                {card.emoji}
+              <div className="mb-4 flex justify-center text-amber-400/90">
+                <Icon size={40} />
               </div>
               <h3 className="mb-2 text-[17px] font-bold">{card.title}</h3>
               <p className="text-sm leading-relaxed text-white/70">{card.body}</p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

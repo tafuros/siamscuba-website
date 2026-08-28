@@ -7,6 +7,8 @@
 // landers must render the AD's language regardless of any returning-visitor
 // preference stored in localStorage.
 
+import type { DiveLineIconName } from "@/components/icons/DiveLineIcons";
+
 export type FunLang = "en" | "es" | "he" | "fr";
 
 export interface FunFact {
@@ -24,7 +26,7 @@ export interface FunSiteCard {
 }
 
 export interface FunWhyCard {
-  emoji: string;
+  icon: DiveLineIconName;
   title: string;
   body: string;
 }
@@ -131,17 +133,17 @@ const EN: FunDiveCopy = {
   whySub: "And why they keep coming back.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "Two custom dive boats",
       body: "No shared boats with other shops. Our divers only - leaves on time, never packed.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "Max 6 per guide",
       body: "Real briefings, real attention. Your guide actually watches your air.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 years",
       body: "Certified dive center with instructors who've logged Koh Tao thousands of times.",
     },
@@ -225,17 +227,17 @@ const ES: FunDiveCopy = {
   whySub: "Y por qué siempre vuelven.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "Dos barcos de buceo propios",
       body: "No compartimos barco con otros centros. Solo nuestros buceadores - sale puntual, nunca abarrotado.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "Máx. 6 por guía",
       body: "Briefings de verdad, atención de verdad. Tu guía realmente vigila tu aire.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 años",
       body: "Centro certificado con instructores que han buceado Koh Tao miles de veces.",
     },
@@ -320,17 +322,17 @@ const HE: FunDiveCopy = {
   whySub: "ולמה הם חוזרים שוב ושוב.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "שתי סירות צלילה פרטיות",
       body: "בלי סירות משותפות עם מרכזים אחרים. רק הצוללים שלנו - יוצאים בזמן, אף פעם לא צפוף.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "מקסימום 6 למדריך",
       body: "תדריכים אמיתיים, תשומת לב אמיתית. המדריך באמת עוקב אחרי האוויר שלכם.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 שנים",
       body: "מרכז מוסמך עם מדריכים שצללו את קוטאו אלפי פעמים.",
     },
@@ -414,17 +416,17 @@ const FR: FunDiveCopy = {
   whySub: "Et pourquoi ils reviennent.",
   why: [
     {
-      emoji: "🚤",
+      icon: "boats",
       title: "Deux bateaux de plongée privés",
       body: "Pas de bateau partagé avec d'autres centres. Nos plongeurs uniquement - départ à l'heure, jamais surchargé.",
     },
     {
-      emoji: "🤿",
+      icon: "mask",
       title: "Max 6 par guide",
       body: "De vrais briefings, une vraie attention. Votre guide surveille vraiment votre air.",
     },
     {
-      emoji: "🏅",
+      icon: "medal",
       title: "PADI 5★ · 43 ans",
       body: "Centre certifié avec des instructeurs qui connaissent Koh Tao par cœur.",
     },
