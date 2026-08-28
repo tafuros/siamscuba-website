@@ -68,6 +68,27 @@ function fbq(
   });
 }
 
+/**
+ * Pushes a clean, GTM-facing custom event onto the dataLayer so GTM GA4 Event
+ * tags can relay it to the GA4 property (G-5WHV1MM0DR). This is the ONLY path
+ * that reaches GA4 - on-page gtag('event',…) calls only hit the Google Ads
+ * account (GA_MEASUREMENT_ID = AW-…), which is why GA4 showed 0 conversions.
+ * ADDITIVE: it does not touch the gtag() Ads pings, so the Google Ads
+ * conversions keep working while GA4 finally gets the same events.
+ * Undefined/null values are dropped so the dataLayer payload stays clean.
+ * The event names map 1:1 to the GTM triggers in docs/ga4-events-gtm-spec.md
+ * (same convention as the existing whatsapp_fastpath_click / book_now_click).
+ */
+function pushDataLayer(event: string, params: Record<string, unknown> = {}): void {
+  if (typeof window === "undefined") return;
+  const clean: Record<string, unknown> = { event };
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== undefined && v !== null) clean[k] = v;
+  }
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(clean);
+}
+
 function utmFields(): Record<string, string | undefined> {
   const utm: UtmParams = getStoredUtm();
   if (!utm.source) return {};
@@ -130,6 +151,12 @@ export interface WhatsAppClickParams {
 }
 
 export function trackWhatsAppClick(params: WhatsAppClickParams): void {
+  // GA4 relay (via GTM). Separate from the Ads gtag ping below.
+  pushDataLayer("whatsapp_click", {
+    location: params.location,
+    url: params.url,
+    ...utmFields(),
+  });
   gtag("event", "whatsapp_click", {
     event_category: "engagement",
     event_label: params.location,
@@ -365,6 +392,14 @@ export interface GenerateLeadParams {
 export function trackGenerateLead(params: GenerateLeadParams): void {
   // Enhanced conversions: set user data BEFORE the conversion event (when present).
   setEnhancedConversionData({ email: params.email, phone: params.phone });
+  // GA4 relay (via GTM). Separate from the Ads gtag conversion below.
+  pushDataLayer("generate_lead", {
+    form_name: params.form_name,
+    product: params.product,
+    dive_date: params.dive_date,
+    currency: "THB",
+    ...utmFields(),
+  });
   gtag("event", "generate_lead", {
     event_category: "lead",
     form_name: params.form_name,
@@ -415,6 +450,14 @@ export function trackPurchase(params: PurchaseParams): void {
   // Enhanced conversions: set user data BEFORE the conversion event so gtag
   // attaches the hashed identifiers to the conversion ping.
   setEnhancedConversionData({ email: params.email, phone: params.phone });
+  // GA4 relay (via GTM). Separate from the Ads gtag conversion below.
+  pushDataLayer("purchase", {
+    transaction_id: params.transaction_id,
+    value: params.value,
+    currency: params.currency ?? "THB",
+    item_name: params.item_name,
+    ...utmFields(),
+  });
   gtag("event", "purchase", {
     transaction_id: params.transaction_id,
     value: params.value,
@@ -453,6 +496,12 @@ export interface BookingPayLaterParams {
 export function trackBookingPayLater(params: BookingPayLaterParams): void {
   // Enhanced conversions: set user data BEFORE the conversion event.
   setEnhancedConversionData({ email: params.email, phone: params.phone });
+  // GA4 relay (via GTM). Separate from the Ads gtag conversion below.
+  pushDataLayer("booking_pay_later", {
+    transaction_id: params.transaction_id,
+    product: params.product,
+    ...utmFields(),
+  });
   gtag("event", "booking_pay_later", {
     event_category: "booking",
     transaction_id: params.transaction_id,
