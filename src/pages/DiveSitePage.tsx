@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, MessageCircle, Waves, Gauge, GraduationCap, Star } from "lucide-react";
+import { ArrowLeft, Gauge, GraduationCap, MessageCircle, Star, Waves } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
@@ -39,7 +39,8 @@ const DiveSitePage = () => {
         <div className="pt-36 pb-20 px-4 text-center">
           <h1 className="font-display text-3xl font-bold text-foreground">Dive site not found</h1>
           <Link to="/dive-sites" className="text-primary mt-4 inline-block hover:underline">
-            ← Back to dive sites
+            <ArrowLeft className="h-[1.05em] w-[1.05em] rtl:rotate-180" aria-hidden="true" />{" "}
+            Back to dive sites
           </Link>
         </div>
         <Footer />

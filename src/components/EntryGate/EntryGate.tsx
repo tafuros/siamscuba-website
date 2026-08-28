@@ -385,7 +385,7 @@ const EntryGate = () => {
               onClick={() => dispatch({ type: "BACK" })}
               className="absolute top-4 ltr:left-5 rtl:right-5 flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-white/15"
             >
-              <span aria-hidden="true">{gateRTL ? "→" : "←"}</span>
+              {gateRTL ? <ArrowRight className="h-[1.05em] w-[1.05em]" /> : <ArrowLeft className="h-[1.05em] w-[1.05em]" />}
               {copy.back}
             </button>
           )}
@@ -403,7 +403,7 @@ const EntryGate = () => {
             className={`absolute top-4 ${gateRTL ? "left-5" : "right-5"} flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-md transition-colors hover:bg-white/15 hover:text-white`}
           >
             {copy.skip}
-            <span aria-hidden="true">{gateRTL ? "←" : "→"}</span>
+            {gateRTL ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
           </button>
         </div>
         {/* The 32vh bottom padding lifts the welcome/location content clear of the

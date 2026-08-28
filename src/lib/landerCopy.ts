@@ -1004,7 +1004,7 @@ const SAIL_ROCK_EN: LanderCopy = {
   heroH1: "Dive Sail Rock",
   heroSubhead:
     "Hin Bai - the legendary pinnacle. Whale shark territory, the famous vertical Chimney swim-through, and massive schools of fish. A full-day boat trip from Koh Tao, every 3 days.",
-  ratingsLine: "★ Google 4.9 (845 reviews) · TripAdvisor 5.0 (776 reviews)",
+  ratingsLine: "Google 4.9 (845 reviews) · TripAdvisor 5.0 (776 reviews)",
   ctaPrimary: "Book the Sail Rock Trip",
   ctaSecondary: "Or message us on WhatsApp",
   nextBoatPrefix: "Next boat",
@@ -1117,7 +1117,7 @@ const SAIL_ROCK_ES: LanderCopy = {
   heroH1: "Bucea en Sail Rock",
   heroSubhead:
     "Hin Bai - el pináculo legendario. Zona de tiburón ballena, la famosa Chimenea vertical y enormes bancos de peces. Excursión de día completo desde Koh Tao, cada 3 días.",
-  ratingsLine: "★ Google 4,9 (845 reseñas) · TripAdvisor 5,0 (776 reseñas)",
+  ratingsLine: "Google 4,9 (845 reseñas) · TripAdvisor 5,0 (776 reseñas)",
   ctaPrimary: "Reserva la excursión a Sail Rock",
   ctaSecondary: "O escríbenos por WhatsApp",
   nextBoatPrefix: "Próximo barco",
@@ -1230,7 +1230,7 @@ const SAIL_ROCK_HE: LanderCopy = {
   heroH1: "צלילה בסייל רוק",
   heroSubhead:
     "הין באי - הפינה האגדית. אזור כרישי הלוויתן, ה\"ארובה\" האנכית המפורסמת ולהקות ענק של דגים. טיול יום שלם מקוטאו, כל 3 ימים.",
-  ratingsLine: "★ גוגל 4.9 (845 ביקורות) · טריפאדוויזר 5.0 (776 ביקורות)",
+  ratingsLine: "גוגל 4.9 (845 ביקורות) · טריפאדוויזר 5.0 (776 ביקורות)",
   ctaPrimary: "הזמינו את טיול סייל רוק",
   ctaSecondary: "או כתבו לנו ב-WhatsApp",
   nextBoatPrefix: "הסירה הבאה",

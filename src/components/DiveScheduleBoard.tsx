@@ -298,7 +298,12 @@ const DiveScheduleBoard = () => {
           <div key={day.key}>
             <p className="mb-2 text-center font-display text-sm font-bold text-white">
               {day.label}
-              {todayKey === day.key && <span className="ml-1 text-amber-300" aria-label="today">•</span>}
+              {todayKey === day.key && (
+                <span
+                  className="ms-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-300 align-middle"
+                  aria-label="today"
+                />
+              )}
             </p>
             <div className="flex flex-col gap-2">
               {day.slots.map((slot, i) => (

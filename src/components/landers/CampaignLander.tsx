@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Award, Calendar, Heart, MessageCircle, Sailboat, Shield, Users, Waves } from "lucide-react";
+import { Award, Calendar, Check, Heart, MessageCircle, Sailboat, Shield, Users, Waves } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -282,7 +282,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                 <ul className="space-y-2 text-sm">
                   {copy.pricing.includes.map((item) => (
                     <li key={item} className="flex gap-2">
-                      <span className="text-accent shrink-0">✓</span>
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                       <span>{item}</span>
                     </li>
                   ))}

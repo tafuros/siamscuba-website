@@ -134,7 +134,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.tripDetails.map((tripItem) => (
                     <li key={tripItem} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="text-primary mt-1">•</span> {tripItem}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {tripItem}
                     </li>
                   ))}
                 </ul>
@@ -201,7 +201,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.learns.map((l) => (
                     <li key={l} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="text-primary mt-1">•</span> {l}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {l}
                     </li>
                   ))}
                 </ul>
@@ -231,7 +231,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.included.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="text-primary mt-1">•</span> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {item}
                     </li>
                   ))}
                 </ul>
@@ -247,7 +247,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.notIncluded.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="text-destructive mt-1">•</span> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" aria-hidden="true" /> {item}
                     </li>
                   ))}
                 </ul>
@@ -263,7 +263,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.whatToBring.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="text-primary mt-1">•</span> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {item}
                     </li>
                   ))}
                 </ul>
@@ -279,7 +279,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.prerequisites.map((p) => (
                     <li key={p} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="text-accent mt-1">•</span> {p}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" /> {p}
                     </li>
                   ))}
                 </ul>
@@ -307,7 +307,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.payment.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="text-primary mt-1">•</span> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {item}
                     </li>
                   ))}
                 </ul>
