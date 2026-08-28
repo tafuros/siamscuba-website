@@ -52,9 +52,6 @@ export interface UspTile {
   icon: "shield" | "users" | "boat" | "calendar" | "award" | "heart" | "waves";
   // When set, the tile renders this brand badge image instead of the lucide icon.
   badge?: "padi5star";
-  // When set, the tile renders this colorful emoji instead of the monochrome
-  // lucide icon (used by the koh-tao conquest lander). `badge` still wins.
-  emoji?: string;
   title: string;
   body: string;
 }
@@ -1324,13 +1321,11 @@ const KOH_TAO_EN: LanderCopy = {
   uspTiles: [
     {
       icon: "users",
-      emoji: "👥",
       title: "Small groups, max 4 per instructor",
       body: "Real attention and real safety. You're a diver, not a number on a packed boat.",
     },
     {
       icon: "boat",
-      emoji: "🛥️",
       title: "Our own private boat + new gear",
       body: "We don't share boats with other shops. Modern, well-maintained equipment, and the schedule actually runs on time.",
     },
@@ -1342,19 +1337,16 @@ const KOH_TAO_EN: LanderCopy = {
     },
     {
       icon: "award",
-      emoji: "🌟",
       title: "4.9 Google · 5.0 TripAdvisor",
       body: "One of the most-reviewed dive shops on the island. Read why divers keep coming back.",
     },
     {
       icon: "heart",
-      emoji: "🗣️",
       title: "Instructors in EN / ES / HE",
       body: "Brief, dive, and debrief in your own language - English, Spanish or Hebrew.",
     },
     {
       icon: "calendar",
-      emoji: "✅",
       title: "Easy booking on WhatsApp",
       body: "Message us, pick your day, and a small deposit secures your spot. We reply within minutes.",
     },
@@ -1441,13 +1433,11 @@ const KOH_TAO_ES: LanderCopy = {
   uspTiles: [
     {
       icon: "users",
-      emoji: "👥",
       title: "Grupos pequeños, máx. 4 por instructor",
       body: "Atención y seguridad reales. Eres un buceador, no un número en un barco lleno.",
     },
     {
       icon: "boat",
-      emoji: "🛥️",
       title: "Barco propio + equipo nuevo",
       body: "No compartimos barco con otras tiendas. Equipo moderno y cuidado, y el horario se cumple.",
     },
@@ -1459,19 +1449,16 @@ const KOH_TAO_ES: LanderCopy = {
     },
     {
       icon: "award",
-      emoji: "🌟",
       title: "4,9 Google · 5,0 TripAdvisor",
       body: "Una de las tiendas de buceo más reseñadas de la isla. Mira por qué los buceadores repiten.",
     },
     {
       icon: "heart",
-      emoji: "🗣️",
       title: "Instructores en EN / ES / HE",
       body: "Briefing, inmersión y debriefing en tu idioma - inglés, español o hebreo.",
     },
     {
       icon: "calendar",
-      emoji: "✅",
       title: "Reserva fácil por WhatsApp",
       body: "Escríbenos, elige tu día y un pequeño depósito asegura tu plaza. Respondemos en minutos.",
     },
@@ -1558,13 +1545,11 @@ const KOH_TAO_HE: LanderCopy = {
   uspTiles: [
     {
       icon: "users",
-      emoji: "👥",
       title: "קבוצות קטנות, מקס׳ 4 למדריך",
       body: "תשומת לב אמיתית ובטיחות אמיתית. אתם צוללים, לא מספר על סירה גדושה.",
     },
     {
       icon: "boat",
-      emoji: "🛥️",
       title: "סירה פרטית משלנו + ציוד חדש",
       body: "אנחנו לא חולקים סירה עם חנויות אחרות. ציוד מודרני ומתוחזק, והלו״ז באמת עומד בזמנים.",
     },
@@ -1576,19 +1561,16 @@ const KOH_TAO_HE: LanderCopy = {
     },
     {
       icon: "award",
-      emoji: "🌟",
       title: "4.9 גוגל · 5.0 טריפאדוויזר",
       body: "אחת מחנויות הצלילה הכי מדורגות באי. תראו למה צוללים חוזרים אלינו שוב ושוב.",
     },
     {
       icon: "heart",
-      emoji: "🗣️",
       title: "מדריכים באנגלית / ספרדית / עברית",
       body: "תדריך, צלילה ותחקיר בשפה שלכם - אנגלית, ספרדית או עברית.",
     },
     {
       icon: "calendar",
-      emoji: "✅",
       title: "הזמנה קלה ב-WhatsApp",
       body: "כתבו לנו, בחרו יום, ומקדמה קטנה שומרת לכם מקום. אנחנו עונים תוך דקות.",
     },

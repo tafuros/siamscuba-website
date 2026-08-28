@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import Footer from "@/components/Footer";
 import LanderNav from "@/components/landers/LanderNav";
-import { DIVE_LINE_ICONS } from "@/components/icons/DiveLineIcons";
+import { DIVE_LINE_ICONS, DiveMaskIcon } from "@/components/icons/DiveLineIcons";
 import { FUN_DIVE_COPY, type FunLang } from "@/lib/funDiveCopy";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { WHATSAPP_NUMBER } from "@/utils/whatsapp";
@@ -110,6 +110,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           className="relative z-10 max-w-3xl px-6 pb-20 pt-28"
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/35 bg-sky-400/10 px-4 py-1.5 text-[12.5px] font-semibold uppercase tracking-[.08em] text-sky-100 backdrop-blur-sm">
+            <DiveMaskIcon size={17} className="shrink-0 text-sky-300" />
             {copy.badge}
           </div>
           <h1

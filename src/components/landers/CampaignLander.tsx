@@ -253,10 +253,6 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                       alt="PADI 5 Star Dive Center"
                       className="h-16 w-auto mb-3 object-contain"
                     />
-                  ) : tile.emoji ? (
-                    <span className="text-4xl mb-3 leading-none" aria-hidden="true">
-                      {tile.emoji}
-                    </span>
                   ) : (
                     <Icon className="h-8 w-8 mb-3 text-accent" />
                   )}

@@ -83,7 +83,7 @@ const EN: FunDiveCopy = {
   seoTitle: "Fun Dives in Koh Tao - Guided Day Trips from 2,000 THB | Siam Scuba",
   seoDescription:
     "Certified divers - book guided fun dives in Koh Tao. Two morning or afternoon dives 2,000 THB all-in. Full-day Sail Rock 4,000 THB. Small groups, two custom boats.",
-  badge: "🤿 For certified divers · PADI 5★ center",
+  badge: "For certified divers · PADI 5★ center",
   h1a: "Fun dives in Koh Tao,",
   h1b: "done properly.",
   sub: "2 guided boat dives at the Gulf's best sites - Chumphon Pinnacle, Sail Rock, Shark Island. Gear, guide and insurance included. Just show up with your card.",
@@ -177,7 +177,7 @@ const ES: FunDiveCopy = {
   seoTitle: "Inmersiones Guiadas en Koh Tao - Desde 2,000 THB | Siam Scuba",
   seoDescription:
     "Buceadores certificados - reserva inmersiones guiadas en Koh Tao. Dos inmersiones mañana o tarde por 2,000 THB todo incluido. Día completo en Sail Rock 4,000 THB. Grupos pequeños, barcos propios.",
-  badge: "🤿 Para buceadores certificados · Centro PADI 5★",
+  badge: "Para buceadores certificados · Centro PADI 5★",
   h1a: "Buceo en Koh Tao,",
   h1b: "como debe ser.",
   sub: "2 inmersiones guiadas en barco en los mejores sitios del Golfo - Chumphon Pinnacle, Sail Rock, Shark Island. Equipo, guía y seguro incluidos. Solo trae tu certificación.",
@@ -272,7 +272,7 @@ const HE: FunDiveCopy = {
   seoTitle: "צלילות כיף בקוטאו - יציאות מודרכות מ-2,000 באט | סיאם סקובה",
   seoDescription:
     "צוללים מוסמכים - הזמינו צלילות מודרכות בקוטאו. שתי צלילות בוקר או צהריים ב-2,000 באט הכל כלול. יום שלם בסייל רוק 4,000 באט. קבוצות קטנות, שתי סירות פרטיות.",
-  badge: "🤿 לצוללים מוסמכים · מרכז PADI 5★",
+  badge: "לצוללים מוסמכים · מרכז PADI 5★",
   h1a: "צלילות כיף בקוטאו,",
   h1b: "כמו שצריך.",
   sub: "2 צלילות מודרכות מהסירה באתרים הכי טובים במפרץ - צ'ומפון פינקל, סייל רוק, שארק איילנד. ציוד, מדריך וביטוח כלולים. רק תביאו את הכרטיס.",
@@ -366,7 +366,7 @@ const FR: FunDiveCopy = {
   seoTitle: "Plongées Fun à Koh Tao - Sorties Guidées dès 2 000 THB | Siam Scuba",
   seoDescription:
     "Plongeurs certifiés - réservez vos plongées guidées à Koh Tao. Deux plongées matin ou après-midi pour 2 000 THB tout compris. Journée complète à Sail Rock 4 000 THB. Petits groupes, deux bateaux privés.",
-  badge: "🤿 Pour plongeurs certifiés · Centre PADI 5★",
+  badge: "Pour plongeurs certifiés · Centre PADI 5★",
   h1a: "Plongées fun à Koh Tao,",
   h1b: "dans les règles de l'art.",
   sub: "2 plongées guidées en bateau sur les meilleurs sites du Golfe - Chumphon Pinnacle, Sail Rock, Shark Island. Équipement, guide et assurance inclus. Venez juste avec votre carte.",
