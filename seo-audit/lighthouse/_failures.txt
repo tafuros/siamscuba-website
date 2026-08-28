@@ -1,0 +1,96 @@
+=== blog-post FAILED AUDITS ===
+first-contentful-paint [0.02] :: First Contentful Paint
+largest-contentful-paint [0] :: Largest Contentful Paint
+speed-index [0.27] :: Speed Index
+max-potential-fid [0.97] :: Max Potential First Input Delay
+interactive [0.25] :: Time to Interactive
+redirects [0] :: Avoid multiple page redirects
+unsized-images [0.5] :: Image elements do not have explicit `width` and `height`
+valid-source-maps [0] :: Missing source maps for large first-party JavaScript
+button-name [0] :: Buttons do not have an accessible name
+color-contrast [0] :: Background and foreground colors do not have a sufficient contrast ratio.
+landmark-one-main [0] :: Document does not have a main landmark.
+unused-css-rules [0] :: Reduce unused CSS
+unused-javascript [0] :: Reduce unused JavaScript
+document-latency-insight [0] :: Document request latency
+image-delivery-insight [0.5] :: Improve image delivery
+lcp-breakdown-insight [0] :: LCP breakdown
+lcp-discovery-insight [0] :: LCP request discovery
+network-dependency-tree-insight [0] :: Network dependency tree
+render-blocking-insight [0] :: Render-blocking requests
+
+=== blog FAILED AUDITS ===
+first-contentful-paint [0.08] :: First Contentful Paint
+largest-contentful-paint [0] :: Largest Contentful Paint
+speed-index [0.4] :: Speed Index
+interactive [0.23] :: Time to Interactive
+redirects [0] :: Avoid multiple page redirects
+unsized-images [0.5] :: Image elements do not have explicit `width` and `height`
+valid-source-maps [0] :: Missing source maps for large first-party JavaScript
+button-name [0] :: Buttons do not have an accessible name
+color-contrast [0] :: Background and foreground colors do not have a sufficient contrast ratio.
+heading-order [0] :: Heading elements are not in a sequentially-descending order
+landmark-one-main [0] :: Document does not have a main landmark.
+total-byte-weight [0.5] :: Avoid enormous network payloads
+unused-css-rules [0] :: Reduce unused CSS
+unused-javascript [0] :: Reduce unused JavaScript
+document-latency-insight [0] :: Document request latency
+image-delivery-insight [0] :: Improve image delivery
+lcp-discovery-insight [0] :: LCP request discovery
+network-dependency-tree-insight [0] :: Network dependency tree
+render-blocking-insight [0] :: Render-blocking requests
+
+=== course-ow FAILED AUDITS ===
+first-contentful-paint [0.11] :: First Contentful Paint
+largest-contentful-paint [0] :: Largest Contentful Paint
+speed-index [0.43] :: Speed Index
+total-blocking-time [0.97] :: Total Blocking Time
+max-potential-fid [0.83] :: Max Potential First Input Delay
+interactive [0.02] :: Time to Interactive
+redirects [0] :: Avoid multiple page redirects
+mainthread-work-breakdown [0] :: Minimize main-thread work
+bootup-time [0] :: Reduce JavaScript execution time
+unsized-images [0.5] :: Image elements do not have explicit `width` and `height`
+valid-source-maps [0] :: Missing source maps for large first-party JavaScript
+color-contrast [0] :: Background and foreground colors do not have a sufficient contrast ratio.
+heading-order [0] :: Heading elements are not in a sequentially-descending order
+total-byte-weight [0.5] :: Avoid enormous network payloads
+unused-css-rules [0] :: Reduce unused CSS
+unused-javascript [0] :: Reduce unused JavaScript
+document-latency-insight [0] :: Document request latency
+forced-reflow-insight [0] :: Forced reflow
+image-delivery-insight [0] :: Improve image delivery
+lcp-breakdown-insight [0] :: LCP breakdown
+
+=== fun-dive FAILED AUDITS ===
+valid-source-maps [0] :: Missing source maps for large first-party JavaScript
+color-contrast [0] :: Background and foreground colors do not have a sufficient contrast ratio.
+landmark-one-main [0] :: Document does not have a main landmark.
+total-byte-weight [0.5] :: Avoid enormous network payloads
+cache-insight [0] :: Use efficient cache lifetimes
+document-latency-insight [0] :: Document request latency
+image-delivery-insight [0] :: Improve image delivery
+render-blocking-insight [0] :: Render-blocking requests
+
+=== home FAILED AUDITS ===
+first-contentful-paint [0.09] :: First Contentful Paint
+largest-contentful-paint [0] :: Largest Contentful Paint
+speed-index [0.3] :: Speed Index
+total-blocking-time [0.51] :: Total Blocking Time
+max-potential-fid [0.05] :: Max Potential First Input Delay
+interactive [0.02] :: Time to Interactive
+redirects [0] :: Avoid multiple page redirects
+mainthread-work-breakdown [0] :: Minimize main-thread work
+bootup-time [0] :: Reduce JavaScript execution time
+unsized-images [0.5] :: Image elements do not have explicit `width` and `height`
+valid-source-maps [0] :: Missing source maps for large first-party JavaScript
+button-name [0] :: Buttons do not have an accessible name
+color-contrast [0] :: Background and foreground colors do not have a sufficient contrast ratio.
+heading-order [0] :: Heading elements are not in a sequentially-descending order
+total-byte-weight [0.5] :: Avoid enormous network payloads
+unused-css-rules [0] :: Reduce unused CSS
+unused-javascript [0] :: Reduce unused JavaScript
+document-latency-insight [0] :: Document request latency
+forced-reflow-insight [0] :: Forced reflow
+image-delivery-insight [0] :: Improve image delivery
+

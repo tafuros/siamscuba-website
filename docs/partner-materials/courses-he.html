@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Siam Scuba - קורסי צלילה PADI - מחירון שותפים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 14mm 14mm 16mm; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Heebo", -apple-system, "Segoe UI", Arial, sans-serif;
+    color: #1a2a36;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    direction: rtl;
+  }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    height: 178mm;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(8,30,46,0.35) 0%, rgba(8,30,46,0.55) 55%, rgba(8,30,46,0.95) 100%),
+      url("turtle-1920.webp") center/cover no-repeat;
+  }
+  .cover-inner { position: relative; height: 100%; padding: 11mm 13mm; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .cover-top img.siam { height: 26mm; }
+  .cover-top .padi-stack { display: flex; flex-direction: column; align-items: flex-start; gap: 4mm; }
+  .cover-top .padi-stack img.padi { height: 12mm; background: #fff; padding: 2mm 3.5mm; border-radius: 2mm; }
+  .cover-top .padi-stack img.badge { height: 17mm; }
+  .cover-title h1 { font-size: 30pt; margin: 0; letter-spacing: -0.3pt; line-height: 1.15; font-weight: 800; }
+  .cover-title .sub { font-size: 13pt; margin-top: 3mm; font-weight: 300; opacity: 0.92; line-height: 1.4; }
+  .cover-title .meta { font-size: 9.5pt; margin-top: 4mm; opacity: 0.85; letter-spacing: 0.5pt; font-weight: 500; }
+  .cover-bottom { display: flex; justify-content: space-between; align-items: flex-end; font-size: 9.5pt; gap: 10mm; }
+  .cover-bottom .left { max-width: 110mm; line-height: 1.55; }
+  .cover-bottom b { font-weight: 700; }
+  .cover-bottom .right { text-align: left; opacity: 0.92; direction: ltr; line-height: 1.7; }
+  .cover-bottom .right .wa-line { display: inline-flex; align-items: center; gap: 2mm; margin-top: 0.5mm; }
+  .cover-bottom .right .wa-line img { width: 4mm; height: 4mm; vertical-align: middle; }
+
+  /* Photo/Video banner on cover page */
+  .cover-banner {
+    margin: 5mm 0 0;
+    background: linear-gradient(135deg, #0c4d6f, #1d7aa6);
+    color: #fff; border-radius: 4mm; padding: 5mm 6mm;
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    page-break-before: avoid; page-break-inside: avoid;
+    position: relative; overflow: hidden;
+  }
+  .cover-banner .banner-text { flex: 1; min-width: 0; }
+  .cover-banner .banner-text h3 { margin: 0 0 1.5mm; font-size: 14pt; font-weight: 700; }
+  .cover-banner .banner-text h3 .cam { margin-left: 1.5mm; }
+  .cover-banner .banner-text p { margin: 0; opacity: 0.93; font-size: 10pt; line-height: 1.5; font-weight: 300; }
+  .cover-banner .banner-text .tag { display: inline-block; margin-top: 2mm; background: rgba(255,255,255,0.18); padding: 0.8mm 3mm; border-radius: 999px; font-size: 8.5pt; font-weight: 600; letter-spacing: 0.3pt; }
+  .cover-banner .addon-price { font-size: 20pt; font-weight: 800; white-space: nowrap; line-height: 1; text-align: left; direction: ltr; }
+  .cover-banner .addon-price small { display: block; font-size: 9pt; opacity: 0.9; font-weight: 500; margin-top: 1mm; direction: rtl; text-align: left; }
+
+  .polaroids {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center;
+    width: 76mm; height: 28mm; position: relative;
+  }
+  .polaroid {
+    background: #fff; padding: 1.2mm 1.2mm 3.5mm; border-radius: 0.5mm;
+    box-shadow: 0 1mm 2mm rgba(0,0,0,0.3);
+    width: 22mm; height: 26mm;
+    position: absolute; top: 1mm;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .polaroid img { width: 100%; height: 17mm; object-fit: cover; display: block; }
+  .polaroid .caption { color: #333; font-size: 7.5pt; margin-top: 1mm; font-weight: 500; font-family: "Heebo", sans-serif; }
+  .polaroid:nth-child(1) { left: 0; transform: rotate(-7deg); z-index: 1; }
+  .polaroid:nth-child(2) { left: 27mm; transform: rotate(3deg); z-index: 3; }
+  .polaroid:nth-child(3) { left: 54mm; transform: rotate(-5deg); z-index: 2; }
+
+  .page-break { page-break-after: always; height: 0; }
+
+  /* ---------- SECTIONS ---------- */
+  .page-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid #0c4d6f; padding-bottom: 3mm; margin-bottom: 4mm;
+  }
+  .page-header h2 { margin: 0; font-size: 17pt; color: #0c4d6f; letter-spacing: -0.3pt; font-weight: 700; }
+  .page-header .mini-logos { display: flex; align-items: center; gap: 5mm; }
+  .page-header .mini-logos img { height: 9mm; }
+  .page-header .mini-logos img.padi-mini { background: #0c4d6f; padding: 1.2mm 2.5mm; border-radius: 1.5mm; }
+
+  .intro {
+    background: #f0f7fb; border-right: 4px solid #0c4d6f; border-left: 4px solid #0c4d6f;
+    padding: 4mm 5mm; border-radius: 2.5mm; margin-bottom: 5mm;
+  }
+  .intro h3 { margin: 0 0 2mm; color: #0c4d6f; font-size: 13pt; font-weight: 700; }
+  .intro p { margin: 0 0 1.5mm; }
+  .intro ul { margin: 2mm 0 0; padding-right: 5mm; padding-left: 0; }
+  .intro li { margin-bottom: 1.5mm; font-size: 10pt; }
+  .highlight-key { background: #fff4d6; padding: 0.3mm 1.8mm; border-radius: 1mm; font-weight: 700; color: #6b4a00; }
+
+  /* ---------- COURSE CARDS ---------- */
+  .courses { display: grid; grid-template-columns: 1fr; gap: 3.5mm; }
+  .card {
+    border: 1px solid #d4dde4;
+    border-radius: 3mm;
+    padding: 4mm 5mm;
+    background: #fff;
+    position: relative;
+    break-inside: avoid;
+  }
+  .card .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 5mm; }
+  .card .title-block { flex: 1; }
+  .card .num {
+    display: inline-block; background: #0c4d6f; color: #fff; width: 7mm; height: 7mm; border-radius: 50%;
+    text-align: center; line-height: 7mm; font-size: 10pt; font-weight: 700; margin-left: 2.5mm; vertical-align: middle;
+  }
+  .card h3 { display: inline; margin: 0; font-size: 14pt; color: #0c4d6f; letter-spacing: -0.2pt; vertical-align: middle; font-weight: 700; }
+  .card h3 .en { font-size: 9.5pt; color: #6a7a86; font-weight: 500; margin-right: 2mm; }
+  .card .pills { margin-top: 2.5mm; display: flex; gap: 2mm; flex-wrap: wrap; }
+  .pill {
+    font-size: 8.5pt; padding: 0.8mm 2.5mm; border-radius: 999px; font-weight: 600; letter-spacing: 0.1pt;
+  }
+  .pill.cert { background: #e0f1e6; color: #1f6a3d; border: 1px solid #b8dec4; }
+  .pill.trial { background: #fff0d6; color: #8b5400; border: 1px solid #f0d7a0; }
+  .pill.type { background: #e3edf3; color: #0c4d6f; border: 1px solid #c3d4df; }
+  .pill.best { background: #ffe2cf; color: #b5430a; border: 1px solid #f3c39c; }
+
+  .card .price-block {
+    text-align: left; min-width: 34mm;
+    border-right: 2px solid #f0f3f5; padding-right: 5mm;
+    direction: ltr;
+  }
+  .card .price { font-size: 18pt; font-weight: 800; color: #0c4d6f; line-height: 1; letter-spacing: -0.5pt; }
+  .card .price small { font-size: 9pt; font-weight: 500; color: #6a7a86; margin-left: 1mm; }
+  .card .price-label { font-size: 8pt; color: #6a7a86; letter-spacing: 0.3pt; margin-bottom: 0.5mm; font-weight: 500; direction: rtl; text-align: left; }
+  .card .commission { margin-top: 1.5mm; font-size: 8.5pt; font-weight: 700; color: #1f6a3d; direction: rtl; text-align: left; }
+
+  .stats {
+    margin-top: 3mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm;
+    border-top: 1px dashed #d4dde4; padding-top: 2.5mm;
+  }
+  .stat .lbl { font-size: 8pt; color: #6a7a86; letter-spacing: 0.2pt; margin-bottom: 0.3mm; font-weight: 500; }
+  .stat .val { font-size: 10.5pt; font-weight: 700; color: #1a2a36; }
+
+  .gift {
+    margin-top: 2.5mm; display: flex; align-items: center; gap: 2.5mm;
+    background: linear-gradient(270deg, #fff7e0, #fff);
+    border: 1px solid #f0d7a0; border-radius: 2mm; padding: 2mm 3.5mm;
+    color: #6b4a00; font-weight: 600; font-size: 10pt;
+  }
+  .gift .icon { font-size: 13pt; }
+
+  .notes { margin-top: 2mm; font-size: 9.5pt; color: #4a5b68; font-style: normal; opacity: 0.9; }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    margin-top: 6mm;
+    border-top: 2px solid #0c4d6f;
+    padding-top: 4mm;
+    display: flex; justify-content: space-between; align-items: flex-start; font-size: 9.5pt; gap: 10mm;
+    break-inside: avoid;
+  }
+  .footer .contact b { color: #0c4d6f; font-size: 11pt; }
+  .footer .contact div { margin-bottom: 1.2mm; }
+  .footer .contact .ltr { direction: ltr; text-align: right; unicode-bidi: embed; }
+  .footer .contact .wa-foot { display: inline-flex; align-items: center; gap: 1.5mm; direction: ltr; }
+  .footer .contact .wa-foot img { width: 4mm; height: 4mm; vertical-align: middle; }
+  .footer .legal { text-align: left; max-width: 80mm; color: #6a7a86; font-size: 9pt; line-height: 1.5; }
+  .footer .legal .siam-foot { height: 14mm; margin-bottom: 2mm; opacity: 0.95; }
+
+  .terms { margin-top: 5mm; font-size: 9pt; color: #6a7a86; break-inside: avoid; line-height: 1.55; }
+  .terms b { color: #0c4d6f; }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-top">
+      <img class="siam" src="siam-logo-color.png" alt="Siam Scuba">
+      <div class="padi-stack">
+        <img class="padi" src="padi-logo.png" alt="PADI">
+        <img class="badge" src="padi-5star-badge.png" alt="PADI 5 Star">
+      </div>
+    </div>
+
+    <div class="cover-title">
+      <h1>קורסי צלילה PADI<br>מחירון שותפים</h1>
+      <div class="sub">קו-טאו, תאילנד · תעודות PADI בינלאומיות, תקפות לכל החיים</div>
+      <div class="meta">מהדורת שותפי תיירות, 2026</div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="left">
+        <b>מועדון הצלילה Siam Scuba</b> הוא מרכז PADI 5 כוכבים בקו-טאו. כל תעודה מונפקת היא רישיון PADI בינלאומי, מוכר ברחבי העולם ותקף לכל החיים. מסמך זה הוכן עבור שותפי התיירות שלנו.
+      </div>
+      <div class="right">
+        siamscuba.com<br>
+        info@siamscuba.com<br>
+        +66 82 506 8898<br>
+        <span class="wa-line"><img src="whatsapp.svg" alt="WhatsApp">+972 52 864 1581</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cover-banner">
+  <div class="banner-text">
+    <h3><span class="cam">📸</span>קחו את הזיכרונות הביתה · צילום וידאו מקצועי</h3>
+    <p>צלם מקצועי מצטרף לצלילה ומתעד כל רגע מתחת למים · האורחים יוצאים עם גלריית תמונות מלאה וסרטון קצר, באותו היום.</p>
+    <span class="tag">מסירה באותו יום</span>
+  </div>
+  <div class="polaroids">
+    <div class="polaroid"><img src="pol-1.jpg" alt=""><span class="caption">יום צלילה</span></div>
+    <div class="polaroid"><img src="pol-2.webp" alt=""><span class="caption">צ׳ומפון</span></div>
+    <div class="polaroid"><img src="pol-3.webp" alt=""><span class="caption">יום סירה</span></div>
+  </div>
+  <div class="addon-price">+1,500 THB<small>לאדם</small></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== CONTENT ==================== -->
+<section>
+  <div class="page-header">
+    <h2>קטלוג הקורסים ומחיר ללקוח</h2>
+    <div class="mini-logos">
+      <img class="padi-mini" src="padi-logo.png" alt="PADI">
+      <img src="siam-logo-color.png" alt="Siam Scuba">
+    </div>
+  </div>
+
+  <div class="intro">
+    <h3>למה לעבוד עם Siam Scuba</h3>
+    <ul>
+      <li><b>מרכז PADI 5 כוכבים</b> בקו-טאו · ההסמכות מונפקות תחת PADI, ארגון הכשרת הצוללנים הגדול בעולם.</li>
+      <li>כל קורס הסמכה במסמך זה מסתיים ב<span class="highlight-key">רישיון PADI בינלאומי, תקף לכל החיים</span> ומוכר בכל מרכז צלילה בעולם.</li>
+      <li>המחירים המוצגים הם <span class="highlight-key">מחירי המכירה ללקוח</span> · אתם מוכרים במחיר זה ומרוויחים את עמלת השותף.</li>
+      <li>קבוצות קטנות, שתי סירות צלילה ייעודיות, מדריכים רב-לשוניים (אנגלית, עברית, ספרדית), כל הציוד כלול.</li>
+    </ul>
+  </div>
+
+  <div class="courses" id="courses"></div>
+
+  <div class="terms">
+    <b>הערות לשותפים:</b> כל המחירים בבאט תאילנדי (THB). המחירים המוצגים הם מחירי המכירה המומלצים ללקוח, וכוללים השכרת ציוד, חומרי PADI, אגרות הסמכה והסעות בסירה. <b>עמלת שותף: 10% ממחיר הלקוח בכל הקורסים, פרט לצלילת היכרות (250 באט קבוע).</b> לילות מתנה כפופים לזמינות במעונות משותפים.
+  </div>
+
+  <div class="footer">
+    <div class="contact">
+      <div><b>מועדון הצלילה Siam Scuba</b></div>
+      <div>9/9 קו-טאו, מחוז קו פאנגאן, סוּראט תאני 84360, תאילנד</div>
+      <div class="ltr">Phone: +66 82 506 8898</div>
+      <div><span class="wa-foot"><img src="whatsapp.svg" alt="WhatsApp">WhatsApp: +972 52 864 1581</span></div>
+      <div class="ltr">Email: info@siamscuba.com</div>
+      <div class="ltr">Web: siamscuba.com</div>
+    </div>
+    <div class="legal">
+      <img class="siam-foot" src="siam-logo-color.png" alt="Siam Scuba">
+      <div>מרכז צלילה PADI 5 כוכבים<br>כל ההסמכות מונפקות תחת הארגון המקצועי של מדריכי הצלילה (PADI).</div>
+    </div>
+  </div>
+</section>
+
+<script>
+const COURSES = [
+  { n: 1,  name: "צלילת היכרות",             en: "Discover Scuba Diving",    type: "חוויית טעימה",       cert: false,                                  days: "יום אחד",     depth: "12 מ׳", age: "10+", price: "3,600",  commission: "250 ฿ (קבוע)", gift: "",                                   notes: "כולל 2 צלילות והסעות הלוך-חזור מהנמל." },
+  { n: 2,  name: "צלילת כיף · Fun Dive",     en: "Fun Dive",                 type: "צלילה חופשית",       cert: false, licensed: true, bestseller: true, days: "חצי יום",     depth: "30 מ׳", age: "12+", price: "2,000",  commission: "200 ฿",        gift: "",                                   notes: "צלילה לבעלי רישיון בלבד · האטרקציה הנמכרת ביותר שלנו." },
+  { n: 3,  name: "ריענון צלילה",             en: "Scuba Review",             type: "ריענון",             cert: false,                                  days: "יום אחד",     depth: "18 מ׳", age: "10+", price: "2,500",  commission: "250 ฿",        gift: "",                                   notes: "כולל 2 צלילות מפוקחות בחבילה." },
+  { n: 4,  name: "כוכב ראשון",               en: "Open Water Diver",         type: "הסמכה",              cert: true,                                   days: "2.5 ימים",    depth: "18 מ׳", age: "10+", price: "12,000", commission: "1,200 ฿",      gift: "2 לילות לינה במתנה במעונות Siam Scuba", notes: "" },
+  { n: 5,  name: "כוכב שני",                 en: "Advanced Open Water",      type: "הסמכה",              cert: true,                                   days: "1.5 ימים",    depth: "30 מ׳", age: "15+", price: "11,000", commission: "1,100 ฿",      gift: "לילה אחד לינה במתנה במעונות Siam Scuba",  notes: "" },
+  { n: 6,  name: "צוללן הצלה",               en: "Rescue Diver",             type: "הסמכה",              cert: true,                                   days: "יומיים",      depth: "30 מ׳", age: "12+", price: "11,000", commission: "1,100 ฿",      gift: "",                                   notes: "" },
+  { n: 7,  name: "עזרה ראשונה (EFR)",        en: "Emergency First Response", type: "הסמכת עזרה ראשונה",  cert: true,                                   days: "יום אחד",     depth: "—",     age: "10+", price: "5,000",  commission: "500 ฿",        gift: "",                                   notes: "הסמכה בינלאומית בהחייאה ועזרה ראשונה." },
+  { n: 8,  name: "Divemaster · צוללן מומחה", en: "Divemaster",               type: "מקצועי",             cert: true,                                   days: "4-8 שבועות",  depth: "40 מ׳", age: "18+", price: "38,500", commission: "3,850 ฿",      gift: "",                                   notes: "התמחות מקצועית מלאה של PADI · תחילת קריירת הצלילה." },
+  { n: 9,  name: "צוללן ספינות טבועות",      en: "Wreck Diver Specialty",    type: "התמחות",             cert: true,                                   days: "יומיים",      depth: "30 מ׳", age: "15+", price: "9,000",  commission: "900 ฿",        gift: "",                                   notes: "כולל צלילות בספינה הטבועה HTMS Sattakut." },
+  { n: 10, name: "צוללן עומק",               en: "Deep Diver Specialty",     type: "התמחות",             cert: true,                                   days: "יומיים",      depth: "40 מ׳", age: "15+", price: "9,000",  commission: "900 ฿",        gift: "",                                   notes: "אתרי צלילה כוללים את Chumphon Pinnacle ו-Sail Rock." },
+  { n: 11, name: "סקוטר תת-מימי",            en: "DPV Specialty",            type: "התמחות",             cert: true,                                   days: "יום אחד",     depth: "30 מ׳", age: "12+", price: "11,000", commission: "1,100 ฿",      gift: "",                                   notes: "" },
+];
+
+const container = document.getElementById("courses");
+for (const c of COURSES) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <div class="card-top">
+      <div class="title-block">
+        <span class="num">${c.n}</span><h3>${c.name}<span class="en">${c.en}</span></h3>
+        <div class="pills">
+          <span class="pill type">${c.type}</span>
+          ${c.cert
+            ? '<span class="pill cert">✓ רישיון PADI בינלאומי · תקף לכל החיים</span>'
+            : (c.licensed
+                ? '<span class="pill trial">לבעלי רישיון צלילה בלבד</span>'
+                : '<span class="pill trial">צלילת היכרות · ללא הסמכה</span>')}
+          ${c.bestseller ? '<span class="pill best">★ הנמכר ביותר</span>' : ''}
+        </div>
+      </div>
+      <div class="price-block">
+        <div class="price-label">מחיר ללקוח</div>
+        <div class="price">${c.price}<small>THB</small></div>
+        <div class="commission">עמלת שותף: ${c.commission}</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="lbl">משך</div><div class="val">${c.days}</div></div>
+      <div class="stat"><div class="lbl">עומק מקסימלי</div><div class="val">${c.depth}</div></div>
+      <div class="stat"><div class="lbl">גיל מינימום</div><div class="val">${c.age}</div></div>
+      <div class="stat"><div class="lbl">הסמכה</div><div class="val">${c.cert ? 'PADI בינלאומי' : 'חוויה בלבד'}</div></div>
+    </div>
+    ${c.gift ? `<div class="gift"><span class="icon">🎁</span><span>מתנה: ${c.gift}</span></div>` : ''}
+    ${c.notes ? `<div class="notes">${c.notes}</div>` : ''}
+  `;
+  container.appendChild(card);
+}
+</script>
+</body>
+</html>

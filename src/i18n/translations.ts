@@ -895,7 +895,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_for_course_subtitle: "Artículos detallados para prepararte para este curso.",
 
     cta_title: "¿Listo para Sumergirte?",
-    cta_subtitle: "Envíanos un mensaje por WhatsApp y te reservamos en minutos. Sin depósito — ¡solo ven y bucea!",
+    cta_subtitle: "Envíanos un mensaje por WhatsApp y te reservamos en minutos. Un pequeño depósito asegura tu plaza - ¡luego solo ven y bucea!",
     cta_button: "Chat en WhatsApp",
 
     loc_label: "Encuéntranos",
@@ -1117,7 +1117,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_for_course_subtitle: "Articles détaillés pour vous préparer à ce cours.",
 
     cta_title: "Prêt à Plonger ?",
-    cta_subtitle: "Envoyez-nous un message sur WhatsApp et nous vous réservons en quelques minutes. Pas de dépôt — venez simplement plonger !",
+    cta_subtitle: "Envoyez-nous un message sur WhatsApp et nous vous réservons en quelques minutes. Un petit acompte réserve votre place - venez ensuite plonger !",
     cta_button: "Chat sur WhatsApp",
 
     loc_label: "Trouvez-nous",

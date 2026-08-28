@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siam Scuba — Phase C: Technical Audit</title>
+  <style>
+    :root {
+      --bg: #0b1320; --card: #131c2d; --border: #1f2c44;
+      --ink: #e6ecf5; --muted: #8a99b3;
+      --primary: #4ea1ff; --ok: #34d399; --warn: #fbbf24; --bad: #f87171; --accent: #c084fc;
+      --code-bg: #0a1120;
+      --hot: #f97316; --opp: #c084fc; --def: #34d399; --skip: #6b7894;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+           background: var(--bg); color: var(--ink); line-height: 1.65; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 28px 80px; }
+    header.hero { background: linear-gradient(135deg, #0a3060, #1a1450);
+                  border-radius: 18px; padding: 36px 32px; margin-bottom: 36px; border: 1px solid var(--border); }
+    header.hero h1 { margin: 0 0 8px; font-size: 32px; }
+    header.hero p.sub { margin: 0; color: #b9cefb; font-size: 17px; }
+    header.hero .meta { margin-top: 18px; display: flex; gap: 24px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+    header.hero .meta span b { color: var(--ink); font-weight: 500; }
+    section { margin: 40px 0; }
+    h2 { font-size: 24px; border-bottom: 2px solid var(--border); padding-bottom: 10px;
+         margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
+    h2 .num { background: var(--primary); color: #001530; width: 30px; height: 30px;
+              border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+              font-size: 15px; font-weight: 700; }
+    h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; }
+    p { margin: 8px 0 14px; }
+    .muted { color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin: 16px 0; }
+
+    .toc { background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+           padding: 18px 22px; margin-bottom: 28px; }
+    .toc ol { margin: 6px 0 0; padding-right: 22px; line-height: 1.9; }
+    .toc a { color: var(--primary); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 14px 0; }
+    .kpi-big { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+    .kpi-big .num { font-size: 36px; font-weight: 800; line-height: 1; color: var(--primary); }
+    .kpi-big.bad .num { color: var(--bad); }
+    .kpi-big.ok .num { color: var(--ok); }
+    .kpi-big.warn .num { color: var(--warn); }
+    .kpi-big .lbl { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
+    table.cmp { width: 100%; border-collapse: separate; border-spacing: 0;
+                margin: 14px 0; background: var(--card); border: 1px solid var(--border);
+                border-radius: 10px; overflow: hidden; font-size: 13.5px; }
+    table.cmp th, table.cmp td {
+      padding: 11px 12px; border-bottom: 1px solid var(--border);
+      text-align: right; vertical-align: top;
+    }
+    table.cmp th { background: #0d1626; font-weight: 600; color: var(--muted); font-size: 12.5px; }
+    table.cmp tr:last-child td { border-bottom: none; }
+    table.cmp td.code { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--accent); direction: ltr; text-align: left; }
+    table.cmp .name { font-weight: 600; color: var(--ink); }
+    table.cmp td.center, table.cmp th.center { text-align: center; }
+
+    .pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.3px; }
+    .pill.hot  { background: rgba(249, 115, 22, 0.18); color: var(--hot); }
+    .pill.opp  { background: rgba(192, 132, 252, 0.18); color: var(--opp); }
+    .pill.def  { background: rgba(52, 211, 153, 0.18); color: var(--def); }
+    .pill.skip { background: rgba(107, 120, 148, 0.20); color: var(--skip); }
+    .pill.warn { background: rgba(251, 191, 36, 0.18); color: var(--warn); }
+    .pill.bad  { background: rgba(248, 113, 113, 0.20); color: var(--bad); }
+    .pill.ok   { background: rgba(52, 211, 153, 0.18); color: var(--def); }
+
+    /* Lighthouse heatmap */
+    .lh-grid { display: grid; grid-template-columns: 200px repeat(7, 1fr); gap: 4px;
+               background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px; margin: 12px 0; overflow-x: auto; font-size: 12.5px; }
+    .lh-cell { padding: 10px 6px; text-align: center; border-radius: 4px; white-space: nowrap; }
+    .lh-cell.head { background: transparent; color: var(--muted); font-weight: 600; }
+    .lh-cell.row  { background: #0d1626; color: var(--muted); text-align: right; padding-right: 10px; font-weight: 500; font-size: 12px; }
+    .lh-cell.good { background: rgba(52, 211, 153, 0.20); color: var(--ok); font-weight: 700; }
+    .lh-cell.mid  { background: rgba(251, 191, 36, 0.22); color: var(--warn); font-weight: 700; }
+    .lh-cell.bad  { background: rgba(248, 113, 113, 0.25); color: #ffb4b4; font-weight: 700; }
+
+    /* LCP timeline */
+    .lcp-timeline { background: var(--card); border: 1px solid var(--border);
+                    border-radius: 10px; padding: 22px; margin: 14px 0; }
+    .lcp-row { display: grid; grid-template-columns: 200px 1fr 90px; gap: 12px; align-items: center; margin: 10px 0; }
+    .lcp-name { color: var(--muted); font-size: 13px; text-align: right; padding-left: 8px; }
+    .lcp-bar-wrap { position: relative; height: 26px; background: #0a1120; border-radius: 4px; overflow: hidden; }
+    .lcp-bar { position: absolute; right: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0;
+               display: flex; align-items: center; padding-left: 6px; font-size: 11px; color: white; font-weight: 600; }
+    .lcp-bar.good { background: linear-gradient(270deg, #34d399, #1d9d6f); }
+    .lcp-bar.mid  { background: linear-gradient(270deg, #fbbf24, #d18f00); }
+    .lcp-bar.bad  { background: linear-gradient(270deg, #f87171, #c2474a); }
+    .lcp-thresh { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--ink); opacity: 0.4; }
+    .lcp-thresh-lbl { position: absolute; top: -16px; transform: translateX(50%); font-size: 10px; color: var(--muted); white-space: nowrap; }
+    .lcp-num { font-family: 'SF Mono', monospace; font-size: 13px; text-align: left; }
+    .lcp-num.good { color: var(--ok); }
+    .lcp-num.mid  { color: var(--warn); }
+    .lcp-num.bad  { color: var(--bad); }
+    .lcp-axis { display: grid; grid-template-columns: 200px 1fr 90px; gap: 12px; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border); }
+    .lcp-axis-bar { position: relative; height: 16px; }
+    .lcp-axis-tick { position: absolute; top: 0; font-size: 10px; color: var(--muted); transform: translateX(50%); }
+
+    /* Bundle blocks */
+    .bundle-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .bundle-row { background: #0d1626; border: 1px solid var(--border); border-radius: 6px;
+                  padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+    .bundle-row .name { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--accent); direction: ltr; }
+    .bundle-row .size { font-weight: 700; color: var(--ink); }
+    .bundle-row.bad .size { color: var(--bad); }
+    .bundle-row.warn .size { color: var(--warn); }
+
+    /* Backlog */
+    .backlog { display: grid; gap: 10px; margin: 14px 0; }
+    .blog-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+                 padding: 16px 18px; display: grid; grid-template-columns: 30px 1fr 240px; gap: 14px; align-items: start; }
+    .blog-num { background: var(--primary); color: #001530; width: 30px; height: 30px;
+                border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+                font-size: 14px; font-weight: 700; }
+    .blog-body h4 { margin: 0 0 4px; font-size: 16px; }
+    .blog-body .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; font-size: 11px; color: var(--muted); }
+    .blog-body p { margin: 4px 0; font-size: 13.5px; }
+    .blog-meta { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
+    .blog-meta b { color: var(--ink); font-weight: 500; }
+
+    /* Callouts */
+    .callout { border-radius: 10px; padding: 12px 16px; margin: 12px 0; border: 1px solid; font-size: 14px; }
+    .callout.warn { background: #2a1f08; border-color: #5a4a13; color: #ffe1a3; }
+    .callout.ok   { background: #0a2a1c; border-color: #156246; color: #aaf6cf; }
+    .callout.info { background: #0e1f3d; border-color: #1f4683; color: #b9cefb; }
+    .callout.bad  { background: #2a0e10; border-color: #5a1f24; color: #ffc0c0; }
+
+    /* Inline */
+    code.inl { background: #0a1120; border: 1px solid var(--border); padding: 1px 6px;
+               border-radius: 5px; font-family: 'SF Mono', monospace; font-size: 12.5px;
+               color: var(--accent); direction: ltr; display: inline-block; }
+    pre.code { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+               padding: 14px 16px; overflow-x: auto; direction: ltr; font-family: 'SF Mono', monospace;
+               font-size: 12.5px; color: #c8d6f0; line-height: 1.55; margin: 10px 0; }
+
+    @media (max-width: 720px) {
+      .lh-grid { grid-template-columns: 130px repeat(7, 60px); font-size: 11px; }
+      .lcp-row, .lcp-axis { grid-template-columns: 110px 1fr 70px; }
+      .bundle-list { grid-template-columns: 1fr; }
+      .blog-item { grid-template-columns: 30px 1fr; }
+      .blog-meta { grid-column: 2; padding-top: 8px; border-top: 1px dashed var(--border); }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Phase C — Technical Audit</h1>
+  <p class="sub">איפה האתר נכשל טכנית ב-Core Web Vitals, נגישות, וביצועים — והתוכנית להפוך את זה ב-Phase A</p>
+  <div class="meta">
+    <span><b>אתר:</b> siamscuba.com</span>
+    <span><b>תאריך:</b> 2026-05-07</span>
+    <span><b>שלב:</b> C (אודיט) · הבא: A (תיקונים בקוד)</span>
+    <span><b>ראוטים נסרקו:</b> 5 (Lighthouse mobile)</span>
+    <span><b>URLs נבדקו ב-sitemap:</b> 14</span>
+  </div>
+</header>
+
+<div class="toc">
+  <strong>תוכן עניינים</strong>
+  <ol>
+    <li><a href="#tldr">TL;DR — שלוש שורות</a></li>
+    <li><a href="#kpi">KPI לוח — איפה אנחנו עומדים טכנית</a></li>
+    <li><a href="#lighthouse">Lighthouse heatmap — 5 ראוטים, 4 קטגוריות</a></li>
+    <li><a href="#lcp">LCP timeline — הבעיה הכי דרמטית</a></li>
+    <li><a href="#hero-video">Hero-video — הרוצח השקט (14.75 MB)</a></li>
+    <li><a href="#bundle">Bundle analysis — JS, תמונות, וידאו</a></li>
+    <li><a href="#a11y">נגישות (a11y) — 5 קטגוריות הפרות</a></li>
+    <li><a href="#schema">JSON-LD validation — schema audit</a></li>
+    <li><a href="#links">Sitemap &amp; broken links — מה גוגל רואה</a></li>
+    <li><a href="#backlog">Phase A backlog — impact × effort</a></li>
+    <li><a href="#next">השלב הבא — Phase A</a></li>
+  </ol>
+</div>
+
+<!-- 1. TL;DR -->
+<section id="tldr">
+  <h2><span class="num">1</span>TL;DR</h2>
+  <div class="card">
+    <p><strong>הבעיה הכי דרמטית: LCP של 19.1 שניות בעמוד הבית.</strong> הסף של גוגל ל-"good" הוא 2.5s, ל-"poor" 4.0s+. בכל 5 הראוטים שנבדקו ה-LCP <em>poor</em>. שני ראוטים מעל 18s.</p>
+    <p>הסיבה הראשית: <code class="inl">hero-video.mp4</code> במשקל <strong>14.75 MB</strong> ב-bitrate של 18.5 Mbps. compression פשוט יחסוך 85% מהמשקל ויקפיץ את ציון Performance של הבית מ-44 ל-~75+.</p>
+    <p>הבעיה השנייה: <strong>אין code splitting.</strong> ה-bundle הוא קובץ JS יחיד במשקל 952 KB (gzip 289 KB). מעל הסף של Vite. כל ראוט טוען את כל האפליקציה.</p>
+    <p>ה-SEO score של Lighthouse הוא 100 בכל מקום — אבל זה <strong>מטעה</strong>. Lighthouse רק בודק את הדף הנוכחי. הבעיה האמיתית היא ש-BlogPostPage / CoursePage חולקים את אותו <code class="inl">&lt;title&gt;</code> ו-meta description של index.html. גוגל לא רואה תוכן ייחודי לכל דף.</p>
+    <p><strong>החדשות הטובות:</strong> 14/14 URLs ב-sitemap מחזירים HTTP 200, JSON-LD תקין מבחינה מבנית, Best Practices = 100 בכל מקום, ואין link rot.</p>
+  </div>
+</section>
+
+<!-- 2. KPI -->
+<section id="kpi">
+  <h2><span class="num">2</span>איפה אנחנו עומדים טכנית</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi-big bad"><div class="num">19.1s</div><div class="lbl">LCP בית<br/>(סף "poor": 4.0s)</div></div>
+    <div class="kpi-big bad"><div class="num">44</div><div class="lbl">Performance בית<br/>(mobile)</div></div>
+    <div class="kpi-big bad"><div class="num">14.75M</div><div class="lbl">hero-video.mp4<br/>(1.75s תוכן בלבד)</div></div>
+    <div class="kpi-big warn"><div class="num">952K</div><div class="lbl">JS bundle<br/>(gzip 289K, 1 chunk)</div></div>
+    <div class="kpi-big warn"><div class="num">5</div><div class="lbl">קטגוריות הפרות a11y<br/>צרובות בכל הדפים</div></div>
+    <div class="kpi-big ok"><div class="num">14/14</div><div class="lbl">URLs ב-sitemap<br/>חיים (HTTP 200)</div></div>
+    <div class="kpi-big ok"><div class="num">100</div><div class="lbl">Best Practices<br/>(כל הראוטים)</div></div>
+    <div class="kpi-big bad"><div class="num">0</div><div class="lbl">דפים עם<br/>per-page meta</div></div>
+  </div>
+</section>
+
+<!-- 3. Lighthouse heatmap -->
+<section id="lighthouse">
+  <h2><span class="num">3</span>Lighthouse heatmap</h2>
+  <p class="muted">5 ראוטים נסרקו ב-mobile preset. ירוק ≥90, כתום 50–89, אדום &lt;50. מקרא: Perf=Performance, A11y=Accessibility, BP=Best Practices, SEO=Lighthouse SEO score.</p>
+
+  <div class="lh-grid">
+    <div class="lh-cell head"></div>
+    <div class="lh-cell head">Perf</div>
+    <div class="lh-cell head">A11y</div>
+    <div class="lh-cell head">BP</div>
+    <div class="lh-cell head">SEO</div>
+    <div class="lh-cell head">LCP</div>
+    <div class="lh-cell head">FCP</div>
+    <div class="lh-cell head">TBT</div>
+
+    <div class="lh-cell row">/ (home)</div>
+    <div class="lh-cell bad">44</div>
+    <div class="lh-cell mid">89</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell bad">19.1s</div>
+    <div class="lh-cell bad">5.0s</div>
+    <div class="lh-cell mid">580ms</div>
+
+    <div class="lh-cell row">/blog</div>
+    <div class="lh-cell mid">60</div>
+    <div class="lh-cell mid">87</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell bad">10.5s</div>
+    <div class="lh-cell bad">5.2s</div>
+    <div class="lh-cell good">20ms</div>
+
+    <div class="lh-cell row">/blog/padi-vs-ssi-koh-tao</div>
+    <div class="lh-cell mid">58</div>
+    <div class="lh-cell mid">89</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell bad">10.2s</div>
+    <div class="lh-cell bad">6.5s</div>
+    <div class="lh-cell good">50ms</div>
+
+    <div class="lh-cell row">/open-water</div>
+    <div class="lh-cell mid">60</div>
+    <div class="lh-cell good">94</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell bad">18.8s</div>
+    <div class="lh-cell bad">4.9s</div>
+    <div class="lh-cell mid">120ms</div>
+
+    <div class="lh-cell row">/fun-dive-booking</div>
+    <div class="lh-cell mid">60</div>
+    <div class="lh-cell good">94</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell good">100</div>
+    <div class="lh-cell bad">6.1s</div>
+    <div class="lh-cell bad">4.7s</div>
+    <div class="lh-cell good">19ms</div>
+  </div>
+
+  <div class="callout warn">
+    <strong>ה-SEO score = 100 בכל הדפים, אבל זה מטעה.</strong> Lighthouse בודק רק את התגיות של הדף הנוכחי — לא את הייחודיות שלהן. כל הדפים חולקים את ה-<code class="inl">&lt;title&gt;</code> וה-meta description של <code class="inl">index.html</code> (אין react-helmet/helmet-async). זאת בעיית SEO ברמת מערכת שלא נמדדת ב-audit אוטומטי. פתרון ב-Phase A.
+  </div>
+</section>
+
+<!-- 4. LCP Timeline -->
+<section id="lcp">
+  <h2><span class="num">4</span>LCP timeline — הציר של גוגל</h2>
+  <p>Largest Contentful Paint הוא ה-Core Web Vital היחיד שגוגל משקלל ל-ranking. הסף ל-"good" הוא 2.5s; ל-"poor" 4.0s+. כל 5 הראוטים שלנו <strong>poor</strong>.</p>
+
+  <div class="lcp-timeline">
+    <!-- bars normalized to 25s = 100% -->
+    <div class="lcp-row">
+      <div class="lcp-name">/ (home)</div>
+      <div class="lcp-bar-wrap">
+        <div class="lcp-thresh" style="right: 10%;"><div class="lcp-thresh-lbl" style="right: 10%;">2.5s</div></div>
+        <div class="lcp-thresh" style="right: 16%;"><div class="lcp-thresh-lbl" style="right: 16%;">4.0s</div></div>
+        <div class="lcp-bar bad" style="width: 76%;">19.1s</div>
+      </div>
+      <div class="lcp-num bad">19.1s</div>
+    </div>
+    <div class="lcp-row">
+      <div class="lcp-name">/open-water</div>
+      <div class="lcp-bar-wrap">
+        <div class="lcp-thresh" style="right: 10%;"></div>
+        <div class="lcp-thresh" style="right: 16%;"></div>
+        <div class="lcp-bar bad" style="width: 75%;">18.8s</div>
+      </div>
+      <div class="lcp-num bad">18.8s</div>
+    </div>
+    <div class="lcp-row">
+      <div class="lcp-name">/blog</div>
+      <div class="lcp-bar-wrap">
+        <div class="lcp-thresh" style="right: 10%;"></div>
+        <div class="lcp-thresh" style="right: 16%;"></div>
+        <div class="lcp-bar bad" style="width: 42%;">10.5s</div>
+      </div>
+      <div class="lcp-num bad">10.5s</div>
+    </div>
+    <div class="lcp-row">
+      <div class="lcp-name">/blog/padi-vs-ssi-koh-tao</div>
+      <div class="lcp-bar-wrap">
+        <div class="lcp-thresh" style="right: 10%;"></div>
+        <div class="lcp-thresh" style="right: 16%;"></div>
+        <div class="lcp-bar bad" style="width: 41%;">10.2s</div>
+      </div>
+      <div class="lcp-num bad">10.2s</div>
+    </div>
+    <div class="lcp-row">
+      <div class="lcp-name">/fun-dive-booking</div>
+      <div class="lcp-bar-wrap">
+        <div class="lcp-thresh" style="right: 10%;"></div>
+        <div class="lcp-thresh" style="right: 16%;"></div>
+        <div class="lcp-bar bad" style="width: 24%;">6.1s</div>
+      </div>
+      <div class="lcp-num bad">6.1s</div>
+    </div>
+
+    <div class="lcp-axis">
+      <div></div>
+      <div class="lcp-axis-bar">
+        <div class="lcp-axis-tick" style="right: 0%;">0s</div>
+        <div class="lcp-axis-tick" style="right: 25%;">6.25s</div>
+        <div class="lcp-axis-tick" style="right: 50%;">12.5s</div>
+        <div class="lcp-axis-tick" style="right: 75%;">18.75s</div>
+        <div class="lcp-axis-tick" style="right: 100%;">25s</div>
+      </div>
+      <div></div>
+    </div>
+  </div>
+
+  <div class="callout bad">
+    <strong>הקריאה:</strong> שני ראוטים (home, course) ב-~19s — שניהם טוענים את <code class="inl">hero-video.mp4</code>. ראוטים בלי וידאו (blog, blog-post, fun-dive) ב-6–10s — עדיין poor, אבל הסיבה היא ה-bundle הכבד וה-CSR (אין SSR/prerender, גוגל מקבל shell ריק).
+  </div>
+</section>
+
+<!-- 5. Hero video -->
+<section id="hero-video">
+  <h2><span class="num">5</span>Hero-video — הרוצח השקט</h2>
+  <p>הוידאו הראשי בעמוד הבית הוא ה-bottleneck היחיד שגורר את כל ה-Performance של הסייט מטה. ה-ffprobe חשף:</p>
+
+  <table class="cmp">
+    <thead>
+      <tr>
+        <th>מאפיין</th>
+        <th>ערך</th>
+        <th>הקריאה</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name">משקל</td>
+        <td><strong style="color: var(--bad);">14.75 MB</strong></td>
+        <td>פי 7+ ממה שמותר ל-hero loop</td>
+      </tr>
+      <tr>
+        <td class="name">אורך</td>
+        <td>1.75 שניות</td>
+        <td>קצר מאוד — אז המשקל לחלוטין לא מוצדק</td>
+      </tr>
+      <tr>
+        <td class="name">רזולוציה</td>
+        <td>1920×1080 (Full HD)</td>
+        <td>מיותר ל-mobile hero, 1280×720 מספיק</td>
+      </tr>
+      <tr>
+        <td class="name">Bitrate</td>
+        <td><strong style="color: var(--bad);">18.5 Mbps</strong></td>
+        <td>זה לב הבעיה — איכות streaming, לא web</td>
+      </tr>
+      <tr>
+        <td class="name">Codec</td>
+        <td>h264 / 24fps</td>
+        <td>ok, אבל לא efficient כמו AV1/h265</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>תוכנית compression (ב-Phase A)</h3>
+  <pre class="code"># MP4 (h264) - תאימות אוניברסלית, ~2 MB
+ffmpeg -i hero-video.mp4 -vcodec libx264 -crf 28 -preset slow \
+  -vf "scale=1280:-2" -an hero-video-compressed.mp4
+
+# WebM (vp9) - חיסכון נוסף 30-40%, ~1.4 MB
+ffmpeg -i hero-video.mp4 -c:v libvpx-vp9 -crf 32 -b:v 0 \
+  -vf "scale=1280:-2" -an hero-video.webm
+
+# Poster (טעון מיידית, hero-video lazy)
+ffmpeg -i hero-video.mp4 -ss 0 -frames:v 1 -vf "scale=1280:-2" hero-poster.jpg</pre>
+
+  <div class="callout ok">
+    <strong>תוצאה צפויה:</strong> 14.75 MB → ~2 MB (חיסכון 86%). LCP בית 19.1s → צפי 3–5s. Performance home 44 → ~75+. <strong>זה ה-Quick win הכי גדול במחקר.</strong>
+  </div>
+
+  <div class="callout info">
+    <strong>שיפור משלים — preload + poster + lazy:</strong> להציג <code class="inl">&lt;img&gt;</code> poster ב-LCP, ולטעון את הוידאו אחרי <code class="inl">requestIdleCallback</code>. ככה ה-LCP יימדד על התמונה (~50KB), לא על הוידאו.
+  </div>
+</section>
+
+<!-- 6. Bundle -->
+<section id="bundle">
+  <h2><span class="num">6</span>Bundle analysis</h2>
+  <p>הרצה של <code class="inl">bun run build</code> חשפה 27 MB ב-<code class="inl">dist/</code>. רוב המשקל בנכסים סטטיים (תמונות, וידאו), אבל ה-JS bundle עצמו חורג גם הוא מסף Vite (500 KB).</p>
+
+  <h3>Top assets</h3>
+  <div class="bundle-list">
+    <div class="bundle-row bad"><span class="name">hero-video.mp4</span><span class="size">14.0 MB</span></div>
+    <div class="bundle-row bad"><span class="name">koh-tao-real-viewpoint.jpg</span><span class="size">3.5 MB</span></div>
+    <div class="bundle-row bad"><span class="name">padi-open-water-cover.jpg</span><span class="size">2.5 MB</span></div>
+    <div class="bundle-row bad"><span class="name">siam-boat.png</span><span class="size">2.5 MB</span></div>
+    <div class="bundle-row warn"><span class="name">index-CZ74jI0q.js</span><span class="size">952 KB</span></div>
+    <div class="bundle-row warn"><span class="name">sea-creatures-nobg.png</span><span class="size">937 KB</span></div>
+    <div class="bundle-row warn"><span class="name">padi-5star-badge.png</span><span class="size">423 KB</span></div>
+    <div class="bundle-row"><span class="name">ad-background.jpg</span><span class="size">290 KB</span></div>
+    <div class="bundle-row"><span class="name">siam-logo.png</span><span class="size">203 KB</span></div>
+    <div class="bundle-row"><span class="name">index-hDSA-R6-.css</span><span class="size">87 KB</span></div>
+  </div>
+
+  <h3>ממצאים מרכזיים</h3>
+  <table class="cmp">
+    <thead>
+      <tr>
+        <th>בעיה</th>
+        <th>נתון</th>
+        <th>השפעה</th>
+        <th>תיקון</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name">JS bundle יחיד</td>
+        <td>952 KB (gzip 289 KB)</td>
+        <td>כל ראוט מוריד את הכל</td>
+        <td><code class="inl">manualChunks</code> + <code class="inl">React.lazy()</code> לראוטים</td>
+      </tr>
+      <tr>
+        <td class="name">תמונות PNG/JPG ענקיות</td>
+        <td>3 קבצים &gt;2.5 MB</td>
+        <td>data transfer + LCP</td>
+        <td>WebP/AVIF + <code class="inl">srcset</code> + <code class="inl">loading="lazy"</code></td>
+      </tr>
+      <tr>
+        <td class="name">אין WebP/AVIF</td>
+        <td>0 קבצי WebP ב-dist</td>
+        <td>חיסכון 25-50% מתמונות בפלאש</td>
+        <td><code class="inl">vite-imagetools</code> או <code class="inl">vite-plugin-image-optimizer</code></td>
+      </tr>
+      <tr>
+        <td class="name">Hero video מועתק כמו שהוא</td>
+        <td>14 MB ב-<code class="inl">dist/</code></td>
+        <td>LCP catastrophe</td>
+        <td>compress ב-pre-build (ראה §5)</td>
+      </tr>
+      <tr>
+        <td class="name">CSS = 87 KB</td>
+        <td>gzip 14.6 KB</td>
+        <td>סביר, לא בראש העדיפויות</td>
+        <td>לא דחוף — Tailwind purge תקין</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 7. A11y -->
+<section id="a11y">
+  <h2><span class="num">7</span>נגישות (a11y)</h2>
+  <p class="muted">axe-core CLI נכשל ב-chromedriver, אבל Lighthouse מריץ axe-core מתחת ל-hood — שאבנו את ההפרות הצרובות מתוך 5 ה-JSON-ים. כל הציונים בתחום 87–94, אבל יש 5 קטגוריות הפרות חוזרות.</p>
+
+  <table class="cmp">
+    <thead>
+      <tr>
+        <th>הפרה</th>
+        <th class="center">home</th>
+        <th class="center">blog</th>
+        <th class="center">blog-post</th>
+        <th class="center">course</th>
+        <th class="center">fun-dive</th>
+        <th>חומרה</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name">color-contrast</td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td><span class="pill warn">WCAG AA</span> רקע/ינטר עם יחס &lt; 4.5:1</td>
+      </tr>
+      <tr>
+        <td class="name">button-name</td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill ok">✓</span></td>
+        <td class="center"><span class="pill ok">✓</span></td>
+        <td><span class="pill bad">קריטי</span> כפתורי IconButton בלי aria-label</td>
+      </tr>
+      <tr>
+        <td class="name">heading-order</td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill ok">✓</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill ok">✓</span></td>
+        <td><span class="pill warn">בינוני</span> דילוג h2→h4 או h1 כפול</td>
+      </tr>
+      <tr>
+        <td class="name">landmark-one-main</td>
+        <td class="center"><span class="pill ok">✓</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td class="center"><span class="pill ok">✓</span></td>
+        <td class="center"><span class="pill bad">✗</span></td>
+        <td><span class="pill warn">בינוני</span> חסר <code class="inl">&lt;main&gt;</code> wrapper</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <strong>תיקונים מהירים:</strong>
+    <ol style="margin: 6px 0 0;">
+      <li><b>color-contrast:</b> לרוץ על palette (ב-tailwind.config) ולוודא שכל גוון על רקע שלו עם יחס ≥ 4.5:1. הכלי <code class="inl">https://webaim.org/resources/contrastchecker/</code>.</li>
+      <li><b>button-name:</b> לעבור על כל <code class="inl">&lt;IconButton&gt;</code>/<code class="inl">&lt;button&gt;</code> ב-React ולהוסיף <code class="inl">aria-label</code>.</li>
+      <li><b>heading-order:</b> לבדוק ש-Header/Page יש h1, ושכל section פותח עם h2 (לא h3/h4).</li>
+      <li><b>landmark-one-main:</b> לעטוף את ה-content router ב-<code class="inl">&lt;main role="main"&gt;</code> אחת.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 8. Schema -->
+<section id="schema">
+  <h2><span class="num">8</span>JSON-LD validation</h2>
+  <p>שני סכמות קיימות ב-<code class="inl">index.html</code>: <code class="inl">LocalBusiness</code> ו-<code class="inl">ItemList</code> של 10 קורסים. ביקרתי ידנית את שניהם. <strong>תקינים מבחינה מבנית.</strong> אבל יש 4 הזדמנויות לשיפור.</p>
+
+  <table class="cmp">
+    <thead>
+      <tr>
+        <th>סכמה</th>
+        <th>מצב</th>
+        <th>בעיה / הזדמנות</th>
+        <th>השפעה</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name">LocalBusiness</td>
+        <td><span class="pill ok">תקין</span></td>
+        <td>חסר <code class="inl">aggregateRating</code></td>
+        <td>אם יש ביקורות (TripAdvisor, Google), הוספה תפעיל star rating ב-SERP</td>
+      </tr>
+      <tr>
+        <td class="name">LocalBusiness</td>
+        <td><span class="pill warn">שיפור</span></td>
+        <td><code class="inl">@type</code> כללי — אפשר לצמצם ל-<code class="inl">SportsActivityLocation</code> או <code class="inl">TouristAttraction</code></td>
+        <td>תיוג ספציפי = יותר רלוונטיות בתוצאות "things to do"</td>
+      </tr>
+      <tr>
+        <td class="name">ItemList (Courses)</td>
+        <td><span class="pill warn">אי-התאמה</span></td>
+        <td><code class="inl">offers.url</code> מצביע על <code class="inl">/?course=Open%20Water%20Diver</code> אבל הראוט האמיתי הוא <code class="inl">/open-water</code></td>
+        <td>גוגל עלול לסמן אי-התאמה בין canonical ל-schema URL</td>
+      </tr>
+      <tr>
+        <td class="name">ItemList (Courses)</td>
+        <td><span class="pill warn">שיפור</span></td>
+        <td>חסר <code class="inl">image</code>, <code class="inl">inLanguage</code>, <code class="inl">audience</code> ב-Course</td>
+        <td>מקטין סיכויי rich result מעבר לרשימה רגילה</td>
+      </tr>
+      <tr>
+        <td class="name">Article (פוסטי בלוג)</td>
+        <td><span class="pill bad">חסר</span></td>
+        <td>אין JSON-LD <code class="inl">Article</code> בכלל בעמוד פוסט</td>
+        <td>פוסטים לא זכאים ל-rich result של אייטם חדשותי</td>
+      </tr>
+      <tr>
+        <td class="name">BreadcrumbList</td>
+        <td><span class="pill bad">חסר</span></td>
+        <td>אין breadcrumb schema לדפי בלוג / קורס</td>
+        <td>גוגל מציג URL pretty path ב-SERP במקום מבנה ניווט</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <strong>פעולה ב-Phase A:</strong> להעביר את ה-JSON-LD מ-index.html ל-React component שמזריק לפי דף, להוסיף Article/BreadcrumbList לפוסטים ולקורסים, ולתקן את ה-offers.url להתאים לראוטים אמיתיים.
+  </div>
+</section>
+
+<!-- 9. Sitemap & broken links -->
+<section id="links">
+  <h2><span class="num">9</span>Sitemap &amp; broken links</h2>
+  <p>14 URLs ב-<code class="inl">sitemap.xml</code>. כולם מחזירים HTTP 200. אין link rot. עם זאת — broken-link-checker (BLC) רץ ולא הצליח לגלות יותר מ-8 קישורים מתוך הראוט הראשי.</p>
+
+  <div class="callout warn">
+    <strong>SPA caveat:</strong> BLC קורא את ה-HTML הסטטי שגוגל מקבל. כי האתר שלנו SPA טהור (CSR בלבד), ה-HTML הראשוני מכיל רק <code class="inl">&lt;div id="root"&gt;</code> — ה-anchor tags של מאמרי הבלוג והקורסים נוצרים על ידי React אחרי שה-JS רץ. לכן גם BLC <em>וגם Bing/Yandex</em> רואים shell ריק. גוגל עושה JS render אבל מקבל את התוכן באיחור גדול.
+  </div>
+
+  <h3>14/14 sitemap URLs — סטטוס</h3>
+  <pre class="code">200  https://siamscuba.com/
+200  https://siamscuba.com/fun-dive-booking
+200  https://siamscuba.com/blog
+200  https://siamscuba.com/blog/padi-vs-ssi-koh-tao
+200  https://siamscuba.com/blog/koh-tao-dive-sites-guide
+200  https://siamscuba.com/blog/padi-open-water-koh-tao-what-to-expect
+200  https://siamscuba.com/blog/padi-divemaster-koh-tao
+200  https://siamscuba.com/blog/best-restaurants-koh-tao
+200  https://siamscuba.com/blog/best-dishes-koh-tao
+200  https://siamscuba.com/blog/top-beaches-viewpoints-koh-tao
+200  https://siamscuba.com/blog/best-snorkeling-spots-non-divers
+200  https://siamscuba.com/blog/things-to-do-besides-diving
+200  https://siamscuba.com/blog/koh-tao-nightlife-guide
+200  https://siamscuba.com/privacy-policy</pre>
+
+  <div class="callout bad">
+    <strong>חסרים מ-sitemap:</strong> אף דף קורס (<code class="inl">/open-water</code>, <code class="inl">/advanced</code>, <code class="inl">/divemaster</code> וכו') לא נמצא ב-sitemap. גוגל לא יודע על קיומם דרך הנתיב הרשמי. <code class="inl">sitemap.xml</code> ידני שצריך לרענן.
+  </div>
+</section>
+
+<!-- 10. Backlog -->
+<section id="backlog">
+  <h2><span class="num">10</span>Phase A backlog — impact × effort</h2>
+  <p class="muted">11 פעולות, ממוינות לפי impact מחולק ב-effort. הראשונה היא ה-quick win הגדול ביותר במחקר כולו.</p>
+
+  <div class="backlog">
+    <!-- 1 -->
+    <div class="blog-item">
+      <span class="blog-num">1</span>
+      <div class="blog-body">
+        <h4>Compress hero-video.mp4</h4>
+        <p>14.75 MB → ~2 MB (h264 CRF 28 + scale 720p) או WebM VP9. הוספת <code class="inl">poster</code> + lazy load דרך <code class="inl">requestIdleCallback</code>.</p>
+        <div class="tags">
+          <span class="pill hot">CRITICAL</span>
+          <span class="pill def">15-30 דקות</span>
+          <span class="pill opp">LCP -15s</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> Performance home 44→75+</div>
+        <div><b>Effort:</b> XS (ffmpeg + 1 React update)</div>
+        <div><b>קבצים:</b> public/hero-video.mp4, src/components/HeroSection.tsx</div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="blog-item">
+      <span class="blog-num">2</span>
+      <div class="blog-body">
+        <h4>Per-page meta עם react-helmet-async</h4>
+        <p>היום כל הדפים חולקים את ה-<code class="inl">&lt;title&gt;</code> וה-meta description של index.html. להתקין helmet-async ולהזריק meta ייחודי לכל BlogPostPage / CoursePage / FunDiveBookingPage.</p>
+        <div class="tags">
+          <span class="pill hot">CRITICAL</span>
+          <span class="pill def">2-3 שעות</span>
+          <span class="pill opp">SEO foundational</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> תנאי הכרחי לכל ranking</div>
+        <div><b>Effort:</b> S (lib + 5 דפים)</div>
+        <div><b>קבצים:</b> כל ה-Page components</div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="blog-item">
+      <span class="blog-num">3</span>
+      <div class="blog-body">
+        <h4>Pre-render עם vite-react-ssg</h4>
+        <p>גוגל עכשיו מקבל shell ריק עם 19s LCP. pre-render סטטי של כל הראוטים ב-build time יגרום ל-bot לקבל HTML מלא. גם פותר את הבעיה ש-Bing/Yandex לא רואים תוכן.</p>
+        <div class="tags">
+          <span class="pill hot">CRITICAL</span>
+          <span class="pill def">4-6 שעות</span>
+          <span class="pill opp">SEO + LCP נוסף</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> social previews + non-Google bots</div>
+        <div><b>Effort:</b> M (vite config + 2 React refactors)</div>
+        <div><b>קבצים:</b> vite.config.ts, src/main.tsx, src/App.tsx</div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="blog-item">
+      <span class="blog-num">4</span>
+      <div class="blog-body">
+        <h4>Image optimization — WebP + srcset</h4>
+        <p>3 תמונות &gt;2 MB ב-PNG/JPG. להוסיף <code class="inl">vite-imagetools</code>, להמיר ל-WebP/AVIF, ולהוסיף <code class="inl">srcset</code> לרזולוציות שונות. <code class="inl">loading="lazy"</code> בכל תמונה מתחת ל-fold.</p>
+        <div class="tags">
+          <span class="pill hot">HIGH</span>
+          <span class="pill def">2-3 שעות</span>
+          <span class="pill opp">Perf +10-15</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> חיסכון 7-9 MB סה"כ</div>
+        <div><b>Effort:</b> S (Vite plugin + 4-5 imports)</div>
+        <div><b>קבצים:</b> src/assets/, vite.config.ts</div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="blog-item">
+      <span class="blog-num">5</span>
+      <div class="blog-body">
+        <h4>Code splitting (React.lazy + manualChunks)</h4>
+        <p>952 KB JS bundle יחיד. להפריד vendors (React, helmet, etc.) ל-chunk נפרד, ולעטוף Page components ב-<code class="inl">React.lazy()</code> כדי שכל ראוט יוריד רק את עצמו.</p>
+        <div class="tags">
+          <span class="pill hot">HIGH</span>
+          <span class="pill def">1-2 שעות</span>
+          <span class="pill opp">FCP/TBT</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> יקטין initial bundle ~40-50%</div>
+        <div><b>Effort:</b> S</div>
+        <div><b>קבצים:</b> src/App.tsx, vite.config.ts</div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="blog-item">
+      <span class="blog-num">6</span>
+      <div class="blog-body">
+        <h4>Article + BreadcrumbList schemas</h4>
+        <p>פוסטי בלוג בלי <code class="inl">Article</code> JSON-LD לא זכאים ל-rich result. להזריק <code class="inl">Article</code> ב-BlogPostPage, ו-<code class="inl">BreadcrumbList</code> בכל דף עם hierarchy.</p>
+        <div class="tags">
+          <span class="pill warn">MEDIUM</span>
+          <span class="pill def">1.5 שעות</span>
+          <span class="pill opp">SERP appearance</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> rich result זכאות + breadcrumb ב-SERP</div>
+        <div><b>Effort:</b> S</div>
+        <div><b>קבצים:</b> BlogPostPage, CoursePage</div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="blog-item">
+      <span class="blog-num">7</span>
+      <div class="blog-body">
+        <h4>hreflang עבור EN/HE/ES/FR</h4>
+        <p>i18n קיים ב-state אבל אין hreflang tags ולא URLs ייחודיים לכל שפה. לשקול: או להוסיף <code class="inl">/he/</code>, <code class="inl">/es/</code>, <code class="inl">/fr/</code> נתיבים אמיתיים, או לפחות <code class="inl">x-default</code> + הצהרה על תמיכה.</p>
+        <div class="tags">
+          <span class="pill warn">MEDIUM</span>
+          <span class="pill def">3-4 שעות</span>
+          <span class="pill opp">השוק העברי + ספרדי</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> פותח את ה-non-English search</div>
+        <div><b>Effort:</b> M (router + i18n)</div>
+        <div><b>קבצים:</b> router config, helmet, sitemap</div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="blog-item">
+      <span class="blog-num">8</span>
+      <div class="blog-body">
+        <h4>Auto-generated sitemap.xml</h4>
+        <p>היום ה-sitemap ידני וחסרים בו 8 דפי הקורסים. לבנות script ב-build time שמייצר sitemap מ-routes config (כולל hreflang אחרי תיקון 7).</p>
+        <div class="tags">
+          <span class="pill warn">MEDIUM</span>
+          <span class="pill def">1-2 שעות</span>
+          <span class="pill opp">discovery + crawl</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> כל הקורסים נכנסים לאינדקס</div>
+        <div><b>Effort:</b> S</div>
+        <div><b>קבצים:</b> scripts/build-sitemap.ts, vite.config.ts</div>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="blog-item">
+      <span class="blog-num">9</span>
+      <div class="blog-body">
+        <h4>A11y fixes (5 קטגוריות)</h4>
+        <p>color-contrast (כל הדפים), button-name (3 דפים, IconButtons בלי aria-label), heading-order (3 דפים), landmark-one-main (3 דפים, חסר <code class="inl">&lt;main&gt;</code>).</p>
+        <div class="tags">
+          <span class="pill warn">MEDIUM</span>
+          <span class="pill def">3-5 שעות</span>
+          <span class="pill opp">a11y + SEO indirect</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> a11y ציון 87→95+</div>
+        <div><b>Effort:</b> M (ויזואלי)</div>
+        <div><b>קבצים:</b> tailwind palette, IconButton, Layout</div>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="blog-item">
+      <span class="blog-num">10</span>
+      <div class="blog-body">
+        <h4>web-vitals reporting → GTM</h4>
+        <p>להוסיף <code class="inl">web-vitals</code> npm pkg ולשלוח LCP/FID/CLS לטרפיק האמיתי דרך dataLayer. ככה נדע ה-real-user metrics, לא רק lab.</p>
+        <div class="tags">
+          <span class="pill skip">LOW</span>
+          <span class="pill def">30 דקות</span>
+          <span class="pill opp">monitoring</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> גילוי בעיות real-user</div>
+        <div><b>Effort:</b> XS</div>
+        <div><b>קבצים:</b> src/main.tsx</div>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="blog-item">
+      <span class="blog-num">11</span>
+      <div class="blog-body">
+        <h4>aggregateRating ב-LocalBusiness</h4>
+        <p>אם יש ביקורות פעילות ב-TripAdvisor או Google Business, לסנכרן את ה-rating ל-LocalBusiness schema. גוגל יציג כוכבים ב-SERP.</p>
+        <div class="tags">
+          <span class="pill skip">LOW</span>
+          <span class="pill def">30 דקות</span>
+          <span class="pill opp">SERP visibility</span>
+        </div>
+      </div>
+      <div class="blog-meta">
+        <div><b>Impact:</b> CTR boost ב-SERP</div>
+        <div><b>Effort:</b> XS (אם יש מקור rating)</div>
+        <div><b>קבצים:</b> index.html</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. Next -->
+<section id="next">
+  <h2><span class="num">11</span>השלב הבא — Phase A</h2>
+  <div class="card">
+    <p>Phase C סגור. יש לנו תמונה מלאה: <strong>הבעיה הכי גדולה היא LCP מ-hero-video,</strong> אחריו פערי SEO מבניים (per-page meta + pre-render), ואז optimization של תמונות ו-bundle. כל שלב ב-Phase A יקח 0.5-6 שעות — סה"כ ~25-35 שעות עבודה לאורך כמה sprints.</p>
+
+    <p><strong>סדר עבודה מומלץ ל-Phase A:</strong></p>
+    <ol>
+      <li><b>Week 1 (~5h):</b> hero-video compression + per-page meta (פעולות 1+2). אלה לבד יקפיצו אותנו מ-Performance ממוצע 56 ל-~75+ ויפתחו את כל הראוטים ל-SEO.</li>
+      <li><b>Week 2 (~8h):</b> pre-render + image optimization + code splitting (פעולות 3+4+5). זה הופך את האתר לטכנולוגית-מודרני וגוגל-friendly.</li>
+      <li><b>Week 3 (~6h):</b> Schema enrichment + sitemap auto + a11y fixes (פעולות 6+8+9). cleanup וזכאות ל-rich results.</li>
+      <li><b>Week 4 (~4h):</b> hreflang + web-vitals + aggregateRating (פעולות 7+10+11). polish.</li>
+    </ol>
+
+    <p class="muted">אחרי Phase A: הרצה חוזרת של Lighthouse על אותם 5 ראוטים כדי למדוד את ה-delta. היעד: כל הראוטים Performance ≥ 75, LCP ≤ 4s, A11y ≥ 95.</p>
+  </div>
+
+  <p class="muted" style="margin-top: 24px; font-size: 12px;">
+    מקורות נתונים: <code class="inl">seo-audit/lighthouse/{home,blog,blog-post,course-ow,fun-dive}.json</code> ·
+    <code class="inl">seo-audit/_data/sitemap-status.txt</code> ·
+    <code class="inl">seo-audit/_data/a11y-violations.txt</code> ·
+    <code class="inl">ffprobe public/hero-video.mp4</code> ·
+    <code class="inl">bun run build</code> output ·
+    <code class="inl">index.html</code> JSON-LD ידני.
+  </p>
+</section>
+
+</div>
+</body>
+</html>

@@ -22,7 +22,7 @@ Companion to `~/.claude/plans/glimmering-percolating-pebble.md` (code) and `~/.c
 
 ## 1. Account setup — Ben actions in Google Ads UI
 
-Account: **AW-18050429438**. Do these in order. Each conversion action's resulting **label** comes back as a snippet like `send_to: AW-18050429438/abc123XYZ` — paste the label part into the table at the bottom of this doc; I'll wire them in `src/utils/tracking.ts`.
+Customer ID: **977-785-8115** ("Siam Scuba Diving 5 Star IDC Center"). Google Tag for conversion tracking: **AW-18050429438** (loaded by `gtag.js`; conversion labels reference this tag, not the Customer ID). Do these in order. Each conversion action's resulting **label** comes back as a snippet like `send_to: AW-18050429438/abc123XYZ` — paste the label part into the table at the bottom of this doc; I'll wire them in `src/utils/tracking.ts`.
 
 ### 1.1 Create conversion actions (3 total — one exists, two new)
 
@@ -58,7 +58,7 @@ Set in Google Ads → Admin → Tracking → Final URL suffix. Our `captureUtmFr
 3 Search campaigns. NO Performance Max in week-1 (creative volume too low for PMax to learn fast under 7-day spend cap). Revisit PMax on day 8 after we have winning RSAs to feed it.
 
 ```
-Account: Siam Scuba (AW-18050429438)
+Account: Siam Scuba (Customer ID 977-785-8115)
 ├── Campaign: SiamScuba_Search_DSD            (500 THB/day)
 │   ├── Ad group: DSD_EN  → /discover-scuba-diving
 │   ├── Ad group: DSD_ES  → /es/discover-scuba-diving
@@ -151,16 +151,16 @@ Match-type policy: start with **Phrase** + a handful of **Exact** for brand/tran
 ### 4.3 DSD_HE (`/he/discover-scuba-diving`)
 
 **Phrase:**
-- "צלילת היכרות קוסמוי"
+- "צלילת היכרות קוטאו"
 - "צלילת היכרות תאילנד"
 - "צלילה ראשונה תאילנד"
-- "DSD קוסמוי"
-- "ניסיון צלילה קוסמוי"
+- "DSD קוטאו"
+- "ניסיון צלילה קוטאו"
 - "צלילה למתחילים תאילנד"
 - "PADI צלילת היכרות"
 
 **Exact:**
-- [צלילת היכרות קוסמוי]
+- [צלילת היכרות קוטאו]
 - [צלילת היכרות תאילנד]
 
 ### 4.4 OWD_EN (`/open-water-course`)
@@ -200,7 +200,7 @@ Match-type policy: start with **Phrase** + a handful of **Exact** for brand/tran
 ### 4.6 OWD_HE (`/he/open-water-course`)
 
 **Phrase:**
-- "קורס צלילה קוסמוי"
+- "קורס צלילה קוטאו"
 - "קורס PADI תאילנד"
 - "קורס אופן ווטר"
 - "כוכב 1 תאילנד"
@@ -208,7 +208,7 @@ Match-type policy: start with **Phrase** + a handful of **Exact** for brand/tran
 - "קורס צלילה כוכב ראשון"
 
 **Exact:**
-- [קורס צלילה קוסמוי]
+- [קורס צלילה קוטאו]
 - [קורס PADI תאילנד]
 
 ### 4.7 FUN_EN (`/fun-dives`)
@@ -245,14 +245,14 @@ Match-type policy: start with **Phrase** + a handful of **Exact** for brand/tran
 ### 4.9 FUN_HE (`/he/fun-dives`)
 
 **Phrase:**
-- "צלילה בקוסמוי"
-- "צלילות קוסמוי"
+- "צלילה בקוטאו"
+- "צלילות קוטאו"
 - "סייל רוק צלילה"
 - "צלילה תאילנד מוסמכים"
-- "מרכז צלילה קוסמוי"
+- "מרכז צלילה קוטאו"
 
 **Exact:**
-- [צלילה בקוסמוי]
+- [צלילה בקוטאו]
 - [סייל רוק]
 
 ---
@@ -310,7 +310,7 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 3. PADI 5-Star Center, Koh Tao
 4. No Certification Needed
 5. Max 4 Students Per Instructor
-6. Two Private Dive Boats
+6. Private Boat & New Gear
 7. WhatsApp Us — Reply in Minutes
 8. Full Day With a PADI Instructor
 9. From First Breath to 2 Ocean Dives
@@ -323,7 +323,7 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 
 **Descriptions (4):**
 - Spend the day with a PADI instructor — confined-water training plus 1 or 2 real ocean dives on Koh Tao's reefs. All gear included.
-- Two custom dive boats, max 4 students per instructor. Schedule actually runs on time. Reply on WhatsApp usually within minutes.
+- Our private boat + new gear, max 4 students per instructor. Schedule actually runs on time. Reply on WhatsApp usually within minutes.
 - 2,600 THB for 1 dive or 3,600 THB for 2 dives — full-day program, gear, instructor, PADI certificate. No experience needed.
 - Built for first-timers. If you can float on your back, you can do this. Book today, dive tomorrow.
 
@@ -336,44 +336,44 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 4. Centro PADI 5 Estrellas
 5. Sin Certificación Previa
 6. Máximo 4 Alumnos por Instructor
-7. Dos Barcos Propios de Buceo
+7. Barco Propio y Equipo Nuevo de Buceo
 8. WhatsApp — Respondemos Rápido
 9. Día Completo con Instructor PADI
 10. Primera Respiración Bajo el Agua
 11. Arrecifes Reales, No Piscina
 12. Grupos Pequeños, Buen Rollo
-13. 778 Reseñas en TripAdvisor
+13. 5.0 en TripAdvisor (776)
 14. Equipo + Barco + Comida Incluidos
 15. Reserva Hoy — Bucea Mañana
 
 **Descriptions (4):**
 - Día completo con un instructor PADI: prácticas en aguas confinadas y 1 o 2 inmersiones reales en los arrecifes de Koh Tao. Equipo incluido.
-- Dos barcos propios, máximo 4 alumnos por instructor. El horario se cumple. Solemos responder en WhatsApp en minutos.
+- Barco propio y equipo nuevo, máximo 4 alumnos por instructor. El horario se cumple. Solemos responder en WhatsApp en minutos.
 - 2,600 THB por 1 inmersión o 3,600 THB por 2 — día completo, equipo, instructor, certificado PADI. Sin experiencia.
 - Diseñado para principiantes. Si flotas boca arriba, puedes hacerlo. Reserva hoy y bucea mañana.
 
 ### 6.3 DSD_HE — `/he/discover-scuba-diving`
 
 **Headlines (15):**
-1. צלילת היכרות בקוסמוי
+1. צלילת היכרות בקוטאו
 2. שתי צלילות ב-3,600 THB
 3. מרכז PADI 5 כוכבים
 4. ללא הסמכה מוקדמת
 5. עד 4 תלמידים למדריך
-6. שתי סירות צלילה פרטיות
+6. סירה פרטית וציוד חדש
 7. WhatsApp — תשובה בדקות
 8. יום שלם עם מדריך PADI
 9. מהנשימה הראשונה לים אמיתי
 10. שונית אמיתית לא בריכה
 11. קבוצות קטנות, חוויה גדולה
 12. הזמינו היום, צוללים מחר
-13. 778 ביקורות ב-TripAdvisor
+13. 5.0 בטריפאדוויזר (776)
 14. ציוד ארוחה וסירה כלולים
-15. בעברית, על הספוט בקוסמוי
+15. בעברית, על הספוט בקוטאו
 
 **Descriptions (4):**
 - יום שלם עם מדריך PADI: אימון במים רדודים ו-1 או 2 צלילות אמיתיות בשונית. כל הציוד כלול.
-- שתי סירות פרטיות, עד 4 תלמידים למדריך. הלו"ז אמיתי. בדרך כלל עונים ב-WhatsApp בדקות.
+- סירה פרטית וציוד חדש, עד 4 תלמידים למדריך. הלו"ז אמיתי. בדרך כלל עונים ב-WhatsApp בדקות.
 - 2,600 THB לצלילה או 3,600 THB לשתיים — יום שלם, ציוד, מדריך, תעודת PADI. בלי ניסיון קודם.
 - בנוי למתחילים. אם אתם צפים על הגב — אתם יכולים. בעברית, על הספוט.
 
@@ -385,11 +385,11 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 3. 11,000 THB All-Inclusive
 4. PADI 5-Star Instructor Dev Center
 5. Small Groups, Real Attention
-6. Two Private Dive Boats
+6. Private Boat & New Gear
 7. WhatsApp Us — Reply in Minutes
 8. Theory + Pool + 4 Ocean Dives
 9. Certified For Life, Worldwide
-10. 778 Reviews on TripAdvisor
+10. 5.0 on TripAdvisor (776)
 11. eLearning Before You Arrive
 12. Koh Tao — Best Place to Learn
 13. Free Re-Take If You Need It
@@ -398,7 +398,7 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 
 **Descriptions (4):**
 - The PADI Open Water Diver course in 4 days: theory, pool training, 4 reef dives. Certified for life, dive anywhere in the world.
-- 11,000 THB — books, gear, instructor, boat, certification. Small groups, max 4 students. Two private boats.
+- 11,000 THB — books, gear, instructor, boat, certification. Small groups, max 4 students. Private boat & new gear.
 - Koh Tao is the cheapest, calmest place on earth to learn. eLearning before you fly so the in-water days are 100% focused.
 - WhatsApp us your travel dates — we'll plan the 4-day schedule around them. Reply usually within minutes.
 
@@ -410,11 +410,11 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 3. 11,000 THB Todo Incluido
 4. Centro PADI 5 Estrellas IDC
 5. Grupos Pequeños, Atención Real
-6. Dos Barcos Propios
+6. Barco Propio y Equipo Nuevo
 7. WhatsApp — Respondemos Rápido
 8. Teoría + Piscina + 4 Inmersiones
 9. Certificación Mundial de por Vida
-10. 778 Reseñas en TripAdvisor
+10. 5.0 en TripAdvisor (776)
 11. eLearning Antes de Llegar
 12. Koh Tao — El Mejor Lugar
 13. Repetición Gratis Si Hace Falta
@@ -423,33 +423,33 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 
 **Descriptions (4):**
 - Curso PADI Open Water Diver en 4 días: teoría, piscina, 4 inmersiones en el arrecife. Certificación mundial de por vida.
-- 11,000 THB — libros, equipo, instructor, barco, certificación. Grupos pequeños, máx. 4 alumnos. Dos barcos propios.
+- 11,000 THB — libros, equipo, instructor, barco, certificación. Grupos pequeños, máx. 4 alumnos. Barco propio y equipo nuevo.
 - Koh Tao es el sitio más barato y tranquilo del mundo para aprender. eLearning antes de llegar para que los días en agua rindan al máximo.
 - Escríbenos por WhatsApp con tus fechas — cuadramos el curso de 4 días contigo. Respondemos en minutos.
 
 ### 6.6 OWD_HE — `/he/open-water-course`
 
 **Headlines (15):**
-1. קורס PADI Open Water קוסמוי
+1. קורס PADI Open Water קוטאו
 2. הסמכה ב-4 ימים
 3. 11,000 THB הכל כלול
 4. מרכז PADI 5 כוכבים IDC
 5. קבוצות קטנות, יחס אישי
-6. שתי סירות פרטיות
+6. סירה פרטית וציוד חדש
 7. WhatsApp — תשובה בדקות
 8. תיאוריה + בריכה + 4 צלילות
 9. הסמכה בינלאומית לכל החיים
-10. 778 ביקורות ב-TripAdvisor
+10. 5.0 בטריפאדוויזר (776)
 11. לימוד עצמי לפני שמגיעים
-12. קוסמוי — המקום ללמוד
+12. קוטאו — המקום ללמוד
 13. חזרה חינם אם צריך
 14. הזמינו קורס, נסגור תאריכים
 15. בעברית, עם מדריך PADI
 
 **Descriptions (4):**
 - קורס PADI Open Water Diver ב-4 ימים: תיאוריה, בריכה, 4 צלילות. הסמכה בינלאומית לכל החיים.
-- 11,000 THB — ספרים, ציוד, מדריך, סירה, הסמכה. קבוצות קטנות, עד 4 תלמידים. שתי סירות פרטיות.
-- קוסמוי הוא המקום הזול והרגוע בעולם ללמוד. eLearning לפני שמגיעים כדי לנצל כל יום במים.
+- 11,000 THB — ספרים, ציוד, מדריך, סירה, הסמכה. קבוצות קטנות, עד 4 תלמידים. סירה פרטית וציוד חדש.
+- קוטאו הוא המקום הזול והרגוע בעולם ללמוד. eLearning לפני שמגיעים כדי לנצל כל יום במים.
 - שלחו ב-WhatsApp תאריכי הטיול ונסגור איתכם את 4 הימים. תשובה בדקות.
 
 ### 6.7 FUN_EN — `/fun-dives`
@@ -457,14 +457,14 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 **Headlines (15):**
 1. Fun Diving in Koh Tao
 2. Sail Rock Full-Day — 3,800 THB
-3. Two-Tank Boat Dive — 1,800 THB
+3. Two-Tank Boat Dive — 2,000 THB
 4. Chumphon Pinnacle & The Twins
 5. PADI 5-Star, Koh Tao
-6. Small Groups, Two Private Boats
+6. Small Groups, Private Boat & New Gear
 7. WhatsApp Us — Reply in Minutes
 8. Whale Sharks at Sail Rock
 9. Morning or Afternoon Boat Dives
-10. 778 Reviews on TripAdvisor
+10. 5.0 on TripAdvisor (776)
 11. All Gear Included
 12. Book Today — Dive Tomorrow
 13. Online Booking, No Deposit
@@ -472,8 +472,8 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 15. Best Dive Sites on the Island
 
 **Descriptions (4):**
-- Two-tank morning or afternoon dives at 1,800 THB. Sail Rock full-day with chance of whale sharks at 3,800 THB. All gear in.
-- Two private boats, small groups, schedule actually runs on time. PADI 5-Star Center in Koh Tao.
+- Two-tank morning or afternoon dives at 2,000 THB. Sail Rock full-day with chance of whale sharks at 3,800 THB. All gear in.
+- Private boat & new gear, small groups, schedule actually runs on time. PADI 5-Star Center in Koh Tao.
 - Pick your dive sites — Chumphon Pinnacle, Sail Rock, The Twins, White Rock and more. Book online, no deposit.
 - WhatsApp us your dates or book directly — we'll get you on a boat usually within 24 hours.
 
@@ -482,14 +482,14 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 **Headlines (15):**
 1. Buceo en Koh Tao
 2. Sail Rock Día Completo — 3,800
-3. 2 Inmersiones Barco — 1,800 THB
+3. 2 Inmersiones Barco — 2,000 THB
 4. Chumphon Pinnacle y The Twins
 5. Centro PADI 5 Estrellas
-6. Grupos Pequeños, 2 Barcos Propios
+6. Grupos Pequeños, Barco Propio y Equipo Nuevo
 7. WhatsApp — Respondemos Rápido
 8. Tiburones Ballena en Sail Rock
 9. Inmersiones Mañana o Tarde
-10. 778 Reseñas en TripAdvisor
+10. 5.0 en TripAdvisor (776)
 11. Equipo Incluido
 12. Reserva Hoy — Bucea Mañana
 13. Reserva Online, Sin Depósito
@@ -497,24 +497,24 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 15. Los Mejores Sitios de la Isla
 
 **Descriptions (4):**
-- Dos inmersiones de mañana o tarde por 1,800 THB. Sail Rock día completo con posibles tiburones ballena por 3,800 THB. Equipo incluido.
-- Dos barcos propios, grupos pequeños, horario que se cumple. Centro PADI 5 Estrellas en Koh Tao.
+- Dos inmersiones de mañana o tarde por 2,000 THB. Sail Rock día completo con posibles tiburones ballena por 3,800 THB. Equipo incluido.
+- Barco propio y equipo nuevo, grupos pequeños, horario que se cumple. Centro PADI 5 Estrellas en Koh Tao.
 - Elige los sitios — Chumphon Pinnacle, Sail Rock, The Twins, White Rock. Reserva online sin depósito.
 - WhatsApp con tus fechas o reserva directo — solemos meterte en un barco en 24 horas.
 
 ### 6.9 FUN_HE — `/he/fun-dives`
 
 **Headlines (15):**
-1. צלילות בקוסמוי
+1. צלילות בקוטאו
 2. סייל רוק יום שלם — 3,800
-3. שתי צלילות סירה — 1,800 THB
+3. שתי צלילות סירה — 2,000 THB
 4. Chumphon Pinnacle ו-The Twins
 5. מרכז PADI 5 כוכבים
-6. קבוצות קטנות, 2 סירות פרטיות
+6. קבוצות קטנות, סירה פרטית וציוד חדש
 7. WhatsApp — תשובה בדקות
 8. כרישי לוויתן בסייל רוק
 9. צלילות בוקר או צהריים
-10. 778 ביקורות ב-TripAdvisor
+10. 5.0 בטריפאדוויזר (776)
 11. ציוד כלול
 12. הזמינו היום, צוללים מחר
 13. הזמנה אונליין, ללא פיקדון
@@ -522,8 +522,8 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 15. אתרי הצלילה הכי טובים באי
 
 **Descriptions (4):**
-- שתי צלילות בוקר או צהריים ב-1,800 THB. סייל רוק יום שלם עם סיכוי לכרישי לוויתן ב-3,800 THB. ציוד כלול.
-- שתי סירות פרטיות, קבוצות קטנות, לו"ז אמיתי. מרכז PADI 5 כוכבים בקוסמוי.
+- שתי צלילות בוקר או צהריים ב-2,000 THB. סייל רוק יום שלם עם סיכוי לכרישי לוויתן ב-3,800 THB. ציוד כלול.
+- סירה פרטית וציוד חדש, קבוצות קטנות, לו"ז אמיתי. מרכז PADI 5 כוכבים בקוטאו.
 - אתם בוחרים אתר — Chumphon Pinnacle, Sail Rock, The Twins, White Rock. הזמנה אונליין ללא פיקדון.
 - שלחו ב-WhatsApp תאריכים או הזמינו ישיר — בדרך כלל מעלים אתכם לסירה בתוך 24 שעות.
 
@@ -534,15 +534,15 @@ Below: master RSA per ad group. 15 headlines, 4 descriptions, 2 final URL paths.
 ### 7.1 Sitelinks (4, EN — replicate per language)
 | Sitelink | URL | Description line 1 | Description line 2 |
 |---|---|---|---|
-| Our 2 Dive Boats | `/about` | Two custom boats, small groups | We don't share boats with other shops |
+| Our Private Boat & New Gear | `/about` | Private boat + new gear, small groups | We don't share boats with other shops |
 | Meet the Team | `/about` | PADI instructors with 10+ yrs | Multilingual: EN / ES / HE / TH |
 | Dive Sites We Cover | `/dive-sites` | Sail Rock, Chumphon, Twins | Whale shark season Mar–May |
-| Real Reviews | `/about#reviews` | 778 reviews, 4.9 on TripAdvisor | First-time divers welcome |
+| Real Reviews | `/about#reviews` | 5.0 on TripAdvisor (776), 4.9 on Google (845) | First-time divers welcome |
 
 ### 7.2 Callouts (8)
 - Free re-take guarantee
 - No deposit required
-- Two private dive boats
+- Private boat & new gear
 - Max 4 students per instructor
 - PADI 5-Star Center
 - WhatsApp in EN / ES / HE

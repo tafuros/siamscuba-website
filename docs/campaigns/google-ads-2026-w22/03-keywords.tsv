@@ -1,0 +1,90 @@
+Campaign	Ad group	Keyword	Match type	Status
+SiamScuba_Search_DSD	DSD_EN	discover scuba diving koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	try scuba diving koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	try diving thailand	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	scuba lesson koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	first time scuba koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	intro dive koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	dsd koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	scuba diving for beginners thailand	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	snorkel and scuba koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	padi discover scuba	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_EN	discover scuba diving koh tao	Exact	Enabled
+SiamScuba_Search_DSD	DSD_EN	try diving koh tao	Exact	Enabled
+SiamScuba_Search_DSD	DSD_EN	dsd koh tao price	Exact	Enabled
+SiamScuba_Search_DSD	DSD_ES	bautismo de buceo koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	bautismo de buceo tailandia	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	primera vez buceo koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	discover scuba koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	buceo principiantes tailandia	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	iniciacion buceo koh tao	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	probar buceo tailandia	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	padi discover scuba español	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	curso introduccion buceo tailandia	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_ES	bautismo de buceo koh tao	Exact	Enabled
+SiamScuba_Search_DSD	DSD_ES	discover scuba koh tao	Exact	Enabled
+SiamScuba_Search_DSD	DSD_HE	צלילת היכרות קוטאו	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_HE	צלילת היכרות תאילנד	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_HE	צלילה ראשונה תאילנד	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_HE	DSD קוטאו	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_HE	ניסיון צלילה קוטאו	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_HE	צלילה למתחילים תאילנד	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_HE	PADI צלילת היכרות	Phrase	Enabled
+SiamScuba_Search_DSD	DSD_HE	צלילת היכרות קוטאו	Exact	Enabled
+SiamScuba_Search_DSD	DSD_HE	צלילת היכרות תאילנד	Exact	Enabled
+SiamScuba_Search_OWD	OWD_EN	padi open water koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	open water course koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	open water diver koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	scuba certification koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	learn to scuba dive thailand	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	padi course thailand	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	owd koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	scuba diving course koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	padi open water price	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	scuba license koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_EN	padi open water koh tao	Exact	Enabled
+SiamScuba_Search_OWD	OWD_EN	open water course koh tao	Exact	Enabled
+SiamScuba_Search_OWD	OWD_EN	owd koh tao	Exact	Enabled
+SiamScuba_Search_OWD	OWD_ES	curso open water koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_ES	curso PADI tailandia	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_ES	certificacion buceo koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_ES	curso buceo tailandia	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_ES	curso buceo koh tao	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_ES	PADI open water tailandia	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_ES	sacarse el titulo de buceo tailandia	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_ES	curso open water koh tao	Exact	Enabled
+SiamScuba_Search_OWD	OWD_ES	PADI open water tailandia	Exact	Enabled
+SiamScuba_Search_OWD	OWD_HE	קורס צלילה קוטאו	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_HE	קורס PADI תאילנד	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_HE	קורס אופן ווטר	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_HE	כוכב 1 תאילנד	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_HE	קורס צלילה תאילנד	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_HE	קורס צלילה כוכב ראשון	Phrase	Enabled
+SiamScuba_Search_OWD	OWD_HE	קורס צלילה קוטאו	Exact	Enabled
+SiamScuba_Search_OWD	OWD_HE	קורס PADI תאילנד	Exact	Enabled
+SiamScuba_Search_FunDive	FUN_EN	fun dive koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	scuba diving koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	sail rock dive trip	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	chumphon pinnacle dive	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	two tank dive koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	boat dive koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	certified diver koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	dive sites koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	padi 5 star koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_EN	fun dive koh tao	Exact	Enabled
+SiamScuba_Search_FunDive	FUN_EN	sail rock koh tao	Exact	Enabled
+SiamScuba_Search_FunDive	FUN_ES	buceo koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_ES	inmersiones koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_ES	sail rock buceo	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_ES	buceo certificados tailandia	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_ES	centros de buceo koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_ES	salida de buceo koh tao	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_ES	buceo koh tao	Exact	Enabled
+SiamScuba_Search_FunDive	FUN_ES	sail rock buceo	Exact	Enabled
+SiamScuba_Search_FunDive	FUN_HE	צלילה בקוטאו	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_HE	צלילות קוטאו	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_HE	סייל רוק צלילה	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_HE	צלילה תאילנד מוסמכים	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_HE	מרכז צלילה קוטאו	Phrase	Enabled
+SiamScuba_Search_FunDive	FUN_HE	צלילה בקוטאו	Exact	Enabled
+SiamScuba_Search_FunDive	FUN_HE	סייל רוק	Exact	Enabled

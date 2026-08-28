@@ -1,0 +1,10 @@
+Campaign	Ad group	Status	Default max CPC	Final URL
+SiamScuba_Search_DSD	DSD_EN	Paused	10	https://siamscuba.com/discover-scuba-diving
+SiamScuba_Search_DSD	DSD_ES	Paused	10	https://siamscuba.com/es/discover-scuba-diving
+SiamScuba_Search_DSD	DSD_HE	Paused	10	https://siamscuba.com/he/discover-scuba-diving
+SiamScuba_Search_OWD	OWD_EN	Paused	10	https://siamscuba.com/open-water-course
+SiamScuba_Search_OWD	OWD_ES	Paused	10	https://siamscuba.com/es/open-water-course
+SiamScuba_Search_OWD	OWD_HE	Paused	10	https://siamscuba.com/he/open-water-course
+SiamScuba_Search_FunDive	FUN_EN	Paused	10	https://siamscuba.com/fun-dives
+SiamScuba_Search_FunDive	FUN_ES	Paused	10	https://siamscuba.com/es/fun-dives
+SiamScuba_Search_FunDive	FUN_HE	Paused	10	https://siamscuba.com/he/fun-dives

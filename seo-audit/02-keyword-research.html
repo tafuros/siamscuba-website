@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siam Scuba — Phase B: Keyword & Competitor Research</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true } });</script>
+  <style>
+    :root {
+      --bg: #0b1320; --card: #131c2d; --border: #1f2c44;
+      --ink: #e6ecf5; --muted: #8a99b3;
+      --primary: #4ea1ff; --ok: #34d399; --warn: #fbbf24; --bad: #f87171; --accent: #c084fc;
+      --code-bg: #0a1120;
+      --hot: #f97316; --opp: #c084fc; --def: #34d399; --skip: #6b7894;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+           background: var(--bg); color: var(--ink); line-height: 1.65; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 28px 80px; }
+    header.hero { background: linear-gradient(135deg, #0a3060, #1a1450);
+                  border-radius: 18px; padding: 36px 32px; margin-bottom: 36px; border: 1px solid var(--border); }
+    header.hero h1 { margin: 0 0 8px; font-size: 32px; }
+    header.hero p.sub { margin: 0; color: #b9cefb; font-size: 17px; }
+    header.hero .meta { margin-top: 18px; display: flex; gap: 24px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+    header.hero .meta span b { color: var(--ink); font-weight: 500; }
+    section { margin: 40px 0; }
+    h2 { font-size: 24px; border-bottom: 2px solid var(--border); padding-bottom: 10px;
+         margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
+    h2 .num { background: var(--primary); color: #001530; width: 30px; height: 30px;
+              border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+              font-size: 15px; font-weight: 700; }
+    h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; }
+    p { margin: 8px 0 14px; }
+    .muted { color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin: 16px 0; }
+
+    /* TOC */
+    .toc { background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+           padding: 18px 22px; margin-bottom: 28px; }
+    .toc ol { margin: 6px 0 0; padding-right: 22px; line-height: 1.9; }
+    .toc a { color: var(--primary); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* Headline KPIs */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 14px 0; }
+    .kpi-big { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+    .kpi-big .num { font-size: 36px; font-weight: 800; line-height: 1; color: var(--primary); }
+    .kpi-big.bad .num { color: var(--bad); }
+    .kpi-big.ok .num { color: var(--ok); }
+    .kpi-big.warn .num { color: var(--warn); }
+    .kpi-big .lbl { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
+    /* Comparison matrix */
+    table.cmp, table.q { width: 100%; border-collapse: separate; border-spacing: 0;
+                         margin: 14px 0; background: var(--card); border: 1px solid var(--border);
+                         border-radius: 10px; overflow: hidden; font-size: 13.5px; }
+    table.cmp th, table.cmp td, table.q th, table.q td {
+      padding: 11px 12px; border-bottom: 1px solid var(--border);
+      text-align: right; vertical-align: top;
+    }
+    table.cmp th, table.q th { background: #0d1626; font-weight: 600; color: var(--muted); font-size: 12.5px; }
+    table.cmp tr:last-child td, table.q tr:last-child td { border-bottom: none; }
+    table.cmp td.code, table.q td.code { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--accent); direction: ltr; text-align: left; }
+    table.cmp .name { font-weight: 600; color: var(--ink); }
+    .pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.3px; }
+    .pill.hot  { background: rgba(249, 115, 22, 0.18); color: var(--hot); }
+    .pill.opp  { background: rgba(192, 132, 252, 0.18); color: var(--opp); }
+    .pill.def  { background: rgba(52, 211, 153, 0.18); color: var(--def); }
+    .pill.skip { background: rgba(107, 120, 148, 0.20); color: var(--skip); }
+    .pill.warn { background: rgba(251, 191, 36, 0.18); color: var(--warn); }
+    .pill.he   { background: rgba(78, 161, 255, 0.18); color: var(--primary); }
+
+    /* SERP heatmap */
+    .heatmap { display: grid; grid-template-columns: 230px repeat(11, 1fr); gap: 4px;
+               background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+               padding: 14px; margin: 12px 0; overflow-x: auto; }
+    .hm-cell { padding: 8px 6px; text-align: center; font-size: 11.5px; border-radius: 4px;
+               white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hm-cell.head { background: transparent; color: var(--muted); font-weight: 600; }
+    .hm-cell.row { background: #0d1626; color: var(--muted); text-align: right; padding-right: 10px; font-size: 12px; font-weight: 500; }
+    .hm-cell.no  { background: #1a2438; color: #4d5872; }
+    .hm-cell.low { background: rgba(251, 191, 36, 0.25); color: var(--warn); }
+    .hm-cell.mid { background: rgba(249, 115, 22, 0.30); color: #ffba87; }
+    .hm-cell.hi  { background: rgba(248, 113, 113, 0.32); color: #ffb4b4; }
+    .hm-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .hm-legend .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+
+    /* Callouts */
+    .callout { border-radius: 10px; padding: 12px 16px; margin: 12px 0; border: 1px solid; font-size: 14px; }
+    .callout.warn { background: #2a1f08; border-color: #5a4a13; color: #ffe1a3; }
+    .callout.ok   { background: #0a2a1c; border-color: #156246; color: #aaf6cf; }
+    .callout.info { background: #0e1f3d; border-color: #1f4683; color: #b9cefb; }
+    .callout.bad  { background: #2a0e10; border-color: #5a1f24; color: #ffc0c0; }
+
+    /* Hebrew block (special) */
+    .heb-card { background: linear-gradient(140deg, #0e2548, #0d1c2e);
+                border: 1px solid var(--primary); border-radius: 14px; padding: 22px; margin: 16px 0; }
+    .heb-card h3 { margin-top: 0; color: var(--primary); }
+
+    /* Inline */
+    code.inl { background: #0a1120; border: 1px solid var(--border); padding: 1px 6px;
+               border-radius: 5px; font-family: 'SF Mono', monospace; font-size: 12.5px;
+               color: var(--accent); direction: ltr; display: inline-block; }
+    .quote { border-right: 3px solid var(--primary); padding: 4px 14px; color: var(--muted); font-style: italic; margin: 8px 0; }
+
+    /* Page brief */
+    .briefs { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .brief { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .brief h4 { margin: 0 0 6px; font-size: 16px; }
+    .brief .meta-row { display: flex; flex-wrap: wrap; gap: 14px; color: var(--muted); font-size: 12.5px; margin-bottom: 8px; }
+    .brief .meta-row b { color: var(--ink); font-weight: 500; }
+    .brief ul { margin: 4px 0 0; padding-right: 20px; font-size: 13.5px; line-height: 1.7; }
+    .brief .url { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--accent); direction: ltr; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Phase B — Keyword &amp; Competitor Research</h1>
+  <p class="sub">איפה אנחנו עומדים ב-Google היום, מה המתחרים עושים, ואיפה יש פערים שאפשר לכבוש</p>
+  <div class="meta">
+    <span><b>אתר:</b> siamscuba.com</span>
+    <span><b>תאריך:</b> 2026-05-07</span>
+    <span><b>שלב:</b> B (מחקר) · הבא: C (אודיט טכני)</span>
+    <span><b>שאילתות שנבדקו:</b> 12</span>
+    <span><b>מתחרים שנותחו:</b> 5 + 6 שצצו ב-SERP</span>
+  </div>
+</header>
+
+<div class="toc">
+  <strong>תוכן עניינים</strong>
+  <ol>
+    <li><a href="#tldr">TL;DR — שלוש שורות</a></li>
+    <li><a href="#scoreboard">איפה אנחנו עומדים — לוח KPI</a></li>
+    <li><a href="#competitors">מתחרים — מטריצת השוואה</a></li>
+    <li><a href="#serp">SERP heatmap — מי מופיע איפה</a></li>
+    <li><a href="#opportunities">מטריצת הזדמנויות — keywords לפי עדיפות</a></li>
+    <li><a href="#hebrew">השוק העברי — הזדמנות הכי גדולה</a></li>
+    <li><a href="#paa">PAA goldmine — 16 briefs לתוכן</a></li>
+    <li><a href="#pages">דפים שצריך לבנות (Phase A)</a></li>
+    <li><a href="#next">השלב הבא — Phase C</a></li>
+  </ol>
+</div>
+
+<!-- 1. TL;DR -->
+<section id="tldr">
+  <h2><span class="num">1</span>TL;DR</h2>
+  <div class="card">
+    <p><strong>siamscuba.com לא מופיע ב-top 10 של Google אפילו בשאילתה אחת מ-11 השאילתות הרלוונטיות שבדקנו.</strong> זה גם החדשות הרעות וגם החדשות הטובות — כל עלייה היא רווח נטו.</p>
+    <p>המתחרים הראשיים זוכים בתוצאות עם <strong>דפי קורס ייעודיים, לא homepage</strong>. גוגל מעדיף שגרת URL: <code class="inl">/courses/[course]-koh-tao</code> + Title פטרן <code class="inl">PADI [Course] Course Koh Tao | [Brand]</code>.</p>
+    <p><strong>השוק העברי כמעט ריק.</strong> רק Ban's Diving נוגע בו. הזדמנות אחת עם ROI גבוה: לבנות דף נחיתה אחד בעברית שמדבר על "מדריכים דוברי עברית בקוטאו" + outreach לסוכנויות הנסיעות הישראליות (פשוט תאילנד, ישרא תור, סיאם טורס).</p>
+    <p><strong>פעולה מומלצת מיידית:</strong> 8 דפי קורס ייעודיים + 1 דף בעברית + 6 פוסטי בלוג ממוקדים = השקעה של ~20–30 שעות, השפעה צפויה ב-90 יום.</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-big bad"><div class="num">0</div><div class="lbl">שאילתות שאנחנו<br/>ב-top 10</div></div>
+    <div class="kpi-big bad"><div class="num">0</div><div class="lbl">דפי קורס ייעודיים<br/>(URL נפרד)</div></div>
+    <div class="kpi-big warn"><div class="num">10</div><div class="lbl">פוסטי בלוג<br/>(big blue: 37, crystal: 36)</div></div>
+    <div class="kpi-big warn"><div class="num">1/5</div><div class="lbl">מתחרים<br/>עם תמיכה רב-לשונית</div></div>
+    <div class="kpi-big ok"><div class="num">3/5</div><div class="lbl">מתחרים<br/>עם schema חלש או חסר</div></div>
+    <div class="kpi-big ok"><div class="num">1</div><div class="lbl">מתחרה ישיר<br/>בשוק העברי (Ban's)</div></div>
+  </div>
+</section>
+
+<!-- 2. Scoreboard -->
+<section id="scoreboard">
+  <h2><span class="num">2</span>איפה אנחנו עומדים</h2>
+  <p>הסוכן בדק 11 שאילתות יעד תקפות (השאילתה ה-12 הייתה תרגום מילולי שגוי). בכולן בדקנו האם siamscuba.com מופיע ב-top 10. <strong>התשובה: לא, אף לא פעם.</strong></p>
+
+  <div class="callout info">
+    <strong>הקריאה:</strong> זה לא "האתר רע". המתחרים לא חזקים בהרבה — הם פשוט בנו דפי קורס ייעודיים לפני שאנחנו עשינו. ברגע שנעשה את זה, נחתוך פנימה. הציטוט המעניין מהסוכן:
+    <div class="quote">"Course-specific deep pages outrank homepages for purchase-intent queries (AOW, Discover Scuba, Divemaster). Roctopus's deep page outranks several homepages — proves a specific Open Water page with the right title tag works."</div>
+  </div>
+</section>
+
+<!-- 3. Competitors -->
+<section id="competitors">
+  <h2><span class="num">3</span>מטריצת מתחרים</h2>
+  <p class="muted">חמישה מתחרים נסקרו. ה-URLs המקוריים שהיו לנו היו שגויים בשלושה מקרים — תוקנו: master-divers.com (עם מקף), davyjoneslocker.asia, roctopusdive.com.</p>
+
+  <table class="cmp">
+    <thead>
+      <tr>
+        <th>מתחרה</th>
+        <th>OW</th>
+        <th>DSD</th>
+        <th>בלוג</th>
+        <th>שפות</th>
+        <th>Schema</th>
+        <th>Tech</th>
+        <th>USP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name">Big Blue</td>
+        <td>฿11,000</td>
+        <td>฿3,500 (SSI)</td>
+        <td>~37 פוסטים</td>
+        <td>EN</td>
+        <td>🏆 הכי כבד: LocalBusiness, AggregateRating, Review×10, BreadcrumbList, Event+Offer</td>
+        <td>WordPress + Yoast</td>
+        <td>Volume / safety / 25 שנה / "Best Dive School"</td>
+      </tr>
+      <tr>
+        <td class="name">Crystal Dive</td>
+        <td>฿11,000</td>
+        <td>נסתר</td>
+        <td>~36 פוסטים</td>
+        <td><strong>EN, NL</strong></td>
+        <td>בינוני: LocalBusiness, Place, Article</td>
+        <td>WordPress + RankMath + WPML</td>
+        <td>SSI Diamond / 100K+ צוללים / on-site resort</td>
+      </tr>
+      <tr>
+        <td class="name">Master Divers</td>
+        <td>נסתר</td>
+        <td>נסתר</td>
+        <td>דק/ריק</td>
+        <td>EN</td>
+        <td>❌ WebSite בלבד</td>
+        <td>Custom (headless)</td>
+        <td>Premium / 4:1 max / נטרוקס in-house</td>
+      </tr>
+      <tr>
+        <td class="name">Roctopus</td>
+        <td>฿11,000</td>
+        <td>נסתר</td>
+        <td>~5 (eco בלבד)</td>
+        <td>EN</td>
+        <td>טוב: LocalBusiness + OfferCatalog × 5</td>
+        <td>Webflow</td>
+        <td>"Sub-Culture" / community / Eco Trust</td>
+      </tr>
+      <tr>
+        <td class="name">Davy Jones</td>
+        <td>฿10,500</td>
+        <td>฿2,500</td>
+        <td>מינימלי</td>
+        <td>EN</td>
+        <td>❌ אין JSON-LD</td>
+        <td>WordPress + WooCommerce + Elementor</td>
+        <td>Tech diving (trimix, sidemount) / since 1996</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>המתחרים שצצו ב-SERP אבל לא היו ברדאר</h3>
+  <p>במהלך ניתוח ה-SERPs, השמות הבאים הופיעו שוב ושוב והם בעצם המתחרים ה<strong>אמיתיים</strong> בתוצאות החיפוש — לא תמיד אלה שאנחנו חושבים עליהם:</p>
+  <table class="cmp">
+    <thead><tr><th>שם</th><th>תדירות</th><th>איפה הופיעו</th></tr></thead>
+    <tbody>
+      <tr><td class="name">Black Turtle Dive</td><td>4/11 שאילתות</td><td>OW, AOW, Divemaster, Dive Courses, Best Dive School</td></tr>
+      <tr><td class="name">Sairee Cottage Diving</td><td>3/11</td><td>OW, Divemaster, Best Dive School</td></tr>
+      <tr><td class="name">Scuba Shack Koh Tao</td><td>3/11</td><td>OW, AOW, Discover Scuba</td></tr>
+      <tr><td class="name">IDC Koh Tao</td><td>2/11</td><td>Discover Scuba, AOW</td></tr>
+      <tr><td class="name">Koh Tao Divers (since 1987)</td><td>2/11</td><td>Scuba diving Koh Tao, Dive Courses</td></tr>
+      <tr><td class="name">PADI.com / travel.padi.com</td><td>4/11</td><td>OW, Scuba Thailand, Dive Courses, Scuba Diving Koh Tao — <strong>גוגל מעדיף את PADI עצמה לעיתים קרובות</strong></td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <strong>תובנה אסטרטגית:</strong> Big Blue, Crystal, Roctopus היו ההנחה שלנו — אבל בפועל <strong>Black Turtle ו-Sairee Cottage</strong> הם המתחרים האמיתיים בתוצאות החיפוש. הם בנו דפי קורס ייעודיים מצוינים ולכן זוכים ב-clicks. אנחנו צריכים לחקות את ה-URL pattern שלהם, לא את של Big Blue.
+  </div>
+</section>
+
+<!-- 4. SERP heatmap -->
+<section id="serp">
+  <h2><span class="num">4</span>SERP Heatmap — נוכחות מתחרים בעמודי תוצאות</h2>
+  <p class="muted">המספר בכל תא = הפוזיציה ב-top 5. צבעים: כתום בהיר = #4–5, כתום = #2–3, אדום = #1.</p>
+
+  <div class="heatmap">
+    <div class="hm-cell head"></div>
+    <div class="hm-cell head">OW</div>
+    <div class="hm-cell head">Scuba<br/>Diving KT</div>
+    <div class="hm-cell head">Dive<br/>Courses</div>
+    <div class="hm-cell head">Discover<br/>Scuba</div>
+    <div class="hm-cell head">Divemaster</div>
+    <div class="hm-cell head">Best<br/>Dive School</div>
+    <div class="hm-cell head">KT Diving<br/>Cert</div>
+    <div class="hm-cell head">AOW</div>
+    <div class="hm-cell head">Scuba<br/>Thailand</div>
+    <div class="hm-cell head">PADI vs<br/>SSI KT</div>
+    <div class="hm-cell head">צלילה<br/>בקוטאו</div>
+
+    <div class="hm-cell row">Siam Scuba</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">Big Blue</div>
+    <div class="hm-cell no">—</div><div class="hm-cell mid">2</div><div class="hm-cell mid">2</div>
+    <div class="hm-cell low">5</div><div class="hm-cell no">—</div><div class="hm-cell mid">2</div>
+    <div class="hm-cell mid">3</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell low">5</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">Crystal Dive</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell hi">1</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">Master Divers</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell mid">3</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">Roctopus</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell low">4</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">Black Turtle</div>
+    <div class="hm-cell mid">2</div><div class="hm-cell no">—</div><div class="hm-cell low">4</div>
+    <div class="hm-cell hi">1</div><div class="hm-cell hi">1</div><div class="hm-cell low">4</div>
+    <div class="hm-cell low">5</div><div class="hm-cell hi">1</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">Sairee Cottage</div>
+    <div class="hm-cell mid">3</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell mid">2</div><div class="hm-cell mid">3</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell mid">2</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">Scuba Shack</div>
+    <div class="hm-cell low">4</div><div class="hm-cell no">—</div><div class="hm-cell low">5</div>
+    <div class="hm-cell mid">2</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell mid">2</div><div class="hm-cell mid">2</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+
+    <div class="hm-cell row">PADI.com</div>
+    <div class="hm-cell hi">1</div><div class="hm-cell hi">1</div><div class="hm-cell hi">1</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+    <div class="hm-cell no">—</div><div class="hm-cell low">4</div><div class="hm-cell hi">1</div>
+    <div class="hm-cell no">—</div><div class="hm-cell no">—</div>
+  </div>
+
+  <div class="hm-legend">
+    <span><span class="sw" style="background:rgba(248,113,113,0.32)"></span>#1</span>
+    <span><span class="sw" style="background:rgba(249,115,22,0.30)"></span>#2–3</span>
+    <span><span class="sw" style="background:rgba(251,191,36,0.25)"></span>#4–5</span>
+    <span><span class="sw" style="background:#1a2438"></span>לא ב-top 5</span>
+  </div>
+
+  <div class="callout bad">
+    <strong>קריאה:</strong> שורת Siam Scuba ריקה לחלוטין. שורת PADI.com מלאה — Google מעדיף את ה-brand authority של PADI עצמה.<br/>
+    <strong>אסטרטגיה:</strong> איננו יכולים לנצח את padi.com — אבל אנחנו <em>יכולים</em> לנצח את Black Turtle/Sairee/Scuba Shack בעמדות 2–5 אם נבנה דפי קורס ברמה דומה (URL ייעודי, title pattern נכון, schema, content depth).
+  </div>
+</section>
+
+<!-- 5. Opportunity matrix -->
+<section id="opportunities">
+  <h2><span class="num">5</span>מטריצת הזדמנויות — Keywords לפי עדיפות</h2>
+
+  <table class="q">
+    <thead>
+      <tr><th>עדיפות</th><th>שאילתה</th><th>למה</th><th>פעולה</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="pill hot">🔥 דחוף</span></td>
+        <td><strong>advanced open water koh tao</strong></td>
+        <td>כל ה-top 5 דפי קורס ייעודיים, אין homepage שמחזיק. סף כניסה נמוך.</td>
+        <td>דף <code class="inl">/courses/advanced-open-water-koh-tao</code>. לכלול: Sattakut wreck, 5 adventure dives, 30m, 2 days.</td>
+      </tr>
+      <tr>
+        <td><span class="pill hot">🔥 דחוף</span></td>
+        <td><strong>discover scuba koh tao</strong></td>
+        <td>Conversion גבוה (תיירים בלי תכנון). תחרות נמוכה יותר מ-OW.</td>
+        <td>דף <code class="inl">/discover-scuba-koh-tao</code>. לכלול: half-day, 12m, ללא שחייה, מחיר.</td>
+      </tr>
+      <tr>
+        <td><span class="pill hot">🔥 דחוף</span></td>
+        <td><strong>divemaster koh tao</strong></td>
+        <td>LTV הגבוה ביותר (לקוח של 2–8 שבועות). Black Turtle ו-Sairee לא בלתי-ניתנים-להבסה.</td>
+        <td>דף <code class="inl">/divemaster-internship-koh-tao</code> + מסלול: prerequisites, 40 dives → 60 dives, accommodation.</td>
+      </tr>
+      <tr>
+        <td><span class="pill hot">🔥 דחוף</span></td>
+        <td><strong>padi open water koh tao</strong></td>
+        <td>הערך המסחרי הגבוה ביותר. כל אחד שמוציא רישיון.</td>
+        <td>דף <code class="inl">/courses/padi-open-water-koh-tao</code>. Title: "PADI Open Water Course Koh Tao | Siam Scuba". 11,000 THB, 4:1.</td>
+      </tr>
+      <tr>
+        <td><span class="pill he">🇮🇱 דחוף</span></td>
+        <td><strong>צלילה בקוטאו</strong></td>
+        <td>SERP חלש בעברית. רק Ban's מתחרה. שוק ישראלי = פלח ליבה של Siam Scuba.</td>
+        <td>דף נחיתה אחד (לפחות) ב-<code class="inl">/he/scuba-koh-tao</code> + outreach לסוכנויות.</td>
+      </tr>
+      <tr>
+        <td><span class="pill opp">💡 תוכן</span></td>
+        <td><strong>padi vs ssi koh tao</strong></td>
+        <td>Crystal מחזיק ב-#1 עם פוסט אחד. שכפול אפשרי.</td>
+        <td>פוסט: "PADI vs SSI on Koh Tao — Honest Comparison". <strong>כבר יש לנו את הפוסט</strong> — צריך לחזק meta + schema.</td>
+      </tr>
+      <tr>
+        <td><span class="pill opp">💡 תוכן</span></td>
+        <td><strong>best dive school koh tao</strong></td>
+        <td>Listicles מנצחים. תחרות ישירה לא תעבוד.</td>
+        <td><strong>Outreach</strong>: pitch ל-Stingy Nomads, Koh Tao Complete Guide, Midnight Blue Elephant. אופציונלי: פוסט משלנו "How to choose a dive school".</td>
+      </tr>
+      <tr>
+        <td><span class="pill opp">💡 תוכן</span></td>
+        <td><strong>koh tao diving certification</strong></td>
+        <td>קושי בינוני, intent מעורב.</td>
+        <td>Pillar guide: "How to Get Scuba Certified on Koh Tao" שמקושר ל-OW + AOW.</td>
+      </tr>
+      <tr>
+        <td><span class="pill def">🏆 הגן</span></td>
+        <td>siam scuba (brand)</td>
+        <td>אנחנו #1 כבר.</td>
+        <td>שמור על schema, GBP, reviews.</td>
+      </tr>
+      <tr>
+        <td><span class="pill skip">🤷 דלג</span></td>
+        <td>scuba diving thailand</td>
+        <td>Head term. PADI + travel publishers שולטים. Intent רחב מדי.</td>
+        <td>אל תכוון. אופציה: פוסט "Koh Tao vs Phuket vs Similan" שילכוד spillover.</td>
+      </tr>
+      <tr>
+        <td><span class="pill skip">🤷 דלג</span></td>
+        <td>scuba diving koh tao</td>
+        <td>Head term, רק homepages עם 10+ שנות authority.</td>
+        <td>הומפייג שלנו תופס בעקיפין. אל תקדיש דף נפרד.</td>
+      </tr>
+      <tr>
+        <td><span class="pill skip">🤷 דלג</span></td>
+        <td>dive courses koh tao</td>
+        <td>PADI's own booking funnel ב-#1. קרב לא הוגן.</td>
+        <td>Capture דרך עמוד קורסים קיים בלבד.</td>
+      </tr>
+      <tr>
+        <td><span class="pill warn">⚠️ תקן</span></td>
+        <td>"כוכב ראשון תאילנד"</td>
+        <td>תרגום מילולי שגוי — לא מה שישראלים מחפשים בפועל.</td>
+        <td>השאילתות הנכונות: <em>"קורס צלילה קוטאו"</em>, <em>"open water קוטאו"</em>, <em>"להוציא רישיון צלילה תאילנד"</em>, <em>"צלילת היכרות קוטאו"</em>. לרוץ שוב.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 6. Hebrew opportunity -->
+<section id="hebrew">
+  <h2><span class="num">6</span>השוק העברי — הזדמנות הכי גדולה</h2>
+
+  <div class="heb-card">
+    <h3>🇮🇱 למה זה הכי משמעותי</h3>
+    <ul>
+      <li><strong>הוצאות שיווק:</strong> רוב המתחרים מתחרים על אנגלית. השוק העברי הוא blue ocean.</li>
+      <li><strong>פלח ליבה:</strong> סייאם סקובה כבר עובד עם ישראלים — יש לכם יתרון אמיתי (שפה, תרבות, מדריכים).</li>
+      <li><strong>מתחרה ישיר אחד:</strong> רק Ban's Diving מציע מדריכים דוברי עברית. הם לא דומיננטיים.</li>
+      <li><strong>סוכנויות הנסיעות מחזיקות את ה-SERP</strong> (פשוט תאילנד, ישרא תור, סיאם טורס, המטייל) — להיות מומלץ אצלן = traffic ישיר.</li>
+    </ul>
+  </div>
+
+  <h3>תוכנית פעולה ליעד הזה</h3>
+  <ol>
+    <li><strong>דף נחיתה אחד בעברית</strong> — <code class="inl">/he/</code> או <code class="inl">/scuba-israel</code>. כותרת: "צלילה בקוטאו עם מדריכים דוברי עברית". H1, H2, meta, OG בעברית. Schema LocalBusiness עם <code class="inl">availableLanguage</code>.</li>
+    <li><strong>גרסה עברית של פוסט "כוכב ראשון" הקיים</strong> — לאמת ש-meta tags + Article schema נכונים. הפוסט קיים ב-<code class="inl">blogPosts.ts</code> (slug: kokhav-rishon-koh-tao).</li>
+    <li><strong>Outreach</strong>:
+      <ul>
+        <li>פשוט תאילנד (p-thailand.co.il) — pitch לbeing the recommended Koh Tao dive shop.</li>
+        <li>ישרא תור (isratours.net) — כבר מציעים "צלילת היכרות סקובה" בקוטאו.</li>
+        <li>סיאם טורס, המטייל, "תאילנד עם גולן" — listings.</li>
+      </ul>
+    </li>
+    <li><strong>הוסף hreflang</strong> לכל דף (בשלב A): <code class="inl">hreflang="he"</code> + <code class="inl">hreflang="en"</code> + <code class="inl">x-default</code>.</li>
+    <li><strong>לרוץ שוב SERP analysis בעברית</strong> עם השאילתות הנכונות (לא "כוכב ראשון תאילנד" — אלא "קורס צלילה קוטאו", "open water קוטאו", "להוציא רישיון צלילה תאילנד"). זה action item לתחילת Phase A.</li>
+  </ol>
+</section>
+
+<!-- 7. PAA -->
+<section id="paa">
+  <h2><span class="num">7</span>PAA Goldmine — 16 Briefs לתוכן</h2>
+  <p class="muted">שאלות שגוגל מציג כ-"People Also Ask" באופן עקבי. כל אחת היא brief מוכן לפוסט / סעיף FAQ. השתמש לפוסטים חדשים <strong>או</strong> כסעיפי FAQ Schema בדפי הקורסים.</p>
+
+  <div class="briefs">
+    <div class="brief">
+      <h4>1. How long does the PADI Open Water course take in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> FAQ schema בעמוד OW</span><span><b>Word count:</b> 50–80</span><span><b>Intent:</b> Informational pre-purchase</span></div>
+      <ul><li>3 vs 4 days — split by day. עדיף לרשום: Day 1 = pool + theory, Day 2–3 = open water dives, Day 4 = optional fun dive.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>2. How much does the Open Water course cost in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> FAQ + price-transparency block</span><span><b>Word count:</b> 80–120</span></div>
+      <ul><li>~11,000 THB סטנדרט שוק. מה כלול (e-learning, materials, 4 dives, certification, accommodation?). הסבר מה לא כלול.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>3. What's the difference between PADI and SSI on Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> Long-form blog</span><span><b>Word count:</b> 1,800–2,200</span><span><b>SEO:</b> זו כבר השאילתה שיש לנו פוסט עליה</span></div>
+      <ul><li>השוואה כנה. אנחנו PADI — לא להחביא. דבר על career value, recognition, materials, scheduling.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>4. Do I need to know how to swim to do Discover Scuba Diving?</h4>
+      <div class="meta-row"><span><b>Type:</b> FAQ</span><span><b>Word count:</b> 30–50</span></div>
+      <ul><li>DSD: לא נדרש. OW: 200m. הסבר את ההפרש כ-up-sell signal.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>5. What's the minimum age to learn to dive in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> FAQ</span></div>
+      <ul><li>Bubble Maker 8+. Junior OW 10+. OW 10+ (בתאריכים מסוימים).</li></ul>
+    </div>
+    <div class="brief">
+      <h4>6. Best time of year to dive in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> Pillar blog post</span><span><b>Word count:</b> 1,200–1,500</span></div>
+      <ul><li>May–September best (visibility 30m יולי–ספטמבר). חודשים לפי dive site. Whale shark season.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>7. Open Water vs Advanced Open Water — which should I do?</h4>
+      <div class="meta-row"><span><b>Type:</b> Comparison post</span><span><b>Word count:</b> 1,000–1,500</span></div>
+    </div>
+    <div class="brief">
+      <h4>8. How many dives do I need to start the Divemaster course?</h4>
+      <div class="meta-row"><span><b>Type:</b> FAQ בעמוד DM</span></div>
+      <ul><li>40 to start, 60 to certify. Rescue Diver prerequisite. EFR.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>9. Can I see whale sharks diving Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> Blog post + dive site landing</span><span><b>Word count:</b> 1,000</span></div>
+      <ul><li>March–June peak. Sail Rock, Chumphon Pinnacle. ניסיונות, סטטיסטיקות.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>10. Koh Tao vs Phuket vs Similan — where should I dive in Thailand?</h4>
+      <div class="meta-row"><span><b>Type:</b> Pillar comparison</span><span><b>Word count:</b> 2,000+</span><span><b>SEO:</b> Spillover מ-"scuba diving thailand"</span></div>
+    </div>
+    <div class="brief">
+      <h4>11. How to choose the best dive school in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> Editorial blog</span><span><b>Word count:</b> 1,500</span></div>
+    </div>
+    <div class="brief">
+      <h4>12. What's included in the Advanced Open Water course in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> FAQ + section בעמוד AOW</span></div>
+      <ul><li>5 adventure dives. Deep + Nav חובה. 3 בחירה (Photography, Wreck, Peak Buoyancy).</li></ul>
+    </div>
+    <div class="brief">
+      <h4>13. What dive sites will I dive in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> Hub + 12 sub-pages</span><span><b>Word count:</b> 600–800 per site</span><span><b>SEO:</b> 12 ניצחונות long-tail</span></div>
+      <ul><li>HTMS Sattakut, Chumphon Pinnacle, Sail Rock, Twins, Mango Bay, Shark Island, White Rock, Japanese Gardens, Hin Wong Pinnacle, Red Rock, Green Rock, Southwest Pinnacle.</li></ul>
+    </div>
+    <div class="brief">
+      <h4>14. Is Discover Scuba Diving worth it before committing to Open Water?</h4>
+      <div class="meta-row"><span><b>Type:</b> Bridge post</span><span><b>Word count:</b> 800</span></div>
+    </div>
+    <div class="brief">
+      <h4>15. How much does it cost to become a Divemaster in Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> FAQ + transparent table</span></div>
+    </div>
+    <div class="brief">
+      <h4>16. Are there Hebrew-speaking dive instructors on Koh Tao?</h4>
+      <div class="meta-row"><span><b>Type:</b> Hebrew landing page H2</span><span><b>SEO:</b> אפס תחרות. ניצחון בטוח.</span></div>
+      <ul><li>תשובה: כן ב-Siam Scuba. שילוב עם CTA לבוקינג. Schema FAQ בעברית.</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Pages to build -->
+<section id="pages">
+  <h2><span class="num">8</span>דפים שצריך לבנות (Phase A)</h2>
+  <p>לפי המטריצה. סדר עדיפות לפי impact × effort.</p>
+
+  <div class="briefs">
+    <div class="brief">
+      <h4>P1 — דף PADI Open Water Koh Tao</h4>
+      <div class="meta-row">
+        <span class="url">/courses/padi-open-water-koh-tao</span>
+        <span><b>Title:</b> "PADI Open Water Course Koh Tao | Siam Scuba"</span>
+        <span><b>Priority:</b> 🔥</span>
+      </div>
+      <ul>
+        <li>H1: PADI Open Water Diver Course on Koh Tao</li>
+        <li>Meta desc: 3-4 day PADI certification on Koh Tao. Small groups (4:1), two private dive boats, 11,000 THB. Lifetime certification.</li>
+        <li>Sections: What you'll learn · Daily schedule · Pricing · What's included · Prerequisites · FAQ (briefs 1, 2, 4, 5)</li>
+        <li>Schema: <code class="inl">Course</code> + <code class="inl">FAQPage</code> + <code class="inl">BreadcrumbList</code></li>
+      </ul>
+    </div>
+
+    <div class="brief">
+      <h4>P2 — דף Advanced Open Water Koh Tao</h4>
+      <div class="meta-row">
+        <span class="url">/courses/advanced-open-water-koh-tao</span>
+        <span><b>Title:</b> "PADI Advanced Open Water Course Koh Tao | Siam Scuba"</span>
+        <span><b>Priority:</b> 🔥</span>
+      </div>
+      <ul>
+        <li>הדגש: Sattakut wreck, 30m, 5 adventure dives, Peak Buoyancy</li>
+        <li>FAQ: brief 7, 12</li>
+      </ul>
+    </div>
+
+    <div class="brief">
+      <h4>P3 — דף Discover Scuba Koh Tao</h4>
+      <div class="meta-row">
+        <span class="url">/discover-scuba-koh-tao</span>
+        <span><b>Title:</b> "Discover Scuba Diving Koh Tao — Half Day Try Dive | Siam Scuba"</span>
+        <span><b>Priority:</b> 🔥</span>
+      </div>
+      <ul>
+        <li>קונבריטים גבוה — תיירים בלי תכנון. CTA חזק לוואטסאפ.</li>
+        <li>FAQ: brief 4, 14</li>
+      </ul>
+    </div>
+
+    <div class="brief">
+      <h4>P4 — דף Divemaster Internship Koh Tao</h4>
+      <div class="meta-row">
+        <span class="url">/divemaster-internship-koh-tao</span>
+        <span><b>Title:</b> "PADI Divemaster Internship Koh Tao — 4–8 Week Pro Course | Siam Scuba"</span>
+        <span><b>Priority:</b> 🔥</span>
+      </div>
+      <ul>
+        <li>LTV הכי גבוה. כלול accommodation, timeline, prerequisites, internship benefits.</li>
+        <li>FAQ: brief 8, 15</li>
+      </ul>
+    </div>
+
+    <div class="brief">
+      <h4>P5 — דף נחיתה בעברית 🇮🇱</h4>
+      <div class="meta-row">
+        <span class="url">/he או /scuba-israel</span>
+        <span><b>Title:</b> "צלילה בקוטאו עם מדריכים דוברי עברית | Siam Scuba"</span>
+        <span><b>Priority:</b> 🇮🇱</span>
+      </div>
+      <ul>
+        <li>תחרות מינימלית. ROI הכי גבוה למאמץ הקטן ביותר.</li>
+        <li>hreflang: <code class="inl">he-IL</code> + <code class="inl">en</code> + <code class="inl">x-default</code></li>
+        <li>FAQ: brief 16</li>
+      </ul>
+    </div>
+
+    <div class="brief">
+      <h4>P6 — Dive Sites Hub + 6 דפי dive site (פאזה 2)</h4>
+      <div class="meta-row">
+        <span class="url">/dive-sites/{slug}</span>
+        <span><b>Priority:</b> 💡</span>
+      </div>
+      <ul>
+        <li>HTMS Sattakut, Chumphon Pinnacle, Sail Rock, Twins, Shark Island, Mango Bay (להתחיל)</li>
+        <li>כל אחד 600–800 מילים. גוגל מציג Image Pack — אפשר לזכות בו.</li>
+      </ul>
+    </div>
+
+    <div class="brief">
+      <h4>P7 — שאר 6 דפי קורס specialty (פאזה 2)</h4>
+      <div class="meta-row">
+        <span class="url">/courses/{rescue,bubble-maker,scuba-review,efr,peak-buoyancy,uw-photography}</span>
+      </div>
+      <ul>
+        <li>כל אחד מהם — דף נפרד. גם אם short-form (300–500 מילים), כל אחד = ניצחון long-tail.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Next -->
+<section id="next">
+  <h2><span class="num">9</span>השלב הבא — Phase C: אודיט טכני מלא</h2>
+  <div class="card">
+    <p>לפני שאנחנו בונים דפים חדשים, נעשה Phase C — אודיט טכני שייתן לנו:</p>
+    <ul>
+      <li>Lighthouse על 5 נתיבים (home, blog, blog post, course, fun-dive-booking) — mobile + desktop</li>
+      <li>Schema validator על כל JSON-LD קיים (אישור שהוא תקין לפני שמכפילים)</li>
+      <li>Pa11y/axe על נגישות</li>
+      <li>broken-link-checker</li>
+      <li>בדיקת hero-video.mp4 (14.7MB) + bundle size</li>
+      <li>SERP run בעברית עם השאילתות הנכונות</li>
+    </ul>
+    <p>ה-deliverable יהיה <code class="inl">03-technical-audit.html</code> עם backlog ממוין לפי impact × effort. אחרי זה, Phase A מתחיל ביצוע — וכבר נדע בדיוק מה לבנות (P1–P5 מפה) + מה לתקן (מ-Phase C).</p>
+  </div>
+  <div class="callout ok">
+    <strong>Action items מיידיים שאני זקוק לאישור עליהם לפני Phase C:</strong>
+    <ul>
+      <li>אישור להריץ <code class="inl">bunx lighthouse https://siamscuba.com</code> פעמים מספר (אורח על האתר, לא משנה כלום).</li>
+      <li>אישור להתקין dev dependencies לאודיט: <code class="inl">@axe-core/cli</code>, <code class="inl">broken-link-checker</code> (זמני, ב-bunx).</li>
+      <li>אם יש לך גישה ל-Google Search Console על siamscuba.com — שלח export CSV של top queries (90 יום אחרונים). זה מקפיץ את האיכות של C משמעותית.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+Resolving dependencies
+Resolved, downloaded and extracted [388]
+Saved lockfile
+Getting links from: https://siamscuba.com/
+├───OK─── https://www.siamscuba.com/favicon.ico
+├───OK─── https://www.siamscuba.com/favicon-32x32.png
+├───OK─── https://www.siamscuba.com/favicon-16x16.png
+├───OK─── https://www.siamscuba.com/favicon.png
+├───OK─── https://www.siamscuba.com/apple-touch-icon.png
+├───OK─── https://dash.siamscuba.com/
+├───OK─── https://www.googletagmanager.com/gtag/js?id=AW-18050429438
+├───OK─── https://www.siamscuba.com/assets/index-CZ74jI0q.js

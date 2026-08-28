@@ -1,0 +1,19 @@
+=== home ===
+button-name | score=0 | Buttons do not have an accessible name
+color-contrast | score=0 | Background and foreground colors do not have a sufficient contrast ratio.
+heading-order | score=0 | Heading elements are not in a sequentially-descending order
+=== blog ===
+button-name | score=0 | Buttons do not have an accessible name
+color-contrast | score=0 | Background and foreground colors do not have a sufficient contrast ratio.
+heading-order | score=0 | Heading elements are not in a sequentially-descending order
+landmark-one-main | score=0 | Document does not have a main landmark.
+=== blog-post ===
+button-name | score=0 | Buttons do not have an accessible name
+color-contrast | score=0 | Background and foreground colors do not have a sufficient contrast ratio.
+landmark-one-main | score=0 | Document does not have a main landmark.
+=== course-ow ===
+color-contrast | score=0 | Background and foreground colors do not have a sufficient contrast ratio.
+heading-order | score=0 | Heading elements are not in a sequentially-descending order
+=== fun-dive ===
+color-contrast | score=0 | Background and foreground colors do not have a sufficient contrast ratio.
+landmark-one-main | score=0 | Document does not have a main landmark.

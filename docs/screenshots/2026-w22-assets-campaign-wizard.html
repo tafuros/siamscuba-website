@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<title>Campaign Wizard - 2026-w22-assets</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --line: #e9e9e4;
+    --accent: #2c5f8e;
+    --accent-soft: #e8f0f7;
+    --good: #2f7a3f;
+    --warn: #b85c00;
+    --code-bg: #f4f4ef;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Arial Hebrew", sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    font-feature-settings: "tnum";
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 96px; }
+  header { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  h1 { margin: 0 0 6px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--ink-soft); font-size: 14px; }
+  .question {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; margin-bottom: 16px;
+    border-inline-start: 4px solid var(--accent);
+  }
+  .qhead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+  .qnum {
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    background: var(--accent-soft); padding: 2px 9px; border-radius: 999px; flex-shrink: 0;
+  }
+  .qtitle { font-weight: 600; font-size: 16px; margin: 0; }
+  .qdesc { color: var(--ink-soft); font-size: 14px; margin: 4px 0 14px; }
+  .qdesc code, .opt-text code {
+    background: var(--code-bg); padding: 1px 5px; border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+    cursor: pointer; transition: background .12s, border-color .12s; background: var(--card);
+  }
+  .opt:hover { background: #fafafa; }
+  .opt input { margin-top: 4px; flex-shrink: 0; }
+  .opt-text { flex: 1; }
+  .opt-text .tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    background: #d8eddd; color: var(--good);
+    padding: 1px 7px; border-radius: 4px; margin-inline-start: 6px; vertical-align: 1px;
+  }
+  .opt-text .tag.warn { background: #f7e3cd; color: var(--warn); }
+  .opt input:checked + .opt-text { font-weight: 500; }
+  .opt:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+  .subq { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .subq-label {
+    font-size: 13px; font-weight: 600; color: var(--ink-soft);
+    margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  textarea.note {
+    width: 100%; margin-top: 12px; border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; font-family: inherit; font-size: 14px; resize: vertical;
+    min-height: 44px; background: #fcfcfa;
+  }
+  textarea.note:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  .toolbar {
+    position: sticky; bottom: 0; margin: 24px -24px 0; padding: 16px 24px;
+    background: var(--bg); border-top: 1px solid var(--line);
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  button {
+    font: inherit; font-weight: 500; border: 1px solid var(--line); background: var(--card);
+    padding: 10px 18px; border-radius: 8px; cursor: pointer; color: var(--ink); transition: background .12s;
+  }
+  button:hover { background: #efefea; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.primary:hover { background: #244e75; }
+  #output-card {
+    margin-top: 16px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 20px; display: none;
+  }
+  #output-card.visible { display: block; }
+  #output-card h3 { margin: 0 0 10px; font-size: 15px; }
+  #output {
+    width: 100%; min-height: 220px; border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+    line-height: 1.55; background: #fcfcfa; direction: ltr; white-space: pre-wrap; resize: vertical;
+  }
+  .row { display: flex; gap: 8px; margin-top: 10px; }
+  .copied { color: var(--good); font-size: 13px; font-weight: 500; align-self: center; opacity: 0; transition: opacity .2s; }
+  .copied.show { opacity: 1; }
+  .ctx {
+    background: #fff8e7; border: 1px solid #f0d999; border-radius: 8px;
+    padding: 12px 14px; margin-bottom: 18px; font-size: 13.5px; color: #5a4400;
+  }
+  .ctx strong { color: #3a2d00; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1 id="page-title"></h1>
+  <p id="page-subtitle"></p>
+</header>
+
+<div id="ctx-box" class="ctx" style="display:none;"></div>
+
+<div id="questions"></div>
+
+<div class="toolbar">
+  <button class="primary" id="generate">Generate prompt</button>
+  <button id="reset">Reset to recommended</button>
+</div>
+
+<div id="output-card">
+  <h3>Prompt ready to copy</h3>
+  <textarea id="output" readonly></textarea>
+  <div class="row">
+    <button class="primary" id="copy">Copy to clipboard</button>
+    <span class="copied" id="copied-msg">✓ Copied</span>
+  </div>
+</div>
+
+</div>
+
+<script id="config" type="application/json">
+{
+  "title": "Campaign Wizard - 2026-w22-assets",
+  "subtitle": "מה אנחנו צריכים בשביל הקמפיין הזה? לוגו, תמונות, וידאו, תקציב, קהל. סמן ולחץ Generate brief.",
+  "context": "<strong>קמפיינים יעד: <code>SiamScuba_Search_DSD</code>, <code>SiamScuba_Search_OWD</code>, <code>SiamScuba_Search_FunDive</code></strong><br />אחרי שתסיים: לחץ Generate brief → Copy → הדבק בצ'אט. אני ארץ את העלאת הנכסים / יצירת ה-AI / המתנה לצילום בהתאם לבחירות שלך.",
+  "outro": "Workflow לאחר: items 'מהמאגר' = אבקש ממך path, 'יוצא לצלם' = אבנה הכל וממתין, 'צור עם AI' = ארץ את הגנרציה ואציג לאישור.",
+  "questions": [
+    {
+      "id": "scope",
+      "title": "סוג הבקשה",
+      "description": "האם זה קמפיין חדש או הוספת נכסים לקמפיין/ים קיימים?",
+      "type": "single",
+      "options": [
+        {
+          "value": "new",
+          "label": "<strong>קמפיין חדש</strong> - לבנות מאפס + להוסיף נכסים",
+          "recommended": false
+        },
+        {
+          "value": "assets",
+          "label": "<strong>הוסף נכסים לקמפיין קיים</strong> - לוגו/תמונות/וידאו לקמפיינים שכבר חיים",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "edit",
+          "label": "עריכת קמפיין קיים - שנה keywords/RSAs/budget/copy (לא נכסים)"
+        }
+      ]
+    },
+    {
+      "id": "basics",
+      "title": "פרטי קמפיין (רק אם 'חדש')",
+      "description": "השאר ריק אם בחרת בשאלה 1 'הוסף נכסים לקיים'.",
+      "subquestions": [
+        {
+          "id": "basics_type",
+          "label": "סוג קמפיין",
+          "type": "single",
+          "options": [
+            {
+              "value": "search",
+              "label": "Search (טקסט בלבד + RSAs)",
+              "recommended": true,
+              "tag": "מומלץ"
+            },
+            {
+              "value": "pmax",
+              "label": "Performance Max (דורש 5+ תמונות + לוגו)"
+            },
+            {
+              "value": "display",
+              "label": "Display (banners)"
+            },
+            {
+              "value": "video",
+              "label": "Video / YouTube"
+            },
+            {
+              "value": "demand",
+              "label": "Demand Gen"
+            }
+          ]
+        },
+        {
+          "id": "basics_langs",
+          "label": "שפות (multi)",
+          "type": "multi",
+          "options": [
+            {
+              "value": "en",
+              "label": "EN - אנגלית"
+            },
+            {
+              "value": "es",
+              "label": "ES - ספרדית"
+            },
+            {
+              "value": "he",
+              "label": "HE - עברית"
+            },
+            {
+              "value": "th",
+              "label": "TH - תאית"
+            },
+            {
+              "value": "fr",
+              "label": "FR - צרפתית"
+            },
+            {
+              "value": "de",
+              "label": "DE - גרמנית"
+            }
+          ]
+        }
+      ],
+      "notePlaceholder": "שם קמפיין מוצע + final URL + audience + insights"
+    },
+    {
+      "id": "budget",
+      "title": "תקציב יומי (THB)",
+      "description": "תקציב לכל קמפיין/שפה. נוכל לשנות בכל עת דרך scripts/sync-budgets.ts.",
+      "type": "single",
+      "options": [
+        {
+          "value": "50",
+          "label": "50 THB/day - דרישת מינימום בדיקה"
+        },
+        {
+          "value": "129",
+          "label": "129 THB/day - test budget נוכחי",
+          "recommended": true,
+          "tag": "נוכחי"
+        },
+        {
+          "value": "200",
+          "label": "200 THB/day - בינוני"
+        },
+        {
+          "value": "500",
+          "label": "500 THB/day - תוקפני (התכנון המקורי)"
+        },
+        {
+          "value": "1000",
+          "label": "1,000 THB/day - גדול"
+        },
+        {
+          "value": "custom",
+          "label": "אחר - אכתוב בהערה"
+        }
+      ],
+      "notePlaceholder": "אם 'אחר' - כתוב את הסכום + הסבר"
+    },
+    {
+      "id": "asset_logo",
+      "title": "לוגו (1:1 + 4:1)",
+      "description": "Google Ads דורש לוגו ריבוע 1200x1200 + לוגו רחב 1200x300. תאריך תוקף סופי.",
+      "type": "single",
+      "options": [
+        {
+          "value": "library",
+          "label": "מהמאגר שלי (Lightroom / Drive / Google Photos)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "shoot",
+          "label": "<strong>יוצא לצלם</strong> - תבנה הכל וחכה לקבצים ממני",
+          "tag": "shoot",
+          "tagClass": "warn"
+        },
+        {
+          "value": "ai-gemini",
+          "label": "צור עם AI - Gemini / Nano Banana (Imagen) - לתמונות photo-realistic"
+        },
+        {
+          "value": "ai-flux",
+          "label": "צור עם AI - fal.ai FLUX - לתמונות מעוצבות / סגנון אמנותי"
+        },
+        {
+          "value": "ai-video",
+          "label": "צור עם AI - fal.ai Veo3 / Kling - לוידאו (יקר, רק כשמוצדק)",
+          "tag": "AI video",
+          "tagClass": "warn"
+        },
+        {
+          "value": "pexels",
+          "label": "Pexels / Unsplash - סטוק חינמי (פחות מומלץ - נראה גנרי)"
+        },
+        {
+          "value": "skip",
+          "label": "לא דרוש לקמפיין הזה"
+        }
+      ],
+      "notePlaceholder": "אם 'library' - איפה הקבצים? אם 'AI' - תיאור עיצובי לתת ל-AI? אם 'יוצא לצלם' - גרסת לוגו לעצב עם מי?"
+    },
+    {
+      "id": "asset_hero",
+      "title": "תמונת Hero (1.91:1, 1200x628)",
+      "description": "התמונה הראשית שמופיעה כ-Image Asset של הקמפיין. כיוון: לפי ה-Hero direction שסימנו בbrief המקורי.",
+      "type": "single",
+      "options": [
+        {
+          "value": "library",
+          "label": "מהמאגר שלי (Lightroom / Drive / Google Photos)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "shoot",
+          "label": "<strong>יוצא לצלם</strong> - תבנה הכל וחכה לקבצים ממני",
+          "tag": "shoot",
+          "tagClass": "warn"
+        },
+        {
+          "value": "ai-gemini",
+          "label": "צור עם AI - Gemini / Nano Banana (Imagen) - לתמונות photo-realistic"
+        },
+        {
+          "value": "ai-flux",
+          "label": "צור עם AI - fal.ai FLUX - לתמונות מעוצבות / סגנון אמנותי"
+        },
+        {
+          "value": "ai-video",
+          "label": "צור עם AI - fal.ai Veo3 / Kling - לוידאו (יקר, רק כשמוצדק)",
+          "tag": "AI video",
+          "tagClass": "warn"
+        },
+        {
+          "value": "pexels",
+          "label": "Pexels / Unsplash - סטוק חינמי (פחות מומלץ - נראה גנרי)"
+        },
+        {
+          "value": "skip",
+          "label": "לא דרוש לקמפיין הזה"
+        }
+      ],
+      "notePlaceholder": "תיאור התמונה הרצויה - subject, mood, location"
+    },
+    {
+      "id": "asset_square",
+      "title": "תמונה ריבוע (1:1, 1200x1200)",
+      "description": "וריאנט ריבוע של ה-hero או תמונה שונה - לפלייסמנטים מובייל ו-square.",
+      "type": "single",
+      "options": [
+        {
+          "value": "library",
+          "label": "מהמאגר שלי (Lightroom / Drive / Google Photos)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "shoot",
+          "label": "<strong>יוצא לצלם</strong> - תבנה הכל וחכה לקבצים ממני",
+          "tag": "shoot",
+          "tagClass": "warn"
+        },
+        {
+          "value": "ai-gemini",
+          "label": "צור עם AI - Gemini / Nano Banana (Imagen) - לתמונות photo-realistic"
+        },
+        {
+          "value": "ai-flux",
+          "label": "צור עם AI - fal.ai FLUX - לתמונות מעוצבות / סגנון אמנותי"
+        },
+        {
+          "value": "ai-video",
+          "label": "צור עם AI - fal.ai Veo3 / Kling - לוידאו (יקר, רק כשמוצדק)",
+          "tag": "AI video",
+          "tagClass": "warn"
+        },
+        {
+          "value": "pexels",
+          "label": "Pexels / Unsplash - סטוק חינמי (פחות מומלץ - נראה גנרי)"
+        },
+        {
+          "value": "skip",
+          "label": "לא דרוש לקמפיין הזה"
+        }
+      ],
+      "notePlaceholder": "אם נפרד מה-hero - תיאור התמונה"
+    },
+    {
+      "id": "asset_extensions",
+      "title": "Image extensions (5+ תמונות landscape)",
+      "description": "Google מבקש 5+ תמונות נכסים. בדרך כלל ערבוב של מקורות - חלק library + חלק AI + חלק shoot.",
+      "type": "multi",
+      "options": [
+        {
+          "value": "library-5plus",
+          "label": "<strong>library</strong> - יש לי 5+ תמונות מהמאגר, אשלח שמות קבצים"
+        },
+        {
+          "value": "shoot-partial",
+          "label": "<strong>יוצא לצלם</strong> את החסר - אספק את הקיים, את החסר אצלם"
+        },
+        {
+          "value": "ai-fill",
+          "label": "AI ימלא את החסר (Gemini/FLUX)"
+        },
+        {
+          "value": "stock-pexels",
+          "label": "Pexels בלבד למה שאין לי"
+        }
+      ],
+      "notePlaceholder": "פירוט: איזה sites/scenes יש לי, איזה צריך לצלם, איזה AI?"
+    },
+    {
+      "id": "asset_video",
+      "title": "וידאו",
+      "description": "אופציונלי ל-Search, מומלץ ל-PMax/Video campaigns. אם 'AI video' - יקר (~$0.50-$2 לקליפ של 5-10s).",
+      "type": "single",
+      "options": [
+        {
+          "value": "library",
+          "label": "מהמאגר שלי (Lightroom / Drive / Google Photos)"
+        },
+        {
+          "value": "shoot",
+          "label": "<strong>יוצא לצלם</strong> - תבנה הכל וחכה לקבצים ממני",
+          "tag": "shoot",
+          "tagClass": "warn"
+        },
+        {
+          "value": "ai-gemini",
+          "label": "צור עם AI - Gemini / Nano Banana (Imagen) - לתמונות photo-realistic"
+        },
+        {
+          "value": "ai-flux",
+          "label": "צור עם AI - fal.ai FLUX - לתמונות מעוצבות / סגנון אמנותי"
+        },
+        {
+          "value": "ai-video",
+          "label": "צור עם AI - fal.ai Veo3 / Kling - לוידאו (יקר, רק כשמוצדק)",
+          "tag": "AI video",
+          "tagClass": "warn"
+        },
+        {
+          "value": "pexels",
+          "label": "Pexels / Unsplash - סטוק חינמי (פחות מומלץ - נראה גנרי)"
+        },
+        {
+          "value": "skip",
+          "label": "לא דרוש לקמפיין הזה",
+          "recommended": true,
+          "tag": "מומלץ"
+        }
+      ],
+      "notePlaceholder": "אם וידאו - אורך, סגנון (talking head / underwater action / drone / testimonial), tone"
+    },
+    {
+      "id": "schedule",
+      "title": "תזמון",
+      "description": "מתי הקמפיין צריך להיות LIVE? אילולי הגעת לדדליין אנחנו לא מורידים את ה-paused.",
+      "type": "single",
+      "options": [
+        {
+          "value": "asap",
+          "label": "ASAP - ברגע שהנכסים מוכנים"
+        },
+        {
+          "value": "this-week",
+          "label": "השבוע"
+        },
+        {
+          "value": "next-week",
+          "label": "שבוע הבא"
+        },
+        {
+          "value": "season",
+          "label": "בכפוף לעונה (whale shark, חגים, יום שני וכו')",
+          "tag": "specify",
+          "tagClass": "warn"
+        },
+        {
+          "value": "draft",
+          "label": "טיוטה בלבד - לא להפעיל כעת",
+          "recommended": true,
+          "tag": "מומלץ ברוב המקרים",
+          "tagClass": "warn"
+        }
+      ],
+      "notePlaceholder": "תאריך/אירוע ספציפי"
+    },
+    {
+      "id": "approvals",
+      "title": "מה צריך אישור שלך לפני העלאה?",
+      "description": "ברירת מחדל: כל פריט AI שאני מייצר מוצג לך לפני שהוא מועלה. אבל אם רוצה אישור על עוד דברים סמן.",
+      "type": "multi",
+      "options": [
+        {
+          "value": "approve-ai",
+          "label": "כל פריט AI - תמונה/וידאו לפני העלאה",
+          "recommended": true,
+          "tag": "ברירת מחדל"
+        },
+        {
+          "value": "approve-text",
+          "label": "כל שינוי טקסט (RSAs/headlines/descriptions) לפני שמירה"
+        },
+        {
+          "value": "approve-budget",
+          "label": "כל שינוי תקציב (מעל ערך X)"
+        },
+        {
+          "value": "approve-targeting",
+          "label": "שינויי targeting/geo/audience"
+        },
+        {
+          "value": "approve-go-live",
+          "label": "<strong>הפעלת הקמפיין מ-paused ל-enabled</strong>",
+          "recommended": true,
+          "tag": "חובה"
+        }
+      ],
+      "notePlaceholder": "אם אישור תקציב - מעל איזה ערך?"
+    }
+  ]
+}
+</script>
+
+<script>
+const config = JSON.parse(document.getElementById("config").textContent);
+
+document.title = config.title || "Decisions";
+document.getElementById("page-title").textContent = config.title || "";
+document.getElementById("page-subtitle").textContent = config.subtitle || "";
+
+if (config.context) {
+  const box = document.getElementById("ctx-box");
+  box.innerHTML = config.context;
+  box.style.display = "";
+}
+
+function renderOptions(name, type, options) {
+  const html = options.map((o) => {
+    const inputType = type === "single" ? "radio" : "checkbox";
+    const checked = o.recommended ? " checked" : "";
+    const tagClass = o.tagClass || "";
+    const tag = o.tag ? `<span class="tag ${tagClass}">${o.tag}</span>` : "";
+    return `<label class="opt"><input type="${inputType}" name="${name}" value="${o.value}"${checked} />` +
+           `<span class="opt-text">${o.label}${tag}</span></label>`;
+  }).join("");
+  return `<div class="options">${html}</div>`;
+}
+
+function renderQuestion(q, idx) {
+  const num = idx + 1;
+  let inner = "";
+  if (q.subquestions && q.subquestions.length) {
+    inner = q.subquestions.map((sq) => {
+      return `<div class="subq">` +
+             `<div class="subq-label">${sq.label}</div>` +
+             renderOptions(sq.id, sq.type || "single", sq.options) +
+             `</div>`;
+    }).join("");
+  } else {
+    inner = renderOptions(q.id, q.type || "single", q.options);
+  }
+  const note = q.note === false
+    ? ""
+    : `<textarea class="note" data-q="${q.id}" placeholder="${q.notePlaceholder || 'Free-form note (optional)'}"></textarea>`;
+  return `<div class="question">` +
+         `<div class="qhead"><span class="qnum">${num}</span><div class="qtitle">${q.title}</div></div>` +
+         (q.description ? `<div class="qdesc">${q.description}</div>` : "") +
+         inner + note +
+         `</div>`;
+}
+
+// Per-question accent color palette — cycles. White-bg friendly.
+const Q_PALETTE = [
+  { accent: "#2c5f8e", soft: "#e8f0f7" }, // blue
+  { accent: "#2f7a3f", soft: "#e3f1e6" }, // green
+  { accent: "#b85c00", soft: "#fbeedd" }, // orange
+  { accent: "#8b3a8b", soft: "#f3e6f3" }, // purple
+  { accent: "#1a7a8a", soft: "#dff0f2" }, // teal
+  { accent: "#c43c3c", soft: "#fbe5e5" }, // red
+];
+
+document.getElementById("questions").innerHTML =
+  (config.questions || []).map(renderQuestion).join("");
+
+document.querySelectorAll(".question").forEach((el, i) => {
+  const c = Q_PALETTE[i % Q_PALETTE.length];
+  el.style.setProperty("--accent", c.accent);
+  el.style.setProperty("--accent-soft", c.soft);
+});
+
+function readChecked(name) {
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
+}
+function readNote(qid) {
+  const el = document.querySelector(`textarea.note[data-q="${qid}"]`);
+  return (el?.value || "").trim();
+}
+function labelFor(options, value) {
+  const o = options.find(o => o.value === value);
+  if (!o) return value;
+  // Strip HTML tags for plain-text prompt output
+  return o.label.replace(/<[^>]+>/g, "");
+}
+
+function buildPrompt() {
+  const lines = [];
+  lines.push(`${config.title || "Decisions"} — answers:`);
+  lines.push("");
+  (config.questions || []).forEach((q, idx) => {
+    const num = idx + 1;
+    lines.push(`Q${num}. ${q.title.replace(/<[^>]+>/g, "")}:`);
+    if (q.subquestions && q.subquestions.length) {
+      q.subquestions.forEach((sq) => {
+        const vals = readChecked(sq.id);
+        const labels = vals.map(v => labelFor(sq.options, v));
+        if ((sq.type || "single") === "single") {
+          lines.push(`  ${sq.label}: ${labels[0] || "(none)"}`);
+        } else {
+          lines.push(`  ${sq.label}:`);
+          if (!labels.length) lines.push("    (none)");
+          labels.forEach(l => lines.push(`    • ${l}`));
+        }
+      });
+    } else {
+      const vals = readChecked(q.id);
+      const labels = vals.map(v => labelFor(q.options, v));
+      if ((q.type || "single") === "single") {
+        lines.push(`  ${labels[0] || "(none)"}`);
+      } else {
+        if (!labels.length) lines.push("  (none)");
+        labels.forEach(l => lines.push(`  • ${l}`));
+      }
+    }
+    const note = readNote(q.id);
+    if (note) lines.push(`  Note: ${note}`);
+    lines.push("");
+  });
+  if (config.outro) lines.push(config.outro);
+  return lines.join("\n").trimEnd();
+}
+
+document.getElementById("generate").addEventListener("click", () => {
+  const out = document.getElementById("output");
+  out.value = buildPrompt();
+  document.getElementById("output-card").classList.add("visible");
+  document.getElementById("output-card").scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+
+document.getElementById("copy").addEventListener("click", async () => {
+  const out = document.getElementById("output");
+  out.select();
+  try { await navigator.clipboard.writeText(out.value); }
+  catch { document.execCommand("copy"); }
+  const msg = document.getElementById("copied-msg");
+  msg.classList.add("show");
+  setTimeout(() => msg.classList.remove("show"), 1400);
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  if (!confirm("Reset all selections to the recommended defaults?")) return;
+  document.querySelectorAll("input[type=checkbox], input[type=radio]").forEach(el => {
+    el.checked = el.defaultChecked;
+  });
+  document.querySelectorAll("textarea.note").forEach(el => el.value = "");
+  document.getElementById("output-card").classList.remove("visible");
+});
+</script>
+</body>
+</html>

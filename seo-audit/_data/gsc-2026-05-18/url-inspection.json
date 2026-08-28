@@ -1,0 +1,49 @@
+{
+  "captured": "2026-05-18",
+  "source": "GSC MCP (AminForou mcp-search-console) URL Inspection API",
+  "property": "sc-domain:siamscuba.com",
+  "sitemap": {
+    "path": "https://siamscuba.com/sitemap.xml",
+    "last_downloaded": "2026-05-17 13:13",
+    "status": "Valid",
+    "submitted_urls": 42,
+    "errors": 0,
+    "warnings": 0
+  },
+  "results": [
+    { "url": "https://siamscuba.com/", "verdict": "PASS", "coverage_state": "Submitted and indexed", "last_crawled": "2026-05-17", "rich_results": "Review snippets" },
+    { "url": "https://siamscuba.com/fun-dive-booking", "verdict": "NEUTRAL", "coverage_state": "Redirect error", "last_crawled": "2026-05-08", "rich_results": "None" },
+    { "url": "https://siamscuba.com/blog", "verdict": "NEUTRAL", "coverage_state": "Redirect error", "last_crawled": "2026-05-08", "rich_results": "None" },
+    { "url": "https://siamscuba.com/blog/koh-tao-dive-sites-guide", "verdict": "PASS", "coverage_state": "Submitted and indexed", "last_crawled": "2026-05-08", "rich_results": "Breadcrumbs, Review snippets" },
+    { "url": "https://siamscuba.com/blog/best-restaurants-koh-tao", "verdict": "NEUTRAL", "coverage_state": "Discovered - currently not indexed", "last_crawled": "Never", "rich_results": "None" },
+    { "url": "https://siamscuba.com/discover-scuba-diving", "verdict": "NEUTRAL", "coverage_state": "URL is unknown to Google", "last_crawled": "Never", "rich_results": "None", "note": "lander - intentionally hidden from organic (commit d1860c3)" },
+    { "url": "https://siamscuba.com/he/open-water-course", "verdict": "NEUTRAL", "coverage_state": "URL is unknown to Google", "last_crawled": "Never", "rich_results": "None", "note": "lander - intentionally hidden" },
+    { "url": "https://siamscuba.com/shop/padi-courses/", "verdict": "NEUTRAL", "coverage_state": "URL is unknown to Google", "last_crawled": "Never", "rich_results": "None", "note": "legacy WP - dropped from index (good)" },
+    { "url": "https://siamscuba.com/shop/padi-courses/padi-open-water-diver/", "verdict": "NEUTRAL", "coverage_state": "Soft 404", "last_crawled": "2026-05-07", "rich_results": "None", "note": "legacy WP - not recrawled since robots unblock" },
+    { "url": "https://siamscuba.com/product-category/padi-courses/", "verdict": "NEUTRAL", "coverage_state": "Soft 404", "last_crawled": "2026-05-07", "rich_results": "None", "note": "legacy WP - not recrawled yet" },
+    { "url": "https://siamscuba.com/shop/padi-courses/padi-emergency-oxygen-provider/", "verdict": "NEUTRAL", "coverage_state": "Crawled - currently not indexed", "last_crawled": "2026-03-12", "rich_results": "None", "note": "legacy WP - stale crawl" },
+    { "url": "https://siamscuba.com/shop/fun-diving/fun-dives/", "verdict": "NEUTRAL", "coverage_state": "Soft 404", "last_crawled": "2026-05-06", "rich_results": "None", "note": "legacy WP - not recrawled yet" },
+    { "url": "https://siamscuba.com/our-island-koh-tao/", "verdict": "NEUTRAL", "coverage_state": "URL is unknown to Google", "last_crawled": "Never", "rich_results": "None", "note": "legacy WP - dropped (good)" },
+    { "url": "https://siamscuba.com/the-wreck-htms-sattukut/", "verdict": "NEUTRAL", "coverage_state": "Page with redirect", "last_crawled": "2026-05-04", "rich_results": "None", "note": "legacy WP" },
+    { "url": "https://siamscuba.com/accommodation-koh-tao/", "verdict": "NEUTRAL", "coverage_state": "Page with redirect", "last_crawled": "2026-05-04", "rich_results": "None", "note": "legacy WP" },
+    { "url": "https://siamscuba.com/zero-to-hero-dive-master-internship/", "verdict": "NEUTRAL", "coverage_state": "Page with redirect", "last_crawled": "2026-05-13", "rich_results": "None", "note": "now 301 -> /divemaster via vercel.json (good)" }
+  ],
+  "live_redirect_check_before": {
+    "https://siamscuba.com/fun-dive-booking": "307 -> https://www.siamscuba.com/fun-dive-booking (200)",
+    "https://siamscuba.com/blog": "307 -> https://www.siamscuba.com/blog (200)",
+    "http://siamscuba.com/fun-dive-booking": "308 -> https -> 307 -> www (200)",
+    "finding": "non-www host 307-redirects (TEMPORARY) to www; sitemap+canonical+SITE_URL all declare non-www"
+  },
+  "fix_applied_2026-05-18": {
+    "change": "Vercel Domains: siamscuba.com set to Production (serves direct, no redirect); www.siamscuba.com set to 308 Permanent Redirect -> siamscuba.com",
+    "live_redirect_check_after": {
+      "https://siamscuba.com/fun-dive-booking": "200 direct, 0 hops",
+      "https://siamscuba.com/blog": "200 direct, 0 hops",
+      "https://siamscuba.com/": "200 direct, 0 hops",
+      "https://www.siamscuba.com/": "308 -> https://siamscuba.com/ (200)",
+      "http://siamscuba.com/blog": "308 -> https://siamscuba.com/blog (200)"
+    },
+    "gsc_after_refetch": "Still 'Redirect error' for /fun-dive-booking and /blog because last_crawled=2026-05-08 (pre-fix). GSC URL Inspection API returns last-crawl state, not live. Awaiting Google recrawl; manual 'Request Indexing' in GSC UI recommended to accelerate.",
+    "no_code_change": "Codebase was already 100% non-www-consistent. The www literal in src/pages/FunDiveBookingPage.tsx:17 is a deliberate postMessage origin allowlist, intentionally left."
+  }
+}

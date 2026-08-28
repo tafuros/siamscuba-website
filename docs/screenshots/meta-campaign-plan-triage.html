@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SiamScuba Meta Ads — Campaign Plan Triage</title>
+<style>
+  :root{
+    --bg:#0e1116; --card:#161b22; --line:#2a313c; --txt:#e6edf3; --mut:#8b949e;
+    --run:#1f6f43; --hold:#7a5c00; --drop:#7a1f1f; --fix:#5a2d82; --manual:#0d4a6b;
+    --accent:#2f81f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+  header{padding:20px 24px;border-bottom:1px solid var(--line);background:var(--card)}
+  header h1{margin:0 0 4px;font-size:19px}
+  header p{margin:0;color:var(--mut);font-size:13px}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;padding:14px 24px;border-bottom:1px solid var(--line)}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px}
+  .stat b{font-size:16px;display:block}
+  main{padding:20px 24px 120px;max-width:1180px;margin:0 auto}
+  h2{font-size:15px;margin:26px 0 10px;color:var(--accent)}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{padding:9px 11px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+  th{background:#1b212b;color:var(--mut);font-weight:600;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  select,input,textarea{background:#0d1117;color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font:inherit;width:100%}
+  textarea{min-height:34px;resize:vertical}
+  .note-wrap{margin-top:6px;display:none}
+  .note-wrap.show{display:block}
+  tr[data-act="run"]    td:first-child{box-shadow:inset 3px 0 0 var(--run)}
+  tr[data-act="hold"]   td:first-child{box-shadow:inset 3px 0 0 var(--hold)}
+  tr[data-act="drop"]   td:first-child{box-shadow:inset 3px 0 0 var(--drop)}
+  tr[data-act="fix"]    td:first-child{box-shadow:inset 3px 0 0 var(--fix)}
+  tr[data-act="manual"] td:first-child{box-shadow:inset 3px 0 0 var(--manual)}
+  .sub{color:var(--mut);font-size:12px}
+  .bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);
+       padding:12px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .bar .sum{color:var(--mut);font-size:13px;flex:1}
+  .bar .sum span{color:var(--txt);font-weight:600}
+  button.gen{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:10px 22px;font:600 14px/1 inherit;cursor:pointer}
+  button.gen:hover{filter:brightness(1.1)}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:30px;z-index:50}
+  .modal.show{display:flex}
+  .modal .box{background:var(--card);border:1px solid var(--line);border-radius:10px;max-width:820px;width:100%;max-height:85vh;display:flex;flex-direction:column}
+  .modal .top{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .modal pre{margin:0;padding:18px;overflow:auto;white-space:pre-wrap;font:12px/1.6 ui-monospace,Menlo,monospace;direction:ltr;text-align:left}
+  .modal .acts{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+  .x{background:none;border:0;color:var(--mut);font-size:22px;cursor:pointer}
+  .pill{display:inline-block;padding:1px 7px;border-radius:99px;font-size:11px;background:#1b212b;border:1px solid var(--line)}
+  .warn{color:#f0a020}
+</style>
+</head>
+<body>
+<header>
+  <h1>🤿 SiamScuba — Meta + Google Ads · 10-Day Plan</h1>
+  <p>Triage snapshot · 2026-05-17 · Meta (9 landers) + Google Search (5) · החלט לכל שורה → Generate prompt → הדבק חזרה ל-Claude</p>
+</header>
+<div class="stats" id="stats"></div>
+<main>
+  <h2>🚀 קמפיינים — החלטה לכל לאנדר</h2>
+  <table><thead><tr>
+    <th>קמפיין</th><th>Offer</th><th>שפה</th><th>קהל / Geo</th><th>תקציב יומי מוצע</th><th>Funnel</th><th style="width:200px">החלטה</th>
+  </tr></thead><tbody id="tb-camp"></tbody></table>
+
+  <h2>🔍 Google Search — קמפיינים (מוכן לעלות מיד, conversion tracking חי)</h2>
+  <table><thead><tr>
+    <th>קמפיין</th><th>Keywords (דוגמאות)</th><th>Match</th><th>Geo</th><th>תקציב יומי</th><th style="width:200px">החלטה</th>
+  </tr></thead><tbody id="tb-goog"></tbody></table>
+
+  <h2>⛔ חסמים — חייבים הכרעה לפני הרצת תקציב</h2>
+  <table><thead><tr>
+    <th>חסם</th><th>סטטוס</th><th>סיכון</th><th style="width:260px">החלטה</th>
+  </tr></thead><tbody id="tb-block"></tbody></table>
+
+  <h2>💰 תקציב והגדרות גלובליות</h2>
+  <table><thead><tr>
+    <th>פריט</th><th>הצעה</th><th style="width:260px">החלטה</th>
+  </tr></thead><tbody id="tb-budget"></tbody></table>
+</main>
+
+<div class="bar">
+  <div class="sum" id="sum"></div>
+  <button class="gen" onclick="gen()">Generate prompt</button>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <div class="top"><b>Markdown — copy &amp; paste back to Claude</b><button class="x" onclick="closeM()">×</button></div>
+    <pre id="md"></pre>
+    <div class="acts">
+      <button class="gen" onclick="copyM()" id="cpy">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+const ACTIONS_CAMP = [
+  {v:"run",   label:"✅ Run week 1"},
+  {v:"hold",  label:"⏸️ Hold (later wave)"},
+  {v:"drop",  label:"🗑️ Drop"},
+  {v:"fix",   label:"🛠️ Needs lander fix", input:"מה לתקן בלאנדר?"},
+  {v:"manual",label:"✍️ Manual note", input:"כתוב מה לעשות"},
+];
+const ROWS_CAMP = [
+  {id:"dsd_en", name:"DSD EN", offer:"Discover Scuba", lang:"🇬🇧 EN", aud:"תיירים בקוסמוי/קופנגן + UK/AU/US/DE/סקנד'", bud:"$15/יום", fun:"קר — רחב", def:"run"},
+  {id:"owd_en", name:"OWD EN", offer:"Open Water", lang:"🇬🇧 EN", aud:"מתכנני חופשת צלילה / כוונת הסמכה", bud:"$10/יום", fun:"חמים", def:"run"},
+  {id:"fun_en", name:"Fun Dives EN", offer:"Fun Dives", lang:"🇬🇧 EN", aud:"צוללים מוסמכים באזור", bud:"$5/יום", fun:"חם / retargeting", def:"run"},
+  {id:"dsd_he", name:"DSD HE", offer:"Discover Scuba", lang:"🇮🇱 HE", aud:"ישראלים בתאילנד + מתכנני טיול", bud:"$5/יום", fun:"קר", def:"run"},
+  {id:"owd_he", name:"OWD HE", offer:"Open Water", lang:"🇮🇱 HE", aud:"ישראלים — כוונת הסמכה", bud:"—", fun:"חמים", def:"hold"},
+  {id:"fun_he", name:"Fun Dives HE", offer:"Fun Dives", lang:"🇮🇱 HE", aud:"ישראלים מוסמכים בתאילנד", bud:"—", fun:"חם", def:"hold"},
+  {id:"dsd_es", name:"DSD ES", offer:"Discover Scuba", lang:"🇪🇸 ES", aud:"דוברי ספרדית בתאילנד + ES/LatAm", bud:"$5/יום (test)", fun:"קר", def:"hold"},
+  {id:"owd_es", name:"OWD ES", offer:"Open Water", lang:"🇪🇸 ES", aud:"דוברי ספרדית — הסמכה", bud:"—", fun:"חמים", def:"hold"},
+  {id:"fun_es", name:"Fun Dives ES", offer:"Fun Dives", lang:"🇪🇸 ES", aud:"דוברי ספרדית מוסמכים", bud:"—", fun:"חם", def:"hold"},
+];
+
+const ACTIONS_GOOG = [
+  {v:"run",   label:"✅ Run from Day 1"},
+  {v:"hold",  label:"⏸️ Hold (later in 10-day plan)"},
+  {v:"drop",  label:"🗑️ Drop"},
+  {v:"fix",   label:"🛠️ Needs lander fix", input:"מה לתקן בלאנדר?"},
+  {v:"manual",label:"✍️ Manual note", input:"כתוב מה לעשות"},
+];
+const ROWS_GOOG = [
+  {id:"g_dsd_en", name:"Google DSD-EN", kw:'"discover scuba koh tao", "try diving koh tao"', mt:"Phrase+Exact", geo:"תאילנד + UK/AU/DE", bud:"$8/יום", def:"run"},
+  {id:"g_owd_en", name:"Google OWD-EN", kw:'"padi open water koh tao", "learn to dive koh tao"', mt:"Phrase+Exact", geo:"תאילנד + מדינות מקור", bud:"$8/יום", def:"run"},
+  {id:"g_he",     name:"Google HE", kw:'"קורס צלילה קוטאו", "צלילה קוטאו", "PADI תאילנד"', mt:"Broad+Phrase", geo:"ישראל + תאילנד", bud:"$4/יום", def:"run"},
+  {id:"g_fun_en", name:"Google Fun-EN / Pmax", kw:'"fun dives koh tao", "sail rock diving"', mt:"Phrase / Pmax", geo:"תאילנד", bud:"$5/יום", def:"hold"},
+  {id:"g_es",     name:"Google ES", kw:'"buceo koh tao", "curso padi tailandia"', mt:"Phrase", geo:"ES/LatAm + תאילנד", bud:"$3/יום", def:"hold"},
+];
+
+const ACTIONS_BLOCK = [
+  {v:"defer",   label:"➡️ Defer — start w/ WhatsApp/Messaging objective (no Pixel)"},
+  {v:"provide", label:"🔑 I'll provide the value now", input:"Pixel ID / מספר WhatsApp גיבוי"},
+  {v:"confirm", label:"✅ Confirmed live — proceed"},
+  {v:"holdall", label:"🛑 Hold ALL campaigns until resolved"},
+  {v:"manual",  label:"✍️ Manual note", input:"כתוב מה לעשות"},
+];
+const ROWS_BLOCK = [
+  {id:"pixel",   name:"Meta Pixel ID", status:"index.html:93 = YOUR_PIXEL_ID (placeholder)", risk:"בלי Pixel אין אופטימיזציה להמרות", def:"defer"},
+  {id:"wa_port", name:"WhatsApp +972528641581", status:"אותו מספר תקוע בניוד; CTA של כל הלאנדרים", risk:"כל התקציב מנקז ל-WA הזה — אם ינותק = שריפת כסף", def:"holdall"},
+];
+
+const ACTIONS_BUDGET = [
+  {v:"approve", label:"✅ Approve as proposed"},
+  {v:"adjust",  label:"✏️ Adjust", input:"הסכום/הערך הרצוי"},
+  {v:"manual",  label:"✍️ Manual note", input:"כתוב מה לעשות"},
+];
+const ROWS_BUDGET = [
+  {id:"total_daily", name:"תקציב יומי כולל (שבוע בדיקה)", prop:"$40/יום (~$280 לשבוע)", def:"approve"},
+  {id:"opt_phase1",  name:"יעד אופטימיזציה — שלב 1", prop:"WhatsApp / Messaging (לא תלוי Pixel)", def:"approve"},
+  {id:"split",       name:"פיצול תקציב לפי קמפיין", prop:"DSD-EN $15 · OWD-EN $10 · DSD-HE $5 · Fun-EN $5 · ES-test $5", def:"approve"},
+];
+
+/* ---------- RENDER ---------- */
+const SECTIONS = [
+  {key:"camp",   rows:ROWS_CAMP,   acts:ACTIONS_CAMP,   tbody:"tb-camp",
+   cells:r=>[r.name,r.offer,r.lang,r.aud,r.bud,r.fun]},
+  {key:"goog",   rows:ROWS_GOOG,   acts:ACTIONS_GOOG,   tbody:"tb-goog",
+   cells:r=>[`<b>${r.name}</b>`,`<span class="sub">${r.kw}</span>`,r.mt,r.geo,r.bud]},
+  {key:"block",  rows:ROWS_BLOCK,  acts:ACTIONS_BLOCK,  tbody:"tb-block",
+   cells:r=>[`<b>${r.name}</b>`,r.status,`<span class="warn">${r.risk}</span>`]},
+  {key:"budget", rows:ROWS_BUDGET, acts:ACTIONS_BUDGET, tbody:"tb-budget",
+   cells:r=>[`<b>${r.name}</b>`,r.prop]},
+];
+const decisions = {};
+
+function render(){
+  for(const s of SECTIONS){
+    const tb=document.getElementById(s.tbody); tb.innerHTML="";
+    for(const r of s.rows){
+      decisions[r.id]={section:s.key,name:r.name,act:r.def,val:""};
+      const tr=document.createElement("tr");
+      tr.dataset.act=r.def;
+      const opts=s.acts.map(a=>`<option value="${a.v}" ${a.v===r.def?"selected":""}>${a.label}</option>`).join("");
+      const needInput=s.acts.find(a=>a.v===r.def)?.input;
+      tr.innerHTML=s.cells(r).map(c=>`<td>${c}</td>`).join("")+
+        `<td><select onchange="onSel('${s.key}','${r.id}',this)">${opts}</select>
+          <div class="note-wrap ${needInput?'show':''}" id="nw-${r.id}">
+            <input id="iv-${r.id}" placeholder="${needInput||''}" oninput="decisions['${r.id}'].val=this.value;summary()">
+          </div></td>`;
+      tb.appendChild(tr);
+    }
+  }
+  summary();
+}
+function onSel(sk,id,el){
+  const sec=SECTIONS.find(x=>x.key===sk);
+  const a=sec.acts.find(x=>x.v===el.value);
+  decisions[id].act=el.value;
+  const nw=document.getElementById("nw-"+id);
+  if(a.input){nw.classList.add("show");document.getElementById("iv-"+id).placeholder=a.input;}
+  else{nw.classList.remove("show");decisions[id].val="";}
+  el.closest("tr").dataset.act=el.value;
+  summary();
+}
+function summary(){
+  const c={};Object.values(decisions).forEach(d=>c[d.act]=(c[d.act]||0)+1);
+  const parts=Object.entries(c).map(([k,v])=>`<span>${v}</span> ${k}`);
+  document.getElementById("sum").innerHTML="סיכום: "+parts.join(" · ");
+}
+function stats(){
+  const el=document.getElementById("stats");
+  el.innerHTML=`
+   <div class="stat"><b>9</b> קמפייני Meta</div>
+   <div class="stat"><b>5</b> קמפייני Google</div>
+   <div class="stat"><b>2</b> חסמים</div>
+   <div class="stat"><b>10</b> ימי תוכנית</div>
+   <div class="stat"><b>~$45</b> תקציב יומי משולב</div>`;
+}
+const LABELS={camp:"קמפייני Meta",goog:"קמפייני Google Search",block:"חסמים",budget:"תקציב והגדרות"};
+function actLabel(sk,v){return SECTIONS.find(s=>s.key===sk).acts.find(a=>a.v===v).label;}
+function gen(){
+  let md="# SiamScuba Meta Ads — החלטות תוכנית קמפיינים\n\n";
+  for(const s of SECTIONS){
+    md+=`## ${LABELS[s.key]}\n`;
+    for(const r of s.rows){
+      const d=decisions[r.id];
+      md+=`- \`${r.id}\` ${d.name} → **${actLabel(s.key,d.act)}**${d.val?` · ${d.val}`:""}\n`;
+    }
+    md+="\n";
+  }
+  md+="## מה לעשות עם זה\n";
+  md+="קרא כל שורה. עבור `run` — בנה את מבנה הקמפיין/קופי הסופי לאותו לאנדר. ";
+  md+="עבור `hold` — שמור לגל הבא, אל תכין נכסים עכשיו. `drop` — הסר מהתוכנית. ";
+  md+="`fix` — תקן את הלאנדר לפי ההערה לפני שמכינים מודעה. ";
+  md+="בחסמים: `holdall` = אל תפעיל שום תקציב עד שהחסם נפתר; `defer` = התחל ביעד Messaging בלי Pixel. ";
+  md+="עדכן את memory ההמשך בהתאם. אל תפעיל קמפיין חי בלי אישור מפורש נוסף ממני.\n";
+  document.getElementById("md").textContent=md;
+  document.getElementById("modal").classList.add("show");
+}
+function closeM(){document.getElementById("modal").classList.remove("show")}
+function copyM(){
+  navigator.clipboard.writeText(document.getElementById("md").textContent).then(()=>{
+    const b=document.getElementById("cpy");b.textContent="✓ Copied";setTimeout(()=>b.textContent="Copy to clipboard",1500);
+  });
+}
+stats();render();
+</script>
+</body>
+</html>

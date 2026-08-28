@@ -1,0 +1,4 @@
+# Copy to notify.conf and fill in. notify.conf is gitignored.
+# WhatsApp leg is sent only if BOTH are non-empty.
+NEMO_WEBHOOK_URL=""
+WHATSAPP_TO=""

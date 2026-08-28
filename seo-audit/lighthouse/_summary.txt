@@ -1,0 +1,64 @@
+=== home ===
+perf: 0.44
+seo: 1
+a11y: 0.89
+bp: 1
+LCP: 19.1 s
+CLS: 0
+TBT: 580 ms
+FCP: 5.0 s
+SI: 7.2 s
+TTI: 19.8 s
+
+=== blog ===
+perf: 0.6
+seo: 1
+a11y: 0.87
+bp: 1
+LCP: 10.5 s
+CLS: 0
+TBT: 20 ms
+FCP: 5.2 s
+SI: 6.4 s
+TTI: 10.6 s
+
+=== blog-post (padi-vs-ssi-koh-tao) ===
+perf: 0.58
+seo: 1
+a11y: 0.89
+bp: 1
+LCP: 10.2 s
+CLS: 0
+TBT: 50 ms
+FCP: 6.5 s
+SI: 7.5 s
+TTI: 10.3 s
+
+=== course-ow (open-water) ===
+perf: 0.6
+seo: 1
+a11y: 0.94
+bp: 1
+LCP: 18.8 s
+CLS: 0
+TBT: 120 ms
+FCP: 4.9 s
+SI: 6.2 s
+TTI: 19.5 s
+
+=== fun-dive (re-run 2026-05-07) ===
+perf: 0.6
+seo: 1
+a11y: 0.94
+bp: 1
+LCP: 6.1 s
+CLS: 0.004
+TBT: 19 ms
+FCP: 4.7 s
+
+=== Headlines ===
+- All 5 routes: LCP > 4s (Google "poor" threshold). Two routes >18s (home, course-ow).
+- home perf=44 is worst — driven by hero-video.mp4 (14.75 MB / 18.5 Mbps).
+- SEO=100 across the board, but Lighthouse only checks current page; it does NOT detect missing per-page meta on SPA routes.
+- Best-Practices=100 everywhere — clean.
+- A11y range 87–94 — see axe-core report for granular violations.

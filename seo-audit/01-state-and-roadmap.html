@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siam Scuba — SEO Audit & Roadmap</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true } });</script>
+  <style>
+    :root {
+      --bg: #0b1320;
+      --card: #131c2d;
+      --border: #1f2c44;
+      --ink: #e6ecf5;
+      --muted: #8a99b3;
+      --primary: #4ea1ff;
+      --ok: #34d399;
+      --warn: #fbbf24;
+      --bad: #f87171;
+      --accent: #c084fc;
+      --code-bg: #0a1120;
+      --diff-add: #103e2a;
+      --diff-add-fg: #b6f5cf;
+      --diff-del: #4a1517;
+      --diff-del-fg: #ffb4b4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'SF Pro Display', -apple-system, system-ui, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 28px 80px; }
+    header.hero {
+      background: linear-gradient(135deg, #0a3060, #1a1450);
+      border-radius: 18px;
+      padding: 36px 32px;
+      margin-bottom: 36px;
+      border: 1px solid var(--border);
+    }
+    header.hero h1 { margin: 0 0 8px; font-size: 32px; }
+    header.hero p.sub { margin: 0; color: #b9cefb; font-size: 17px; }
+    header.hero .meta { margin-top: 18px; display: flex; gap: 24px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+    header.hero .meta span b { color: var(--ink); font-weight: 500; }
+
+    section { margin: 40px 0; }
+    h2 {
+      font-size: 24px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2 .num {
+      background: var(--primary);
+      color: #001530;
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700;
+    }
+    h3 { font-size: 18px; margin-top: 28px; margin-bottom: 10px; color: var(--ink); }
+    p { margin: 8px 0 14px; }
+    .muted { color: var(--muted); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      margin: 16px 0;
+    }
+
+    /* Status grid */
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .status-cell {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-right: 4px solid var(--muted);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .status-cell.ok    { border-right-color: var(--ok); }
+    .status-cell.warn  { border-right-color: var(--warn); }
+    .status-cell.bad   { border-right-color: var(--bad); }
+    .status-cell .label { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+    .status-cell .desc  { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .status-cell .icon { font-size: 16px; margin-left: 6px; }
+
+    /* Diff blocks */
+    .diff {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 12px 0;
+      font-family: 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 13px;
+      direction: ltr; text-align: left;
+    }
+    .diff .hdr {
+      background: #0d1626;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .diff pre { margin: 0; padding: 14px 16px; overflow-x: auto; line-height: 1.5; }
+    .diff .add { background: var(--diff-add); color: var(--diff-add-fg); display: block; padding: 2px 6px; margin: 0 -6px; }
+    .diff .del { background: var(--diff-del); color: var(--diff-del-fg); display: block; padding: 2px 6px; margin: 0 -6px; }
+    .diff .ctx { color: #6b7894; display: block; padding: 2px 6px; margin: 0 -6px; }
+
+    /* Tables */
+    table.tools {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 14px 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+    table.tools th, table.tools td { padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: right; vertical-align: top; }
+    table.tools th { background: #0d1626; font-weight: 600; color: var(--muted); font-size: 13px; }
+    table.tools tr:last-child td { border-bottom: none; }
+    table.tools td.code { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--accent); direction: ltr; text-align: left; }
+    .tier-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .tier-1 { background: #0e3a25; color: var(--ok); }
+    .tier-2 { background: #3a2f0e; color: var(--warn); }
+    .tier-3 { background: #1a2c4f; color: var(--primary); }
+    .tier-4 { background: #3a0e2c; color: #f99fc3; }
+
+    /* Roadmap */
+    .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+    .phase {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .phase.b { border-top-color: var(--primary); }
+    .phase.c { border-top-color: var(--warn); }
+    .phase.a { border-top-color: var(--ok); }
+    .phase h4 { margin: 0 0 6px; font-size: 17px; }
+    .phase .est { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+    .phase ul { margin: 8px 0 0; padding-right: 18px; font-size: 14px; line-height: 1.7; }
+
+    /* Mermaid container */
+    .mermaid-wrap { background: #fff; border-radius: 12px; padding: 18px; margin: 16px 0; }
+
+    /* TOC */
+    .toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+    }
+    .toc ol { margin: 6px 0 0; padding-right: 22px; line-height: 1.9; }
+    .toc a { color: var(--primary); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* Inline tags */
+    code.inl {
+      background: #0a1120;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-family: 'SF Mono', monospace;
+      font-size: 12.5px;
+      color: var(--accent);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    /* Severity callout */
+    .callout { border-radius: 10px; padding: 12px 16px; margin: 12px 0; border: 1px solid; font-size: 14px; }
+    .callout.warn { background: #2a1f08; border-color: #5a4a13; color: #ffe1a3; }
+    .callout.ok { background: #0a2a1c; border-color: #156246; color: #aaf6cf; }
+    .callout.info { background: #0e1f3d; border-color: #1f4683; color: #b9cefb; }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 14px 0 8px; }
+    .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
+    .kpi .num { font-size: 24px; font-weight: 700; color: var(--primary); }
+    .kpi .lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Siam Scuba — SEO Audit &amp; Roadmap</h1>
+  <p class="sub">מצב נוכחי, פערים, כלים, ותוכנית פעולה לקידום אורגני בגוגל</p>
+  <div class="meta">
+    <span><b>אתר:</b> siamscuba.com</span>
+    <span><b>תאריך:</b> 2026-05-07</span>
+    <span><b>Tech stack:</b> Vite + React + TS (SPA, CSR)</span>
+    <span><b>שלב:</b> 1 — מיפוי וכלים</span>
+  </div>
+</header>
+
+<div class="toc">
+  <strong>תוכן עניינים</strong>
+  <ol>
+    <li><a href="#tldr">TL;DR — שלוש שורות</a></li>
+    <li><a href="#scoreboard">מצב SEO נוכחי — לוח מחוונים</a></li>
+    <li><a href="#funnel">תרשים: איך גוגל רואה את האתר</a></li>
+    <li><a href="#issues">פערים עם diffs (לפני / אחרי)</a></li>
+    <li><a href="#tools">רשימת כלים — 4 שכבות</a></li>
+    <li><a href="#mcp">MCP servers ו-Skills להוספה לסביבת Claude</a></li>
+    <li><a href="#roadmap">Roadmap: B → C → A</a></li>
+    <li><a href="#kpi">איך נמדוד הצלחה</a></li>
+  </ol>
+</div>
+
+<!-- ───────────────────────── 1. TL;DR ───────────────────────── -->
+<section id="tldr">
+  <h2><span class="num">1</span>TL;DR</h2>
+  <div class="card">
+    <p>הבסיס הטכני <strong>טוב יחסית</strong>: יש meta, OG, JSON-LD ל‑LocalBusiness ו-Courses, robots, sitemap, GTM, Consent Mode v2 — דברים שלרוב האתרים אין.</p>
+    <p>שלוש בעיות עיקריות פוגעות בנו <strong>היום</strong>:</p>
+    <ol>
+      <li><strong>כל פוסט בלוג + כל דף קורס משתמשים ב‑title/description של דף הבית</strong> → גוגל לא מבין במה כל דף עוסק.</li>
+      <li><strong>אין hreflang</strong> למרות תמיכה ב-EN/HE/ES/FR → גוגל לא מציע גרסאות מתאימות לפי שפת המשתמש.</li>
+      <li><strong>hero-video.mp4 = 14.7MB</strong> נטען מיד → פוגע ב-LCP, אחד מארבעת ה-Core Web Vitals שגוגל מודד.</li>
+    </ol>
+    <p>הסדר המומלץ לתיקון: <strong>B (מחקר keywords)</strong> → <strong>C (אודיט טכני מלא)</strong> → <strong>A (תיקונים בקוד עם נתונים)</strong>.</p>
+  </div>
+</section>
+
+<!-- ───────────────────────── 2. Scoreboard ───────────────────────── -->
+<section id="scoreboard">
+  <h2><span class="num">2</span>מצב SEO נוכחי — לוח מחוונים</h2>
+  <p class="muted">ירוק = עובד. צהוב = קיים אבל חסר/חלקי. אדום = חסר ומשפיע.</p>
+
+  <h3>טכני (Indexability &amp; Crawlability)</h3>
+  <div class="status-grid">
+    <div class="status-cell ok"><div class="label">✅ robots.txt</div><div class="desc">קיים, חוסם wp-* legacy paths, מצביע לסיטמאפ.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ sitemap.xml</div><div class="desc">ידני בלבד. חסר lastmod, חסרות גרסאות שפה. קל לשכוח לעדכן.</div></div>
+    <div class="status-cell ok"><div class="label">✅ Canonical Tags</div><div class="desc"><code class="inl">CanonicalTag.tsx</code> מזריק לכל route.</div></div>
+    <div class="status-cell bad"><div class="label">❌ SSR / Prerender</div><div class="desc">SPA טהור — Bing/Yandex/social previews לא רואים תוכן דינמי.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ Vercel rewrites</div><div class="desc">תקין; אך אין hooks ל‑sitemap dynamic.</div></div>
+  </div>
+
+  <h3>On-page (Meta &amp; Content)</h3>
+  <div class="status-grid">
+    <div class="status-cell ok"><div class="label">✅ Home title/description</div><div class="desc">איכותי, ב‑<code class="inl">index.html</code>.</div></div>
+    <div class="status-cell bad"><div class="label">❌ Per-page meta</div><div class="desc">BlogPostPage / CoursePage / FunDiveBookingPage כולם עם title זהה.</div></div>
+    <div class="status-cell ok"><div class="label">✅ OG / Twitter Card (home)</div><div class="desc">קיים ב-index.html.</div></div>
+    <div class="status-cell bad"><div class="label">❌ OG per page</div><div class="desc">פוסט בלוג בוואטסאפ מציג preview של דף הבית.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ H1 בכל דף</div><div class="desc">לא נבדק שיטתית — דורש crawl.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ Image alts</div><div class="desc">חלקי — דורש audit.</div></div>
+  </div>
+
+  <h3>Structured Data (JSON-LD)</h3>
+  <div class="status-grid">
+    <div class="status-cell ok"><div class="label">✅ LocalBusiness</div><div class="desc">מלא, עם geo + sameAs ל-TripAdvisor/PADI/Instagram.</div></div>
+    <div class="status-cell ok"><div class="label">✅ Course ItemList × 10</div><div class="desc">עם price + availability — מתאים ל-rich results.</div></div>
+    <div class="status-cell bad"><div class="label">❌ Article schema</div><div class="desc">10 פוסטי בלוג ללא JSON-LD → לא מועמדים ל-rich snippets.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ BreadcrumbList</div><div class="desc">חסר. עוזר ל-SERP display.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ FAQPage / Review</div><div class="desc">הזדמנות חמיצה — אנחנו עם ביקורות מצוינות ב-TripAdvisor.</div></div>
+  </div>
+
+  <h3>International (i18n)</h3>
+  <div class="status-grid">
+    <div class="status-cell ok"><div class="label">✅ i18n קיים</div><div class="desc">EN / HE / ES / FR ב-<code class="inl">translations.ts</code>.</div></div>
+    <div class="status-cell bad"><div class="label">❌ hreflang tags</div><div class="desc">לא מוטמעים. גוגל לא יודע שיש 4 שפות.</div></div>
+    <div class="status-cell bad"><div class="label">❌ Localized URLs</div><div class="desc">אין /he/ או /es/ — שפה נשמרת ב‑state בלבד.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ Hebrew/RTL pages</div><div class="desc"><code class="inl">document.documentElement.lang</code> משתנה דינמית — אך לא מצולם בסיטמאפ.</div></div>
+  </div>
+
+  <h3>Performance &amp; Core Web Vitals</h3>
+  <div class="status-grid">
+    <div class="status-cell bad"><div class="label">❌ LCP (Hero Video)</div><div class="desc"><code class="inl">hero-video.mp4 = 14.7MB</code>. נטען בעמוד הראשי. בעיה מובהקת.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ Bundle size</div><div class="desc">Three.js + R3F בשימוש (3D). גודל לא נמדד.</div></div>
+    <div class="status-cell bad"><div class="label">❌ web-vitals reporting</div><div class="desc">אין מדידת RUM. אנחנו עיוורים.</div></div>
+    <div class="status-cell ok"><div class="label">✅ DNS preconnect</div><div class="desc"><code class="inl">dash.siamscuba.com</code> ב-preconnect.</div></div>
+  </div>
+
+  <h3>Tracking &amp; Privacy</h3>
+  <div class="status-grid">
+    <div class="status-cell ok"><div class="label">✅ GTM + GA</div><div class="desc">GTM-TN3SM66Q.</div></div>
+    <div class="status-cell ok"><div class="label">✅ Google Ads</div><div class="desc">AW-18050429438 + Enhanced conversions.</div></div>
+    <div class="status-cell ok"><div class="label">✅ Consent Mode v2</div><div class="desc">defaults denied + wait_for_update 500ms.</div></div>
+    <div class="status-cell ok"><div class="label">✅ Cookie banner</div><div class="desc"><code class="inl">CookieConsent.tsx</code>.</div></div>
+  </div>
+
+  <h3>Off-page &amp; Local</h3>
+  <div class="status-grid">
+    <div class="status-cell warn"><div class="label">⚠️ Google Business Profile</div><div class="desc">לא נבדק האם מאומת/מסונכרן עם ה-LocalBusiness JSON-LD.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ Google Search Console</div><div class="desc">לא נבדק האם דומיין מאומת + sitemap מוגש.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ Bing Webmaster Tools</div><div class="desc">לא נבדק.</div></div>
+    <div class="status-cell warn"><div class="label">⚠️ Backlinks</div><div class="desc">לא נמדדים — דורש Ahrefs free / Search Console.</div></div>
+  </div>
+</section>
+
+<!-- ───────────────────────── 3. Funnel diagram ───────────────────────── -->
+<section id="funnel">
+  <h2><span class="num">3</span>איך גוגל רואה את האתר — תרשים זרימה</h2>
+  <p class="muted">המסלול שכל דף עובר מרגע שגוגל מגלה אותו ועד שהמשתמש מקליק ב-SERP. הצבעים מציינים: ירוק = עובד היום. אדום = פגום היום.</p>
+  <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart LR
+  A[Discovery<br/>sitemap + links] --> B[Crawl<br/>Googlebot]
+  B --> C{Render JS?<br/>Vite SPA}
+  C -->|Google: yes,<br/>but slow| D[Index]
+  C -->|Bing/Social:<br/>partial| D2[Static<br/>shell only]
+  D --> E[Rank<br/>by relevance]
+  E --> F[SERP<br/>title + meta]
+  F --> G[Click<br/>CTR]
+  G --> H[Land<br/>LCP/CWV]
+  H --> I[Convert<br/>booking]
+
+  style A fill:#34d399,color:#000
+  style B fill:#34d399,color:#000
+  style C fill:#fbbf24,color:#000
+  style D fill:#fbbf24,color:#000
+  style D2 fill:#f87171,color:#fff
+  style E fill:#f87171,color:#fff
+  style F fill:#f87171,color:#fff
+  style G fill:#fbbf24,color:#000
+  style H fill:#f87171,color:#fff
+  style I fill:#34d399,color:#000
+</pre>
+  </div>
+  <div class="callout info">
+    <strong>קריאה:</strong> רוב הדפים נופלים בשלב <em>Render → Index → Rank → SERP</em>. כל פוסט בלוג נכנס לאינדקס עם title זהה לדף הבית, וזה יוצר קניבליזציה (גוגל מתבלבל איזה דף להציג). השלב <em>Land</em> אדום בגלל hero-video.
+  </div>
+</section>
+
+<!-- ───────────────────────── 4. Issues with diffs ───────────────────────── -->
+<section id="issues">
+  <h2><span class="num">4</span>פערים עם דוגמאות לפני / אחרי</h2>
+  <p class="muted">5 הפערים בעלי ההשפעה הגבוהה. הקוד הוא דוגמה — נתוני הkeywords האמיתיים ייקבעו בשלב B.</p>
+
+  <!-- Issue 1 -->
+  <h3>פער #1 — Per-page meta tags חסרים</h3>
+  <div class="callout warn">
+    <strong>השפעה:</strong> 10 פוסטי בלוג + 10 דפי קורסים = 20 דפים שכולם זהים בעיני גוגל.
+    <br><strong>קובץ:</strong> <code class="inl">src/pages/BlogPostPage.tsx</code>, <code class="inl">src/pages/CoursePage.tsx</code>
+  </div>
+  <div class="diff">
+    <div class="hdr"><span>BlogPostPage.tsx</span><span>react-helmet-async</span></div>
+<pre><span class="ctx">import { useParams, Link } from "react-router-dom";</span>
+<span class="add">+ import { Helmet } from "react-helmet-async";</span>
+<span class="ctx">import { blogPosts } from "@/data/blogPosts";</span>
+
+<span class="ctx">const BlogPostPage = () =&gt; {</span>
+<span class="ctx">  const post = blogPosts.find((p) =&gt; p.slug === slug);</span>
+
+<span class="del">-  // (no &lt;head&gt; management — uses index.html title)</span>
+<span class="add">+  const seoTitle = `${post.title} | Siam Scuba Koh Tao`;</span>
+<span class="add">+  const seoDesc  = post.excerpt.slice(0, 155);</span>
+<span class="add">+  const ogImage  = `https://siamscuba.com${post.coverImage}`;</span>
+
+<span class="ctx">  return (</span>
+<span class="ctx">    &lt;div className="min-h-screen bg-background"&gt;</span>
+<span class="add">+      &lt;Helmet&gt;</span>
+<span class="add">+        &lt;title&gt;{seoTitle}&lt;/title&gt;</span>
+<span class="add">+        &lt;meta name="description" content={seoDesc} /&gt;</span>
+<span class="add">+        &lt;meta property="og:title" content={seoTitle} /&gt;</span>
+<span class="add">+        &lt;meta property="og:description" content={seoDesc} /&gt;</span>
+<span class="add">+        &lt;meta property="og:image" content={ogImage} /&gt;</span>
+<span class="add">+        &lt;meta property="og:type" content="article" /&gt;</span>
+<span class="add">+      &lt;/Helmet&gt;</span>
+<span class="ctx">      &lt;Navbar /&gt;</span>
+</pre>
+  </div>
+
+  <!-- Issue 2 -->
+  <h3>פער #2 — אין JSON-LD ל-Article בפוסטי הבלוג</h3>
+  <div class="callout warn">
+    <strong>השפעה:</strong> פוסטים לא מועמדים ל-rich results (תאריך, מחבר, תמונה ב-SERP). גם פוגע ב-Discover.
+  </div>
+  <div class="diff">
+    <div class="hdr"><span>BlogPostPage.tsx (תוספת בתוך &lt;Helmet&gt;)</span><span>schema.org/Article</span></div>
+<pre><span class="add">+ &lt;script type="application/ld+json"&gt;{JSON.stringify({</span>
+<span class="add">+   "@context": "https://schema.org",</span>
+<span class="add">+   "@type": "Article",</span>
+<span class="add">+   "headline": post.title,</span>
+<span class="add">+   "description": post.excerpt,</span>
+<span class="add">+   "image": ogImage,</span>
+<span class="add">+   "datePublished": post.date,</span>
+<span class="add">+   "author": { "@type": "Organization", "name": "Siam Scuba" },</span>
+<span class="add">+   "publisher": {</span>
+<span class="add">+     "@type": "Organization",</span>
+<span class="add">+     "name": "Siam Scuba",</span>
+<span class="add">+     "logo": { "@type": "ImageObject", "url": "https://siamscuba.com/favicon.png" }</span>
+<span class="add">+   },</span>
+<span class="add">+   "mainEntityOfPage": `https://siamscuba.com/blog/${post.slug}`</span>
+<span class="add">+ })}&lt;/script&gt;</span>
+</pre>
+  </div>
+
+  <!-- Issue 3 -->
+  <h3>פער #3 — אין hreflang למרות תמיכה ב-4 שפות</h3>
+  <div class="callout warn">
+    <strong>השפעה:</strong> משתמש מצרפת מחפש "padi koh tao" → גוגל לא יודע להציע לו את הגרסה הצרפתית. אנחנו "מבזבזים" 75% מהתוכן.
+  </div>
+  <div class="diff">
+    <div class="hdr"><span>תוספת בלפחות hreflang per route</span><span>option A: query param ?lang=he</span></div>
+<pre><span class="ctx">// בכל route דרך &lt;Helmet&gt;:</span>
+<span class="add">+ &lt;link rel="alternate" hrefLang="en" href={`https://siamscuba.com${path}`} /&gt;</span>
+<span class="add">+ &lt;link rel="alternate" hrefLang="he" href={`https://siamscuba.com${path}?lang=he`} /&gt;</span>
+<span class="add">+ &lt;link rel="alternate" hrefLang="es" href={`https://siamscuba.com${path}?lang=es`} /&gt;</span>
+<span class="add">+ &lt;link rel="alternate" hrefLang="fr" href={`https://siamscuba.com${path}?lang=fr`} /&gt;</span>
+<span class="add">+ &lt;link rel="alternate" hrefLang="x-default" href={`https://siamscuba.com${path}`} /&gt;</span>
+</pre>
+  </div>
+  <div class="callout info">
+    <strong>החלטה דרושה:</strong> ?lang=he (קל) או /he/path (טהור). מומלץ לעבור בהדרגה ל-/he/. נדון בשלב A.
+  </div>
+
+  <!-- Issue 4 -->
+  <h3>פער #4 — sitemap.xml ידני; שוכחים לעדכן</h3>
+  <div class="diff">
+    <div class="hdr"><span>scripts/generate-sitemap.ts (חדש)</span><span>~30 שורות</span></div>
+<pre><span class="add">+ import { writeFileSync } from "fs";</span>
+<span class="add">+ import { blogPosts } from "../src/data/blogPosts";</span>
+<span class="add">+ import { COURSE_TO_SLUG } from "../src/lib/courseSlugMap";</span>
+
+<span class="add">+ const SITE = "https://siamscuba.com";</span>
+<span class="add">+ const today = new Date().toISOString().split("T")[0];</span>
+
+<span class="add">+ const urls = [</span>
+<span class="add">+   { loc: "/", priority: 1.0, changefreq: "weekly" },</span>
+<span class="add">+   { loc: "/blog", priority: 0.8, changefreq: "weekly" },</span>
+<span class="add">+   { loc: "/fun-dive-booking", priority: 0.8, changefreq: "monthly" },</span>
+<span class="add">+   ...blogPosts.map(p =&gt; ({ loc: `/blog/${p.slug}`, priority: 0.9, changefreq: "monthly" })),</span>
+<span class="add">+   ...Object.values(COURSE_TO_SLUG).map(s =&gt; ({ loc: `/courses/${s}`, priority: 0.85, changefreq: "monthly" }))</span>
+<span class="add">+ ];</span>
+
+<span class="add">+ const xml = `&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="add">+ &lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;</span>
+<span class="add">+ ${urls.map(u =&gt; `&lt;url&gt;&lt;loc&gt;${SITE}${u.loc}&lt;/loc&gt;&lt;lastmod&gt;${today}&lt;/lastmod&gt;&lt;changefreq&gt;${u.changefreq}&lt;/changefreq&gt;&lt;priority&gt;${u.priority}&lt;/priority&gt;&lt;/url&gt;`).join("\n")}</span>
+<span class="add">+ &lt;/urlset&gt;`;</span>
+
+<span class="add">+ writeFileSync("public/sitemap.xml", xml);</span>
+</pre>
+    <div class="hdr"><span>package.json</span><span>הוספת hook</span></div>
+<pre><span class="ctx">"scripts": {</span>
+<span class="del">-   "build": "vite build",</span>
+<span class="add">+   "build": "bun run scripts/generate-sitemap.ts &amp;&amp; vite build",</span>
+<span class="ctx">}</span>
+</pre>
+  </div>
+
+  <!-- Issue 5 -->
+  <h3>פער #5 — hero-video.mp4 = 14.7MB (פוגע ב-LCP)</h3>
+  <div class="callout warn">
+    <strong>השפעה:</strong> Core Web Vitals — LCP יעד &lt; 2.5s. וידאו 14.7MB ב-3G/4G חלש = 5–10 שניות. גוגל מוריד דירוג.
+  </div>
+  <div class="diff">
+    <div class="hdr"><span>אופציות לפעולה</span><span>מומלץ: 2 + 4</span></div>
+<pre><span class="ctx">1. Compress: ffmpeg -i hero-video.mp4 -vcodec h264 -crf 28 hero-720.mp4   // ~3-4MB</span>
+<span class="ctx">2. Replace with poster image first, lazy-load video on viewport</span>
+<span class="ctx">3. Move to Mux/Cloudflare Stream (HLS adaptive)</span>
+<span class="ctx">4. preload="none" + autoplay only on viewport intersect</span>
+<span class="ctx">5. Add &lt;link rel="preload" as="image" href="/hero-poster.webp"&gt; for instant LCP</span>
+</pre>
+  </div>
+</section>
+
+<!-- ───────────────────────── 5. Tools ───────────────────────── -->
+<section id="tools">
+  <h2><span class="num">5</span>רשימת כלים — 4 שכבות</h2>
+  <p class="muted">Tier 1 = חינם, חובה. Tier 2 = חינם, מומלץ. Tier 3 = MCP/automation. Tier 4 = בתשלום, רק כשצריך.</p>
+
+  <table class="tools">
+    <thead>
+      <tr>
+        <th style="width:60px">Tier</th>
+        <th style="width:25%">כלי</th>
+        <th>מטרה</th>
+        <th style="width:18%">איך מתקינים</th>
+        <th style="width:90px">סטטוס</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Tier 1 -->
+      <tr><td><span class="tier-pill tier-1">T1</span></td>
+          <td><strong>react-helmet-async</strong></td>
+          <td>per-page title / meta / OG / JSON-LD ב‑React.</td>
+          <td class="code">bun add react-helmet-async</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-1">T1</span></td>
+          <td><strong>vite-react-ssg</strong> או <strong>vite-plugin-prerender</strong></td>
+          <td>Pre-render סטטי של routes ידועים → social previews + Bing יעבדו.</td>
+          <td class="code">bun add -d vite-react-ssg</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-1">T1</span></td>
+          <td><strong>web-vitals</strong></td>
+          <td>שולח LCP/INP/CLS/FCP/TTFB ל-GTM. בלי זה אנחנו עיוורים.</td>
+          <td class="code">bun add web-vitals</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-1">T1</span></td>
+          <td><strong>scripts/generate-sitemap.ts</strong></td>
+          <td>סקריפט build, לא חבילה. קורא blogPosts + courseSlugMap.</td>
+          <td class="code">~30 שורות, אנחנו כותבים</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-1">T1</span></td>
+          <td><strong>Google Search Console</strong></td>
+          <td>אימות דומיין, הגשת sitemap, מעקב impressions/CTR/queries אמיתיים.</td>
+          <td class="code">search.google.com/search-console</td>
+          <td>לבדוק</td></tr>
+      <tr><td><span class="tier-pill tier-1">T1</span></td>
+          <td><strong>Bing Webmaster Tools</strong></td>
+          <td>אימות + ייבוא מ-GSC. Bing הוא 8% מהתעבורה האירופית.</td>
+          <td class="code">bing.com/webmasters</td>
+          <td>לבדוק</td></tr>
+      <tr><td><span class="tier-pill tier-1">T1</span></td>
+          <td><strong>Google Business Profile</strong></td>
+          <td>קריטי ל-Local Pack של Koh Tao ב-Maps + SERP.</td>
+          <td class="code">business.google.com</td>
+          <td>לבדוק</td></tr>
+
+      <!-- Tier 2 -->
+      <tr><td><span class="tier-pill tier-2">T2</span></td>
+          <td><strong>@lhci/cli</strong> (Lighthouse CI)</td>
+          <td>אודיט CWV אוטומטי בכל push. יישבר אם CWV יורד.</td>
+          <td class="code">bun add -d @lhci/cli</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-2">T2</span></td>
+          <td><strong>Microsoft Clarity</strong></td>
+          <td>Heatmaps + session recordings חינם. סקריפט אחד ב-GTM.</td>
+          <td class="code">clarity.microsoft.com</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-2">T2</span></td>
+          <td><strong>Vercel Analytics + Speed Insights</strong></td>
+          <td>RUM (real-user) CWV — נתונים אמיתיים מבוקרים.</td>
+          <td class="code">Vercel Dashboard one-click</td>
+          <td>לבדוק</td></tr>
+      <tr><td><span class="tier-pill tier-2">T2</span></td>
+          <td><strong>@axe-core/cli</strong> או <strong>pa11y-ci</strong></td>
+          <td>אודיט נגישות — מנוע SEO סמוי (WCAG ↔ rankings).</td>
+          <td class="code">bunx pa11y-ci</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-2">T2</span></td>
+          <td><strong>broken-link-checker</strong></td>
+          <td>בודק 404 פנימיים/חיצוניים.</td>
+          <td class="code">bunx broken-link-checker https://siamscuba.com</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-2">T2</span></td>
+          <td><strong>Schema Markup Validator</strong> + <strong>Rich Results Test</strong></td>
+          <td>ולידציה של JSON-LD הקיים והחדש.</td>
+          <td class="code">validator.schema.org / search.google.com/test/rich-results</td>
+          <td>web</td></tr>
+      <tr><td><span class="tier-pill tier-2">T2</span></td>
+          <td><strong>Ahrefs Webmaster Tools</strong></td>
+          <td>חינם לבעלי דומיין מאומת. נותן backlinks + keywords בסיסי.</td>
+          <td class="code">ahrefs.com/webmaster-tools</td>
+          <td>חסר</td></tr>
+
+      <!-- Tier 3 - MCP -->
+      <tr><td><span class="tier-pill tier-3">T3</span></td>
+          <td><strong>Firecrawl MCP</strong></td>
+          <td>לסרוק את siamscuba.com + מתחרים בקוטאו (Big Blue, Crystal, Master). אני רואה ש-firecrawl-cli כבר ב-permissions.</td>
+          <td class="code">npx firecrawl-mcp</td>
+          <td>חצי-מותקן</td></tr>
+      <tr><td><span class="tier-pill tier-3">T3</span></td>
+          <td><strong>DataForSEO MCP</strong></td>
+          <td>SERP analysis אמיתי + keyword volumes.</td>
+          <td class="code">dataforseo.com (paid per query)</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-3">T3</span></td>
+          <td><strong>Perplexity / Brave Search MCP</strong></td>
+          <td>מחקר תוכן עם ציטוטים — מהיר מ-WebSearch הרגיל.</td>
+          <td class="code">npx @anthropic-ai/mcp-perplexity</td>
+          <td>חסר</td></tr>
+
+      <!-- Tier 4 -->
+      <tr><td><span class="tier-pill tier-4">T4</span></td>
+          <td><strong>Screaming Frog SEO Spider</strong></td>
+          <td>חינם עד 500 URLs (מספיק לנו!). full crawl audit.</td>
+          <td class="code">screamingfrog.co.uk</td>
+          <td>חסר</td></tr>
+      <tr><td><span class="tier-pill tier-4">T4</span></td>
+          <td><strong>Ahrefs / Semrush / Mangools</strong></td>
+          <td>Keyword research מקצועי — רק אם משקיעים אגרסיבית בתוכן.</td>
+          <td class="code">$99–$199/m</td>
+          <td>אופציונלי</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ───────────────────────── 6. MCP Servers ───────────────────────── -->
+<section id="mcp">
+  <h2><span class="num">6</span>MCP servers להוסיף לסביבת Claude</h2>
+  <p>אלו כלים ש<strong>אני</strong> משתמש בהם — מאיצים את העבודה שלי באתר. הוספה ב-<code class="inl">~/.claude/mcp.json</code>.</p>
+
+  <table class="tools">
+    <thead><tr><th>Server</th><th>למה זה עוזר</th><th>עלות</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Firecrawl MCP</strong></td><td>אני יכול לסרוק את siamscuba.com וגם 5 מתחרים בקוטאו ולחלץ keyword data, structure, prices.</td><td>חינם בסיסי</td></tr>
+      <tr><td><strong>Perplexity MCP</strong></td><td>"What are the top searched scuba terms for Koh Tao 2026?" — תשובה עם sources.</td><td>~$5/m או free tier</td></tr>
+      <tr><td><strong>Playwright MCP</strong></td><td>אני יכול להריץ Lighthouse, לצלם screenshots של רנדור, לבדוק CWV ידנית.</td><td>חינם</td></tr>
+      <tr><td><strong>Google Search Console MCP</strong></td><td>קורא ישירות את הנתונים שלך — queries, CTR, position. כל פעם שאני עוזר לך אני רואה את המצב.</td><td>חינם, OAuth</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">
+    <strong>המלצה:</strong> נוסיף Firecrawl + Playwright לפני שלב B (זה נדרש שם). Search Console MCP אחרי שלב 1 ב-A (אחרי שמאמתים את האתר).
+  </div>
+</section>
+
+<!-- ───────────────────────── 7. Roadmap ───────────────────────── -->
+<section id="roadmap">
+  <h2><span class="num">7</span>Roadmap — סדר ביצוע B → C → A</h2>
+  <p class="muted">כל שלב נגמר ב-deliverable מוחשי שאתה יכול לראות ולאשר. שום דבר לא רץ קדימה אוטומטית.</p>
+
+  <div class="timeline">
+    <div class="phase b">
+      <h4>שלב B — מחקר Keywords ומתחרים</h4>
+      <div class="est">⏱ ~2–3 שעות עבודה שלי · אתה: 30 דקות לסקור</div>
+      <ul>
+        <li>Firecrawl על 5 מתחרים: Big Blue, Crystal, Master Divers, Roctopus, Davy Jones</li>
+        <li>SERP analysis: "padi open water koh tao", "scuba diving koh tao", "dive courses koh tao", "discover scuba koh tao", "divemaster koh tao"</li>
+        <li>Keyword gaps: מילים שהמתחרים מדרגים אליהן ואנחנו לא</li>
+        <li>Content gaps: נושאי בלוג חסרים</li>
+        <li><strong>Deliverable:</strong> <code class="inl">02-keyword-research.html</code> עם רשימת 30–50 keywords ממוקדים, volume estimate, ו-content briefs</li>
+      </ul>
+    </div>
+
+    <div class="phase c">
+      <h4>שלב C — אודיט טכני מלא</h4>
+      <div class="est">⏱ ~1–2 שעות שלי · אתה: 30 דקות</div>
+      <ul>
+        <li>Lighthouse על 5 routes (home, blog, blog post, course, fun-dive-booking) — mobile + desktop</li>
+        <li>Schema validator על כל JSON-LD קיים</li>
+        <li>Pa11y / axe-core על אותם 5 routes</li>
+        <li>Broken-link-checker על האתר כולו</li>
+        <li>בדיקת hero-video.mp4 + bundle size</li>
+        <li><strong>Deliverable:</strong> <code class="inl">03-technical-audit.html</code> עם backlog ממוין לפי impact × effort</li>
+      </ul>
+    </div>
+
+    <div class="phase a">
+      <h4>שלב A — ביצוע התיקונים</h4>
+      <div class="est">⏱ ~3–5 שעות שלי · אתה: לבדוק על staging</div>
+      <ul>
+        <li>react-helmet-async + per-page meta + Article JSON-LD</li>
+        <li>scripts/generate-sitemap.ts + הוספה ל-build</li>
+        <li>web-vitals reporting → GTM</li>
+        <li>hreflang strategy (קודם ?lang=, אחר כך /he/)</li>
+        <li>hero-video compress + lazy-load</li>
+        <li><strong>Deliverable:</strong> PR עם diff מלא, lighthouse before/after, deploy ל-Vercel preview לאישור</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── 8. KPIs ───────────────────────── -->
+<section id="kpi">
+  <h2><span class="num">8</span>איך נמדוד הצלחה</h2>
+  <p>ביעדים של 30/60/90 יום אחרי שלב A:</p>
+  <div class="kpi-row">
+    <div class="kpi"><div class="num">+50%</div><div class="lbl">indexed pages<br/>(GSC)</div></div>
+    <div class="kpi"><div class="num">+30%</div><div class="lbl">avg CTR<br/>בשאילתות long-tail</div></div>
+    <div class="kpi"><div class="num">&lt;2.5s</div><div class="lbl">LCP<br/>(p75 mobile)</div></div>
+    <div class="kpi"><div class="num">≥90</div><div class="lbl">Lighthouse SEO<br/>בכל route</div></div>
+    <div class="kpi"><div class="num">+5</div><div class="lbl">rich-result<br/>eligible pages</div></div>
+    <div class="kpi"><div class="num">4×</div><div class="lbl">hreflang variants<br/>(en/he/es/fr)</div></div>
+  </div>
+  <div class="callout ok">
+    <strong>מה הבא:</strong> אם אתה מאשר את הסדר B → C → A, אני מתחיל ב-B. אצטרך ממך אישור להתקין Firecrawl MCP (וגם להפעיל אותו על siamscuba.com + 5 מתחרים).
+  </div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Siam Scuba - PADI Dive Courses - Partnership Rate Sheet</title>
+<style>
+  @page { size: A4; margin: 14mm 14mm 16mm; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #1a2a36;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    height: 178mm;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(8,30,46,0.35) 0%, rgba(8,30,46,0.55) 55%, rgba(8,30,46,0.95) 100%),
+      url("turtle-1920.webp") center/cover no-repeat;
+  }
+  .cover-inner { position: relative; height: 100%; padding: 11mm 13mm; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .cover-top img.siam { height: 26mm; }
+  .cover-top .padi-stack { display: flex; flex-direction: column; align-items: flex-end; gap: 4mm; }
+  .cover-top .padi-stack img.padi { height: 12mm; background: #fff; padding: 2mm 3.5mm; border-radius: 2mm; }
+  .cover-top .padi-stack img.badge { height: 17mm; }
+  .cover-title h1 { font-size: 28pt; margin: 0; letter-spacing: -0.5pt; line-height: 1.05; font-weight: 800; }
+  .cover-title .sub { font-size: 12pt; margin-top: 3mm; font-weight: 300; opacity: 0.92; }
+  .cover-title .meta { font-size: 9pt; margin-top: 4mm; opacity: 0.85; letter-spacing: 1pt; text-transform: uppercase; }
+  .cover-bottom { display: flex; justify-content: space-between; align-items: flex-end; font-size: 9pt; }
+  .cover-bottom .left { max-width: 105mm; }
+  .cover-bottom b { font-weight: 700; }
+  .cover-bottom .right { text-align: right; opacity: 0.92; line-height: 1.7; }
+  .cover-bottom .right .wa-line { display: inline-flex; align-items: center; gap: 2mm; margin-top: 0.5mm; }
+  .cover-bottom .right .wa-line img { width: 4mm; height: 4mm; vertical-align: middle; }
+
+  /* Photo/Video banner on cover page */
+  .cover-banner {
+    margin: 5mm 0 0;
+    background: linear-gradient(135deg, #0c4d6f, #1d7aa6);
+    color: #fff; border-radius: 4mm; padding: 5mm 6mm;
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+    page-break-before: avoid; page-break-inside: avoid;
+    position: relative; overflow: hidden;
+  }
+  .cover-banner .banner-text { flex: 1; min-width: 0; }
+  .cover-banner .banner-text h3 { margin: 0 0 1.5mm; font-size: 13pt; }
+  .cover-banner .banner-text h3 .cam { margin-right: 1.5mm; }
+  .cover-banner .banner-text p { margin: 0; opacity: 0.93; font-size: 9.5pt; line-height: 1.4; }
+  .cover-banner .banner-text .tag { display: inline-block; margin-top: 2mm; background: rgba(255,255,255,0.18); padding: 0.8mm 3mm; border-radius: 999px; font-size: 8pt; font-weight: 600; letter-spacing: 0.4pt; }
+  .cover-banner .addon-price { font-size: 18pt; font-weight: 800; white-space: nowrap; line-height: 1; text-align: right; }
+  .cover-banner .addon-price small { display: block; font-size: 8.5pt; opacity: 0.9; font-weight: 500; margin-top: 1mm; }
+
+  .polaroids {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center;
+    width: 76mm; height: 28mm; position: relative;
+  }
+  .polaroid {
+    background: #fff; padding: 1.2mm 1.2mm 3.5mm; border-radius: 0.5mm;
+    box-shadow: 0 1mm 2mm rgba(0,0,0,0.3);
+    width: 22mm; height: 26mm;
+    position: absolute; top: 1mm;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .polaroid img { width: 100%; height: 17mm; object-fit: cover; display: block; }
+  .polaroid .caption { font-family: "Bradley Hand", "Marker Felt", cursive; color: #333; font-size: 6.5pt; margin-top: 1mm; }
+  .polaroid:nth-child(1) { left: 0; transform: rotate(-7deg); z-index: 1; }
+  .polaroid:nth-child(2) { left: 27mm; transform: rotate(3deg); z-index: 3; }
+  .polaroid:nth-child(3) { left: 54mm; transform: rotate(-5deg); z-index: 2; }
+
+  .page-break { page-break-after: always; height: 0; }
+
+  /* ---------- SECTIONS ---------- */
+  .page-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid #0c4d6f; padding-bottom: 3mm; margin-bottom: 4mm;
+  }
+  .page-header h2 { margin: 0; font-size: 16pt; color: #0c4d6f; letter-spacing: -0.3pt; }
+  .page-header .mini-logos { display: flex; align-items: center; gap: 5mm; }
+  .page-header .mini-logos img { height: 9mm; }
+  .page-header .mini-logos img.padi-mini { background: #0c4d6f; padding: 1.2mm 2.5mm; border-radius: 1.5mm; }
+
+  .intro {
+    background: #f0f7fb; border-right: 4px solid #0c4d6f; border-left: 4px solid #0c4d6f;
+    padding: 4mm 5mm; border-radius: 2.5mm; margin-bottom: 5mm;
+  }
+  .intro h3 { margin: 0 0 2mm; color: #0c4d6f; font-size: 12pt; }
+  .intro p { margin: 0 0 1.5mm; }
+  .intro ul { margin: 2mm 0 0; padding-left: 5mm; }
+  .intro li { margin-bottom: 1mm; font-size: 10pt; }
+  .highlight-key { background: #fff4d6; padding: 0.3mm 1.8mm; border-radius: 1mm; font-weight: 700; color: #6b4a00; }
+
+  /* ---------- COURSE CARDS ---------- */
+  .courses { display: grid; grid-template-columns: 1fr; gap: 3.5mm; }
+  .card {
+    border: 1px solid #d4dde4;
+    border-radius: 3mm;
+    padding: 4mm 5mm;
+    background: #fff;
+    position: relative;
+    break-inside: avoid;
+  }
+  .card .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 5mm; }
+  .card .title-block { flex: 1; }
+  .card .num {
+    display: inline-block; background: #0c4d6f; color: #fff; width: 7mm; height: 7mm; border-radius: 50%;
+    text-align: center; line-height: 7mm; font-size: 10pt; font-weight: 700; margin-right: 2.5mm; vertical-align: middle;
+  }
+  .card h3 { display: inline; margin: 0; font-size: 13pt; color: #0c4d6f; letter-spacing: -0.2pt; vertical-align: middle; }
+  .card .pills { margin-top: 2mm; display: flex; gap: 2mm; flex-wrap: wrap; }
+  .pill {
+    font-size: 8pt; padding: 0.8mm 2.5mm; border-radius: 999px; font-weight: 600; letter-spacing: 0.2pt;
+  }
+  .pill.cert { background: #e0f1e6; color: #1f6a3d; border: 1px solid #b8dec4; }
+  .pill.trial { background: #fff0d6; color: #8b5400; border: 1px solid #f0d7a0; }
+  .pill.type { background: #e3edf3; color: #0c4d6f; border: 1px solid #c3d4df; }
+  .pill.best { background: #ffe2cf; color: #b5430a; border: 1px solid #f3c39c; }
+
+  .card .price-block {
+    text-align: right; min-width: 32mm;
+    border-left: 2px solid #f0f3f5; padding-left: 5mm;
+  }
+  .card .price { font-size: 18pt; font-weight: 800; color: #0c4d6f; line-height: 1; letter-spacing: -0.5pt; }
+  .card .price small { font-size: 9pt; font-weight: 500; color: #6a7a86; margin-left: 1mm; }
+  .card .price-label { font-size: 7.5pt; color: #6a7a86; text-transform: uppercase; letter-spacing: 0.6pt; margin-bottom: 0.5mm; }
+  .card .commission { margin-top: 1.5mm; font-size: 8pt; font-weight: 700; color: #1f6a3d; }
+
+  .stats {
+    margin-top: 3mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm;
+    border-top: 1px dashed #d4dde4; padding-top: 2.5mm;
+  }
+  .stat .lbl { font-size: 7.5pt; color: #6a7a86; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 0.3mm; }
+  .stat .val { font-size: 10pt; font-weight: 700; color: #1a2a36; }
+
+  .gift {
+    margin-top: 2.5mm; display: flex; align-items: center; gap: 2.5mm;
+    background: linear-gradient(90deg, #fff7e0, #fff);
+    border: 1px solid #f0d7a0; border-radius: 2mm; padding: 2mm 3.5mm;
+    color: #6b4a00; font-weight: 600; font-size: 9.5pt;
+  }
+  .gift .icon { font-size: 12pt; }
+
+  .notes { margin-top: 2mm; font-size: 9pt; color: #4a5b68; font-style: italic; }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    margin-top: 6mm;
+    border-top: 2px solid #0c4d6f;
+    padding-top: 4mm;
+    display: flex; justify-content: space-between; align-items: flex-start; font-size: 9pt;
+    break-inside: avoid;
+  }
+  .footer .contact b { color: #0c4d6f; }
+  .footer .contact div { margin-bottom: 1mm; }
+  .footer .contact .wa-foot { display: inline-flex; align-items: center; gap: 1.5mm; }
+  .footer .contact .wa-foot img { width: 4mm; height: 4mm; vertical-align: middle; }
+  .footer .legal { text-align: right; max-width: 80mm; color: #6a7a86; font-size: 8.5pt; }
+  .footer .legal .siam-foot { height: 12mm; margin-bottom: 2mm; opacity: 0.9; }
+
+  .terms { margin-top: 5mm; font-size: 8.5pt; color: #6a7a86; break-inside: avoid; }
+  .terms b { color: #0c4d6f; }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-top">
+      <img class="siam" src="siam-logo-color.png" alt="Siam Scuba">
+      <div class="padi-stack">
+        <img class="padi" src="padi-logo.png" alt="PADI">
+        <img class="badge" src="padi-5star-badge.png" alt="PADI 5 Star">
+      </div>
+    </div>
+
+    <div class="cover-title">
+      <h1>PADI Dive Courses<br>Partnership Rate Sheet</h1>
+      <div class="sub">Koh Tao, Thailand - Internationally Recognized PADI Certifications, Valid for Life</div>
+      <div class="meta">2026 / Bangkok Tourism Partners Edition</div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="left">
+        <b>Siam Scuba Dive Club</b> is a PADI 5 Star center on Koh Tao. Every certification issued is a PADI international license, recognized worldwide and valid for life. This rate sheet is prepared for our Bangkok tourism partners.
+      </div>
+      <div class="right">
+        siamscuba.com<br>
+        info@siamscuba.com<br>
+        +66 82 506 8898<br>
+        <span class="wa-line"><img src="whatsapp.svg" alt="WhatsApp">+972 52 864 1581</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cover-banner">
+  <div class="banner-text">
+    <h3><span class="cam">📸</span> Take the Memories Home - Photo &amp; Video</h3>
+    <p>A pro photographer joins the dive and captures every moment - guests leave with a full photo gallery and a short video, same day.</p>
+    <span class="tag">SAME-DAY DELIVERY</span>
+  </div>
+  <div class="polaroids">
+    <div class="polaroid"><img src="pol-1.jpg" alt=""><span class="caption">Dive day!</span></div>
+    <div class="polaroid"><img src="pol-2.webp" alt=""><span class="caption">Chumphon</span></div>
+    <div class="polaroid"><img src="pol-3.webp" alt=""><span class="caption">Boat day</span></div>
+  </div>
+  <div class="addon-price">+1,500 THB<small>/ person</small></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ==================== CONTENT ==================== -->
+<section>
+  <div class="page-header">
+    <h2>Course Catalogue &amp; Customer Prices</h2>
+    <div class="mini-logos">
+      <img class="padi-mini" src="padi-logo.png" alt="PADI">
+      <img src="siam-logo-color.png" alt="Siam Scuba">
+    </div>
+  </div>
+
+  <div class="intro">
+    <h3>Why partner with Siam Scuba</h3>
+    <ul>
+      <li><b>PADI 5 Star center</b> on Koh Tao - certifications are issued under PADI, the world's largest dive training organization.</li>
+      <li>Every certification course on this sheet results in an <span class="highlight-key">international PADI license, valid for life</span> and recognized at every dive center worldwide.</li>
+      <li>The prices shown are the <span class="highlight-key">customer sale prices</span> - you sell at this price and keep the partner commission.</li>
+      <li>Small groups, two custom dive boats, multilingual instructors (English, Hebrew, Spanish), all equipment included.</li>
+    </ul>
+  </div>
+
+  <div class="courses" id="courses"></div>
+
+  <div class="terms">
+    <b>Notes for partners:</b> All prices in Thai Baht (THB). The prices shown are the recommended customer sale prices and include equipment rental, PADI materials, certification fees, and dive boat transfers. <b>Partner commission: 10% of the customer price on all courses, except Discover Scuba Diving (fixed 250 THB).</b> Complimentary nights are based on shared-dorm availability.
+  </div>
+
+  <div class="footer">
+    <div class="contact">
+      <div><b>Siam Scuba Dive Club</b></div>
+      <div>9/9 Koh Tao, Amphoe Ko Pha-Ngan, Surat Thani 84360, Thailand</div>
+      <div>Phone: +66 82 506 8898</div>
+      <div><span class="wa-foot"><img src="whatsapp.svg" alt="WhatsApp">WhatsApp: +972 52 864 1581</span></div>
+      <div>Email: info@siamscuba.com</div>
+      <div>Web: siamscuba.com</div>
+    </div>
+    <div class="legal">
+      <img class="siam-foot" src="siam-logo-color.png" alt="Siam Scuba">
+      <div>PADI 5 Star Dive Center<br>All certifications issued under the Professional Association of Diving Instructors (PADI).</div>
+    </div>
+  </div>
+</section>
+
+<script>
+const COURSES = [
+  { n: 1,  name: "Discover Scuba Diving",           type: "Try-Dive Experience",     cert: false,                                  days: "1 day",       depth: "12 m",  age: "10+", price: "3,600",  commission: "250 THB (fixed)", gift: "",                                       notes: "Includes 2 dives and round-trip pier transfers." },
+  { n: 2,  name: "Fun Dive",                        type: "Recreational Dive",       cert: false, licensed: true, bestseller: true, days: "Half day",    depth: "30 m",  age: "12+", price: "2,000",  commission: "200 THB",         gift: "",                                       notes: "For certified divers only - our best-selling experience." },
+  { n: 3,  name: "Scuba Review (Refresher)",        type: "Refresher",               cert: false,                                  days: "1 day",       depth: "18 m",  age: "10+", price: "2,500",  commission: "250 THB",         gift: "",                                       notes: "Two supervised dives included in the package." },
+  { n: 4,  name: "Open Water Diver",                type: "Certification",           cert: true,                                   days: "2.5 days",    depth: "18 m",  age: "10+", price: "12,000", commission: "1,200 THB",       gift: "2 complimentary nights at Siam Scuba dorms", notes: "" },
+  { n: 5,  name: "Advanced Open Water",             type: "Certification",           cert: true,                                   days: "1.5 days",    depth: "30 m",  age: "15+", price: "11,000", commission: "1,100 THB",       gift: "1 complimentary night at Siam Scuba dorms",  notes: "" },
+  { n: 6,  name: "Rescue Diver",                    type: "Certification",           cert: true,                                   days: "2 days",      depth: "30 m",  age: "12+", price: "11,000", commission: "1,100 THB",       gift: "",                                       notes: "" },
+  { n: 7,  name: "Emergency First Response (EFR)",  type: "First Aid Certification", cert: true,                                   days: "1 day",       depth: "-",     age: "10+", price: "5,000",  commission: "500 THB",         gift: "",                                       notes: "International CPR and first-aid certification." },
+  { n: 8,  name: "Divemaster",                      type: "Professional",            cert: true,                                   days: "4 - 8 weeks", depth: "40 m",  age: "18+", price: "38,500", commission: "3,850 THB",       gift: "",                                       notes: "Full PADI Pro internship - start your diving career." },
+  { n: 9,  name: "Wreck Diver Specialty",           type: "Specialty",               cert: true,                                   days: "2 days",      depth: "30 m",  age: "15+", price: "9,000",  commission: "900 THB",         gift: "",                                       notes: "Includes dives on the HTMS Sattakut wreck." },
+  { n: 10, name: "Deep Diver Specialty",            type: "Specialty",               cert: true,                                   days: "2 days",      depth: "40 m",  age: "15+", price: "9,000",  commission: "900 THB",         gift: "",                                       notes: "Dive sites include Chumphon Pinnacle and Sail Rock." },
+  { n: 11, name: "Underwater Scooter (DPV)",        type: "Specialty",               cert: true,                                   days: "1 day",       depth: "30 m",  age: "12+", price: "11,000", commission: "1,100 THB",       gift: "",                                       notes: "" },
+];
+
+const container = document.getElementById("courses");
+for (const c of COURSES) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <div class="card-top">
+      <div class="title-block">
+        <span class="num">${c.n}</span><h3>${c.name}</h3>
+        <div class="pills">
+          <span class="pill type">${c.type}</span>
+          ${c.cert
+            ? '<span class="pill cert">✓ International PADI License - Valid for Life</span>'
+            : (c.licensed
+                ? '<span class="pill trial">Certified divers only</span>'
+                : '<span class="pill trial">Try-Dive - No certification</span>')}
+          ${c.bestseller ? '<span class="pill best">★ Best seller</span>' : ''}
+        </div>
+      </div>
+      <div class="price-block">
+        <div class="price-label">Customer price</div>
+        <div class="price">${c.price}<small>THB</small></div>
+        <div class="commission">Partner commission: ${c.commission}</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="lbl">Duration</div><div class="val">${c.days}</div></div>
+      <div class="stat"><div class="lbl">Max Depth</div><div class="val">${c.depth}</div></div>
+      <div class="stat"><div class="lbl">Min Age</div><div class="val">${c.age}</div></div>
+      <div class="stat"><div class="lbl">Certification</div><div class="val">${c.cert ? 'PADI (International)' : 'Experience only'}</div></div>
+    </div>
+    ${c.gift ? `<div class="gift"><span class="icon">🎁</span><span>FREE: ${c.gift}</span></div>` : ''}
+    ${c.notes ? `<div class="notes">${c.notes}</div>` : ''}
+  `;
+  container.appendChild(card);
+}
+</script>
+</body>
+</html>

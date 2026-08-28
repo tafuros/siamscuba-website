@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<title>תכנון קמפיין קורס Open Water (OWD) - תכנים ויזואליים</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --line: #e9e9e4;
+    --accent: #2c5f8e;
+    --accent-soft: #e8f0f7;
+    --good: #2f7a3f;
+    --warn: #b85c00;
+    --code-bg: #f4f4ef;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Arial Hebrew", sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    font-feature-settings: "tnum";
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 96px; }
+  header { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  h1 { margin: 0 0 6px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--ink-soft); font-size: 14px; }
+  .question {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; margin-bottom: 16px;
+    border-inline-start: 4px solid var(--accent);
+  }
+  .qhead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+  .qnum {
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    background: var(--accent-soft); padding: 2px 9px; border-radius: 999px; flex-shrink: 0;
+  }
+  .qtitle { font-weight: 600; font-size: 16px; margin: 0; }
+  .qdesc { color: var(--ink-soft); font-size: 14px; margin: 4px 0 14px; }
+  .qdesc code, .opt-text code {
+    background: var(--code-bg); padding: 1px 5px; border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+    cursor: pointer; transition: background .12s, border-color .12s; background: var(--card);
+  }
+  .opt:hover { background: #fafafa; }
+  .opt input { margin-top: 4px; flex-shrink: 0; }
+  .opt-text { flex: 1; }
+  .opt-text .tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    background: #d8eddd; color: var(--good);
+    padding: 1px 7px; border-radius: 4px; margin-inline-start: 6px; vertical-align: 1px;
+  }
+  .opt-text .tag.warn { background: #f7e3cd; color: var(--warn); }
+  .opt input:checked + .opt-text { font-weight: 500; }
+  .opt:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+  .subq { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .subq-label {
+    font-size: 13px; font-weight: 600; color: var(--ink-soft);
+    margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  textarea.note {
+    width: 100%; margin-top: 12px; border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; font-family: inherit; font-size: 14px; resize: vertical;
+    min-height: 44px; background: #fcfcfa;
+  }
+  textarea.note:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  .toolbar {
+    position: sticky; bottom: 0; margin: 24px -24px 0; padding: 16px 24px;
+    background: var(--bg); border-top: 1px solid var(--line);
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  button {
+    font: inherit; font-weight: 500; border: 1px solid var(--line); background: var(--card);
+    padding: 10px 18px; border-radius: 8px; cursor: pointer; color: var(--ink); transition: background .12s;
+  }
+  button:hover { background: #efefea; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.primary:hover { background: #244e75; }
+  #output-card {
+    margin-top: 16px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 20px; display: none;
+  }
+  #output-card.visible { display: block; }
+  #output-card h3 { margin: 0 0 10px; font-size: 15px; }
+  #output {
+    width: 100%; min-height: 220px; border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+    line-height: 1.55; background: #fcfcfa; direction: ltr; white-space: pre-wrap; resize: vertical;
+  }
+  .row { display: flex; gap: 8px; margin-top: 10px; }
+  .copied { color: var(--good); font-size: 13px; font-weight: 500; align-self: center; opacity: 0; transition: opacity .2s; }
+  .copied.show { opacity: 1; }
+  .ctx {
+    background: #fff8e7; border: 1px solid #f0d999; border-radius: 8px;
+    padding: 12px 14px; margin-bottom: 18px; font-size: 13.5px; color: #5a4400;
+  }
+  .ctx strong { color: #3a2d00; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1 id="page-title"></h1>
+  <p id="page-subtitle"></p>
+</header>
+
+<div id="ctx-box" class="ctx" style="display:none;"></div>
+
+<div id="questions"></div>
+
+<div class="toolbar">
+  <button class="primary" id="generate">Generate prompt</button>
+  <button id="reset">Reset to recommended</button>
+</div>
+
+<div id="output-card">
+  <h3>Prompt ready to copy</h3>
+  <textarea id="output" readonly></textarea>
+  <div class="row">
+    <button class="primary" id="copy">Copy to clipboard</button>
+    <span class="copied" id="copied-msg">✓ Copied</span>
+  </div>
+</div>
+
+</div>
+
+<script id="config" type="application/json">
+{
+  "title": "תכנון קמפיין קורס Open Water (OWD) - תכנים ויזואליים",
+  "subtitle": "סיעור מוחות לפני העלאה ל-Google Ads: לוגו, תמונות, וידאו, וטון",
+  "context": "<strong>קורס Open Water (OWD)</strong> · תקציב 500 THB/יום × 7 ימים · לאנדרים: <code>/open-water-course + /es/ + /he/</code> · מחיר: 11,000 THB - 4 ימי קורס<br /><em>הסמכה בינלאומית ב-4 ימים. הקהל = מטייל מתוכנן, יותר committed, רוצה לראות מקצועיות + ביטחון. PADI 5-star IDC.</em>",
+  "outro": "אחרי שתסיים את שלושת הטפסים, הדבק את הפלט בצ'אט. אני אבנה רשימת קניות של נכסים (תמונות / וידאו / לוגו) ואז נמשיך ל-Playwright upload לקמפיינים.",
+  "questions": [
+    {
+      "id": "tone",
+      "title": "טון ומיצוב",
+      "description": "איזו הרגשה הקמפיין צריך לשדר? משפיע על בחירת תמונות, גוון צבעים, ועל ה-RSA שיוצג עם התמונה.",
+      "type": "single",
+      "options": [
+        {
+          "value": "casual-fun",
+          "label": "כיפי וחברתי - 'בוא תיהנה'"
+        },
+        {
+          "value": "expert-safety",
+          "label": "מקצועי ובטוח - 'מדריך PADI, IDC center'",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "budget-led",
+          "label": "מבוסס מחיר - 'הכי משתלם בקוטאו'"
+        },
+        {
+          "value": "adventure-thrill",
+          "label": "הרפתקני - 'תראה דברים שלא ראית'"
+        },
+        {
+          "value": "premium-personal",
+          "label": "פרימיום אישי - 'קבוצות קטנות, יחס VIP'"
+        }
+      ]
+    },
+    {
+      "id": "hero",
+      "title": "כיוון התמונה הראשית (Hero Image)",
+      "description": "התמונה שתופיע ב-Image Asset הראשי ובכל הלאנדרים. צריך להחליט על סוג אחד.",
+      "type": "single",
+      "options": [
+        {
+          "value": "instructor-closeup",
+          "label": "מדריך פנים מקרוב - אמינות וקשר עין",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "first-breath",
+          "label": "רגע הנשימה הראשונה - תלמיד מופתע / שמח"
+        },
+        {
+          "value": "underwater-wide",
+          "label": "צילום תת-מימי רחב - שונית, שמש, צבעים"
+        },
+        {
+          "value": "boat-deck",
+          "label": "סגנון חיים על הסיפון - חברה צוחקת"
+        },
+        {
+          "value": "reef-marine-life",
+          "label": "חיי שונית / כריש לוויתן / צב"
+        }
+      ]
+    },
+    {
+      "id": "shortlist",
+      "title": "Image shortlist - אילו 5+ תמונות אנחנו צריכים?",
+      "description": "סמן כל מה שצריך לקמפיין. Google מבקש 5+ תמונות נכסים (1200×628 / 1200×1200) - נחתוך מאוחר יותר ל-5 הסופיות.",
+      "type": "multi",
+      "options": [
+        {
+          "value": "boats",
+          "label": "הסירות שלנו (deck shot, פנים, רחב)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "instructor-action",
+          "label": "מדריך בפעולה (מסביר, מצביע, מחייך)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "trainees-underwater",
+          "label": "תלמידים במים (mask clearing, regulator practice)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "gear-closeup",
+          "label": "ציוד מקרוב (מסכה, BCD, רגולטור, סנפירים)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "sail-rock",
+          "label": "סייל רוק - הסלע מבחוץ / מבפנים"
+        },
+        {
+          "value": "chumphon",
+          "label": "Chumphon Pinnacle - schooling fish, סלעים"
+        },
+        {
+          "value": "twins",
+          "label": "The Twins - מערכת הסלעים הכפולה"
+        },
+        {
+          "value": "reef-life",
+          "label": "חיי שונית כלליים - דגים, אלמוגים",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "whale-shark",
+          "label": "כריש לוויתן - תמונה חזקה לעונת מרץ-מאי"
+        },
+        {
+          "value": "customer-smile",
+          "label": "תייר מחייך אחרי צלילה - testimonial-style",
+          "recommended": true,
+          "tag": "מומלץ"
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "title": "מקור התמונות",
+      "description": "מאיפה נשיג את התמונות שסימנת? סמן את כל המקורות הרלוונטיים.",
+      "type": "multi",
+      "options": [
+        {
+          "value": "library",
+          "label": "מהמאגר הקיים שלנו (Lightroom / Google Photos / Drive)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "new-shoot",
+          "label": "צילום חדש - צריך להזמין צלם / לצלם בעצמנו"
+        },
+        {
+          "value": "ai-imagen",
+          "label": "AI - Imagen / Gemini / Nano Banana (gen-hero-extension.sh)"
+        },
+        {
+          "value": "pexels-unsplash",
+          "label": "Pexels / Unsplash - תמונות סטוק חינמיות"
+        },
+        {
+          "value": "padi-partner",
+          "label": "PADI / מדריך / Pro - חומר שותפים",
+          "recommended": true,
+          "tag": "מומלץ"
+        }
+      ]
+    },
+    {
+      "id": "video",
+      "title": "האם לכלול וידאו?",
+      "description": "Google Ads ב-Search לא דורש וידאו, אבל וידאו מעלה ביצועים ומאפשר PMax בעתיד.",
+      "type": "single",
+      "options": [
+        {
+          "value": "story-15-30",
+          "label": "כן - וידאו 15-30 שניות (story format)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "short-loop",
+          "label": "כן - לופ קצר 6-10 שניות (hero loop)"
+        },
+        {
+          "value": "not-week-1",
+          "label": "לא ב-week-1 - מתחילים רק עם תמונות"
+        },
+        {
+          "value": "decide-day-3",
+          "label": "להחליט ב-day 3 על סמך ביצועים"
+        }
+      ]
+    },
+    {
+      "id": "video-dir",
+      "title": "כיוון הוידאו (אם בחרת לכלול)",
+      "description": "אם סימנת 'כן' ב-Q5, מה סוג התוכן? אפשר לבחור כמה.",
+      "type": "multi",
+      "options": [
+        {
+          "value": "instructor-talking",
+          "label": "מדריך מדבר למצלמה (אמינות, talking head)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "underwater-action",
+          "label": "אקשן תת-מימי (צלילה, schooling fish, drama)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "boat-boarding",
+          "label": "עלייה לסירה, יציאה לים (lifestyle)"
+        },
+        {
+          "value": "customer-testimonial",
+          "label": "תייר מספר על החוויה (UGC style)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "drone-establishing",
+          "label": "צילום רחפן - establishing shot של קוטאו / סייל רוק"
+        }
+      ]
+    },
+    {
+      "id": "logo",
+      "title": "וריאנטים של לוגו שיש לנו (או צריך)",
+      "description": "Google Ads דורש לוגו ב-2 פורמטים: ריבוע 1:1 (1200×1200 מינ') ורחב 4:1 (1200×300 מינ'). סמן מה מוכן.",
+      "type": "multi",
+      "options": [
+        {
+          "value": "square",
+          "label": "ריבוע 1:1 (1200×1200) - מוכן",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "wide",
+          "label": "רחב 4:1 (1200×300) - מוכן",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "need-design",
+          "label": "אין לוגו תקני - צריך עיצוב חדש",
+          "tag": "חוסר",
+          "tagClass": "warn"
+        }
+      ]
+    },
+    {
+      "id": "urgency",
+      "title": "Urgency hook - האם דחיפות בקמפיין?",
+      "description": "Promo / לחץ לפעולה. אופציונלי ב-week-1, אבל מעלה CTR.",
+      "type": "single",
+      "options": [
+        {
+          "value": "percent-discount",
+          "label": "% הנחה ל-7 ימי קמפיין (למשל 'חסוך 15% השבוע')"
+        },
+        {
+          "value": "book-today-dive-tomorrow",
+          "label": "'הזמן היום, צלול מחר' - כבר ב-copy שלנו",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "season-driven",
+          "label": "מבוסס עונה - 'עונת כריש לוויתן 2026'"
+        },
+        {
+          "value": "no-urgency",
+          "label": "אין urgency hook - רק value prop"
+        }
+      ]
+    },
+    {
+      "id": "locale",
+      "title": "אסטרטגיית לוקליזציה (EN / ES / HE)",
+      "description": "אותה תמונה ל-3 השפות, או תמונה שונה לכל אחת?",
+      "type": "single",
+      "options": [
+        {
+          "value": "same-image-overlay",
+          "label": "אותה תמונה + טקסט מקומי בכותרת/תיאור (זול, מהיר)",
+          "recommended": true,
+          "tag": "מומלץ"
+        },
+        {
+          "value": "different-per-lang",
+          "label": "תמונה שונה לכל שפה (יקר יותר, יותר מותאם)"
+        },
+        {
+          "value": "text-first",
+          "label": "טקסט בלבד עכשיו, תמונה אחר כך (week-2)"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+const config = JSON.parse(document.getElementById("config").textContent);
+
+document.title = config.title || "Decisions";
+document.getElementById("page-title").textContent = config.title || "";
+document.getElementById("page-subtitle").textContent = config.subtitle || "";
+
+if (config.context) {
+  const box = document.getElementById("ctx-box");
+  box.innerHTML = config.context;
+  box.style.display = "";
+}
+
+function renderOptions(name, type, options) {
+  const html = options.map((o) => {
+    const inputType = type === "single" ? "radio" : "checkbox";
+    const checked = o.recommended ? " checked" : "";
+    const tagClass = o.tagClass || "";
+    const tag = o.tag ? `<span class="tag ${tagClass}">${o.tag}</span>` : "";
+    return `<label class="opt"><input type="${inputType}" name="${name}" value="${o.value}"${checked} />` +
+           `<span class="opt-text">${o.label}${tag}</span></label>`;
+  }).join("");
+  return `<div class="options">${html}</div>`;
+}
+
+function renderQuestion(q, idx) {
+  const num = idx + 1;
+  let inner = "";
+  if (q.subquestions && q.subquestions.length) {
+    inner = q.subquestions.map((sq) => {
+      return `<div class="subq">` +
+             `<div class="subq-label">${sq.label}</div>` +
+             renderOptions(sq.id, sq.type || "single", sq.options) +
+             `</div>`;
+    }).join("");
+  } else {
+    inner = renderOptions(q.id, q.type || "single", q.options);
+  }
+  const note = q.note === false
+    ? ""
+    : `<textarea class="note" data-q="${q.id}" placeholder="${q.notePlaceholder || 'Free-form note (optional)'}"></textarea>`;
+  return `<div class="question">` +
+         `<div class="qhead"><span class="qnum">${num}</span><div class="qtitle">${q.title}</div></div>` +
+         (q.description ? `<div class="qdesc">${q.description}</div>` : "") +
+         inner + note +
+         `</div>`;
+}
+
+// Per-question accent color palette — cycles. White-bg friendly.
+const Q_PALETTE = [
+  { accent: "#2c5f8e", soft: "#e8f0f7" }, // blue
+  { accent: "#2f7a3f", soft: "#e3f1e6" }, // green
+  { accent: "#b85c00", soft: "#fbeedd" }, // orange
+  { accent: "#8b3a8b", soft: "#f3e6f3" }, // purple
+  { accent: "#1a7a8a", soft: "#dff0f2" }, // teal
+  { accent: "#c43c3c", soft: "#fbe5e5" }, // red
+];
+
+document.getElementById("questions").innerHTML =
+  (config.questions || []).map(renderQuestion).join("");
+
+document.querySelectorAll(".question").forEach((el, i) => {
+  const c = Q_PALETTE[i % Q_PALETTE.length];
+  el.style.setProperty("--accent", c.accent);
+  el.style.setProperty("--accent-soft", c.soft);
+});
+
+function readChecked(name) {
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
+}
+function readNote(qid) {
+  const el = document.querySelector(`textarea.note[data-q="${qid}"]`);
+  return (el?.value || "").trim();
+}
+function labelFor(options, value) {
+  const o = options.find(o => o.value === value);
+  if (!o) return value;
+  // Strip HTML tags for plain-text prompt output
+  return o.label.replace(/<[^>]+>/g, "");
+}
+
+function buildPrompt() {
+  const lines = [];
+  lines.push(`${config.title || "Decisions"} — answers:`);
+  lines.push("");
+  (config.questions || []).forEach((q, idx) => {
+    const num = idx + 1;
+    lines.push(`Q${num}. ${q.title.replace(/<[^>]+>/g, "")}:`);
+    if (q.subquestions && q.subquestions.length) {
+      q.subquestions.forEach((sq) => {
+        const vals = readChecked(sq.id);
+        const labels = vals.map(v => labelFor(sq.options, v));
+        if ((sq.type || "single") === "single") {
+          lines.push(`  ${sq.label}: ${labels[0] || "(none)"}`);
+        } else {
+          lines.push(`  ${sq.label}:`);
+          if (!labels.length) lines.push("    (none)");
+          labels.forEach(l => lines.push(`    • ${l}`));
+        }
+      });
+    } else {
+      const vals = readChecked(q.id);
+      const labels = vals.map(v => labelFor(q.options, v));
+      if ((q.type || "single") === "single") {
+        lines.push(`  ${labels[0] || "(none)"}`);
+      } else {
+        if (!labels.length) lines.push("  (none)");
+        labels.forEach(l => lines.push(`  • ${l}`));
+      }
+    }
+    const note = readNote(q.id);
+    if (note) lines.push(`  Note: ${note}`);
+    lines.push("");
+  });
+  if (config.outro) lines.push(config.outro);
+  return lines.join("\n").trimEnd();
+}
+
+document.getElementById("generate").addEventListener("click", () => {
+  const out = document.getElementById("output");
+  out.value = buildPrompt();
+  document.getElementById("output-card").classList.add("visible");
+  document.getElementById("output-card").scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+
+document.getElementById("copy").addEventListener("click", async () => {
+  const out = document.getElementById("output");
+  out.select();
+  try { await navigator.clipboard.writeText(out.value); }
+  catch { document.execCommand("copy"); }
+  const msg = document.getElementById("copied-msg");
+  msg.classList.add("show");
+  setTimeout(() => msg.classList.remove("show"), 1400);
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  if (!confirm("Reset all selections to the recommended defaults?")) return;
+  document.querySelectorAll("input[type=checkbox], input[type=radio]").forEach(el => {
+    el.checked = el.defaultChecked;
+  });
+  document.querySelectorAll("textarea.note").forEach(el => el.value = "");
+  document.getElementById("output-card").classList.remove("visible");
+});
+</script>
+</body>
+</html>
