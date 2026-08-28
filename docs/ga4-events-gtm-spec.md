@@ -32,11 +32,30 @@ the events too, relayed by GTM GA4 Event tags.
 
 | dataLayer event | Fires when | Key params | Mark as Key Event? |
 |---|---|---|---|
-| `generate_lead` | Booking-wizard submit, chat lead capture, course inquiry (same point as the Ads lead conversion) | `form_name`, `product`, `dive_date`, `currency` | **Yes** |
-| `purchase` | Booking complete WITH deposit paid (same point as the Ads Purchase conversion) | `transaction_id`, `value`, `currency`, `item_name` | **Yes** |
-| `booking_pay_later` | Booking complete, pay-on-arrival (mirrors Ads "Booking - Pay Later") | `transaction_id`, `product` | **Yes** |
-| `whatsapp_click` | Click-to-WhatsApp on lander CTAs | `location`, `url` | **Yes** (contact conversion) |
-| `whatsapp_fastpath_click` | Booking-page WhatsApp fast-path strip (already pushed pre-fix) | `product`, `dive_date`, `url` | Optional (signal) |
+| `purchase` | Booking COMPLETE with deposit paid (`SIAM_BOOKING_COMPLETE`, `depositPaid: true`) | `transaction_id`, `value`, `currency`, `item_name` | **Yes** |
+| `booking_pay_later` | Booking COMPLETE, pay-on-arrival (`SIAM_BOOKING_COMPLETE`, `depositPaid: false`) | `transaction_id`, `product` | **Yes** |
+| `generate_lead` | Contact details entered at wizard step 2 (`SIAM_BOOKING_LEAD`) - the form is NOT finished | `form_name`, `product`, `dive_date`, `currency` | **No** |
+| `whatsapp_click` | Click-to-WhatsApp on any CTA | `location`, `url` | **No** |
+| `whatsapp_fastpath_click` | Booking-page WhatsApp fast-path strip | `product`, `dive_date`, `url` | **No** |
+
+### RULING (Ben, 2026-08-28): only a COMPLETED registration is a conversion
+
+An earlier version of this doc told you to mark `generate_lead` and
+`whatsapp_click` as Key Events too. **That was wrong** and Ben corrected it
+during the GTM build.
+
+A conversion is a **finished booking form** - nothing else. `generate_lead`
+fires when someone types their phone number at step 2 and may still abandon;
+`whatsapp_click` is a tap on a button. Both are useful signals and stay fully
+collected - they are just not conversions.
+
+This is not bookkeeping pedantry. GA4 Key Events can be imported into Google
+Ads and fed to Smart Bidding. Make `whatsapp_click` a key event and the
+algorithm optimises toward WhatsApp taps - plentiful and free - instead of
+bookings, spending real budget on the cheap action. The Ads account is already
+built correctly: Purchase + Pay-Later are Primary, Lead + WhatsApp are
+Secondary (observation only, excluded from bidding). Keep GA4 consistent with
+that.
 
 All events also carry the UTM passthrough fields (`campaign_source`, `campaign_medium`,
 `campaign_name`, `campaign_content`, `campaign_term`) when a stored UTM exists.
@@ -90,10 +109,16 @@ For each, Tag type = **Google Analytics: GA4 Event**, Configuration/Measurement 
 
 ### 4. Mark as Key Events in GA4 (not GTM)
 
-GA4 console -> Admin -> Events (or Key events). After the first live hits arrive
-(may take a few hours to appear), toggle **Mark as key event** for:
-`generate_lead`, `purchase`, `booking_pay_later`, `whatsapp_click`.
-(`whatsapp_fastpath_click` optional.)
+GA4 console -> Admin -> Events (or Key events). GA4 only lets you flag an event
+AFTER it has arrived at least once, so this is a separate visit a few hours
+later.
+
+Toggle **Mark as key event** for exactly two events:
+- `purchase`
+- `booking_pay_later`
+
+Leave `generate_lead`, `whatsapp_click` and `whatsapp_fastpath_click` OFF - see
+the ruling above. They keep collecting either way.
 
 Tip: `value`/`currency` on `purchase` make GA4 attribute revenue - keep those two
 mapped exactly as named or the revenue column stays blank.
