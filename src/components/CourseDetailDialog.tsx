@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Clock, CheckCircle2, Gift, Tag, AlertCircle, MessageCircle, Fish, Anchor, XCircle, Backpack, CreditCard, GraduationCap } from "lucide-react";
-import { Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { languageFlags, languageNames, type Language } from "@/i18n/translations";
 import { courseDetails } from "@/i18n/courseDetails";
@@ -348,10 +348,10 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
 
             {/* CTA */}
             <Button asChild className="w-full rounded-full" size="lg">
-              <Link to="/fun-dive-booking" className="flex items-center gap-2">
+              <BookingLink to="/fun-dive-booking" className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
                 {t("nav_book_now")}
-              </Link>
+              </BookingLink>
             </Button>
           </div>
         </div>

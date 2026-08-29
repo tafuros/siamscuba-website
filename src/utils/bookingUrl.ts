@@ -1,4 +1,9 @@
-import { getStoredUtm, getStoredGclid } from "@/utils/utm";
+import {
+  getStoredUtm,
+  getStoredClickIds,
+  hasStoredClickId,
+  CLICK_ID_NAMES,
+} from "@/utils/utm";
 
 // Ben's personal instructor lead form. RETIRED as the embed target on
 // 2026-08-24 (Ben's ruling - see buildWizardIframeSrc): organic iframe
@@ -33,6 +38,16 @@ const UTM_KEYS = [
   "utm_content",
   "utm_term",
 ] as const;
+
+/**
+ * Google click ids, in the order we emit them.
+ *
+ * `wbraid`/`gbraid` are the iOS/privacy-safe forms: a click that carries one
+ * has NO gclid, so forwarding gclid alone loses the whole iPhone half of a
+ * campaign. DiveOS already accepts and classifies all three
+ * (backend leadFormUrl.ts FORWARDED_PARAMS + leadSource.ts isPaidAttribution).
+ */
+const CLICK_ID_PARAMS = CLICK_ID_NAMES;
 
 export interface BookingUrlOptions {
   /** Wizard base URL. Defaults to the public web wizard. */
@@ -88,8 +103,10 @@ export function buildBookingUrl(search: string, options: BookingUrlOptions = {})
       out.set(key, value);
     }
   }
-  const incomingGclid = incoming.get("gclid");
-  if (incomingGclid) out.set("gclid", incomingGclid);
+  for (const name of CLICK_ID_PARAMS) {
+    const value = incoming.get(name);
+    if (value) out.set(name, value);
+  }
 
   // Backfill from first-touch storage unless explicitly opted out, without
   // clobbering explicit values already set above. The landers still send
@@ -107,8 +124,11 @@ export function buildBookingUrl(search: string, options: BookingUrlOptions = {})
       const value = stored[key];
       if (value && !out.has(key)) out.set(key, value);
     }
-    const storedGclid = getStoredGclid();
-    if (storedGclid && !out.has("gclid")) out.set("gclid", storedGclid);
+    const clickIds = getStoredClickIds();
+    for (const name of CLICK_ID_PARAMS) {
+      const value = clickIds[name];
+      if (value && !out.has(name)) out.set(name, value);
+    }
   }
 
   const qs = out.toString();
@@ -146,12 +166,12 @@ export function isCampaignTraffic(
   const { includeStored = true } = options;
   const incoming = new URLSearchParams(search);
 
-  if (incoming.get("gclid")) return true;
+  if (CLICK_ID_PARAMS.some((name) => incoming.get(name))) return true;
   const medium = incoming.get("utm_medium");
   if (medium && PAID_MEDIUMS.has(medium.trim().toLowerCase())) return true;
 
   if (!includeStored) return false;
-  if (getStoredGclid()) return true;
+  if (hasStoredClickId()) return true;
   const storedMedium = getStoredUtm().medium;
   return Boolean(storedMedium && PAID_MEDIUMS.has(storedMedium.trim().toLowerCase()));
 }
@@ -219,24 +239,67 @@ export function buildWizardIframeSrc(
   return buildBookingUrl(search, { ...rest, baseUrl, includeStored });
 }
 
+export interface WithAttributionOptions {
+  /**
+   * Backfill from first-touch storage. MUST be false for the server render and
+   * the first client render of any SSG page - see components/BookNowLink.tsx
+   * and hooks/useAttributedPath.ts for the hydration trap.
+   */
+  includeStored?: boolean;
+}
+
 /**
  * Append the current attribution params to an INTERNAL path so a click-through
- * (lander -> course page) keeps them visible on the URL.
+ * (lander -> course page -> booking) keeps them visible on the URL.
  *
- * sessionStorage first-touch already survives in-site navigation, so this is
- * belt-and-braces - it matters when the visitor opens an internal link in a NEW
- * TAB, which starts a fresh sessionStorage and would otherwise arrive
- * unattributed.
+ * WHY IT MATTERS. Opening an internal CTA in a NEW TAB starts a fresh
+ * sessionStorage, and the destination page's own URL carries nothing - so the
+ * visit lands unattributed and DiveOS reads a paid click as organic. The
+ * localStorage mirror added alongside this (utils/utm.ts) covers most of that
+ * case now, but the URL is the only carrier that survives storage being
+ * blocked entirely, and it is what makes the attribution visible in analytics
+ * for the destination page view.
+ *
+ * Sources match buildBookingUrl: explicit params on the current URL win, then
+ * first-touch storage backfills. Click ids are forwarded as a trio, since an
+ * iOS click carries wbraid/gbraid and no gclid at all.
  */
-export function withAttribution(path: string, search: string): string {
+export function withAttribution(
+  path: string,
+  search: string,
+  options: WithAttributionOptions = {},
+): string {
+  const { includeStored = true } = options;
   const incoming = new URLSearchParams(search);
   const out = new URLSearchParams();
   for (const key of UTM_KEYS) {
     const value = incoming.get(key);
     if (value) out.set(key, value);
   }
-  const gclid = incoming.get("gclid");
-  if (gclid) out.set("gclid", gclid);
+  for (const name of CLICK_ID_PARAMS) {
+    const value = incoming.get(name);
+    if (value) out.set(name, value);
+  }
+
+  if (includeStored && incoming.get("utm_passthrough") !== "0") {
+    const utm = getStoredUtm();
+    const stored: Record<string, string | undefined> = {
+      utm_source: utm.source,
+      utm_medium: utm.medium,
+      utm_campaign: utm.campaign,
+      utm_content: utm.content,
+      utm_term: utm.term,
+    };
+    for (const key of UTM_KEYS) {
+      const value = stored[key];
+      if (value && !out.has(key)) out.set(key, value);
+    }
+    const clickIds = getStoredClickIds();
+    for (const name of CLICK_ID_PARAMS) {
+      const value = clickIds[name];
+      if (value && !out.has(name)) out.set(name, value);
+    }
+  }
 
   const qs = out.toString();
   if (!qs) return path;

@@ -9,7 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
 import { trackPageView, tagTrafficSource } from "@/utils/tracking";
-import { captureUtmFromUrl, captureGclidFromUrl } from "@/utils/utm";
+import { captureUtmFromUrl, captureClickIdsFromUrl } from "@/utils/utm";
 
 // Floating chat widget - client-only, not SEO content. Lazy-load it so its
 // code (and the avatar) is split out of the initial app bundle and fetched
@@ -32,7 +32,7 @@ const RouteTracker = () => {
   useEffect(() => {
     if (!utmCapturedRef.current) {
       captureUtmFromUrl();
-      captureGclidFromUrl();
+      captureClickIdsFromUrl();
       // First-touch like the UTMs above: on an in-site navigation the referrer
       // is us, so only the landing referrer is meaningful.
       tagTrafficSource();

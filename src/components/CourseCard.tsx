@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
 
 /** Shape of a course entry as built in CoursesSection. */
@@ -93,9 +93,9 @@ const CourseCard = ({
             )}
             <div className="flex gap-1.5">
               <Button asChild variant={course.featured ? "default" : "outline"} size="sm" className="rounded-full flex-1 h-8 text-xs">
-                <Link to="/fun-dive-booking">
+                <BookingLink to="/fun-dive-booking">
                   {course.price ? t("courses_book_now") : t("courses_get_price")}
-                </Link>
+                </BookingLink>
               </Button>
               <Button variant="ghost" size="icon" className="rounded-full shrink-0 text-muted-foreground hover:text-primary h-8 w-8" onClick={handleShare} aria-label={t("share_button")}>
                 <Share2 className="h-3.5 w-3.5" />

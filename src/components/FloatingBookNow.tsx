@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
-import { Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 
 const BOOKING_PATH = "/fun-dive-booking";
 
@@ -26,14 +26,14 @@ const FloatingBookNow = () => {
     >
       {/* No perpetual ping - a constantly pulsing ring competes with the content
           for attention. The solid FAB + ring is visible enough on its own. */}
-      <Link
+      <BookingLink
         to={BOOKING_PATH}
         onClick={handleClick}
         aria-label="Book your dive now"
         className="relative flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-2 ring-primary/30 transition-colors hover:bg-primary/90"
       >
         <CalendarPlus className="h-6 w-6" />
-      </Link>
+      </BookingLink>
     </motion.div>
   );
 };

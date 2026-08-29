@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { CheckCircle2, Clock, Users, Waves, AlertCircle } from "lucide-react";
 import { trackBookNowClick } from "@/utils/tracking";
 import {
@@ -115,7 +116,7 @@ function SlotButton({
 function BookButton({ trip, className = "" }: { trip: Trip; className?: string }) {
   const to = tripBookingPath(trip);
   return (
-    <Link
+    <BookingLink
       to={to}
       onClick={() => trackBookNowClick({ location: trip.trackingSlot, product: trip.productCode ?? "", url: to })}
       className={
@@ -124,7 +125,7 @@ function BookButton({ trip, className = "" }: { trip: Trip; className?: string }
       }
     >
       Book this trip
-    </Link>
+    </BookingLink>
   );
 }
 

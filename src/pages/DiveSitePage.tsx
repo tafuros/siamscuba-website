@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Gauge, GraduationCap, MessageCircle, Star, Waves } from "lucide-react";
@@ -192,10 +193,10 @@ const DiveSitePage = () => {
                 size="lg"
                 className="mt-6 rounded-full px-10 bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
               >
-                <Link to="/fun-dive-booking">
+                <BookingLink to="/fun-dive-booking">
                   <MessageCircle className="h-5 w-5" />
                   Book a fun dive
-                </Link>
+                </BookingLink>
               </Button>
             </div>
 

@@ -5,7 +5,7 @@
  * the "added GA but forgot Meta" drift as new events get added.
  */
 
-import { getStoredUtm, getStoredGclid, type UtmParams } from "@/utils/utm";
+import { getStoredUtm, getStoredClickIds, type UtmParams } from "@/utils/utm";
 import { classifyReferrer } from "@/utils/trafficSource";
 
 declare global {
@@ -625,6 +625,7 @@ export interface ChatLeadResult {
  */
 export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResult> {
   const utm: UtmParams = getStoredUtm();
+  const clickIds = getStoredClickIds();
   const payload = {
     source: input.source ?? "website-chat",
     phone: input.phone || null,
@@ -634,11 +635,19 @@ export async function submitChatLead(input: ChatLeadInput): Promise<ChatLeadResu
     dates: input.dates ?? null,
     message: input.message ?? null,
     sessionId: input.sessionId ?? null,
-    gclid: getStoredGclid(),
+    // The click-id trio, not gclid alone: an iOS ad click carries wbraid or
+    // gbraid and NO gclid, so a gclid-only payload files iPhone ad traffic as
+    // organic - and an organic lead is the one the club pays a commission on.
+    // DiveOS classifies all three as paid (backend lib/leadSource.ts
+    // isPaidAttribution); its captureLeadSchema strips keys it does not know,
+    // so sending them is safe today and correct the moment it adds the columns.
+    ...clickIds,
+    gclid: clickIds.gclid ?? null,
     utm: {
       source: utm.source ?? null,
       medium: utm.medium ?? null,
       campaign: utm.campaign ?? null,
+      content: utm.content ?? null,
     },
     timestamp: new Date().toISOString(),
   };

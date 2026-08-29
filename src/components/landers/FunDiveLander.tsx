@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, MessageCircle, Star } from "lucide-react";
 import {
@@ -142,9 +142,9 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           </div>
 
           <div className="flex flex-col items-center gap-3">
-            <Link to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
+            <BookingLink to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
               {copy.ctaBook} {isRtl ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
-            </Link>
+            </BookingLink>
             <a
               href={whatsappHref}
               target="_blank"
@@ -296,9 +296,9 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           <em className="not-italic text-sky-300">{copy.closingB}</em>
         </h2>
         <p className="mb-7 text-[15px] text-white/65">{copy.closingSub}</p>
-        <Link to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
+        <BookingLink to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
           {copy.ctaBook} {isRtl ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
-        </Link>
+        </BookingLink>
       </section>
 
       <Footer />
@@ -312,9 +312,9 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           <b className="text-[17px] leading-tight text-amber-400">{copy.priceNum}</b>
           <span className="text-[10.5px] text-white/60">{copy.stickyPriceLabel}</span>
         </div>
-        <Link to={BOOKING_HREF} className={`${bookBtn} flex-1 px-3 py-3 text-[15px] shadow-none`}>
+        <BookingLink to={BOOKING_HREF} className={`${bookBtn} flex-1 px-3 py-3 text-[15px] shadow-none`}>
           {copy.stickyCta}
-        </Link>
+        </BookingLink>
         <a
           href={whatsappHref}
           target="_blank"

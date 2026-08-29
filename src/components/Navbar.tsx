@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Compass, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/siam-logo.webp";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -111,7 +112,7 @@ const Navbar = () => {
             </button>
             <LanguageSwitcher />
             <Button asChild size="sm" className="rounded-full px-6 bg-accent/80 backdrop-blur-md hover:bg-accent/95 text-accent-foreground border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.2)] hover:-translate-y-0.5 whitespace-nowrap">
-              <Link to="/fun-dive-booking">{t("nav_book_now")}</Link>
+              <BookingLink to="/fun-dive-booking">{t("nav_book_now")}</BookingLink>
             </Button>
             <a
               href={whatsappHref}
@@ -166,7 +167,7 @@ const Navbar = () => {
               )
             )}
             <Button asChild className="rounded-full bg-accent/80 backdrop-blur-md hover:bg-accent/95 text-accent-foreground border border-white/25 shadow-[0_4px_16px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.2)] hover:-translate-y-0.5 mt-2">
-              <Link to="/fun-dive-booking">{t("nav_book_now")}</Link>
+              <BookingLink to="/fun-dive-booking">{t("nav_book_now")}</BookingLink>
             </Button>
             <a
               href={whatsappHref}

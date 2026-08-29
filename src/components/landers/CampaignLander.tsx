@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { motion } from "framer-motion";
 import { Award, Calendar, Check, Heart, MessageCircle, Sailboat, Shield, Users, Waves } from "lucide-react";
 import {
@@ -174,7 +174,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                 </a>
               ) : (
                 <Button asChild size="lg" className="rounded-full px-6 bg-accent hover:bg-accent/90">
-                  <Link to={primaryHref}>{copy.ctaPrimary}</Link>
+                  <BookingLink to={primaryHref}>{copy.ctaPrimary}</BookingLink>
                 </Button>
               )}
               {primaryIsExternal ? null : (
@@ -364,7 +364,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                   variant="secondary"
                   className="rounded-full px-6"
                 >
-                  <Link to={primaryHref}>{copy.ctaPrimary}</Link>
+                  <BookingLink to={primaryHref}>{copy.ctaPrimary}</BookingLink>
                 </Button>
                 <a
                   href={whatsappHref}
@@ -416,7 +416,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
           ) : (
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="rounded-full px-8 bg-accent hover:bg-accent/90">
-                <Link to={primaryHref}>{copy.ctaPrimary}</Link>
+                <BookingLink to={primaryHref}>{copy.ctaPrimary}</BookingLink>
               </Button>
               <a
                 href={whatsappHref}

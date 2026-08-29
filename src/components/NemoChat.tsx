@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Send, X, MessageCircle, Sailboat, GraduationCap } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 import {
@@ -567,7 +568,7 @@ const NemoChat = () => {
 
             {/* Persistent CTA row - NOT LLM-dependent. Each fires its own event. */}
             <div className="grid grid-cols-3 gap-1.5 border-b border-border bg-secondary/30 px-2.5 py-2">
-              <Link
+              <BookingLink
                 to="/fun-dive-booking"
                 onClick={() => {
                   trackChatCtaClick("fun_dive");
@@ -579,7 +580,7 @@ const NemoChat = () => {
               >
                 <Sailboat className="h-4 w-4 text-coral" />
                 {copy.ctaFunDive}
-              </Link>
+              </BookingLink>
               <a
                 href={waHref}
                 target="_blank"
@@ -652,7 +653,7 @@ const NemoChat = () => {
                 in-chat detail collection. Panel closes so the visitor sees the
                 form; chat history persists for when they come back. */}
             {messages.length > 0 && !isBooking && (
-              <Link
+              <BookingLink
                 to="/fun-dive-booking"
                 onClick={() => {
                   trackChatCtaClick("fun_dive");
@@ -661,7 +662,7 @@ const NemoChat = () => {
                 className="mx-3 mb-1 rounded-[13px] border border-dashed border-coral/50 py-2 text-center text-[12.5px] font-semibold text-coral transition-colors hover:bg-coral/5"
               >
                 {copy.registerCta}
-              </Link>
+              </BookingLink>
             )}
 
             {/* input */}

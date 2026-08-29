@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import BookingLink from "@/components/BookingLink";
 import { Fragment, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, MapPin, MessageCircle } from "lucide-react";
@@ -286,10 +287,10 @@ const BlogPostPage = () => {
                           size="default"
                           className="rounded-full px-6 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shrink-0"
                         >
-                          <Link to={inlineCtaHref}>
+                          <BookingLink to={inlineCtaHref}>
                             <MessageCircle className="h-4 w-4" />
                             {t("blog_inline_cta_button")}
-                          </Link>
+                          </BookingLink>
                         </Button>
                       </div>
                     )}
@@ -339,10 +340,10 @@ const BlogPostPage = () => {
                   size="lg"
                   className="mt-6 rounded-full px-10 bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
                 >
-                  <Link to="/fun-dive-booking">
+                  <BookingLink to="/fun-dive-booking">
                     <MessageCircle className="h-5 w-5" />
                     {t("blog_cta_button")}
-                  </Link>
+                  </BookingLink>
                 </Button>
               </div>
 

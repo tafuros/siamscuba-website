@@ -329,7 +329,74 @@ describe("buildBookingUrl - handoff to the DiveOS web wizard", () => {
   });
 });
 
+// The iOS/privacy-safe click ids. Google sends one of these INSTEAD of a gclid,
+// so forwarding gclid alone loses the whole iPhone half of every campaign and
+// files it as organic - the bucket that pays a commission. DiveOS already
+// forwards them (backend lib/leadFormUrl.ts) and already classifies them as
+// paid (backend lib/leadSource.ts isPaidAttribution); this site was the gap.
+describe("wbraid / gbraid - the iOS clicks that carry no gclid", () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+    localStorage.clear();
+  });
+
+  it("forwards wbraid from the incoming URL to the wizard", () => {
+    const url = new URL(buildBookingUrl("?wbraid=WB_123&utm_source=google&utm_medium=cpc"));
+    expect(url.searchParams.get("wbraid")).toBe("WB_123");
+    expect(url.searchParams.get("gclid")).toBeNull();
+  });
+
+  it("forwards gbraid too", () => {
+    expect(
+      new URL(buildBookingUrl("?gbraid=GB_456")).searchParams.get("gbraid"),
+    ).toBe("GB_456");
+  });
+
+  it("backfills a stored wbraid onto a bare CTA", () => {
+    sessionStorage.setItem("siam_wbraid", "WB_STORED");
+    expect(
+      new URL(buildBookingUrl("")).searchParams.get("wbraid"),
+    ).toBe("WB_STORED");
+  });
+
+  it("an explicit wbraid on the URL beats the stored one", () => {
+    sessionStorage.setItem("siam_wbraid", "WB_STORED");
+    expect(
+      new URL(buildBookingUrl("?wbraid=WB_FRESH")).searchParams.get("wbraid"),
+    ).toBe("WB_FRESH");
+  });
+
+  it("THE CLASSIFICATION FIX: an iOS ad click counts as PAID, not organic", () => {
+    expect(isCampaignTraffic("?wbraid=WB_1")).toBe(true);
+    expect(isCampaignTraffic("?gbraid=GB_1")).toBe(true);
+    // ...even with no utm tags at all, which is exactly how they arrive.
+    expect(isCampaignTraffic("?wbraid=WB_1", { includeStored: false })).toBe(true);
+  });
+
+  it("a stored iOS click id classifies later in-site pages as paid too", () => {
+    sessionStorage.setItem("siam_gbraid", "GB_1");
+    expect(isCampaignTraffic("")).toBe(true);
+    expect(isCampaignTraffic("", { includeStored: false })).toBe(false);
+  });
+
+  it("the wizard iframe carries them through as well", () => {
+    const url = new URL(buildWizardIframeSrc("?wbraid=WB_1&utm_passthrough=1"));
+    expect(url.searchParams.get("wbraid")).toBe("WB_1");
+    expect(url.searchParams.get("utm_passthrough")).toBeNull();
+  });
+
+  it("the storage opt-out still suppresses the stored half", () => {
+    sessionStorage.setItem("siam_wbraid", "WB_STORED");
+    expect(buildWizardIframeSrc("?utm_passthrough=0")).toBe(WEB_WIZARD_URL);
+  });
+});
+
 describe("withAttribution - internal navigation", () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+    localStorage.clear();
+  });
+
   it("carries utm params and gclid onto an internal path", () => {
     const href = withAttribution(
       "/open-water-course",
@@ -343,6 +410,15 @@ describe("withAttribution - internal navigation", () => {
     expect(url.searchParams.get("irrelevant")).toBeNull();
   });
 
+  it("carries the iOS click ids too - they arrive with no gclid at all", () => {
+    const url = new URL(
+      withAttribution("/open-water-course", "?wbraid=WB_1&gbraid=GB_1"),
+      "https://siamscuba.com",
+    );
+    expect(url.searchParams.get("wbraid")).toBe("WB_1");
+    expect(url.searchParams.get("gbraid")).toBe("GB_1");
+  });
+
   it("leaves a path untouched when there is nothing to attribute", () => {
     expect(withAttribution("/open-water-course", "")).toBe("/open-water-course");
   });
@@ -351,5 +427,38 @@ describe("withAttribution - internal navigation", () => {
     expect(withAttribution("/fun-dives?product=FUN", "?gclid=ABC")).toBe(
       "/fun-dives?product=FUN&gclid=ABC",
     );
+  });
+
+  // THE POINT OF WIRING THIS UP: an in-site page's own URL is bare, so without
+  // the storage backfill an internal CTA opened in a new tab lands unattributed.
+  it("backfills first-touch storage onto a bare in-site URL", () => {
+    seedFirstTouch();
+    const url = new URL(
+      withAttribution("/fun-dive-booking", ""),
+      "https://siamscuba.com",
+    );
+    expect(url.searchParams.get("gclid")).toBe("GCL_ABC123");
+    expect(url.searchParams.get("utm_source")).toBe("google");
+    expect(url.searchParams.get("utm_medium")).toBe("cpc");
+  });
+
+  it("explicit params on the current URL beat the stored first touch", () => {
+    seedFirstTouch();
+    const url = new URL(
+      withAttribution("/fun-dive-booking", "?utm_source=meta&gclid=FRESH"),
+      "https://siamscuba.com",
+    );
+    expect(url.searchParams.get("utm_source")).toBe("meta");
+    expect(url.searchParams.get("gclid")).toBe("FRESH");
+  });
+
+  it("respects the storage opt-out and the SSG-safe includeStored:false", () => {
+    seedFirstTouch();
+    expect(withAttribution("/fun-dive-booking", "?utm_passthrough=0")).toBe(
+      "/fun-dive-booking",
+    );
+    expect(
+      withAttribution("/fun-dive-booking", "", { includeStored: false }),
+    ).toBe("/fun-dive-booking");
   });
 });
