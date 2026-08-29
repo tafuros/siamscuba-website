@@ -117,16 +117,16 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       payment: [
         "First dive: 2,600 THB",
         "Loved it? Add a second dive for just 1,000 THB (no commitment upfront!)",
-        "Booking deposit: 2,600 THB (payable via Bit) - refunded on dive day, pay at the club",
+        "Booking deposit: 1,000 THB (payable via Bit) - deducted on dive day, pay the rest at the club",
         "Payment methods: Cash, Bit, PayBox, bank transfer, credit card (+3.5%)",
         "Deposit is non-refundable ❌",
         "Reschedule up to 12 hours before",
       ],
       extras: [
         "🛌 Accommodation available - 500 THB per night",
-        "📸 Underwater video & photos - 1,300-2,000 THB",
+        "📸 Underwater video & photos - priced with the team at the shop",
       ],
-      price: "2,600 / 3,600 THB",
+      price: "2,600 THB (+1,000 optional 2nd dive)",
       nextStep: "Loved it? Continue to Open Water course - just 2 more days of diving to get certified! 🐠💙",
     },
     "Open Water Diver": {
@@ -480,16 +480,16 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       payment: [
         "צלילה ראשונה: 2,600 THB",
         "אהבתם? אפשר להוסיף צלילה שנייה ב-1,000 THB בלבד (בלי התחייבות מראש!)",
-        "מקדמת הזמנה: 2,600 THB (לתשלום ב-Bit) - מוחזרת ביום הצלילה, משלמים במועדון",
+        "מקדמת הזמנה: 1,000 THB (לתשלום ב-Bit) - מתקזזת ביום הצלילה, את היתרה משלמים במועדון",
         "אמצעי תשלום: מזומן, Bit, PayBox, העברה בנקאית, כרטיס אשראי (3.5%+)",
         "המקדמה אינה ניתנת להחזר ❌",
         "אפשר לשנות מועד עד 12 שעות מראש",
       ],
       extras: [
         "🛌 לינה זמינה - 500 THB ללילה",
-        "📸 וידאו ותמונות מתחת למים - 1,300-2,000 THB",
+        "📸 וידאו ותמונות מתחת למים - סוגרים מחיר עם הצוות במועדון",
       ],
-      price: "2,600 / 3,600 THB",
+      price: "2,600 THB (+1,000 לצלילה שנייה)",
       nextStep: "אהבתם? המשיכו לקורס Open Water - רק עוד יומיים של צלילה כדי לקבל הסמכה! 🐠💙",
     },
     "Open Water Diver": {
@@ -843,16 +843,16 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       payment: [
         "Primera inmersión: 2,600 THB",
         "¿Te encantó? Añade una segunda inmersión por solo 1,000 THB (¡sin compromiso por adelantado!)",
-        "Depósito de reserva: 2,600 THB (pagadero por Bit): se devuelve el día de la inmersión, pagas en el club",
+        "Depósito de reserva: 1,000 THB (pagadero por Bit): se descuenta el día de la inmersión, el resto lo pagas en el club",
         "Métodos de pago: efectivo, Bit, PayBox, transferencia bancaria, tarjeta de crédito (+3,5%)",
         "El depósito no es reembolsable ❌",
         "Puedes reprogramar hasta 12 horas antes",
       ],
       extras: [
         "🛌 Alojamiento disponible: 500 THB por noche",
-        "📸 Vídeo y fotos submarinas: 1,300-2,000 THB",
+        "📸 Vídeo y fotos submarinas: el precio se acuerda con el equipo en el club",
       ],
-      price: "2,600 / 3,600 THB",
+      price: "2,600 THB (+1,000 segunda inmersión opcional)",
       nextStep: "¿Te encantó? Continúa con el curso Open Water: ¡solo 2 días más de buceo para certificarte! 🐠💙",
     },
     "Open Water Diver": {
@@ -1206,16 +1206,16 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       payment: [
         "Première plongée : 2,600 THB",
         "Vous avez adoré ? Ajoutez une deuxième plongée pour seulement 1,000 THB (sans engagement à l'avance !)",
-        "Acompte de réservation : 2,600 THB (payable via Bit) - remboursé le jour de la plongée, vous payez au club",
+        "Acompte de réservation : 1,000 THB (payable via Bit) - déduit le jour de la plongée, vous payez le reste au club",
         "Moyens de paiement : espèces, Bit, PayBox, virement bancaire, carte de crédit (+3,5%)",
         "L'acompte n'est pas remboursable ❌",
         "Report possible jusqu'à 12 heures avant",
       ],
       extras: [
         "🛌 Hébergement disponible - 500 THB par nuit",
-        "📸 Vidéo et photos sous-marines - 1,300-2,000 THB",
+        "📸 Vidéo et photos sous-marines - tarif à convenir avec l'équipe au club",
       ],
-      price: "2,600 / 3,600 THB",
+      price: "2,600 THB (+1,000 pour une 2e plongée en option)",
       nextStep: "Vous avez adoré ? Poursuivez avec le cours Open Water : seulement 2 jours de plongée de plus pour être certifié ! 🐠💙",
     },
     "Open Water Diver": {
