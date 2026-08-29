@@ -140,11 +140,11 @@ export interface LeadFormCopy {
 const DSD_EN: LanderCopy = {
   seoTitle: "Discover Scuba Diving in Koh Tao - from 2,600 THB | Siam Scuba",
   seoDescription:
-    "Try scuba diving in Koh Tao - 2,600 THB for your first ocean dive, all gear and PADI instructor included. Add a second dive the same day for 3,600 THB total. Small groups, two custom boats, no certification needed.",
+    "Try scuba diving in Koh Tao - 2,600 THB for your first ocean dive, all gear and PADI instructor included. Add a second dive the same day for just +1,000 THB. Small groups, two custom boats, no certification needed.",
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Try scuba diving in Koh Tao - 2,600 THB",
   heroSubhead:
-    "No certification needed. A PADI instructor takes you from your first breath in shallow sheltered sea to a real ocean dive on Koh Tao's reefs - all in one day. Want a second dive the same day? 3,600 THB total.",
+    "No certification needed. A PADI instructor takes you from your first breath in shallow sheltered sea to a real ocean dive on Koh Tao's reefs - all in one day. Want a second dive the same day? Just +1,000 THB.",
   ctaPrimary: "Book your Discover Scuba day",
   ctaSecondary: "Or chat on WhatsApp",
   uspHeadline: "Why try diving with Siam Scuba",
@@ -168,7 +168,7 @@ const DSD_EN: LanderCopy = {
   ],
   pricingHeadline: "What's included",
   pricing: {
-    price: "2,600 / 3,600 THB",
+    price: "2,600 THB (+1,000 optional 2nd dive)",
     perWhat: "1 dive / 2 dives, all in",
     includes: [
       "Full day with a PADI instructor (English, Spanish, Hebrew spoken)",
@@ -182,7 +182,7 @@ const DSD_EN: LanderCopy = {
     excludes: [
       "Hotel pickup",
       "Accommodation (add 500 THB / night)",
-      "Photos & video (add 1,300-2,000 THB)",
+      "Photos & video (optional - priced with the team at the shop)",
     ],
   },
   socialProofHeadline: "778 reviews. 5.0 stars on TripAdvisor.",
@@ -223,17 +223,17 @@ const DSD_EN: LanderCopy = {
     },
   ],
   closingCtaHeadline: "One day, one dive, 2,600 THB.",
-  closingCtaSubhead: "Or two dives for 3,600 THB. WhatsApp us - we'll find you a slot this week.",
+  closingCtaSubhead: "Add a second dive for just +1,000 THB. WhatsApp us - we'll find you a slot this week.",
 };
 
 const DSD_ES: LanderCopy = {
   seoTitle: "Discover Scuba Diving en Koh Tao - desde 2,600 THB | Siam Scuba",
   seoDescription:
-    "Prueba el buceo en Koh Tao - 2,600 THB tu primera inmersión en el mar, equipo e instructor PADI incluidos. Añade una segunda inmersión el mismo día por 3,600 THB en total. Grupos pequeños, dos barcos propios, sin certificación previa.",
+    "Prueba el buceo en Koh Tao - 2,600 THB tu primera inmersión en el mar, equipo e instructor PADI incluidos. Añade una segunda inmersión el mismo día por solo +1,000 THB. Grupos pequeños, dos barcos propios, sin certificación previa.",
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Prueba el buceo en Koh Tao - 2,600 THB",
   heroSubhead:
-    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración en mar poco profundo y resguardado hasta una inmersión real en los arrecifes de Koh Tao, todo en un día. ¿Quieres una segunda inmersión el mismo día? 3,600 THB en total.",
+    "Sin certificación previa. Un instructor PADI te lleva desde tu primera respiración en mar poco profundo y resguardado hasta una inmersión real en los arrecifes de Koh Tao, todo en un día. ¿Quieres una segunda inmersión el mismo día? Solo +1,000 THB más.",
   ctaPrimary: "Reserva tu día de buceo",
   ctaSecondary: "O chatea por WhatsApp",
   uspHeadline: "Por qué bucear con Siam Scuba",
@@ -257,7 +257,7 @@ const DSD_ES: LanderCopy = {
   ],
   pricingHeadline: "Qué incluye",
   pricing: {
-    price: "2,600 / 3,600 THB",
+    price: "2,600 THB (+1,000 segunda inmersión opcional)",
     perWhat: "1 inmersión / 2 inmersiones, todo incluido",
     includes: [
       "Día completo con instructor PADI (hablamos español)",
@@ -271,7 +271,7 @@ const DSD_ES: LanderCopy = {
     excludes: [
       "Recogida en hotel",
       "Alojamiento (+500 THB/noche)",
-      "Fotos y vídeo (+1.300-2.000 THB)",
+      "Fotos y vídeo (opcional - se cotiza con el equipo en la tienda)",
     ],
   },
   socialProofHeadline: "778 reseñas. 5,0 estrellas en TripAdvisor.",
@@ -312,17 +312,17 @@ const DSD_ES: LanderCopy = {
     },
   ],
   closingCtaHeadline: "Un día, una inmersión, 2,600 THB.",
-  closingCtaSubhead: "O dos inmersiones por 3,600 THB. Escríbenos por WhatsApp - te buscamos hueco esta semana.",
+  closingCtaSubhead: "Añade una segunda inmersión por solo +1,000 THB. Escríbenos por WhatsApp - te buscamos hueco esta semana.",
 };
 
 const DSD_HE: LanderCopy = {
   seoTitle: "צלילת היכרות בקוטאו - החל מ-2,600 THB | סיאם סקובה",
   seoDescription:
-    "תנסו צלילה בקוטאו - 2,600 THB לצלילה הראשונה בים, כל הציוד ומדריך PADI כלולים. אפשר להוסיף צלילה שנייה באותו יום ב-3,600 THB סה\"כ. קבוצות קטנות, שתי סירות פרטיות, ללא הסמכה קודמת.",
+    "תנסו צלילה בקוטאו - 2,600 THB לצלילה הראשונה בים, כל הציוד ומדריך PADI כלולים. אפשר להוסיף צלילה שנייה באותו יום בתוספת 1,000 THB בלבד. קבוצות קטנות, שתי סירות פרטיות, ללא הסמכה קודמת.",
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "צלילת היכרות בקוטאו - 2,600 THB",
   heroSubhead:
-    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה בים רדוד ומוגן עד צלילה אמיתית בשונית של קוטאו - הכל ביום אחד. רוצים צלילה שנייה באותו יום? 3,600 THB סה\"כ.",
+    "ללא הסמכה קודמת. מדריך PADI לוקח אתכם מהנשימה הראשונה בים רדוד ומוגן עד צלילה אמיתית בשונית של קוטאו - הכל ביום אחד. רוצים צלילה שנייה באותו יום? תוספת של 1,000 THB בלבד.",
   ctaPrimary: "הזמינו צלילת היכרות",
   ctaSecondary: "או דברו איתנו ב-WhatsApp",
   uspHeadline: "למה לצלול איתנו",
@@ -346,7 +346,7 @@ const DSD_HE: LanderCopy = {
   ],
   pricingHeadline: "מה כלול",
   pricing: {
-    price: "2,600 / 3,600 THB",
+    price: "2,600 THB (+1,000 לצלילה שנייה)",
     perWhat: "צלילה אחת / שתי צלילות, הכל כלול",
     includes: [
       "יום שלם עם מדריך PADI דובר עברית",
@@ -360,7 +360,7 @@ const DSD_HE: LanderCopy = {
     excludes: [
       "איסוף מהמלון",
       "לינה (תוספת 500 THB ללילה)",
-      "צילום ותמונות (תוספת 1,300-2,000 THB)",
+      "צילום ותמונות (אופציונלי - התמחור מול הצוות בחנות)",
     ],
   },
   socialProofHeadline: "778 ביקורות. 5.0 כוכבים ב-TripAdvisor.",
@@ -401,7 +401,7 @@ const DSD_HE: LanderCopy = {
     },
   ],
   closingCtaHeadline: "יום אחד, צלילה אחת, 2,600 THB.",
-  closingCtaSubhead: "או שתי צלילות ב-3,600 THB. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
+  closingCtaSubhead: "צלילה שנייה בתוספת 1,000 THB בלבד. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
 };
 
 // ---------- OWD (PADI Open Water Diver) ----------
@@ -1053,7 +1053,7 @@ const SAIL_ROCK_EN: LanderCopy = {
     ],
     excludes: [],
   },
-  pricingAddon: "+ ฿500 underwater photo package (optional)",
+  pricingAddon: "+ optional underwater photo package (priced at the shop)",
   socialProofHeadline: "4.9 on Google (845) · 5.0 on TripAdvisor (776).",
   socialProofSubhead: "See what divers say after a day on the Sail Rock boat with us.",
   dayTimelineHeadline: "Your day on the boat",
@@ -1087,7 +1087,7 @@ const SAIL_ROCK_EN: LanderCopy = {
     },
     {
       q: "What's included for 4,000 THB?",
-      a: "3 dives (2x Sail Rock + Shark Island), all gear and tanks, a private boat with experienced guides, breakfast, a Thai lunch buffet, drinks and dive insurance. Photos are an optional +500 THB.",
+      a: "3 dives (2x Sail Rock + Shark Island), all gear and tanks, a private boat with experienced guides, breakfast, a Thai lunch buffet, drinks and dive insurance. Photos are an optional add-on - the team at the shop will price it with you.",
     },
   ],
   closingCtaHeadline: "The next boat leaves",
@@ -1166,7 +1166,7 @@ const SAIL_ROCK_ES: LanderCopy = {
     ],
     excludes: [],
   },
-  pricingAddon: "+ ฿500 paquete de fotos submarinas (opcional)",
+  pricingAddon: "+ paquete de fotos submarinas opcional (se cotiza en la tienda)",
   socialProofHeadline: "4,9 en Google (845) · 5,0 en TripAdvisor (776).",
   socialProofSubhead: "Mira lo que dicen los buceadores tras un día en el barco de Sail Rock.",
   dayTimelineHeadline: "Tu día en el barco",
@@ -1200,7 +1200,7 @@ const SAIL_ROCK_ES: LanderCopy = {
     },
     {
       q: "¿Qué incluye por 4,000 THB?",
-      a: "3 inmersiones (2x Sail Rock + Shark Island), todo el equipo y botellas, barco privado con guías expertos, desayuno, buffet de almuerzo tailandés, bebidas y seguro de buceo. Las fotos son +500 THB opcionales.",
+      a: "3 inmersiones (2x Sail Rock + Shark Island), todo el equipo y botellas, barco privado con guías expertos, desayuno, buffet de almuerzo tailandés, bebidas y seguro de buceo. Las fotos son un extra opcional - el equipo en la tienda te lo cotiza.",
     },
   ],
   closingCtaHeadline: "El próximo barco sale el",
@@ -1279,7 +1279,7 @@ const SAIL_ROCK_HE: LanderCopy = {
     ],
     excludes: [],
   },
-  pricingAddon: "+ ฿500 חבילת תמונות מתחת למים (אופציונלי)",
+  pricingAddon: "+ חבילת תמונות מתחת למים אופציונלית (תמחור בחנות)",
   socialProofHeadline: "4.9 בגוגל (845) · 5.0 בטריפאדוויזר (776).",
   socialProofSubhead: "תראו מה צוללים מספרים אחרי יום על סירת סייל רוק איתנו.",
   dayTimelineHeadline: "היום שלכם על הסירה",
@@ -1313,7 +1313,7 @@ const SAIL_ROCK_HE: LanderCopy = {
     },
     {
       q: "מה כלול ב-4,000 THB?",
-      a: "3 צלילות (2x סייל רוק + שארק איילנד), כל הציוד והבלונים, סירה פרטית עם מדריכים מנוסים, ארוחת בוקר, בופה צהריים תאי, שתייה וביטוח צלילה. תמונות בתוספת 500 THB אופציונלית.",
+      a: "3 צלילות (2x סייל רוק + שארק איילנד), כל הציוד והבלונים, סירה פרטית עם מדריכים מנוסים, ארוחת בוקר, בופה צהריים תאי, שתייה וביטוח צלילה. תמונות הן תוספת אופציונלית - הצוות בחנות יתמחר איתכם.",
     },
   ],
   closingCtaHeadline: "הסירה הבאה יוצאת ב-",
@@ -1371,16 +1371,16 @@ export function landerHreflangAlternates(offer: Offer): Partial<Record<Lang, str
 // the range instead of a single Offer - otherwise the rich result advertises a
 // price the customer cannot actually buy the advertised product for.
 //
-// DSD is exactly that case: 2,600 THB buys ONE dive, 3,600 THB buys TWO, and the
-// visible lander copy says both. The H1 leads with 2,600 (the entry tier, matching
-// `price` below) and the subhead upsells 3,600 (matching `highPrice`), so the rich
-// result and the visible page advertise the same two tiers - keep it that way, a
-// headline price the customer cannot actually buy the product for is flaggable.
+// DSD: 2,600 THB buys the dive; an optional second dive the same day is +1,000
+// (Ben 2026-08-28: never advertise a flat "3,600 total" - lead with 2,600 and
+// frame the second dive as a +1,000 add-on). The rich result is a single Offer
+// at the 2,600 entry price to match the visible copy exactly - no highPrice,
+// so Google never renders a "3,600" the page itself no longer says.
 const PRICES: Record<
   Offer,
   { price: string; highPrice?: string; currency: string; duration: string }
 > = {
-  dsd: { price: "2600", highPrice: "3600", currency: "THB", duration: "P1D" },
+  dsd: { price: "2600", currency: "THB", duration: "P1D" },
   owd: { price: "12000", currency: "THB", duration: "P2DT12H" },
   aow: { price: "11000", currency: "THB", duration: "P1DT12H" },
   "sail-rock": { price: "4000", currency: "THB", duration: "PT8H" },

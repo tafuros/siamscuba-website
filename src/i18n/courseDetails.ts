@@ -138,7 +138,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { day: "Day 3", description: "06:30 - First dive to 18m. 09:00 - Break. 10:00 - Final dive. 11:00 - Back to the club 🎉" },
       ],
       perks: [
-        "Small Groups: Max 6 students per instructor.",
+        "Small Groups: Max 4 students per instructor.",
         "Free Stay: 2 nights of accommodation at our club! 🎁",
         "Instructors in multiple languages 🌍",
       ],

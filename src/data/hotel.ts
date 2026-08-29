@@ -90,8 +90,10 @@ export interface HotelRoom {
   /** "bed" renders the dorm's per-bed price label instead of per-night-per-room. */
   priceUnit?: "bed";
   /**
-   * Under renovation (Ben, 2026-08-18): the room stays visible but shows a
-   * "fully booked" badge instead of a Book button, so guests don't inquire.
+   * Under renovation: the room stays visible but shows an honest
+   * "under renovation - reopening soon" badge instead of a Book button
+   * (Ben, 2026-08-29: say renovation plainly, never "fully booked" -
+   * Nemo says the same, so the two surfaces now agree).
    * Delete the flag when the room reopens.
    */
   soldOut?: true;
@@ -620,7 +622,7 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     priceOnRequest: "Price on request",
     sleeps: (n) => `Sleeps ${n}`,
     book: "Book",
-    fullyBooked: "Fully booked",
+    fullyBooked: "Under renovation - reopening soon",
     requestToBook: "Request to book",
     orWhatsApp: "or chat on WhatsApp",
     bookCheckIn: "Check-in",
@@ -720,7 +722,7 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     priceOnRequest: "מחיר לפי בקשה",
     sleeps: (n) => `עד ${n} אורחים`,
     book: "להזמנה",
-    fullyBooked: "מלא - אין זמינות",
+    fullyBooked: "בשיפוץ - נפתח מחדש בקרוב",
     requestToBook: "בקשת הזמנה",
     orWhatsApp: "או שיחה בוואטסאפ",
     bookCheckIn: "צ'ק-אין",
@@ -844,7 +846,7 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     priceOnRequest: "Precio a consultar",
     sleeps: (n) => `Para ${n} personas`,
     book: "Reservar",
-    fullyBooked: "Completo",
+    fullyBooked: "En renovación - reabre pronto",
     requestToBook: "Solicitar reserva",
     orWhatsApp: "o chatea por WhatsApp",
     bookCheckIn: "Check-in",
@@ -968,7 +970,7 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
     priceOnRequest: "Prix sur demande",
     sleeps: (n) => `Pour ${n} personnes`,
     book: "Réserver",
-    fullyBooked: "Complet",
+    fullyBooked: "En rénovation - rouvre bientôt",
     requestToBook: "Demander à réserver",
     orWhatsApp: "ou discuter sur WhatsApp",
     bookCheckIn: "Check-in",

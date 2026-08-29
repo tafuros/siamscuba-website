@@ -8,14 +8,23 @@
       "duration": "1 day (half day option)",
       "price_thb": 2600,
       "price_thb_one_dive": 2600,
-      "price_thb_two_dives": 3600,
       "price_thb_extra_dive": 1000,
       "certification": false,
       "requires_prior_cert": false,
       "max_depth_m": 12,
-      "description": "First-time dive experience for people with no prior scuba background. One day at the dive center: briefing, gear intro, 4 basic skills in shallow sheltered sea, then a dive to 12m. 2,600 THB for one dive, 3,600 THB for two dives the same day. Personal instructor throughout.",
-      "included": ["1 or 2 ocean dives (your choice)", "personal instructor", "full equipment", "dive insurance", "boat snacks"],
-      "not_included": ["meals", "transport to dive center"]
+      "description": "First-time dive experience for people with no prior scuba background. One day at the dive center: briefing, gear intro, 4 basic skills in shallow sheltered sea, then a dive to 12m. 2,600 THB for the first dive; an optional second dive the same day is +1,000 THB. Max 2 students per instructor - personal attention throughout.",
+      "included": [
+        "1 or 2 ocean dives (your choice)",
+        "personal instructor",
+        "full equipment",
+        "dive insurance",
+        "boat snacks"
+      ],
+      "not_included": [
+        "meals",
+        "transport to dive center"
+      ],
+      "price_thb_second_dive_addon": 1000
     },
     {
       "id": "bubble_maker",
@@ -44,8 +53,15 @@
       "certification": true,
       "requires_prior_cert": false,
       "max_depth_m": 18,
-      "description": "Entry-level PADI certification, valid for life, recognized worldwide. Theory, pool session, 4 open-water dives to 18m. 2 nights on-site accommodation included. Max 6 students per instructor.",
-      "included": ["4 open-water dives", "full equipment", "theory + pool drills", "2 nights accommodation", "PADI certification card", "dive insurance"],
+      "description": "Entry-level PADI certification, valid for life, recognized worldwide. Theory, pool session, 4 open-water dives to 18m. 2 nights on-site accommodation included. Max 4 students per instructor.",
+      "included": [
+        "4 open-water dives",
+        "full equipment",
+        "theory + pool drills",
+        "2 nights accommodation",
+        "PADI certification card",
+        "dive insurance"
+      ],
       "deposit_thb": 2000
     },
     {
@@ -97,7 +113,7 @@
       "id": "wreck",
       "name": "Wreck Diving",
       "duration": "2 days",
-      "price_thb": 8500,
+      "price_thb": 9000,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Advanced Open Water (typical)",
@@ -179,7 +195,10 @@
   "fun_dives": {
     "price_thb": 2000,
     "dives_per_trip": 2,
-    "schedule": ["morning", "afternoon"],
+    "schedule": [
+      "morning",
+      "afternoon"
+    ],
     "level": "Open Water and up - Advanced recommended for the deep pinnacles",
     "morning_meet_time": "05:50",
     "morning_return_time": "11:00",
@@ -218,47 +237,144 @@
     "return_time": "16:00",
     "certification_required": false,
     "description": "Join the dive boat as a snorkeler - explore Koh Tao's reefs from the surface. No certification needed.",
-    "included": ["snorkeling equipment and float", "boat trip", "snacks and fresh fruit on board"]
+    "included": [
+      "snorkeling equipment and float",
+      "boat trip",
+      "snacks and fresh fruit on board"
+    ]
   },
   "weekly_schedule": {
     "_note": "Source of truth for the homepage board (src/data/diveScheduleBoard.ts). Sites listed are the usual plan for each day; conditions on the morning can change them. Runs year-round, weather permitting.",
-    "monday": [{ "trip": "3-Site Day Trip", "sites": ["Southwest Pinnacle", "Sail Rock", "Shark Island"] }],
-    "tuesday": [
-      { "trip": "Morning Fun Dive", "sites": ["Chumphon Pinnacle", "HTMS Suphairin (wreck)"] },
-      { "trip": "Sail Rock Half-Day", "sites": ["Sail Rock", "Sail Rock"] }
+    "monday": [
+      {
+        "trip": "3-Site Day Trip",
+        "sites": [
+          "Southwest Pinnacle",
+          "Sail Rock",
+          "Shark Island"
+        ]
+      }
     ],
-    "wednesday": [{ "trip": "3-Site Day Trip", "sites": ["Southwest Pinnacle", "Samran", "Sail Rock"] }],
+    "tuesday": [
+      {
+        "trip": "Morning Fun Dive",
+        "sites": [
+          "Chumphon Pinnacle",
+          "HTMS Suphairin (wreck)"
+        ]
+      },
+      {
+        "trip": "Sail Rock Half-Day",
+        "sites": [
+          "Sail Rock",
+          "Sail Rock"
+        ]
+      }
+    ],
+    "wednesday": [
+      {
+        "trip": "3-Site Day Trip",
+        "sites": [
+          "Southwest Pinnacle",
+          "Samran",
+          "Sail Rock"
+        ]
+      }
+    ],
     "thursday": [
-      { "trip": "Morning Fun Dive", "sites": ["Chumphon Pinnacle", "Green Rock"] },
-      { "trip": "Sail Rock Half-Day", "sites": ["Sail Rock", "Sail Rock"] }
+      {
+        "trip": "Morning Fun Dive",
+        "sites": [
+          "Chumphon Pinnacle",
+          "Green Rock"
+        ]
+      },
+      {
+        "trip": "Sail Rock Half-Day",
+        "sites": [
+          "Sail Rock",
+          "Sail Rock"
+        ]
+      }
     ],
     "friday": [
-      { "trip": "Morning Fun Dive", "sites": ["Chumphon Pinnacle", "HTMS Suphairin (wreck)"] },
-      { "trip": "Sail Rock Half-Day", "sites": ["Sail Rock", "Sail Rock"] }
+      {
+        "trip": "Morning Fun Dive",
+        "sites": [
+          "Chumphon Pinnacle",
+          "HTMS Suphairin (wreck)"
+        ]
+      },
+      {
+        "trip": "Sail Rock Half-Day",
+        "sites": [
+          "Sail Rock",
+          "Sail Rock"
+        ]
+      }
     ],
-    "saturday": [{ "trip": "3-Site Day Trip", "sites": ["Southwest Pinnacle", "Sail Rock", "Shark Island"] }],
+    "saturday": [
+      {
+        "trip": "3-Site Day Trip",
+        "sites": [
+          "Southwest Pinnacle",
+          "Sail Rock",
+          "Shark Island"
+        ]
+      }
+    ],
     "sunday": [
-      { "trip": "Morning Fun Dive", "sites": ["Chumphon Pinnacle", "HTMS Sattakut (wreck)"] },
-      { "trip": "Sail Rock Half-Day", "sites": ["Sail Rock", "Sail Rock"] }
+      {
+        "trip": "Morning Fun Dive",
+        "sites": [
+          "Chumphon Pinnacle",
+          "HTMS Sattakut (wreck)"
+        ]
+      },
+      {
+        "trip": "Sail Rock Half-Day",
+        "sites": [
+          "Sail Rock",
+          "Sail Rock"
+        ]
+      }
     ],
-    "also_every_day": ["Afternoon Fun Dive", "Night Dive", "Snorkelling"]
+    "also_every_day": [
+      "Afternoon Fun Dive",
+      "Night Dive",
+      "Snorkelling"
+    ]
   },
   "sail_rock_half_day": {
     "price_thb": 3800,
     "dives_per_trip": 2,
     "meet_time": "10:00",
     "return_time": "18:00",
-    "days": ["Tuesday", "Thursday", "Friday", "Sunday"],
+    "days": [
+      "Tuesday",
+      "Thursday",
+      "Friday",
+      "Sunday"
+    ],
     "min_divers": 4,
     "level": "Open Water and up - Advanced recommended",
     "description": "Half-day trip to Sail Rock, two dives on the pinnacle. Sails with a minimum of 4 divers; if the trip does not fill, the customer is refunded in full.",
-    "included": ["2 guided dives at Sail Rock", "full diving equipment", "lunch on the boat", "dive insurance"]
+    "included": [
+      "2 guided dives at Sail Rock",
+      "full diving equipment",
+      "lunch on the boat",
+      "dive insurance"
+    ]
   },
   "sail_rock": {
     "_alias": "Also called the 3-Site Day Trip on the website board.",
     "price_thb": 4000,
     "dives_per_trip": 3,
-    "days": ["Monday", "Wednesday", "Saturday"],
+    "days": [
+      "Monday",
+      "Wednesday",
+      "Saturday"
+    ],
     "meet_time": "07:00",
     "return_time": "17:00",
     "min_divers": 10,
@@ -272,9 +388,9 @@
       "dive insurance",
       "coffee, tea, cookies, fresh fruit"
     ],
-    "photo_package_thb": 1000,
     "open_to": "Open Water (max 18m) and Advanced (to 40m)",
-    "notes": "Best dive site in the Gulf of Thailand. Open-ocean pinnacle between Koh Tao and Koh Phangan, rises 15m above surface, drops to 40m. Seasonal whale shark sightings. Famous for The Chimney swim-through (18m to 5m) and dense schools of barracuda, trevally, batfish."
+    "notes": "Best dive site in the Gulf of Thailand. Open-ocean pinnacle between Koh Tao and Koh Phangan, rises 15m above surface, drops to 40m. Seasonal whale shark sightings. Famous for The Chimney swim-through (18m to 5m) and dense schools of barracuda, trevally, batfish.",
+    "photo_package": "optional - priced with the team at the shop (photos / video / both)"
   },
   "accommodation": {
     "available_on_site": true,
@@ -292,19 +408,71 @@
     "course_director": "Bob Murphy",
     "contact_email": "coursedirectorbob@gmail.com",
     "upcoming": [
-      { "month": "April", "prep_start": "4th", "idc_start": "7th", "ie_date": "21st" },
-      { "month": "May", "prep_start": "2nd", "idc_start": "5th", "ie_date": "19th" },
-      { "month": "June", "prep_start": "6th", "idc_start": "9th", "ie_date": "23rd" },
-      { "month": "July", "prep_start": "4th", "idc_start": "7th", "ie_date": "21st" },
-      { "month": "August", "prep_start": "1st", "idc_start": "4th", "ie_date": "18th" },
-      { "month": "September", "prep_start": "5th", "idc_start": "8th", "ie_date": "22nd" },
-      { "month": "October", "prep_start": "3rd", "idc_start": "6th", "ie_date": "20th" },
-      { "month": "November", "prep_start": "7th", "idc_start": "10th", "ie_date": "24th" },
-      { "month": "December", "prep_start": "Nov 28th", "idc_start": "1st", "ie_date": "15th" }
+      {
+        "month": "April",
+        "prep_start": "4th",
+        "idc_start": "7th",
+        "ie_date": "21st"
+      },
+      {
+        "month": "May",
+        "prep_start": "2nd",
+        "idc_start": "5th",
+        "ie_date": "19th"
+      },
+      {
+        "month": "June",
+        "prep_start": "6th",
+        "idc_start": "9th",
+        "ie_date": "23rd"
+      },
+      {
+        "month": "July",
+        "prep_start": "4th",
+        "idc_start": "7th",
+        "ie_date": "21st"
+      },
+      {
+        "month": "August",
+        "prep_start": "1st",
+        "idc_start": "4th",
+        "ie_date": "18th"
+      },
+      {
+        "month": "September",
+        "prep_start": "5th",
+        "idc_start": "8th",
+        "ie_date": "22nd"
+      },
+      {
+        "month": "October",
+        "prep_start": "3rd",
+        "idc_start": "6th",
+        "ie_date": "20th"
+      },
+      {
+        "month": "November",
+        "prep_start": "7th",
+        "idc_start": "10th",
+        "ie_date": "24th"
+      },
+      {
+        "month": "December",
+        "prep_start": "Nov 28th",
+        "idc_start": "1st",
+        "ie_date": "15th"
+      }
     ],
     "_needs_update": "Dates pulled from CourseDetailDialog 2026 schedule; confirm year and any updates for 2027."
   },
-  "languages": ["English", "Hebrew", "Thai", "Spanish", "French", "German"],
+  "languages": [
+    "English",
+    "Hebrew",
+    "Thai",
+    "Spanish",
+    "French",
+    "German"
+  ],
   "contact": {
     "whatsapp": "+66825068898",
     "instagram": "@siamscuba",
@@ -353,78 +521,174 @@
     {
       "name": "Sail Rock",
       "location": "Between Koh Tao and Koh Phangan (open ocean pinnacle)",
-      "depth_range_m": [5, 40],
+      "depth_range_m": [
+        5,
+        40
+      ],
       "level": "Open Water (to 18m) / Advanced (to 40m)",
-      "highlights": ["The Chimney swim-through (18m to 5m)", "seasonal whale sharks", "dense schools of chevron barracuda, trevally, batfish"],
+      "highlights": [
+        "The Chimney swim-through (18m to 5m)",
+        "seasonal whale sharks",
+        "dense schools of chevron barracuda, trevally, batfish"
+      ],
       "description": "Best dive site in the Gulf of Thailand. Open-ocean granite pinnacle, reached on the dedicated Sail Rock day trip every 3 days."
     },
     {
       "name": "Chumphon Pinnacle",
       "location": "West of Koh Tao",
-      "depth_range_m": [14, 35],
+      "depth_range_m": [
+        14,
+        35
+      ],
       "level": "Advanced Open Water recommended",
-      "highlights": ["giant grouper", "schools of chevron barracuda", "seasonal whale shark sightings"],
+      "highlights": [
+        "giant grouper",
+        "schools of chevron barracuda",
+        "seasonal whale shark sightings"
+      ],
       "description": "Cluster of submerged granite peaks dropping to 35m. Famous for pelagic life. Currents can be strong."
     },
     {
       "name": "Japanese Gardens",
       "location": "Between Koh Tao and Koh Nang Yuan",
-      "depth_range_m": [1, 12],
+      "depth_range_m": [
+        1,
+        12
+      ],
       "level": "All levels, great for beginners and snorkelling",
-      "highlights": ["hard and soft coral garden", "clownfish in anemones", "pufferfish", "blue-spotted stingrays", "occasional hawksbill turtles"],
+      "highlights": [
+        "hard and soft coral garden",
+        "clownfish in anemones",
+        "pufferfish",
+        "blue-spotted stingrays",
+        "occasional hawksbill turtles"
+      ],
       "description": "Shallow, sheltered coral garden. Common Open Water training site."
     },
     {
       "name": "Shark Island",
       "location": "South-east of Koh Tao",
-      "depth_range_m": [5, 25],
+      "depth_range_m": [
+        5,
+        25
+      ],
       "level": "Open Water+",
-      "highlights": ["boulders covered in coral", "reef fish", "occasional turtles"],
+      "highlights": [
+        "boulders covered in coral",
+        "reef fish",
+        "occasional turtles"
+      ],
       "description": "Bonus site paired with the Sail Rock day trip (3rd dive of the day)."
     },
     {
       "name": "White Rock",
       "location": "West side of Koh Tao",
-      "depth_range_m": [5, 20],
+      "depth_range_m": [
+        5,
+        20
+      ],
       "level": "All levels",
-      "highlights": ["resident hawksbill turtles (very reliable)", "coral-covered boulders", "reef fish"],
+      "highlights": [
+        "resident hawksbill turtles (very reliable)",
+        "coral-covered boulders",
+        "reef fish"
+      ],
       "description": "One of the most visited sites on Koh Tao. Large enough for a full 50-minute dive without repeating ground."
     },
     {
       "name": "Twins / Twin Peaks",
       "location": "Off Koh Nang Yuan",
-      "depth_range_m": [5, 18],
+      "depth_range_m": [
+        5,
+        18
+      ],
       "level": "All levels",
-      "highlights": ["two pinnacles", "anemone fields", "batfish", "suitable for Open Water training"],
+      "highlights": [
+        "two pinnacles",
+        "anemone fields",
+        "batfish",
+        "suitable for Open Water training"
+      ],
       "description": "Two rocky pinnacles close together, popular for Open Water course dives."
     },
     {
       "name": "Southwest Pinnacle (SW Pinnacle)",
       "location": "South-west of Koh Tao",
-      "depth_range_m": [8, 30],
+      "depth_range_m": [
+        8,
+        30
+      ],
       "level": "Advanced",
-      "highlights": ["granite pinnacles", "barracuda schools", "occasional whale sharks"],
+      "highlights": [
+        "granite pinnacles",
+        "barracuda schools",
+        "occasional whale sharks"
+      ],
       "description": "Deeper pinnacle dive, similar profile to Chumphon. Often paired with morning fun dives."
     }
   ],
   "marine_life_notes": {
-    "commonly_seen": ["turtles (hawksbill, green)", "chevron barracuda", "giant grouper", "pufferfish", "clownfish", "batfish", "blue-spotted stingrays"],
-    "seasonal": ["whale sharks (Sail Rock and Chumphon Pinnacle, seasonal)"],
-    "not_present": ["reef sharks (none on local Koh Tao sites)"],
+    "commonly_seen": [
+      "turtles (hawksbill, green)",
+      "chevron barracuda",
+      "giant grouper",
+      "pufferfish",
+      "clownfish",
+      "batfish",
+      "blue-spotted stingrays"
+    ],
+    "seasonal": [
+      "whale sharks (Sail Rock and Chumphon Pinnacle, seasonal)"
+    ],
+    "not_present": [
+      "reef sharks (none on local Koh Tao sites)"
+    ],
     "coral_status": "Recovering thanks to ongoing conservation efforts; not pristine but actively regrowing."
   },
   "getting_here": {
     "island": "Koh Tao, Surat Thani province, Thailand",
     "nearest_airports": [
-      { "name": "Koh Samui (USM)", "notes": "Closest airport, then ferry to Koh Tao (~1.5-2h by Lomprayah)" },
-      { "name": "Surat Thani (URT)", "notes": "Cheaper flights, then bus + ferry combo" },
-      { "name": "Chumphon (CJM)", "notes": "Small airport on the mainland, then Lomprayah or Songserm ferry (~1.5-2h)" },
-      { "name": "Bangkok (BKK / DMK)", "notes": "Overnight bus/train to Chumphon, then ferry" }
+      {
+        "name": "Koh Samui (USM)",
+        "notes": "Closest airport, then ferry to Koh Tao (~1.5-2h by Lomprayah)"
+      },
+      {
+        "name": "Surat Thani (URT)",
+        "notes": "Cheaper flights, then bus + ferry combo"
+      },
+      {
+        "name": "Chumphon (CJM)",
+        "notes": "Small airport on the mainland, then Lomprayah or Songserm ferry (~1.5-2h)"
+      },
+      {
+        "name": "Bangkok (BKK / DMK)",
+        "notes": "Overnight bus/train to Chumphon, then ferry"
+      }
     ],
     "ferry_operators": [
-      { "name": "Lomprayah", "type": "High-speed catamaran", "routes": ["Chumphon <-> Koh Tao", "Koh Samui / Koh Phangan <-> Koh Tao"] },
-      { "name": "Songserm", "type": "Slower ferry", "routes": ["Chumphon <-> Koh Tao", "Koh Samui <-> Koh Tao"] },
-      { "name": "Seatran Discovery", "type": "Ferry", "routes": ["Koh Samui / Koh Phangan <-> Koh Tao"] }
+      {
+        "name": "Lomprayah",
+        "type": "High-speed catamaran",
+        "routes": [
+          "Chumphon <-> Koh Tao",
+          "Koh Samui / Koh Phangan <-> Koh Tao"
+        ]
+      },
+      {
+        "name": "Songserm",
+        "type": "Slower ferry",
+        "routes": [
+          "Chumphon <-> Koh Tao",
+          "Koh Samui <-> Koh Tao"
+        ]
+      },
+      {
+        "name": "Seatran Discovery",
+        "type": "Ferry",
+        "routes": [
+          "Koh Samui / Koh Phangan <-> Koh Tao"
+        ]
+      }
     ],
     "pier_on_koh_tao": "Mae Haad",
     "dive_center_location": "Sairee Beach (short taxi or songthaew from Mae Haad pier, ~5-10 min)",

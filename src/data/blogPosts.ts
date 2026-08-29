@@ -565,14 +565,14 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Honest price breakdown for every PADI course on Koh Tao",
         paragraphs: [
           "Here's what each course costs at Siam Scuba in 2026. Every price below includes all gear rental, boat trips, certification fees, and tax. No surcharges added at the shop.",
-          "Discover Scuba Diving: ฿2,600 for one dive, ฿3,600 for two - One day, no certification. An easy shallow-water start plus your ocean dives in calm water. Best if you're not sure you'll like diving.",
+          "Discover Scuba Diving: ฿2,600 for the first dive, +฿1,000 for an optional second the same day - One day, no certification. An easy shallow-water start plus your ocean dives in calm water. Best if you're not sure you'll like diving.",
           "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
           "PADI Open Water Diver: ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
           "PADI Advanced Open Water: ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,500 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
-          "Wreck Diver / Deep Diver / Sidemount / DPV: each runs ฿7,000-฿9,500 depending on dive count.",
+          "Wreck Diver and Deep Diver are ฿9,000 each. Sidemount and DPV are priced on request - ask the team.",
           "PADI Divemaster: ฿38,500 - 4-8 weeks, includes a free internship period. Your first professional certification.",
           "PADI Underwater Photography & Videography: ฿37,000 - 5 days, 10 dives, 1-on-1 instruction.",
           "PADI IDC (Instructor Development Course): price on request. We're a 5 Star IDC Centre, so you can train all the way from Open Water to Instructor at the same shop.",
@@ -604,7 +604,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "Total budget by goal: from try-dive to professional",
         paragraphs: [
-          "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (฿3,600 for two dives) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
+          "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (an optional second dive is +฿1,000) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
           "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿2,000 = ฿25,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
           "Pro pathway: ฿38,500 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿80,000-฿120,000 over 6-8 weeks. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",

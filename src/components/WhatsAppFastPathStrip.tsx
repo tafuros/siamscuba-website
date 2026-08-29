@@ -20,7 +20,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 // Fast-path number. Swaps to the dedicated Nemo number at cutover - change
 // this ONE line only. (Intentionally separate from WHATSAPP_NUMBER in
 // utils/whatsapp.ts, which stays on the shop line.)
-export const FASTPATH_WHATSAPP_NUMBER = "972528641581";
+export const FASTPATH_WHATSAPP_NUMBER = "66825068898";
 
 // Mid-form base message - Ben's exact requirement. Nemo pattern-matches on
 // "before I finish the booking form" to route this as a mid-form assist.
