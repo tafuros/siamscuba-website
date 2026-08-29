@@ -1,7 +1,13 @@
 # GA4 conversion events via GTM - wiring spec (siamscuba.com)
 
-Status: code side SHIPPED (branch `fix/ga4-conversion-events-datalayer`). GTM side
-is this ~10-minute clicklist. Companion to `docs/meta-pixel-gtm-spec.md`.
+Status: **container GTM-TN3SM66Q is BUILT AND PUBLISHED** (verified 2026-08-29 by
+reading the live `gtm.js`: Google Tag for `G-5WHV1MM0DR`, 11 DLVs, 5 custom-event
+predicates, 5 GA4 event tags with the param maps below). The clicklist in section
+"GTM build steps" is therefore a RECORD of what was built, not an open task.
+
+A follow-on defect - the gtag-shim double-fire - was found and fixed on
+2026-08-29; see "Defect: the gtag-shim double-fire" below before touching any
+tracking code. Companion to `docs/meta-pixel-gtm-spec.md`.
 
 ## The bug this fixes
 
@@ -59,6 +65,88 @@ that.
 
 All events also carry the UTM passthrough fields (`campaign_source`, `campaign_medium`,
 `campaign_name`, `campaign_content`, `campaign_term`) when a stored UTM exists.
+
+## Defect: the gtag-shim double-fire (found + fixed 2026-08-29)
+
+**Symptom.** Every GA4 conversion was counted **twice**. GA4 property 527567742
+recorded 2 x `whatsapp_fastpath_click` for Ben's single click on 2026-08-29, and
+4 x `whatsapp_click` for two clicks on 2026-08-28.
+
+**Cause.** `index.html` defines the standard shim:
+
+```js
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+```
+
+GTM's **gtag interop** turns an `arguments` push of `["event", name, params]`
+into a GTM event literally named `name`. Verified live against the published
+container:
+
+```js
+gtag('event','__probe_args_<ts>',{})
+  -> google_tag_manager['GTM-TN3SM66Q'].dataLayer.get('event') === '__probe_args_<ts>'  // true
+dataLayer.push({event:'__probe_obj_<ts>'})
+  -> same                                                                              // true
+```
+
+So `gtag("event","purchase",…)` fires the **same** Custom Event trigger as
+`dataLayer.push({event:"purchase"})`. `src/utils/tracking.ts` was doing both for
+the same name, so each GA4 tag fired twice per user action.
+
+> An earlier version of this doc (and a comment in `tracking.ts`) claimed on-page
+> `gtag('event',…)` calls "only hit the Google Ads account". **That was wrong**
+> and it is what allowed the duplicate to be written. Both push shapes reach GTM.
+
+**Were the bare `gtag('event', <name>)` calls load-bearing?** No - checked before
+deleting:
+
+- **Google Ads:** a conversion is only recorded for an event carrying
+  `send_to: AW-…/<label>`. Those are the *separate* `gtag("event","conversion",…)`
+  calls, which were **not** touched. A bare `gtag("event","purchase",…)` with no
+  `send_to` produces no Ads conversion.
+- **GA4:** `G-5WHV1MM0DR` is not configured in the on-page gtag context
+  (`index.html` configs only `AW-18357382437`), so the bare call never delivered
+  a direct GA4 hit. Confirmed arithmetically: the observed count was exactly
+  **2**, not 3 - i.e. two GTM trigger firings and no direct delivery.
+
+**Fix (option A - delete the duplicates).** Removed the redundant bare
+`gtag("event", <name>, …)` calls from `src/utils/tracking.ts`, keeping every
+`send_to` conversion ping. Each event now reaches GTM by exactly one path,
+`pushDataLayer()`.
+
+De-duplicated: `whatsapp_click`, `whatsapp_fastpath_click`, `generate_lead`,
+`purchase`, `booking_pay_later`, and `book_now_click` (the last had no GA4 tag,
+so it was a latent rather than live double-count).
+
+Option B (renaming the dataLayer events to a `ga4_*` namespace) was rejected: it
+requires editing the 5 published GTM triggers, and Ben's Google account currently
+has **no Tag Manager access at all**, so it could not be completed.
+
+**Guard.** `src/test/ga4-datalayer.test.ts` now stubs `window.gtag` with the
+*real* shim (`dataLayer.push(arguments)`) and asserts each event name reaches GTM
+exactly once, plus that the Ads `send_to` pings survive. On the unfixed code those
+tests fail with `expected 2 to be 1`.
+
+**Rule going forward:** an event may reach the dataLayer by **one** path only. If
+GTM has a tag for it, use `pushDataLayer()` and never also call
+`gtag("event", <same name>, …)`. See the TRAP comment on `gtag()` in
+`src/utils/tracking.ts`.
+
+### Side notes from the same investigation
+
+- Container predicates are exactly `gtm.js` + the 5 event names. There is **no**
+  trigger on `conversion`, so the Ads pings cost no GA4 event. Never create one.
+- `meta_event` has **0** occurrences in the live container - the Meta Pixel relay
+  tags in `docs/meta-pixel-gtm-spec.md` are **not built**, so `fbq()` calls from
+  `tracking.ts` currently go nowhere.
+- `book_now_click` has no GA4 tag. If one is added, its DLV set is
+  `location`, `product`, `url` + the campaign fields.
+- Deleting the bare `purchase` gtag also removed the only `items[]` array in the
+  codebase. It was inert (Ads-bound, and GA4's tag maps flat params), but GA4
+  ecommerce/revenue reporting would need `items` reconstructed in the GTM tag.
+- `whatsapp_fastpath_click` and `book_now_click` now carry the campaign fields on
+  the dataLayer too (they previously only rode the deleted gtag call).
 
 ## GTM build steps (~10 minutes)
 
