@@ -25,9 +25,13 @@ const LanguageSwitcher = () => {
   const handlePick = (lang: Language) => {
     setLanguage(lang);
     const target = localizedPath(pathname, lang);
-    // No translated twin (blog posts, dive sites, booking): stay put and let
-    // the i18n context translate the page in place. Navigating to a guessed
-    // path would hard-404 on Vercel.
+    // null = stay put and let the i18n context translate the page in place.
+    // Two different cases return null, and both must stay put:
+    //   - no translated twin at all (blog posts, dive sites, booking) - guessing
+    //     a path would hard-404 on Vercel;
+    //   - the page already renders every language itself (the homepage) - see
+    //     SELF_TRANSLATING in localeRoutes.ts. Jumping from "/" to /he sent the
+    //     visitor to a Hebrew guide article instead of translating the homepage.
     if (target && target !== pathname) navigate(target);
   };
 

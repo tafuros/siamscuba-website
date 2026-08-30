@@ -44,6 +44,29 @@ export const LOCALE_FAMILIES: Partial<Record<Language, string>>[] = [
 
 const SITE_URL = "https://siamscuba.com";
 
+/**
+ * Paths that render EVERY language themselves, out of the i18n context.
+ *
+ * Only "/" qualifies, and it is the whole reason this set exists. The
+ * { en: "/", he: "/he", es: "/es" } row above is an hreflang cluster, NOT a set
+ * of translated twins: /he and /es are standalone long-form guides (both
+ * schema.org Article - "צלילה בקוטאו - המדריך הישראלי השלם" and "Buceo en Koh
+ * Tao - la guia completa en espanol") written for Israeli and Spanish
+ * searchers, while "/" is the homepage, which already renders in all four
+ * languages through t().
+ *
+ * So the switcher must not navigate AWAY from "/". Tapping the Hebrew flag on
+ * the homepage threw the visitor into a 2,000-word guide article instead of
+ * translating the page they were reading - reported 2026-08-30, introduced
+ * 2026-08-06 in c0b005a when the switcher first learned to route.
+ *
+ * Navigating INTO "/" stays correct and is deliberately still allowed: /he and
+ * /es carry hardcoded single-language copy and cannot translate themselves, so
+ * the homepage is the only honest destination when a visitor leaves one of
+ * them. Hence the check is on the SOURCE path, not on the family.
+ */
+const SELF_TRANSLATING = new Set(["/"]);
+
 /** Strip a trailing slash so "/es/fun-dives/" matches "/es/fun-dives". */
 const normalize = (pathname: string) =>
   pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
@@ -102,7 +125,27 @@ export const HOME_HREFLANG_ALTERNATES = hreflangAlternatesFor("/");
  * switch the language" - which is correct for those pages, and is why this
  * returns null instead of guessing a path that would 404 on Vercel.
  */
+/**
+ * The standalone long-form guide written FOR this language, or null when the
+ * language has none (English and French).
+ *
+ * These are the same /he and /es the switcher deliberately stops navigating to
+ * (see SELF_TRANSLATING). They are real pages that rank and convert - Hebrew
+ * and Spanish searchers land on them straight from Google and from ads - but
+ * once the switcher stopped hijacking the flag, NOTHING in the UI linked to
+ * them any more, which is precisely how the campaign landers ended up orphaned
+ * from the internal link graph. The footer links them for a visitor already
+ * reading in that language, which is an honest link (a guide, offered to the
+ * people it was written for) rather than a hijacked language control.
+ */
+export function languageGuidePath(lang: Language): string | null {
+  if (lang !== "he" && lang !== "es") return null;
+  return LOCALE_FAMILIES[0][lang] ?? null;
+}
+
 export function localizedPath(pathname: string, lang: Language): string | null {
+  // A page that translates itself is never left behind - see SELF_TRANSLATING.
+  if (SELF_TRANSLATING.has(normalize(pathname))) return null;
   const family = familyFor(pathname);
   if (!family) return null;
   return family[lang] ?? null;

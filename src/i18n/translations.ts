@@ -24,6 +24,7 @@ type TranslationStrings = {
   nav_boats: string;
   nav_dive_sites: string;
   nav_conservation: string;
+  nav_language_guide: string;
   nav_koh_tao_guide: string;
   nav_about: string;
   nav_hotel: string;
@@ -273,6 +274,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_boats: "The Boats",
     nav_dive_sites: "Dive Sites",
     nav_conservation: "Conservation",
+    nav_language_guide: "Koh Tao diving guide",
     nav_koh_tao_guide: "Koh Tao Guide",
     nav_about: "About Us",
     nav_hotel: "Hotel",
@@ -499,6 +501,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_boats: "הסירות",
     nav_dive_sites: "אתרי צלילה",
     nav_conservation: "שימור ימי",
+    nav_language_guide: "המדריך הישראלי לצלילה בקוטאו",
     nav_koh_tao_guide: "מדריך קוטאו",
     nav_about: "אודות",
     nav_hotel: "מלון",
@@ -725,6 +728,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_boats: "Los Barcos",
     nav_dive_sites: "Sitios de Buceo",
     nav_conservation: "Conservación",
+    nav_language_guide: "Guía de buceo en español",
     nav_koh_tao_guide: "Guía Koh Tao",
     nav_about: "Sobre Nosotros",
     nav_hotel: "Hotel",
@@ -951,6 +955,7 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_boats: "Les Bateaux",
     nav_dive_sites: "Sites de Plongée",
     nav_conservation: "Conservation",
+    nav_language_guide: "Guide de plongée à Koh Tao",
     nav_koh_tao_guide: "Guide Koh Tao",
     nav_about: "À Propos",
     nav_hotel: "Hôtel",

@@ -5,7 +5,7 @@ import {
   HOTEL_COPY,
   HOTEL_INFO,
   HOTEL_LANGS,
-  diveSiteHomePath,
+  DIVE_SITE_HOME_PATH,
   hotelPath,
   hotelWhatsAppLink,
   sortedRooms,
@@ -247,7 +247,7 @@ const HotelContent = ({ lang }: HotelContentProps) => {
               <h2 className="font-display text-2xl text-[#072a45] sm:text-3xl">{copy.diveTitle}</h2>
               <p className="text-[#072a45]/70">{copy.diveBody}</p>
               <a
-                href={diveSiteHomePath(lang)}
+                href={DIVE_SITE_HOME_PATH}
                 className="inline-flex w-fit items-center gap-2 rounded-full bg-[#0b4a8f] px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#0a3a6b]"
               >
                 {copy.diveCta}
@@ -316,7 +316,7 @@ const HotelContent = ({ lang }: HotelContentProps) => {
             className="h-16 w-auto"
           />
           <p className="text-sm">{copy.footerTagline}</p>
-          <a href={diveSiteHomePath(lang)} className="text-sm text-white hover:underline">
+          <a href={DIVE_SITE_HOME_PATH} className="text-sm text-white hover:underline">
             {copy.footerDiveLink}
           </a>
           <p className="text-xs text-white/40">

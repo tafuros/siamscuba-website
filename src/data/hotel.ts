@@ -1191,15 +1191,25 @@ export const hotelPath = (lang: Language) => (lang === "en" ? "/hotel" : `/${lan
 export const hotelUrl = (lang: Language) => `https://siamscuba.com${hotelPath(lang)}`;
 
 /**
- * Where the "back to the dive site" links point, per language.
+ * Where the "visit the dive centre" links point. Always "/", in every language.
  *
- * NOT `/${lang}`: there is no /fr route - "/" is the multilingual homepage and
- * doubles as the French destination (see LOCALE_FAMILIES in
- * src/lib/localeRoutes.ts). Hardcoding the prefix shipped a dead /fr link that
- * `bun run check:links` caught before it reached a preview.
+ * Two separate traps live behind this one constant, and both were paid for:
+ *
+ * 1. NOT `/${lang}` - there is no /fr route. Hardcoding the prefix shipped a
+ *    dead /fr link that `bun run check:links` caught before a preview.
+ * 2. NOT "/he" or "/es" either, which is what this used to return. Those are
+ *    standalone GUIDE ARTICLES, not the homepage in Hebrew and Spanish - so a
+ *    Hebrew reader who tapped "visit the dive centre" landed in a 2,000-word
+ *    article instead of the dive centre. "/" is the multilingual homepage and
+ *    already renders in all four languages through t(). Same bug the language
+ *    switcher had (SELF_TRANSLATING in src/lib/localeRoutes.ts, fixed
+ *    2026-08-30); it lived here too because both read the same LOCALE_FAMILIES
+ *    row as if it listed translated twins.
+ *
+ * Kept as a named export rather than an inline "/" so the reasoning above has
+ * somewhere to live - the next person to reach for `/${lang}` finds it here.
  */
-export const diveSiteHomePath = (lang: Language) =>
-  lang === "he" ? "/he" : lang === "es" ? "/es" : "/";
+export const DIVE_SITE_HOME_PATH = "/";
 
 /**
  * Reciprocal hreflang cluster for the four hotel URLs. Built here rather than

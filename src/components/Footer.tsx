@@ -5,9 +5,11 @@ import padi from "@/assets/padi-logo.png";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { openGate } from "@/utils/gateBus";
 import { conservationPath } from "@/lib/conservationCopy";
+import { languageGuidePath } from "@/lib/localeRoutes";
 
 const Footer = () => {
   const { t, language } = useLanguage();
+  const guidePath = languageGuidePath(language);
 
   const quickLinks = [
     { label: t("nav_courses"), id: "courses" },
@@ -86,6 +88,21 @@ const Footer = () => {
                   {t("nav_conservation")}
                 </Link>
               </li>
+              {/* The Hebrew and Spanish long-form guides (/he, /es). The
+                  language switcher used to be the only way into them, by
+                  hijacking the flag - it dropped a homepage reader into a
+                  2,000-word article, so that stopped on 2026-08-30. Without
+                  this link they would have no internal inbound link at all,
+                  which is the orphaned-lander problem again. Rendered only for
+                  a visitor already reading in that language: it is a guide
+                  offered to its own audience, not a language control. */}
+              {guidePath && (
+                <li>
+                  <Link to={guidePath} className="hover:text-primary transition-colors">
+                    {t("nav_language_guide")}
+                  </Link>
+                </li>
+              )}
               {quickLinks.map((link) => (
                 <li key={link.id}>
                   <button

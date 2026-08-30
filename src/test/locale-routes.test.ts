@@ -10,6 +10,7 @@ import {
   HOME_HREFLANG_ALTERNATES,
   LOCALE_FAMILIES,
   hreflangAlternatesFor,
+  languageGuidePath,
   localizedPath,
 } from "../lib/localeRoutes";
 
@@ -34,12 +35,20 @@ describe("every locale-family path is a real route", () => {
 });
 
 describe("localizedPath", () => {
-  it("maps the homepage to the language landings", () => {
-    expect(localizedPath("/", "es")).toBe("/es");
-    expect(localizedPath("/", "he")).toBe("/he");
-    expect(localizedPath("/", "en")).toBe("/");
+  // REGRESSION 2026-08-30. /he and /es are standalone guide ARTICLES, not
+  // translations of the homepage, so the switcher must never jump there from
+  // "/" - the homepage renders every language itself. Ben hit this as "tapping
+  // Hebrew opens a Koh Tao diving explainer instead of translating the page".
+  it("never navigates away from the self-translating homepage", () => {
+    expect(localizedPath("/", "he")).toBeNull();
+    expect(localizedPath("/", "es")).toBeNull();
+    expect(localizedPath("/", "en")).toBeNull();
+    expect(localizedPath("/", "fr")).toBeNull();
   });
 
+  // ...but the guides CAN'T translate themselves (hardcoded single-language
+  // copy), so leaving one for the homepage stays the right escape hatch. The
+  // rule keys off the SOURCE page, which is what makes this asymmetric.
   it("maps a language landing back to the homepage for English", () => {
     expect(localizedPath("/es", "en")).toBe("/");
     expect(localizedPath("/he", "en")).toBe("/");
@@ -72,6 +81,45 @@ describe("localizedPath", () => {
   });
 });
 
+// The guides stopped being the switcher's destination on 2026-08-30, so the
+// footer link is now their ONLY internal inbound link. If it silently stops
+// rendering they are orphaned from the link graph exactly like the campaign
+// landers were.
+describe("languageGuidePath", () => {
+  it("offers each guide to the language it was written for", () => {
+    expect(languageGuidePath("he")).toBe("/he");
+    expect(languageGuidePath("es")).toBe("/es");
+  });
+
+  it("has nothing to offer English and French - there is no such guide", () => {
+    expect(languageGuidePath("en")).toBeNull();
+    expect(languageGuidePath("fr")).toBeNull();
+  });
+
+  it("is rendered by the footer, or the guides go orphaned", () => {
+    const footer = readFileSync(resolve(__dirname, "../components/Footer.tsx"), "utf8");
+    expect(footer.includes("languageGuidePath")).toBe(true);
+    expect(footer.includes('t("nav_language_guide")')).toBe(true);
+  });
+});
+
+// Same wrong assumption as the switcher's, in a second place: the hotel
+// mini-site's "visit the dive centre" CTAs sent Hebrew and Spanish readers to
+// the guide articles instead of the dive centre. "/" is the only correct answer
+// in every language - it is the multilingual homepage, and /fr does not exist.
+describe("hotel dive-centre link", () => {
+  it("points at the multilingual homepage, never a locale prefix", () => {
+    const hotel = readFileSync(resolve(__dirname, "../data/hotel.ts"), "utf8");
+    expect(/export const DIVE_SITE_HOME_PATH = "\/";/.test(hotel)).toBe(true);
+    const content = readFileSync(
+      resolve(__dirname, "../components/hotel/HotelContent.tsx"),
+      "utf8",
+    );
+    expect(content.includes("DIVE_SITE_HOME_PATH")).toBe(true);
+    expect(content.includes("diveSiteHomePath")).toBe(false);
+  });
+});
+
 // hreflang is only honoured when it is RECIPROCAL. /es originally declared
 // alternates while "/" and /he declared none, so Google discarded the lot and
 // the Spanish landing read as duplicate content instead of a translation.
@@ -88,6 +136,14 @@ describe("homepage hreflang cluster", () => {
     expect(hreflangAlternatesFor("/he")).toEqual(HOME_HREFLANG_ALTERNATES);
     expect(hreflangAlternatesFor("/es")).toEqual(HOME_HREFLANG_ALTERNATES);
     expect(hreflangAlternatesFor("/es/")).toEqual(HOME_HREFLANG_ALTERNATES);
+  });
+
+  // The switcher no longer routes between "/", /he and /es, but they remain one
+  // hreflang cluster - that is an SEO annotation about language targeting, not
+  // a claim that the switcher can move between them.
+  it("survives the self-translating-homepage rule", () => {
+    expect(hreflangAlternatesFor("/")).toEqual(HOME_HREFLANG_ALTERNATES);
+    expect(localizedPath("/", "he")).toBeNull();
   });
 
   it("is undefined for pages with no locale twins", () => {
