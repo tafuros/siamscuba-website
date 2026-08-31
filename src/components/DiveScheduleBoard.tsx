@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import BookingLink from "@/components/BookingLink";
 import { CheckCircle2, Clock, Users, Waves, AlertCircle } from "lucide-react";
 import { trackBookNowClick } from "@/utils/tracking";
+import Price from "@/components/Price";
 import {
   weeklySchedule,
   trips,
@@ -106,7 +107,7 @@ function SlotButton({
           {trip.dives} {trip.dives === 1 ? "dive" : "dives"}
         </span>
         <span className="font-display text-sm font-bold tabular-nums text-white">
-          ฿{trip.priceThb.toLocaleString("en-US")}
+          <Price thb={trip.priceThb} estimate="inline" />
         </span>
       </div>
     </button>
@@ -193,7 +194,7 @@ function SlotPanel({ day, slot, index, active }: { day: ScheduleDay; slot: DaySl
           <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
             <p>
               <span className="font-display text-3xl font-bold tabular-nums text-white">
-                ฿{trip.priceThb.toLocaleString("en-US")}
+                <Price thb={trip.priceThb} estimate="inline" />
               </span>
               <span className="ml-1 text-sm text-white/60">/ person</span>
             </p>
@@ -354,7 +355,7 @@ const DiveScheduleBoard = () => {
                 <div className="flex items-baseline justify-between gap-2">
                   <h4 className="font-display text-sm font-bold text-white">{trip.name}</h4>
                   <span className="font-display text-sm font-bold tabular-nums text-white">
-                    ฿{trip.priceThb.toLocaleString("en-US")}
+                    <Price thb={trip.priceThb} estimate="inline" />
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-white/60">{trip.tagline}</p>

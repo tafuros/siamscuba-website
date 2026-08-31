@@ -10,6 +10,7 @@ import "@/components/EntryGate/gate.css";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { phuketCopy, PHUKET_PRODUCTS } from "@/components/phuket/phuketContent";
 import PhuketBookingForm from "@/components/phuket/PhuketBookingForm";
+import { PriceEstimate } from "@/components/Price";
 
 const OCEAN_BG =
   "radial-gradient(120% 90% at 50% 0%, #0a3a66 0%, #08315a 36%, #051f3a 70%, #03152a 100%)";
@@ -166,6 +167,10 @@ const SiamPhuketPage = () => {
                   <div className="mt-5">
                     <div className="font-display text-2xl font-bold drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
                       {product.price.toLocaleString("en-US")} <span className="text-base font-medium">THB</span>
+                      <PriceEstimate
+                        thb={product.price}
+                        className="block text-xs font-medium text-white/60"
+                      />
                     </div>
                     <div className="text-xs text-white/55">{copy.products.perPerson}</div>
                   </div>

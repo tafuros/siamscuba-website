@@ -25,6 +25,9 @@ type TranslationStrings = {
   nav_dive_sites: string;
   nav_conservation: string;
   nav_language_guide: string;
+  cur_heading_language: string;
+  cur_heading_currency: string;
+  cur_note: string;
   nav_koh_tao_guide: string;
   nav_about: string;
   nav_hotel: string;
@@ -79,6 +82,7 @@ type TranslationStrings = {
   hl_review_instructor: string;
   hl_no_exp: string;
   hl_dsd_dives: string;
+  hl_dsd_second_dive: string;
   hl_padi_instructor: string;
   hl_18m: string;
   hl_lifetime: string;
@@ -275,6 +279,9 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_dive_sites: "Dive Sites",
     nav_conservation: "Conservation",
     nav_language_guide: "Koh Tao diving guide",
+    cur_heading_language: "Language",
+    cur_heading_currency: "Currency",
+    cur_note: "Prices are charged in Thai Baht. Other currencies are indicative.",
     nav_koh_tao_guide: "Koh Tao Guide",
     nav_about: "About Us",
     nav_hotel: "Hotel",
@@ -322,6 +329,7 @@ export const translations: Record<Language, TranslationStrings> = {
 
     hl_no_exp: "No experience needed",
     hl_dsd_dives: "฿2,600 · optional 2nd dive +฿1,000",
+    hl_dsd_second_dive: "optional 2nd dive",
     hl_padi_instructor: "PADI certified instructor",
     hl_18m: "Dive to 18m worldwide",
     hl_lifetime: "Lifetime certification",
@@ -502,6 +510,9 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_dive_sites: "אתרי צלילה",
     nav_conservation: "שימור ימי",
     nav_language_guide: "המדריך הישראלי לצלילה בקוטאו",
+    cur_heading_language: "שפה",
+    cur_heading_currency: "מטבע",
+    cur_note: "התשלום נגבה בבאט תאילנדי. מטבעות אחרים הם הערכה בלבד.",
     nav_koh_tao_guide: "מדריך קוטאו",
     nav_about: "אודות",
     nav_hotel: "מלון",
@@ -549,6 +560,7 @@ export const translations: Record<Language, TranslationStrings> = {
 
     hl_no_exp: "ללא ניסיון נדרש",
     hl_dsd_dives: "฿2,600 · צלילה שנייה +฿1,000",
+    hl_dsd_second_dive: "צלילה שנייה",
     hl_padi_instructor: "מדריך PADI מוסמך",
     hl_18m: "צלול עד 18 מטר בכל העולם",
     hl_lifetime: "הסמכה לכל החיים",
@@ -729,6 +741,9 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_dive_sites: "Sitios de Buceo",
     nav_conservation: "Conservación",
     nav_language_guide: "Guía de buceo en español",
+    cur_heading_language: "Idioma",
+    cur_heading_currency: "Moneda",
+    cur_note: "Los precios se cobran en baht tailandés. Otras monedas son orientativas.",
     nav_koh_tao_guide: "Guía Koh Tao",
     nav_about: "Sobre Nosotros",
     nav_hotel: "Hotel",
@@ -776,6 +791,7 @@ export const translations: Record<Language, TranslationStrings> = {
 
     hl_no_exp: "Sin experiencia necesaria",
     hl_dsd_dives: "฿2,600 · 2ª inmersión opcional +฿1,000",
+    hl_dsd_second_dive: "2ª inmersión opcional",
     hl_padi_instructor: "Instructor certificado PADI",
     hl_18m: "Bucea hasta 18m en todo el mundo",
     hl_lifetime: "Certificación de por vida",
@@ -956,6 +972,9 @@ export const translations: Record<Language, TranslationStrings> = {
     nav_dive_sites: "Sites de Plongée",
     nav_conservation: "Conservation",
     nav_language_guide: "Guide de plongée à Koh Tao",
+    cur_heading_language: "Langue",
+    cur_heading_currency: "Devise",
+    cur_note: "Les prix sont facturés en bahts thaïlandais. Les autres devises sont indicatives.",
     nav_koh_tao_guide: "Guide Koh Tao",
     nav_about: "À Propos",
     nav_hotel: "Hôtel",
@@ -1003,6 +1022,7 @@ export const translations: Record<Language, TranslationStrings> = {
 
     hl_no_exp: "Aucune expérience requise",
     hl_dsd_dives: "฿2,600 · 2e plongée optionnelle +฿1,000",
+    hl_dsd_second_dive: "2e plongée optionnelle",
     hl_padi_instructor: "Instructeur certifié PADI",
     hl_18m: "Plongez jusqu'à 18m partout dans le monde",
     hl_lifetime: "Certification à vie",

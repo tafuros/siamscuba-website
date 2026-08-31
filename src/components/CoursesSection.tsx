@@ -6,6 +6,32 @@ import CourseDetailDialog from "./CourseDetailDialog";
 import CourseCarouselRow from "./CourseCarouselRow";
 import { useLanguage } from "@/i18n/LanguageContext";
 import AmbientReviews from "@/components/AmbientReviews";
+import Price from "@/components/Price";
+
+/**
+ * The Discover Scuba bullet: "฿2,600 · optional 2nd dive +฿1,000".
+ *
+ * Built from numbers rather than read from the hl_dsd_dives translation string,
+ * so both figures convert with the currency picker. It was the one place on a
+ * card where the headline price converted and the line under it did not, which
+ * read as a half-finished feature rather than as the deliberate
+ * tags-convert-prose-does-not rule.
+ *
+ * hl_dsd_dives is deliberately KEPT in translations.ts even though nothing
+ * renders it any more: scripts/lib/extract-kb.ts flattens every translation
+ * string into Nemo's knowledge base, and deleting copy has silently stripped
+ * facts from the bot before. src/test/currency.test.ts asserts these numbers
+ * still match that string, so the two cannot drift apart.
+ */
+export const DSD_FIRST_DIVE_THB = 2600;
+export const DSD_SECOND_DIVE_THB = 1000;
+
+const DSD_PRICE_HIGHLIGHT = (t: (key: string) => string) => (
+  <>
+    <Price thb={DSD_FIRST_DIVE_THB} estimate="inline" /> · {t("hl_dsd_second_dive")} +
+    <Price thb={DSD_SECOND_DIVE_THB} estimate="inline" />
+  </>
+);
 
 const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) => {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -31,26 +57,26 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       label: t("courses_basic"),
       description: t("courses_basic_desc"),
       courses: [
-        { icon: Fish, title: t("course_dsd"), dialogKey: "Discover Scuba Diving", subtitle: "One Day Experience", price: "2,600", duration: t("dur_1_day"), highlights: [t("hl_no_exp"), t("hl_dsd_dives"), t("hl_padi_instructor")], hasDetails: true },
-        { icon: BookOpen, title: t("course_ow"), dialogKey: "Open Water Diver", price: "12,000", duration: t("dur_2_5_days"), highlights: [t("hl_18m"), t("hl_lifetime"), t("hl_4_dives")], featured: true, hasDetails: true },
-        { icon: Fish, title: t("course_bubble"), dialogKey: "Bubble Maker", price: "3,800", duration: t("dur_1_day"), highlights: [t("hl_children"), t("hl_fun_intro"), t("hl_safe")], hasDetails: true },
-        { icon: Waves, title: t("course_review"), dialogKey: "Scuba Review", price: "2,500", duration: t("dur_1_day"), highlights: [t("hl_review_refresh"), t("hl_review_2dives"), t("hl_review_instructor")], hasDetails: true },
+        { icon: Fish, title: t("course_dsd"), dialogKey: "Discover Scuba Diving", subtitle: "One Day Experience", price: 2600, duration: t("dur_1_day"), highlights: [t("hl_no_exp"), DSD_PRICE_HIGHLIGHT(t), t("hl_padi_instructor")], hasDetails: true },
+        { icon: BookOpen, title: t("course_ow"), dialogKey: "Open Water Diver", price: 12000, duration: t("dur_2_5_days"), highlights: [t("hl_18m"), t("hl_lifetime"), t("hl_4_dives")], featured: true, hasDetails: true },
+        { icon: Fish, title: t("course_bubble"), dialogKey: "Bubble Maker", price: 3800, duration: t("dur_1_day"), highlights: [t("hl_children"), t("hl_fun_intro"), t("hl_safe")], hasDetails: true },
+        { icon: Waves, title: t("course_review"), dialogKey: "Scuba Review", price: 2500, duration: t("dur_1_day"), highlights: [t("hl_review_refresh"), t("hl_review_2dives"), t("hl_review_instructor")], hasDetails: true },
       ],
     },
     {
       label: t("courses_advanced"),
       description: t("courses_advanced_desc"),
       courses: [
-        { icon: Star, title: t("course_aow"), dialogKey: "Advanced Open Water", price: "11,000", duration: t("dur_1_5_days"), highlights: [t("hl_30m"), t("hl_5_adventure"), t("hl_deep_nav")], featured: true, hasDetails: true },
-        { icon: ShieldCheck, title: t("course_rescue"), dialogKey: "Rescue Diver", price: "11,000", duration: t("dur_3_days"), highlights: [t("hl_emergency"), t("hl_rescue_tech"), t("hl_stress")], hasDetails: true },
-        { icon: Heart, title: t("course_efr"), dialogKey: "Emergency First Response (EFR)", price: "5,000", duration: t("dur_1_day"), highlights: [t("hl_cpr"), t("hl_intl_cert"), t("hl_life_saving")], hasDetails: true },
+        { icon: Star, title: t("course_aow"), dialogKey: "Advanced Open Water", price: 11000, duration: t("dur_1_5_days"), highlights: [t("hl_30m"), t("hl_5_adventure"), t("hl_deep_nav")], featured: true, hasDetails: true },
+        { icon: ShieldCheck, title: t("course_rescue"), dialogKey: "Rescue Diver", price: 11000, duration: t("dur_3_days"), highlights: [t("hl_emergency"), t("hl_rescue_tech"), t("hl_stress")], hasDetails: true },
+        { icon: Heart, title: t("course_efr"), dialogKey: "Emergency First Response (EFR)", price: 5000, duration: t("dur_1_day"), highlights: [t("hl_cpr"), t("hl_intl_cert"), t("hl_life_saving")], hasDetails: true },
       ],
     },
     {
       label: t("courses_pro"),
       description: t("courses_pro_desc"),
       courses: [
-        { icon: Crown, title: t("course_dm"), dialogKey: "Divemaster", price: "38,500", duration: t("dur_4_8_weeks"), highlights: [t("hl_lead"), t("hl_career"), t("hl_free_intern")], featured: true },
+        { icon: Crown, title: t("course_dm"), dialogKey: "Divemaster", price: 38500, duration: t("dur_4_8_weeks"), highlights: [t("hl_lead"), t("hl_career"), t("hl_free_intern")], featured: true },
         { icon: Award, title: t("course_idc"), dialogKey: "IDC (Instructor Course)", price: null, duration: t("dur_varies"), highlights: [t("hl_become_instructor"), t("hl_full_training"), t("hl_free_intern")], hasDetails: true },
       ],
     },
@@ -58,14 +84,14 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       label: t("courses_specialty"),
       description: t("courses_specialty_desc"),
       courses: [
-        { icon: Feather, title: t("course_ppb"), dialogKey: "Peak Performance Buoyancy", price: "5,500", duration: t("dur_1_day"), highlights: [t("hl_ppb_buoyancy"), t("hl_ppb_air"), t("hl_ppb_glide")], hasDetails: true },
-        { icon: Anchor, title: t("course_wreck"), dialogKey: "Wreck Diving", price: "9,000", duration: t("dur_2_days"), highlights: [t("hl_wrecks"), t("hl_penetration"), t("hl_specialty_cert")] },
-        { icon: ArrowDown, title: t("course_deep"), dialogKey: "Deep Diving", price: "9,000", duration: t("dur_2_days"), highlights: [t("hl_beyond_18"), t("hl_gas"), t("hl_deep_plan")] },
-        { icon: Moon, title: t("course_night_dive"), dialogKey: "Night Dive", price: "1,300", duration: t("dur_1_day"), highlights: [t("hl_night_certified"), t("hl_night_reef"), t("hl_night_guided")] },
+        { icon: Feather, title: t("course_ppb"), dialogKey: "Peak Performance Buoyancy", price: 5500, duration: t("dur_1_day"), highlights: [t("hl_ppb_buoyancy"), t("hl_ppb_air"), t("hl_ppb_glide")], hasDetails: true },
+        { icon: Anchor, title: t("course_wreck"), dialogKey: "Wreck Diving", price: 9000, duration: t("dur_2_days"), highlights: [t("hl_wrecks"), t("hl_penetration"), t("hl_specialty_cert")] },
+        { icon: ArrowDown, title: t("course_deep"), dialogKey: "Deep Diving", price: 9000, duration: t("dur_2_days"), highlights: [t("hl_beyond_18"), t("hl_gas"), t("hl_deep_plan")] },
+        { icon: Moon, title: t("course_night_dive"), dialogKey: "Night Dive", price: 1300, duration: t("dur_1_day"), highlights: [t("hl_night_certified"), t("hl_night_reef"), t("hl_night_guided")] },
         { icon: Zap, title: t("course_dpv"), dialogKey: "Underwater Scooter (DPV)", price: null, duration: t("dur_1_day"), highlights: [t("hl_dpv"), t("hl_cover_ground"), t("hl_unique")] },
         { icon: Layers, title: t("course_sidemount"), dialogKey: "Sidemount Diving", price: null, duration: t("dur_2_3_days"), highlights: [t("hl_streamline"), t("hl_independent_gas"), t("hl_advanced_config")] },
-        { icon: Compass, title: t("course_self_reliant"), dialogKey: "Self-Reliant Diver", price: "13,000", duration: t("dur_1_5_days"), highlights: [t("hl_self_100dives"), t("hl_self_redundancy"), t("hl_self_indep")], hasDetails: true },
-        { icon: Camera, title: t("course_uw_photo"), dialogKey: "UW Photography & Videography", price: "37,000", duration: t("dur_5_days"), highlights: [t("hl_uw_10dives"), t("hl_uw_1on1"), t("hl_uw_padi_cert")], hasDetails: true },
+        { icon: Compass, title: t("course_self_reliant"), dialogKey: "Self-Reliant Diver", price: 13000, duration: t("dur_1_5_days"), highlights: [t("hl_self_100dives"), t("hl_self_redundancy"), t("hl_self_indep")], hasDetails: true },
+        { icon: Camera, title: t("course_uw_photo"), dialogKey: "UW Photography & Videography", price: 37000, duration: t("dur_5_days"), highlights: [t("hl_uw_10dives"), t("hl_uw_1on1"), t("hl_uw_padi_cert")], hasDetails: true },
       ],
     },
   ];

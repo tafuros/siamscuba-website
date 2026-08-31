@@ -4,6 +4,7 @@ import type { Language } from "@/i18n/translations";
 import { type HotelRoom, type HotelCopy, hotelWhatsAppLink } from "@/data/hotel";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import BookingRequestForm from "./BookingRequestForm";
+import { PriceEstimate } from "@/components/Price";
 
 /**
  * One room = one liquid-glass card: photos, price, book. Nothing else.
@@ -151,6 +152,10 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
                   <span className="ms-1 font-body text-xs font-normal text-[#072a45]/50">
                     {room.priceUnit === "bed" ? copy.perBed : copy.perNight}
                   </span>
+                  <PriceEstimate
+                    thb={room.pricePerNight}
+                    className="block font-body text-xs font-normal text-[#072a45]/50"
+                  />
                 </span>
               </>
             ) : (

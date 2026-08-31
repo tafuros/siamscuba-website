@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, useLocation } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
+import { CurrencyProvider } from "@/lib/CurrencyContext";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import CookieConsent from "./components/CookieConsent";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
@@ -85,24 +86,29 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LanguageProvider>
-        <SkipLink />
-        <Toaster />
-        <Sonner />
-        <RouteTracker />
-        <CookieConsent />
-        <SpeedInsights />
-        <main id="main-content">
-          <Suspense fallback={<PageFallback />}>
-            <Outlet />
-          </Suspense>
-        </main>
-        <AccessibilityMenu />
-        {ENTRY_GATE_ON && EntryGate && (
-          <Suspense fallback={null}>
-            <EntryGate />
-          </Suspense>
-        )}
-        <ChatWidget />
+        {/* Inside LanguageProvider: the currency picker lives in the same menu
+            as the language picker, and price formatting groups digits by the
+            reader's locale (12,000 / 12.000 / 12 000). */}
+        <CurrencyProvider>
+          <SkipLink />
+          <Toaster />
+          <Sonner />
+          <RouteTracker />
+          <CookieConsent />
+          <SpeedInsights />
+          <main id="main-content">
+            <Suspense fallback={<PageFallback />}>
+              <Outlet />
+            </Suspense>
+          </main>
+          <AccessibilityMenu />
+          {ENTRY_GATE_ON && EntryGate && (
+            <Suspense fallback={null}>
+              <EntryGate />
+            </Suspense>
+          )}
+          <ChatWidget />
+        </CurrencyProvider>
       </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>

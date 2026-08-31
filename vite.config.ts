@@ -69,6 +69,53 @@ function nemoChatDevApi(env: Record<string, string>): Plugin {
   };
 }
 
+// Dev AND PREVIEW: serve GET /api/rates from the same getRates() Vercel runs in
+// prod, so the currency picker can actually be verified locally.
+//
+// Unlike the other dev shims this also registers on the PREVIEW server. The
+// picker hides itself when /api/rates gives it nothing, so without this the
+// feature would be invisible on `vite preview` - which is exactly where the
+// pre-deploy check looks at it, and "the control is missing" would read as a
+// bug rather than as a missing local endpoint.
+type MiddlewareFn = (
+  req: { method?: string },
+  res: {
+    statusCode: number;
+    setHeader: (k: string, v: string) => void;
+    end: (body?: string) => void;
+  },
+) => void | Promise<void>;
+
+function ratesDevApi(): Plugin {
+  const attach = (server: { middlewares: { use: (path: string, fn: MiddlewareFn) => void } }) => {
+    server.middlewares.use("/api/rates", async (req, res) => {
+      if (req.method !== "GET") {
+        res.statusCode = 405;
+        return res.end(JSON.stringify({ error: "method_not_allowed" }));
+      }
+      try {
+        // The preview server has no ssrLoadModule, so import the source directly.
+        const mod = (await import("./api/rates")) as { getRates: () => Promise<unknown> };
+        const rates = await mod.getRates();
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
+        // No CDN in front of a local server - keep it short so a rate change is
+        // visible on reload rather than pinned for six hours.
+        res.setHeader("Cache-Control", "public, max-age=60");
+        res.end(JSON.stringify(rates));
+      } catch (err) {
+        console.error("[dev /api/rates]", err instanceof Error ? err.message : String(err));
+        res.statusCode = 502;
+        res.end(JSON.stringify({ error: "rates_unavailable" }));
+      }
+    });
+  };
+  return {
+    name: "rates-dev-api",
+    configureServer: attach,
+    configurePreviewServer: attach,
+  };
+}
+
 // Dev-only: serve GET /api/pulse from the same handler logic Vercel uses in
 // prod, so the Google Ads pulse can be verified on `vite` (port 8080) without
 // `vercel dev`. Reuses getPulse from api/pulse.ts; auth mirrors the prod guard.
@@ -187,6 +234,8 @@ export default defineConfig(({ mode }) => {
   plugins: [
     react(),
     mode === "development" && componentTagger(),
+    // Not gated on mode: this one must also serve on `vite preview`.
+    ratesDevApi(),
     mode === "development" && nemoChatDevApi(env),
     mode === "development" && googleAdsPulseDevApi(env),
     mode === "development" && hotelBookingDevApi(),

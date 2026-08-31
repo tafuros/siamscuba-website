@@ -1,10 +1,12 @@
-import { Award, Info, Share2 } from "lucide-react";
+import type { ReactNode } from "react";
+import { Award, Info, Share2, type LucideIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { toast } from "sonner";
 import BookingLink from "@/components/BookingLink";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
+import Price from "@/components/Price";
 
 /** Shape of a course entry as built in CoursesSection. */
 export interface CourseCardData {
@@ -12,9 +14,19 @@ export interface CourseCardData {
   title: string;
   dialogKey: string;
   subtitle?: string;
-  price: string;
+  /**
+   * Price in Thai Baht, or null for the enquire-only courses (IDC, DPV,
+   * Sidemount). A NUMBER since 2026-08-31 - it used to be the display string
+   * "12,000", which could not be converted or locale-formatted.
+   */
+  price: number | null;
   duration: string;
-  highlights: string[];
+  /**
+   * Bullet lines. ReactNode, not string, since 2026-08-31: the Discover Scuba
+   * bullet carries two prices and has to render them through <Price> so they
+   * convert like the headline figure does. Everything else is still a string.
+   */
+  highlights: ReactNode[];
   featured?: boolean;
   hasDetails?: boolean;
 }
@@ -68,8 +80,16 @@ const CourseCard = ({
           <div className="flex items-baseline gap-1 mb-0.5">
             {course.price ? (
               <>
-                <span className="text-xl font-bold text-foreground">฿{course.price}</span>
-                <span className="text-xs text-muted-foreground">THB</span>
+                {/* course.price is a NUMBER of Baht (migrated from the old
+                    "12,000" strings so it can be converted). Price renders the
+                    Baht figure plus an indicative line when the visitor has
+                    picked another currency - never instead of the Baht. */}
+                <Price
+                  thb={course.price}
+                  className="text-xl font-bold text-foreground"
+                  estimateClassName="block text-[11px] font-normal leading-tight text-muted-foreground"
+                />
+                <span className="text-xs text-muted-foreground self-start">THB</span>
               </>
             ) : (
               <span className="text-sm font-semibold text-primary">{t("courses_get_price")}</span>
@@ -77,8 +97,11 @@ const CourseCard = ({
           </div>
           <p className="text-[11px] text-muted-foreground mb-2">{course.duration}</p>
           <ul className="space-y-1 mb-3 sm:flex-1">
-            {course.highlights.map((h: string) => (
-              <li key={h} className="flex items-start gap-1.5 text-xs text-foreground/80">
+            {/* Index keys: the array is built fresh per render from a static
+                literal and never reorders, and a ReactNode has no stable key of
+                its own the way the old plain strings did. */}
+            {course.highlights.map((h, i) => (
+              <li key={i} className="flex items-start gap-1.5 text-xs text-foreground/80">
                 <Award className="h-3.5 w-3.5 text-primary mt-0.5 shrink-0" />
                 {h}
               </li>
