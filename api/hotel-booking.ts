@@ -927,6 +927,9 @@ async function fetchDecisionStatus(ref: string): Promise<DecisionStatus> {
 // Ben-facing HTML pages (self-contained, inline CSS, mobile-first)
 // ---------------------------------------------------------------------------
 
+/** Ben reaches these pages from a push notification, so there is no history to go back to. */
+const NEMO_INBOX_URL = "https://nemo.siamscuba.com/webhook/nemo-inbox";
+
 function page(title: string, inner: string): string {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -950,7 +953,11 @@ function page(title: string, inner: string): string {
   .reflabel{margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#5b7386;text-align:center;}
   .ref{display:block;margin:0 0 16px;padding:11px 14px;border:1.5px solid #cfe0ee;border-radius:12px;background:#f2f7fb;text-align:center;
        font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:22px;font-weight:700;letter-spacing:.16em;color:#072a45;}
-</style></head><body><div class="card">${inner}</div></body></html>`;
+  .back{display:inline-flex;align-items:center;gap:7px;min-height:44px;margin:-14px 0 2px;padding-right:12px;
+        color:#5b7386;font-size:13px;font-weight:500;text-decoration:none;-webkit-tap-highlight-color:transparent;}
+  .back .arr{font-size:17px;line-height:1;}
+  .back:active{color:#072a45;}
+</style></head><body><div class="card"><a class="back" href="${NEMO_INBOX_URL}"><span class="arr" aria-hidden="true">←</span>Nemo Inbox</a>${inner}</div></body></html>`;
 }
 
 function row(label: string, value: string): string {
