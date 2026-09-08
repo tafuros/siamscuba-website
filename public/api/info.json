@@ -1,6 +1,6 @@
 {
-  "version": "1.1.0",
-  "last_updated": "2026-08-17",
+  "version": "1.1.1",
+  "last_updated": "2026-09-08",
   "courses": [
     {
       "id": "dsd",
@@ -480,7 +480,7 @@
     "location": "Sairee Beach, Koh Tao, Thailand",
     "padi_status": "PADI 5-Star IDC Dive Center",
     "boat": "Bongkotpetch",
-    "booking_form_url": "https://dash.siamscuba.com/api/og/lead-form?ref=ben"
+    "booking_form_url": "https://siamscuba.com/fun-dive-booking"
   },
   "food_recommendations": [
     {
