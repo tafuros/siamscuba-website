@@ -160,7 +160,12 @@ export async function getRates(): Promise<RatesPayload> {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "GET") {
+  // HEAD must mirror GET - same status, same headers, empty body. Uptime
+  // monitors and link checkers probe with HEAD, and a 405 there reads as "the
+  // endpoint is down" even while every real visitor is served fine.
+  const method = req.method ?? "GET";
+  const isHead = method === "HEAD";
+  if (method !== "GET" && !isHead) {
     res.statusCode = 405;
     return res.end(JSON.stringify({ error: "method_not_allowed" }));
   }
@@ -168,7 +173,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const rates = await getRates();
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.setHeader("Cache-Control", CACHE_CONTROL);
-    return res.end(JSON.stringify(rates));
+    return isHead ? res.end() : res.end(JSON.stringify(rates));
   } catch (err) {
     console.error("[/api/rates]", err instanceof Error ? err.message : String(err));
     res.statusCode = 502;
@@ -176,6 +181,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // also must not pin a failure in the CDN for hours after they recover.
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=120");
     res.setHeader("Content-Type", "application/json; charset=utf-8");
-    return res.end(JSON.stringify({ error: "rates_unavailable" }));
+    return isHead ? res.end() : res.end(JSON.stringify({ error: "rates_unavailable" }));
   }
 }

@@ -89,7 +89,10 @@ type MiddlewareFn = (
 function ratesDevApi(): Plugin {
   const attach = (server: { middlewares: { use: (path: string, fn: MiddlewareFn) => void } }) => {
     server.middlewares.use("/api/rates", async (req, res) => {
-      if (req.method !== "GET") {
+      // Same GET/HEAD contract the Vercel handler serves, so a HEAD probe
+      // behaves identically locally and in production.
+      const isHead = req.method === "HEAD";
+      if (req.method !== "GET" && !isHead) {
         res.statusCode = 405;
         return res.end(JSON.stringify({ error: "method_not_allowed" }));
       }
@@ -101,10 +104,12 @@ function ratesDevApi(): Plugin {
         // No CDN in front of a local server - keep it short so a rate change is
         // visible on reload rather than pinned for six hours.
         res.setHeader("Cache-Control", "public, max-age=60");
+        if (isHead) return res.end();
         res.end(JSON.stringify(rates));
       } catch (err) {
         console.error("[dev /api/rates]", err instanceof Error ? err.message : String(err));
         res.statusCode = 502;
+        if (isHead) return res.end();
         res.end(JSON.stringify({ error: "rates_unavailable" }));
       }
     });
