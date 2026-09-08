@@ -42,6 +42,20 @@ const dateInputs = () => ({
 
 const bodyText = () => document.body.textContent ?? "";
 
+// Dates are derived from Bangkok "today", never hard-coded. Fixed literals
+// (2026-09-01 ...) silently rotted into the past and every same-day/order case
+// started tripping the "check-in cannot be in the past" guard instead of the
+// rule under test - the whole file went red on 2026-09-02 without a code change.
+const plusDays = (n: number) =>
+  new Date(Date.parse(`${bangkokToday()}T00:00:00Z`) + n * 86_400_000)
+    .toISOString()
+    .slice(0, 10);
+
+const D0 = plusDays(1); // check-in, comfortably in the future
+const D1 = plusDays(2);
+const D3 = plusDays(4);
+const FAR = plusDays(1 + HOTEL_MAX_NIGHTS + 1); // past the night cap
+
 function openSheet(lang: Language) {
   act(() => {
     root.render(
@@ -98,7 +112,7 @@ afterEach(() => {
 describe("booking sheet - a same-day range is fixable, not a dead end", () => {
   it.each(LANGS)("%s: names the fix and sends nothing", (lang) => {
     openSheet(lang);
-    submitWithDates("2026-09-01", "2026-09-01");
+    submitWithDates(D0, D0);
 
     expect(bodyText()).toContain(HOTEL_COPY[lang].bookErrDateOrder);
     // the generic "message us on WhatsApp" line must NOT be what they see
@@ -109,7 +123,7 @@ describe("booking sheet - a same-day range is fixable, not a dead end", () => {
 
   it("renders the message next to the date fields, wired for screen readers", () => {
     openSheet("en");
-    submitWithDates("2026-09-01", "2026-09-01");
+    submitWithDates(D0, D0);
 
     const alert = el(`#dates-err-${ROOM.slug}`);
     expect(alert).toBeTruthy();
@@ -120,24 +134,24 @@ describe("booking sheet - a same-day range is fixable, not a dead end", () => {
 
   it("says the same thing for a backwards range", () => {
     openSheet("en");
-    submitWithDates("2026-09-04", "2026-09-01");
+    submitWithDates(D3, D0);
     expect(bodyText()).toContain(HOTEL_COPY.en.bookErrDateOrder);
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("names the night cap instead of failing generically", () => {
     openSheet("en");
-    submitWithDates("2026-09-01", "2026-10-15");
+    submitWithDates(D0, FAR);
     expect(bodyText()).toContain(HOTEL_COPY.en.bookErrMaxNights(HOTEL_MAX_NIGHTS));
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("clears the message as soon as the guest edits a date", () => {
     openSheet("en");
-    submitWithDates("2026-09-01", "2026-09-01");
+    submitWithDates(D0, D0);
     expect(bodyText()).toContain(HOTEL_COPY.en.bookErrDateOrder);
 
-    act(() => setValue(dateInputs().checkOut, "2026-09-03"));
+    act(() => setValue(dateInputs().checkOut, D1));
     expect(bodyText()).not.toContain(HOTEL_COPY.en.bookErrDateOrder);
   });
 
@@ -149,7 +163,7 @@ describe("booking sheet - a same-day range is fixable, not a dead end", () => {
   it("lets a valid range through to the API", async () => {
     fetchSpy.mockResolvedValue({ ok: false, status: 500, json: async () => ({}) });
     openSheet("en");
-    submitWithDates("2026-09-01", "2026-09-04");
+    submitWithDates(D0, D3);
     await settle();
     expect(fetchSpy).toHaveBeenCalledTimes(1);
     expect(String(fetchSpy.mock.calls[0][0])).toContain("action=hold");
@@ -163,7 +177,7 @@ describe("booking sheet - server rejections get named too", () => {
   it("maps invalid_email onto the email line, not the generic one", async () => {
     rejectWith("invalid_email");
     openSheet("en");
-    submitWithDates("2026-09-01", "2026-09-04");
+    submitWithDates(D0, D3);
     await settle();
     expect(bodyText()).toContain(HOTEL_COPY.en.bookErrEmail);
     expect(bodyText()).not.toContain(HOTEL_COPY.en.bookError);
@@ -172,7 +186,7 @@ describe("booking sheet - server rejections get named too", () => {
   it("maps invalid_guests onto its own line", async () => {
     rejectWith("invalid_guests");
     openSheet("es");
-    submitWithDates("2026-09-01", "2026-09-04");
+    submitWithDates(D0, D3);
     await settle();
     expect(bodyText()).toContain(HOTEL_COPY.es.bookErrGuests(6));
   });
@@ -180,7 +194,7 @@ describe("booking sheet - server rejections get named too", () => {
   it("maps rate_limited onto its own line", async () => {
     rejectWith("rate_limited", 429);
     openSheet("he");
-    submitWithDates("2026-09-01", "2026-09-04");
+    submitWithDates(D0, D3);
     await settle();
     expect(bodyText()).toContain(HOTEL_COPY.he.bookErrRate);
   });
@@ -188,7 +202,7 @@ describe("booking sheet - server rejections get named too", () => {
   it("puts a server-side date rejection back beside the date fields", async () => {
     rejectWith("checkin_in_past");
     openSheet("fr");
-    submitWithDates("2026-09-01", "2026-09-04");
+    submitWithDates(D0, D3);
     await settle();
     expect(el(`#dates-err-${ROOM.slug}`).textContent).toBe(HOTEL_COPY.fr.bookErrDatePast);
   });
@@ -196,7 +210,7 @@ describe("booking sheet - server rejections get named too", () => {
   it("keeps the generic fallback for a provider failure", async () => {
     rejectWith("hold_failed", 502);
     openSheet("en");
-    submitWithDates("2026-09-01", "2026-09-04");
+    submitWithDates(D0, D3);
     await settle();
     expect(bodyText()).toContain(HOTEL_COPY.en.bookError);
   });
@@ -204,7 +218,7 @@ describe("booking sheet - server rejections get named too", () => {
   it("keeps the generic fallback when the network drops", async () => {
     fetchSpy.mockRejectedValue(new Error("offline"));
     openSheet("fr");
-    submitWithDates("2026-09-01", "2026-09-04");
+    submitWithDates(D0, D3);
     await settle();
     expect(bodyText()).toContain(HOTEL_COPY.fr.bookError);
   });
