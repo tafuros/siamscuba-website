@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Waves, MessageCircle, ArrowRight, Info } from "lucide-react";
 import type { Language } from "@/i18n/translations";
@@ -10,7 +11,7 @@ import {
   hotelWhatsAppLink,
   sortedRooms,
 } from "@/data/hotel";
-import { trackWhatsAppClick } from "@/utils/tracking";
+import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import RoomCard from "./RoomCard";
 import HotelGallery from "./HotelGallery";
 import PalmDecor from "./PalmDecor";
@@ -40,6 +41,15 @@ const HotelContent = ({ lang }: HotelContentProps) => {
   const rooms = sortedRooms();
   const rtl = lang === "he";
   const waHref = hotelWhatsAppLink(lang);
+
+  // One effect covers the whole /hotel cluster - HotelPage, HotelHePage,
+  // HotelEsPage and HotelFrPage all render this component, so the view signal
+  // cannot be added to one language and forgotten on the other three.
+  // (/hotel/book is deliberately excluded: it is a noindex, token-gated page
+  // reached from a confirmation email, not a page traffic lands on.)
+  useEffect(() => {
+    trackViewContent({ offer: "hotel", lang });
+  }, [lang]);
 
   return (
     <div

@@ -506,6 +506,13 @@ const OFFER_TO_SLUG: Record<string, string> = {
   "fun-dive": "fun-dives",
   "koh-tao": "koh-tao-diving",
   "sail-rock": "sail-rock-diving",
+  // Destination + property pages. They are not campaign landers in the
+  // LANDER_COPY sense, but they are the pages ad traffic can land on, so they
+  // need the same view signal - without it there is no denominator for the
+  // lead events their forms already fire, and any spend on them bids blind.
+  similan: "similan",
+  phuket: "phuket-diving",
+  hotel: "hotel",
 };
 
 export function trackViewContent(params: ViewContentParams): void {

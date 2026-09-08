@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,7 @@ import siamLogo from "@/assets/siam-logo.webp";
 import { similanCopy, SIMILAN_TRIPS, SIMILAN_BOATS, SIMILAN_SITES } from "@/components/similan/similanContent";
 import SimilanBookingForm from "@/components/similan/SimilanBookingForm";
 import { PriceEstimate } from "@/components/Price";
+import { trackViewContent } from "@/utils/tracking";
 
 const OCEAN_BG =
   "radial-gradient(120% 90% at 50% 0%, #0a3a66 0%, #08315a 36%, #051f3a 70%, #03152a 100%)";
@@ -35,6 +36,14 @@ const SiamSimilansPage = () => {
   }, [searchParams]);
 
   const [selectedId, setSelectedId] = useState(initialId);
+
+  // The lander-view signal. SimilanBookingForm already fires generate_lead on
+  // submit, so without this there is no denominator for it - the funnel has a
+  // numerator and no top, and any ad spend pointed here bids blind.
+  useEffect(() => {
+    trackViewContent({ offer: "similan", lang: language });
+  }, [language]);
+
   const bookingRef = useRef<HTMLDivElement>(null);
   const tripsRef = useRef<HTMLDivElement>(null);
   const sitesRef = useRef<HTMLDivElement>(null);

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -11,6 +11,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { phuketCopy, PHUKET_PRODUCTS } from "@/components/phuket/phuketContent";
 import PhuketBookingForm from "@/components/phuket/PhuketBookingForm";
 import { PriceEstimate } from "@/components/Price";
+import { trackViewContent } from "@/utils/tracking";
 
 const OCEAN_BG =
   "radial-gradient(120% 90% at 50% 0%, #0a3a66 0%, #08315a 36%, #051f3a 70%, #03152a 100%)";
@@ -31,6 +32,13 @@ const SiamPhuketPage = () => {
   }, [searchParams]);
 
   const [selectedId, setSelectedId] = useState(initialId);
+
+  // Same reason as /similan: PhuketBookingForm fires generate_lead, so the page
+  // needs its view signal or the lead has nothing to be a conversion rate of.
+  useEffect(() => {
+    trackViewContent({ offer: "phuket", lang: language });
+  }, [language]);
+
   const bookingRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement>(null);
 
