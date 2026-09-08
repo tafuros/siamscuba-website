@@ -19,7 +19,7 @@ const articleSchema = {
   "@type": "Article",
   headline: "Buceo en Koh Tao - la guía completa en español 2026",
   description:
-    "La guía en español para bucear en Koh Tao: precios reales de los cursos PADI, presupuesto del viaje, mejor época del año y por qué en Siam Scuba buceas en grupos de máximo 4 y sin depósito.",
+    "La guía en español para bucear en Koh Tao: precios reales de los cursos PADI, presupuesto del viaje, mejor época del año y por qué en Siam Scuba buceas en grupos de máximo 4, pagando el resto al llegar.",
   inLanguage: "es",
   datePublished: "2026-08-06T00:00:00+07:00",
   dateModified: "2026-08-06T00:00:00+07:00",
@@ -56,7 +56,7 @@ const SpanishLanding = () => {
     <div className="min-h-screen bg-background" dir="ltr" lang="es">
       <Seo
         title="Buceo en Koh Tao en español | Cursos PADI con Siam Scuba"
-        description="Guía en español para bucear en Koh Tao: cursos PADI desde 2,600 THB, máximo 4 alumnos por instructor, sin depósito, barcos propios. Instructores que hablan español."
+        description="Guía en español para bucear en Koh Tao: cursos PADI desde 2,600 THB, máximo 4 alumnos por instructor, depósito pequeño y el resto al llegar, barcos propios. Instructores que hablan español."
         ogType="article"
         jsonLd={articleSchema}
         hreflangAlternates={HOME_HREFLANG_ALTERNATES}
@@ -365,9 +365,9 @@ const SpanishLanding = () => {
               personas.
             </p>
             <p>
-              <strong>Sin depósito.</strong> Nunca hemos pedido pago por adelantado. Llegas a Koh Tao,
-              conoces al equipo, ves los barcos y el equipo, y solo entonces te comprometes. Si no
-              encaja con lo que buscabas, no nos debes nada.
+              <strong>Casi todo se paga al llegar.</strong> Solo pedimos un depósito pequeño para
+              guardar la plaza; el resto se paga en la tienda. Llegas a Koh Tao, conoces al equipo,
+              ves los barcos y el material, y empiezas el curso al día siguiente.
             </p>
             <p>
               <strong>Instructores que hablan español.</strong> Puedes hacer el curso entero en tu
@@ -396,7 +396,8 @@ const SpanishLanding = () => {
               interesa. Contestamos en menos de una hora en horario de día (hora de Tailandia).
             </p>
             <p>
-              <strong>Sin depósito.</strong> Se paga al llegar a Koh Tao, después de ver el sitio. La
+              <strong>Un depósito guarda la plaza</strong> (2.000 THB en Open Water y Advanced, 1.000
+              THB en el resto); el resto se paga al llegar a Koh Tao, después de ver el sitio. La
               mayoría de nuestros alumnos vienen directos del ferry a Mae Haad, se registran y empiezan
               el curso a la mañana siguiente.
             </p>

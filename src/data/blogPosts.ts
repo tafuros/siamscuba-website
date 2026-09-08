@@ -1263,7 +1263,7 @@ const divingBlogPosts: BlogPost[] = [
     slug: "curso-buceo-koh-tao",
     title: "Curso de Buceo Open Water en Koh Tao: La Guía Completa en Español",
     category: "Diving",
-    excerpt: "Todo sobre el curso PADI Open Water en Koh Tao en español: qué aprenderás, las 4 inmersiones en mar abierto, el precio (12.000 THB), y cómo reservar sin depósito.",
+    excerpt: "Todo sobre el curso PADI Open Water en Koh Tao en español: qué aprenderás, las 4 inmersiones en mar abierto, el precio (12.000 THB), y cómo reservar con un depósito de 2.000 THB.",
     coverImage: "/blog/whale-shark-divers-koh-tao.webp",
     date: "2026-05-09",
     sections: [
@@ -1323,10 +1323,10 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
       {
-        heading: "Cómo reservar (sin depósito)",
+        heading: "Cómo reservar (depósito de 2.000 THB)",
         paragraphs: [
           "Escríbenos por WhatsApp con tus fechas, cuántos sois, y el nombre de cada uno. Confirmamos disponibilidad en menos de una hora durante el día (hora de Tailandia).",
-          "No pedimos depósito. Llegas a Koh Tao primero, conoces al equipo, ves las instalaciones y los barcos, y solo entonces te comprometes. Si algo no encaja cuando nos visitas, no nos debes nada.",
+          "Un depósito de 2.000 THB te guarda la plaza; los 10.000 THB restantes se pagan en la tienda el primer día del curso. El depósito no es reembolsable, así que confirma tus fechas antes de enviarlo.",
           "Si vienes desde España y tienes nivel de español pero no de inglés, avísanos al reservar. Tenemos instructores y divemasters que hablan español; coordinamos la asignación según los grupos del momento.",
           "Si quieres seguir leyendo: nuestro Advanced Open Water (en inglés por ahora, pronto en español) cubre lo que viene después del Open Water. Y si te interesa el camino profesional, mira la guía del Divemaster.",
         ],
