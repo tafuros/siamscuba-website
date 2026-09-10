@@ -47,7 +47,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { name: "Cloud of Fish", description: "Swim through massive schools of Chevron Barracuda, Trevally, and Batfish." },
       ],
       tripDetails: [
-        "Departs every 3 days at 07:30, returns at 16:30.",
+        "Every Sunday: 06:30 at the dive centre, boat leaves 07:30, back by 16:00.",
         "3 dives: 2 at Sail Rock + 1 at a bonus site like Shark Island.",
         "Full breakfast and an authentic Thai buffet lunch served onboard.",
       ],
@@ -55,7 +55,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "Open Water certification (Max 18m).",
         "Advanced divers can explore the full 40m depth.",
       ],
-      price: "3,800 THB",
+      price: "4,000 THB",
       included: [
         "Full gear rental included.",
         "Professional dive guide.",
@@ -410,7 +410,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { name: "ענן של דגים", description: "שוחים בין להקות ענק של ברקודות, טרוולי ודגי עטלף." },
       ],
       tripDetails: [
-        "יציאה כל 3 ימים בשעה 07:30, חזרה ב-16:30.",
+        "כל יום ראשון: התייצבות במועדון 06:30, הסירה יוצאת 07:30, חזרה ב-16:00.",
         "3 צלילות: 2 ב-Sail Rock + צלילה נוספת באתר בונוס כמו Shark Island.",
         "ארוחת בוקר מלאה וצהריים בופה תאילנדי אותנטי מוגשים על הסירה.",
       ],
@@ -418,7 +418,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "הסמכת Open Water (עד 18 מ').",
         "צוללים מוסמכים Advanced יכולים לרדת עד 40 מ'.",
       ],
-      price: "3,800 THB",
+      price: "4,000 THB",
       included: [
         "השכרת ציוד מלא כלולה.",
         "מדריך צלילה מקצועי.",
@@ -773,7 +773,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { name: "Nube de peces", description: "Nada entre enormes bancos de barracudas chevron, jureles y peces murciélago." },
       ],
       tripDetails: [
-        "Sale cada 3 días a las 07:30 y regresa a las 16:30.",
+        "Todos los domingos: 06:30 en el centro de buceo, el barco sale a las 07:30 y regresa a las 16:00.",
         "3 inmersiones: 2 en Sail Rock + 1 en un sitio extra como Shark Island.",
         "Desayuno completo y un auténtico almuerzo buffet tailandés servidos a bordo.",
       ],
@@ -781,7 +781,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "Certificación Open Water (máx. 18 m).",
         "Los buceadores Advanced pueden explorar toda la profundidad de 40 m.",
       ],
-      price: "3,800 THB",
+      price: "4,000 THB",
       included: [
         "Alquiler de equipo completo incluido.",
         "Guía de buceo profesional.",
@@ -1136,7 +1136,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { name: "Nuée de poissons", description: "Nagez au milieu d'immenses bancs de barracudas chevron, de carangues et de poissons-chauves-souris." },
       ],
       tripDetails: [
-        "Départ tous les 3 jours à 07h30, retour à 16h30.",
+        "Tous les dimanches : rendez-vous au club à 06h30, départ du bateau à 07h30, retour à 16h00.",
         "3 plongées : 2 à Sail Rock + 1 sur un site bonus comme Shark Island.",
         "Petit-déjeuner complet et authentique buffet thaïlandais servis à bord.",
       ],
@@ -1144,7 +1144,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "Certification Open Water (max. 18 m).",
         "Les plongeurs Advanced peuvent explorer toute la profondeur de 40 m.",
       ],
-      price: "3,800 THB",
+      price: "4,000 THB",
       included: [
         "Location de l'équipement complet incluse.",
         "Guide de plongée professionnel.",

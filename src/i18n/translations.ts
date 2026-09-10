@@ -408,7 +408,7 @@ export const translations: Record<Language, TranslationStrings> = {
     fun_per_dive: "/ dive",
     fun_book: "Book Fun Dives",
 
-    sail_banner_title: "We go to Sail Rock every 3 days!",
+    sail_banner_title: "We go to Sail Rock every Sunday!",
     sail_banner_desc: "The best dive site in the Gulf of Thailand — Whale Sharks, the Chimney & more",
     sail_banner_cta: "Book Sail Rock Trip",
 
@@ -639,7 +639,7 @@ export const translations: Record<Language, TranslationStrings> = {
     fun_per_dive: "/ צלילה",
     fun_book: "הזמן צלילות כיף",
 
-    sail_banner_title: "אנחנו יוצאים לסייל רוק כל 3 ימים!",
+    sail_banner_title: "אנחנו יוצאים לסייל רוק כל יום ראשון!",
     sail_banner_desc: "אתר הצלילה הטוב ביותר במפרץ תאילנד — כרישי לוויתן, הארובה ועוד",
     sail_banner_cta: "הזמן טיול לסייל רוק",
 
@@ -870,7 +870,7 @@ export const translations: Record<Language, TranslationStrings> = {
     fun_per_dive: "/ inmersión",
     fun_book: "Reservar Inmersiones",
 
-    sail_banner_title: "¡Vamos a Sail Rock cada 3 días!",
+    sail_banner_title: "¡Vamos a Sail Rock todos los domingos!",
     sail_banner_desc: "El mejor sitio de buceo del Golfo de Tailandia — Tiburones Ballena, la Chimenea y más",
     sail_banner_cta: "Reservar Viaje a Sail Rock",
 
@@ -1101,7 +1101,7 @@ export const translations: Record<Language, TranslationStrings> = {
     fun_per_dive: "/ plongée",
     fun_book: "Réserver des Plongées",
 
-    sail_banner_title: "Nous allons à Sail Rock tous les 3 jours !",
+    sail_banner_title: "Nous allons à Sail Rock tous les dimanches !",
     sail_banner_desc: "Le meilleur site de plongée du Golfe de Thaïlande — Requins Baleines, la Cheminée et plus",
     sail_banner_cta: "Réserver Sail Rock",
 

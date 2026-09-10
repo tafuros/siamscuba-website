@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { SAIL_ROCK_WEEKDAY } from "@/data/sailRockDay";
 
-// Sail Rock departs on a fixed 3-day cadence. This anchor + step is the single
-// source of truth for every "upcoming departures" UI on the site (currently the
-// Sail Rock lander) so the dates never drift between surfaces.
+// Sail Rock sails once a week, on the weekday named in src/data/sailRockDay.ts.
+// That constant is the single source of truth for every "upcoming departures"
+// UI on the site AND for the homepage week board, so the two can no longer
+// disagree.
 //
-// The homepage board does NOT use this. Its Sail Rock slots sit on fixed
-// weekdays because that is how the boat is scheduled; this cadence stays for
-// the lander, and both are subject to weather - see SCHEDULE_NOTES.weather.
+// It used to be a fixed 3-day cadence anchored to 2026-03-15, which stopped
+// being true on 2026-09-10 when the boat moved to one weekly day trip. The
+// board and the lander then quoted different departure days on the same site.
+// If the cadence ever goes back to "every N days", the shape to restore is a
+// step in days off an anchor - see git history for the old implementation.
 //
 // HYDRATION CONTRACT: all departure Dates are UTC midnights and all math /
 // formatting is done in UTC. The first render (SSG *and* client hydration)
@@ -17,31 +21,26 @@ import { useEffect, useState } from "react";
 // different calendar day for negative-UTC-offset visitors (Americas), which
 // was a hydration text mismatch (React #418/#425/#423) on every page showing
 // departures.
-export const SAIL_ROCK_FIRST = new Date("2026-03-15"); // first departure (anchor, UTC midnight)
-export const SAIL_ROCK_STEP_DAYS = 3;
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-const STEP_MS = SAIL_ROCK_STEP_DAYS * DAY_MS;
+const WEEK_MS = 7 * DAY_MS;
 
-/** The visitor's calendar day as a UTC midnight (matches the anchor's frame). */
+/** The visitor's calendar day as a UTC midnight (matches the departure frame). */
 function localTodayAsUtcMidnight(): Date {
   const now = new Date();
   return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
 }
 
 /**
- * Returns the next `count` Sail Rock departure dates on or after `from`
- * (a UTC-midnight Date), rolling forward automatically off the fixed anchor.
+ * The next `count` Sail Rock departures on or after `from` (a UTC-midnight
+ * Date), rolling forward automatically. When `from` IS the sailing weekday it
+ * counts as the next departure - the boat has not left yet at midnight.
  * No manual date upkeep. Defaults to the visitor's local calendar day.
  */
 export function getUpcomingSailRockDates(count: number, from: Date = localTodayAsUtcMidnight()): Date[] {
-  const elapsed = from.getTime() - SAIL_ROCK_FIRST.getTime();
-  const stepsPassed = elapsed > 0 ? Math.ceil(elapsed / STEP_MS) : 0;
-  const dates: Date[] = [];
-  for (let i = 0; i < count; i++) {
-    dates.push(new Date(SAIL_ROCK_FIRST.getTime() + (stepsPassed + i) * STEP_MS));
-  }
-  return dates;
+  const daysAhead = (SAIL_ROCK_WEEKDAY - from.getUTCDay() + 7) % 7;
+  const first = from.getTime() + daysAhead * DAY_MS;
+  return Array.from({ length: count }, (_, i) => new Date(first + i * WEEK_MS));
 }
 
 /**

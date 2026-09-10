@@ -1,20 +1,24 @@
 /**
  * The weekly dive schedule - single source of truth for the homepage board.
  *
- * Every value here came from Ben (worksheet round, 2026-08-17). Do not "improve"
- * a time, a price or a site name from memory: the old DiveSchedule component
- * carried a 06:00 meet and an invented per-dive timeline that had drifted from
- * both info.json and reality. Where a fact was not confirmed it is simply not
- * stated - an absent line is better than a wrong one.
+ * Every value here came from Ben (schedule round, 2026-09-10, superseding the
+ * 2026-08-17 worksheet). Do not "improve" a time, a price or a site name from
+ * memory. Where a fact was not confirmed it is simply not stated - an absent
+ * line is better than a wrong one.
  *
- * Two deliberate omissions, both waiting on a coordinated DiveOS session:
- *  - `sail-rock-half-day` has no product code. Its 3,800 price has no matching
- *    entry in the DiveOS catalogue, and preselecting SAILROCK would open the
- *    wizard showing 4,000. Sending no product is the honest degrade: the wizard
- *    opens on its own chooser instead of quoting a price we'd have to walk back.
- *  - `three-site-day-trip` reuses SAILROCK because the price matches; confirm
- *    whether the 3-site trip is a separate catalogue item.
+ * WHAT CHANGED ON 2026-09-10, and why the shape of this file changed with it:
+ * the schedule stopped varying by weekday. Morning and afternoon fun dives now
+ * run every single day, off the same site rotation, and the only day-specific
+ * thing left is the Sail Rock day trip. So sites moved off the day and onto the
+ * trip (`divePlan`), and the week is GENERATED from one constant rather than
+ * hand-written seven times - see src/data/sailRockDay.ts. Seven hand-written
+ * days is seven chances to leave one of them stale.
+ *
+ * The retired `sail-rock-half-day` (3,800, min 4) and the three-days-a-week
+ * `three-site-day-trip` are gone: both collapsed into `sail-rock-day-trip`.
  */
+
+import { SAIL_ROCK_DAY_KEY } from "./sailRockDay";
 
 /** Dive sites that have their own page - the rest render as plain text. */
 const SITE_PAGES: Record<string, string> = {
@@ -26,8 +30,7 @@ const SITE_PAGES: Record<string, string> = {
 export type TripId =
   | "morning-fun-dive"
   | "afternoon-fun-dive"
-  | "sail-rock-half-day"
-  | "three-site-day-trip"
+  | "sail-rock-day-trip"
   | "night-dive"
   | "snorkeling";
 
@@ -35,6 +38,17 @@ export interface TripSite {
   name: string;
   /** Free-text qualifier shown after the name, e.g. "wreck". */
   note?: string;
+}
+
+/**
+ * One dive of a trip. `sites` with several entries means a rotation the crew
+ * picks from on the day - not several dives. `freeText` covers the case where
+ * the rotation is not a closed list we are willing to name.
+ */
+export interface DiveLeg {
+  label: string;
+  sites?: TripSite[];
+  freeText?: string;
 }
 
 export interface Trip {
@@ -53,29 +67,83 @@ export interface Trip {
   productCode?: string;
   /** Analytics slot name for book_now_click. */
   trackingSlot: string;
+  /**
+   * Named sites on the compact board card. Kept ON the card, not only in the
+   * panel: real site names are what the page ranks for, and the ones with their
+   * own page become internal links from every day of the week.
+   */
+  boardSites: TripSite[];
+  /** Muted tail after the card's site list, e.g. "+ more island reefs". */
+  boardMore?: string;
+  /** Per-dive plan, shown in the detail panel. Empty for trips with no dives. */
+  divePlan: DiveLeg[];
+  /** Renders the card in the warm accent - reserved for the week's flagship. */
+  flagship?: boolean;
   includes: string[];
 }
 
-export interface DaySlot {
-  tripId: TripId;
-  /** The sites usually dived in this slot. Conditions can change them. */
-  sites: TripSite[];
-}
+export type DayKey =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
 
 export interface ScheduleDay {
   /** Stable id, also the anchor/DOM key. */
-  key: string;
+  key: DayKey;
   /** Full weekday name - indexable text, not an abbreviation. */
   label: string;
   short: string;
-  slots: DaySlot[];
+  /** Trips sailing that day, in the order they should read on the board. */
+  slots: TripId[];
 }
+
+const CHUMPHON: TripSite = { name: "Chumphon Pinnacle" };
+const SOUTHWEST: TripSite = { name: "Southwest Pinnacle" };
+const SAIL_ROCK: TripSite = { name: "Sail Rock" };
+const SHARK_ISLAND: TripSite = { name: "Shark Island" };
+const WHITE_ROCK: TripSite = { name: "White Rock" };
+const JAPANESE_GARDENS: TripSite = { name: "Japanese Gardens" };
+const TWINS: TripSite = { name: "Twins" };
+const GREEN_ROCK: TripSite = { name: "Green Rock" };
+const MANGO_BAY: TripSite = { name: "Mango Bay" };
+const SATTAKUT: TripSite = { name: "HTMS Sattakut", note: "wreck" };
+const SUPHAIRIN: TripSite = { name: "HTMS Suphairin", note: "wreck" };
+
+/**
+ * The reefs and wrecks the second morning dive and both afternoon dives rotate
+ * through. Every name here is one the site already claims elsewhere (blog,
+ * funDiveCopy, the old board) - nothing invented, and Ben confirmed on
+ * 2026-09-10 that the boat dives all of them.
+ */
+const ISLAND_ROTATION: TripSite[] = [
+  WHITE_ROCK,
+  JAPANESE_GARDENS,
+  TWINS,
+  GREEN_ROCK,
+  MANGO_BAY,
+  SHARK_ISLAND,
+  SATTAKUT,
+  SUPHAIRIN,
+];
+
+const FUN_DIVE_INCLUDES = [
+  "2 guided dives with a professional instructor",
+  "Full diving equipment",
+  "Full air tank (180-200 bar)",
+  "Fresh pineapple on the boat",
+  "Dive insurance",
+  "Photography add-on available",
+];
 
 export const trips: Record<TripId, Trip> = {
   "morning-fun-dive": {
     id: "morning-fun-dive",
     name: "Morning Fun Dive",
-    tagline: "Two dives on the deep pinnacles, back before lunch",
+    tagline: "One of the big pinnacles at first light, then a second site - back before lunch",
     meet: "05:50",
     back: "11:00",
     dives: 2,
@@ -83,14 +151,21 @@ export const trips: Record<TripId, Trip> = {
     level: "Open Water and up - Advanced recommended for the deep pinnacles",
     productCode: "FD",
     trackingSlot: "board_morning_fun_dive",
-    includes: [
-      "2 guided dives with a professional instructor",
-      "Full diving equipment",
-      "Full air tank (180-200 bar)",
-      "Fresh pineapple on the boat",
-      "Dive insurance",
-      "Photography add-on available",
+    boardSites: [CHUMPHON, SOUTHWEST, SHARK_ISLAND],
+    boardMore: "+ a reef or wreck",
+    divePlan: [
+      {
+        label: "Dive 1",
+        sites: [CHUMPHON, SOUTHWEST, SHARK_ISLAND],
+        freeText: "whichever of the three the morning's conditions favour",
+      },
+      {
+        label: "Dive 2",
+        sites: ISLAND_ROTATION,
+        freeText: "chosen on the day",
+      },
     ],
+    includes: FUN_DIVE_INCLUDES,
   },
   "afternoon-fun-dive": {
     id: "afternoon-fun-dive",
@@ -103,45 +178,35 @@ export const trips: Record<TripId, Trip> = {
     level: "Open Water and up",
     productCode: "FD",
     trackingSlot: "board_afternoon_fun_dive",
-    includes: [
-      "2 guided dives with a professional instructor",
-      "Full diving equipment",
-      "Full air tank (180-200 bar)",
-      "Fresh pineapple on the boat",
-      "Dive insurance",
-      "Photography add-on available",
+    boardSites: [WHITE_ROCK, JAPANESE_GARDENS, TWINS],
+    boardMore: "+ more island reefs",
+    divePlan: [
+      { label: "Dive 1", sites: ISLAND_ROTATION, freeText: "the rotation changes daily" },
+      { label: "Dive 2", sites: ISLAND_ROTATION, freeText: "a second site, picked to suit the conditions" },
     ],
+    includes: FUN_DIVE_INCLUDES,
   },
-  "sail-rock-half-day": {
-    id: "sail-rock-half-day",
-    name: "Sail Rock Half-Day",
-    tagline: "Two dives on the best pinnacle in the Gulf of Thailand",
-    meet: "10:00",
-    back: "18:00",
-    dives: 2,
-    priceThb: 3800,
-    level: "Open Water and up - Advanced recommended",
-    minDivers: 4,
-    trackingSlot: "board_sail_rock_half_day",
-    includes: [
-      "2 guided dives at Sail Rock",
-      "Full diving equipment",
-      "Lunch on the boat",
-      "Dive insurance",
-    ],
-  },
-  "three-site-day-trip": {
-    id: "three-site-day-trip",
-    name: "3-Site Day Trip",
-    tagline: "A full day on the boat - three dives, breakfast and Thai lunch",
-    meet: "07:00",
-    back: "17:00",
+  "sail-rock-day-trip": {
+    id: "sail-rock-day-trip",
+    name: "Sail Rock Day Trip",
+    tagline: "A full day on the boat - two dives at Sail Rock plus Shark Island, meals on board",
+    meet: "06:30",
+    back: "16:00",
     dives: 3,
     priceThb: 4000,
     level: "Open Water and up - Advanced recommended",
+    // Carried over from the 3-site day trip this replaced (confirmed 2026-08-17).
+    // Ben has not re-confirmed it for the weekly trip - see the website HQ board.
     minDivers: 10,
     productCode: "SAILROCK",
-    trackingSlot: "board_three_site_day_trip",
+    trackingSlot: "board_sail_rock_day_trip",
+    boardSites: [SAIL_ROCK, SAIL_ROCK, SHARK_ISLAND],
+    flagship: true,
+    divePlan: [
+      { label: "Dive 1", sites: [SAIL_ROCK] },
+      { label: "Dive 2", sites: [SAIL_ROCK] },
+      { label: "Dive 3", sites: [SHARK_ISLAND] },
+    ],
     includes: [
       "3 guided dives",
       "Full diving equipment",
@@ -163,6 +228,8 @@ export const trips: Record<TripId, Trip> = {
     level: "Open Water and up",
     productCode: "NIGHT DIVE",
     trackingSlot: "board_night_dive",
+    boardSites: [],
+    divePlan: [{ label: "Dive 1", sites: ISLAND_ROTATION, freeText: "chosen on the day" }],
     includes: [
       "1 guided night dive with a professional instructor",
       "Full diving equipment",
@@ -180,6 +247,8 @@ export const trips: Record<TripId, Trip> = {
     priceThb: 500,
     level: "No certification needed",
     trackingSlot: "board_snorkeling",
+    boardSites: [],
+    divePlan: [],
     includes: [
       "Snorkelling equipment and float",
       "Boat trip",
@@ -188,70 +257,33 @@ export const trips: Record<TripId, Trip> = {
   },
 };
 
-const CHUMPHON: TripSite = { name: "Chumphon Pinnacle" };
-const SOUTHWEST: TripSite = { name: "Southwest Pinnacle" };
-const SAIL_ROCK: TripSite = { name: "Sail Rock" };
-const SHARK_ISLAND: TripSite = { name: "Shark Island" };
+/** Runs every single day of the week, Sail Rock day included. */
+const EVERY_DAY: TripId[] = ["morning-fun-dive", "afternoon-fun-dive"];
 
-export const weeklySchedule: ScheduleDay[] = [
-  {
-    key: "monday",
-    label: "Monday",
-    short: "Mon",
-    slots: [{ tripId: "three-site-day-trip", sites: [SOUTHWEST, SAIL_ROCK, SHARK_ISLAND] }],
-  },
-  {
-    key: "tuesday",
-    label: "Tuesday",
-    short: "Tue",
-    slots: [
-      { tripId: "morning-fun-dive", sites: [CHUMPHON, { name: "HTMS Suphairin", note: "wreck" }] },
-      { tripId: "sail-rock-half-day", sites: [SAIL_ROCK, SAIL_ROCK] },
-    ],
-  },
-  {
-    key: "wednesday",
-    label: "Wednesday",
-    short: "Wed",
-    slots: [{ tripId: "three-site-day-trip", sites: [SOUTHWEST, { name: "Samran" }, SAIL_ROCK] }],
-  },
-  {
-    key: "thursday",
-    label: "Thursday",
-    short: "Thu",
-    slots: [
-      { tripId: "morning-fun-dive", sites: [CHUMPHON, { name: "Green Rock" }] },
-      { tripId: "sail-rock-half-day", sites: [SAIL_ROCK, SAIL_ROCK] },
-    ],
-  },
-  {
-    key: "friday",
-    label: "Friday",
-    short: "Fri",
-    slots: [
-      { tripId: "morning-fun-dive", sites: [CHUMPHON, { name: "HTMS Suphairin", note: "wreck" }] },
-      { tripId: "sail-rock-half-day", sites: [SAIL_ROCK, SAIL_ROCK] },
-    ],
-  },
-  {
-    key: "saturday",
-    label: "Saturday",
-    short: "Sat",
-    slots: [{ tripId: "three-site-day-trip", sites: [SOUTHWEST, SAIL_ROCK, SHARK_ISLAND] }],
-  },
-  {
-    key: "sunday",
-    label: "Sunday",
-    short: "Sun",
-    slots: [
-      { tripId: "morning-fun-dive", sites: [CHUMPHON, { name: "HTMS Sattakut", note: "wreck" }] },
-      { tripId: "sail-rock-half-day", sites: [SAIL_ROCK, SAIL_ROCK] },
-    ],
-  },
+const DAYS: { key: DayKey; label: string; short: string }[] = [
+  { key: "monday", label: "Monday", short: "Mon" },
+  { key: "tuesday", label: "Tuesday", short: "Tue" },
+  { key: "wednesday", label: "Wednesday", short: "Wed" },
+  { key: "thursday", label: "Thursday", short: "Thu" },
+  { key: "friday", label: "Friday", short: "Fri" },
+  { key: "saturday", label: "Saturday", short: "Sat" },
+  { key: "sunday", label: "Sunday", short: "Sun" },
 ];
 
-/** Runs every day alongside the board, so it gets its own row rather than 7 cells. */
-export const alsoEveryDay: TripId[] = ["afternoon-fun-dive", "night-dive", "snorkeling"];
+/**
+ * The week, generated. The Sail Rock day gets the flagship trip on top of the
+ * two that run daily; every other day is the same two. Moving the boat is one
+ * edit in src/data/sailRockDay.ts, not seven edits here.
+ */
+export const weeklySchedule: ScheduleDay[] = DAYS.map(({ key, label, short }) => ({
+  key,
+  label,
+  short,
+  slots: key === SAIL_ROCK_DAY_KEY ? (["sail-rock-day-trip", ...EVERY_DAY] as TripId[]) : EVERY_DAY,
+}));
+
+/** Trips that aren't tied to a weekday and get their own row under the board. */
+export const alsoEveryDay: TripId[] = ["night-dive", "snorkeling"];
 
 /** Path to a dive site's page, or null when we don't have one. */
 export function diveSitePath(siteName: string): string | null {
@@ -277,8 +309,7 @@ export function buildScheduleJsonLd(siteUrl = "https://siamscuba.com") {
   const ordered: TripId[] = [
     "morning-fun-dive",
     "afternoon-fun-dive",
-    "sail-rock-half-day",
-    "three-site-day-trip",
+    "sail-rock-day-trip",
     "night-dive",
     "snorkeling",
   ];

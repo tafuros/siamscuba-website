@@ -11,24 +11,31 @@ import {
   diveSitePath,
   tripBookingPath,
   SCHEDULE_NOTES,
-  type DaySlot,
+  type DiveLeg,
   type ScheduleDay,
+  type TripSite,
   type Trip,
+  type TripId,
 } from "@/data/diveScheduleBoard";
 
 /**
- * The weekly board. Two rules shape this component:
+ * The weekly board. Three rules shape this component:
  *
- * 1. NO PORTAL. Every slot's detail panel is rendered into the normal DOM and
- *    merely hidden when inactive. A Radix Dialog would put this content in a
- *    portal that only exists after a click, so the prerenderer would emit a
- *    board with no dive-site names, times or prices in the HTML - which is the
- *    entire reason this section was rebuilt.
+ * 1. NO PORTAL. Every detail panel is rendered into the normal DOM and merely
+ *    hidden when inactive. A Radix Dialog would put this content in a portal
+ *    that only exists after a click, so the prerenderer would emit a board with
+ *    no dive-site names, times or prices in the HTML - which is the entire
+ *    reason this section was rebuilt.
  *
  * 2. NO BUILD-TIME CLOCK IN THE FIRST RENDER. The default open slot is a fixed
  *    index, never "today". vite-react-ssg bakes the first render into static
  *    HTML, so deriving it from a Date would ship a stale day and mismatch on
  *    hydration. "Today" is applied in an effect, after mount.
+ *
+ * 3. ONE PANEL PER TRIP, NOT PER DAY-SLOT. Since 2026-09-10 the same two trips
+ *    run every day, so a panel per day-slot would emit the identical block of
+ *    prose fifteen times into the static HTML. Panels are keyed by trip; the
+ *    weekday shown in the panel's eyebrow follows the selection.
  */
 
 const slotKey = (dayKey: string, i: number) => `${dayKey}-${i}`;
@@ -52,35 +59,68 @@ function SiteName({ name, note }: { name: string; note?: string }) {
   );
 }
 
+/** "Chumphon Pinnacle / Southwest Pinnacle / Shark Island - whichever ..." */
+function DiveLegLine({ leg }: { leg: DiveLeg }) {
+  return (
+    <li className="flex flex-wrap items-baseline gap-x-2 text-sm text-white/85">
+      <span className="text-[11px] font-semibold uppercase tracking-wide text-sky-300">{leg.label}</span>
+      <span>
+        {leg.sites?.map((s, i) => (
+          <span key={`${s.name}-${i}`}>
+            {i > 0 && <span className="text-white/40"> / </span>}
+            <SiteName name={s.name} note={s.note} />
+          </span>
+        ))}
+        {leg.sites?.length && leg.freeText ? <span className="text-white/50"> - {leg.freeText}</span> : null}
+        {!leg.sites?.length && leg.freeText ? <span className="text-white/70">{leg.freeText}</span> : null}
+      </span>
+    </li>
+  );
+}
+
+/**
+ * "Sail Rock, Sail Rock, Shark Island" reads as a mistake on a card. Two dives
+ * at the same site collapse to "Sail Rock ×2" while the data stays one entry
+ * per dive, which is what the detail panel and the JSON-LD need.
+ */
+function collapseRepeats(sites: TripSite[]): { site: TripSite; count: number }[] {
+  const out: { site: TripSite; count: number }[] = [];
+  for (const site of sites) {
+    const last = out[out.length - 1];
+    if (last && last.site.name === site.name) last.count += 1;
+    else out.push({ site, count: 1 });
+  }
+  return out;
+}
+
 function SlotButton({
-  day,
-  slot,
-  index,
+  tripId,
   active,
   isToday,
   onSelect,
+  panelId,
 }: {
-  day: ScheduleDay;
-  slot: DaySlot;
-  index: number;
+  tripId: TripId;
   active: boolean;
   isToday: boolean;
   onSelect: () => void;
+  panelId: string;
 }) {
-  const trip = trips[slot.tripId];
-  const id = slotKey(day.key, index);
+  const trip = trips[tripId];
   return (
     <button
       type="button"
       onClick={onSelect}
       aria-expanded={active}
-      aria-controls={`slot-panel-${id}`}
+      aria-controls={panelId}
       className={[
         "group w-full rounded-xl border p-3 text-left transition-all",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b2444]",
         active
           ? "border-sky-300/70 bg-sky-400/25 shadow-[0_0_0_1px_rgba(125,211,252,0.35)]"
-          : "border-white/10 bg-white/[0.07] hover:border-white/25 hover:bg-white/[0.12]",
+          : trip.flagship
+            ? "border-amber-300/40 bg-amber-300/[0.10] hover:border-amber-300/60 hover:bg-amber-300/[0.16]"
+            : "border-white/10 bg-white/[0.07] hover:border-white/25 hover:bg-white/[0.12]",
       ].join(" ")}
     >
       <div className="flex items-baseline justify-between gap-2">
@@ -95,13 +135,18 @@ function SlotButton({
         <Clock className="h-3 w-3 shrink-0" aria-hidden="true" />
         {trip.meet} - {trip.back}
       </div>
-      <ul className="mt-2 space-y-0.5 text-[13px] leading-snug text-white/85">
-        {slot.sites.map((s, i) => (
-          <li key={`${s.name}-${i}`}>
-            <SiteName name={s.name} note={s.note} />
-          </li>
-        ))}
-      </ul>
+      {trip.boardSites.length > 0 && (
+        <p className="mt-2 text-[12px] leading-snug text-white/85">
+          {collapseRepeats(trip.boardSites).map(({ site, count }, i) => (
+            <span key={`${site.name}-${i}`}>
+              {i > 0 && <span className="text-white/40"> · </span>}
+              <SiteName name={site.name} note={site.note} />
+              {count > 1 && <span className="text-white/60"> ×{count}</span>}
+            </span>
+          ))}
+          {trip.boardMore && <span className="block text-white/55">{trip.boardMore}</span>}
+        </p>
+      )}
       <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-2">
         <span className="text-[11px] text-white/60">
           {trip.dives} {trip.dives === 1 ? "dive" : "dives"}
@@ -130,14 +175,14 @@ function BookButton({ trip, className = "" }: { trip: Trip; className?: string }
   );
 }
 
-function SlotPanel({ day, slot, index, active }: { day: ScheduleDay; slot: DaySlot; index: number; active: boolean }) {
-  const trip = trips[slot.tripId];
-  const id = slotKey(day.key, index);
+const tripPanelId = (tripId: TripId) => `trip-panel-${tripId}`;
+
+function TripPanel({ trip, dayLabel, active }: { trip: Trip; dayLabel: string; active: boolean }) {
   return (
-    <div id={`slot-panel-${id}`} hidden={!active} className="border-t border-white/10 pt-6">
+    <div id={tripPanelId(trip.id)} hidden={!active} className="border-t border-white/10 pt-6">
       <div className="grid gap-6 md:grid-cols-[1.1fr_1fr]">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">{day.label}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">{dayLabel}</p>
           <h3 className="font-display text-2xl font-bold text-white">{trip.name}</h3>
           <p className="mt-1 text-sm text-white/70">{trip.tagline}</p>
 
@@ -160,17 +205,16 @@ function SlotPanel({ day, slot, index, active }: { day: ScheduleDay; slot: DaySl
             </div>
           </dl>
 
-          <div className="mt-5">
-            <p className="text-[11px] uppercase tracking-wide text-white/50">Dive sites this day</p>
-            <p className="mt-1 text-sm text-white/85">
-              {slot.sites.map((s, i) => (
-                <span key={`${s.name}-${i}`}>
-                  {i > 0 && <span className="text-white/40"> · </span>}
-                  <SiteName name={s.name} note={s.note} />
-                </span>
-              ))}
-            </p>
-          </div>
+          {trip.divePlan.length > 0 && (
+            <div className="mt-5">
+              <p className="text-[11px] uppercase tracking-wide text-white/50">The plan</p>
+              <ul className="mt-2 space-y-1.5">
+                {trip.divePlan.map((leg) => (
+                  <DiveLegLine key={leg.label} leg={leg} />
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="rounded-2xl bg-white/[0.06] p-5">
@@ -206,6 +250,11 @@ function SlotPanel({ day, slot, index, active }: { day: ScheduleDay; slot: DaySl
   );
 }
 
+/** Every trip that appears somewhere in the week, in first-appearance order. */
+const boardTrips: TripId[] = Array.from(
+  new Set(weeklySchedule.flatMap((d: ScheduleDay) => d.slots)),
+);
+
 const DiveScheduleBoard = () => {
   // Fixed default so the SSG HTML and the hydrated client agree. See header note.
   const [selected, setSelected] = useState<string>(slotKey(weeklySchedule[0].key, 0));
@@ -218,10 +267,11 @@ const DiveScheduleBoard = () => {
   }, []);
 
   // The selected slot id is the single source of truth; the mobile day picker
-  // reads its day back out of it rather than keeping a second piece of state
-  // that could drift out of sync with the open panel.
-  const activeDay =
-    weeklySchedule.find((d) => selected.startsWith(`${d.key}-`)) ?? weeklySchedule[0];
+  // and the open panel both read back out of it rather than keeping a second
+  // piece of state that could drift out of sync.
+  const activeDay = weeklySchedule.find((d) => selected.startsWith(`${d.key}-`)) ?? weeklySchedule[0];
+  const activeIndex = Number(selected.slice(selected.lastIndexOf("-") + 1));
+  const activeTripId = activeDay.slots[activeIndex] ?? activeDay.slots[0];
 
   return (
     <div className="overflow-hidden rounded-3xl bg-gradient-to-b from-[#0f3163] to-[#071a33] p-4 shadow-2xl sm:p-6 lg:p-8">
@@ -247,6 +297,7 @@ const DiveScheduleBoard = () => {
         <div className="grid grid-cols-7 gap-1">
           {weeklySchedule.map((day) => {
             const isActiveDay = activeDay.key === day.key;
+            const hasFlagship = day.slots.some((id) => trips[id].flagship);
             return (
               <button
                 key={day.key}
@@ -258,7 +309,9 @@ const DiveScheduleBoard = () => {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70",
                   isActiveDay
                     ? "bg-sky-400/90 text-[#06213f]"
-                    : "bg-white/[0.07] text-white/70 hover:bg-white/[0.14]",
+                    : hasFlagship
+                      ? "bg-amber-300/20 text-amber-100 hover:bg-amber-300/30"
+                      : "bg-white/[0.07] text-white/70 hover:bg-white/[0.14]",
                 ].join(" ")}
               >
                 <span>{day.short}</span>
@@ -280,12 +333,11 @@ const DiveScheduleBoard = () => {
         </p>
 
         <div className="mt-2 flex flex-col gap-2">
-          {activeDay.slots.map((slot, i) => (
+          {activeDay.slots.map((tripId, i) => (
             <SlotButton
               key={slotKey(activeDay.key, i)}
-              day={activeDay}
-              slot={slot}
-              index={i}
+              tripId={tripId}
+              panelId={tripPanelId(tripId)}
               active={selected === slotKey(activeDay.key, i)}
               isToday={todayKey === activeDay.key}
               onSelect={() => setSelected(slotKey(activeDay.key, i))}
@@ -308,12 +360,11 @@ const DiveScheduleBoard = () => {
               )}
             </p>
             <div className="flex flex-col gap-2">
-              {day.slots.map((slot, i) => (
+              {day.slots.map((tripId, i) => (
                 <SlotButton
                   key={slotKey(day.key, i)}
-                  day={day}
-                  slot={slot}
-                  index={i}
+                  tripId={tripId}
+                  panelId={tripPanelId(tripId)}
                   active={selected === slotKey(day.key, i)}
                   isToday={todayKey === day.key}
                   onSelect={() => setSelected(slotKey(day.key, i))}
@@ -329,25 +380,22 @@ const DiveScheduleBoard = () => {
         {SCHEDULE_NOTES.weather}
       </p>
 
-      {/* Every panel is in the DOM; only the selected one is shown. */}
+      {/* Every trip's panel is in the DOM; only the selected one is shown. */}
       <div className="mt-6">
-        {weeklySchedule.map((day) =>
-          day.slots.map((slot, i) => (
-            <SlotPanel
-              key={slotKey(day.key, i)}
-              day={day}
-              slot={slot}
-              index={i}
-              active={selected === slotKey(day.key, i)}
-            />
-          )),
-        )}
+        {boardTrips.map((tripId) => (
+          <TripPanel
+            key={tripId}
+            trip={trips[tripId]}
+            dayLabel={activeDay.label}
+            active={activeTripId === tripId}
+          />
+        ))}
       </div>
 
       {/* Trips that aren't tied to a weekday. */}
       <div className="mt-8 border-t border-white/10 pt-6">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">Also every day</p>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           {alsoEveryDay.map((id) => {
             const trip = trips[id];
             return (

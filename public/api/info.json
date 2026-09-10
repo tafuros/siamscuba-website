@@ -1,6 +1,6 @@
 {
-  "version": "1.1.1",
-  "last_updated": "2026-09-08",
+  "version": "1.2.0",
+  "last_updated": "2026-09-10",
   "courses": [
     {
       "id": "dsd",
@@ -202,10 +202,10 @@
     "level": "Open Water and up - Advanced recommended for the deep pinnacles",
     "morning_meet_time": "05:50",
     "morning_return_time": "11:00",
-    "morning_sites": "1st dive is a deep pinnacle - Chumphon Pinnacle OR Southwest Pinnacle depending on the weather. The 2nd site (a wreck or another site nearby) is chosen on the day based on conditions and recent reports.",
+    "morning_sites": "1st dive is one of the three big sites - Chumphon Pinnacle, Southwest Pinnacle or Shark Island - whichever the morning conditions favour. 2nd dive rotates through the island reefs and wrecks: White Rock, Japanese Gardens, Twins, Green Rock, Mango Bay, Shark Island, HTMS Sattakut (wreck), HTMS Suphairin (wreck).",
     "afternoon_meet_time": "11:00",
     "afternoon_return_time": "16:00",
-    "afternoon_sites": "Reef sites around Koh Tao - the rotation changes daily.",
+    "afternoon_sites": "Two of the island reefs and wrecks, chosen on the day: White Rock, Japanese Gardens, Twins, Green Rock, Mango Bay, Shark Island, HTMS Sattakut (wreck), HTMS Suphairin (wreck).",
     "included": [
       "2 guided dives with professional instructor",
       "full diving equipment",
@@ -213,7 +213,8 @@
       "fresh pineapple on the boat",
       "dive insurance",
       "photography add-on available"
-    ]
+    ],
+    "runs": "Every day of the week, Sail Rock day included."
   },
   "night_dive": {
     "price_thb": 1300,
@@ -221,7 +222,7 @@
     "for": "certified divers",
     "meet_time": "45 minutes before sunset",
     "return_time": "20:15",
-    "sites": "Varies daily - a Koh Tao reef chosen on the day.",
+    "sites": "Varies daily - one of the Koh Tao reefs, chosen on the day.",
     "description": "Single guided night dive on a Koh Tao reef - the reef comes alive after dark. For certified divers.",
     "included": [
       "1 guided night dive with professional instructor",
@@ -244,139 +245,61 @@
     ]
   },
   "weekly_schedule": {
-    "_note": "Source of truth for the homepage board (src/data/diveScheduleBoard.ts). Sites listed are the usual plan for each day; conditions on the morning can change them. Runs year-round, weather permitting.",
-    "monday": [
-      {
-        "trip": "3-Site Day Trip",
-        "sites": [
-          "Southwest Pinnacle",
-          "Sail Rock",
-          "Shark Island"
-        ]
-      }
-    ],
-    "tuesday": [
+    "_note": "Source of truth for the homepage board (src/data/diveScheduleBoard.ts). Since 2026-09-10 the week no longer varies: morning and afternoon fun dives run EVERY day, and Sunday adds the Sail Rock day trip on top. Sites are the usual plan; conditions on the morning can change them. Runs year-round, weather permitting.",
+    "every_day": [
       {
         "trip": "Morning Fun Dive",
-        "sites": [
-          "Chumphon Pinnacle",
-          "HTMS Suphairin (wreck)"
-        ]
+        "meet_time": "05:50",
+        "return_time": "11:00",
+        "price_thb": 2000,
+        "sites": "Dive 1: Chumphon Pinnacle OR Southwest Pinnacle OR Shark Island. Dive 2: one of White Rock, Japanese Gardens, Twins, Green Rock, Mango Bay, Shark Island, HTMS Sattakut (wreck), HTMS Suphairin (wreck)."
       },
       {
-        "trip": "Sail Rock Half-Day",
-        "sites": [
-          "Sail Rock",
-          "Sail Rock"
-        ]
+        "trip": "Afternoon Fun Dive",
+        "meet_time": "11:00",
+        "return_time": "16:00",
+        "price_thb": 2000,
+        "sites": "Two of White Rock, Japanese Gardens, Twins, Green Rock, Mango Bay, Shark Island, HTMS Sattakut (wreck), HTMS Suphairin (wreck)."
       }
     ],
-    "wednesday": [
-      {
-        "trip": "3-Site Day Trip",
-        "sites": [
-          "Southwest Pinnacle",
-          "Samran",
-          "Sail Rock"
-        ]
-      }
-    ],
-    "thursday": [
-      {
-        "trip": "Morning Fun Dive",
-        "sites": [
-          "Chumphon Pinnacle",
-          "Green Rock"
-        ]
-      },
-      {
-        "trip": "Sail Rock Half-Day",
-        "sites": [
-          "Sail Rock",
-          "Sail Rock"
-        ]
-      }
-    ],
-    "friday": [
-      {
-        "trip": "Morning Fun Dive",
-        "sites": [
-          "Chumphon Pinnacle",
-          "HTMS Suphairin (wreck)"
-        ]
-      },
-      {
-        "trip": "Sail Rock Half-Day",
-        "sites": [
-          "Sail Rock",
-          "Sail Rock"
-        ]
-      }
-    ],
-    "saturday": [
-      {
-        "trip": "3-Site Day Trip",
-        "sites": [
-          "Southwest Pinnacle",
-          "Sail Rock",
-          "Shark Island"
-        ]
-      }
-    ],
-    "sunday": [
-      {
-        "trip": "Morning Fun Dive",
-        "sites": [
-          "Chumphon Pinnacle",
-          "HTMS Sattakut (wreck)"
-        ]
-      },
-      {
-        "trip": "Sail Rock Half-Day",
-        "sites": [
-          "Sail Rock",
-          "Sail Rock"
-        ]
-      }
-    ],
+    "sunday_extra": {
+      "trip": "Sail Rock Day Trip",
+      "meet_time": "06:30",
+      "boat_departs": "07:30",
+      "return_time": "16:00",
+      "price_thb": 4000,
+      "dives": 3,
+      "sites": [
+        "Sail Rock",
+        "Sail Rock",
+        "Shark Island"
+      ],
+      "note": "Runs alongside the morning and afternoon fun dives - all three sail on Sunday."
+    },
     "also_every_day": [
-      "Afternoon Fun Dive",
       "Night Dive",
       "Snorkelling"
-    ]
-  },
-  "sail_rock_half_day": {
-    "price_thb": 3800,
-    "dives_per_trip": 2,
-    "meet_time": "10:00",
-    "return_time": "18:00",
-    "days": [
-      "Tuesday",
-      "Thursday",
-      "Friday",
-      "Sunday"
     ],
-    "min_divers": 4,
-    "level": "Open Water and up - Advanced recommended",
-    "description": "Half-day trip to Sail Rock, two dives on the pinnacle. Sails with a minimum of 4 divers; if the trip does not fill, the customer is refunded in full.",
-    "included": [
-      "2 guided dives at Sail Rock",
-      "full diving equipment",
-      "lunch on the boat",
-      "dive insurance"
+    "island_rotation": [
+      "White Rock",
+      "Japanese Gardens",
+      "Twins",
+      "Green Rock",
+      "Mango Bay",
+      "Shark Island",
+      "HTMS Sattakut (wreck)",
+      "HTMS Suphairin (wreck)"
     ]
   },
   "sail_rock": {
-    "_alias": "Also called the 3-Site Day Trip on the website board.",
+    "_alias": "The weekly Sail Rock Day Trip. Replaced the old 3-Site Day Trip and the Sail Rock Half-Day on 2026-09-10.",
     "price_thb": 4000,
     "dives_per_trip": 3,
     "days": [
-      "Monday",
-      "Wednesday",
-      "Saturday"
+      "Sunday"
     ],
-    "meet_time": "07:00",
-    "return_time": "17:00",
+    "meet_time": "06:30",
+    "return_time": "16:00",
     "min_divers": 10,
     "level": "Open Water and up - Advanced recommended",
     "refund_policy": "Sails with a minimum of 10 divers. If the trip does not fill, the customer is refunded in full.",
@@ -390,7 +313,8 @@
     ],
     "open_to": "Open Water (max 18m) and Advanced (to 40m)",
     "notes": "Best dive site in the Gulf of Thailand. Open-ocean pinnacle between Koh Tao and Koh Phangan, rises 15m above surface, drops to 40m. Seasonal whale shark sightings. Famous for The Chimney swim-through (18m to 5m) and dense schools of barracuda, trevally, batfish.",
-    "photo_package": "optional - priced with the team at the shop (photos / video / both)"
+    "photo_package": "optional - priced with the team at the shop (photos / video / both)",
+    "boat_departs": "07:30"
   },
   "accommodation": {
     "available_on_site": true,
@@ -531,7 +455,7 @@
         "seasonal whale sharks",
         "dense schools of chevron barracuda, trevally, batfish"
       ],
-      "description": "Best dive site in the Gulf of Thailand. Open-ocean granite pinnacle, reached on the dedicated Sail Rock day trip every 3 days."
+      "description": "Best dive site in the Gulf of Thailand. Open-ocean granite pinnacle, reached on the dedicated Sail Rock day trip every Sunday."
     },
     {
       "name": "Chumphon Pinnacle",
