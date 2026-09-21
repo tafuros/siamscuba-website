@@ -161,6 +161,7 @@ const BlogPostPage = () => {
         title={`${post.seoTitle ?? post.title} | Siam Scuba`}
         description={post.excerpt.length > 155 ? `${post.excerpt.slice(0, 152).trimEnd()}...` : post.excerpt}
         ogType="article"
+        noindex={post.noindex}
         ogImage={post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`}
         publishedTime={datePublishedIso}
         author="Siam Scuba"

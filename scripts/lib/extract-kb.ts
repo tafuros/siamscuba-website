@@ -4,7 +4,7 @@
 // Reads the structured data files (blogPosts, diveSites, translations, landerCopy)
 // and returns a flat list of {source, text} records.
 
-import { blogPosts, blogPostPath } from "@/data/blogPosts";
+import { listedBlogPosts, blogPostPath } from "@/data/blogPosts";
 import { diveSites } from "@/data/diveSites";
 import { translations } from "@/i18n/translations";
 import { LANDER_COPY } from "@/lib/landerCopy";
@@ -23,7 +23,7 @@ export function extractKbRecords(): KbRecord[] {
       .replace(/\[([^\]\n]+)\]\((?:https?:\/\/|\/|mailto:|tel:)[^)\s]+\)/g, "$1")
       .replace(/\*\*([^*\n]+)\*\*/g, "$1");
 
-  for (const post of blogPosts) {
+  for (const post of listedBlogPosts) {
     const slugUrl = blogPostPath(post);
     const header = `${post.title}\n${post.excerpt ?? ""}`.trim();
     records.push({ source: `${slugUrl}#header`, text: header });

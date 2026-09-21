@@ -1,5 +1,5 @@
 import BlogCard from "@/components/BlogCard";
-import { blogPosts, type BlogPost } from "@/data/blogPosts";
+import { listedBlogPosts, type BlogPost } from "@/data/blogPosts";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 interface RelatedPostsProps {
@@ -11,11 +11,11 @@ const RelatedPosts = ({ current, count = 3 }: RelatedPostsProps) => {
   const { t } = useLanguage();
 
   const explicit = (current.relatedBlogSlugs ?? [])
-    .map((slug) => blogPosts.find((p) => p.slug === slug))
+    .map((slug) => listedBlogPosts.find((p) => p.slug === slug))
     .filter((p): p is BlogPost => Boolean(p));
 
   const explicitSlugs = new Set(explicit.map((p) => p.slug));
-  const fallback = blogPosts
+  const fallback = listedBlogPosts
     .filter(
       (p) =>
         p.slug !== current.slug &&

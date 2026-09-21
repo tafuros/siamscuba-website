@@ -4,7 +4,7 @@ import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogCard from "@/components/BlogCard";
-import { blogPosts } from "@/data/blogPosts";
+import { listedBlogPosts } from "@/data/blogPosts";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const BlogPage = () => {
@@ -28,7 +28,7 @@ const BlogPage = () => {
 
   const sorted = useMemo(() => {
     // /blog index excludes Spanish posts (those live at /es/blog/<slug>)
-    return blogPosts
+    return listedBlogPosts
       .filter((p) => p.language !== "es")
       .slice()
       .sort((a, b) => {

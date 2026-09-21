@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import BlogCard from "@/components/BlogCard";
-import { blogPosts } from "@/data/blogPosts";
+import { listedBlogPosts } from "@/data/blogPosts";
 import { useLanguage } from "@/i18n/LanguageContext";
 import AmbientReviews from "@/components/AmbientReviews";
 
@@ -15,11 +15,11 @@ const BlogPreview = ({ courseSlug }: BlogPreviewProps) => {
   const { t } = useLanguage();
 
   const courseFiltered = courseSlug
-    ? blogPosts.filter((p) => p.relatedCourses?.includes(courseSlug))
+    ? listedBlogPosts.filter((p) => p.relatedCourses?.includes(courseSlug))
     : [];
 
   // If course-specific filter has any matches, use them; else fall back to first 3
-  const featured = courseFiltered.length > 0 ? courseFiltered.slice(0, 3) : blogPosts.slice(0, 3);
+  const featured = courseFiltered.length > 0 ? courseFiltered.slice(0, 3) : listedBlogPosts.slice(0, 3);
   const isCourseContext = courseSlug && courseFiltered.length > 0;
 
   return (

@@ -46,6 +46,12 @@ export interface BlogPost {
    *   "es"               -> /es/blog/<slug>
    */
   language?: "en" | "he" | "es";
+  /**
+   * Retired post: still prerendered for anyone holding the link, but noindex, out of
+   * the sitemap, out of every listing (blog index, previews, related posts) and out
+   * of the chat knowledge base. Read listings through `listedBlogPosts`, not `blogPosts`.
+   */
+  noindex?: boolean;
 }
 
 /**
@@ -394,6 +400,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "koh-tao-taxi-app",
+    // Retired 2026-09-21 (Ben): We Love Koh Tao moved to Cabarete as Dale on 2026-09-10,
+    // so the app this post describes no longer serves Koh Tao and welovekohtao.com is down.
+    noindex: true,
     title: "Getting Around Koh Tao: The Island Finally Has a Taxi App",
     seoTitle: "Koh Tao Taxi App - Getting Around the Island",
     category: "Activities",
@@ -413,7 +422,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "We Love Koh Tao: the island's first taxi app",
         paragraphs: [
-          "[We Love Koh Tao](https://welovekohtao.com/) is a ride app built specifically for this island - 21 km² of steep hills, dirt tracks and bays you can only reach by boat. Three ride types are live today: **taxi** (a car or pickup, priced per vehicle), **taxi boat** (for the bays with no road access) and **taxi bike** (a scooter ride, single passenger).",
+          "We Love Koh Tao is a ride app built specifically for this island - 21 km² of steep hills, dirt tracks and bays you can only reach by boat. Three ride types are live today: **taxi** (a car or pickup, priced per vehicle), **taxi boat** (for the bays with no road access) and **taxi bike** (a scooter ride, single passenger).",
           "It was built by **Tafuros**, the same team behind this website, our course registration and booking systems, and [T-ink](https://shirts.siamscuba.com), our custom t-shirt printing app. On the island the service is operated by Lotus Group.",
           "You do not need to install anything to try it - it runs in any mobile browser. iPhone users can also get it from the App Store. Two more sections, tours & dives and restaurants, are marked coming soon inside the app.",
         ],
@@ -422,10 +431,6 @@ export const blogPosts: BlogPost[] = [
           "Three We Love Koh Tao app screens: the ride-type menu with taxi, taxi boat and taxi bike, a fixed fare quote of 500 baht, and the island map with the booking sheet open.",
         imageCaption:
           "Pick a ride type, pick where you are going, and the fixed fare appears before you book.",
-        links: [
-          { label: "Open the app in your browser", url: "https://welovekohtao.com/app/" },
-          { label: "Get the iPhone app", url: "https://welovekohtao.com/get/" },
-        ],
       },
       {
         heading: "Fixed fares: you read the price before you book",
@@ -461,7 +466,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "How to book a ride, step by step",
         paragraphs: [
-          "**1. Open the app.** On iPhone, install it from the App Store. On Android or anything else, open [welovekohtao.com/app](https://welovekohtao.com/app/) in your browser - it works as a web app, and you can add it to your home screen so it behaves like an installed one. There is no Android app on Google Play.",
+          "**1. Open the app.** On iPhone, install it from the App Store. On Android or anything else, open the web version in your browser - it works as a web app, and you can add it to your home screen so it behaves like an installed one. There is no Android app on Google Play.",
           "**2. Create an account.** Sign up with your email address; a verification code arrives by mail and you are in. It takes about a minute.",
           "**3. Pick where you are going.** The destination list is grouped into hubs, beaches, dive clubs and restaurants, so you can usually just tap the name. You can also search any address or drop a pin on the map.",
           "**4. Check the fare, then request.** The fixed price shows with distance and a rough duration. Adjust passengers if there are more than three of you, and optionally schedule a return trip, add waiting time, or switch to day hire. Then request the ride - the app matches you to the nearest available driver and you can follow them on the map.",
@@ -524,10 +529,6 @@ export const blogPosts: BlogPost[] = [
           "**Tours, dives and restaurants are coming soon.** Those tiles exist in the app but are not live, so you cannot book a dive trip or a table through it today.",
           "**Small driver pool.** This is an early, soft launch at island scale, not a city ride-hailing network. Availability at 03:00 is not guaranteed.",
           "For what it is worth, that list is shrinking fast - and the core thing, knowing the price before you get in a vehicle on Koh Tao, works today.",
-        ],
-        links: [
-          { label: "Try it - open in your browser", url: "https://welovekohtao.com/app/" },
-          { label: "Get it on iPhone", url: "https://welovekohtao.com/get/" },
         ],
       },
     ],
@@ -1440,3 +1441,6 @@ const divingBlogPosts: BlogPost[] = [
 
 // Prepend diving posts so they appear first (most relevant to the business)
 blogPosts.unshift(...divingBlogPosts);
+
+/** Posts that may be listed, linked and indexed - everything except retired (`noindex`) posts. */
+export const listedBlogPosts: BlogPost[] = blogPosts.filter((p) => !p.noindex);

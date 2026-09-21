@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import RelatedCourses from "@/components/RelatedCourses";
 import BlogCard from "@/components/BlogCard";
 import { findDiveSite } from "@/data/diveSites";
-import { blogPosts } from "@/data/blogPosts";
+import { listedBlogPosts } from "@/data/blogPosts";
 
 const SITE_URL = "https://siamscuba.com";
 
@@ -78,7 +78,7 @@ const DiveSitePage = () => {
   };
 
   const relatedPosts = (site.relatedBlogSlugs ?? [])
-    .map((slug) => blogPosts.find((p) => p.slug === slug))
+    .map((slug) => listedBlogPosts.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
     .slice(0, 3);
 

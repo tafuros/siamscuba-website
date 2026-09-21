@@ -101,6 +101,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   ];
 
   for (const post of blogPosts) {
+    if (post.noindex) continue; // retired posts stay reachable but must not be submitted
     const prefix = post.language === "es" ? "/es" : "";
     const lang = post.language || "en";
     entries.push({
