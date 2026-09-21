@@ -84,7 +84,10 @@
    wordmark + "Scuba Dive Center", ~0.81:1), so sizing by width would make it
    ~23% taller than the old square mark and push the gate column down on short
    viewports. Height animates in px (clamp resolves to px) so the column reflows
-   smoothly. */
+   smoothly.
+   The pre-React cover in index.html (#gate-preload-logo) paints this same logo
+   at the same place before the bundle loads - change its inline size/position
+   there too if you change height, max-width or filter here. */
 .gate-logo {
   display: block;
   margin: 0 auto;

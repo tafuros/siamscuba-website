@@ -12,8 +12,8 @@
       /* Pre-React gate cover poster framing - must match .gate-photo-bg in
          seascape/gate styles exactly so the background does not jump when the
          React gate mounts over it. */
-      #gate-preload-cover>img{object-position:50% 42%}
-      @media (max-width:767px){#gate-preload-cover>img{object-position:50% 38%}}
+      #gate-preload-cover>img:not(#gate-preload-logo){object-position:50% 42%}
+      @media (max-width:767px){#gate-preload-cover>img:not(#gate-preload-logo){object-position:50% 38%}}
     </style>
     <!-- Entry gate: paint an instant deep-ocean cover BEFORE the homepage body
          renders, so a hard reload eases straight into the gate instead of
@@ -66,6 +66,23 @@
           im.style.cssText =
             "position:absolute;inset:0;width:100%;height:100%;object-fit:cover";
           c.appendChild(im);
+          // The gate logo in the SAME spot as the React gate paints it (top bar
+          // pt-4 = 16px, centered, .gate-logo height clamp(180px,44vw,300px),
+          // max-width 78vw, same drop-shadow - keep in sync with gate.css), so it
+          // is on screen from the first frame instead of after the bundle mounts
+          // the gate (~12s mobile LCP on prod, 2026-09-21). The React gate paints
+          // the identical image on top (z-index 100 vs 99) and then removes this cover.
+          var lo = document.createElement("img");
+          lo.id = "gate-preload-logo";
+          lo.src = "/brand/siam-logo-lockup.webp";
+          lo.alt = "";
+          lo.setAttribute("aria-hidden", "true");
+          lo.setAttribute("fetchpriority", "high");
+          lo.width = 486; lo.height = 600;
+          lo.style.cssText =
+            "position:absolute;top:16px;left:50%;transform:translateX(-50%);width:auto;max-width:78vw;height:clamp(180px,44vw,300px);" +
+            "filter:drop-shadow(0 8px 30px rgba(0,0,0,.45)) drop-shadow(0 0 22px rgba(120,200,255,.22));user-select:none";
+          c.appendChild(lo);
           (document.body || document.documentElement).appendChild(c);
           // Also preload it so the fetch starts before this script appends the img.
           var p = document.createElement("link");
@@ -191,26 +208,63 @@
         'wait_for_update': 500
       });
     </script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TN3SM66Q');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager + Meta Pixel: stubs NOW, heavy scripts AFTER load.
+         Everything that must run early stays inline and immediate - the GTM
+         start marker, the fbq stub + consent revoke + init (and, at the end of
+         <head>, gtag('js') / gtag('config') for Ads). Those only queue: dataLayer
+         and fbq.queue are drained the moment the real scripts arrive, so no event
+         is lost. Only the ~390KB of script DOWNLOADS (gtm.js, gtag/js, fbevents.js)
+         are deferred, by window.__loadTags below.
 
-    <!-- Meta Pixel — consent revoked by default to mirror Google Consent Mode v2.
-         Auto-PageView is suppressed; CookieConsent fires it on grant. -->
+         History - read before changing: 3aecdb8 (2026-06-30) deferred these to
+         "first interaction or 3.5s" by inserting them before the first <script>
+         in <head>; on slow mobile that fired mid-hydration and the app stylesheet
+         <link> vanished (reverted in 21a8de9, site rendered unstyled/empty). This
+         version waits for window "load" (the module bundle has executed and
+         hydrated by then) and appends to the END of <body>, never touching <head>.
+
+         Tradeoff (Ben, 2026-09-21): a visitor who leaves before the page finishes
+         loading is not counted in GA / Google Ads / Meta. Booking conversions fire
+         long after load and are unaffected. -->
     <script>
-      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
       fbq('consent', 'revoke');
       fbq('init', '1422856882983398'); // Meta dataset "Siam Scuba Web"
+
+      window.__loadTags = function () {
+        if (window.__tagsLoaded) return;
+        window.__tagsLoaded = true;
+        [
+          "https://www.googletagmanager.com/gtm.js?id=GTM-TN3SM66Q",
+          "https://www.googletagmanager.com/gtag/js?id=AW-18357382437",
+          "https://connect.facebook.net/en_US/fbevents.js"
+        ].forEach(function (src) {
+          var s = document.createElement("script");
+          s.async = true; s.src = src;
+          document.body.appendChild(s);
+        });
+      };
+      (function () {
+        // After "load": on the first interaction, or 1.5s later, whichever is first.
+        function arm() {
+          var evs = ["pointerdown", "keydown", "touchstart", "scroll"], opts = { passive: true }, timer;
+          function fire() {
+            evs.forEach(function (e) { window.removeEventListener(e, fire, opts); });
+            clearTimeout(timer);
+            window.__loadTags();
+          }
+          evs.forEach(function (e) { window.addEventListener(e, fire, opts); });
+          timer = setTimeout(fire, 1500);
+        }
+        if (document.readyState === "complete") arm();
+        else window.addEventListener("load", arm, { once: true });
+      })();
     </script>
-    <!-- End Meta Pixel (noscript fallback lives in <body> below) -->
+    <!-- End GTM + Meta Pixel (noscript fallbacks live in <body> below) -->
 
     <!-- Microsoft Clarity (heatmaps + session replay). Installed as a DIRECT
          snippet - NOT via GTM (we have no admin on container GTM-TN3SM66Q). The
@@ -230,8 +284,8 @@
          STOP tracking on denial - not what we want here.)
 
          The deferred trigger is purely ADDITIVE - it only appends Clarity's own
-         script and never touches the app stylesheet or the eager GTM/Ads/Pixel
-         tags above (unlike the reverted whole-page tag-defer). -->
+         script and never touches the app stylesheet or the GTM/Ads/Pixel loader
+         above (which has its own post-load trigger, window.__loadTags). -->
     <script>
       window.__loadClarity = function () {
         if (window.__clarityLoaded) return;
@@ -446,8 +500,8 @@
       ]
     }
     </script>
-    <!-- Google Ads Tag -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18357382437"></script>
+    <!-- Google Ads Tag - config queues now; gtag/js itself is loaded by
+         window.__loadTags after page load (see the GTM + Meta Pixel block). -->
     <script>
       gtag('js', new Date());
       gtag('config', 'AW-18357382437', { allow_enhanced_conversions: true });
