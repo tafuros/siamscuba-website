@@ -56,7 +56,7 @@ const SiamSimilansPage = () => {
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="relative min-h-screen overflow-hidden text-white" style={{ background: OCEAN_BG }}>
       <Seo
-        title="Siam Similans - Similan Islands Liveaboards & Day Trips | Siam Scuba"
+        title="Similan Islands Liveaboards & Day Trips | Siam Scuba"
         description="Hand-picked Similan Islands liveaboard safaris and day trips - Koh Bon, Koh Tachai & Richelieu Rock. Book now, pay later with Siam Scuba."
         canonical="https://siamscuba.com/similan"
       />

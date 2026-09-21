@@ -158,7 +158,7 @@ const BlogPostPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title={`${post.title} | Siam Scuba Blog`}
+        title={`${post.seoTitle ?? post.title} | Siam Scuba`}
         description={post.excerpt.slice(0, 158)}
         ogType="article"
         ogImage={post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`}

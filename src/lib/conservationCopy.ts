@@ -153,7 +153,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
   en: {
     seoTitle: "Conservation Diving on Koh Tao | PADI AWARE with Siam Scuba",
     seoDescription:
-      "Conservation is not a single course at Siam Scuba - it is how we dive. PADI AWARE, Dive Against Debris, Shark & Ray Conservation, Coral Reef Conservation, Underwater Naturalist, Fish ID and Peak Performance Buoyancy on Koh Tao.",
+      "Conservation is how we dive at Siam Scuba: PADI AWARE, Dive Against Debris, Shark & Ray, Coral Reef Conservation and Peak Performance Buoyancy on Koh Tao.",
     breadcrumb: "Conservation",
 
     heroEyebrow: "Conservation at Siam Scuba",
@@ -332,7 +332,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
   he: {
     seoTitle: "צלילות שימור בקוֹ טאו | PADI AWARE עם Siam Scuba",
     seoDescription:
-      "שימור ימי הוא לא קורס אחד ב-Siam Scuba - זו הדרך שבה אנחנו צוללים. PADI AWARE, Dive Against Debris, שימור כרישים וטריגונים, שימור שוניות אלמוגים, Underwater Naturalist, זיהוי דגים וציפה מושלמת בקוֹ טאו.",
+      "שימור ימי הוא הדרך שבה אנחנו צוללים ב-Siam Scuba: PADI AWARE, Dive Against Debris, שימור כרישים וטריגונים, שימור שוניות אלמוגים וציפה מושלמת בקוֹ טאו.",
     breadcrumb: "שימור ימי",
 
     heroEyebrow: "שימור ימי ב-Siam Scuba",
@@ -511,7 +511,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
   es: {
     seoTitle: "Buceo de Conservación en Koh Tao | PADI AWARE con Siam Scuba",
     seoDescription:
-      "La conservación no es un curso más en Siam Scuba - es cómo buceamos. PADI AWARE, Dive Against Debris, Shark & Ray Conservation, Coral Reef Conservation, Underwater Naturalist, identificación de peces y Peak Performance Buoyancy en Koh Tao.",
+      "La conservación es cómo buceamos en Siam Scuba: PADI AWARE, Dive Against Debris, tiburones y rayas, arrecifes de coral y flotabilidad perfecta en Koh Tao.",
     breadcrumb: "Conservación",
 
     heroEyebrow: "Conservación en Siam Scuba",
@@ -688,9 +688,9 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
   },
 
   fr: {
-    seoTitle: "Plongée de Conservation à Koh Tao | PADI AWARE avec Siam Scuba",
+    seoTitle: "Plongée de Conservation à Koh Tao - PADI AWARE | Siam Scuba",
     seoDescription:
-      "La conservation n'est pas un cours de plus chez Siam Scuba - c'est notre façon de plonger. PADI AWARE, Dive Against Debris, Shark & Ray Conservation, Coral Reef Conservation, Underwater Naturalist, identification des poissons et Peak Performance Buoyancy à Koh Tao.",
+      "La conservation, c'est notre façon de plonger : PADI AWARE, Dive Against Debris, requins et raies, récifs coralliens et flottabilité à Koh Tao.",
     breadcrumb: "Conservation",
 
     heroEyebrow: "La conservation chez Siam Scuba",

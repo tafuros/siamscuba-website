@@ -42,6 +42,30 @@ const SiamPhuketPage = () => {
   const bookingRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement>(null);
 
+  const RELATED: Record<string, { to: string; label: string }[]> = {
+    en: [
+      { to: "/fun-dives", label: "Fun dives in Koh Tao" },
+      { to: "/similan", label: "Similan Islands trips" },
+      { to: "/open-water-course", label: "PADI Open Water course" },
+    ],
+    he: [
+      { to: "/he/fun-dives", label: "צלילות כיף בקוטאו" },
+      { to: "/similan", label: "טיולי סימילאן" },
+      { to: "/he/open-water-course", label: "קורס PADI Open Water" },
+    ],
+    es: [
+      { to: "/es/fun-dives", label: "Inmersiones en Koh Tao" },
+      { to: "/similan", label: "Islas Similan" },
+      { to: "/es/open-water-course", label: "Curso PADI Open Water" },
+    ],
+    fr: [
+      { to: "/fr/fun-dives", label: "Plongées fun à Koh Tao" },
+      { to: "/similan", label: "Îles Similan" },
+      { to: "/open-water-course", label: "Cours PADI Open Water" },
+    ],
+  };
+  const relatedLinks = RELATED[language] ?? RELATED.en;
+
   const reserve = (id: string) => {
     setSelectedId(id);
     bookingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -50,7 +74,7 @@ const SiamPhuketPage = () => {
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="relative min-h-screen overflow-hidden text-white" style={{ background: OCEAN_BG }}>
       <Seo
-        title="Diving from Phuket - Day Trips, Fun Dives & Courses | Siam Scuba"
+        title="Diving from Phuket - Day Trips & Courses | Siam Scuba"
         description="Day diving from Phuket on the Andaman coast - guided fun dives, Discover Scuba, refreshers and Open Water courses. Book now, pay later with Siam Scuba."
         canonical="https://siamscuba.com/phuket-diving"
       />
@@ -229,6 +253,14 @@ const SiamPhuketPage = () => {
         />
       </section>
 
+      {/* Related pages - the page had a single internal link (seo-baseline item 12). */}
+      <nav aria-label="Related" className="relative z-[1] mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-5 pb-6 text-sm text-white/70">
+        {relatedLinks.map((l) => (
+          <Link key={l.to} to={l.to} className="underline underline-offset-4 transition-colors hover:text-white">
+            {l.label}
+          </Link>
+        ))}
+      </nav>
       <div className="relative z-[1] pb-10 text-center text-xs text-white/40">Siam Scuba · Phuket</div>
     </div>
   );

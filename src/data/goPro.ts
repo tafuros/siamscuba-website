@@ -257,7 +257,7 @@ export const GO_PRO_COPY: Record<Language, GoProCopy> = {
   en: {
     seoTitle: "Go Pro on Koh Tao - PADI Divemaster & IDC | Siam Scuba",
     seoDescription:
-      "Become a PADI professional at a 5 Star Instructor Development Center on Koh Tao. Divemaster and IDC, with the monthly Instructor Examination dates. Talk to an instructor.",
+      "Become a PADI professional at a 5 Star IDC Center on Koh Tao - Divemaster and IDC, with the monthly Instructor Examination dates. Talk to an instructor.",
     breadcrumb: "Go Pro",
     kicker: "Go Pro · IDC + DM",
     gateLabel: "Become a PADI Instructor",
@@ -331,9 +331,9 @@ export const GO_PRO_COPY: Record<Language, GoProCopy> = {
   },
 
   es: {
-    seoTitle: "Hazte profesional en Koh Tao - PADI Divemaster e IDC | Siam Scuba",
+    seoTitle: "Hazte Profesional PADI en Koh Tao - DM e IDC | Siam Scuba",
     seoDescription:
-      "Conviértete en profesional PADI en un 5 Star Instructor Development Center de Koh Tao. Divemaster e IDC, con las fechas del Examen de Instructor mensual. Habla con un instructor.",
+      "Conviértete en profesional PADI en un 5 Star IDC Center de Koh Tao: Divemaster e IDC, con las fechas del Examen de Instructor mensual.",
     breadcrumb: "Hazte profesional",
     kicker: "Go Pro · IDC + DM",
     gateLabel: "Conviértete en Instructor PADI",
@@ -371,7 +371,7 @@ export const GO_PRO_COPY: Record<Language, GoProCopy> = {
   fr: {
     seoTitle: "Devenez pro à Koh Tao - PADI Divemaster et IDC | Siam Scuba",
     seoDescription:
-      "Devenez professionnel PADI dans un 5 Star Instructor Development Center à Koh Tao. Divemaster et IDC, avec les dates de l'Examen d'Instructeur mensuel. Parlez à un instructeur.",
+      "Devenez professionnel PADI dans un 5 Star IDC Center à Koh Tao : Divemaster et IDC, avec les dates de l'Examen d'Instructeur mensuel.",
     breadcrumb: "Devenir pro",
     kicker: "Go Pro · IDC + DM",
     gateLabel: "Devenez Instructeur PADI",

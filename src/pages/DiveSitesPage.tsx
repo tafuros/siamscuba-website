@@ -31,7 +31,7 @@ const DiveSitesPage = () => {
     <div className="min-h-screen bg-background">
       <Seo
         title="Koh Tao Dive Sites - Maps, Depths & Marine Life | Siam Scuba"
-        description="A guide to the best dive sites around Koh Tao and the Gulf of Thailand - Twins, Chumphon Pinnacle and Sail Rock. Depth, difficulty, marine life, site maps and how to dive each one with Siam Scuba."
+        description="The best dive sites around Koh Tao - Twins, Chumphon Pinnacle and Sail Rock: depth, difficulty, marine life and how to dive each one."
         jsonLd={itemListSchema}
         breadcrumbs={[
           { name: "Home", path: "/" },
@@ -67,7 +67,7 @@ const DiveSitesPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <DiveSiteCard site={site} />
+                <DiveSiteCard site={site} headingAs="h2" />
               </motion.div>
             ))}
           </div>

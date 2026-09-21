@@ -51,7 +51,7 @@ const BlogPage = () => {
     <div className="min-h-screen bg-background">
       <Seo
         title="Koh Tao Diving & Travel Blog | Siam Scuba"
-        description="Honest guides to diving, food, beaches, and nightlife in Koh Tao. PADI tips, dive site reviews, and what to expect on your trip to Thailand's tropical paradise."
+        description="Honest guides to diving, food, beaches and nightlife in Koh Tao - PADI tips, dive site reviews and what to expect on your trip to Thailand's island."
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Koh Tao Guide" },

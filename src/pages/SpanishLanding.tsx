@@ -56,7 +56,7 @@ const SpanishLanding = () => {
     <div className="min-h-screen bg-background" dir="ltr" lang="es">
       <Seo
         title="Buceo en Koh Tao en español | Cursos PADI con Siam Scuba"
-        description="Guía en español para bucear en Koh Tao: cursos PADI desde 2,600 THB, máximo 4 alumnos por instructor, depósito pequeño y el resto al llegar, barcos propios. Instructores que hablan español."
+        description="Bucear en Koh Tao en español: cursos PADI desde 2,600 THB, máx. 4 alumnos por instructor, depósito pequeño y barcos propios. Instructores en español."
         ogType="article"
         jsonLd={articleSchema}
         hreflangAlternates={HOME_HREFLANG_ALTERNATES}

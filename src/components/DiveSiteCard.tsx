@@ -7,10 +7,13 @@ import type { DiveSite } from "@/data/diveSites";
 interface DiveSiteCardProps {
   site: DiveSite;
   variant?: "default" | "hero";
+  /** Heading element for the site name - h2 directly under a page h1 (dive-sites index), h3 inside a section. */
+  headingAs?: "h2" | "h3";
 }
 
-const DiveSiteCard = ({ site, variant = "default" }: DiveSiteCardProps) => {
+const DiveSiteCard = ({ site, variant = "default", headingAs = "h3" }: DiveSiteCardProps) => {
   const isHero = variant === "hero";
+  const Heading = headingAs;
 
   return (
     <Link to={`/dive-sites/${site.slug}`} className="block h-full">
@@ -29,13 +32,13 @@ const DiveSiteCard = ({ site, variant = "default" }: DiveSiteCardProps) => {
             </span>
           </div>
           <CardContent className={isHero ? "p-6 lg:p-8" : "p-5"}>
-            <h3
+            <Heading
               className={`font-display font-semibold text-foreground leading-snug mb-1 group-hover:text-primary transition-colors ${
                 isHero ? "text-2xl lg:text-3xl" : "text-lg"
               }`}
             >
               {site.name}
-            </h3>
+            </Heading>
             <p className="text-xs text-muted-foreground/80 mb-3">{site.localName}</p>
             <p className={`text-muted-foreground ${isHero ? "text-base line-clamp-3" : "text-sm line-clamp-2"}`}>
               {site.excerpt}

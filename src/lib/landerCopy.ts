@@ -138,9 +138,9 @@ export interface LeadFormCopy {
 // ---------- DSD (Discover Scuba Diving) ----------
 
 const DSD_EN: LanderCopy = {
-  seoTitle: "Discover Scuba Diving in Koh Tao - from 2,600 THB | Siam Scuba",
+  seoTitle: "Discover Scuba Diving Koh Tao - 2,600 THB | Siam Scuba",
   seoDescription:
-    "Try scuba diving in Koh Tao - 2,600 THB for your first ocean dive, all gear and PADI instructor included. Add a second dive the same day for just +1,000 THB. Small groups, two custom boats, no certification needed.",
+    "Try scuba diving in Koh Tao: 2,600 THB for your first ocean dive, gear and PADI instructor included. Second dive +1,000 THB. No certification needed.",
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Try scuba diving in Koh Tao - 2,600 THB",
   heroSubhead:
@@ -227,9 +227,9 @@ const DSD_EN: LanderCopy = {
 };
 
 const DSD_ES: LanderCopy = {
-  seoTitle: "Discover Scuba Diving en Koh Tao - desde 2,600 THB | Siam Scuba",
+  seoTitle: "Discover Scuba Diving en Koh Tao - 2,600 THB | Siam Scuba",
   seoDescription:
-    "Prueba el buceo en Koh Tao - 2,600 THB tu primera inmersión en el mar, equipo e instructor PADI incluidos. Añade una segunda inmersión el mismo día por solo +1,000 THB. Grupos pequeños, dos barcos propios, sin certificación previa.",
+    "Prueba el buceo en Koh Tao: 2,600 THB tu primera inmersión, equipo e instructor PADI incluidos. Segunda inmersión por +1,000 THB. Sin certificación previa.",
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "Prueba el buceo en Koh Tao - 2,600 THB",
   heroSubhead:
@@ -318,7 +318,7 @@ const DSD_ES: LanderCopy = {
 const DSD_HE: LanderCopy = {
   seoTitle: "צלילת היכרות בקוטאו - החל מ-2,600 THB | סיאם סקובה",
   seoDescription:
-    "תנסו צלילה בקוטאו - 2,600 THB לצלילה הראשונה בים, כל הציוד ומדריך PADI כלולים. אפשר להוסיף צלילה שנייה באותו יום בתוספת 1,000 THB בלבד. קבוצות קטנות, שתי סירות פרטיות, ללא הסמכה קודמת.",
+    "תנסו צלילה בקוטאו - 2,600 THB לצלילה הראשונה בים, כל הציוד ומדריך PADI כלולים. צלילה שנייה באותו יום בתוספת 1,000 THB. ללא הסמכה קודמת.",
   heroBadge: "PADI Discover Scuba Diving",
   heroH1: "צלילת היכרות בקוטאו - 2,600 THB",
   heroSubhead:
@@ -407,9 +407,9 @@ const DSD_HE: LanderCopy = {
 // ---------- OWD (PADI Open Water Diver) ----------
 
 const OWD_EN: LanderCopy = {
-  seoTitle: "PADI Open Water Course in Koh Tao - 12,000 THB Lifelong Cert | Siam Scuba",
+  seoTitle: "PADI Open Water Course Koh Tao - 12,000 THB | Siam Scuba",
   seoDescription:
-    "Get PADI certified in 2.5 days on Koh Tao. Small groups (max 4), classroom + pool + four ocean dives, 2 nights' accommodation included. Lifelong certification.",
+    "Get PADI certified in 2.5 days on Koh Tao. Max 4 per group, classroom, pool and four ocean dives, 2 nights' accommodation included. Lifelong certification.",
   heroBadge: "PADI Open Water Diver",
   heroH1: "Get PADI certified in Koh Tao - 2.5 days, 12,000 THB, lifelong",
   heroSubhead:
@@ -504,9 +504,9 @@ const OWD_EN: LanderCopy = {
 };
 
 const OWD_ES: LanderCopy = {
-  seoTitle: "Curso PADI Open Water en Koh Tao - Certificación de por Vida 12,000 THB | Siam Scuba",
+  seoTitle: "Curso PADI Open Water en Koh Tao - 12,000 THB | Siam Scuba",
   seoDescription:
-    "Sácate el PADI en 2,5 días en Koh Tao. Grupos pequeños (máx. 4), teoría + piscina + cuatro inmersiones, 2 noches de alojamiento incluidas. Certificación de por vida.",
+    "Sácate el PADI en 2,5 días en Koh Tao. Máx. 4 por grupo, teoría, piscina y cuatro inmersiones, 2 noches incluidas. Certificación de por vida.",
   heroBadge: "PADI Open Water Diver",
   heroH1: "Certifícate PADI en Koh Tao - 2,5 días, 12,000 THB, de por vida",
   heroSubhead:
@@ -601,7 +601,7 @@ const OWD_ES: LanderCopy = {
 };
 
 const OWD_HE: LanderCopy = {
-  seoTitle: "קורס PADI Open Water בקוטאו - הסמכה לכל החיים ב-12,000 THB | סיאם סקובה",
+  seoTitle: "קורס PADI Open Water בקוטאו - 12,000 THB | סיאם סקובה",
   seoDescription:
     "תוסמכו ל-PADI ב-2.5 ימים בקוטאו. קבוצות קטנות (מקס׳ 4), תיאוריה + בריכה + ארבע צלילות בים, 2 לילות לינה כלולים. הסמכה לכל החיים.",
   heroBadge: "PADI כוכב ראשון - Open Water Diver",
@@ -700,9 +700,9 @@ const OWD_HE: LanderCopy = {
 // ---------- AOW (PADI Advanced Open Water Diver) ----------
 
 const AOW_EN: LanderCopy = {
-  seoTitle: "PADI Advanced Open Water Course in Koh Tao - 1.5 Days, 11,000 THB | Siam Scuba",
+  seoTitle: "PADI Advanced Open Water Koh Tao - 11,000 THB | Siam Scuba",
   seoDescription:
-    "Level up with the PADI Advanced Open Water course on Koh Tao. 1.5 days, 5 adventure dives to 30m incl. deep, wreck, night and navigation. Small groups (max 4), 1 night accommodation included. 4.9 on Google (845), 5.0 on TripAdvisor (776).",
+    "PADI Advanced Open Water on Koh Tao: 1.5 days, 5 dives to 30m incl. deep, wreck, night and navigation. Max 4 per group, 1 night's stay included.",
   heroBadge: "PADI Advanced Open Water Diver",
   heroH1: "Go Advanced in Koh Tao - 1.5 days, 5 dives, 11,000 THB",
   heroSubhead:
@@ -792,9 +792,9 @@ const AOW_EN: LanderCopy = {
 };
 
 const AOW_ES: LanderCopy = {
-  seoTitle: "Curso PADI Advanced Open Water en Koh Tao - 1,5 Días, 11,000 THB | Siam Scuba",
+  seoTitle: "PADI Advanced en Koh Tao - 1,5 Días, 11,000 THB | Siam Scuba",
   seoDescription:
-    "Sube de nivel con el curso PADI Advanced Open Water en Koh Tao. 1,5 días, 5 inmersiones de aventura hasta 30m incl. profunda, pecio, nocturna y navegación. Grupos pequeños (máx. 4), 1 noche de alojamiento incluida. 4,9 en Google (845), 5,0 en TripAdvisor (776).",
+    "PADI Advanced Open Water en Koh Tao: 1,5 días, 5 inmersiones hasta 30m incl. profunda, pecio, nocturna y navegación. Máx. 4 por grupo, 1 noche incluida.",
   heroBadge: "PADI Advanced Open Water Diver",
   heroH1: "Advanced Open Water en Koh Tao - 1,5 días, 5 inmersiones hasta 30m",
   heroSubhead:
@@ -884,9 +884,9 @@ const AOW_ES: LanderCopy = {
 };
 
 const AOW_HE: LanderCopy = {
-  seoTitle: "קורס PADI כוכב שני (Advanced Open Water) בקוטאו - יום וחצי, 11,000 THB | סיאם סקובה",
+  seoTitle: "קורס PADI כוכב שני בקוטאו - 11,000 THB | סיאם סקובה",
   seoDescription:
-    "מעלים רמה עם קורס PADI כוכב שני (Advanced Open Water) בקוטאו. יום וחצי, 5 צלילות הרפתקה עד 30 מ׳ כולל עומק, ספינה טרופה, לילה וניווט. קבוצות קטנות (מקס׳ 4), לילה לינה כלול. 4.9 בגוגל (845), 5.0 בטריפאדוויזר (776).",
+    "קורס PADI כוכב שני (Advanced) בקוטאו: יום וחצי, 5 צלילות הרפתקה עד 30 מ׳ כולל עומק, ספינה טרופה, לילה וניווט. עד 4 בקבוצה, לילה לינה כלול.",
   heroBadge: "PADI כוכב שני - Advanced Open Water",
   heroH1: "כוכב שני בקוטאו בעברית!!! - יום וחצי, 5 צלילות, 11,000 THB",
   heroSubhead:
@@ -996,9 +996,9 @@ const SAIL_ROCK_FEATURE_IMAGES = {
 };
 
 const SAIL_ROCK_EN: LanderCopy = {
-  seoTitle: "Dive Sail Rock from Koh Tao - Full-Day Trip, 4,000 THB | Siam Scuba",
+  seoTitle: "Dive Sail Rock from Koh Tao - 4,000 THB | Siam Scuba",
   seoDescription:
-    "Dive Sail Rock (Hin Bai) - the best dive in the Gulf of Thailand. Full-day boat trip from Koh Tao: 3 dives (2x Sail Rock + Shark Island), whale shark chance, the famous Chimney swim-through. 4,000 THB all-in. Google 4.9 (845), TripAdvisor 5.0 (776).",
+    "Dive Sail Rock (Hin Bai), the Gulf of Thailand's best dive: full-day trip from Koh Tao, 3 dives incl. Shark Island and the Chimney. 4,000 THB all-in.",
   heroBadge: "For certified divers",
   heroEyebrow: "The Best Dive in the Gulf of Thailand",
   heroH1: "Dive Sail Rock",
@@ -1111,9 +1111,9 @@ const SAIL_ROCK_EN: LanderCopy = {
 };
 
 const SAIL_ROCK_ES: LanderCopy = {
-  seoTitle: "Bucea en Sail Rock desde Koh Tao - Día Completo, 4,000 THB | Siam Scuba",
+  seoTitle: "Bucea en Sail Rock desde Koh Tao - 4,000 THB | Siam Scuba",
   seoDescription:
-    "Bucea en Sail Rock (Hin Bai) - la mejor inmersión del Golfo de Tailandia. Excursión de día completo desde Koh Tao: 3 inmersiones (2x Sail Rock + Shark Island), tiburón ballena y la famosa Chimenea. 4,000 THB todo incluido. Google 4,9 (845), TripAdvisor 5,0 (776).",
+    "Bucea en Sail Rock, la mejor inmersión del Golfo de Tailandia: día completo desde Koh Tao, 3 inmersiones incl. Shark Island y la Chimenea. 4,000 THB.",
   heroBadge: "Para buceadores certificados",
   heroEyebrow: "La mejor inmersión del Golfo de Tailandia",
   heroH1: "Bucea en Sail Rock",

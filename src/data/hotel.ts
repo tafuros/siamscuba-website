@@ -602,7 +602,7 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
   en: {
     seoTitle: "Siam Hotel & Hostel - Rooms & Dorms on Sairee Beach, Koh Tao",
     seoDescription:
-      "Rooms, dorm beds and a palm-garden pool on Sairee Beach, Koh Tao. Air-conditioned private rooms and budget dorms, steps from the sea - book direct on WhatsApp.",
+      "Rooms, dorm beds and a palm-garden pool on Sairee Beach, Koh Tao. Air-con private rooms and budget dorms, steps from the sea - book direct on WhatsApp.",
     breadcrumb: "Hotel",
     navRooms: "Rooms",
     navGallery: "Gallery",
@@ -824,9 +824,9 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
   },
 
   es: {
-    seoTitle: "Siam Hotel & Hostel - Habitaciones y Dormitorios en Sairee Beach, Koh Tao",
+    seoTitle: "Siam Hotel & Hostel en Sairee Beach, Koh Tao",
     seoDescription:
-      "Habitaciones, camas en dormitorio y piscina entre palmeras en Sairee Beach, Koh Tao. Habitaciones privadas con aire acondicionado y dormitorios económicos, a pasos del mar - reserva directa por WhatsApp.",
+      "Habitaciones, dormitorios y piscina entre palmeras en Sairee Beach, Koh Tao. Aire acondicionado, a pasos del mar - reserva directa por WhatsApp.",
     breadcrumb: "Hotel",
     navRooms: "Habitaciones",
     navGallery: "Galería",
@@ -948,9 +948,9 @@ export const HOTEL_COPY: Record<Language, HotelCopy> = {
   },
 
   fr: {
-    seoTitle: "Siam Hotel & Hostel - Chambres et Dortoirs à Sairee Beach, Koh Tao",
+    seoTitle: "Siam Hotel & Hostel à Sairee Beach, Koh Tao",
     seoDescription:
-      "Chambres, lits en dortoir et piscine dans un jardin de palmiers à Sairee Beach, Koh Tao. Chambres privées climatisées et dortoirs économiques, à deux pas de la mer - réservation directe sur WhatsApp.",
+      "Chambres, dortoirs et piscine dans un jardin de palmiers à Sairee Beach, Koh Tao. Climatisation, à deux pas de la mer - réservation directe sur WhatsApp.",
     breadcrumb: "Hôtel",
     navRooms: "Chambres",
     navGallery: "Galerie",

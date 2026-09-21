@@ -278,6 +278,26 @@ const FunDiveBookingPage = () => {
           Back to home
         </Link>
 
+        {/* Indexable page head (seo-baseline 2026-09-20): the iframe alone gave Google
+            a page with no h1, no copy and one link. Kept short so the wizard stays
+            above the fold on a phone. */}
+        <header className="mb-5">
+          <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+            Book a Fun Dive in Koh Tao
+          </h1>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
+            Certified divers: pick your date below and we take care of the rest - small
+            groups, our own two dive boats and sites like{" "}
+            <Link to="/dive-sites/chumphon-pinnacle" className="underline underline-offset-2 hover:text-foreground">Chumphon Pinnacle</Link>,{" "}
+            <Link to="/dive-sites/sail-rock" className="underline underline-offset-2 hover:text-foreground">Sail Rock</Link> and{" "}
+            <Link to="/dive-sites/twins" className="underline underline-offset-2 hover:text-foreground">Twins</Link>.
+            Not certified yet? Start with the{" "}
+            <Link to="/open-water-course" className="underline underline-offset-2 hover:text-foreground">PADI Open Water course</Link>{" "}
+            or see{" "}
+            <Link to="/fun-dives" className="underline underline-offset-2 hover:text-foreground">how our fun dives work</Link>.
+          </p>
+        </header>
+
         {/* WhatsApp fast path - above the wizard, visible without scrolling on
             mobile. Secondary visual weight: a fast path, not a bail-out. */}
         <WhatsAppFastPathStrip
