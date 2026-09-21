@@ -1,7 +1,9 @@
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "@/assets/siam-logo-lockup.webp";
 import padi from "@/assets/padi-logo.png";
+
+// Same fixed URL as the entry gate's logo (see EntryGate.tsx) - one cached download.
+const logo = "/brand/siam-logo-lockup.webp";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { openGate } from "@/utils/gateBus";
 import { conservationPath } from "@/lib/conservationCopy";
@@ -26,7 +28,7 @@ const Footer = () => {
             {/* Full lockup (mark + wordmark + "Scuba Dive Center"), so the footer
                 carries the complete brand signature. Sized taller than the old
                 square mark because the tagline line is unreadable below ~90px. */}
-            <img src={logo} alt="Siam Scuba - Scuba Dive Center" width={486} height={600} className="h-24 w-auto mb-3" />
+            <img src={logo} alt="Siam Scuba - Scuba Dive Center" width={486} height={600} loading="lazy" decoding="async" className="h-24 w-auto mb-3" />
             <p className="text-sm text-background/50 mb-3">{t("footer_desc")}</p>
             <img src={padi} alt="PADI Dive Center" className="h-8 w-auto opacity-70" />
           </div>

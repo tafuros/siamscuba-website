@@ -290,5 +290,17 @@ export default defineConfig(({ mode }) => {
     // do not reintroduce a manualChunks function without checking the emitted
     // graph for cycles (scripts/check-chunk-cycles.ts asserts this in CI).
   },
+  ssgOptions: {
+    // vite-react-ssg injects <link rel="preload" as="image" crossorigin=""> for
+    // EVERY image imported by any module on the page (footer logo, PADI badge,
+    // the boat photo far below the fold...). On throttled mobile they all start
+    // at once and starve the page's real LCP image, and the crossorigin="" does
+    // not match the plain <img>, so the browser cannot even reuse the preload.
+    // Drop them; pages that need an early image preload it explicitly
+    // (index.html gate/hero scripts, fetchpriority="high" on the LCP <img>).
+    onPageRendered(_route: string, html: string) {
+      return html.replace(/<link rel="preload" as="image" href="[^"]*" crossorigin="">/g, "");
+    },
+  },
   };
 });

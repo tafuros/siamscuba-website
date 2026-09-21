@@ -4,8 +4,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { Language } from "@/i18n/translations";
-import gateLogo from "@/assets/siam-logo-lockup.webp";
 import { OPEN_GATE_EVENT } from "@/utils/gateBus";
+
+// Fixed public path (not a hashed Vite import) so the pre-React cover script in
+// index.html can preload it at high priority before the bundle parses - it is the
+// home page's mobile LCP element. Footer.tsx uses the same URL, so it is one download.
+const gateLogo = "/brand/siam-logo-lockup.webp";
 import { trackGateAnswer } from "@/utils/tracking";
 
 // Hero video lives in /public (streamed media, not Vite-imported) so the browser
@@ -395,8 +399,8 @@ const EntryGate = () => {
             alt="Siam Scuba"
             draggable={false}
             // LCP element on mobile: intrinsic size for the aspect ratio (CSS drives the
-            // rendered height) + high fetch priority. The build already emits a site-wide
-            // <link rel=preload> for this asset - do not add a second one.
+            // rendered height) + high fetch priority. index.html preloads the same URL
+            // when the gate is going to show.
             width={486}
             height={600}
             fetchPriority="high"

@@ -72,6 +72,14 @@
           p.rel = "preload"; p.as = "image"; p.href = "/gate/gate-poster.jpg";
           p.setAttribute("fetchpriority", "high");
           document.head.appendChild(p);
+          // The gate logo is the largest element in the gate's first frame, so it is
+          // the mobile LCP. Without this it only starts when the lazy gate chunk
+          // mounts, at Low priority, and took ~8s on throttled 4G (Lighthouse on
+          // prod 2026-09-21). Fixed path shared with EntryGate.tsx and Footer.tsx.
+          var lg = document.createElement("link");
+          lg.rel = "preload"; lg.as = "image"; lg.href = "/brand/siam-logo-lockup.webp";
+          lg.setAttribute("fetchpriority", "high");
+          document.head.appendChild(lg);
           // The four language flags are the gate's first interactive element and
           // live inside the lazy gate chunk, so without this their fetch cannot
           // start until the app bundle parses. ~1.2KB total - preloading them here
@@ -121,6 +129,12 @@
       (function () {
         try {
           if (window.__siamGate) return; // gate covers the hero; don't preload it
+          // Only the routes that render UnderwaterHero: "/" and the course pages
+          // Index renders via courseOverride (keys of SLUG_TO_COURSE in
+          // src/lib/courseSlugMap.ts - keep in sync). Everywhere else this preload
+          // downloaded the home hero and stole bandwidth from the page's own LCP.
+          var heroRoutes = /^\/(discover-scuba|open-water|bubble-maker|scuba-review|advanced-open-water|rescue-diver|efr|divemaster|idc|peak-performance-buoyancy|wreck-diving|deep-diving|night-dive|dpv|sidemount|self-reliant-diver|uw-photography)?\/?$/;
+          if (!heroRoutes.test(location.pathname)) return;
           var add = function (type, srcset) {
             var l = document.createElement("link");
             l.rel = "preload"; l.as = "image"; l.type = type;
@@ -128,8 +142,11 @@
             l.setAttribute("fetchpriority", "high");
             document.head.appendChild(l);
           };
+          // AVIF only. A browser that supports both types fetches BOTH preloads (the
+          // type attribute only skips unsupported ones), so the WebP line was a
+          // second download of the same hero. Non-AVIF browsers skip the preload and
+          // the <picture> still picks WebP.
           add("image/avif", "/hero/turtle-768.avif 768w, /hero/turtle-1280.avif 1280w, /hero/turtle-1920.avif 1920w");
-          add("image/webp", "/hero/turtle-768.webp 768w, /hero/turtle-1280.webp 1280w, /hero/turtle-1920.webp 1920w");
         } catch (e) {}
       })();
     </script>
