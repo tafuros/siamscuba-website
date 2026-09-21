@@ -61,8 +61,8 @@ const BlogPage = () => {
       <main className="pt-36 pb-20 px-4">
         <div className="container mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
             className="text-center mb-12"
           >
             <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground">

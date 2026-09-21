@@ -112,8 +112,8 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           style={GOD_RAYS}
         />
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 16 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.4 }}
           className="relative z-10 max-w-3xl px-6 pb-20 pt-28"
         >

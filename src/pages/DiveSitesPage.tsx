@@ -42,8 +42,8 @@ const DiveSitesPage = () => {
       <main className="pt-36 pb-20 px-4">
         <div className="container mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
             className="text-center mb-12 max-w-3xl mx-auto"
           >
             <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">

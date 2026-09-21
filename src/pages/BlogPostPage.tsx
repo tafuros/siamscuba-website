@@ -189,7 +189,7 @@ const BlogPostPage = () => {
       <div className="container mx-auto px-4 -mt-24 relative z-10 max-w-6xl pb-20">
         <div className={`grid gap-10 ${showToc ? "lg:grid-cols-[minmax(0,1fr)_240px]" : ""}`}>
           <article className="max-w-3xl mx-auto w-full" dir={isRTL ? "rtl" : "ltr"}>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <motion.div initial={{ y: 20 }} animate={{ y: 0 }}>
               <Link
                 to="/blog"
                 className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"

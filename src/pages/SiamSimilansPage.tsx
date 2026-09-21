@@ -103,8 +103,8 @@ const SiamSimilansPage = () => {
           {copy.hero.kicker}
         </motion.p>
         <motion.h1
-          initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ y: 14 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
           className="mt-3 font-display text-4xl font-bold leading-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)] sm:text-6xl"
         >

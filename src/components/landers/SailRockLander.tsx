@@ -92,8 +92,8 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
         <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/20 via-ocean-deep/55 to-ocean-deep/90" />
         <div className="container mx-auto px-4 relative z-10 max-w-5xl pb-12 md:pb-16">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 16 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.4 }}
           >
             {copy.heroEyebrow && (

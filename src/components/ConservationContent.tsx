@@ -222,8 +222,8 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
           </motion.p>
 
           <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 16 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
             className={`${display} text-4xl leading-[1.08] text-white [text-shadow:0_2px_20px_rgba(0,0,0,0.75)] sm:text-6xl`}
           >

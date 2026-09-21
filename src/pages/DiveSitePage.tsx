@@ -108,7 +108,7 @@ const DiveSitePage = () => {
         </div>
 
         <div className="container mx-auto px-4 -mt-24 relative z-10 max-w-4xl pb-20">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div initial={{ y: 20 }} animate={{ y: 0 }}>
             <Link
               to="/dive-sites"
               className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
