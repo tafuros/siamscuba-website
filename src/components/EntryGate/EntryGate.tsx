@@ -394,6 +394,12 @@ const EntryGate = () => {
             src={gateLogo}
             alt="Siam Scuba"
             draggable={false}
+            // LCP element on mobile: intrinsic size for the aspect ratio (CSS drives the
+            // rendered height) + high fetch priority. Index.tsx also preloads it.
+            width={486}
+            height={600}
+            fetchPriority="high"
+            decoding="async"
             className={`gate-logo${state.step === "welcome" ? "" : " gate-logo--compact"}`}
           />
           {/* Always-available escape hatch: intent-driven visitors (esp. from

@@ -13,17 +13,17 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "discover-scuba": {
     title: "Discover Scuba Diving in Koh Tao – Try Diving | Siam Scuba",
     description:
-      "Try scuba diving in Koh Tao with no experience needed. One-day intro with PADI instructor: an easy shallow-water start plus 1-2 ocean dives in calm tropical water. ฿2,600 for one dive, ฿3,600 for two.",
+      "Try scuba diving in Koh Tao with no experience: a one-day intro with a PADI instructor, easy shallow start and 1-2 calm ocean dives. ฿2,600 for one dive.",
     h1: "Discover Scuba Diving",
   },
   "open-water": {
-    title: "PADI Open Water Course Koh Tao – ฿12,000 Lifetime Cert | Siam Scuba",
+    title: "PADI Open Water Course Koh Tao – ฿12,000 | Siam Scuba",
     description:
       "Get your PADI Open Water Diver certification in Koh Tao. Small groups, two custom dive boats, lifetime certification. ฿12,000.",
     h1: "PADI Open Water Diver Course",
   },
   "advanced-open-water": {
-    title: "PADI Advanced Open Water Course Koh Tao – 1.5 Days | Siam Scuba",
+    title: "PADI Advanced Open Water Koh Tao – 1.5 Days | Siam Scuba",
     description:
       "Advance to 30m depth with the PADI Advanced Open Water course in Koh Tao. 1.5 days, 5 adventure dives, deep diving and navigation. ฿11,000 with Siam Scuba.",
     h1: "PADI Advanced Open Water Course",
@@ -31,25 +31,25 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "rescue-diver": {
     title: "PADI Rescue Diver Course Koh Tao – 4 Days | Siam Scuba",
     description:
-      "Build emergency response and rescue skills in Koh Tao with the PADI Rescue Diver course. 3-4 days of scenarios, stress management, and rescue techniques. ฿11,000.",
+      "Build emergency response and rescue skills in Koh Tao with the PADI Rescue Diver course: 3-4 days of scenarios, stress control and rescue skills. ฿11,000.",
     h1: "PADI Rescue Diver Course",
   },
   "divemaster": {
     title: "PADI Divemaster Course Koh Tao – Pro Internship | Siam Scuba",
     description:
-      "Start your professional diving career with the PADI Divemaster course in Koh Tao. 4-8 week internship: lead dives, mentor students, two boats daily. ฿38,500.",
+      "Start your professional diving career with the PADI Divemaster course in Koh Tao: 4-8 week internship, lead dives, mentor students, two boats a day. ฿38,500.",
     h1: "PADI Divemaster Course",
   },
   "idc": {
     title: "PADI IDC Instructor Course Koh Tao | Siam Scuba 5 Star IDC",
     description:
-      "Become a PADI Open Water Scuba Instructor in Koh Tao at a 5 Star IDC center. Full Instructor Development Course with two custom dive boats and small groups.",
+      "Become a PADI Open Water Scuba Instructor in Koh Tao at a 5 Star IDC center: the full Instructor Development Course with two dive boats and small groups.",
     h1: "PADI IDC Instructor Course",
   },
   "bubble-maker": {
     title: "PADI Bubble Maker for Kids in Koh Tao | Siam Scuba",
     description:
-      "Safe, supervised first scuba experience for children aged 8+ in Koh Tao. PADI Bubble Maker: in shallow sheltered sea, with a PADI instructor, fun and confidence-building. ฿3,800.",
+      "A safe, supervised first scuba experience for children aged 8+ in Koh Tao: PADI Bubble Maker in shallow sheltered sea with a PADI instructor. ฿3,800.",
     h1: "PADI Bubble Maker for Kids",
   },
   "scuba-review": {
@@ -65,7 +65,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
     h1: "PADI Peak Performance Buoyancy",
   },
   "wreck-diving": {
-    title: "PADI Wreck Diver Specialty Koh Tao – HTMS Sattakut | Siam Scuba",
+    title: "PADI Wreck Diver Koh Tao – HTMS Sattakut | Siam Scuba",
     description:
       "Explore Koh Tao's HTMS Sattakut wreck and learn safe wreck-diving techniques. PADI Wreck Diver specialty with experienced instructors at Siam Scuba.",
     h1: "PADI Wreck Diver Course",
@@ -79,7 +79,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "night-dive": {
     title: "Night Diving in Koh Tao – Guided Night Dive | Siam Scuba",
     description:
-      "Explore Koh Tao's reefs after dark with a guided night dive. Spot hunting marine life and glowing plankton with experienced PADI instructors at Siam Scuba. ฿1,300.",
+      "Explore Koh Tao's reefs after dark on a guided night dive: hunting marine life and glowing plankton with experienced PADI instructors. ฿1,300.",
     h1: "Night Diving",
   },
   "dpv": {
@@ -107,9 +107,9 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
     h1: "Underwater Photography Course",
   },
   "self-reliant-diver": {
-    title: "PADI Self-Reliant Diver Course Koh Tao – 1.5 Days | Siam Scuba",
+    title: "PADI Self-Reliant Diver Koh Tao – 1.5 Days | Siam Scuba",
     description:
-      "Learn to dive independently in Koh Tao with the PADI Self-Reliant Diver specialty. 1.5 days, 3 dives, backup-gear redundancy and SAC-rate planning. ฿13,000.",
+      "Learn to dive independently in Koh Tao with the PADI Self-Reliant Diver specialty: 1.5 days, 3 dives, backup-gear redundancy and SAC planning. ฿13,000.",
     h1: "PADI Self-Reliant Diver Course",
   },
 };
