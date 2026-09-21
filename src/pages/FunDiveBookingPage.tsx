@@ -100,6 +100,7 @@ const FunDiveBookingPage = () => {
   // edits their contact details mid-wizard (re-emitting SIAM_BOOKING_LEAD)
   // doesn't double-count in Google Ads / Meta.
   const leadFiredRef = useRef(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -141,6 +142,16 @@ const FunDiveBookingPage = () => {
       // fires once per step per page session either way.
       if (data.type === "SIAM_BOOKING_STEP") {
         trackWizardStep(data.step);
+        // Keep the newly opened step in view. Inside the iframe the wizard
+        // skips its own scroll-to-section (it cannot scroll a cross-origin
+        // parent), so when the previous step collapses the visitor can be left
+        // staring at the empty space below the frame. Only scroll UP, and only
+        // when the frame's top has left the viewport - never yank someone who
+        // can already see it.
+        const frame = iframeRef.current;
+        if (frame && frame.getBoundingClientRect().top < 0) {
+          frame.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
         return;
       }
 
@@ -263,7 +274,12 @@ const FunDiveBookingPage = () => {
         initial={{ y: 20 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="container mx-auto px-4 py-6 max-w-5xl"
+        // max-w-3xl (768 - 2x16 padding = 736px frame) sized to the wizard: its
+        // fold layout caps the content column at 660px (wizard-fold.css
+        // --f-measure) + a 13px minimum gutter each side = 686px. The old
+        // max-w-5xl frame was ~990px wide, so the 660px column floated in wide
+        // empty grey margins.
+        className="container mx-auto px-4 py-6 max-w-3xl"
       >
         {/* Back to home as a real pill button, pushed below the iOS status-bar
             zone on phones. The old bare text link sat ~24px from the top of a
@@ -314,6 +330,7 @@ const FunDiveBookingPage = () => {
 
           {mounted && (
           <iframe
+            ref={iframeRef}
             src={iframeSrc}
             title="Siam Scuba Booking Form"
             className="block w-full border-0"
