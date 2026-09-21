@@ -18,6 +18,7 @@ import { LANDER_COPY, type Lang, type Offer, type UspTile } from "@/lib/landerCo
 import { WIZARD_PRODUCT, usesBookingWrapper } from "@/lib/landerBooking";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
+import { cardSrcSet } from "@/lib/cardImage";
 
 interface CampaignLanderProps {
   offer: Offer;
@@ -215,6 +216,8 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                     {image && (
                       <img
                         src={image}
+                        srcSet={cardSrcSet(image)}
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         alt={site.name}
                         loading="lazy"
                         className="w-full h-40 object-cover"

@@ -14,6 +14,7 @@ import { DIVE_LINE_ICONS, DiveMaskIcon } from "@/components/icons/DiveLineIcons"
 import { FUN_DIVE_COPY, type FunLang } from "@/lib/funDiveCopy";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { WHATSAPP_NUMBER } from "@/utils/whatsapp";
+import { cardSrcSet } from "@/lib/cardImage";
 
 interface FunDiveLanderProps {
   lang: FunLang;
@@ -208,6 +209,8 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
             >
               <img
                 src={site.image}
+                srcSet={cardSrcSet(site.image)}
+                sizes="(min-width: 768px) 25vw, 50vw"
                 alt={site.name}
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
