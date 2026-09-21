@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Head } from "vite-react-ssg";
 import Seo from "@/components/Seo";
-import gateLogo from "@/assets/siam-logo-lockup.webp";
 import { COURSE_SEO } from "@/lib/courseSeoData";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
 import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
@@ -49,12 +47,6 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
 
   return (
     <div className="min-h-screen">
-      {/* The entry gate mounts client-side only, so its logo (the mobile LCP element)
-          is otherwise discovered only after the JS bundle runs. Preloading it from the
-          prerendered head lets the image arrive while the bundle is still downloading. */}
-      <Head>
-        <link rel="preload" as="image" href={gateLogo} fetchPriority="high" />
-      </Head>
       <Seo
         title={seo.title}
         description={seo.description}

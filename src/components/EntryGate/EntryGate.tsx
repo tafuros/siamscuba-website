@@ -395,7 +395,8 @@ const EntryGate = () => {
             alt="Siam Scuba"
             draggable={false}
             // LCP element on mobile: intrinsic size for the aspect ratio (CSS drives the
-            // rendered height) + high fetch priority. Index.tsx also preloads it.
+            // rendered height) + high fetch priority. The build already emits a site-wide
+            // <link rel=preload> for this asset - do not add a second one.
             width={486}
             height={600}
             fetchPriority="high"
