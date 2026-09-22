@@ -42,6 +42,43 @@ export const pathLanguage = (pathname: string): Language | null => {
   return match ? (match[1] as Language) : null;
 };
 
+// The language the visitor is reading in THIS visit (tab session). Real bug this
+// fixes (Ben, 2026-09-22): on /es he tapped "Cursos" in the navbar, which does a
+// full page load to "/#courses"; the fresh load fell back to a stale
+// siam-lang=he from an earlier visit and the site switched to Hebrew mid-visit.
+// sessionStorage outranks localStorage on unprefixed pages, so the language holds
+// across every page of the visit (SPA or full load), while the original promise
+// still stands: following a /he link once does not trap an English visitor in
+// Hebrew on their NEXT visit - the session value dies with the tab.
+// (exported for tests)
+export const SESSION_LANG_KEY = "siam-lang-session";
+const readSessionLanguage = (): Language | null => {
+  try {
+    const v = window.sessionStorage.getItem(SESSION_LANG_KEY);
+    return isKnownLanguage(v) ? v : null;
+  } catch {
+    return null;
+  }
+};
+const writeSessionLanguage = (lang: Language) => {
+  try {
+    window.sessionStorage.setItem(SESSION_LANG_KEY, lang);
+  } catch {
+    /* private mode / blocked storage: fall back to the old behavior */
+  }
+};
+
+/**
+ * Which language an UNPREFIXED page should adopt on a fresh load: this visit's
+ * language first, then the visitor's saved choice, else stay on the SSG "en".
+ * (exported for tests)
+ */
+export const initialLanguageFor = (session: string | null, saved: string | null): Language | null => {
+  if (isKnownLanguage(session)) return session;
+  if (isKnownLanguage(saved)) return saved;
+  return null;
+};
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   // HYDRATION CONTRACT: the first client render MUST match the SSG HTML, which
   // is always built with "en". Reading localStorage in the useState initializer
@@ -77,23 +114,30 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     };
 
     // On a locale-prefixed page the URL WINS over localStorage (see
-    // pathLanguage above). State only - we deliberately do NOT persist it, so
-    // following a /he link never traps an English visitor in Hebrew forever.
+    // pathLanguage above). It is remembered for THIS VISIT only (sessionStorage),
+    // never in localStorage, so following a /he link never traps an English
+    // visitor in Hebrew on a later visit.
     if (urlLanguage) {
       adopt(urlLanguage);
+      writeSessionLanguage(urlLanguage);
       return;
     }
-    // Unprefixed page: original behavior - adopt the saved language once, on
-    // mount. On later SPA navigations keep whatever the visitor is already
+    // Unprefixed page: on a fresh load adopt this visit's language, else the saved
+    // choice. On later SPA navigations keep whatever the visitor is already
     // reading in (e.g. /es/fun-dives -> / stays Spanish).
     if (!isFirstRun) return;
-    const saved = window.localStorage.getItem("siam-lang");
-    if (isKnownLanguage(saved) && saved !== "en") adopt(saved);
+    let saved: string | null = null;
+    try { saved = window.localStorage.getItem("siam-lang"); } catch { /* blocked storage */ }
+    const initial = initialLanguageFor(readSessionLanguage(), saved);
+    if (initial && initial !== "en") adopt(initial);
   }, [urlLanguage]);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-    if (isBrowser) window.localStorage.setItem("siam-lang", lang);
+    if (isBrowser) {
+      window.localStorage.setItem("siam-lang", lang);
+      writeSessionLanguage(lang);
+    }
   }, []);
 
   const isRTL = rtlLanguages.includes(language);
