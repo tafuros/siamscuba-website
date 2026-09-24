@@ -2,32 +2,1075 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "functions": {
-    "api/chat.ts": { "includeFiles": "api/_kb.json" },
-    "api/hotel-booking.ts": { "includeFiles": "api/_hotel-data.json" }
+    "api/chat.ts": {
+      "includeFiles": "api/_kb.json"
+    },
+    "api/hotel-booking.ts": {
+      "includeFiles": "api/_hotel-data.json"
+    }
   },
   "redirects": [
-    { "source": "/contact-us", "destination": "/", "permanent": true },
-    { "source": "/freediving", "destination": "/", "permanent": true },
-    { "source": "/zero-to-hero-dive-master-internship", "destination": "/divemaster", "permanent": true },
-    { "source": "/koh-tao-diving", "destination": "/fun-dives", "permanent": true },
-    { "source": "/es/koh-tao-diving", "destination": "/es/fun-dives", "permanent": true },
-    { "source": "/he/koh-tao-diving", "destination": "/he/fun-dives", "permanent": true },
-    { "source": "/privacy-policy", "destination": "/privacy", "permanent": true },
-    { "source": "/nemo", "destination": "https://wa.me/66825068898?text=Hi%20Nemo!%20%F0%9F%A4%BF%0AI'd%20love%20to%20hear%20about%20your%20dive%20courses%20and%20trips", "permanent": false },
-    { "source": "/nemo-mizrahnik", "destination": "https://wa.me/66825068898?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%9E%D7%95%20%D7%9E%D7%94%20%D7%94%D7%9E%D7%A6%D7%91%3F%0A%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%9E%D7%96%D7%A8%D7%97%D7%A0%D7%99%D7%A7%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%90%D7%95%D7%9C%20%D7%A2%D7%9C%20%D7%A6%D7%9C%D7%99%D7%9C%D7%95%D7%AA", "permanent": false },
-    { "source": "/kokhav-rishon-cover.jpg", "destination": "/blog/open-water-course-koh-tao.jpg", "permanent": true },
-    { "source": "/freediving/discover.jpg", "destination": "/freediving/discover-freediving-koh-tao.jpg", "permanent": true },
-    { "source": "/freediving/beginner.jpg", "destination": "/freediving/beginner-freediving-course-koh-tao.jpg", "permanent": true },
-    { "source": "/freediving/advanced.jpg", "destination": "/freediving/advanced-freediving-course-koh-tao.jpg", "permanent": true },
-    { "source": "/freediving/instructor.jpg", "destination": "/freediving/freediving-instructor-course-koh-tao.jpg", "permanent": true },
-    { "source": "/freediving/zerohero.jpg", "destination": "/freediving/freediving-zero-to-hero-koh-tao.jpg", "permanent": true },
-    { "source": "/similan/raga.jpg", "destination": "/similan/liveaboard-raga.jpg", "permanent": true },
-    { "source": "/similan/gentle-giant.jpg", "destination": "/similan/liveaboard-gentle-giant.jpg", "permanent": true },
-    { "source": "/similan/aqua.png", "destination": "/similan/liveaboard-aqua.png", "permanent": true },
-    { "source": "/hero/desktop-extension.jpg", "destination": "/hero/koh-tao-underwater-hero-desktop.jpg", "permanent": true }
+    {
+      "source": "/contact-us",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/freediving",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/zero-to-hero-dive-master-internship",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/koh-tao-diving",
+      "destination": "/fun-dives",
+      "permanent": true
+    },
+    {
+      "source": "/es/koh-tao-diving",
+      "destination": "/es/fun-dives",
+      "permanent": true
+    },
+    {
+      "source": "/he/koh-tao-diving",
+      "destination": "/he/fun-dives",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/nemo",
+      "destination": "https://wa.me/66825068898?text=Hi%20Nemo!%20%F0%9F%A4%BF%0AI'd%20love%20to%20hear%20about%20your%20dive%20courses%20and%20trips",
+      "permanent": false
+    },
+    {
+      "source": "/nemo-mizrahnik",
+      "destination": "https://wa.me/66825068898?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%9E%D7%95%20%D7%9E%D7%94%20%D7%94%D7%9E%D7%A6%D7%91%3F%0A%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%9E%D7%96%D7%A8%D7%97%D7%A0%D7%99%D7%A7%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%90%D7%95%D7%9C%20%D7%A2%D7%9C%20%D7%A6%D7%9C%D7%99%D7%9C%D7%95%D7%AA",
+      "permanent": false
+    },
+    {
+      "source": "/kokhav-rishon-cover.jpg",
+      "destination": "/blog/open-water-course-koh-tao.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/freediving/discover.jpg",
+      "destination": "/freediving/discover-freediving-koh-tao.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/freediving/beginner.jpg",
+      "destination": "/freediving/beginner-freediving-course-koh-tao.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/freediving/advanced.jpg",
+      "destination": "/freediving/advanced-freediving-course-koh-tao.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/freediving/instructor.jpg",
+      "destination": "/freediving/freediving-instructor-course-koh-tao.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/freediving/zerohero.jpg",
+      "destination": "/freediving/freediving-zero-to-hero-koh-tao.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/similan/raga.jpg",
+      "destination": "/similan/liveaboard-raga.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/similan/gentle-giant.jpg",
+      "destination": "/similan/liveaboard-gentle-giant.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/similan/aqua.png",
+      "destination": "/similan/liveaboard-aqua.png",
+      "permanent": true
+    },
+    {
+      "source": "/hero/desktop-extension.jpg",
+      "destination": "/hero/koh-tao-underwater-hero-desktop.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/5-wochen-thailand-herumreisen-und-tauchen-das-war-der-plan-am-anfang",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/6-diving-tips-for-saving-air",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/author/enrichedmedia",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/author/siamscuba",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/advanced-open-water",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/dive-master-training",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/mobile",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/networking",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/open-water-divers",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/siam-website",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/siam-website/page/2",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/staff",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/turtle",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/uncategorized",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/category/uncategorized/articles",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/edwin-the-fish",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/edwin-the-fish/padi-con-ed-flow-chart-jpg",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/fun-and-interesting-facts-about-diving",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/get-wet-koh-tao",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/getting-from-bangkok-to-koh-tao",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/great-french-review",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/hernias-issues-for-divers",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/latest-news",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/latest-news/page/2",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/latest-news/page/3",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/air",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/aow",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/bangkok",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/boat-trips",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/boat",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/consumption",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/depth",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/dive-master",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/diving",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/ferry",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/go-pro",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/koh-nang-yuan",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/koh-tao",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/padi",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/scuba",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/snorkeling",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/snorkling",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/weighting",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/tag/wreck",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/the-unknown-facts-of-being-a-dive-instructor",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/top-10-newbie-diving-mistakes-what-not-to-do-when-youre-learning-to-dive",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/7-reasons-you-need-to-try-diving",
+      "destination": "/discover-scuba-diving",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-dsd.html",
+      "destination": "/discover-scuba-diving",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-dsd",
+      "destination": "/discover-scuba-diving",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-discover-scuba-diving-10-years-and-above",
+      "destination": "/discover-scuba-diving",
+      "permanent": true
+    },
+    {
+      "source": "/NMSmZ/shop/padi-courses/padi-open-water-diver",
+      "destination": "/open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-open-water-diver.html",
+      "destination": "/open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-open-water-diver",
+      "destination": "/open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-scuba-diver.html",
+      "destination": "/open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-scuba-diver",
+      "destination": "/open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-open-water-diver",
+      "destination": "/open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-scuba-diver",
+      "destination": "/open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-Pro/siam-scuba-center-PADI-pro-divemaster-internship-programs.html",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-Pro/siam-scuba-center-PADI-pro-divemaster-internship-programs",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/laventure-divemaster",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/matt-and-his-dive-master-course",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/min-fantastiska-resa-till-att-bli-en-divemaster",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/min-underbara-resa-mot-att-bli-dive-master",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-dive-master-course",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/thomas-divemaster-trainee",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/ダイブマスターコースについて",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-Pro/siam-scuba-center-PADI-pro-instructor-development-course.html",
+      "destination": "/idc",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-Pro/siam-scuba-center-PADI-pro-instructor-development-course",
+      "destination": "/idc",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-pro/padi-assistant-instructor-course",
+      "destination": "/idc",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-pro/padi-idc-open-water-scuba-instructor-course",
+      "destination": "/idc",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-pro/padi-master-scuba-diver-trainer-msdt",
+      "destination": "/idc",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/childrens-diving/siam-scuba-center-PADI-course-bubble-maker.html",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/childrens-diving/siam-scuba-center-PADI-course-bubble-maker",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/childrens-diving/siam-scuba-center-PADI-course-childrens-diving.html",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/childrens-diving/siam-scuba-center-PADI-course-childrens-diving",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/childrens-diving/siam-scuba-center-PADI-course-swimming-lessons.html",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/childrens-diving/siam-scuba-center-PADI-course-swimming-lessons",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/childrens-diving",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/shop/childrens-diving/padi-bubblemaker-experience",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/shop/childrens-diving/padi-seal-team-program",
+      "destination": "/bubble-maker",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-advanced-open-water-diver.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-course-advanced-open-water-diver",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-courses-speciality.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-courses-speciality",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-AWARE-Fish-ID.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-AWARE-Fish-ID",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-multi-level-and-computer.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-multi-level-and-computer",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-nitrox.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-nitrox",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-search-and-recovery.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-search-and-recovery",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-naturalist.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-naturalist",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-navigation.html",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-navigation",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/padi-courses/specialty-courses",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-advanced-open-water-diver",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-aware-fish-id-specialty-1-day-2-dives",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-eanx-nitrox-specialty-half-day-or-whole-day-you-choose",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-search-and-recovery-specialty-2-days-4-dives",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-underwater-navigation-specialty-1-days-2-dives",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/underwater-naturalist-1-day-2-dives",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-emergency-first-response.html",
+      "destination": "/efr",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-emergency-first-response",
+      "destination": "/efr",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-emergency-first-response-efr",
+      "destination": "/efr",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-emergency-oxygen-provider",
+      "destination": "/efr",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-rescue-diver.html",
+      "destination": "/rescue-diver",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/siam-scuba-center-PADI-rescue-diver",
+      "destination": "/rescue-diver",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/padi-rescue-diver",
+      "destination": "/rescue-diver",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-deep.html",
+      "destination": "/deep-diving",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-deep",
+      "destination": "/deep-diving",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-deep-specialty-2-days-4-dives",
+      "destination": "/deep-diving",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-diver-propulsion-vehicle.html",
+      "destination": "/dpv",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-diver-propulsion-vehicle",
+      "destination": "/dpv",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-night-dive.html",
+      "destination": "/night-dive",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-night-dive",
+      "destination": "/night-dive",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-night-diver-specialty-2-nights-3-dives",
+      "destination": "/night-dive",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-peak-performance-buoyancy.html",
+      "destination": "/peak-performance-buoyancy",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-courses-peak-performance-buoyancy",
+      "destination": "/peak-performance-buoyancy",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-peak-performance-buoyancy-specialty-1-day-2-dives",
+      "destination": "/peak-performance-buoyancy",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-photography.html",
+      "destination": "/uw-photography",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-photography",
+      "destination": "/uw-photography",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-videography.html",
+      "destination": "/uw-photography",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-underwater-videography",
+      "destination": "/uw-photography",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-digital-underwater-photography-specialty-1-day-2-dives",
+      "destination": "/uw-photography",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-underwater-videographer-specialty-1-days-2-dives",
+      "destination": "/uw-photography",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-wreck-diver.html",
+      "destination": "/wreck-diving",
+      "permanent": true
+    },
+    {
+      "source": "/PADI-courses/specialty/siam-scuba-center-PADI-specialty-wreck-diver",
+      "destination": "/wreck-diving",
+      "permanent": true
+    },
+    {
+      "source": "/shop/padi-courses/specialty-courses/padi-wreck-diver-specialty-2-days-4-dives",
+      "destination": "/wreck-diving",
+      "permanent": true
+    },
+    {
+      "source": "/the-wreck-htms-sattukut",
+      "destination": "/wreck-diving",
+      "permanent": true
+    },
+    {
+      "source": "/about-siam-scuba-center",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-the-boats.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-the-boats",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-the-team.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-the-team",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/cart",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/padi-courses",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/padi-courses/page/2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/reviews",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/shop",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-PADI-courses.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-PADI-courses",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-about-us.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-about-us",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-contact-us.php",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-reviews.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-reviews",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-the-team",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/the-boats",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-our-island-fun-diving-divesites.html",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-our-island-fun-diving-divesites",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/diving-in-koh-tao-thailand",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/hawksbill-turtle-at-white-rock",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/koh-tao-dive-sites",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/lovely-scribbled-file-fish",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/up-close-and-personal-with-a-whale-shark",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/whale-sharks",
+      "destination": "/dive-sites",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-our-island-koh-tao.html",
+      "destination": "/blog/top-beaches-viewpoints-koh-tao",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-our-island-koh-tao",
+      "destination": "/blog/top-beaches-viewpoints-koh-tao",
+      "permanent": true
+    },
+    {
+      "source": "/koh-tao-beaches",
+      "destination": "/blog/top-beaches-viewpoints-koh-tao",
+      "permanent": true
+    },
+    {
+      "source": "/our-island-koh-tao",
+      "destination": "/blog/top-beaches-viewpoints-koh-tao",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-the-accommodation.html",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/siam-scuba-center-the-accommodation",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/accommodation-koh-tao",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/accommodation",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/lotus-paradise-resort-bungalow-ac",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/lotus-paradise-resort-bungalow",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/lotus-paradise-resort-deluxe-room",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/lotus-paradise-resort-family-room",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/lotus-paradise-resort-standard-room",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/lotus-paradise-resort-superior-room",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/siam-3-bed-dorm-room",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/siam-4-bed-dorm-room",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/shop/accommodation/siam-private-room",
+      "destination": "/hotel",
+      "permanent": true
+    },
+    {
+      "source": "/booking-terms-and-conditions",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/terms-and-conditions.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/terms-and-conditions",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/go-pro-with-padi-on-koh-tao",
+      "destination": "/go-pro",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/padi-pro",
+      "destination": "/go-pro",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-PADI-pro.html",
+      "destination": "/go-pro",
+      "permanent": true
+    },
+    {
+      "source": "/siam-scuba-center-PADI-pro",
+      "destination": "/go-pro",
+      "permanent": true
+    },
+    {
+      "source": "/ko-tao-rainy-season-not-so-bad",
+      "destination": "/blog/best-time-to-dive-koh-tao",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/fun-diving",
+      "destination": "/fun-dives",
+      "permanent": true
+    },
+    {
+      "source": "/shop/fun-diving/fun-dives",
+      "destination": "/fun-dives",
+      "permanent": true
+    },
+    {
+      "source": "/what-a-great-fun-dive-dont-you-think",
+      "destination": "/fun-dives",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/fun-diving/refresher-dive",
+      "destination": "/scuba-review",
+      "permanent": true
+    },
+    {
+      "source": "/shop/fun-diving/refresher-dive",
+      "destination": "/scuba-review",
+      "permanent": true
+    },
+    {
+      "source": "/shop/fun-diving/refresher-dive/refresher-dive",
+      "destination": "/scuba-review",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
@@ -50,25 +1093,37 @@
     {
       "source": "/hero/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/gate/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/fonts/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ]
