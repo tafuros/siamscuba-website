@@ -82,14 +82,33 @@ const EntryGate = () => {
   // On a manual reopen (no cover), the fade is what hides the live page - keep it.
   const coverPresentRef = useRef(false);
 
+  // True until the first route effect has run: only the page the visitor landed
+  // on may open the gate (see the show-decision effect below).
+  const arrivalRouteRef = useRef(true);
+
   // Client-only reveal: show on the homepage unless explicitly skipped (?gate=0)
   // or already seen recently (returning visitors skip the intro - see GATE_SEEN).
   // ?gate=1 forces the gate even for remembered visitors (mirrored in the
   // index.html cover script so the pre-paint cover agrees).
   useEffect(() => {
+    // Was this the page the visitor ARRIVED on? EntryGate stays mounted across
+    // client-side routes, so a later run of this effect means the visitor reached
+    // "/" from inside the site (navbar, a link) - the intro must not interrupt
+    // them. Mark it before the pathname bail-out, or a first route of /es would
+    // still count the following "/" as the arrival.
+    const isArrivalRoute = arrivalRouteRef.current;
+    arrivalRouteRef.current = false;
+
     if (pathname !== "/") return;
     const q = new URLSearchParams(window.location.search).get("gate");
-    if (q === "0" || (q !== "1" && gateSeenRecently())) {
+    // visitStartedElsewhere: this visit began on another page (/es, a lander, a
+    // blog post...) and reached the homepage from inside the site, so the intro
+    // would interrupt someone who is already reading. Set by the index.html cover
+    // script on page load; SPA navigations back to "/" are covered by the
+    // gate-seen flag the gate writes when it closes. ?gate=1 still forces it.
+    const visitStartedElsewhere =
+      (window as { __siamVisitStarted?: boolean }).__siamVisitStarted === true || !isArrivalRoute;
+    if (q === "0" || (q !== "1" && (gateSeenRecently() || visitStartedElsewhere))) {
       // The index.html cover only paints when it too sees no recent visit, so on
       // a remembered skip there is normally nothing to remove - but clear it just
       // in case (e.g. flag written this session after the cover painted).

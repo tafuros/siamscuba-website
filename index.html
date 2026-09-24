@@ -34,6 +34,18 @@
             var t = Number(localStorage.getItem("siam_gate_seen"));
             seen = t > 0 && Date.now() - t < 604800000; // 7 days
           } catch (e) {}
+          // Did this visit already start on another page of the site? The gate
+          // greets people ENTERING the site, not people already reading it: Ben
+          // landed on /es, tapped "Cursos" in the navbar (a full load of "/") and
+          // got the intro gate in his face mid-visit (2026-09-24). Read the flag
+          // BEFORE setting it, and hand the answer to EntryGate.tsx, which runs
+          // long after this line has already marked the visit as started.
+          var visitStarted = false;
+          try {
+            visitStarted = sessionStorage.getItem("siam_visit_started") === "1";
+            sessionStorage.setItem("siam_visit_started", "1");
+          } catch (e) {}
+          window.__siamVisitStarted = visitStarted;
           // ?gate=0 skips; ?gate=1 forces (even for remembered visitors).
           // Must stay in sync with the show-decision in EntryGate.tsx.
           var q = new URLSearchParams(location.search).get("gate");
@@ -41,7 +53,7 @@
             "%VITE_ENTRY_GATE%" === "on" &&
             location.pathname === "/" &&
             q !== "0" &&
-            (q === "1" || !seen);
+            (q === "1" || (!seen && !visitStarted));
           if (!window.__siamGate) return;
           var c = document.createElement("div");
           c.id = "gate-preload-cover";

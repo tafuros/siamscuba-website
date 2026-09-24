@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Compass, Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import BookingLink from "@/components/BookingLink";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/siam-logo.webp";
@@ -12,11 +12,46 @@ import { buildWhatsAppLink, normalizeLang } from "@/utils/whatsapp";
 import { openGate } from "@/utils/gateBus";
 import { hotelPath } from "@/data/hotel";
 
+/**
+ * Scroll to a homepage section after a client-side navigation to "/".
+ *
+ * Two things fight a single scrollIntoView here: the home route is lazy, so the
+ * section does not exist yet when the click happens, and once it mounts the page
+ * keeps growing (images, below-the-fold sections) which moves the target under
+ * the viewport. So: poll for the element, jump to it, then re-align while the
+ * layout settles - and stop the moment the visitor scrolls themselves.
+ */
+const scrollToSectionWhenReady = (hash: string) => {
+  const deadline = Date.now() + 4000;
+  let userScrolled = false;
+  const onUserScroll = () => { userScrolled = true; };
+  window.addEventListener("wheel", onUserScroll, { passive: true, once: true });
+  window.addEventListener("touchmove", onUserScroll, { passive: true, once: true });
+  const cleanup = () => {
+    window.removeEventListener("wheel", onUserScroll);
+    window.removeEventListener("touchmove", onUserScroll);
+  };
+
+  const tick = () => {
+    if (userScrolled || Date.now() > deadline) return cleanup();
+    const el = document.querySelector(hash);
+    if (el) {
+      const top = el.getBoundingClientRect().top;
+      // Already parked at the section (within a hair) - the layout is settled.
+      if (Math.abs(top) < 12) return cleanup();
+      el.scrollIntoView({ behavior: "auto", block: "start" });
+    }
+    window.setTimeout(tick, 150);
+  };
+  window.setTimeout(tick, 0);
+};
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { t, language } = useLanguage();
   const location = useLocation();
+  const navigate = useNavigate();
   const whatsappHref = buildWhatsAppLink({
     lang: normalizeLang(language),
     pathname: location.pathname,
@@ -51,7 +86,12 @@ const Navbar = () => {
     setMobileOpen(false);
     if (href.startsWith("/")) return;
     if (location.pathname !== "/") {
-      window.location.href = "/" + href;
+      // Client-side navigation, NOT window.location (Ben, 2026-09-24): a full
+      // reload from /es dropped him on the entry gate mid-visit and threw away
+      // the language he was reading in. The home route is lazy, so poll briefly
+      // for the section before scrolling to it.
+      navigate("/");
+      scrollToSectionWhenReady(href);
       return;
     }
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
