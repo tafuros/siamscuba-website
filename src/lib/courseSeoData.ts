@@ -37,7 +37,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "divemaster": {
     title: "PADI Divemaster Course Koh Tao – Pro Internship | Siam Scuba",
     description:
-      "Start your professional diving career with the PADI Divemaster course in Koh Tao: 4-8 week internship, lead dives, mentor students, two boats a day. ฿38,500.",
+      "Start your professional diving career with the PADI Divemaster course in Koh Tao: a 16-35 day internship - lead dives, assist on courses, internship and PADI fees included. ฿40,000.",
     h1: "PADI Divemaster Course",
   },
   "idc": {

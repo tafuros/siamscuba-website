@@ -131,6 +131,10 @@ expect "/go-pro"                                    200 "PADI Instructor"
 expect "/he/go-pro"                                 200
 expect "/es/go-pro"                                 200
 expect "/fr/go-pro"                                 200
+expect "/divemaster-course"                         200 "Divemaster"
+expect "/he/divemaster-course"                      200
+expect "/es/divemaster-course"                      200
+expect "/fr/divemaster-course"                      200
 
 info "Critical analytics tags must survive the build"
 expect "/"                                          200 "GTM-TN3SM66Q"

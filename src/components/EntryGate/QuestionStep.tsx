@@ -118,8 +118,8 @@ const QuestionStep = ({ question, onPick, reducedMotion = false, artByKey, swapO
               )}
               <div className="flex flex-col items-center gap-1">
                 {opt.eyebrow && (
-                  <span className="gate-card-eyebrow mb-1 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-[0.18em]">
-                    {opt.key === "goPro" && <PadiStars />}
+                  <span className="gate-card-eyebrow mb-1 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold uppercase leading-none tracking-[0.16em]">
+                    {opt.key === "goPro" && <PadiStars className="h-3.5 w-3.5" />}
                     {opt.eyebrow}
                   </span>
                 )}

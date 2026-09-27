@@ -126,7 +126,7 @@ export const GO_PRO_TRACKS: GoProTrack[] = [
       es: "Eres Rescue Diver y quieres trabajar en el buceo.",
       fr: "Vous êtes Rescue Diver et vous voulez travailler dans la plongée.",
     },
-    duration: { en: "4-8 weeks", he: "4-8 שבועות", es: "4-8 semanas", fr: "4-8 semaines" },
+    duration: { en: "16-35 days", he: "16-35 ימים", es: "16-35 días", fr: "16-35 jours" },
     points: {
       en: ["The first professional rating", "Guide certified divers", "Free internship with us"],
       he: ["הדרגה המקצועית הראשונה", "להוביל צוללים מוסמכים", "התמחות חינם אצלנו"],

@@ -172,12 +172,12 @@
     {
       "id": "dm",
       "name": "Divemaster",
-      "duration": "16-35 days (4-8 weeks)",
-      "price_thb": 38500,
+      "duration": "16-35 days",
+      "price_thb": 40000,
       "certification": true,
       "requires_prior_cert": true,
-      "prerequisite": "Rescue Diver + valid EFR",
-      "description": "First professional PADI level. Internship-style program. Duration depends on progress. Free stay + free fun diving during training."
+      "prerequisite": "Rescue Diver (or equivalent) + EFR within the last 24 months, at least 40 logged dives, age 18+",
+      "description": "First professional PADI level. Internship-style program inside the team; duration depends on progress. Price includes training, materials, dives, the internship and the PADI certification fee. Accommodation and food are NOT included - a monthly room on the island is about 8,000-15,000 THB. Landing page: https://siamscuba.com/divemaster-course"
     },
     {
       "id": "idc",
@@ -323,7 +323,7 @@
     "included_in_courses": {
       "open_water": "2 nights included",
       "advanced_open_water": "1 night included",
-      "divemaster": "free stay during internship"
+      "divemaster": "NOT included - accommodation and food are on the candidate (monthly room about 8,000-15,000 THB)"
     },
     "_needs_update": "Specific room tiers, occupancy, and per-night pricing for non-course stays are not published on the website. Confirm with Ben."
   },

@@ -14,6 +14,7 @@ import {
   type TrackKey,
 } from "@/data/goPro";
 import PadiStars from "./PadiStars";
+import PadiKicker from "./PadiKicker";
 import { useNextExam } from "./useNextExam";
 import { courseDetails } from "@/i18n/courseDetails";
 
@@ -69,12 +70,7 @@ const GoProContent = ({ lang }: GoProContentProps) => {
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <div className="mb-4 flex items-center gap-2.5">
-                <PadiStars className="h-3 w-3" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#419EBC]">
-                  {copy.kicker}
-                </span>
-              </div>
+              <PadiKicker className="mb-5">{copy.kicker}</PadiKicker>
 
               <h1 className="font-display text-4xl leading-[1.06] text-white sm:text-6xl">
                 {copy.heroTitle}
@@ -222,12 +218,7 @@ const GoProContent = ({ lang }: GoProContentProps) => {
               </figure>
 
               <div>
-                <div className="mb-4 flex items-center gap-2.5">
-                  <PadiStars className="h-3 w-3" />
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#419EBC]">
-                    {bob.title}
-                  </span>
-                </div>
+                <PadiKicker className="mb-5">{bob.title}</PadiKicker>
                 <h2 className="font-display text-3xl text-white sm:text-4xl">{bob.name}</h2>
                 <p className="mt-1.5 text-sm font-semibold text-[#A5C5D4]">{bob.role}</p>
                 {bob.paragraphs.map((paragraph) => (
@@ -270,7 +261,7 @@ const GoProContent = ({ lang }: GoProContentProps) => {
 
           {next && (
             <p className="mb-6 inline-flex flex-wrap items-center gap-2 rounded-full border border-[#419EBC]/40 bg-[#0270B6]/12 px-5 py-2.5">
-              <PadiStars />
+              <PadiStars className="h-3.5 w-3.5" />
               <span className="text-sm text-[#A5C5D4]">
                 {copy.nextIe}:{" "}
                 <strong className="font-semibold text-white">

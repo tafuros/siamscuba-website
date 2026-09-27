@@ -513,6 +513,7 @@ const OFFER_TO_SLUG: Record<string, string> = {
   similan: "similan",
   phuket: "phuket-diving",
   hotel: "hotel",
+  divemaster: "divemaster-course",
 };
 
 export function trackViewContent(params: ViewContentParams): void {

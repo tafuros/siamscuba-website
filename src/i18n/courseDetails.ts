@@ -1,4 +1,5 @@
 import type { Language } from "./translations";
+import { divemasterCourseDetail } from "@/data/divemaster";
 
 export interface CourseDetail {
   header: string;
@@ -31,6 +32,8 @@ export interface CourseDetail {
   whatToBring?: string[];
   payment?: string[];
   nextStep?: string;
+  /** Optional link to the course's own landing page (e.g. Divemaster). */
+  pageLink?: { label: string; href: string };
 }
 
 // Detailed course info shown in the CourseDetailDialog modal, per language.
@@ -38,6 +41,8 @@ export interface CourseDetail {
 // `en` is the source of truth / fallback; he/es/fr mirror its structure.
 export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
   en: {
+    // Built from src/data/divemaster.ts - edit the copy there, not here.
+    Divemaster: divemasterCourseDetail("en"),
     "Sail Rock": {
       header: "Sail Rock: The Ultimate Diving Adventure",
       intro: "Located between Koh Tao and Koh Phangan, Sail Rock is an open-ocean pinnacle that rises 15m above the surface and drops to 40m. It is world-famous for its incredible fish density and unique topography.",
@@ -401,6 +406,8 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
   },
 
   he: {
+    // Built from src/data/divemaster.ts - edit the copy there, not here.
+    Divemaster: divemasterCourseDetail("he"),
     "Sail Rock": {
       header: "Sail Rock: חוויית הצלילה האולטימטיבית",
       intro: "ממוקם בין קוֹ טאו לקוֹ פאנגן, Sail Rock הוא צוק תת-ימי בלב הים הפתוח שמתנשא 15 מ' מעל פני המים וצולל עד 40 מ'. אתר מפורסם בכל העולם בזכות צפיפות הדגים המדהימה והטופוגרפיה הייחודית שלו.",
@@ -764,6 +771,8 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
   },
 
   es: {
+    // Built from src/data/divemaster.ts - edit the copy there, not here.
+    Divemaster: divemasterCourseDetail("es"),
     "Sail Rock": {
       header: "Sail Rock: la aventura de buceo definitiva",
       intro: "Situado entre Koh Tao y Koh Phangan, Sail Rock es un pináculo en mar abierto que se eleva 15 m sobre la superficie y desciende hasta los 40 m. Es mundialmente famoso por su increíble densidad de peces y su topografía única.",
@@ -1127,6 +1136,8 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
   },
 
   fr: {
+    // Built from src/data/divemaster.ts - edit the copy there, not here.
+    Divemaster: divemasterCourseDetail("fr"),
     "Sail Rock": {
       header: "Sail Rock : l'aventure de plongée ultime",
       intro: "Situé entre Koh Tao et Koh Phangan, Sail Rock est un pinacle en pleine mer qui s'élève à 15 m au-dessus de la surface et plonge jusqu'à 40 m. Il est mondialement connu pour son incroyable densité de poissons et sa topographie unique.",

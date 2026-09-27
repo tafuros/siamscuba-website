@@ -234,6 +234,27 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/GoProFrPage")),
         entry: "src/pages/GoProFrPage.tsx",
       },
+      // Divemaster lander - full en/he/es/fr cluster (LOCALE_FAMILIES).
+      {
+        path: "divemaster-course",
+        lazy: lazyDefault(() => import("./pages/DivemasterPage")),
+        entry: "src/pages/DivemasterPage.tsx",
+      },
+      {
+        path: "he/divemaster-course",
+        lazy: lazyDefault(() => import("./pages/DivemasterHePage")),
+        entry: "src/pages/DivemasterHePage.tsx",
+      },
+      {
+        path: "es/divemaster-course",
+        lazy: lazyDefault(() => import("./pages/DivemasterEsPage")),
+        entry: "src/pages/DivemasterEsPage.tsx",
+      },
+      {
+        path: "fr/divemaster-course",
+        lazy: lazyDefault(() => import("./pages/DivemasterFrPage")),
+        entry: "src/pages/DivemasterFrPage.tsx",
+      },
       // Siam Hotel & Hostel - the property's own mini-site. Standalone chrome
       // (its own nav + footer), full en/he/es/fr cluster declared together in
       // LOCALE_FAMILIES so hreflang stays reciprocal.

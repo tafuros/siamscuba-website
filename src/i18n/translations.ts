@@ -137,7 +137,7 @@ type TranslationStrings = {
   dur_3_4_days: string;
   dur_3_days: string;
   dur_2_5_days: string;
-  dur_4_8_weeks: string;
+  dur_16_35_days: string;
   dur_varies: string;
   dur_2_3_days: string;
 
@@ -386,7 +386,7 @@ export const translations: Record<Language, TranslationStrings> = {
     dur_3_4_days: "3–4 days",
     dur_3_days: "3 days",
     dur_2_5_days: "2.5 days",
-    dur_4_8_weeks: "4–8 weeks",
+    dur_16_35_days: "16-35 days",
     dur_varies: "Varies",
     dur_2_3_days: "2–3 days",
 
@@ -617,7 +617,7 @@ export const translations: Record<Language, TranslationStrings> = {
     dur_3_4_days: "3–4 ימים",
     dur_3_days: "3 ימים",
     dur_2_5_days: "2.5 ימים",
-    dur_4_8_weeks: "4–8 שבועות",
+    dur_16_35_days: "16-35 ימים",
     dur_varies: "משתנה",
     dur_2_3_days: "2–3 ימים",
 
@@ -848,7 +848,7 @@ export const translations: Record<Language, TranslationStrings> = {
     dur_3_4_days: "3–4 días",
     dur_3_days: "3 días",
     dur_2_5_days: "2.5 días",
-    dur_4_8_weeks: "4–8 semanas",
+    dur_16_35_days: "16-35 días",
     dur_varies: "Variable",
     dur_2_3_days: "2–3 días",
 
@@ -1079,7 +1079,7 @@ export const translations: Record<Language, TranslationStrings> = {
     dur_3_4_days: "3–4 jours",
     dur_3_days: "3 jours",
     dur_2_5_days: "2,5 jours",
-    dur_4_8_weeks: "4–8 semaines",
+    dur_16_35_days: "16-35 jours",
     dur_varies: "Variable",
     dur_2_3_days: "2–3 jours",
 

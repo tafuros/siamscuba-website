@@ -5,6 +5,11 @@ import BookingLink from "@/components/BookingLink";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { languageFlags, languageNames, type Language } from "@/i18n/translations";
 import { courseDetails } from "@/i18n/courseDetails";
+import IdcLinkText from "@/components/IdcLinkText";
+import { Link } from "react-router-dom";
+import type { ReactNode } from "react";
+
+const IDC_KEY = "IDC (Instructor Course)";
 
 const switcherLangs: Language[] = ["en", "he", "es", "fr"];
 
@@ -12,14 +17,37 @@ interface CourseDetailDialogProps {
   courseTitle: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Swap the dialog to another course in place (used by the IDC links). */
+  onSwitchCourse?: (courseTitle: string) => void;
 }
 
-const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDialogProps) => {
+const CourseDetailDialog = ({ courseTitle, open, onOpenChange, onSwitchCourse }: CourseDetailDialogProps) => {
   const { language, setLanguage, t } = useLanguage();
 
   // Fall back to English if a course hasn't been translated into the active language.
   const detail = courseDetails[language]?.[courseTitle] || courseDetails.en[courseTitle];
   if (!detail) return null;
+
+  // Every "IDC" in the copy becomes a highlighted button that swaps this
+  // dialog to the IDC detail. Not inside the IDC dialog itself.
+  const rich = (text: string): ReactNode =>
+    !onSwitchCourse || courseTitle === IDC_KEY ? (
+      text
+    ) : (
+      <IdcLinkText
+        text={text}
+        renderLink={(label, key) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => onSwitchCourse(IDC_KEY)}
+            className="font-bold text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary"
+          >
+            {label}
+          </button>
+        )}
+      />
+    );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -57,7 +85,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 {detail.header}
               </DialogTitle>
               <DialogDescription className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                {detail.intro}
+                {rich(detail.intro)}
               </DialogDescription>
             </DialogHeader>
 
@@ -151,7 +179,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                   {detail.schedule.map((s) => (
                     <div key={s.time} className="flex gap-3 text-sm">
                       <span className="font-semibold text-primary min-w-[50px]">{s.time}</span>
-                      <span className="text-foreground/80">{s.description}</span>
+                      <span className="text-foreground/80">{rich(s.description)}</span>
                     </div>
                   ))}
                 </div>
@@ -201,7 +229,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.learns.map((l) => (
                     <li key={l} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {l}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {rich(l)}
                     </li>
                   ))}
                 </ul>
@@ -216,7 +244,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 </h4>
                 <ul className="space-y-1.5">
                   {detail.structure.map((s) => (
-                    <li key={s} className="text-sm text-foreground/80">{s}</li>
+                    <li key={s} className="text-sm text-foreground/80">{rich(s)}</li>
                   ))}
                 </ul>
               </div>
@@ -231,7 +259,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.included.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {rich(item)}
                     </li>
                   ))}
                 </ul>
@@ -247,7 +275,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.notIncluded.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" aria-hidden="true" /> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" aria-hidden="true" /> {rich(item)}
                     </li>
                   ))}
                 </ul>
@@ -263,7 +291,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.whatToBring.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {rich(item)}
                     </li>
                   ))}
                 </ul>
@@ -279,7 +307,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.prerequisites.map((p) => (
                     <li key={p} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" /> {p}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" /> {rich(p)}
                     </li>
                   ))}
                 </ul>
@@ -307,7 +335,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
                 <ul className="space-y-1.5">
                   {detail.payment.map((item) => (
                     <li key={item} className="text-sm text-foreground/80 flex items-start gap-2">
-                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {item}
+                      <span className="mt-[7px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" /> {rich(item)}
                     </li>
                   ))}
                 </ul>
@@ -329,7 +357,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
 
             {/* Extras */}
             {detail.extras?.map((e) => (
-              <p key={e} className="text-sm text-accent font-semibold italic">{e}</p>
+              <p key={e} className="text-sm text-accent font-semibold italic">{rich(e)}</p>
             ))}
 
             {/* Special Offer */}
@@ -342,8 +370,15 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange }: CourseDetailDia
             {/* Next Step */}
             {detail.nextStep && (
               <div className="bg-secondary/30 border border-secondary rounded-lg p-3 text-sm text-foreground font-medium">
-                ➕ {detail.nextStep}
+                ➕ {rich(detail.nextStep)}
               </div>
+            )}
+
+            {/* The course's own landing page, when it has one (Divemaster) */}
+            {detail.pageLink && (
+              <Button asChild variant="outline" className="w-full rounded-full" size="lg">
+                <Link to={detail.pageLink.href}>{detail.pageLink.label}</Link>
+              </Button>
             )}
 
             {/* CTA */}
