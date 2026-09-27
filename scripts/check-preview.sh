@@ -135,6 +135,7 @@ expect "/divemaster-course"                         200 "Divemaster"
 expect "/he/divemaster-course"                      200
 expect "/es/divemaster-course"                      200
 expect "/fr/divemaster-course"                      200
+expect "/he/dive-sites/sail-rock"                   200 "סייל רוק"
 
 info "Critical analytics tags must survive the build"
 expect "/"                                          200 "GTM-TN3SM66Q"

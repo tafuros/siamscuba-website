@@ -23,6 +23,31 @@ export interface ThingToSee {
   seasonal?: boolean;
 }
 
+/**
+ * A Hebrew edition of a dive-site page, served at /he/dive-sites/<slug>.
+ * Only the reader-facing text is translated; photo, coords and price are shared
+ * with the English entry. A site without `he` has no Hebrew page (no route, no
+ * sitemap entry, no hreflang) - see HE_DIVE_SITES.
+ */
+export interface DiveSiteHe {
+  name: string;
+  localName: string;
+  seoTitle: string;
+  seoDescription: string;
+  excerpt: string;
+  level: string;
+  difficulty: string;
+  bestFor: string;
+  intro: string;
+  body: string[];
+  /** Same order and length as the English thingsToSee. */
+  thingsToSee: string[];
+  gettingThere: string;
+  seasonNote?: string;
+  /** The Hebrew lander that sells the trip to this site, if any. */
+  landerPath?: string;
+}
+
 export interface DiveSite {
   slug: string;
   /** Display name, e.g. "Chumphon Pinnacle". */
@@ -58,6 +83,8 @@ export interface DiveSite {
   relatedBlogSlugs?: string[];
   /** Featured on the homepage section + hub hero row. */
   featured?: boolean;
+  /** Hebrew edition (/he/dive-sites/<slug>). */
+  he?: DiveSiteHe;
 }
 
 export const diveSites: DiveSite[] = [
@@ -176,8 +203,43 @@ export const diveSites: DiveSite[] = [
     relatedCourses: ["advanced-open-water", "deep-diving"],
     relatedBlogSlugs: ["koh-tao-dive-sites-guide", "best-time-to-dive-koh-tao"],
     featured: true,
+    he: {
+      name: "סייל רוק",
+      localName: "Sail Rock · הין באי · בין קו טאו לקו פנגן",
+      seoTitle: "סייל רוק (Sail Rock) - מדריך לאתר הצלילה | סיאם סקובה",
+      seoDescription:
+        "סייל רוק, אתר הצלילה המפורסם במפרץ תאילנד: להקות ברקודות וטרבלי, מעבר הארובה (The Chimney) ועומקים של 5-40 מטר. יום צלילה מקו טאו ב-4,000 בת.",
+      excerpt:
+        "אתר הצלילה הכי מזוהה במפרץ תאילנד - להקות ענק של ברקודות וטרבלי, ומעבר הצלילה האנכי המפורסם, הארובה (The Chimney).",
+      level: "Advanced",
+      difficulty: "מתקדם",
+      bestFor: "להקות גדולות והארובה",
+      intro:
+        "סייל רוק - או הין באי, כמו שצוותי הסירות התאילנדים קוראים לו - הוא הפסגה התת-ימית היחידה באזור שמבצבצת מעל פני המים. הוא עומד לבד בים הפתוח בין קו טאו לקו פנגן: גוש גרניט שמעל המים בקושי בגודל של סירת דייגים, ומתחת למים - קתדרלה.",
+      body: [
+        "הקירות שלו יורדים כמעט אנכית עד לעומק של כשלושים מטר, ומשם קרקעית הים ממשיכה לרדת אל החושך. מכיוון שאין לידו שונית אחרת, סייל רוק מושך אליו חיים כמו מגנט: ברקודות שברון מסתחררות בטורנדו איטי, טרבלי גדולי עיניים צדים בקירות מנצנצים של דגים, ולהקות סנאפר ופוזיליירים ממלאות כל מדף סלע.",
+        "הסימן המסחרי של האתר הוא הארובה (The Chimney) - מעבר צלילה אנכי שבולע את הצוללים בעומק שמונה-עשר מטר ומשחרר אותם, ממצמצים מול האור, בעומק שישה מטר.",
+      ],
+      thingsToSee: [
+        "הארובה (The Chimney)",
+        "ברקודות שברון",
+        "טרבלי גדולי עיניים",
+        "סנאפר ופוזיליירים",
+        "דג שושנת ים ורוד",
+        "דקרים (גרופרים)",
+        "דג אבן",
+        "כריש לווייתן",
+      ],
+      gettingThere:
+        "מגיעים לסייל רוק ביום צלילה מלא שיוצא מקו טאו. המעבר בארובה דורש שליטה טובה בציפה, ומתאים לצוללים מנוסים.",
+      seasonNote: "כרישי לווייתן מגיעים בעונות מסוימות, ואין הבטחה שנראה אותם.",
+      landerPath: "/he/sail-rock-diving",
+    },
   },
 ];
+
+/** Sites that have a Hebrew edition - drives the /he route, sitemap and hreflang. */
+export const HE_DIVE_SITES = diveSites.filter((s) => s.he);
 
 export const findDiveSite = (slug?: string): DiveSite | undefined =>
   diveSites.find((s) => s.slug === slug);

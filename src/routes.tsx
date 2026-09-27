@@ -73,6 +73,13 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/DiveSitePage.tsx",
         getStaticPaths: () => diveSites.map((s) => `dive-sites/${s.slug}`),
       },
+      // Hebrew editions - only for sites that carry `he` in diveSites.ts.
+      {
+        path: "he/dive-sites/:siteSlug",
+        lazy: lazyDefault(() => import("./pages/DiveSiteHePage")),
+        entry: "src/pages/DiveSiteHePage.tsx",
+        getStaticPaths: () => diveSites.filter((s) => s.he).map((s) => `he/dive-sites/${s.slug}`),
+      },
       {
         path: "he",
         lazy: lazyDefault(() => import("./pages/HebrewLanding")),

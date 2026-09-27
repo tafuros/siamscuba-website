@@ -119,12 +119,29 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   }
 
   for (const site of diveSites) {
+    // Sites with a Hebrew edition get a reciprocal en/he hreflang pair.
+    const alternates = site.he
+      ? {
+          en: `https://siamscuba.com/dive-sites/${site.slug}`,
+          he: `https://siamscuba.com/he/dive-sites/${site.slug}`,
+        }
+      : undefined;
     entries.push({
       loc: `/dive-sites/${site.slug}`,
       lastmod: today,
       changefreq: "monthly",
       priority: 0.7,
+      ...(alternates ? { alternates } : {}),
     });
+    if (site.he) {
+      entries.push({
+        loc: `/he/dive-sites/${site.slug}`,
+        lastmod: today,
+        changefreq: "monthly",
+        priority: 0.6,
+        alternates,
+      });
+    }
   }
 
   for (const slug of Object.keys(SLUG_TO_COURSE)) {

@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import BookingLink from "@/components/BookingLink";
 import { motion } from "framer-motion";
 import { Check, MessageCircle, Star } from "lucide-react";
@@ -182,6 +183,18 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
         <p className="text-sm md:text-base text-muted-foreground max-w-2xl mb-7">
           {copy.whatYouDoSubhead}
         </p>
+        {/* Link to the dive-site guide (Hebrew edition for Hebrew visitors) -
+            gives both pages an inbound internal link. */}
+        <Link
+          to={lang === "he" ? "/he/dive-sites/sail-rock" : "/dive-sites/sail-rock"}
+          className="-mt-4 mb-7 inline-block text-sm font-semibold text-primary hover:underline"
+        >
+          {lang === "he"
+            ? "המדריך המלא לאתר הצלילה סייל רוק ←"
+            : lang === "es"
+              ? "Guía completa del sitio de buceo (en inglés) →"
+              : "Full Sail Rock dive-site guide →"}
+        </Link>
         <div className="grid gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {copy.featureCards?.map((card) => (
             <div
