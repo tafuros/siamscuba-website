@@ -9,6 +9,7 @@ import {
   GO_PRO_COPY,
   GO_PRO_TRACKS,
   IE_SCHEDULE,
+  IDC_START_WINDOW,
   formatExamDate,
   monthName,
   type TrackKey,
@@ -294,8 +295,7 @@ const GoProContent = ({ lang }: GoProContentProps) => {
                     >
                       <td className="py-3 font-medium">{monthName(e.month, lang, "long")}</td>
                       <td className="py-3">
-                        {e.idcDay}
-                        {e.prepMonthOffset ? ` (${monthName(e.month - 1, lang)})` : ""}
+                        <span dir="ltr">{IDC_START_WINDOW}</span>
                       </td>
                       <td className={`py-3 ${isNext ? "font-semibold" : ""}`}>{e.examDay}</td>
                     </tr>

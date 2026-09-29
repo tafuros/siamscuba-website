@@ -4,6 +4,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import {
   GO_PRO_COPY,
   IE_SCHEDULE,
+  IDC_START_WINDOW,
   formatExamDate,
   goProPath,
   monthName,
@@ -167,7 +168,7 @@ const GoProBanner = () => {
                               : "text-white/75"
                           }
                         >
-                          {copy.colIdc} {e.idcDay} · {copy.colExam} {e.examDay}
+                          {copy.colIdc} {IDC_START_WINDOW} · {copy.colExam} {e.examDay}
                         </span>
                       </li>
                     );

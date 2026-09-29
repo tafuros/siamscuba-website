@@ -25,6 +25,14 @@ import type { Language } from "@/i18n/translations";
  */
 export const IE_SCHEDULE_YEAR = 2026;
 
+/**
+ * Ben, 2026-09-29: the IDC opens once a month, at the start of the month -
+ * always between the 1st and the 5th. The site shows that window, not a
+ * per-month day (the old prepDay/idcDay figures below are kept only for the
+ * countdown maths and are no longer displayed).
+ */
+export const IDC_START_WINDOW = "1-5";
+
 export interface IeEntry {
   /** 1-12 */
   month: number;
