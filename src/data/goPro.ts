@@ -149,7 +149,12 @@ export const GO_PRO_TRACKS: GoProTrack[] = [
       es: "Ya tienes el Divemaster y quieres enseñar.",
       fr: "Vous avez déjà le Divemaster et vous voulez enseigner.",
     },
-    duration: { en: "2 weeks + exam", he: "שבועיים + מבחן", es: "2 semanas + examen", fr: "2 semaines + examen" },
+    duration: {
+      en: "Up to 2 weeks + 2-day exam (IE)",
+      he: "עד שבועיים + מבחן IE של יומיים",
+      es: "Hasta 2 semanas + examen IE de 2 días",
+      fr: "Jusqu'à 2 semaines + examen IE de 2 jours",
+    },
     points: {
       en: [
         "Timed to finish right before the monthly IE",

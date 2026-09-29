@@ -364,7 +364,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "Sidemount instructor diving over a Koh Tao reef" },
       ],
       structure: [
-        "The IDC is a 2-week program designed to finish just before monthly Instructor Examinations on Koh Tao.",
+        "The IDC runs up to 2 weeks and is designed to finish just before the monthly Instructor Examination (IE) on Koh Tao - a 2-day exam.",
         "Prior to the IDC start date, we spend 2 short days covering dive theory refresher sessions.",
         "A multitude of online study tools are provided by both Bob and PADI.",
         "Rather than focusing on passing an examination (which is necessary), the focus is on realistic, honest, day-to-day teaching - and how to make that effective and memorable for students at any level.",
@@ -729,7 +729,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "מדריך סיידמאונט צולל מעל שונית בקוֹ טאו" },
       ],
       structure: [
-        "ה-IDC הוא תוכנית בת שבועיים שנבנתה להסתיים בדיוק לפני מבחני המדריכים החודשיים בקוֹ טאו.",
+        "ה-IDC נמשך עד שבועיים, ובנוי להסתיים בדיוק לפני מבחן המדריכים החודשי (IE) בקוֹ טאו - מבחן של יומיים.",
         "לפני מועד תחילת ה-IDC אנו מקדישים 2 ימים קצרים לרענון תיאוריית הצלילה.",
         "מגוון רחב של כלי לימוד מקוונים מסופקים גם על ידי Bob וגם על ידי PADI.",
         "במקום להתמקד במעבר מבחן (שהוא הכרחי), הדגש הוא על הוראה מציאותית, כנה ויומיומית - ואיך להפוך אותה ליעילה ובלתי נשכחת לתלמידים בכל רמה.",
@@ -1094,7 +1094,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "Instructor de sidemount buceando sobre un arrecife de Koh Tao" },
       ],
       structure: [
-        "El IDC es un programa de 2 semanas diseñado para terminar justo antes de los exámenes mensuales de instructor en Koh Tao.",
+        "El IDC dura hasta 2 semanas y está diseñado para terminar justo antes del Examen de Instructor (IE) mensual en Koh Tao, un examen de 2 días.",
         "Antes de la fecha de inicio del IDC, dedicamos 2 días cortos a sesiones de repaso de teoría de buceo.",
         "Tanto Bob como PADI ofrecen multitud de herramientas de estudio en línea.",
         "En lugar de centrarnos en aprobar un examen (que es necesario), el foco está en una enseñanza realista, honesta y del día a día, y en cómo hacerla eficaz y memorable para alumnos de cualquier nivel.",
@@ -1459,7 +1459,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { src: "/idc/idc-sidemount-instructor-koh-tao.webp", alt: "Instructeur sidemount plongeant au-dessus d'un récif de Koh Tao" },
       ],
       structure: [
-        "L'IDC est un programme de 2 semaines conçu pour se terminer juste avant les examens mensuels d'instructeur à Koh Tao.",
+        "L'IDC dure jusqu'à 2 semaines et se termine juste avant l'Examen d'Instructeur (IE) mensuel à Koh Tao, un examen de 2 jours.",
         "Avant la date de début de l'IDC, nous consacrons 2 courtes journées à des séances de remise à niveau en théorie de plongée.",
         "Une multitude d'outils d'étude en ligne sont fournis par Bob et par PADI.",
         "Plutôt que de se concentrer sur la réussite d'un examen (qui est nécessaire), l'accent est mis sur un enseignement réaliste, honnête et quotidien - et sur la façon de le rendre efficace et mémorable pour des élèves de tout niveau.",
