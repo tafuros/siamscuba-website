@@ -131,7 +131,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
                   <p className="text-muted-foreground text-sm mt-1">{cat.description}</p>
                 </div>
 
-                <CourseCarouselRow courses={cat.courses} t={t} setSelectedCourse={setSelectedCourse} />
+                <CourseCarouselRow courses={cat.courses} t={t} setSelectedCourse={setSelectedCourse} rowKey={cat.key} />
               </motion.div>
             ))}
           </div>

@@ -40,6 +40,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   const HOTEL_ALTERNATES = hreflangAlternatesFor("/hotel");
   const GO_PRO_ALTERNATES = hreflangAlternatesFor("/go-pro");
   const DM_ALTERNATES = hreflangAlternatesFor("/divemaster-course");
+  const START_ALTERNATES = hreflangAlternatesFor("/discover-scuba-vs-open-water");
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -90,6 +91,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/he/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
     { loc: "/es/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
     { loc: "/fr/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
+    { loc: "/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.8, lastmod: today, alternates: START_ALTERNATES },
+    { loc: "/he/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: START_ALTERNATES },
+    { loc: "/es/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: START_ALTERNATES },
+    { loc: "/fr/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: START_ALTERNATES },
     { loc: "/go-pro", changefreq: "monthly", priority: 0.9, lastmod: today, alternates: GO_PRO_ALTERNATES },
     { loc: "/he/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },
     { loc: "/es/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },

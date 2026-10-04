@@ -165,6 +165,28 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/landers/FunDiveFrPage")),
         entry: "src/pages/landers/FunDiveFrPage.tsx",
       },
+      // "Try diving or Open Water?" - where the gate's "Complete beginner"
+      // answer leads (2026-10-04). Above :courseSlug like every other page.
+      {
+        path: "discover-scuba-vs-open-water",
+        lazy: lazyDefault(() => import("./pages/StartDivingEnPage")),
+        entry: "src/pages/StartDivingEnPage.tsx",
+      },
+      {
+        path: "he/discover-scuba-vs-open-water",
+        lazy: lazyDefault(() => import("./pages/StartDivingHePage")),
+        entry: "src/pages/StartDivingHePage.tsx",
+      },
+      {
+        path: "es/discover-scuba-vs-open-water",
+        lazy: lazyDefault(() => import("./pages/StartDivingEsPage")),
+        entry: "src/pages/StartDivingEsPage.tsx",
+      },
+      {
+        path: "fr/discover-scuba-vs-open-water",
+        lazy: lazyDefault(() => import("./pages/StartDivingFrPage")),
+        entry: "src/pages/StartDivingFrPage.tsx",
+      },
       // /koh-tao-diving (+ es/he) retired 2026-07-15 — consolidated into
       // /fun-dives. vercel.json 301s the old paths to the fun-dives twins so
       // their SEO equity + stray links flow to the live target.

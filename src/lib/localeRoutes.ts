@@ -39,6 +39,12 @@ export const LOCALE_FAMILIES: Partial<Record<Language, string>>[] = [
     fr: "/fr/conservation",
   },
   { en: "/hotel", he: "/he/hotel", es: "/es/hotel", fr: "/fr/hotel" },
+  {
+    en: "/discover-scuba-vs-open-water",
+    he: "/he/discover-scuba-vs-open-water",
+    es: "/es/discover-scuba-vs-open-water",
+    fr: "/fr/discover-scuba-vs-open-water",
+  },
   { en: "/go-pro", he: "/he/go-pro", es: "/es/go-pro", fr: "/fr/go-pro" },
   {
     en: "/divemaster-course",

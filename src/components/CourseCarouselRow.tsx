@@ -3,16 +3,32 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import CourseCard, { type CourseCardData } from "./CourseCard";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { clarityWhenReady } from "@/utils/tracking";
 
 interface CourseCarouselRowProps {
   courses: CourseCardData[];
   t: (key: string) => string;
   setSelectedCourse: (key: string) => void;
+  /** Row id for analytics ("basic", "advanced", ...). */
+  rowKey?: string;
 }
 
-const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowProps) => {
+const CourseCarouselRow = ({ courses, t, setSelectedCourse, rowKey = "row" }: CourseCarouselRowProps) => {
   const { isRTL } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Ben asked (2026-10-04) whether visitors realise the course rows scroll
+  // sideways. Clarity counts taps, not swipes, so each row reports - once per
+  // page session - whether it was moved by an arrow or by a finger:
+  // carousel_<row>_arrow / carousel_<row>_swipe.
+  const reported = useRef<Set<string>>(new Set());
+  const report = (how: "arrow" | "swipe") => {
+    const name = `carousel_${rowKey}_${how}`;
+    if (reported.current.has(name)) return;
+    reported.current.add(name);
+    clarityWhenReady((clarity) => clarity("event", name));
+  };
+  const touching = useRef(false);
   // Physical sides - whether content overflows past the left / right edge. Computed
   // from element geometry so it's correct regardless of LTR/RTL or the browser's
   // RTL scrollLeft model (Chrome negative vs legacy reversed-positive).
@@ -68,6 +84,7 @@ const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowP
   const scroll = (toRight: boolean) => {
     const el = scrollRef.current;
     if (!el) return;
+    report("arrow");
     const cardWidth = el.querySelector<HTMLElement>(":scope > div")?.offsetWidth || 300;
     el.scrollBy({ left: (toRight ? 1 : -1) * cardWidth, behavior: "smooth" });
   };
@@ -76,6 +93,18 @@ const CourseCarouselRow = ({ courses, t, setSelectedCourse }: CourseCarouselRowP
     <div className="relative group">
       <div
         ref={scrollRef}
+        onTouchStart={() => {
+          touching.current = true;
+        }}
+        onTouchEnd={() => {
+          // Momentum keeps scrolling briefly after the finger lifts.
+          window.setTimeout(() => {
+            touching.current = false;
+          }, 600);
+        }}
+        onScroll={() => {
+          if (touching.current) report("swipe");
+        }}
         className="flex items-start sm:items-stretch gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 -mb-2 scrollbar-hide"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >

@@ -58,10 +58,10 @@ const GoProBanner = () => {
     <section
       id="go-pro"
       dir={rtl ? "rtl" : "ltr"}
-      className="relative z-10 -mt-12 px-4 pb-10 pt-2 sm:-mt-16 sm:pb-14 sm:pt-4"
+      className="relative z-10 -mt-12 px-4 pb-6 pt-2 sm:-mt-16 sm:pb-14 sm:pt-4"
     >
       <div
-        className="container mx-auto max-w-6xl overflow-hidden rounded-[26px] border border-[#419EBC]/25 bg-[#04090f] p-6 shadow-[0_30px_80px_-40px_rgba(4,20,45,0.75)] sm:rounded-[34px] sm:p-10 lg:p-12"
+        className="container mx-auto max-w-6xl overflow-hidden rounded-[26px] border border-[#419EBC]/25 bg-[#04090f] p-5 shadow-[0_30px_80px_-40px_rgba(4,20,45,0.75)] sm:rounded-[34px] sm:p-10 lg:p-12"
         style={{
           backgroundImage:
             "radial-gradient(680px 320px at 12% -10%, rgba(2,112,182,0.20), transparent 62%)",
@@ -81,6 +81,10 @@ const GoProBanner = () => {
             wrapperClassName="shrink-0 self-start pt-1"
           />
 
+          {/* Phone: compact (Ben 2026-10-04 - "shrink it a little to bring people
+              closer to the courses"). The sub-line, the second button and the
+              exam calendar show from sm up; on a phone it is the credential,
+              the headline with the countdown, and one button. */}
           <div className="grid min-w-0 flex-1 items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
             {/* ---------------------------------------------------------- copy */}
             <div>
@@ -95,13 +99,13 @@ const GoProBanner = () => {
                 height={319}
                 loading="lazy"
                 decoding="async"
-                className="mb-4 w-[136px] sm:w-[172px]"
+                className="mb-3 w-[110px] sm:mb-4 sm:w-[172px]"
               />
 
               {/* Stable stem + an appended countdown once the client knows the
                 date. The prerendered HTML carries no date, so it cannot go
                 stale - see useNextExam. */}
-              <h2 className="font-display text-[26px] leading-[1.15] text-white sm:text-4xl">
+              <h2 className="font-display text-[22px] leading-[1.15] text-white sm:text-4xl">
                 {copy.nextIe}
                 {next && (
                   <span className="text-[#A5C5D4]">
@@ -111,11 +115,11 @@ const GoProBanner = () => {
                 )}
               </h2>
 
-              <p className="mt-3 max-w-[46ch] text-sm leading-relaxed text-white/60 sm:text-base">
+              <p className="mt-3 hidden max-w-[46ch] text-sm leading-relaxed text-white/60 sm:block sm:text-base">
                 {copy.calendarSub}
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <div className="mt-4 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap sm:items-center">
                 <Link
                   to={goProPath(language)}
                   className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#0270B6] px-7 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0286d8]"
@@ -125,7 +129,7 @@ const GoProBanner = () => {
                 </Link>
                 <Link
                   to={goProPath(language)}
-                  className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-[#419EBC]/40 px-7 text-sm font-semibold text-[#A5C5D4] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A5C5D4]/70"
+                  className="hidden min-h-[48px] items-center justify-center rounded-full border border-[#419EBC]/40 px-7 text-sm font-semibold text-[#A5C5D4] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#A5C5D4]/70 sm:inline-flex"
                 >
                   {copy.ctaSecondary}
                 </Link>
@@ -133,7 +137,7 @@ const GoProBanner = () => {
             </div>
 
             {/* ------------------------------------------------------ calendar */}
-            <div className="overflow-hidden rounded-2xl border border-[#419EBC]/25 bg-black/40">
+            <div className="hidden overflow-hidden rounded-2xl border border-[#419EBC]/25 bg-black/40 sm:block">
               {/* The label + date must survive a 320px screen. Letting the
                   label truncate (rather than push the date out of the card) is
                   the safe failure: the headline above already says "Next

@@ -5,7 +5,7 @@ import { resolveAction, needsLocation } from "@/components/EntryGate/gateMachine
 // decision (Ben, 2026-07-13), not an implementation detail - the funnel broke
 // twice in one day by drifting from them, so they get a tripwire.
 //
-//   beginner              -> no location step at all -> homepage
+//   beginner              -> no location step at all -> /discover-scuba-vs-open-water (localized)
 //   certified / fun dives -> Koh Tao      -> /fun-dives      (localized)
 //                         -> Koh Phangan  -> /sail-rock-diving (localized)
 //                         -> Similan      -> /similan
@@ -105,8 +105,15 @@ describe("entry gate - certified + keep training", () => {
 });
 
 describe("entry gate - beginner", () => {
-  it("lands on the homepage with no location", () => {
-    expect(resolveAction("beginner", null, "en")).toEqual({ type: "enter-site" });
+  it("lands on the try-dive vs Open Water page, in its language", () => {
+    expect(resolveAction("beginner", null, "en")).toEqual({
+      type: "navigate",
+      path: "/discover-scuba-vs-open-water",
+    });
+    expect(resolveAction("beginner", null, "he")).toEqual({
+      type: "navigate",
+      path: "/he/discover-scuba-vs-open-water",
+    });
   });
 });
 

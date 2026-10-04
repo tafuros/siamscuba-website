@@ -11,16 +11,9 @@ import CoursesSection from "@/components/CoursesSection";
 import GoProBanner from "@/components/goPro/GoProBanner";
 
 import FunDivingSection from "@/components/FunDivingSection";
-import DiveSitesSection from "@/components/DiveSitesSection";
-import BoatsSection from "@/components/BoatsSection";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import TripAdvisorSection from "@/components/TripAdvisorSection";
-import BlogPreview from "@/components/BlogPreview";
-import BookingCTA from "@/components/BookingCTA";
-import LocationSection from "@/components/LocationSection";
+import ReviewsStrip from "@/components/ReviewsStrip";
 import Footer from "@/components/Footer";
 import FloatingBookNow from "@/components/FloatingBookNow";
-import ScrollHint from "@/components/ScrollHint";
 
 const HOME_SEO = {
   title: "Siam Scuba | PADI 5 Star Dive Center in Koh Tao, Thailand",
@@ -77,16 +70,14 @@ const Index = ({ courseOverride }: { courseOverride?: string }) => {
           before the course list rather than an afterthought below it. */}
       <GoProBanner />
       <CoursesSection initialCourse={courseParam} />
-      <ScrollHint label="Fun Diving" targetId="fun-diving" />
       <FunDivingSection />
-      <DiveSitesSection />
-      <ScrollHint label="Our Boats" targetId="boats" />
-      <BoatsSection />
-      <WhyChooseUs />
-      <TripAdvisorSection />
-      <BlogPreview courseSlug={courseSlug} />
-      <BookingCTA />
-      <LocationSection />
+      {/* Trimmed 2026-10-04 (Ben, mockup D). Clarity, 30 days to 2026-10-02:
+          the page was 19 phone screens and 9.5% of mobile visitors got past
+          half of it. Dive sites, Boats, Why us, the big TripAdvisor block, the
+          blog preview, "Ready to dive" and Location sat below that line with
+          0-5 taps each, so they left the homepage. Their links live on in the
+          footer (dive sites, guides, map) and on their own pages. */}
+      <ReviewsStrip />
       <Footer />
       <FloatingBookNow />
     </div>

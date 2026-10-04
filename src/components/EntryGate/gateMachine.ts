@@ -30,6 +30,8 @@ const SAIL_ROCK_LANGS: readonly Language[] = ["es", "he"];
 const CONSERVATION_LANGS: readonly Language[] = ["he", "es", "fr"];
 // /go-pro shipped with all four twins, same as conservation.
 const GO_PRO_LANGS: readonly Language[] = ["he", "es", "fr"];
+// "Try diving or Open Water?" ships in all four (2026-10-04).
+const START_LANGS: readonly Language[] = ["he", "es", "fr"];
 
 /**
  * level (+ location) -> where the visitor lands.
@@ -89,7 +91,13 @@ export function resolveAction(
   // (whose first row is beginner courses a certified diver has already done).
   if (level === "training") return { type: "enter-site", section: "courses-advanced" };
 
-  // beginner (no location asked).
+  // Complete beginner -> the try-dive vs Open Water comparison (Ben 2026-10-04).
+  // It was the gate's most popular answer and used to close onto the generic
+  // homepage, where 70% of visitors never scroll past the first screen.
+  if (level === "beginner") {
+    return { type: "navigate", path: localized("/discover-scuba-vs-open-water", lang, START_LANGS) };
+  }
+
   return { type: "enter-site" };
 }
 

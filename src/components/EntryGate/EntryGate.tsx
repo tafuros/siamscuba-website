@@ -173,18 +173,24 @@ const EntryGate = () => {
   // navigate lands on an empty Suspense.
   useEffect(() => {
     if (state.step !== "level") return;
+    // "Complete beginner" also commits from this step (to the try-dive vs Open
+    // Water page, 2026-10-04), so its chunk is warmed here too.
     switch (language) {
       case "he":
         import("@/pages/ConservationHePage").catch(() => {});
+        import("@/pages/StartDivingHePage").catch(() => {});
         break;
       case "es":
         import("@/pages/ConservationEsPage").catch(() => {});
+        import("@/pages/StartDivingEsPage").catch(() => {});
         break;
       case "fr":
         import("@/pages/ConservationFrPage").catch(() => {});
+        import("@/pages/StartDivingFrPage").catch(() => {});
         break;
       default:
         import("@/pages/ConservationPage").catch(() => {});
+        import("@/pages/StartDivingEnPage").catch(() => {});
     }
   }, [state.step, language]);
 

@@ -286,7 +286,11 @@ const NemoChat = () => {
   const isBooking = /fun-dive-booking/.test(location.pathname);
   // The fun-dives lander has a sticky bottom booking bar on mobile (< md).
   // Lift the pill above it there so neither covers the other.
-  const isFunDivesLander = /^\/(en\/|es\/|he\/|fr\/)?fun-dives(\/|$)/.test(location.pathname);
+  const isFunDivesLander =
+    /^\/(en\/|es\/|he\/|fr\/)?fun-dives(\/|$)/.test(location.pathname) ||
+    // The real course pages (2026-10-04) have the same sticky booking bar.
+    /^\/(open-water|discover-scuba|scuba-review)\/?$/.test(location.pathname) ||
+    /^\/(en\/|es\/|he\/|fr\/)?discover-scuba-vs-open-water\/?$/.test(location.pathname);
 
   const navigate = useNavigate();
   // HYDRATION CONTRACT: the SSG HTML always renders the widget closed with no
