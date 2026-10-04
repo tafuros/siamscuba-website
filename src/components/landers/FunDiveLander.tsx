@@ -161,7 +161,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
               rel="noopener noreferrer"
               className="text-lg text-white/95 hover:text-white"
             >
-              <Stars /> <b className="text-xl text-white">5.0</b> · {copy.trustTaReviews}
+              <Stars /> <b className="text-xl text-white">4.9</b> · {copy.trustTaReviews}
             </a>
             <span>{copy.trustDivers}</span>
             <span>{copy.trustBoats}</span>

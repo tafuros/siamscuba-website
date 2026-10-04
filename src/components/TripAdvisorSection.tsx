@@ -73,11 +73,11 @@ const TripAdvisorSection = () => {
           </div>
           <div className="flex items-center justify-center gap-2 mb-2">
             <RatingBubbles rating={5} />
-            <span className="text-2xl font-bold text-foreground">5.0</span>
+            <span className="text-2xl font-bold text-foreground">4.9</span>
             <span className="text-muted-foreground">Excellent</span>
           </div>
           <p className="text-muted-foreground text-sm">
-            Based on <strong className="text-foreground">776+ verified reviews</strong> on Tripadvisor
+            Based on <strong className="text-foreground">796 verified reviews</strong> on Tripadvisor
           </p>
         </motion.div>
 
@@ -120,7 +120,7 @@ const TripAdvisorSection = () => {
           >
             <a href={TRIPADVISOR_URL} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-4 w-4" />
-              Read all 776 reviews
+              Read all 796 reviews
             </a>
           </Button>
           <Button

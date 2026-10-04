@@ -185,7 +185,7 @@ const DSD_EN: LanderCopy = {
       "Photos & video (optional - priced with the team at the shop)",
     ],
   },
-  socialProofHeadline: "778 reviews. 5.0 stars on TripAdvisor.",
+  socialProofHeadline: "796 reviews. 4.9 stars on TripAdvisor.",
   socialProofSubhead: "What divers say after their first day under the surface with us.",
   whatYouDoHeadline: "Your day, hour by hour",
   whatYouDoSubhead:
@@ -274,7 +274,7 @@ const DSD_ES: LanderCopy = {
       "Fotos y vídeo (opcional - se cotiza con el equipo en la tienda)",
     ],
   },
-  socialProofHeadline: "778 reseñas. 5,0 estrellas en TripAdvisor.",
+  socialProofHeadline: "796 reseñas. 4,9 estrellas en TripAdvisor.",
   socialProofSubhead: "Lo que dicen los buceadores después de su primer día bajo el agua con nosotros.",
   whatYouDoHeadline: "Tu día, hora por hora",
   whatYouDoSubhead:
@@ -363,7 +363,7 @@ const DSD_HE: LanderCopy = {
       "צילום ותמונות (אופציונלי - התמחור מול הצוות בחנות)",
     ],
   },
-  socialProofHeadline: "778 ביקורות. 5.0 כוכבים ב-TripAdvisor.",
+  socialProofHeadline: "796 ביקורות. 4.9 כוכבים ב-TripAdvisor.",
   socialProofSubhead: "מה שצוללים מספרים אחרי היום הראשון שלהם מתחת למים.",
   whatYouDoHeadline: "היום שלכם, שעה אחר שעה",
   whatYouDoSubhead:
@@ -456,8 +456,8 @@ const OWD_EN: LanderCopy = {
       "Private instructor (add-on)",
     ],
   },
-  socialProofHeadline: "Most-reviewed PADI shop on Koh Tao with 5.0 stars.",
-  socialProofSubhead: "778 reviews and counting. Read what graduates say about their certification week.",
+  socialProofHeadline: "Most-reviewed PADI shop on Koh Tao with 4.9 stars.",
+  socialProofSubhead: "796 reviews and counting. Read what graduates say about their certification week.",
   whatYouDoHeadline: "Your 2.5-day path to certification",
   whatYouDoSubhead:
     "Day 1 is theory and pool. Days 2-3 are four real ocean dives, with a short final morning. Start the eLearning before you arrive and the classroom part flies by.",
@@ -553,8 +553,8 @@ const OWD_ES: LanderCopy = {
       "Instructor privado (extra)",
     ],
   },
-  socialProofHeadline: "El centro PADI con más reseñas en Koh Tao y 5,0 estrellas.",
-  socialProofSubhead: "778 reseñas y subiendo. Lee lo que dicen los graduados de su semana de certificación.",
+  socialProofHeadline: "El centro PADI con más reseñas en Koh Tao y 4,9 estrellas.",
+  socialProofSubhead: "796 reseñas y subiendo. Lee lo que dicen los graduados de su semana de certificación.",
   whatYouDoHeadline: "Tu camino a la certificación en 2,5 días",
   whatYouDoSubhead:
     "Día 1 teoría y piscina. Días 2-3 cuatro inmersiones reales, con una última mañana corta. Empieza el eLearning antes de llegar y la parte teórica será pan comido.",
@@ -650,8 +650,8 @@ const OWD_HE: LanderCopy = {
       "מדריך פרטי (תוספת בתשלום)",
     ],
   },
-  socialProofHeadline: "חנות ה-PADI הכי מדורגת בקוטאו עם 5.0 כוכבים.",
-  socialProofSubhead: "778 ביקורות וזה ממשיך. קראו מה בוגרים אומרים על שבוע ההסמכה שלהם.",
+  socialProofHeadline: "חנות ה-PADI הכי מדורגת בקוטאו עם 4.9 כוכבים.",
+  socialProofSubhead: "796 ביקורות וזה ממשיך. קראו מה בוגרים אומרים על שבוע ההסמכה שלהם.",
   whatYouDoHeadline: "הדרך שלכם להסמכה תוך 2.5 ימים",
   whatYouDoSubhead:
     "יום 1 תיאוריה ובריכה. ימים 2-3 ארבע צלילות בים, כשהבוקר האחרון קצר. שווה להתחיל את הלימוד האונליין לפני שמגיעים.",
@@ -748,7 +748,7 @@ const AOW_EN: LanderCopy = {
       "Private instructor (add-on)",
     ],
   },
-  socialProofHeadline: "4.9 on Google (845) · 5.0 on TripAdvisor (776).",
+  socialProofHeadline: "4.9 on Google (954) · 4.9 on TripAdvisor (796).",
   socialProofSubhead: "Read what divers say after going Advanced the Siam Scuba way.",
   whatYouDoHeadline: "Your 1.5-day path to Advanced",
   whatYouDoSubhead:
@@ -840,7 +840,7 @@ const AOW_ES: LanderCopy = {
       "Instructor privado (extra)",
     ],
   },
-  socialProofHeadline: "4,9 en Google (845) · 5,0 en TripAdvisor (776).",
+  socialProofHeadline: "4,9 en Google (954) · 4,9 en TripAdvisor (796).",
   socialProofSubhead: "Lee lo que dicen los buceadores tras hacer el Advanced al estilo Siam Scuba.",
   whatYouDoHeadline: "Tu camino al Advanced en 1,5 días",
   whatYouDoSubhead:
@@ -932,7 +932,7 @@ const AOW_HE: LanderCopy = {
       "מדריך פרטי (תוספת בתשלום)",
     ],
   },
-  socialProofHeadline: "4.9 בגוגל (845) · 5.0 בטריפאדוויזר (776).",
+  socialProofHeadline: "4.9 בגוגל (954) · 4.9 בטריפאדוויזר (796).",
   socialProofSubhead: "קראו מה צוללים מספרים אחרי שעשו כוכב שני בדרך של סיאם סקובה.",
   whatYouDoHeadline: "הדרך שלכם לכוכב שני תוך יום וחצי",
   whatYouDoSubhead:
@@ -1004,7 +1004,7 @@ const SAIL_ROCK_EN: LanderCopy = {
   heroH1: "Dive Sail Rock",
   heroSubhead:
     "Hin Bai - the legendary pinnacle. Whale shark territory, the famous vertical Chimney swim-through, and massive schools of fish. A full-day boat trip from Koh Tao, every Sunday.",
-  ratingsLine: "Google 4.9 (845 reviews) · TripAdvisor 5.0 (776 reviews)",
+  ratingsLine: "Google 4.9 (954 reviews) · TripAdvisor 4.9 (796 reviews)",
   ctaPrimary: "Book the Sail Rock Trip",
   ctaSecondary: "Or message us on WhatsApp",
   nextBoatPrefix: "Next boat",
@@ -1055,7 +1055,7 @@ const SAIL_ROCK_EN: LanderCopy = {
     excludes: [],
   },
   pricingAddon: "+ optional underwater photo package (priced at the shop)",
-  socialProofHeadline: "4.9 on Google (845) · 5.0 on TripAdvisor (776).",
+  socialProofHeadline: "4.9 on Google (954) · 4.9 on TripAdvisor (796).",
   socialProofSubhead: "See what divers say after a day on the Sail Rock boat with us.",
   dayTimelineHeadline: "Your day on the boat",
   dayTimeline: [
@@ -1119,7 +1119,7 @@ const SAIL_ROCK_ES: LanderCopy = {
   heroH1: "Bucea en Sail Rock",
   heroSubhead:
     "Hin Bai - el pináculo legendario. Zona de tiburón ballena, la famosa Chimenea vertical y enormes bancos de peces. Excursión de día completo desde Koh Tao, todos los domingos.",
-  ratingsLine: "Google 4,9 (845 reseñas) · TripAdvisor 5,0 (776 reseñas)",
+  ratingsLine: "Google 4,9 (954 reseñas) · TripAdvisor 4,9 (796 reseñas)",
   ctaPrimary: "Reserva la excursión a Sail Rock",
   ctaSecondary: "O escríbenos por WhatsApp",
   nextBoatPrefix: "Próximo barco",
@@ -1170,7 +1170,7 @@ const SAIL_ROCK_ES: LanderCopy = {
     excludes: [],
   },
   pricingAddon: "+ paquete de fotos submarinas opcional (se cotiza en la tienda)",
-  socialProofHeadline: "4,9 en Google (845) · 5,0 en TripAdvisor (776).",
+  socialProofHeadline: "4,9 en Google (954) · 4,9 en TripAdvisor (796).",
   socialProofSubhead: "Mira lo que dicen los buceadores tras un día en el barco de Sail Rock.",
   dayTimelineHeadline: "Tu día en el barco",
   dayTimeline: [
@@ -1234,7 +1234,7 @@ const SAIL_ROCK_HE: LanderCopy = {
   heroH1: "צלילה בסייל רוק",
   heroSubhead:
     "הין באי - הפינה האגדית. אזור כרישי הלוויתן, ה\"ארובה\" האנכית המפורסמת ולהקות ענק של דגים. טיול יום שלם מקוטאו, כל יום ראשון.",
-  ratingsLine: "גוגל 4.9 (845 ביקורות) · טריפאדוויזר 5.0 (776 ביקורות)",
+  ratingsLine: "גוגל 4.9 (954 ביקורות) · טריפאדוויזר 4.9 (796 ביקורות)",
   ctaPrimary: "הזמינו את טיול סייל רוק",
   ctaSecondary: "או כתבו לנו ב-WhatsApp",
   nextBoatPrefix: "הסירה הבאה",
@@ -1285,7 +1285,7 @@ const SAIL_ROCK_HE: LanderCopy = {
     excludes: [],
   },
   pricingAddon: "+ חבילת תמונות מתחת למים אופציונלית (תמחור בחנות)",
-  socialProofHeadline: "4.9 בגוגל (845) · 5.0 בטריפאדוויזר (776).",
+  socialProofHeadline: "4.9 בגוגל (954) · 4.9 בטריפאדוויזר (796).",
   socialProofSubhead: "תראו מה צוללים מספרים אחרי יום על סירת סייל רוק איתנו.",
   dayTimelineHeadline: "היום שלכם על הסירה",
   dayTimeline: [

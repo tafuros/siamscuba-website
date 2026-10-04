@@ -385,7 +385,7 @@ const SpanishLanding = () => {
               sitio.
             </p>
             <p>
-              <strong>4,9 en Google (845 reseñas) y 5,0 en TripAdvisor (776 reseñas).</strong> No es
+              <strong>4,9 en Google (954 reseñas) y 4,9 en TripAdvisor (796 reseñas).</strong> No es
               una promesa nuestra: puedes comprobarlo tú mismo antes de escribirnos.
             </p>
           </Section>

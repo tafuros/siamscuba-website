@@ -99,7 +99,7 @@ const EN: FunDiveCopy = {
   priceLine2: "everything included",
   ctaBook: "Book your dive day",
   ctaWa: "or ask us anything on WhatsApp",
-  trustTaReviews: "778 TripAdvisor reviews",
+  trustTaReviews: "796 TripAdvisor reviews",
   trustDivers: "Max 6 divers per guide",
   trustBoats: "2 own boats - no crowds",
   facts: [
@@ -160,7 +160,7 @@ const EN: FunDiveCopy = {
     },
   ],
   reviewQuote: "“Most repeat customers we've ever had.”",
-  reviewSrc: "5.0 · 778 reviews on TripAdvisor",
+  reviewSrc: "4.9 · 796 reviews on TripAdvisor",
   faqHeadline: "Quick answers",
   // Ben's answers, 2026-10-02 - the three most-tapped questions in Clarity.
   faq: [
@@ -199,7 +199,7 @@ const ES: FunDiveCopy = {
   priceLine2: "todo incluido",
   ctaBook: "Reserva tu día de buceo",
   ctaWa: "o pregúntanos por WhatsApp",
-  trustTaReviews: "778 reseñas en TripAdvisor",
+  trustTaReviews: "796 reseñas en TripAdvisor",
   trustDivers: "Máx. 6 buceadores por guía",
   trustBoats: "2 barcos propios - sin aglomeraciones",
   facts: [
@@ -260,7 +260,7 @@ const ES: FunDiveCopy = {
     },
   ],
   reviewQuote: "“Los clientes más fieles que hemos tenido jamás.”",
-  reviewSrc: "5.0 · 778 reseñas en TripAdvisor",
+  reviewSrc: "4.9 · 796 reseñas en TripAdvisor",
   faqHeadline: "Respuestas rápidas",
   faq: [
     {
@@ -299,7 +299,7 @@ const HE: FunDiveCopy = {
   priceLine2: "הכל כלול",
   ctaBook: "להזמנת יום הצלילה",
   ctaWa: "או שאלו אותנו הכל בוואטסאפ",
-  trustTaReviews: "778 ביקורות בטריפאדוויזור",
+  trustTaReviews: "796 ביקורות בטריפאדוויזור",
   trustDivers: "מקסימום 6 צוללים למדריך",
   trustBoats: "2 סירות פרטיות - בלי צפיפות",
   facts: [
@@ -360,7 +360,7 @@ const HE: FunDiveCopy = {
     },
   ],
   reviewQuote: "“הכי הרבה לקוחות חוזרים שהיו לנו אי פעם.”",
-  reviewSrc: "5.0 · 778 ביקורות בטריפאדוויזור",
+  reviewSrc: "4.9 · 796 ביקורות בטריפאדוויזור",
   faqHeadline: "תשובות מהירות",
   faq: [
     {
@@ -398,7 +398,7 @@ const FR: FunDiveCopy = {
   priceLine2: "tout compris",
   ctaBook: "Réservez votre journée",
   ctaWa: "ou posez-nous vos questions sur WhatsApp",
-  trustTaReviews: "778 avis TripAdvisor",
+  trustTaReviews: "796 avis TripAdvisor",
   trustDivers: "Max 6 plongeurs par guide",
   trustBoats: "2 bateaux privés - jamais bondés",
   facts: [
@@ -459,7 +459,7 @@ const FR: FunDiveCopy = {
     },
   ],
   reviewQuote: "“Le plus de clients fidèles que nous ayons jamais eus.”",
-  reviewSrc: "5.0 · 778 avis sur TripAdvisor",
+  reviewSrc: "4.9 · 796 avis sur TripAdvisor",
   faqHeadline: "Réponses rapides",
   faq: [
     {
