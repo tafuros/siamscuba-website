@@ -85,7 +85,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   he: {
     seoTitle: "קורס דייבמאסטר בקו טאו - PADI Divemaster | סיאם סקובה",
     seoDescription:
-      "קורס PADI Divemaster בקו טאו: התמחות של 16-35 יום בתוך הצוות, במרכז PADI 5 Star IDC. 40,000 בת כולל ההתמחות ודמי ההסמכה של PADI.",
+      "קורס PADI Divemaster בקו טאו: התמחות של 16-35 יום בתוך הצוות, במרכז PADI 5 Star IDC. 40,000 באט כולל ההתמחות ודמי ההסמכה של PADI.",
     breadcrumb: "קורס דייבמאסטר",
     kicker: "PADI Divemaster · קו טאו",
     heroTitle: "הדרגה המקצועית הראשונה שלך בצלילה",

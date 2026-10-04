@@ -94,13 +94,13 @@ describe("entry gate - certified + keep training", () => {
   });
 
   it("sends Koh Tao to the homepage, NOT the fun-dive lander", () => {
-    expect(resolveAction("training", "kohTao", "en")).toEqual({ type: "enter-site", section: "courses" });
+    expect(resolveAction("training", "kohTao", "en")).toEqual({ type: "enter-site", section: "courses-advanced" });
   });
 
   it("sends Koh Phangan to the homepage, NOT Sail Rock", () => {
     // Sail Rock is a fun-dive lander; someone here to keep training wants the
     // courses, which live on the homepage.
-    expect(resolveAction("training", "kohPhangan", "en")).toEqual({ type: "enter-site", section: "courses" });
+    expect(resolveAction("training", "kohPhangan", "en")).toEqual({ type: "enter-site", section: "courses-advanced" });
   });
 });
 

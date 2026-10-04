@@ -54,6 +54,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
 
   const categories = [
     {
+      key: "basic",
       label: t("courses_basic"),
       description: t("courses_basic_desc"),
       courses: [
@@ -64,6 +65,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       ],
     },
     {
+      key: "advanced",
       label: t("courses_advanced"),
       description: t("courses_advanced_desc"),
       courses: [
@@ -73,6 +75,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       ],
     },
     {
+      key: "pro",
       label: t("courses_pro"),
       description: t("courses_pro_desc"),
       courses: [
@@ -81,6 +84,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       ],
     },
     {
+      key: "specialty",
       label: t("courses_specialty"),
       description: t("courses_specialty_desc"),
       courses: [
@@ -111,7 +115,17 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
 
           <div className="space-y-10">
             {categories.map((cat, catIdx) => (
-              <motion.div key={cat.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: catIdx * 0.1 }}>
+              <motion.div
+                key={cat.label}
+                // Anchor per row (e.g. #courses-advanced) - the entry gate sends
+                // "keep training" divers straight to the advanced row.
+                id={`courses-${cat.key}`}
+                className="scroll-mt-24"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: catIdx * 0.1 }}
+              >
                 <div className="mb-4">
                   <h3 className="font-display text-xl md:text-2xl font-bold text-foreground">{cat.label}</h3>
                   <p className="text-muted-foreground text-sm mt-1">{cat.description}</p>

@@ -6,7 +6,7 @@ import type { Language } from "@/i18n/translations";
 // visitor to a dedicated scuba lander. There are no WhatsApp exits any more:
 // the gate qualifies, the landers convert.
 export type GateAction =
-  | { type: "enter-site"; section?: "courses" }
+  | { type: "enter-site"; section?: "courses-advanced" }
   | { type: "navigate"; path: string };
 
 // Which levels actually need the location question. A total beginner only ever
@@ -85,7 +85,9 @@ export function resolveAction(
   // the gate straight onto the course list instead of the top of the page.
   // Clarity 2026-10-02: training divers landed on the hero and had to find the
   // courses themselves (Ben ruled: scroll them there).
-  if (level === "training") return { type: "enter-site", section: "courses" };
+  // Ben 2026-10-04: land on the ADVANCED row, not the top of the courses
+  // (whose first row is beginner courses a certified diver has already done).
+  if (level === "training") return { type: "enter-site", section: "courses-advanced" };
 
   // beginner (no location asked).
   return { type: "enter-site" };

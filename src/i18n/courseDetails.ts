@@ -122,8 +122,8 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       payment: [
         "First dive: 2,600 THB",
         "Loved it? Add a second dive for just 1,000 THB (no commitment upfront!)",
-        "Booking deposit: 1,000 THB (payable via Bit) - deducted on dive day, pay the rest at the club",
-        "Payment methods: Cash, Bit, PayBox, bank transfer, credit card (+3.5%)",
+        "Booking deposit: 1,000 THB (paid online when you book) - deducted on dive day, pay the rest at the club",
+        "Payment methods: cash, bank transfer, credit card (+3.5%)",
         "Deposit is non-refundable ❌",
         "Reschedule up to 12 hours before",
       ],
@@ -169,7 +169,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       payment: [
         "Course price: 12,000 THB",
-        "Booking deposit: 2,000 THB (payable via Bit)",
+        "Booking deposit: 2,000 THB (paid online when you book)",
         "Balance on dive day: 10,000 THB (cash or Thai bank transfer)",
         "Deposit is non-refundable ❌",
         "Reschedule up to 12 hours before",
@@ -211,7 +211,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "Transport to the dive center 🚕",
       ],
       payment: [
-        "Deposit: 2,000 THB (payable via Bit)",
+        "Deposit: 2,000 THB (paid online when you book)",
         "Balance on dive day (cash or Thai bank transfer)",
         "Deposit is non-refundable ❌",
         "Reschedule up to 12 hours before",
@@ -852,8 +852,8 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       payment: [
         "Primera inmersión: 2,600 THB",
         "¿Te encantó? Añade una segunda inmersión por solo 1,000 THB (¡sin compromiso por adelantado!)",
-        "Depósito de reserva: 1,000 THB (pagadero por Bit): se descuenta el día de la inmersión, el resto lo pagas en el club",
-        "Métodos de pago: efectivo, Bit, PayBox, transferencia bancaria, tarjeta de crédito (+3,5%)",
+        "Depósito de reserva: 1,000 THB (se paga online al reservar): se descuenta el día de la inmersión, el resto lo pagas en el club",
+        "Métodos de pago: efectivo, transferencia bancaria, tarjeta de crédito (+3,5%)",
         "El depósito no es reembolsable ❌",
         "Puedes reprogramar hasta 12 horas antes",
       ],
@@ -899,7 +899,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       payment: [
         "Precio del curso: 12,000 THB",
-        "Depósito de reserva: 2,000 THB (pagadero por Bit)",
+        "Depósito de reserva: 2,000 THB (se paga online al reservar)",
         "Saldo el día de la inmersión: 10,000 THB (efectivo o transferencia bancaria tailandesa)",
         "El depósito no es reembolsable ❌",
         "Puedes reprogramar hasta 12 horas antes",
@@ -941,7 +941,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "Transporte al centro de buceo 🚕",
       ],
       payment: [
-        "Depósito: 2,000 THB (pagadero por Bit)",
+        "Depósito: 2,000 THB (se paga online al reservar)",
         "Saldo el día de la inmersión (efectivo o transferencia bancaria tailandesa)",
         "El depósito no es reembolsable ❌",
         "Puedes reprogramar hasta 12 horas antes",
@@ -1217,8 +1217,8 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       payment: [
         "Première plongée : 2,600 THB",
         "Vous avez adoré ? Ajoutez une deuxième plongée pour seulement 1,000 THB (sans engagement à l'avance !)",
-        "Acompte de réservation : 1,000 THB (payable via Bit) - déduit le jour de la plongée, vous payez le reste au club",
-        "Moyens de paiement : espèces, Bit, PayBox, virement bancaire, carte de crédit (+3,5%)",
+        "Acompte de réservation : 1,000 THB (payé en ligne à la réservation) - déduit le jour de la plongée, vous payez le reste au club",
+        "Moyens de paiement : espèces, virement bancaire, carte de crédit (+3,5%)",
         "L'acompte n'est pas remboursable ❌",
         "Report possible jusqu'à 12 heures avant",
       ],
@@ -1264,7 +1264,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       payment: [
         "Prix du cours : 12,000 THB",
-        "Acompte de réservation : 2,000 THB (payable via Bit)",
+        "Acompte de réservation : 2,000 THB (payé en ligne à la réservation)",
         "Solde le jour de la plongée : 10,000 THB (espèces ou virement bancaire thaïlandais)",
         "L'acompte n'est pas remboursable ❌",
         "Report possible jusqu'à 12 heures avant",
@@ -1306,7 +1306,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         "Transport jusqu'au centre de plongée 🚕",
       ],
       payment: [
-        "Acompte : 2,000 THB (payable via Bit)",
+        "Acompte : 2,000 THB (payé en ligne à la réservation)",
         "Solde le jour de la plongée (espèces ou virement bancaire thaïlandais)",
         "L'acompte n'est pas remboursable ❌",
         "Report possible jusqu'à 12 heures avant",
