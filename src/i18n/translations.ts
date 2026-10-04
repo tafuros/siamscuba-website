@@ -377,7 +377,7 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_self_indep: "Dive independently",
     hl_review_refresh: "Refresh your skills",
     hl_review_2dives: "2 open-water dives",
-    hl_review_instructor: "Personal instructor guidance",
+    hl_review_instructor: "Guided by a PADI instructor",
 
     dur_1_day: "1 day",
     dur_1_5_days: "1.5 days",
@@ -608,7 +608,7 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_self_indep: "צלילה עצמאית",
     hl_review_refresh: "ריענון מיומנויות",
     hl_review_2dives: "2 צלילות במים פתוחים",
-    hl_review_instructor: "ליווי מדריך אישי",
+    hl_review_instructor: "ליווי של מדריך PADI",
 
     dur_1_day: "יום אחד",
     dur_1_5_days: "יום וחצי",
@@ -839,7 +839,7 @@ export const translations: Record<Language, TranslationStrings> = {
     hl_self_indep: "Bucea de forma independiente",
     hl_review_refresh: "Refresca tus habilidades",
     hl_review_2dives: "2 inmersiones en aguas abiertas",
-    hl_review_instructor: "Instructor personal",
+    hl_review_instructor: "Guiado por un instructor PADI",
 
     dur_1_day: "1 día",
     dur_1_5_days: "1,5 días",
