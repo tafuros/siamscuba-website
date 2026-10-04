@@ -417,7 +417,10 @@ export function trackGenerateLead(params: GenerateLeadParams): void {
     currency: "THB",
     ...utmFields(),
   });
-  if (LEAD_CONVERSION_LABEL) {
+  // Hotel booking requests stay out of the Google Ads lead conversion: that
+  // action belongs to the dive campaigns, and mixing hotel leads into it would
+  // teach their bidding the wrong thing. GA4 + Meta still get the lead.
+  if (LEAD_CONVERSION_LABEL && params.form_name !== "hotel_booking_request") {
     gtag("event", "conversion", {
       send_to: `${GA_MEASUREMENT_ID}/${LEAD_CONVERSION_LABEL}`,
       currency: "THB",
