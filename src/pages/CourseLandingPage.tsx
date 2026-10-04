@@ -323,7 +323,7 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
       <Footer />
 
       {/* ── Sticky booking bar ── */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#03152a]/92 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+10px)] pt-2.5 backdrop-blur-md">
+      <div data-sticky-cta className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#03152a]/92 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+10px)] pt-2.5 backdrop-blur-md">
         {/* pl-[68px]: the accessibility button is fixed bottom-LEFT (physical,
             in every language) and would otherwise sit on top of the price. */}
         <div className="mx-auto flex max-w-[920px] items-center justify-between gap-3 pl-[68px] md:pl-0">

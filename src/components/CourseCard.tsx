@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { toast } from "sonner";
 import BookingLink from "@/components/BookingLink";
+import { Link } from "react-router-dom";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
+import { isCoursePageSlug } from "@/data/coursePages";
 import Price from "@/components/Price";
 
 /** Shape of a course entry as built in CoursesSection. */
@@ -40,6 +42,8 @@ const CourseCard = ({
   t: (key: string) => string;
   setSelectedCourse: (key: string) => void;
 }) => {
+  const slugForCourse = COURSE_TO_SLUG[course.dialogKey];
+  const coursePageSlug = slugForCourse && isCoursePageSlug(slugForCourse) ? slugForCourse : null;
   const handleShare = async () => {
     const slug = COURSE_TO_SLUG[course.dialogKey];
     const shareUrl = slug
@@ -108,7 +112,17 @@ const CourseCard = ({
             ))}
           </ul>
           <div className="space-y-1.5 mt-auto">
-            {course.hasDetails && (
+            {/* Courses with a real page (2026-10-04: Open Water, Discover
+                Scuba, Scuba Review) link to it - before this the pages had no
+                way in from the site. The rest still open the modal. */}
+            {coursePageSlug ? (
+              <Button asChild variant="ghost" size="sm" className="rounded-full w-full text-primary hover:text-primary/80 h-8 text-xs">
+                <Link to={`/${coursePageSlug}`}>
+                  <Info className="h-3.5 w-3.5 mr-1" />
+                  {t("courses_more_details")}
+                </Link>
+              </Button>
+            ) : course.hasDetails && (
               <Button variant="ghost" size="sm" className="rounded-full w-full text-primary hover:text-primary/80 h-8 text-xs" onClick={() => setSelectedCourse(course.dialogKey)}>
                 <Info className="h-3.5 w-3.5 mr-1" />
                 {t("courses_more_details")}

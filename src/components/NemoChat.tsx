@@ -284,13 +284,12 @@ const NemoChat = () => {
   // floats. Collapse Nemo to just the fish avatar (and suppress the teaser)
   // there so it never overlaps the form's action buttons on mobile.
   const isBooking = /fun-dive-booking/.test(location.pathname);
-  // The fun-dives lander has a sticky bottom booking bar on mobile (< md).
-  // Lift the pill above it there so neither covers the other.
-  const isFunDivesLander =
-    /^\/(en\/|es\/|he\/|fr\/)?fun-dives(\/|$)/.test(location.pathname) ||
-    // The real course pages (2026-10-04) have the same sticky booking bar.
-    /^\/(open-water|discover-scuba|scuba-review)\/?$/.test(location.pathname) ||
-    /^\/(en\/|es\/|he\/|fr\/)?discover-scuba-vs-open-water\/?$/.test(location.pathname);
+  // Pages with a sticky bottom booking bar (fun-dives lander, course pages)
+  // mark it with data-sticky-cta. We MEASURE that bar and lift the pill just
+  // above it. A hard-coded URL list + fixed bottom-24 left the pill floating
+  // mid-screen on /discover-scuba-vs-open-water (no bar there at all) and
+  // overlapping the bar on iPhones (safe-area makes it taller than 96px).
+  const [ctaLift, setCtaLift] = useState(0);
 
   const navigate = useNavigate();
   // HYDRATION CONTRACT: the SSG HTML always renders the widget closed with no
@@ -313,6 +312,24 @@ const NemoChat = () => {
   // Hidden until the visitor has engaged (see NEMO_REVEALED_KEY). Starts false
   // so the prerendered HTML and the first client render agree.
   const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    if (!revealed) return;
+    const measure = () => {
+      const bar = document.querySelector<HTMLElement>("[data-sticky-cta]");
+      // display:none (md:hidden on desktop) measures 0 -> default spot.
+      setCtaLift(bar ? Math.round(bar.getBoundingClientRect().height) : 0);
+    };
+    measure();
+    const bar = document.querySelector<HTMLElement>("[data-sticky-cta]");
+    const ro = bar && typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    if (bar && ro) ro.observe(bar);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [location.pathname, revealed]);
   useEffect(() => {
     let pages = 0;
     let t0 = Date.now();
@@ -542,9 +559,12 @@ const NemoChat = () => {
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 10 }}
-            className={`fixed right-4 z-50 flex flex-col items-end gap-2 ${
-              isFunDivesLander ? "bottom-24 md:bottom-4" : "bottom-4"
-            }`}
+            // dir=ltr pins items-end to the physical RIGHT edge. Under the
+            // page's rtl wrapper (Hebrew) items-end meant LEFT, so the pill
+            // sat inward under the wider teaser instead of in the corner.
+            dir="ltr"
+            className="fixed right-4 z-50 flex flex-col items-end gap-2"
+            style={{ bottom: ctaLift ? ctaLift + 12 : 16 }}
           >
             {/* Teaser bubble */}
             <AnimatePresence>
@@ -554,6 +574,7 @@ const NemoChat = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.92 }}
                   transition={{ type: "spring", stiffness: 360, damping: 26 }}
+                  dir={isRtl ? "rtl" : "ltr"}
                   className="relative max-w-[230px] rounded-2xl rounded-br-sm border border-border bg-white px-3 py-2.5 pe-7 text-[13px] font-semibold text-ocean-deep shadow-xl"
                 >
                   <button
@@ -577,6 +598,7 @@ const NemoChat = () => {
             <button
               onClick={() => openChat("pill")}
               aria-label={copy.pill}
+              dir={isRtl ? "rtl" : "ltr"}
               className={
                 isBooking
                   ? "rounded-full shadow-lg transition-shadow hover:shadow-xl"

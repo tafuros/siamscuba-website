@@ -211,16 +211,16 @@ export const COURSE_PAGES: Record<CoursePageSlug, CoursePageData> = {
     },
     heroImage: "/blog/scuba-diver-coral-reef-koh-tao.webp",
     tagline: {
-      en: "Your first dive, with no experience at all. A personal instructor by your side the whole way.",
-      he: "הצלילה הראשונה שלכם, בלי שום ניסיון. מדריך אישי לצידכם כל הדרך.",
-      es: "Tu primera inmersión, sin ninguna experiencia. Un instructor personal a tu lado todo el tiempo.",
-      fr: "Votre première plongée, sans aucune expérience. Un instructeur personnel à vos côtés tout du long.",
+      en: "Your first dive, with no experience at all. Max 2 students per instructor, by your side the whole way.",
+      he: "הצלילה הראשונה שלכם, בלי שום ניסיון. עד 2 משתתפים למדריך, לצידכם כל הדרך.",
+      es: "Tu primera inmersión, sin ninguna experiencia. Máx. 2 alumnos por instructor, a tu lado todo el tiempo.",
+      fr: "Votre première plongée, sans aucune expérience. Max 2 élèves par instructeur, à vos côtés tout du long.",
     },
     facts: {
-      en: [["1 day", "10:30 - 16:00"], ["12 m", "Max depth"], ["1 dive", "+1 optional"], ["Personal", "Instructor"]],
-      he: [["יום אחד", "10:30 - 16:00"], ["12 מ'", "עומק מקסימלי"], ["צלילה 1", "+1 אופציונלית"], ["אישי", "מדריך"]],
-      es: [["1 día", "10:30 - 16:00"], ["12 m", "Profundidad máx."], ["1 inmersión", "+1 opcional"], ["Personal", "Instructor"]],
-      fr: [["1 jour", "10:30 - 16:00"], ["12 m", "Profondeur max"], ["1 plongée", "+1 en option"], ["Personnel", "Instructeur"]],
+      en: [["1 day", "10:30 - 16:00"], ["12 m", "Max depth"], ["1 dive", "+1 optional"], ["Max 2", "Per instructor"]],
+      he: [["יום אחד", "10:30 - 16:00"], ["12 מ'", "עומק מקסימלי"], ["צלילה 1", "+1 אופציונלית"], ["עד 2", "למדריך"]],
+      es: [["1 día", "10:30 - 16:00"], ["12 m", "Profundidad máx."], ["1 inmersión", "+1 opcional"], ["Máx. 2", "Por instructor"]],
+      fr: [["1 jour", "10:30 - 16:00"], ["12 m", "Profondeur max"], ["1 plongée", "+1 en option"], ["Max 2", "Par instructeur"]],
     },
     faq: {
       en: [

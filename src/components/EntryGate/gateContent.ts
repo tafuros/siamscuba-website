@@ -17,6 +17,11 @@ import { GO_PRO_COPY } from "@/data/goPro";
 // languages - otherwise the conservation card does not answer the question it
 // sits under. The `level` field name and the gate_level analytics param are
 // unchanged, so historical GA4 data still lines up.
+//
+// 2026-10-04 (Ben): the Koh Phangan card left the location question - no work
+// comes from there and it took prime space. The key, its routing in
+// gateMachine and the Phangan pages all stay, so re-adding is one line per
+// language.
 
 /** What the visitor is here to do - the first real question. */
 export type LevelKey = "beginner" | "funDives" | "training" | "conservation" | "goPro";
@@ -101,7 +106,6 @@ export const gateContent: Record<Language, GateCopy> = {
       title: "Where do you want to dive?",
       options: [
         { key: "kohTao", label: "Koh Tao", sub: "Where it all begins" },
-        { key: "kohPhangan", label: "Koh Phangan", sub: "Sail Rock & hidden reefs" },
         { key: "similan", label: "Similan & Phuket", sub: "Thailand's crown jewels" },
       ],
     },
@@ -150,7 +154,6 @@ export const gateContent: Record<Language, GateCopy> = {
       title: "איפה תרצו לצלול?",
       options: [
         { key: "kohTao", label: "קוֹ טאו", sub: "כאן הכל מתחיל" },
-        { key: "kohPhangan", label: "קוֹ פנגן", sub: "Sail Rock ושוניות נסתרות" },
         { key: "similan", label: "סימילן ופוקט", sub: "פניני הכתר של תאילנד" },
       ],
     },
@@ -199,7 +202,6 @@ export const gateContent: Record<Language, GateCopy> = {
       title: "¿Dónde quieres bucear?",
       options: [
         { key: "kohTao", label: "Koh Tao", sub: "Donde todo empieza" },
-        { key: "kohPhangan", label: "Koh Phangan", sub: "Sail Rock y arrecifes ocultos" },
         { key: "similan", label: "Similan y Phuket", sub: "Las joyas de Tailandia" },
       ],
     },
@@ -248,7 +250,6 @@ export const gateContent: Record<Language, GateCopy> = {
       title: "Où voulez-vous plonger ?",
       options: [
         { key: "kohTao", label: "Koh Tao", sub: "Là où tout commence" },
-        { key: "kohPhangan", label: "Koh Phangan", sub: "Sail Rock et récifs cachés" },
         { key: "similan", label: "Similan & Phuket", sub: "Les joyaux de la Thaïlande" },
       ],
     },

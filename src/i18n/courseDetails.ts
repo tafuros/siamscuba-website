@@ -103,7 +103,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       included: [
         "First ocean dive included - optional 2nd dive at another site for 1,000 THB 🐠🐟",
-        "Personal instructor by your side the whole way 🫶",
+        "Max 2 students per instructor, by your side the whole way 🫶",
         "Instructors in multiple languages: Hebrew, English, Spanish 🇮🇱🇬🇧🇪🇸",
         "Basic theory session - learn how diving works 🌊",
         "Full professional diving equipment 🤿",
@@ -468,7 +468,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       included: [
         "צלילה ראשונה כלולה במחיר - אפשר להוסיף צלילה שנייה באתר אחר ב-1,000 THB 🐠🐟",
-        "מדריך אישי לצידכם לאורך כל הדרך 🫶",
+        "עד 2 משתתפים למדריך, לצידכם לאורך כל הדרך 🫶",
         "מדריכים בכמה שפות: עברית, אנגלית, ספרדית 🇮🇱🇬🇧🇪🇸",
         "מפגש תיאוריה בסיסי - לומדים איך הצלילה עובדת 🌊",
         "ציוד צלילה מקצועי מלא 🤿",
@@ -833,7 +833,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       included: [
         "Primera inmersión incluida - 2.ª inmersión opcional en otro punto por 1,000 THB 🐠🐟",
-        "Instructor personal a tu lado en todo momento 🫶",
+        "Máx. 2 alumnos por instructor, a tu lado en todo momento 🫶",
         "Instructores en varios idiomas: hebreo, inglés, español 🇮🇱🇬🇧🇪🇸",
         "Sesión de teoría básica: aprende cómo funciona el buceo 🌊",
         "Equipo de buceo profesional completo 🤿",
@@ -1198,7 +1198,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       ],
       included: [
         "Première plongée incluse - 2e plongée en option sur un autre site pour 1,000 THB 🐠🐟",
-        "Un instructeur personnel à vos côtés tout du long 🫶",
+        "Max 2 élèves par instructeur, à vos côtés tout du long 🫶",
         "Instructeurs en plusieurs langues : hébreu, anglais, espagnol 🇮🇱🇬🇧🇪🇸",
         "Séance de théorie de base : comprenez comment fonctionne la plongée 🌊",
         "Équipement de plongée professionnel complet 🤿",

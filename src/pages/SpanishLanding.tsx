@@ -163,7 +163,7 @@ const SpanishLanding = () => {
               <li>
                 <strong>Discover Scuba Diving (bautismo):</strong> 2,600 THB una inmersión, 3,600 THB
                 dos inmersiones el mismo día. Un día, sin certificación. Tu primera respiración es en
-                el mar, sobre un arrecife, con instructor personal.
+                el mar, sobre un arrecife, máx. 2 alumnos por instructor.
               </li>
               <li>
                 <strong>PADI Bubble Maker (niños desde 8 años):</strong> 3,800 THB. Introducción

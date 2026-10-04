@@ -313,7 +313,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
       <Footer />
 
       {/* ── Sticky mobile CTA: always one tap from booking ── */}
-      <div
+      <div data-sticky-cta
         className="fixed inset-x-0 bottom-0 z-[60] flex items-stretch gap-2.5 border-t border-white/[.12] bg-[#03152a]/90 px-3.5 pt-3 backdrop-blur-xl md:hidden"
         style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom))" }}
       >
