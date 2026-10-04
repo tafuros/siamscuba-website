@@ -84,7 +84,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         target="_blank"
         rel="noopener noreferrer"
         onClick={onWhatsApp("lander_nav")}
-        className="absolute top-7 z-50 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/[.06] px-4 py-2 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/15 ltr:right-4 rtl:left-4 md:ltr:right-8 md:rtl:left-8"
+        className="absolute top-7 z-50 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/[.06] px-4 py-2 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/15 end-4 md:end-8"
       >
         <MessageCircle className="h-4 w-4" />
         WhatsApp
@@ -239,7 +239,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#03152a]/95 via-[#03152a]/25 to-transparent" />
               {site.tag && (
-                <span className="absolute top-3 rounded-full bg-amber-400/95 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[.06em] text-stone-900 ltr:left-3 rtl:right-3">
+                <span className="absolute top-3 rounded-full bg-amber-400/95 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[.06em] text-stone-900 start-3">
                   {site.tag}
                 </span>
               )}
@@ -250,7 +250,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
               {/* Tap affordance: the cards now book the trip they show. */}
               <span
                 aria-hidden
-                className="absolute bottom-4 grid h-8 w-8 place-items-center rounded-full bg-white/90 text-[#03152a] shadow-lg transition-transform group-hover:scale-110 ltr:right-3 rtl:left-3"
+                className="absolute bottom-4 grid h-8 w-8 place-items-center rounded-full bg-white/90 text-[#03152a] shadow-lg transition-transform group-hover:scale-110 end-3"
               >
                 {isRtl ? <ArrowLeft className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
               </span>

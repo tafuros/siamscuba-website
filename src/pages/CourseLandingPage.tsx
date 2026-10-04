@@ -116,7 +116,7 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
         target="_blank"
         rel="noopener noreferrer"
         onClick={onWa("course_nav")}
-        className="absolute top-7 z-50 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/[.06] px-4 py-2 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/15 ltr:right-4 rtl:left-4 md:ltr:right-8 md:rtl:left-8"
+        className="absolute top-7 z-50 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/[.06] px-4 py-2 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/15 end-4 md:end-8"
       >
         <MessageCircle className="h-4 w-4" />
         WhatsApp
