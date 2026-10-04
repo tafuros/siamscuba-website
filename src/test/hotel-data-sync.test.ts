@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { HOTEL_INFO, HOTEL_ROOMS, HOTEL_WHATSAPP_NUMBER } from "@/data/hotel";
+import { HOTEL_COPY, HOTEL_INFO, HOTEL_ROOMS, HOTEL_WHATSAPP_NUMBER } from "@/data/hotel";
 
 // api/_hotel-data.json is GENERATED from src/data/hotel.ts by
 // scripts/build-hotel-data.ts and read at runtime by the booking engine
@@ -49,5 +49,21 @@ describe("api/_hotel-data.json stays in sync with src/data/hotel.ts", () => {
         expect(tpl?.html, `${kind}/${lang} html`).toBeTruthy();
       }
     }
+  });
+});
+
+// HotelContent links two perks by POSITION (pool -> gallery, dive center -> the
+// dive site, Clarity fix 2026-10-02). Lock the order so a reordered list in one
+// language cannot silently link the wrong perk.
+describe("hotel perks order", () => {
+  it("keeps pool first and the dive center fourth in every language", () => {
+    expect(HOTEL_COPY.en.perks[0]).toMatch(/pool/i);
+    expect(HOTEL_COPY.en.perks[3]).toMatch(/dive center/i);
+    expect(HOTEL_COPY.he.perks[0]).toMatch(/בריכ/);
+    expect(HOTEL_COPY.he.perks[3]).toMatch(/צלילה/);
+    expect(HOTEL_COPY.es.perks[0]).toMatch(/piscina/i);
+    expect(HOTEL_COPY.es.perks[3]).toMatch(/buceo/i);
+    expect(HOTEL_COPY.fr.perks[0]).toMatch(/piscine/i);
+    expect(HOTEL_COPY.fr.perks[3]).toMatch(/plongée/i);
   });
 });

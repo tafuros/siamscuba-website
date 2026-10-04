@@ -30,7 +30,8 @@ export type TrafficSource =
   | "referral_spam"
   | "internal"
   | "referral"
-  | "direct";
+  | "direct"
+  | "ads_partner";
 
 /**
  * Domains that appeared as referrers but serve none of our content and do not
@@ -166,4 +167,43 @@ export function classifyReferrer(
   if (isGoogleSearch(host)) return "search";
 
   return "referral";
+}
+
+/** Google Ads click ids (gclid + the iOS/privacy-safe forms). */
+const AD_CLICK_PARAMS = ["gclid", "gbraid", "wbraid"];
+
+/**
+ * A Google Ads click that did NOT come from Google itself.
+ *
+ * WHY. Clarity 2026-10-02: 331 of the FunDive campaign's 481 sessions arrived
+ * with a click id but from sites like routefounder.com and *.xyz - Search
+ * Partners / Display placements, 99% new users, ~1 page per session, almost no
+ * bookings. Clarity's referrer filter cannot select them (see top of file), so
+ * they get their own label and can be excluded as a segment. A real search-ad
+ * click comes from a Google search host or YouTube; an empty referrer (common
+ * on iOS) is left alone rather than accused.
+ */
+export function isAdPartnerClick(referrer: string | null | undefined, search: string): boolean {
+  let params: URLSearchParams;
+  try {
+    params = new URLSearchParams(search);
+  } catch {
+    return false;
+  }
+  if (!AD_CLICK_PARAMS.some((k) => params.has(k))) return false;
+  const host = hostOf(referrer ?? "");
+  if (!host) return false;
+  if (isGoogleSearch(host) || hostMatches(host, "youtube.com")) return false;
+  if (APP_PACKAGE_SOURCES.get(host) === "search") return false;
+  return true;
+}
+
+/** classifyReferrer, plus the ad-partner check that needs the landing URL. */
+export function classifyTrafficSource(
+  referrer: string | null | undefined,
+  currentHost: string | undefined,
+  search: string,
+): TrafficSource {
+  if (isAdPartnerClick(referrer, search)) return "ads_partner";
+  return classifyReferrer(referrer, currentHost);
 }

@@ -36,6 +36,23 @@ interface HotelContentProps {
   lang: Language;
 }
 
+/** Index of the pool and dive-center perks in every language's `perks` list. */
+const PERK_POOL = 0;
+const PERK_DIVE_CENTER = 3;
+
+/**
+ * In-page jump with a visible smooth scroll. Clarity counted the hero's
+ * "to the rooms" link as a dead tap half the time (8 of 16): the native jump
+ * landed instantly and registered as nothing happening.
+ */
+function scrollToSection(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  e.preventDefault();
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+  window.history.replaceState(window.history.state, "", `#${id}`);
+}
+
 const HotelContent = ({ lang }: HotelContentProps) => {
   const copy = HOTEL_COPY[lang];
   const rooms = sortedRooms();
@@ -148,6 +165,7 @@ const HotelContent = ({ lang }: HotelContentProps) => {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#rooms"
+              onClick={(e) => scrollToSection(e, "rooms")}
               className="rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#072a45] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)] transition hover:-translate-y-0.5"
             >
               {copy.heroCta}
@@ -169,15 +187,38 @@ const HotelContent = ({ lang }: HotelContentProps) => {
       {/* ------------------------------------------------------------- perks */}
       <section className="relative z-10 -mt-8">
         <div className="mx-auto max-w-6xl px-4">
-          <ul className="flex flex-wrap justify-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-3 shadow-[0_10px_36px_-18px_rgba(7,42,69,0.5)] backdrop-blur-xl sm:gap-3">
-            {copy.perks.map((perk) => (
-              <li
-                key={perk}
-                className="rounded-full px-3 py-1 text-xs font-medium text-[#0b4a8f] sm:text-sm"
-              >
-                {perk}
-              </li>
-            ))}
+          {/* Clarity 2026-10-02: 27 taps on these, at least 19 of them dead -
+              they looked like buttons. Two now go somewhere (pool -> gallery,
+              dive center -> the dive site); the rest read as plain text. The
+              perks list has the same order in every language. */}
+          <ul className="flex flex-wrap justify-center gap-x-1 gap-y-1.5 rounded-full border border-white/70 bg-white/70 px-4 py-3 shadow-[0_10px_36px_-18px_rgba(7,42,69,0.5)] backdrop-blur-xl sm:gap-x-2">
+            {copy.perks.map((perk, i) => {
+              const href = i === PERK_POOL ? "#gallery" : i === PERK_DIVE_CENTER ? DIVE_SITE_HOME_PATH : null;
+              return (
+                <li key={perk} className="px-2 py-1 text-xs sm:text-sm">
+                  {href === "#gallery" ? (
+                    <a
+                      href="#gallery"
+                      onClick={(e) => scrollToSection(e, "gallery")}
+                      className="inline-flex items-center gap-1 font-semibold text-[#0b4a8f] underline decoration-[#0b4a8f]/30 underline-offset-4 hover:decoration-[#0b4a8f]"
+                    >
+                      {perk}
+                      <ArrowRight className="h-3 w-3 rtl:rotate-180" aria-hidden="true" />
+                    </a>
+                  ) : href ? (
+                    <Link
+                      to={href}
+                      className="inline-flex items-center gap-1 font-semibold text-[#0b4a8f] underline decoration-[#0b4a8f]/30 underline-offset-4 hover:decoration-[#0b4a8f]"
+                    >
+                      {perk}
+                      <ArrowRight className="h-3 w-3 rtl:rotate-180" aria-hidden="true" />
+                    </Link>
+                  ) : (
+                    <span className="text-[#072a45]/70">{perk}</span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>

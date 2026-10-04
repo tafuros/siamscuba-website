@@ -23,6 +23,11 @@ export interface FunSiteCard {
   name: string;
   blurb: string;
   tag?: string;
+  /**
+   * DiveOS product the card books (wizard ?product=). Clarity 2026-10-02: the
+   * site cards were the most-tapped thing on the lander and did nothing.
+   */
+  product: "FD" | "SAILROCK";
 }
 
 export interface FunWhyCard {
@@ -34,6 +39,8 @@ export interface FunWhyCard {
 export interface FunFaqItem {
   q: string;
   a: string;
+  /** Optional follow-up link rendered after the answer. */
+  link?: { label: string; href: string };
 }
 
 export interface FunDiveCopy {
@@ -106,23 +113,27 @@ const EN: FunDiveCopy = {
   sites: [
     {
       image: SITE_IMAGES.chumphon,
+      product: "FD",
       name: "Chumphon Pinnacle",
       blurb: "Barracuda schools, batfish - whale sharks in season.",
       tag: "Big fish",
     },
     {
       image: SITE_IMAGES.sailRock,
+      product: "SAILROCK",
       name: "Sail Rock",
       blurb: "The famous chimney swim-through. Full-day trip.",
       tag: "Best in the Gulf",
     },
     {
       image: SITE_IMAGES.twins,
+      product: "FD",
       name: "Twins",
       blurb: "Relaxed 12-18m, perfect warm-up dive.",
     },
     {
       image: SITE_IMAGES.whaleShark,
+      product: "FD",
       name: "Whale sharks",
       blurb: "March-May and Sep-Oct around the pinnacles.",
       tag: "In season",
@@ -151,18 +162,20 @@ const EN: FunDiveCopy = {
   reviewQuote: "“Most repeat customers we've ever had.”",
   reviewSrc: "5.0 · 778 reviews on TripAdvisor",
   faqHeadline: "Quick answers",
+  // Ben's answers, 2026-10-02 - the three most-tapped questions in Clarity.
   faq: [
     {
-      q: "Which certifications do you accept?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - anything mainstream. A digital copy of your card is fine.",
+      q: "What if the weather cancels the dive?",
+      a: "You get a full refund. We never run unsafe trips.",
     },
     {
-      q: "Haven't dived in 2+ years?",
-      a: "Do a quick refresher (฿2,500) - two skill sessions plus a shallow dive, then join the fun dives with confidence.",
+      q: "Which licence do I need?",
+      a: "Morning trips: certified to 18 m (Open Water) or higher, any agency. Afternoon trips: no licence needed - you can join on a Discover Scuba try-dive.",
     },
     {
-      q: "What if weather cancels the trip?",
-      a: "Full refund or reschedule - your choice. We never run unsafe trips.",
+      q: "Haven't dived in a few years?",
+      a: "You're welcome to join - do a refresher dive first (฿2,500), then dive with confidence.",
+      link: { label: "Book a refresher", href: "/fun-dive-booking?product=SR" },
     },
   ],
   closingA: "Two dives. Your day.",
@@ -200,23 +213,27 @@ const ES: FunDiveCopy = {
   sites: [
     {
       image: SITE_IMAGES.chumphon,
+      product: "FD",
       name: "Chumphon Pinnacle",
       blurb: "Bancos de barracudas, peces murciélago - tiburones ballena en temporada.",
       tag: "Peces grandes",
     },
     {
       image: SITE_IMAGES.sailRock,
+      product: "SAILROCK",
       name: "Sail Rock",
       blurb: "La famosa chimenea vertical. Salida de día completo.",
       tag: "El mejor del Golfo",
     },
     {
       image: SITE_IMAGES.twins,
+      product: "FD",
       name: "Twins",
       blurb: "12-18 m tranquilos, perfecto para volver al agua.",
     },
     {
       image: SITE_IMAGES.whaleShark,
+      product: "FD",
       name: "Tiburones ballena",
       blurb: "Marzo-mayo y sept-oct alrededor de los pináculos.",
       tag: "En temporada",
@@ -247,16 +264,17 @@ const ES: FunDiveCopy = {
   faqHeadline: "Respuestas rápidas",
   faq: [
     {
-      q: "¿Qué certificaciones aceptáis?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - cualquiera reconocida. Vale una copia digital de tu tarjeta.",
+      q: "¿Y si el tiempo cancela la inmersión?",
+      a: "Te devolvemos el importe completo. Nunca salimos si no es seguro.",
     },
     {
-      q: "¿Más de 2 años sin bucear?",
-      a: "Haz un refresher rápido (฿2,500) - dos sesiones de habilidades más una inmersión poco profunda, y únete a los fun dives con confianza.",
+      q: "¿Qué certificación necesito?",
+      a: "Salidas de mañana: certificación hasta 18 m (Open Water) o superior, de cualquier agencia. Por la tarde no hace falta: puedes venir con un bautismo (Discover Scuba).",
     },
     {
-      q: "¿Y si el tiempo cancela la salida?",
-      a: "Reembolso completo o cambio de fecha - tú eliges. Nunca salimos si no es seguro.",
+      q: "¿Hace años que no buceas?",
+      a: "Puedes venir - haz antes una inmersión de repaso (฿2,500) y bucea con confianza.",
+      link: { label: "Reservar el repaso", href: "/fun-dive-booking?product=SR" },
     },
   ],
   closingA: "Dos inmersiones. Tu día.",
@@ -295,23 +313,27 @@ const HE: FunDiveCopy = {
   sites: [
     {
       image: SITE_IMAGES.chumphon,
+      product: "FD",
       name: "צ'ומפון פינקל",
       blurb: "להקות ברקודות, באטפיש - כרישי לוויתן בעונה.",
       tag: "דגים גדולים",
     },
     {
       image: SITE_IMAGES.sailRock,
+      product: "SAILROCK",
       name: "סייל רוק",
       blurb: "הארובה המפורסמת שאפשר לשחות דרכה. יציאה ליום שלם.",
       tag: "הכי טוב במפרץ",
     },
     {
       image: SITE_IMAGES.twins,
+      product: "FD",
       name: "טווינס",
       blurb: "12-18 מ' רגועים, מושלם לחזרה למים.",
     },
     {
       image: SITE_IMAGES.whaleShark,
+      product: "FD",
       name: "כרישי לוויתן",
       blurb: "מרץ-מאי וספטמבר-אוקטובר סביב הפינקלים.",
       tag: "בעונה",
@@ -342,16 +364,17 @@ const HE: FunDiveCopy = {
   faqHeadline: "תשובות מהירות",
   faq: [
     {
-      q: "אילו הסמכות אתם מקבלים?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - כל הסמכה מוכרת. עותק דיגיטלי של הכרטיס מספיק.",
+      q: "מה אם מזג האוויר מבטל את הצלילה?",
+      a: "מקבלים החזר מלא. אנחנו אף פעם לא יוצאים כשלא בטוח.",
     },
     {
-      q: "לא צללתם יותר משנתיים?",
-      a: "עשו ריענון מהיר (฿2,500) - שני תרגולי מיומנויות וצלילה רדודה, ואז הצטרפו לצלילות בביטחון.",
+      q: "איזה רישיון צריך?",
+      a: "לצלילות הבוקר: הסמכה ל-18 מטר (Open Water) ומעלה, מכל ארגון. בצלילות הצהריים אפשר להצטרף גם בלי רישיון - בצלילת היכרות.",
     },
     {
-      q: "מה אם מזג האוויר מבטל את היציאה?",
-      a: "החזר מלא או דחייה - לבחירתכם. אנחנו אף פעם לא יוצאים כשלא בטוח.",
+      q: "לא צללתם כמה שנים?",
+      a: "בשמחה - עשו קודם צלילת ריענון (฿2,500), ואז צוללים בביטחון.",
+      link: { label: "להרשמה לריענון", href: "/fun-dive-booking?product=SR" },
     },
   ],
   closingA: "שתי צלילות. היום שלכם.",
@@ -389,23 +412,27 @@ const FR: FunDiveCopy = {
   sites: [
     {
       image: SITE_IMAGES.chumphon,
+      product: "FD",
       name: "Chumphon Pinnacle",
       blurb: "Bancs de barracudas, platax - requins-baleines en saison.",
       tag: "Gros poissons",
     },
     {
       image: SITE_IMAGES.sailRock,
+      product: "SAILROCK",
       name: "Sail Rock",
       blurb: "La célèbre cheminée traversante. Sortie à la journée.",
       tag: "Le meilleur du Golfe",
     },
     {
       image: SITE_IMAGES.twins,
+      product: "FD",
       name: "Twins",
       blurb: "12-18 m tranquilles, parfait pour se remettre à l'eau.",
     },
     {
       image: SITE_IMAGES.whaleShark,
+      product: "FD",
       name: "Requins-baleines",
       blurb: "Mars-mai et sept-oct autour des pinacles.",
       tag: "En saison",
@@ -436,16 +463,17 @@ const FR: FunDiveCopy = {
   faqHeadline: "Réponses rapides",
   faq: [
     {
-      q: "Quelles certifications acceptez-vous ?",
-      a: "PADI, SSI, NAUI, BSAC, RAID, CMAS - toutes les principales. Une copie numérique de votre carte suffit.",
+      q: "Et si la météo annule la plongée ?",
+      a: "Vous êtes remboursé intégralement. Nous ne sortons jamais si ce n'est pas sûr.",
     },
     {
-      q: "Vous n'avez pas plongé depuis plus de 2 ans ?",
-      a: "Faites un rapide refresher (฿2,500) - deux sessions de révision plus une plongée peu profonde, puis rejoignez les fun dives en confiance.",
+      q: "Quel niveau faut-il ?",
+      a: "Sorties du matin : niveau 18 m (Open Water) ou plus, toutes agences. L'après-midi, aucun niveau n'est requis : vous pouvez venir faire un baptême (Discover Scuba).",
     },
     {
-      q: "Et si la météo annule la sortie ?",
-      a: "Remboursement intégral ou report - à vous de choisir. Nous ne sortons jamais si ce n'est pas sûr.",
+      q: "Pas plongé depuis quelques années ?",
+      a: "Bienvenue - faites d'abord une plongée de remise à niveau (฿2,500), puis plongez en confiance.",
+      link: { label: "Réserver la remise à niveau", href: "/fun-dive-booking?product=SR" },
     },
   ],
   closingA: "Deux plongées. Votre journée.",

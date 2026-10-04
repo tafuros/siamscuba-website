@@ -2,12 +2,6 @@ import { useEffect, useMemo } from "react";
 import BookingLink from "@/components/BookingLink";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, MessageCircle, Star } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import Footer from "@/components/Footer";
 import LanderNav from "@/components/landers/LanderNav";
 import { DIVE_LINE_ICONS, DiveMaskIcon } from "@/components/icons/DiveLineIcons";
@@ -195,6 +189,32 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         </div>
       </div>
 
+      {/* ── Quick answers, moved up under the hero (Ben 2026-10-02): the three
+          most-tapped FAQ questions in Clarity, answered without a tap. ── */}
+      <section className="mx-auto max-w-[900px] px-5 pt-10">
+        <h2 className="mb-4 text-center text-[11px] font-semibold uppercase tracking-[.14em] text-white/55">
+          {copy.faqHeadline}
+        </h2>
+        <dl className="grid gap-3 md:grid-cols-3">
+          {copy.faq.map((item) => (
+            <div key={item.q} className="rounded-2xl border border-white/[.10] bg-white/[.04] p-4">
+              <dt className="text-[14.5px] font-semibold text-white">{item.q}</dt>
+              <dd className="mt-1.5 text-[13.5px] leading-relaxed text-white/70">
+                {item.a}
+                {item.link && (
+                  <>
+                    {" "}
+                    <BookingLink to={item.link.href} className="font-semibold text-sky-300 underline underline-offset-2 hover:text-sky-200">
+                      {item.link.label}
+                    </BookingLink>
+                  </>
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
       {/* ── Dive sites: photo-first ── */}
       <section className="mx-auto max-w-[1060px] px-5 py-16 md:py-20">
         <h2 className={`${display} mb-2 text-center text-[clamp(26px,4vw,38px)]`}>
@@ -203,9 +223,11 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         <p className="mb-9 text-center text-[15px] text-white/65">{copy.sitesSub}</p>
         <div className="grid grid-cols-2 gap-3.5 md:grid-cols-4">
           {copy.sites.map((site) => (
-            <div
+            <BookingLink
               key={site.name}
-              className="group relative aspect-[3/4] overflow-hidden rounded-[18px] border border-white/[.12]"
+              to={`/fun-dive-booking?product=${site.product}&utm_passthrough=1`}
+              aria-label={`${copy.stickyCta} - ${site.name}`}
+              className="group relative block aspect-[3/4] overflow-hidden rounded-[18px] border border-white/[.12] focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-300"
             >
               <img
                 src={site.image}
@@ -221,11 +243,18 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
                   {site.tag}
                 </span>
               )}
-              <div className="absolute inset-x-0 bottom-0 p-4">
+              <div className="absolute inset-x-0 bottom-0 p-4 pe-12">
                 <div className={`${display} mb-1 text-[19px]`}>{site.name}</div>
                 <div className="text-[12.5px] leading-snug text-white/80">{site.blurb}</div>
               </div>
-            </div>
+              {/* Tap affordance: the cards now book the trip they show. */}
+              <span
+                aria-hidden
+                className="absolute bottom-4 grid h-8 w-8 place-items-center rounded-full bg-white/90 text-[#03152a] shadow-lg transition-transform group-hover:scale-110 ltr:right-3 rtl:left-3"
+              >
+                {isRtl ? <ArrowLeft className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
+              </span>
+            </BookingLink>
           ))}
         </div>
         <p className="mt-5 text-center text-[13px] text-white/50">{copy.sitesNote}</p>
@@ -267,29 +296,6 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         <div className={`${display} mt-2 text-2xl`}>{copy.reviewQuote}</div>
         <div className="mt-1.5 text-[13.5px] text-white/60">{copy.reviewSrc}</div>
       </a>
-
-      {/* ── FAQ: only the 3 real blockers ── */}
-      <section className="mx-auto max-w-2xl px-5 py-16 md:py-20">
-        <h2 className={`${display} mb-8 text-center text-[clamp(26px,4vw,38px)]`}>
-          {copy.faqHeadline}
-        </h2>
-        <Accordion type="single" collapsible className="w-full">
-          {copy.faq.map((item, idx) => (
-            <AccordionItem
-              key={item.q}
-              value={`faq-${idx}`}
-              className="border-white/10"
-            >
-              <AccordionTrigger className="text-start text-[15px] font-semibold text-white hover:no-underline">
-                {item.q}
-              </AccordionTrigger>
-              <AccordionContent className="text-sm leading-relaxed text-white/70">
-                {item.a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </section>
 
       {/* ── Closing CTA ── */}
       <section className="px-5 pb-28 pt-2 text-center md:pb-24">

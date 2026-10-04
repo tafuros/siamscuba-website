@@ -292,10 +292,36 @@ export function diveSitePath(siteName: string): string | null {
 }
 
 /** Booking URL for a trip. No product code -> the wizard's own chooser. */
-export function tripBookingPath(trip: Trip): string {
-  return trip.productCode
-    ? `/fun-dive-booking?product=${encodeURIComponent(trip.productCode)}`
-    : "/fun-dive-booking";
+export function tripBookingPath(trip: Trip, date?: string): string {
+  if (!trip.productCode) return "/fun-dive-booking";
+  const q = new URLSearchParams({ product: trip.productCode });
+  if (date) q.set("date", date);
+  return `/fun-dive-booking?${q.toString()}`;
+}
+
+const WEEKDAY_INDEX: Record<string, number> = {
+  sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6,
+};
+
+/**
+ * The next calendar date (YYYY-MM-DD, Koh Tao time) that falls on `dayKey`,
+ * today included - unless `meet` ("HH:MM") has already passed today, in which
+ * case the same weekday next week (the boat has left). Client-only: call it
+ * after mount, never in the first render (the board's SSG rule).
+ */
+export function nextDateFor(dayKey: string, now: Date = new Date(), meet?: string): string | undefined {
+  const target = WEEKDAY_INDEX[dayKey];
+  if (target === undefined) return undefined;
+  // Koh Tao is UTC+7 with no daylight saving.
+  const bkk = new Date(now.getTime() + 7 * 3600_000);
+  let ahead = (target - bkk.getUTCDay() + 7) % 7;
+  const hm = meet && /^(\d{1,2}):(\d{2})$/.exec(meet);
+  if (ahead === 0 && hm) {
+    const nowMin = bkk.getUTCHours() * 60 + bkk.getUTCMinutes();
+    if (nowMin >= Number(hm[1]) * 60 + Number(hm[2])) ahead = 7;
+  }
+  const d = new Date(Date.UTC(bkk.getUTCFullYear(), bkk.getUTCMonth(), bkk.getUTCDate() + ahead));
+  return d.toISOString().slice(0, 10);
 }
 
 /**

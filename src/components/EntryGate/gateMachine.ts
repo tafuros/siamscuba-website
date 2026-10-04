@@ -6,7 +6,7 @@ import type { Language } from "@/i18n/translations";
 // visitor to a dedicated scuba lander. There are no WhatsApp exits any more:
 // the gate qualifies, the landers convert.
 export type GateAction =
-  | { type: "enter-site" }
+  | { type: "enter-site"; section?: "courses" }
   | { type: "navigate"; path: string };
 
 // Which levels actually need the location question. A total beginner only ever
@@ -81,7 +81,13 @@ export function resolveAction(
     }
   }
 
-  // beginner (no location asked), and training + Koh Tao / Koh Phangan.
+  // Training + Koh Tao / Koh Phangan: the courses live on the homepage, so close
+  // the gate straight onto the course list instead of the top of the page.
+  // Clarity 2026-10-02: training divers landed on the hero and had to find the
+  // courses themselves (Ben ruled: scroll them there).
+  if (level === "training") return { type: "enter-site", section: "courses" };
+
+  // beginner (no location asked).
   return { type: "enter-site" };
 }
 

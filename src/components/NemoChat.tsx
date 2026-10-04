@@ -133,6 +133,13 @@ const COPY: Record<string, Copy> = {
 };
 
 const TEASER_DISMISSED_KEY = "nemo_teaser_dismissed";
+// Engagement gate (Ben 2026-10-02, from Clarity: the bubble was closed far more
+// often than used). The pill appears only after 30s on the site or on the
+// visitor's second page, then stays for the rest of the session.
+const NEMO_REVEALED_KEY = "nemo_revealed";
+const NEMO_PAGES_KEY = "nemo_pages";
+const NEMO_T0_KEY = "nemo_t0";
+const REVEAL_AFTER_MS = 30_000;
 
 // One stable id per chat session, sent on the chat-log calls so DiveOS groups
 // the conversation into one row (see chat-console contract). Persisted in
@@ -299,6 +306,41 @@ const NemoChat = () => {
   // Teaser bubble (dismissible, once per session).
   const [showTeaser, setShowTeaser] = useState(false);
 
+  // Hidden until the visitor has engaged (see NEMO_REVEALED_KEY). Starts false
+  // so the prerendered HTML and the first client render agree.
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    let pages = 0;
+    let t0 = Date.now();
+    try {
+      if (sessionStorage.getItem(NEMO_REVEALED_KEY) === "1") {
+        setRevealed(true);
+        return;
+      }
+      pages = Number(sessionStorage.getItem(NEMO_PAGES_KEY) || "0") + 1;
+      sessionStorage.setItem(NEMO_PAGES_KEY, String(pages));
+      const stored = Number(sessionStorage.getItem(NEMO_T0_KEY));
+      if (stored > 0) t0 = stored;
+      else sessionStorage.setItem(NEMO_T0_KEY, String(t0));
+    } catch {
+      pages = 1; // storage blocked: fall back to the timer alone
+    }
+    const reveal = () => {
+      setRevealed(true);
+      try {
+        sessionStorage.setItem(NEMO_REVEALED_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+    };
+    if (pages >= 2) {
+      reveal();
+      return;
+    }
+    const timer = window.setTimeout(reveal, Math.max(0, REVEAL_AFTER_MS - (Date.now() - t0)));
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
+
   // Fired-once guards.
   const engagedRef = useRef(false);
 
@@ -350,7 +392,7 @@ const NemoChat = () => {
   // Show a small, dismissible teaser after dwell time (or 50% scroll), once per
   // session. On koh-tao landers fire faster with koh-tao copy.
   useEffect(() => {
-    if (open || isBooking) return;
+    if (open || isBooking || !revealed) return;
     let dismissed = false;
     try {
       dismissed = sessionStorage.getItem(TEASER_DISMISSED_KEY) === "1";
@@ -378,7 +420,7 @@ const NemoChat = () => {
       window.clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [open, isKohTao, isBooking]);
+  }, [open, isKohTao, isBooking, revealed]);
 
   const dismissTeaser = useCallback(() => {
     setShowTeaser(false);
@@ -489,7 +531,9 @@ const NemoChat = () => {
     <div dir={isRtl ? "rtl" : "ltr"}>
       {/* ── Floating pill trigger + teaser bubble ── */}
       <AnimatePresence>
-        {!open && (
+        {/* Not on the booking page at all (Ben 2026-10-02): the form is the
+            only job there, and an open chat panel still renders below. */}
+        {!open && revealed && !isBooking && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

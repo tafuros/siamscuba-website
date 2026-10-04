@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import Seo from "@/components/Seo";
 import WhatsAppFastPathStrip from "@/components/WhatsAppFastPathStrip";
@@ -23,7 +23,68 @@ const ALLOWED_ORIGINS = [
   "https://www.siamscuba.com",
 ];
 
+/**
+ * Placeholder shaped like the wizard's first step, shown until the wizard has
+ * painted. Clarity 2026-10-02: five people tapped the old lone spinner - a
+ * skeleton reads as "the form is coming" instead of "nothing is here".
+ */
+function WizardSkeleton() {
+  return (
+    <div className="absolute inset-0 z-10 bg-card p-5" role="status">
+      <span className="sr-only">Loading the booking form</span>
+      <div className="animate-pulse space-y-4 motion-reduce:animate-none" aria-hidden="true">
+        <div className="flex items-center gap-3">
+          <div className="h-7 w-7 rounded-full bg-muted" />
+          <div className="space-y-2">
+            <div className="h-4 w-44 rounded bg-muted" />
+            <div className="h-3 w-32 rounded bg-muted/70" />
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <div className="h-8 w-20 rounded-full bg-muted/80" />
+          <div className="h-8 w-20 rounded-full bg-muted/80" />
+          <div className="h-8 w-20 rounded-full bg-muted/80" />
+        </div>
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="rounded-xl border border-border/60 p-4">
+            <div className="h-4 w-40 rounded bg-muted" />
+            <div className="mt-3 h-3 w-full rounded bg-muted/70" />
+            <div className="mt-2 h-3 w-2/3 rounded bg-muted/70" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Where "Back" should go: the previous in-app page when there is one, else a
+ * same-site referrer (a full page load from a lander), else null = home.
+ */
+function backTarget(): number | string | null {
+  if (typeof window === "undefined") return null;
+  const idx = (window.history.state as { idx?: number } | null)?.idx;
+  if (typeof idx === "number" && idx > 0) return -1;
+  try {
+    const ref = new URL(document.referrer);
+    if (ref.origin === window.location.origin && ref.pathname !== window.location.pathname) {
+      return ref.pathname + ref.search;
+    }
+  } catch {
+    /* no or unparseable referrer */
+  }
+  return null;
+}
+
 const FunDiveBookingPage = () => {
+  const navigate = useNavigate();
+  const handleBack = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const target = backTarget();
+    if (target === null) return; // plain link to "/"
+    e.preventDefault();
+    if (typeof target === "number") navigate(target);
+    else navigate(target);
+  };
   const [loaded, setLoaded] = useState(false);
   // Mount the iframe only after hydration. Its src depends on the query string
   // (?product/?date/utm_*/gclid), which the SSG HTML can't know - hydrating a
@@ -124,6 +185,8 @@ const FunDiveBookingPage = () => {
           const clamped = Math.min(6000, Math.max(400, Math.round(rawHeight)));
           setReportedHeight(clamped);
         }
+        // The first height report means the wizard has painted - drop the skeleton.
+        setLoaded(true);
         return;
       }
 
@@ -286,12 +349,18 @@ const FunDiveBookingPage = () => {
             navbar-less page: on iPhone that's inside the status-bar strip,
             where taps trigger scroll-to-top instead of the link - it looked
             broken. min-h + padding give it a 44px tap target. */}
+        {/* Back returns to the page the visitor came from (Clarity 2026-10-02:
+            "Back to home" was the most-tapped element here and every tap left
+            the funnel for the homepage, not the lander that sent them). The
+            href stays "/" so the prerendered HTML and hydration agree; the
+            click handler upgrades it when there is somewhere better to go. */}
         <Link
           to="/"
+          onClick={handleBack}
           className="mb-4 mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-border/50 bg-card px-4 py-2 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground sm:mt-0"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to home
+          Back
         </Link>
 
         {/* Indexable page head (seo-baseline 2026-09-20): the iframe alone gave Google
@@ -322,11 +391,7 @@ const FunDiveBookingPage = () => {
         />
 
         <div className="relative w-full rounded-xl overflow-hidden border border-border/50 shadow-lg bg-card">
-          {!loaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-card z-10">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-          )}
+          {!loaded && <WizardSkeleton />}
 
           {mounted && (
           <iframe
@@ -354,7 +419,10 @@ const FunDiveBookingPage = () => {
             scrolling="no"
             allow="camera;microphone"
             loading="eager"
-            onLoad={() => setLoaded(true)}
+            // The HTML loading is not the wizard painting (its app still boots),
+            // so the skeleton waits for the first SIAM_BOOKING_HEIGHT message.
+            // Fallback for a wizard build that never reports: reveal after 4s.
+            onLoad={() => window.setTimeout(() => setLoaded(true), 4000)}
           />
           )}
           {/* Reserve the iframe's height pre-mount so the loader box doesn't collapse. */}

@@ -6,7 +6,7 @@
  */
 
 import { getStoredUtm, getStoredClickIds, type UtmParams } from "@/utils/utm";
-import { classifyReferrer } from "@/utils/trafficSource";
+import { classifyTrafficSource } from "@/utils/trafficSource";
 
 declare global {
   interface Window {
@@ -325,7 +325,7 @@ export function tagTrafficSource(): void {
   if (trafficSourceTagged) return;
   trafficSourceTagged = true;
 
-  const source = classifyReferrer(document.referrer, window.location.hostname);
+  const source = classifyTrafficSource(document.referrer, window.location.hostname, window.location.search);
 
   let attempts = 0;
   const send = (): void => {
@@ -338,6 +338,26 @@ export function tagTrafficSource(): void {
     window.setTimeout(send, CLARITY_TAG_RETRY_MS);
   };
   send();
+}
+
+/**
+ * Run `fn` with Clarity once it exists. Clarity loads lazily (see above), so a
+ * call made in the first seconds - or by a gate answer - would otherwise be lost.
+ * Gives up quietly after ~15s for visitors who never trigger the load.
+ */
+export function clarityWhenReady(fn: (clarity: NonNullable<typeof window.clarity>) => void): void {
+  if (typeof window === "undefined") return;
+  let attempts = 0;
+  const run = (): void => {
+    if (typeof window.clarity === "function") {
+      fn(window.clarity);
+      return;
+    }
+    attempts += 1;
+    if (attempts >= CLARITY_TAG_MAX_ATTEMPTS) return;
+    window.setTimeout(run, CLARITY_TAG_RETRY_MS);
+  };
+  run();
 }
 
 /** Test seam - the once-per-session latch is module state, not React state. */
@@ -378,7 +398,7 @@ export function trackBookNowClick(params: BookNowClickParams): void {
 }
 
 export interface GenerateLeadParams {
-  form_name: "fun_dive_booking" | "booking_wizard" | "course_inquiry" | "contact";
+  form_name: "fun_dive_booking" | "booking_wizard" | "course_inquiry" | "contact" | "hotel_booking_request";
   dive_date?: string;
   product?: string;
   /** Enhanced-conversion user data. Lead capture usually has a phone. */
@@ -683,6 +703,14 @@ export interface GateAnswerParams {
 
 /** Fired once the gate resolves the visitor's answer to a destination. */
 export function trackGateAnswer(params: GateAnswerParams): void {
+  // Clarity too (Ben 2026-10-02): a session tag makes every gate branch a
+  // filterable segment, so we can see what each answer does next. Only the
+  // fixed level/location keys leave the browser.
+  const answer = params.location ? `${params.level}/${params.location}` : params.level;
+  clarityWhenReady((clarity) => {
+    clarity("set", "gate_answer", answer);
+    clarity("event", "gate_answer");
+  });
   gtag("event", "gate_answer", {
     event_category: "engagement",
     event_label: params.level,

@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { X, CheckCircle2, MessageCircle, ShieldCheck, ArrowLeft } from "lucide-react";
 import type { Language } from "@/i18n/translations";
 import { type HotelRoom, type HotelCopy, hotelWhatsAppLink } from "@/data/hotel";
-import { trackWhatsAppClick } from "@/utils/tracking";
+import { trackGenerateLead, trackWhatsAppClick } from "@/utils/tracking";
 import { loadPayPalSdk, paypalLocale, type PayPalButtonsController } from "@/lib/paypalSdk";
 import { bangkokToday, bookingErrorMessage, validateStayDates } from "@/lib/hotelBookingErrors";
 
@@ -82,6 +82,9 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
   const [hold, setHold] = useState<HoldSession | null>(null);
   const [payState, setPayState] = useState<PayState>("loading");
   const openedAtRef = useRef(0);
+  // Contact details of the submitted request, kept for the lead event below.
+  const leadRef = useRef<{ email: string | null; phone: string | null; checkIn: string } | null>(null);
+  const leadFiredRef = useRef(false);
   const buttonsHostRef = useRef<HTMLDivElement>(null);
   const waHref = hotelWhatsAppLink(lang, room.name[lang]);
   // The hotel is in Thailand - "today" has to be Bangkok's, or a guest booking
@@ -101,6 +104,7 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
   useEffect(() => {
     if (open) {
       openedAtRef.current = Date.now();
+      leadFiredRef.current = false;
       setStatus("idle");
       setHold(null);
       setPayState("loading");
@@ -176,6 +180,21 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
     };
   }, [hold, status, confirmHold, lang]);
 
+  // A request reached us (confirmed hold, duplicate, or simulated flow): count
+  // it as a lead, once per sheet. Before 2026-10-02 the hotel's booking
+  // requests fired no event at all, so GA4/Ads could not see them.
+  useEffect(() => {
+    if (status !== "success" || leadFiredRef.current) return;
+    leadFiredRef.current = true;
+    trackGenerateLead({
+      form_name: "hotel_booking_request",
+      product: room.slug,
+      dive_date: leadRef.current?.checkIn,
+      email: leadRef.current?.email,
+      phone: leadRef.current?.phone,
+    });
+  }, [status, room.slug]);
+
   /** Stage 1a - validate the details and open the hold. No request exists yet. */
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -195,6 +214,11 @@ const BookingRequestForm = ({ room, copy, lang, open, onOpenChange }: BookingReq
 
     setDateError(null);
     setFormError(null);
+    leadRef.current = {
+      email: (form.get("email") as string) || null,
+      phone: (form.get("phone") as string) || null,
+      checkIn: ci,
+    };
     setStatus("sending");
     try {
       const res = await fetch("/api/hotel-booking?action=hold", {

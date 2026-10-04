@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { Cookie } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { Language } from "@/i18n/translations";
 
 const STORAGE_KEY = "cookie_consent";
 
@@ -37,7 +39,41 @@ function updateConsent(granted: boolean) {
   }
 }
 
+// The banner used to be English on every page; Clarity showed Hebrew, Spanish
+// and French visitors meeting it in English (Ben 2026-10-02: translate it).
+const COPY: Record<Language, { label: string; text: string; privacy: string; decline: string; accept: string }> = {
+  en: {
+    label: "Cookie consent",
+    text: "We use cookies to improve the site and measure how it performs.",
+    privacy: "Privacy",
+    decline: "Decline",
+    accept: "Accept",
+  },
+  he: {
+    label: "הסכמה לעוגיות",
+    text: "אנחנו משתמשים בעוגיות כדי לשפר את האתר ולמדוד את הביצועים שלו.",
+    privacy: "פרטיות",
+    decline: "לא, תודה",
+    accept: "מאשר/ת",
+  },
+  es: {
+    label: "Consentimiento de cookies",
+    text: "Usamos cookies para mejorar el sitio y medir su rendimiento.",
+    privacy: "Privacidad",
+    decline: "Rechazar",
+    accept: "Aceptar",
+  },
+  fr: {
+    label: "Consentement aux cookies",
+    text: "Nous utilisons des cookies pour améliorer le site et mesurer ses performances.",
+    privacy: "Confidentialité",
+    decline: "Refuser",
+    accept: "Accepter",
+  },
+};
+
 const CookieConsent = () => {
+  const { language, isRTL } = useLanguage();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -67,59 +103,45 @@ const CookieConsent = () => {
 
   if (!visible) return null;
 
+  const copy = COPY[language] ?? COPY.en;
+
+  // A thin bar pinned to the bottom, no backdrop (Ben 2026-10-02). Clarity
+  // showed the old dimmed modal as an extra step on every first visit; the page
+  // now stays usable while the choice waits. Consent Mode is untouched: nothing
+  // is granted until Accept.
   return (
-    <>
-      <style>{`@keyframes ccRise{from{opacity:0;transform:translateY(0.75rem) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes ccFade{from{opacity:0}to{opacity:1}}`}</style>
-      {/* Soft backdrop: dims the floating buttons behind so the cookie choice
-          floats clearly above the rest. Sits above every floating element
-          (chat/accessibility z-50, social/book z-40). Cleared once answered. */}
-      <div
-        aria-hidden
-        className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px] animate-[ccFade_0.25s_ease-out]"
-        style={{ animationFillMode: "both" }}
-      />
-      {/* Positioning layer: a bottom bar on mobile (where it sits perfectly),
-          a centred modal on desktop so it reads as a deliberate dialog rather
-          than something stuck in the corner. */}
-      <div className="fixed inset-0 z-[70] flex items-end justify-center p-4 md:items-center pointer-events-none">
-        <div
-          role="dialog"
-          aria-label="Cookie consent"
-          className="pointer-events-auto w-full max-w-lg md:max-w-md
-            bg-gradient-to-b from-[#161616]/95 to-[#0A0A0A]/95 backdrop-blur-md text-white
-            rounded-2xl shadow-2xl ring-1 ring-white/10
-            px-5 py-4 md:px-6 md:py-5 flex flex-col gap-3 md:gap-4
-            animate-[ccRise_0.35s_ease-out]"
-          style={{ animationFillMode: "both" }}
-        >
-          <div className="flex items-start gap-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1873BF]/15 ring-1 ring-[#1873BF]/30">
-              <Cookie className="h-5 w-5 text-[#3b9ae0]" aria-hidden />
-            </span>
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-white">We value your privacy</p>
-              <p className="mt-0.5 text-xs sm:text-sm text-white/70 leading-snug">
-                We use cookies to improve your experience and measure site performance.
-              </p>
-            </div>
-          </div>
-          <div className="flex gap-2 justify-end">
-            <button
-              onClick={handleDecline}
-              className="px-4 py-2 text-xs rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-            >
-              Decline
-            </button>
-            <button
-              onClick={handleAccept}
-              className="px-5 py-2 text-xs rounded-lg bg-[#1873BF] hover:bg-[#155f9c] text-white font-semibold shadow-lg shadow-[#1873BF]/20 transition-colors"
-            >
-              Accept
-            </button>
-          </div>
+    <div
+      role="region"
+      aria-label={copy.label}
+      dir={isRTL ? "rtl" : "ltr"}
+      className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 bg-[#0D1B26]/95 text-white backdrop-blur-md
+        pb-[env(safe-area-inset-bottom,0px)] animate-[ccUp_0.3s_ease-out]"
+      style={{ animationFillMode: "both" }}
+    >
+      <style>{`@keyframes ccUp{from{transform:translateY(100%)}to{transform:translateY(0)}}`}</style>
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5">
+        <p className="min-w-0 flex-1 basis-56 text-xs leading-snug text-white/80 sm:text-sm">
+          {copy.text}{" "}
+          <Link to="/privacy" className="underline underline-offset-2 hover:text-white">
+            {copy.privacy}
+          </Link>
+        </p>
+        <div className="flex shrink-0 gap-2">
+          <button
+            onClick={handleDecline}
+            className="rounded-lg px-3 py-1.5 text-xs text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+          >
+            {copy.decline}
+          </button>
+          <button
+            onClick={handleAccept}
+            className="rounded-lg bg-[#1873BF] px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#155f9c]"
+          >
+            {copy.accept}
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

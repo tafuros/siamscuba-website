@@ -9,7 +9,7 @@
 //      labels may leave the browser, because a referrer can carry a query
 //      string that a third party chose the contents of.
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { classifyReferrer } from "../utils/trafficSource";
+import { classifyReferrer, isAdPartnerClick, classifyTrafficSource } from "../utils/trafficSource";
 import { tagTrafficSource, __resetTrafficSourceTag } from "../utils/tracking";
 
 const SITE = "siamscuba.com";
@@ -189,5 +189,28 @@ describe("tagTrafficSource - what reaches Clarity", () => {
       tagTrafficSource();
       vi.advanceTimersByTime(60_000);
     }).not.toThrow();
+  });
+});
+
+describe("isAdPartnerClick / classifyTrafficSource", () => {
+  it("flags an ad click that arrived from a non-Google site", () => {
+    expect(isAdPartnerClick("https://routefounder.com/x", "?gclid=abc")).toBe(true);
+    expect(classifyTrafficSource("https://qwz.geneticffmi.com/", "siamscuba.com", "?wbraid=1")).toBe("ads_partner");
+  });
+
+  it("leaves real search-ad clicks alone", () => {
+    expect(isAdPartnerClick("https://www.google.com/", "?gclid=abc")).toBe(false);
+    expect(isAdPartnerClick("https://www.google.co.th/", "?gbraid=abc")).toBe(false);
+    expect(isAdPartnerClick("https://m.youtube.com/", "?gclid=abc")).toBe(false);
+    expect(classifyTrafficSource("https://www.google.com/", "siamscuba.com", "?gclid=1")).toBe("search");
+  });
+
+  it("does not accuse an ad click with no referrer (iOS strips it)", () => {
+    expect(isAdPartnerClick("", "?gclid=abc")).toBe(false);
+  });
+
+  it("ignores visits without a click id", () => {
+    expect(isAdPartnerClick("https://routefounder.com/", "")).toBe(false);
+    expect(classifyTrafficSource("https://routefounder.com/", "siamscuba.com", "?utm_source=x")).toBe("referral");
   });
 });

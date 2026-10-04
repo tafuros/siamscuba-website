@@ -293,7 +293,8 @@ const EntryGate = () => {
   // destination, report it, and commit.
   const commit = (level: LevelKey, location: LocationKey | null) => {
     const action = resolveAction(level, location, language);
-    const destination = action.type === "navigate" ? action.path : "/";
+    const destination =
+      action.type === "navigate" ? action.path : action.section ? `/#${action.section}` : "/";
     trackGateAnswer({ level, location, destination });
 
     if (action.type === "navigate") {
@@ -305,6 +306,16 @@ const EntryGate = () => {
     }
     // "enter-site" just closes the gate onto the homepage that was always beneath.
     close();
+    if (action.section) {
+      const id = action.section;
+      // Wait for the close to release the body scroll lock before scrolling. If
+      // the gate was reopened on a page without the section, go to the homepage's.
+      window.setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        else navigate(`/#${id}`);
+      }, 80);
+    }
   };
 
   const handlePickLevel = (level: LevelKey) => {

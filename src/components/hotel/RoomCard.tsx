@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Users, ImageOff, MessageCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Users, ImageOff, MessageCircle, Maximize2 } from "lucide-react";
+import { useSwipe } from "@/hooks/useSwipe";
+import PhotoLightbox from "./PhotoLightbox";
 import type { Language } from "@/i18n/translations";
 import { type HotelRoom, type HotelCopy, hotelWhatsAppLink } from "@/data/hotel";
 import { trackWhatsAppClick } from "@/utils/tracking";
@@ -38,6 +40,17 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
   const step = (delta: number) =>
     setIndex((i) => (i + delta + room.images.length) % room.images.length);
 
+  // Swipe between photos, tap for fullscreen (Ben 2026-10-02, from Clarity:
+  // 1,325 taps on the small arrows, and taps on the photo itself did nothing).
+  const rtl = lang === "he";
+  const { handlers: swipeHandlers, swiped } = useSwipe((dir) => step(dir), rtl);
+  const [lightbox, setLightbox] = useState(false);
+  const openLightbox = () => {
+    if (swiped.current) return; // the click that follows a swipe
+    setLightbox(true);
+  };
+  const alt = `${name} - Siam Hotel & Hostel, Koh Tao`;
+
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-[26px] border border-white/70 bg-white/60 shadow-[0_12px_40px_-16px_rgba(7,42,69,0.35)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-18px_rgba(7,42,69,0.45)]">
       {/* Liquid-glass sheen: a single soft highlight across the top edge. */}
@@ -47,7 +60,7 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
       />
 
       {/* Photos */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#dceaf4]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#dceaf4]" {...(hasPhotos ? swipeHandlers : {})}>
         {room.soldOut && (
           <span className="absolute start-3 top-3 z-10 rounded-full border border-white/40 bg-[#072a45]/85 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur-md">
             {copy.fullyBooked}
@@ -55,13 +68,26 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
         )}
         {hasPhotos ? (
           <>
+            {/* The whole photo is the "open fullscreen" button. */}
+            <button
+              type="button"
+              onClick={openLightbox}
+              aria-label={`${copy.galleryTitle}: ${name}`}
+              className="absolute inset-0 z-[1] cursor-zoom-in"
+            />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute end-3 top-3 z-10 grid h-8 w-8 place-items-center rounded-full border border-white/60 bg-white/70 text-[#072a45] backdrop-blur-md"
+            >
+              <Maximize2 className="h-4 w-4" />
+            </span>
             {room.images.map((slug, i) => (
               <img
                 key={slug}
                 src={`/hotel/${slug}.webp`}
                 srcSet={`/hotel/${slug}-800.webp 800w, /hotel/${slug}.webp 1600w`}
                 sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
-                alt={`${name} - Siam Hotel & Hostel, Koh Tao`}
+                alt={alt}
                 loading="lazy"
                 decoding="async"
                 width={1600}
@@ -114,7 +140,9 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
         )}
       </div>
 
-      {/* Body */}
+      {/* Body: the price and the request button come straight after the
+          photos (Ben 2026-10-02 - Clarity: 1,325 photo taps, 15 requests;
+          the button sat at the bottom of the card, small and easy to miss). */}
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-display text-xl leading-tight text-[#072a45]">{name}</h3>
@@ -126,57 +154,39 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
           )}
         </div>
 
-        <p className="text-sm leading-relaxed text-[#072a45]/70">{room.blurb[lang]}</p>
-
-        <ul className="flex flex-wrap gap-1.5">
-          {room.amenities.map((key) => (
-            <li
-              key={key}
-              className="rounded-full border border-white/70 bg-white/60 px-2.5 py-1 text-[11px] font-medium text-[#0b4a8f] backdrop-blur-sm"
-            >
-              {copy.amenities[key]}
-            </li>
-          ))}
-        </ul>
-
-        {/* Price + the one action. */}
-        <div className="mt-auto flex items-end justify-between gap-3 pt-3">
-          <div className="min-w-0">
-            {room.pricePerNight != null ? (
-              <>
-                <span className="block text-[11px] uppercase tracking-wide text-[#072a45]/45">
-                  {copy.priceFrom}
-                </span>
-                <span className="font-display text-2xl text-[#072a45]">
-                  ฿{room.pricePerNight.toLocaleString()}
-                  <span className="ms-1 font-body text-xs font-normal text-[#072a45]/50">
-                    {room.priceUnit === "bed" ? copy.perBed : copy.perNight}
-                  </span>
-                  <PriceEstimate
-                    thb={room.pricePerNight}
-                    className="block font-body text-xs font-normal text-[#072a45]/50"
-                  />
-                </span>
-              </>
-            ) : (
-              <span className="text-sm font-medium text-[#072a45]/50">{copy.priceOnRequest}</span>
-            )}
-          </div>
-
-          {room.soldOut ? (
-            <span className="shrink-0 whitespace-nowrap rounded-full border border-[#072a45]/15 bg-[#072a45]/5 px-6 py-2.5 text-sm font-semibold text-[#072a45]/45">
-              {copy.fullyBooked}
+        <div className="min-w-0">
+          {room.pricePerNight != null ? (
+            <span className="font-display text-2xl text-[#072a45]">
+              <span className="me-1.5 align-middle font-body text-[11px] uppercase tracking-wide text-[#072a45]/45">
+                {copy.priceFrom}
+              </span>
+              ฿{room.pricePerNight.toLocaleString()}
+              <span className="ms-1 font-body text-xs font-normal text-[#072a45]/50">
+                {room.priceUnit === "bed" ? copy.perBed : copy.perNight}
+              </span>
+              <PriceEstimate
+                thb={room.pricePerNight}
+                className="block font-body text-xs font-normal text-[#072a45]/50"
+              />
             </span>
           ) : (
-            <button
-              type="button"
-              onClick={() => setFormOpen(true)}
-              className="shrink-0 rounded-full bg-[#0b4a8f] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgba(11,74,143,0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a3a6b]"
-            >
-              {copy.requestToBook}
-            </button>
+            <span className="text-sm font-medium text-[#072a45]/50">{copy.priceOnRequest}</span>
           )}
         </div>
+
+        {room.soldOut ? (
+          <span className="flex h-12 w-full items-center justify-center rounded-full border border-[#072a45]/15 bg-[#072a45]/5 px-6 text-sm font-semibold text-[#072a45]/45">
+            {copy.fullyBooked}
+          </span>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setFormOpen(true)}
+            className="flex h-12 w-full items-center justify-center rounded-full bg-[#0b4a8f] px-6 text-base font-semibold text-white shadow-[0_10px_24px_-10px_rgba(11,74,143,0.95)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0a3a6b]"
+          >
+            {copy.requestToBook}
+          </button>
+        )}
 
         {!room.soldOut && (
           <a
@@ -184,13 +194,37 @@ const RoomCard = ({ room, copy, lang }: RoomCardProps) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackWhatsAppClick({ location: `hotel-room-${room.slug}`, url: waHref })}
-            className="flex items-center justify-center gap-1.5 pt-1 text-xs font-medium text-[#072a45]/50 transition hover:text-[#0b4a8f]"
+            className="flex items-center justify-center gap-1.5 text-xs font-medium text-[#072a45]/55 transition hover:text-[#0b4a8f]"
           >
             <MessageCircle className="h-3.5 w-3.5" />
             {copy.orWhatsApp}
           </a>
         )}
+
+        <p className="pt-1 text-sm leading-relaxed text-[#072a45]/70">{room.blurb[lang]}</p>
+
+        <ul className="flex flex-wrap gap-1.5">
+          {room.amenities.map((key) => (
+            <li
+              key={key}
+              className="rounded-md bg-[#072a45]/[0.04] px-2 py-0.5 text-[11px] text-[#072a45]/65"
+            >
+              {copy.amenities[key]}
+            </li>
+          ))}
+        </ul>
       </div>
+
+      {lightbox && hasPhotos && (
+        <PhotoLightbox
+          photos={room.images.map((slug) => ({ src: `/hotel/${slug}.webp`, alt }))}
+          index={index}
+          onIndex={setIndex}
+          onClose={() => setLightbox(false)}
+          rtl={rtl}
+          labels={{ title: name, close: copy.galleryClose, prev: copy.galleryPrev, next: copy.galleryNext }}
+        />
+      )}
 
       {!room.soldOut && (
         <BookingRequestForm

@@ -113,8 +113,17 @@ export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
         if (!res.ok) return;
         const data = (await res.json()) as { rates?: RateTable; date?: string };
         if (cancelled || !data?.rates) return;
-        setRates(data.rates);
-        setRatesDate(data.date ?? null);
+        // A transition, like the cache restore above: this fetch is CDN-cached
+        // and often resolves while a lazy route is still hydrating. A plain
+        // update to this context then forces that Suspense boundary to throw
+        // away its server HTML - React error #421, ~70% of the site's JS
+        // errors in Clarity (30d to 2026-10-02). As a transition React
+        // finishes hydrating first and applies the new rates after.
+        const rates = data.rates;
+        startTransition(() => {
+          setRates(rates);
+          setRatesDate(data.date ?? null);
+        });
         try {
           window.localStorage.setItem(
             RATES_KEY,
