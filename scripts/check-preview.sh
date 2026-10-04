@@ -131,6 +131,14 @@ expect "/go-pro"                                    200 "PADI Instructor"
 expect "/he/go-pro"                                 200
 expect "/es/go-pro"                                 200
 expect "/fr/go-pro"                                 200
+info "Try-dive vs Open Water + real course pages (2026-10-04)"
+expect "/discover-scuba-vs-open-water"               200
+expect "/he/discover-scuba-vs-open-water"            200
+expect "/es/discover-scuba-vs-open-water"            200
+expect "/fr/discover-scuba-vs-open-water"            200
+expect "/open-water"                                 200
+expect "/discover-scuba"                             200
+expect "/scuba-review"                               200
 expect "/divemaster-course"                         200 "Divemaster"
 expect "/he/divemaster-course"                      200
 expect "/es/divemaster-course"                      200
