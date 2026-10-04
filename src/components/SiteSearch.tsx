@@ -41,10 +41,8 @@ const SiteSearch = () => {
     // Fun Diving
     { label: t("nav_fun_diving"), category: t("nav_fun_diving"), href: "#fun-diving" },
     { label: "Sail Rock", category: t("nav_fun_diving"), href: "#fun-diving" },
-    // Boats
-    { label: t("nav_boats"), category: t("nav_boats"), href: "#boats" },
-    // About
-    { label: t("nav_about"), category: t("nav_about"), href: "#about" },
+    // (Boats / About left 2026-10-04 with their homepage sections.)
+    { label: t("nav_dive_sites"), category: t("nav_dive_sites"), href: "/dive-sites" },
     // Blog
     { label: t("nav_koh_tao_guide"), category: "Blog", href: "/blog" },
   ];

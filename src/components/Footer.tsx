@@ -16,8 +16,6 @@ const Footer = () => {
   const quickLinks = [
     { label: t("nav_courses"), id: "courses" },
     { label: t("nav_fun_diving"), id: "fun-diving" },
-    { label: t("nav_boats"), id: "boats" },
-    { label: t("nav_about"), id: "about" },
   ];
 
   return (

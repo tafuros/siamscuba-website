@@ -60,10 +60,10 @@ const Navbar = () => {
   const navLinks = [
     { label: t("nav_courses"), href: "#courses" },
     { label: t("nav_fun_diving"), href: "#fun-diving" },
-    { label: t("nav_boats"), href: "#boats" },
     { label: t("nav_dive_sites"), href: "/dive-sites" },
     { label: t("nav_koh_tao_guide"), href: "/blog" },
-    { label: t("nav_about"), href: "#about" },
+    // "Boats" and "About" left 2026-10-04 with their homepage sections
+    // (trimmed homepage) - their anchors no longer exist.
     // Siam Hotel & Hostel - the sister property. Its own mini-site at /hotel,
     // localized to whichever language the visitor is already reading.
     //
