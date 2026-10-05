@@ -22,6 +22,8 @@ export interface CourseDetail {
   highlights?: { name: string; description: string }[];
   tripDetails?: string[];
   learns?: string[];
+  /** Optional numbered list with its own heading (e.g. Rescue's 10 exercises). */
+  exercises?: { title: string; items: string[] };
   structure?: string[];
   prerequisites?: string[];
   perks?: string[];
@@ -227,22 +229,33 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       nextStep: "Continue to Rescue Diver course - become a true underwater leader! 🌊",
     },
     "Rescue Diver": {
-      header: "Serious Fun: Become a Hero Underwater",
-      intro: "Transform from a diver into a leader. You'll learn how to anticipate problems and manage emergencies, making you the best buddy in the water.",
-      learns: [
-        "Self-rescue and managing diver stress.",
-        "Missing diver search and recovery patterns.",
-        "Surfacing an unconscious diver.",
-      ],
+      header: "Rescue Diver Course 🤿",
+      intro: "The course is split into theory, rescue exercises, and two realistic open-water scenarios.",
       structure: [
-        "Duration: 3 days of intense, rewarding scenarios.",
-        "Includes theory, 10 rescue exercises, and 2 realistic open-water scenarios.",
+        "3 days",
+        "2 realistic scenarios putting everything together in a real open-water emergency simulation.",
       ],
+      exercises: {
+        title: "10 Rescue Exercises",
+        items: [
+          "Assisting a tired diver at the surface",
+          "Rescuing a panicked diver",
+          "Response from shore or boat",
+          "Distressed diver underwater - out of air, uncontrolled ascent",
+          "Missing diver search patterns",
+          "Surfacing an unresponsive diver",
+          "Rescue breathing in the water",
+          "Exiting an unresponsive diver from the water",
+          "Oxygen administration for pressure injuries",
+          "Full response to a nonbreathing diver at the surface",
+        ],
+      },
       prerequisites: [
-        "Advanced Open Water certification (or equivalent).",
-        "EFR (First Aid/CPR) certification valid within the last 12 months.",
+        "Advanced Open Water",
+        "EFR (CPR + First Aid) within the last 24 months",
       ],
-      price: "11,000 THB (Add EFR for 5,000 THB if needed)",
+      price: "11,000 THB (or 16,000 THB including EFR)",
+      nextStep: "By the end you'll be able to prevent and manage dive emergencies confidently - and it's a required step before Divemaster 💪",
     },
     "Peak Performance Buoyancy": {
       header: "Master Your Buoyancy & Become a Better Diver",
@@ -592,22 +605,33 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       nextStep: "המשיכו לקורס Rescue Diver - הפכו למנהיגים אמיתיים מתחת למים! 🌊",
     },
     "Rescue Diver": {
-      header: "כיף רציני: הופכים לגיבורים מתחת למים",
-      intro: "הופכים מצוללים למנהיגים. תלמדו איך לצפות בעיות מראש ולנהל מצבי חירום - מה שיהפוך אתכם לבן הזוג הכי טוב במים.",
-      learns: [
-        "חילוץ עצמי וניהול לחץ אצל צוללים.",
-        "דפוסי חיפוש ואיתור צולל נעדר.",
-        "העלאת צולל מחוסר הכרה לפני המים.",
-      ],
+      header: "קורס Rescue Diver 🤿",
+      intro: "הקורס מחולק לתיאוריה, תרגילי חילוץ ושני תרחישים מציאותיים בים הפתוח.",
       structure: [
-        "משך: 3 ימים של תרחישים אינטנסיביים ומתגמלים.",
-        "כולל תיאוריה, 10 תרגילי חילוץ ו-2 תרחישים מציאותיים במים פתוחים.",
+        "3 ימים",
+        "2 תרחישים מציאותיים שמחברים את הכול יחד - סימולציה של מצב חירום אמיתי בים הפתוח.",
       ],
+      exercises: {
+        title: "10 תרגילי חילוץ",
+        items: [
+          "עזרה לצולל עייף על פני המים",
+          "חילוץ צולל בפאניקה",
+          "תגובה מהחוף או מהסירה",
+          "צולל במצוקה מתחת למים - נגמר האוויר, עלייה לא מבוקרת",
+          "דפוסי חיפוש אחר צולל נעדר",
+          "העלאת צולל שאינו מגיב אל פני המים",
+          "הנשמה במים",
+          "הוצאת צולל שאינו מגיב מהמים",
+          "מתן חמצן בפציעות לחץ",
+          "טיפול מלא בצולל שאינו נושם על פני המים",
+        ],
+      },
       prerequisites: [
-        "הסמכת Advanced Open Water (או שווה ערך).",
-        "הסמכת EFR (עזרה ראשונה/החייאה) בתוקף מ-12 החודשים האחרונים.",
+        "Advanced Open Water",
+        "EFR (החייאה + עזרה ראשונה) מ-24 החודשים האחרונים",
       ],
-      price: "11,000 THB (אפשר להוסיף EFR ב-5,000 THB במידת הצורך)",
+      price: "11,000 THB (או 16,000 THB כולל EFR)",
+      nextStep: "בסוף הקורס תדעו למנוע ולנהל מצבי חירום בצלילה בביטחון - וזה שלב חובה לפני Divemaster 💪",
     },
     "Peak Performance Buoyancy": {
       header: "שולטים בציפה והופכים לצוללים טובים יותר",
@@ -957,22 +981,33 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       nextStep: "Continúa con el curso Rescue Diver: ¡conviértete en un verdadero líder submarino! 🌊",
     },
     "Rescue Diver": {
-      header: "Diversión en serio: conviértete en un héroe bajo el agua",
-      intro: "Pasa de ser buceador a ser líder. Aprenderás a anticipar problemas y a gestionar emergencias, lo que te convertirá en el mejor compañero en el agua.",
-      learns: [
-        "Autorrescate y gestión del estrés del buceador.",
-        "Patrones de búsqueda y recuperación de un buceador perdido.",
-        "Sacar a la superficie a un buceador inconsciente.",
-      ],
+      header: "Curso Rescue Diver 🤿",
+      intro: "El curso se divide en teoría, ejercicios de rescate y dos escenarios realistas en mar abierto.",
       structure: [
-        "Duración: 3 días de escenarios intensos y gratificantes.",
-        "Incluye teoría, 10 ejercicios de rescate y 2 escenarios realistas en mar abierto.",
+        "3 días",
+        "2 escenarios realistas que lo juntan todo en una simulación de emergencia real en mar abierto.",
       ],
+      exercises: {
+        title: "10 ejercicios de rescate",
+        items: [
+          "Ayudar a un buceador cansado en superficie",
+          "Rescatar a un buceador en pánico",
+          "Respuesta desde la orilla o el barco",
+          "Buceador en apuros bajo el agua - sin aire, ascenso descontrolado",
+          "Patrones de búsqueda de un buceador perdido",
+          "Subir a superficie a un buceador que no responde",
+          "Respiración de rescate en el agua",
+          "Sacar del agua a un buceador que no responde",
+          "Administración de oxígeno en lesiones por presión",
+          "Respuesta completa a un buceador que no respira en superficie",
+        ],
+      },
       prerequisites: [
-        "Certificación Advanced Open Water (o equivalente).",
-        "Certificación EFR (primeros auxilios/RCP) válida en los últimos 12 meses.",
+        "Advanced Open Water",
+        "EFR (RCP + primeros auxilios) en los últimos 24 meses",
       ],
-      price: "11,000 THB (añade EFR por 5,000 THB si lo necesitas)",
+      price: "11,000 THB (o 16,000 THB con EFR incluido)",
+      nextStep: "Al terminar sabrás prevenir y gestionar emergencias de buceo con confianza - y es un paso obligatorio antes de Divemaster 💪",
     },
     "Peak Performance Buoyancy": {
       header: "Domina tu flotabilidad y conviértete en mejor buceador",
@@ -1322,22 +1357,33 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       nextStep: "Poursuivez avec le cours Rescue Diver - devenez un véritable leader sous l'eau ! 🌊",
     },
     "Rescue Diver": {
-      header: "Du sérieux dans le fun : devenez un héros sous l'eau",
-      intro: "Passez du statut de plongeur à celui de leader. Vous apprendrez à anticiper les problèmes et à gérer les urgences, ce qui fera de vous le meilleur binôme dans l'eau.",
-      learns: [
-        "Auto-sauvetage et gestion du stress du plongeur.",
-        "Schémas de recherche et de récupération d'un plongeur disparu.",
-        "Remontée d'un plongeur inconscient.",
-      ],
+      header: "Cours Rescue Diver 🤿",
+      intro: "Le cours se divise en théorie, exercices de sauvetage et deux scénarios réalistes en mer.",
       structure: [
-        "Durée : 3 jours de scénarios intenses et gratifiants.",
-        "Comprend la théorie, 10 exercices de sauvetage et 2 scénarios réalistes en mer.",
+        "3 jours",
+        "2 scénarios réalistes qui rassemblent tout dans une simulation d'urgence réelle en mer.",
       ],
+      exercises: {
+        title: "10 exercices de sauvetage",
+        items: [
+          "Aider un plongeur fatigué en surface",
+          "Secourir un plongeur paniqué",
+          "Intervention depuis le rivage ou le bateau",
+          "Plongeur en détresse sous l'eau - panne d'air, remontée incontrôlée",
+          "Méthodes de recherche d'un plongeur disparu",
+          "Remonter un plongeur inconscient en surface",
+          "Ventilation artificielle dans l'eau",
+          "Sortir de l'eau un plongeur inconscient",
+          "Administration d'oxygène pour les accidents de pression",
+          "Prise en charge complète d'un plongeur qui ne respire pas en surface",
+        ],
+      },
       prerequisites: [
-        "Certification Advanced Open Water (ou équivalent).",
-        "Certification EFR (premiers secours/RCP) valide dans les 12 derniers mois.",
+        "Advanced Open Water",
+        "EFR (RCP + premiers secours) dans les 24 derniers mois",
       ],
-      price: "11,000 THB (ajoutez l'EFR pour 5,000 THB si nécessaire)",
+      price: "11,000 THB (ou 16,000 THB EFR inclus)",
+      nextStep: "À la fin, vous saurez prévenir et gérer les urgences de plongée en confiance - et c'est une étape obligatoire avant le Divemaster 💪",
     },
     "Peak Performance Buoyancy": {
       header: "Maîtrisez votre flottabilité et devenez un meilleur plongeur",
