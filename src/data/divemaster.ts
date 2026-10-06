@@ -64,6 +64,11 @@ export interface DmCopy {
   waterTests: { value: string; label: string }[];
   dayTitle: string;
   day: { time: string; body: string }[];
+  /** Condensed from Paul's DMT behaviours (2026-10-06). */
+  expectTitle: string;
+  expectLede: string;
+  expects: DmLearn[];
+  expectMotto: string;
   nextTitle: string;
   /** Mentions of "IDC" in these strings render as links to the IDC info. */
   nextBody: string;
@@ -140,6 +145,18 @@ export const DM_COPY: Record<Language, DmCopy> = {
       { time: "אחר הצהריים", body: "צלילה שנייה, שיעור תיאוריה או תרגול מעשי." },
       { time: "ערב", body: "ממלאים יומן צלילות ולומדים." },
     ],
+    expectTitle: "מה אנחנו מצפים מהמתלמדים שלנו",
+    expectLede:
+      "לצד מדריך, התפקיד שלכם הוא ללמוד, לצפות ולעזור. זו ההזדמנות לראות סגנונות הדרכה שונים ולצמוח לאנשי מקצוע בצלילה.",
+    expects: [
+      { title: "לומדים, לא מלמדים", body: "לא מסבירים מיומנויות, לא מתקנים תלמידים ולא נותנים עצות - אלא אם המדריך ביקש. מידע סותר מבלבל תלמידים." },
+      { title: "נשארים עם הקבוצה", body: "הקשב על המדריך ועל התלמידים. את התרגול של המיומנויות שלכם עושים בזמן אחר." },
+      { title: "המדריך מוביל", body: "פועלים לפי ההנחיות שלו. אם יש אי-הסכמה - מדברים איתו אחר כך, אף פעם לא מול התלמידים." },
+      { title: "שואלים ברגע הנכון", body: "שאלות מבורכות. אלא אם מדובר בבטיחות, שומרים אותן לזמן שבו המדריך לא באמצע הדרכה." },
+      { title: "מוכנים ובזמן", body: "מגיעים מוכנים, עם הציוד מסודר, ויודעים מה התפקיד שלכם לפני שהצלילה מתחילה." },
+      { title: "בטיחות ומקצועיות", body: "עוזרים ביוזמה בלי להשתלט, ואף פעם לא חורגים מההכשרה שלכם או מהנחיית המדריך." },
+    ],
+    expectMotto: "אתם כאן כדי ללמוד ולעזור - לא כדי ללמד.",
     nextTitle: "מה אחרי",
     nextBody:
       "הרבה ממשיכים ישר לקורס מדריכים (IDC). אנחנו מרכז PADI 5 Star IDC, אז אפשר להגיע ממתחיל ועד מדריך באותו מקום ועם אותם מדריכים.",
@@ -217,6 +234,18 @@ export const DM_COPY: Record<Language, DmCopy> = {
       { time: "Afternoon", body: "A second dive, a theory session or hands-on practice." },
       { time: "Evening", body: "Fill in your dive log and study." },
     ],
+    expectTitle: "What we expect from our trainees",
+    expectLede:
+      "Next to an instructor, your job is to learn, observe and assist. It's your chance to see different teaching styles and grow into a dive professional.",
+    expects: [
+      { title: "Learn, don't teach", body: "Don't explain skills, correct students or give advice unless the instructor asks you to. Conflicting information confuses students." },
+      { title: "Stay with the class", body: "Keep your attention on the instructor and the students. Your own skills practice comes at another time." },
+      { title: "The instructor leads", body: "Follow their direction. If you disagree, talk to them afterwards - never in front of students." },
+      { title: "Ask at the right moment", body: "Questions are encouraged. Unless it's about safety, save them for when the instructor isn't teaching." },
+      { title: "Ready and on time", body: "Arrive prepared, with your gear sorted, and know your role before the dive starts." },
+      { title: "Safety and professionalism", body: "Help proactively without taking over, and never step beyond your training or the instructor's direction." },
+    ],
+    expectMotto: "You're here to learn and assist - not to teach.",
     nextTitle: "What comes after",
     nextBody:
       "Many go straight on to the instructor course (IDC). We are a PADI 5 Star IDC centre, so you can go from beginner to instructor in one place, with the same instructors.",
@@ -294,6 +323,18 @@ export const DM_COPY: Record<Language, DmCopy> = {
       { time: "Tarde", body: "Una segunda inmersión, una clase de teoría o práctica." },
       { time: "Noche", body: "Rellenas tu diario de inmersiones y estudias." },
     ],
+    expectTitle: "Lo que esperamos de nuestros trainees",
+    expectLede:
+      "Junto a un instructor, tu trabajo es aprender, observar y ayudar. Es tu oportunidad de ver distintos estilos de enseñanza y crecer como profesional del buceo.",
+    expects: [
+      { title: "Aprende, no enseñes", body: "No expliques habilidades, no corrijas alumnos ni des consejos salvo que el instructor te lo pida. La información contradictoria confunde." },
+      { title: "Quédate con la clase", body: "Mantén la atención en el instructor y los alumnos. Tu propia práctica va en otro momento." },
+      { title: "El instructor dirige", body: "Sigue sus indicaciones. Si no estás de acuerdo, háblalo después - nunca delante de los alumnos." },
+      { title: "Pregunta en el momento justo", body: "Las preguntas son bienvenidas. Salvo que sea de seguridad, guárdalas para cuando el instructor no esté enseñando." },
+      { title: "Preparado y puntual", body: "Llega preparado, con tu equipo listo, y conoce tu papel antes de empezar la inmersión." },
+      { title: "Seguridad y profesionalidad", body: "Ayuda con iniciativa sin tomar el control, y nunca vayas más allá de tu formación o de lo que indique el instructor." },
+    ],
+    expectMotto: "Estás aquí para aprender y ayudar - no para enseñar.",
     nextTitle: "Y después",
     nextBody:
       "Muchos siguen directamente con el curso de instructor (IDC). Somos un centro PADI 5 Star IDC, así que puedes pasar de principiante a instructor en el mismo lugar y con los mismos instructores.",
@@ -371,6 +412,18 @@ export const DM_COPY: Record<Language, DmCopy> = {
       { time: "Après-midi", body: "Une deuxième plongée, un cours de théorie ou de la pratique." },
       { time: "Soir", body: "Vous remplissez votre carnet de plongée et vous révisez." },
     ],
+    expectTitle: "Ce que nous attendons de nos stagiaires",
+    expectLede:
+      "Aux côtés d'un instructeur, votre rôle est d'apprendre, d'observer et d'aider. C'est l'occasion de découvrir différents styles d'enseignement et de devenir un professionnel de la plongée.",
+    expects: [
+      { title: "Apprendre, pas enseigner", body: "N'expliquez pas les exercices, ne corrigez pas les élèves et ne donnez pas de conseils sauf si l'instructeur vous le demande. Des infos contradictoires embrouillent les élèves." },
+      { title: "Rester avec le groupe", body: "Gardez votre attention sur l'instructeur et les élèves. Votre propre entraînement se fait à un autre moment." },
+      { title: "L'instructeur dirige", body: "Suivez ses consignes. En cas de désaccord, parlez-lui après - jamais devant les élèves." },
+      { title: "Poser ses questions au bon moment", body: "Les questions sont bienvenues. Sauf pour la sécurité, gardez-les pour quand l'instructeur n'est pas en train d'enseigner." },
+      { title: "Prêt et à l'heure", body: "Arrivez préparé, matériel en ordre, en connaissant votre rôle avant le début de la plongée." },
+      { title: "Sécurité et professionnalisme", body: "Aidez avec initiative sans prendre le contrôle, et ne dépassez jamais votre formation ni les consignes de l'instructeur." },
+    ],
+    expectMotto: "Vous êtes là pour apprendre et aider - pas pour enseigner.",
     nextTitle: "Et après",
     nextBody:
       "Beaucoup enchaînent directement avec le cours d'instructeur (IDC). Nous sommes un centre PADI 5 Star IDC : vous pouvez passer de débutant à instructeur au même endroit, avec les mêmes instructeurs.",

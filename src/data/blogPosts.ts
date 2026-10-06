@@ -580,7 +580,7 @@ const divingBlogPosts: BlogPost[] = [
           "PADI Open Water Diver: ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
           "PADI Advanced Open Water: ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
-          "Peak Performance Buoyancy: ฿5,500 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
+          "Peak Performance Buoyancy: ฿5,000 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver and Deep Diver are ฿9,000 each. Sidemount and DPV are priced on request - ask the team.",
           "PADI Divemaster: ฿40,000 - 16-35 days, the internship period is included. Your first professional certification.",
           "PADI Underwater Photography & Videography: ฿37,000 - 5 days, 10 dives, 1-on-1 instruction.",

@@ -9,6 +9,7 @@ import { diveSites } from "@/data/diveSites";
 import { translations } from "@/i18n/translations";
 import { LANDER_COPY } from "@/lib/landerCopy";
 import { FUN_DIVE_COPY } from "@/lib/funDiveCopy";
+import { CONSERVATION_COPY, SPECIALTY_IMAGE_KEYS, SPECIALTY_PRICES } from "@/lib/conservationCopy";
 
 export type KbRecord = { source: string; text: string };
 
@@ -110,6 +111,27 @@ export function extractKbRecords(): KbRecord[] {
     };
     walk(copy);
     records.push({ source: `lander:fun-dive:${lang}`, text: parts.join("\n") });
+  }
+
+  // ── conservation specialties + Paul's prices (2026-10-06) ────────────────
+  // Prices are numbers in SPECIALTY_PRICES (one source for the cards), so the
+  // string walkers above would never see them - spell them out here.
+  {
+    const en = CONSERVATION_COPY.en;
+    const lines = en.specialties.map((sp, i) => {
+      const p = SPECIALTY_PRICES[SPECIALTY_IMAGE_KEYS[i]];
+      const price = p.withDivesThb
+        ? `${p.thb.toLocaleString("en-US")} THB theory only, ${p.withDivesThb.toLocaleString("en-US")} THB with 2 dives`
+        : `${p.thb.toLocaleString("en-US")} THB`;
+      return `${sp.name} - ${sp.payoff}: ${price}. ${sp.body}`;
+    });
+    records.push({
+      source: "/conservation#specialties",
+      text: [
+        "Conservation specialty courses at Siam Scuba (taught by our conservation instructor Paul; book by WhatsApp, not in the online booking form):",
+        ...lines,
+      ].join("\n"),
+    });
   }
 
   return records;

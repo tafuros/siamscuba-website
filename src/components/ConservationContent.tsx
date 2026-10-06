@@ -5,6 +5,7 @@ import { MessageCircle, ArrowRight, Plus, Clock, MapPin, Sunset, Users } from "l
 import type { ConservationLearn } from "@/lib/conservationCopy";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Price from "@/components/Price";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import {
   buildWhatsAppLink,
@@ -15,6 +16,7 @@ import {
   CONSERVATION_COPY,
   CONSERVATION_IMAGES,
   SPECIALTY_IMAGE_KEYS,
+  SPECIALTY_PRICES,
   type ConservationLang,
 } from "@/lib/conservationCopy";
 
@@ -407,6 +409,7 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
             <div className="mt-12 grid gap-6 md:grid-cols-2">
               {copy.specialties.map((s, i) => {
                 const imgKey = SPECIALTY_IMAGE_KEYS[i];
+                const price = SPECIALTY_PRICES[imgKey];
                 return (
                   <article
                     key={s.name}
@@ -462,10 +465,27 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
                         </p>
                       )}
 
+                      {/* Price (Paul's list, 2026-10-06). Booking still goes
+                          through the enquiry below - these are not in DiveOS. */}
+                      <div className="mt-6 flex flex-wrap items-baseline gap-x-5 gap-y-1">
+                        <p>
+                          <Price thb={price.thb} estimate="inline" className="text-2xl font-semibold tabular-nums text-white" />
+                          {price.withDivesThb && (
+                            <span className="ms-2 text-xs text-white/60">{copy.priceDry}</span>
+                          )}
+                        </p>
+                        {price.withDivesThb && (
+                          <p>
+                            <Price thb={price.withDivesThb} estimate="inline" className="text-2xl font-semibold tabular-nums text-white" />
+                            <span className="ms-2 text-xs text-white/60">{copy.priceWithDives}</span>
+                          </p>
+                        )}
+                      </div>
+
                       {/*
                         The enquiry IS the funnel here. None of these seven
-                        courses exists in the DiveOS catalogue - no product code,
-                        no published price - so there is nothing to send anyone
+                        courses exists in the DiveOS catalogue - no product code
+                        - so there is nothing to send anyone
                         into the wizard for. The prefill names the course because
                         this lands on Paul's personal phone (Ben, 15.08: every
                         WhatsApp destination on this page goes to Paul) and he
@@ -476,7 +496,7 @@ const ConservationContent = ({ lang }: ConservationContentProps) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={onWhatsApp(`conservation_specialty_${i + 1}`)}
-                        className="mt-6 inline-flex items-center gap-2 rounded-full border border-teal-300/40 bg-teal-300/10 px-5 py-2.5 text-sm font-medium text-teal-100 transition-colors hover:border-teal-300/70 hover:bg-teal-300/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70"
+                        className="mt-4 inline-flex items-center gap-2 rounded-full border border-teal-300/40 bg-teal-300/10 px-5 py-2.5 text-sm font-medium text-teal-100 transition-colors hover:border-teal-300/70 hover:bg-teal-300/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300/70"
                       >
                         <MessageCircle className="h-4 w-4" aria-hidden />
                         {copy.ctaAskCourse}

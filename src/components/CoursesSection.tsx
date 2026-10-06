@@ -88,7 +88,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       label: t("courses_specialty"),
       description: t("courses_specialty_desc"),
       courses: [
-        { icon: Feather, title: t("course_ppb"), dialogKey: "Peak Performance Buoyancy", price: 5500, duration: t("dur_1_day"), highlights: [t("hl_ppb_buoyancy"), t("hl_ppb_air"), t("hl_ppb_glide")], hasDetails: true },
+        { icon: Feather, title: t("course_ppb"), dialogKey: "Peak Performance Buoyancy", price: 5000, duration: t("dur_1_day"), highlights: [t("hl_ppb_buoyancy"), t("hl_ppb_air"), t("hl_ppb_glide")], hasDetails: true },
         { icon: Anchor, title: t("course_wreck"), dialogKey: "Wreck Diving", price: 9000, duration: t("dur_2_days"), highlights: [t("hl_wrecks"), t("hl_penetration"), t("hl_specialty_cert")] },
         { icon: ArrowDown, title: t("course_deep"), dialogKey: "Deep Diving", price: 9000, duration: t("dur_2_days"), highlights: [t("hl_beyond_18"), t("hl_gas"), t("hl_deep_plan")] },
         { icon: Moon, title: t("course_night_dive"), dialogKey: "Night Dive", price: 1300, duration: t("dur_1_day"), highlights: [t("hl_night_certified"), t("hl_night_reef"), t("hl_night_guided")] },

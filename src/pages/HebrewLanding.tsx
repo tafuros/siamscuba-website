@@ -180,7 +180,7 @@ const HebrewLanding = () => {
                 שעבר אותו אומר שהפך אותו לצוללן טוב יותר.
               </li>
               <li>
-                <strong>Peak Performance Buoyancy (שיפור ציפה):</strong> 5,500 באט. יום אחד, 2 צלילות. השיפור הכי
+                <strong>Peak Performance Buoyancy (שיפור ציפה):</strong> 5,000 באט. יום אחד, 2 צלילות. השיפור הכי
                 משמעותי בכישורי צלילה לכל הזמן.
               </li>
               <li>

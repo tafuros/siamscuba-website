@@ -189,7 +189,7 @@ const SpanishLanding = () => {
                 buceador.
               </li>
               <li>
-                <strong>Peak Performance Buoyancy (flotabilidad):</strong> 5,500 THB. Un día, 2
+                <strong>Peak Performance Buoyancy (flotabilidad):</strong> 5,000 THB. Un día, 2
                 inmersiones. La mejora más grande que puedes hacer en tu forma de bucear.
               </li>
               <li>

@@ -380,6 +380,28 @@ const DivemasterContent = ({ lang }: DivemasterContentProps) => {
         </div>
       </section>
 
+      {/* ------------------------------------------ what we expect (Paul, 2026-10-06) */}
+      <section className="border-t border-white/10 py-14 sm:py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="font-display text-3xl text-white sm:text-4xl">{c.expectTitle}</h2>
+          <p className="mt-4 max-w-[60ch] leading-relaxed text-white/70">{c.expectLede}</p>
+          <ul className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+            {c.expects.map((e) => (
+              <li key={e.title} className="flex gap-3">
+                <Check className="mt-1 h-4 w-4 shrink-0 text-[#419EBC]" aria-hidden="true" />
+                <div>
+                  <p className="font-semibold text-white">{e.title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-white/65">{e.body}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className={`mt-10 border-s-2 border-[#419EBC] ps-4 font-display text-xl text-white sm:text-2xl ${rtl ? "" : "italic"}`}>
+            {c.expectMotto}
+          </p>
+        </div>
+      </section>
+
       {/* ------------------------------------------------------ what's next */}
       <section className="border-t border-white/10 py-14 sm:py-20">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-2">

@@ -278,7 +278,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       prerequisites: [
         "Open Water certification (or equivalent)",
       ],
-      price: "5,500 THB",
+      price: "5,000 THB",
     },
     "UW Photography & Videography": {
       header: "📸 Extended PADI Digital UW Photographer & Videographer",
@@ -654,7 +654,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       prerequisites: [
         "הסמכת Open Water (או שווה ערך)",
       ],
-      price: "5,500 THB",
+      price: "5,000 THB",
     },
     "UW Photography & Videography": {
       header: "📸 קורס מורחב PADI Digital UW Photographer & Videographer",
@@ -1030,7 +1030,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       prerequisites: [
         "Certificación Open Water (o equivalente)",
       ],
-      price: "5,500 THB",
+      price: "5,000 THB",
     },
     "UW Photography & Videography": {
       header: "📸 Curso ampliado PADI Digital UW Photographer & Videographer",
@@ -1406,7 +1406,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       prerequisites: [
         "Certification Open Water (ou équivalent)",
       ],
-      price: "5,500 THB",
+      price: "5,000 THB",
     },
     "UW Photography & Videography": {
       header: "📸 Cours étendu PADI Digital UW Photographer & Videographer",

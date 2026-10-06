@@ -10,8 +10,9 @@ import { hreflangAlternatesFor } from "@/lib/localeRoutes";
 //
 // Source text is our instructor Paul's, near-verbatim in English (2026-08-07);
 // he/es/fr are translations of it. Two rules held throughout:
-//   - NO PRICES anywhere. They are not published elsewhere on the site and a
-//     second source of truth would drift.
+//   - PRICES since 2026-10-06: Paul sent the price list, so the cards show
+//     them. They live ONCE, in SPECIALTY_PRICES below - never typed into the
+//     copy. (Until then there was no source, hence "no prices" before.)
 //   - PADI course NAMES stay in English in every language. They are the
 //     certification's registered name and what the card in the visitor's hand
 //     will say; only the payoff line and the body are translated.
@@ -77,6 +78,9 @@ export interface ConservationCopy {
    * catalogue, so there is nothing to book - the enquiry is the funnel.
    */
   ctaAskCourse: string;
+  /** AWARE Specialty has two options: theory only, or with 2 dives. */
+  priceDry: string;
+  priceWithDives: string;
 
   landEyebrow: string;
   landTitle: string;
@@ -149,6 +153,22 @@ export const SPECIALTY_IMAGE_KEYS = [
   "buoyancy",
 ] as const;
 
+/**
+ * Paul's price list (2026-10-06), in render order - same order as
+ * SPECIALTY_IMAGE_KEYS. One source for the cards and for Nemo's KB.
+ * Peak Performance Buoyancy is also a course card on the homepage at the same
+ * 5,000 (Ben confirmed Paul's figure over the old 5,500).
+ */
+export const SPECIALTY_PRICES: Record<(typeof SPECIALTY_IMAGE_KEYS)[number], { thb: number; withDivesThb?: number }> = {
+  aware: { thb: 2500, withDivesThb: 4500 },
+  debris: { thb: 5000 },
+  ray: { thb: 5500 },
+  coral: { thb: 5000 },
+  naturalist: { thb: 4500 },
+  fish: { thb: 4500 },
+  buoyancy: { thb: 5000 },
+};
+
 export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
   en: {
     seoTitle: "Conservation Diving on Koh Tao | PADI AWARE with Siam Scuba",
@@ -214,7 +234,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     specEyebrow: "Conservation specialties",
     specTitle: "Practical diving skills, married to marine science",
     specLede:
-      "Each of these gives you the knowledge to better understand - and actively protect - the underwater world. Message us for dates and pricing; we'll tell you honestly which one fits where you are as a diver.",
+      "Each of these gives you the knowledge to better understand - and actively protect - the underwater world. Message us for dates; we'll tell you honestly which one fits where you are as a diver.",
     specialties: [
       {
         name: "PADI AWARE Specialty",
@@ -257,6 +277,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
       },
     ],
     ctaAskCourse: "Ask about this course",
+    priceDry: "Theory only",
+    priceWithDives: "With 2 dives",
 
     landEyebrow: "Sustainability beyond diving",
     landTitle: "Conservation starts on land",
@@ -393,7 +415,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     specEyebrow: "התמחויות שימור",
     specTitle: "מיומנויות צלילה מעשיות, יחד עם מדעי הים",
     specLede:
-      "כל אחת מאלה נותנת לכם את הידע להבין טוב יותר - ולהגן באופן פעיל - על העולם התת-ימי. כתבו לנו לתאריכים ומחירים; נגיד לכם בכנות איזו מהן מתאימה לאיפה שאתם נמצאים כצוללים.",
+      "כל אחת מאלה נותנת לכם את הידע להבין טוב יותר - ולהגן באופן פעיל - על העולם התת-ימי. כתבו לנו לתאריכים; נגיד לכם בכנות איזו מהן מתאימה לאיפה שאתם נמצאים כצוללים.",
     specialties: [
       {
         name: "PADI AWARE Specialty",
@@ -436,6 +458,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
       },
     ],
     ctaAskCourse: "שאלו על הקורס",
+    priceDry: "תיאוריה בלבד",
+    priceWithDives: "עם 2 צלילות",
 
     landEyebrow: "קיימות מעבר לצלילה",
     landTitle: "השימור מתחיל על היבשה",
@@ -572,7 +596,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     specEyebrow: "Especialidades de conservación",
     specTitle: "Habilidades prácticas de buceo, unidas a la ciencia marina",
     specLede:
-      "Cada una te da el conocimiento para entender mejor - y proteger activamente - el mundo submarino. Escríbenos para fechas y precios; te diremos con honestidad cuál encaja con tu nivel actual.",
+      "Cada una te da el conocimiento para entender mejor - y proteger activamente - el mundo submarino. Escríbenos para fechas; te diremos con honestidad cuál encaja con tu nivel actual.",
     specialties: [
       {
         name: "PADI AWARE Specialty",
@@ -615,6 +639,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
       },
     ],
     ctaAskCourse: "Pregunta por este curso",
+    priceDry: "Solo teoría",
+    priceWithDives: "Con 2 inmersiones",
 
     landEyebrow: "Sostenibilidad más allá del buceo",
     landTitle: "La conservación empieza en tierra",
@@ -751,7 +777,7 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
     specEyebrow: "Spécialités de conservation",
     specTitle: "Des compétences concrètes, associées aux sciences marines",
     specLede:
-      "Chacune vous donne les clés pour mieux comprendre - et protéger activement - le monde sous-marin. Écrivez-nous pour les dates et les tarifs ; nous vous dirons honnêtement laquelle correspond à votre niveau.",
+      "Chacune vous donne les clés pour mieux comprendre - et protéger activement - le monde sous-marin. Écrivez-nous pour les dates ; nous vous dirons honnêtement laquelle correspond à votre niveau.",
     specialties: [
       {
         name: "PADI AWARE Specialty",
@@ -794,6 +820,8 @@ export const CONSERVATION_COPY: Record<ConservationLang, ConservationCopy> = {
       },
     ],
     ctaAskCourse: "Renseignez-vous sur ce cours",
+    priceDry: "Théorie seule",
+    priceWithDives: "Avec 2 plongées",
 
     landEyebrow: "La durabilité au-delà de la plongée",
     landTitle: "La conservation commence à terre",

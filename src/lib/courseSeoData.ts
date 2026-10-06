@@ -61,7 +61,7 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
   "peak-performance-buoyancy": {
     title: "PADI Peak Performance Buoyancy – Koh Tao | Siam Scuba",
     description:
-      "Master buoyancy control in Koh Tao with the PADI Peak Performance Buoyancy specialty. Improve air consumption and effortless underwater gliding. ฿5,500.",
+      "Master buoyancy control in Koh Tao with the PADI Peak Performance Buoyancy specialty. Improve air consumption and effortless underwater gliding. ฿5,000.",
     h1: "PADI Peak Performance Buoyancy",
   },
   "wreck-diving": {
