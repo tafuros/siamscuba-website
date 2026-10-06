@@ -539,6 +539,7 @@ export type HoldFailure =
   | "already_captured"
   | "voided"
   | "declined" // the issuer said no
+  | "payer_cannot_pay" // PayPal refused to re-charge the guest's account (a declined, in effect)
   | "provider_error"; // network, credentials, anything else
 
 export type HoldResult =
@@ -591,6 +592,7 @@ export function classifyPaypalError(status: number, body: unknown): { code: Hold
   if (up.includes("ALREADY_CAPTURED")) return { code: "already_captured", message: described };
   if (up.includes("EXPIRED")) return { code: "expired", message: described };
   if (up.includes("VOIDED")) return { code: "voided", message: described };
+  if (up.includes("PAYER_CANNOT_PAY")) return { code: "payer_cannot_pay", message: described };
   if (up.includes("DECLINED") || up.includes("INSTRUMENT_DECLINED")) {
     return { code: "declined", message: described };
   }
@@ -856,6 +858,10 @@ export function holdFailureText(code: HoldFailure, verb: "capture" | "release"):
       return "The authorization was already released, so there is nothing left to charge.";
     case "declined":
       return "The guest's bank declined the charge.";
+    case "payer_cannot_pay":
+      return verb === "capture"
+        ? "The guest's PayPal would not release the 1,000 THB (PayPal's 3-day hold had lapsed and re-charging their account failed). Nothing was charged - approve anyway and collect the deposit at reception, or ask the guest to pay another way."
+        : "PayPal says the guest's account cannot be used for this payment, so there is nothing to release. Nothing was charged.";
     case "not_approved":
       return "The guest never finished approving the payment, so there is no authorization to work with.";
     default:

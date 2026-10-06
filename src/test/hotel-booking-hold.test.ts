@@ -4,6 +4,7 @@ import {
   signToken,
   verifyToken,
   classifyPaypalError,
+  holdFailureText,
   getHoldProvider,
   __resetStateForTests,
   __setSimulatedHoldState,
@@ -448,6 +449,7 @@ describe("PayPal error classification", () => {
     ["expired", "AUTHORIZATION_EXPIRED", "expired"],
     ["voided", "AUTHORIZATION_VOIDED", "voided"],
     ["declined", "INSTRUMENT_DECLINED", "declined"],
+    ["payer cannot pay", "PAYER_CANNOT_PAY", "payer_cannot_pay"],
     ["unapproved order", "ORDER_NOT_APPROVED", "not_approved"],
     ["anything else", "INTERNAL_SERVER_ERROR", "provider_error"],
   ];
@@ -456,6 +458,13 @@ describe("PayPal error classification", () => {
     expect(
       classifyPaypalError(422, { name: "UNPROCESSABLE_ENTITY", details: [{ issue, description: "d" }] }).code,
     ).toBe(code);
+  });
+
+  it("tells Ben what to do when the guest's PayPal will not pay", () => {
+    const text = holdFailureText("payer_cannot_pay", "capture");
+    expect(text).toContain("Nothing was charged");
+    expect(text).toContain("approve anyway");
+    expect(text).not.toMatch(/[\u2013\u2014]/);
   });
 
   it("survives a body that is not the documented shape", () => {
