@@ -151,7 +151,7 @@ const DSD_EN: LanderCopy = {
   uspTiles: [
     {
       icon: "users",
-      title: "Max 2 students per instructor",
+      title: "Small groups",
       body: "Real attention, real safety. Not a 12-person cattle dive.",
     },
     {
@@ -240,7 +240,7 @@ const DSD_ES: LanderCopy = {
   uspTiles: [
     {
       icon: "users",
-      title: "Máximo 2 alumnos por instructor",
+      title: "Grupos pequeños",
       body: "Atención real, seguridad real. No una inmersión masiva de 12 personas.",
     },
     {
