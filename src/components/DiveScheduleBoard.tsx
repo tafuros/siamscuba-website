@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import BookingLink from "@/components/BookingLink";
 import { CheckCircle2, Clock, Users, Waves, AlertCircle } from "lucide-react";
 import { trackBookNowClick } from "@/utils/tracking";
 import Price from "@/components/Price";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { BOARD_UI, localizedTrips, plainTripName } from "@/data/diveScheduleBoardI18n";
 import {
   weeklySchedule,
-  trips,
+  trips as enTrips,
   alsoEveryDay,
   diveSitePath,
   tripBookingPath,
   nextDateFor,
-  SCHEDULE_NOTES,
   type DiveLeg,
   type ScheduleDay,
   type TripSite,
@@ -41,7 +42,35 @@ import {
 
 const slotKey = (dayKey: string, i: number) => `${dayKey}-${i}`;
 
-function SiteName({ name, note }: { name: string; note?: string }) {
+/**
+ * The board's words in the visitor's language (2026-10-06). Facts come from
+ * diveScheduleBoard.ts; diveScheduleBoardI18n.ts swaps only the text. A
+ * context instead of threading `trips` + `ui` through every sub-component.
+ */
+const BoardCtx = createContext({ trips: enTrips, ui: BOARD_UI.en });
+const useBoard = () => useContext(BoardCtx);
+
+/** Renders `{word}` in a trip name as a small, muted "(word)". */
+const TripName = ({ name }: { name: string }) => (
+  <>
+    {name.split(/(\{[^}]+\})/).map((part, i) =>
+      part.startsWith("{") ? (
+        <span key={i} className="text-[0.75em] font-medium text-white/60">({part.slice(1, -1)})</span>
+      ) : (
+        part
+      ),
+    )}
+  </>
+);
+
+/** Clock times are LTR in every language - "05:50 - 11:00" must not flip under rtl. */
+const Times = ({ meet, back }: { meet: string; back: string }) => (
+  <span dir="ltr">{meet} - {back}</span>
+);
+
+function SiteName({ name, note: rawNote }: { name: string; note?: string }) {
+  const { ui } = useBoard();
+  const note = rawNote === "wreck" ? ui.wreck : rawNote;
   const path = diveSitePath(name);
   const label = (
     <>
@@ -107,6 +136,7 @@ function SlotButton({
   onSelect: () => void;
   panelId: string;
 }) {
+  const { trips, ui } = useBoard();
   const trip = trips[tripId];
   return (
     <button
@@ -115,7 +145,7 @@ function SlotButton({
       aria-expanded={active}
       aria-controls={panelId}
       className={[
-        "group w-full rounded-xl border p-3 text-left transition-all",
+        "group w-full rounded-xl border p-3 text-start transition-all",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b2444]",
         active
           ? "border-sky-300/70 bg-sky-400/25 shadow-[0_0_0_1px_rgba(125,211,252,0.35)]"
@@ -125,16 +155,16 @@ function SlotButton({
       ].join(" ")}
     >
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-display text-sm font-bold text-white">{trip.name}</span>
+        <span className="font-display text-sm font-bold text-white"><TripName name={trip.name} /></span>
         {isToday && (
           <span className="rounded-full bg-amber-300/90 px-1.5 py-px text-[9px] font-bold uppercase tracking-wide text-amber-950">
-            Today
+            {ui.today}
           </span>
         )}
       </div>
       <div className="mt-0.5 flex items-center gap-1 text-[11px] font-medium tabular-nums text-sky-200/90">
         <Clock className="h-3 w-3 shrink-0" aria-hidden="true" />
-        {trip.meet} - {trip.back}
+        <Times meet={trip.meet} back={trip.back} />
       </div>
       {trip.boardSites.length > 0 && (
         <p className="mt-2 text-[12px] leading-snug text-white/85">
@@ -150,17 +180,19 @@ function SlotButton({
       )}
       <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-2">
         <span className="text-[11px] text-white/60">
-          {trip.dives} {trip.dives === 1 ? "dive" : "dives"}
+          {trip.dives} {trip.dives === 1 ? ui.dive : ui.dives}
         </span>
         <span className="font-display text-sm font-bold tabular-nums text-white">
           <Price thb={trip.priceThb} estimate="inline" />
         </span>
       </div>
+      {trip.footnote && <p className="mt-1.5 text-[10px] leading-snug text-white/50">{trip.footnote}</p>}
     </button>
   );
 }
 
 function BookButton({ trip, className = "" }: { trip: Trip; className?: string }) {
+  const { ui } = useBoard();
   const to = tripBookingPath(trip);
   return (
     <BookingLink
@@ -171,7 +203,7 @@ function BookButton({ trip, className = "" }: { trip: Trip; className?: string }
         className
       }
     >
-      Book this trip
+      {ui.bookTrip}
     </BookingLink>
   );
 }
@@ -183,6 +215,7 @@ function BookButton({ trip, className = "" }: { trip: Trip; className?: string }
  * date of that weekday, with both preselected in the wizard.
  */
 function BookDayButton({ trip, day }: { trip: Trip; day: ScheduleDay }) {
+  const { ui } = useBoard();
   // The date depends on today's clock, so it is added after mount only.
   const [date, setDate] = useState<string | undefined>(undefined);
   useEffect(() => setDate(nextDateFor(day.key, new Date(), trip.meet)), [day.key, trip.meet]);
@@ -193,7 +226,7 @@ function BookDayButton({ trip, day }: { trip: Trip; day: ScheduleDay }) {
       onClick={() => trackBookNowClick({ location: `${trip.trackingSlot}-day`, product: trip.productCode ?? "", url: to })}
       className="mt-3 flex h-12 w-full items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-[#0b2444] transition-colors hover:bg-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b2444]"
     >
-      Book {day.label} · {trip.name}
+      {ui.bookDay(ui.days[day.key].label, plainTripName(trip.name))}
     </BookingLink>
   );
 }
@@ -201,36 +234,37 @@ function BookDayButton({ trip, day }: { trip: Trip; day: ScheduleDay }) {
 const tripPanelId = (tripId: TripId) => `trip-panel-${tripId}`;
 
 function TripPanel({ trip, dayLabel, active }: { trip: Trip; dayLabel: string; active: boolean }) {
+  const { ui } = useBoard();
   return (
     <div id={tripPanelId(trip.id)} hidden={!active} className="border-t border-white/10 pt-6">
       <div className="grid gap-6 md:grid-cols-[1.1fr_1fr]">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">{dayLabel}</p>
-          <h3 className="font-display text-2xl font-bold text-white">{trip.name}</h3>
+          <h3 className="font-display text-2xl font-bold text-white"><TripName name={trip.name} /></h3>
           <p className="mt-1 text-sm text-white/70">{trip.tagline}</p>
 
           <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
             <div>
-              <dt className="text-[11px] uppercase tracking-wide text-white/50">Meet at the dive center</dt>
-              <dd className="font-semibold tabular-nums text-white">{trip.meet}</dd>
+              <dt className="text-[11px] uppercase tracking-wide text-white/50">{ui.meetLabel}</dt>
+              <dd className="font-semibold tabular-nums text-white"><span dir="ltr">{trip.meet}</span></dd>
             </div>
             <div>
-              <dt className="text-[11px] uppercase tracking-wide text-white/50">Back on the pier</dt>
-              <dd className="font-semibold tabular-nums text-white">{trip.back}</dd>
+              <dt className="text-[11px] uppercase tracking-wide text-white/50">{ui.backLabel}</dt>
+              <dd className="font-semibold tabular-nums text-white"><span dir="ltr">{trip.back}</span></dd>
             </div>
             <div>
-              <dt className="text-[11px] uppercase tracking-wide text-white/50">Dives</dt>
+              <dt className="text-[11px] uppercase tracking-wide text-white/50">{ui.divesLabel}</dt>
               <dd className="font-semibold text-white">{trip.dives}</dd>
             </div>
             <div>
-              <dt className="text-[11px] uppercase tracking-wide text-white/50">Level</dt>
+              <dt className="text-[11px] uppercase tracking-wide text-white/50">{ui.levelLabel}</dt>
               <dd className="font-semibold text-white">{trip.level}</dd>
             </div>
           </dl>
 
           {trip.divePlan.length > 0 && (
             <div className="mt-5">
-              <p className="text-[11px] uppercase tracking-wide text-white/50">The plan</p>
+              <p className="text-[11px] uppercase tracking-wide text-white/50">{ui.plan}</p>
               <ul className="mt-2 space-y-1.5">
                 {trip.divePlan.map((leg) => (
                   <DiveLegLine key={leg.label} leg={leg} />
@@ -241,7 +275,7 @@ function TripPanel({ trip, dayLabel, active }: { trip: Trip; dayLabel: string; a
         </div>
 
         <div className="rounded-2xl bg-white/[0.06] p-5">
-          <p className="text-[11px] uppercase tracking-wide text-white/50">What's included</p>
+          <p className="text-[11px] uppercase tracking-wide text-white/50">{ui.included}</p>
           <ul className="mt-3 space-y-2">
             {trip.includes.map((item) => (
               <li key={item} className="flex items-start gap-2 text-sm text-white/85">
@@ -251,10 +285,12 @@ function TripPanel({ trip, dayLabel, active }: { trip: Trip; dayLabel: string; a
             ))}
           </ul>
 
+          {trip.footnote && <p className="mt-3 text-[11px] leading-snug text-white/55">{trip.footnote}</p>}
+
           {trip.minDivers && (
             <p className="mt-4 flex items-start gap-2 rounded-lg bg-amber-300/10 p-3 text-xs text-amber-100">
               <Users className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              <span>{SCHEDULE_NOTES.refund(trip.minDivers)}</span>
+              <span>{ui.refund(trip.minDivers)}</span>
             </p>
           )}
 
@@ -263,7 +299,7 @@ function TripPanel({ trip, dayLabel, active }: { trip: Trip; dayLabel: string; a
               <span className="font-display text-3xl font-bold tabular-nums text-white">
                 <Price thb={trip.priceThb} estimate="inline" />
               </span>
-              <span className="ml-1 text-sm text-white/60">/ person</span>
+              <span className="ms-1 text-sm text-white/60">{ui.perPerson}</span>
             </p>
             <BookButton trip={trip} />
           </div>
@@ -279,6 +315,9 @@ const boardTrips: TripId[] = Array.from(
 );
 
 const DiveScheduleBoard = () => {
+  const { language } = useLanguage();
+  const ui = BOARD_UI[language] ?? BOARD_UI.en;
+  const trips = useMemo(() => localizedTrips(language), [language]);
   // Fixed default so the SSG HTML and the hydrated client agree. See header note.
   const [selected, setSelected] = useState<string>(slotKey(weeklySchedule[0].key, 0));
   const [todayKey, setTodayKey] = useState<string | null>(null);
@@ -297,17 +336,18 @@ const DiveScheduleBoard = () => {
   const activeTripId = activeDay.slots[activeIndex] ?? activeDay.slots[0];
 
   return (
+    <BoardCtx.Provider value={{ trips, ui }}>
     <div className="overflow-hidden rounded-3xl bg-gradient-to-b from-[#0f3163] to-[#071a33] p-4 shadow-2xl sm:p-6 lg:p-8">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h3 className="font-display text-xl font-bold text-white sm:text-2xl">This week on the boat</h3>
+          <h3 className="font-display text-xl font-bold text-white sm:text-2xl">{ui.title}</h3>
           <p className="mt-1 flex items-center gap-1.5 text-xs text-sky-200/80">
             <Waves className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            <span className="lg:hidden">Pick a day, then tap a trip for times, sites, price and booking</span>
-            <span className="hidden lg:inline">Tap any trip for times, dive sites, what's included and the price</span>
+            <span className="lg:hidden">{ui.hintMobile}</span>
+            <span className="hidden lg:inline">{ui.hintDesktop}</span>
           </p>
         </div>
-        <p className="text-xs text-white/50">{SCHEDULE_NOTES.season}</p>
+        <p className="text-xs text-white/50">{ui.season}</p>
       </div>
 
       {/* MOBILE: an explicit day picker, not a swipe strip.
@@ -337,7 +377,7 @@ const DiveScheduleBoard = () => {
                       : "bg-white/[0.07] text-white/70 hover:bg-white/[0.14]",
                 ].join(" ")}
               >
-                <span>{day.short}</span>
+                <span>{ui.days[day.key].short}</span>
                 <span
                   aria-hidden="true"
                   className={[
@@ -351,8 +391,8 @@ const DiveScheduleBoard = () => {
         </div>
 
         <p className="mt-3 text-center font-display text-base font-bold text-white">
-          {activeDay.label}
-          {todayKey === activeDay.key && <span className="ml-1.5 text-amber-300">· Today</span>}
+          {ui.days[activeDay.key].label}
+          {todayKey === activeDay.key && <span className="ms-1.5 text-amber-300">· {ui.today}</span>}
         </p>
 
         <div className="mt-2 flex flex-col gap-2">
@@ -375,7 +415,7 @@ const DiveScheduleBoard = () => {
         {weeklySchedule.map((day) => (
           <div key={day.key}>
             <p className="mb-2 text-center font-display text-sm font-bold text-white">
-              {day.label}
+              {ui.days[day.key].label}
               {todayKey === day.key && (
                 <span
                   className="ms-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-300 align-middle"
@@ -401,7 +441,7 @@ const DiveScheduleBoard = () => {
 
       <p className="mt-3 flex items-start gap-1.5 text-xs text-white/50">
         <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-        {SCHEDULE_NOTES.weather}
+        {ui.weather}
       </p>
 
       {/* Every trip's panel is in the DOM; only the selected one is shown. */}
@@ -410,7 +450,7 @@ const DiveScheduleBoard = () => {
           <TripPanel
             key={tripId}
             trip={trips[tripId]}
-            dayLabel={activeDay.label}
+            dayLabel={ui.days[activeDay.key].label}
             active={activeTripId === tripId}
           />
         ))}
@@ -418,14 +458,14 @@ const DiveScheduleBoard = () => {
 
       {/* Trips that aren't tied to a weekday. */}
       <div className="mt-8 border-t border-white/10 pt-6">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">Also every day</p>
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">{ui.alsoEveryDay}</p>
         <div className="grid gap-3 sm:grid-cols-2">
           {alsoEveryDay.map((id) => {
             const trip = trips[id];
             return (
               <div key={id} className="rounded-xl border border-white/10 bg-white/[0.06] p-4">
                 <div className="flex items-baseline justify-between gap-2">
-                  <h4 className="font-display text-sm font-bold text-white">{trip.name}</h4>
+                  <h4 className="font-display text-sm font-bold text-white"><TripName name={trip.name} /></h4>
                   <span className="font-display text-sm font-bold tabular-nums text-white">
                     <Price thb={trip.priceThb} estimate="inline" />
                   </span>
@@ -433,7 +473,7 @@ const DiveScheduleBoard = () => {
                 <p className="mt-1 text-xs text-white/60">{trip.tagline}</p>
                 <p className="mt-2 flex items-center gap-1 text-[11px] tabular-nums text-sky-200/80">
                   <Clock className="h-3 w-3 shrink-0" aria-hidden="true" />
-                  {trip.meet} - {trip.back}
+                  <Times meet={trip.meet} back={trip.back} />
                 </p>
                 <ul className="mt-2 space-y-1">
                   {trip.includes.map((item) => (
@@ -452,6 +492,7 @@ const DiveScheduleBoard = () => {
         </div>
       </div>
     </div>
+    </BoardCtx.Provider>
   );
 };
 

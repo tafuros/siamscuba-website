@@ -75,6 +75,8 @@ export interface Trip {
   boardSites: TripSite[];
   /** Muted tail after the card's site list, e.g. "+ more island reefs". */
   boardMore?: string;
+  /** Small asterisk note at the end of the card + in the detail panel. */
+  footnote?: string;
   /** Per-dive plan, shown in the detail panel. Empty for trips with no dives. */
   divePlan: DiveLeg[];
   /** Renders the card in the warm accent - reserved for the week's flagship. */
@@ -153,6 +155,8 @@ export const trips: Record<TripId, Trip> = {
     trackingSlot: "board_morning_fun_dive",
     boardSites: [CHUMPHON, SOUTHWEST, SHARK_ISLAND],
     boardMore: "+ a reef or wreck",
+    // Ben 2026-10-06.
+    footnote: "*Chumphon runs with a minimum of 4 divers and depends on the weather",
     divePlan: [
       {
         label: "Dive 1",
