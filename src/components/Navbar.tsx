@@ -57,6 +57,11 @@ const Navbar = () => {
     pathname: location.pathname,
   });
 
+  // The homepage in the reader's language (2026-10-06): /he and /es are the
+  // homepage too, so "home" from a Hebrew page must not drop to English "/".
+  const homePath = language === "he" ? "/he" : language === "es" ? "/es" : "/";
+  const onHome = ["/", "/he", "/es"].includes(location.pathname.replace(/(.)\/$/, "$1"));
+
   const navLinks = [
     { label: t("nav_courses"), href: "#courses" },
     { label: t("nav_fun_diving"), href: "#fun-diving" },
@@ -85,12 +90,12 @@ const Navbar = () => {
   const handleNav = (href: string) => {
     setMobileOpen(false);
     if (href.startsWith("/")) return;
-    if (location.pathname !== "/") {
+    if (!onHome) {
       // Client-side navigation, NOT window.location (Ben, 2026-09-24): a full
       // reload from /es dropped him on the entry gate mid-visit and threw away
       // the language he was reading in. The home route is lazy, so poll briefly
       // for the section before scrolling to it.
-      navigate("/");
+      navigate(homePath);
       scrollToSectionWhenReady(href);
       return;
     }
@@ -111,9 +116,9 @@ const Navbar = () => {
               homepage it reopens the welcome gate (and scrolls to top), so the
               brand mark doubles as the way back to the "front door". */}
           <Link
-            to="/"
+            to={homePath}
             onClick={() => {
-              if (location.pathname === "/") {
+              if (onHome) {
                 window.scrollTo({ top: 0, behavior: "smooth" });
                 openGate();
               }

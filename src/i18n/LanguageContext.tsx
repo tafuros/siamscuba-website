@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { useLocation } from "react-router-dom";
+import { Head } from "vite-react-ssg";
 import { translations, rtlLanguages, type Language } from "./translations";
 
 interface LanguageContextType {
@@ -87,13 +88,18 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   // EVERY page load. So: start at "en", then adopt the saved language in a
   // layout effect - it runs before the browser paints, so there is no visible
   // English flash, and hydration always succeeds.
-  const [language, setLanguageState] = useState<Language>("en");
-
   // Locale prefix of the CURRENT route ("/es/..." -> "es"), reactive to SPA
   // navigations. LanguageProvider renders inside the route element (App), so
   // the router context is always available here.
   const { pathname } = useLocation();
   const urlLanguage = pathLanguage(pathname);
+
+  // 2026-10-06: a locale-prefixed route STARTS in its own language. The URL is
+  // identical at build time and on the client, so this cannot mismatch on
+  // hydration - unlike localStorage, which is why unprefixed pages still start
+  // at "en". Before this, /he and /es were prerendered with English t() strings
+  // (and <html lang="en">), so Google never saw the translated homepage.
+  const [language, setLanguageState] = useState<Language>(() => urlLanguage ?? "en");
   const didInitRef = useRef(false);
 
   useIsomorphicLayoutEffect(() => {
@@ -158,6 +164,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t, isRTL }}>
+      {/* Baked into the prerendered HTML too: every /he page used to ship
+          <html lang="en"> with no dir, a wrong language signal to Google. */}
+      <Head htmlAttributes={{ lang: language, dir: isRTL ? "rtl" : "ltr" }} />
       {children}
     </LanguageContext.Provider>
   );

@@ -20,8 +20,9 @@ import type { Language } from "@/i18n/translations";
  * see localizedPath below.
  */
 export const LOCALE_FAMILIES: Partial<Record<Language, string>>[] = [
-  // Homepage / language landing pages. "/" is the multilingual homepage, so it
-  // doubles as the English + French destination.
+  // Homepage. Since 2026-10-06 /he and /es are the SAME homepage prerendered
+  // in Hebrew / Spanish - real translated twins. French has no URL of its own:
+  // "/" translates itself into French through t().
   { en: "/", he: "/he", es: "/es" },
   { en: "/discover-scuba-diving", es: "/es/discover-scuba-diving", he: "/he/discover-scuba-diving" },
   { en: "/open-water-course", es: "/es/open-water-course", he: "/he/open-water-course" },
@@ -77,7 +78,10 @@ const SITE_URL = "https://siamscuba.com";
  * the homepage is the only honest destination when a visitor leaves one of
  * them. Hence the check is on the SOURCE path, not on the family.
  */
-const SELF_TRANSLATING = new Set(["/"]);
+// 2026-10-06: EMPTY. "/" now has real he/es twins (/he, /es are the homepage,
+// the guides moved to /he|es/koh-tao-diving-guide), so the switcher SHOULD
+// navigate between them. Kept as the hook for any future self-translating page.
+const SELF_TRANSLATING = new Set<string>();
 
 /** Strip a trailing slash so "/es/fun-dives/" matches "/es/fun-dives". */
 const normalize = (pathname: string) =>
@@ -151,14 +155,24 @@ export const HOME_HREFLANG_ALTERNATES = hreflangAlternatesFor("/");
  * people it was written for) rather than a hijacked language control.
  */
 export function languageGuidePath(lang: Language): string | null {
-  if (lang !== "he" && lang !== "es") return null;
-  return LOCALE_FAMILIES[0][lang] ?? null;
+  return GUIDE_PATHS[lang] ?? null;
 }
+
+/** The long-form guides, moved off /he and /es on 2026-10-06. */
+const GUIDE_PATHS: Partial<Record<Language, string>> = {
+  he: "/he/koh-tao-diving-guide",
+  es: "/es/koh-tao-diving-guide",
+};
+
+const HOME_FAMILY = LOCALE_FAMILIES[0];
 
 export function localizedPath(pathname: string, lang: Language): string | null {
   // A page that translates itself is never left behind - see SELF_TRANSLATING.
   if (SELF_TRANSLATING.has(normalize(pathname))) return null;
   const family = familyFor(pathname);
   if (!family) return null;
+  // Homepage in a language with no URL of its own (French): go to "/", which
+  // translates itself. Staying on /he would keep the URL's Hebrew winning.
+  if (family === HOME_FAMILY) return family[lang] ?? HOME_FAMILY.en ?? null;
   return family[lang] ?? null;
 }

@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
-import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
 import { ORG_LOGO } from "@/lib/brand";
 
 const SPANISH_WHATSAPP_HREF = buildWhatsAppLink({ offer: "general", lang: "es" });
@@ -59,7 +58,8 @@ const SpanishLanding = () => {
         description="Bucear en Koh Tao en español: cursos PADI desde 2,600 THB, máx. 4 alumnos por instructor, depósito pequeño y barcos propios. Instructores en español."
         ogType="article"
         jsonLd={articleSchema}
-        hreflangAlternates={HOME_HREFLANG_ALTERNATES}
+        // No hreflang: since 2026-10-06 this guide has its own URL and no
+        // translated twin (the he and es guides are different articles).
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Buceo en Koh Tao" },

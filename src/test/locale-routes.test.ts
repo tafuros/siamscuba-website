@@ -39,11 +39,14 @@ describe("localizedPath", () => {
   // translations of the homepage, so the switcher must never jump there from
   // "/" - the homepage renders every language itself. Ben hit this as "tapping
   // Hebrew opens a Koh Tao diving explainer instead of translating the page".
-  it("never navigates away from the self-translating homepage", () => {
-    expect(localizedPath("/", "he")).toBeNull();
-    expect(localizedPath("/", "es")).toBeNull();
-    expect(localizedPath("/", "en")).toBeNull();
-    expect(localizedPath("/", "fr")).toBeNull();
+  // 2026-10-06: /he and /es ARE the homepage in Hebrew / Spanish, so the
+  // switcher moves between them. French has no URL - "/" translates itself.
+  it("moves between the homepage's real twins", () => {
+    expect(localizedPath("/", "he")).toBe("/he");
+    expect(localizedPath("/", "es")).toBe("/es");
+    expect(localizedPath("/", "en")).toBe("/");
+    expect(localizedPath("/", "fr")).toBe("/");
+    expect(localizedPath("/he", "fr")).toBe("/");
   });
 
   // ...but the guides CAN'T translate themselves (hardcoded single-language
@@ -69,7 +72,6 @@ describe("localizedPath", () => {
   // French only exists for fun-dives. Returning null keeps the switcher on the
   // current page instead of inventing /fr/open-water-course.
   it("returns null when the target language has no twin", () => {
-    expect(localizedPath("/", "fr")).toBeNull();
     expect(localizedPath("/open-water-course", "fr")).toBeNull();
     expect(localizedPath("/fun-dives", "fr")).toBe("/fr/fun-dives");
   });
@@ -87,8 +89,8 @@ describe("localizedPath", () => {
 // landers were.
 describe("languageGuidePath", () => {
   it("offers each guide to the language it was written for", () => {
-    expect(languageGuidePath("he")).toBe("/he");
-    expect(languageGuidePath("es")).toBe("/es");
+    expect(languageGuidePath("he")).toBe("/he/koh-tao-diving-guide");
+    expect(languageGuidePath("es")).toBe("/es/koh-tao-diving-guide");
   });
 
   it("has nothing to offer English and French - there is no such guide", () => {
@@ -141,9 +143,17 @@ describe("homepage hreflang cluster", () => {
   // The switcher no longer routes between "/", /he and /es, but they remain one
   // hreflang cluster - that is an SEO annotation about language targeting, not
   // a claim that the switcher can move between them.
-  it("survives the self-translating-homepage rule", () => {
+  it("is the same cluster from the English homepage", () => {
     expect(hreflangAlternatesFor("/")).toEqual(HOME_HREFLANG_ALTERNATES);
-    expect(localizedPath("/", "he")).toBeNull();
+  });
+
+  // The guides left the cluster on 2026-10-06: different articles, no twins.
+  it("is not claimed by the moved guides", () => {
+    expect(hreflangAlternatesFor("/he/koh-tao-diving-guide")).toBeUndefined();
+    for (const page of ["HebrewLanding.tsx", "SpanishLanding.tsx"]) {
+      const src = readFileSync(resolve(__dirname, "../pages", page), "utf8");
+      expect(src.includes("HOME_HREFLANG_ALTERNATES"), page).toBe(false);
+    }
   });
 
   it("is undefined for pages with no locale twins", () => {
@@ -154,7 +164,8 @@ describe("homepage hreflang cluster", () => {
   // The derivation only pays off if all three pages actually consume it. A page
   // that hand-rolls its own object (or drops the prop) breaks reciprocity
   // without breaking anything a unit test would otherwise notice.
-  const CLUSTER_PAGES = ["Index.tsx", "HebrewLanding.tsx", "SpanishLanding.tsx"];
+  // /, /he and /es all render Index since 2026-10-06.
+  const CLUSTER_PAGES = ["Index.tsx"];
   for (const page of CLUSTER_PAGES) {
     it(`${page} passes the shared cluster to <Seo>`, () => {
       const src = readFileSync(resolve(__dirname, "../pages", page), "utf8");

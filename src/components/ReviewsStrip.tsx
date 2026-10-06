@@ -4,6 +4,18 @@ import type { Language } from "@/i18n/translations";
 import { googleReviews } from "@/data/googleReviews";
 import { REVIEW_STATS } from "@/data/reviewStats";
 
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+/** "March 2026" -> "מרץ 2026" / "marzo de 2026". Unknown shapes pass through. */
+function localizeMonthYear(date: string, language: Language): string {
+  const m = /^([A-Za-z]+) (\d{4})$/.exec(date);
+  const month = m ? MONTHS.indexOf(m[1]) : -1;
+  if (language === "en" || month < 0) return date;
+  return new Intl.DateTimeFormat(language, { month: "long", year: "numeric", timeZone: "UTC" }).format(
+    new Date(Date.UTC(Number(m![2]), month, 15)),
+  );
+}
+
 /**
  * Compact social proof for the trimmed homepage (Ben 2026-10-04, mockup D).
  *
@@ -72,7 +84,7 @@ const ReviewsStrip = () => {
               <Stars />
               <p className="mt-2 text-sm leading-relaxed text-foreground/85">“{r!.text}”</p>
               <p className="mt-2 text-xs text-muted-foreground">
-                {r!.name} · {r!.country} · Google · {r!.date}
+                {r!.name} · {r!.country} · Google · {localizeMonthYear(r!.date, language)}
               </p>
             </li>
           ))}

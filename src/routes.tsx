@@ -80,16 +80,20 @@ export const routes: RouteRecord[] = [
         entry: "src/pages/DiveSiteHePage.tsx",
         getStaticPaths: () => diveSites.filter((s) => s.he).map((s) => `he/dive-sites/${s.slug}`),
       },
+      // 2026-10-06 (Ben): /he and /es ARE the homepage, prerendered in Hebrew /
+      // Spanish (same Index component - the language comes from the URL, see
+      // LanguageContext). They used to be standalone long-form guides wrongly
+      // declared as the homepage's hreflang twins; the guides moved to their
+      // own URLs just below.
+      { path: "he", element: <Index />, entry: "src/pages/Index.tsx" },
+      { path: "es", element: <Index />, entry: "src/pages/Index.tsx" },
       {
-        path: "he",
+        path: "he/koh-tao-diving-guide",
         lazy: lazyDefault(() => import("./pages/HebrewLanding")),
         entry: "src/pages/HebrewLanding.tsx",
       },
-      // Spanish index. The /es/* sub-routes (landers + blog) shipped long
-      // before this did, so /es itself fell through to :courseSlug and served
-      // NotFound - the entry point of the language with the most traffic.
       {
-        path: "es",
+        path: "es/koh-tao-diving-guide",
         lazy: lazyDefault(() => import("./pages/SpanishLanding")),
         entry: "src/pages/SpanishLanding.tsx",
       },

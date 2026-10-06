@@ -68,7 +68,7 @@ const FunDivingSection = () => {
         <DiveScheduleBoard />
 
         <p className="text-center text-xs text-muted-foreground mt-6">
-          ✳️ For certified divers · Snorkellers are welcome on the boat
+          {t("fun_certified_note")}
         </p>
       </div>
     </section>

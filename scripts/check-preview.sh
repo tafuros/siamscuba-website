@@ -142,6 +142,11 @@ expect "/scuba-review"                               200
 expect "/divemaster-course"                         200 "Divemaster"
 expect "/he/divemaster-course"                      200
 expect "/es/divemaster-course"                      200
+# 2026-10-06: /he + /es are the homepage, the guides moved to their own URLs.
+expect "/he"                                        200
+expect "/es"                                        200
+expect "/he/koh-tao-diving-guide"                   200
+expect "/es/koh-tao-diving-guide"                   200
 expect "/fr/divemaster-course"                      200
 expect "/he/dive-sites/sail-rock"                   200 "סייל רוק"
 

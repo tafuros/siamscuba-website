@@ -51,20 +51,12 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/blog", changefreq: "weekly", priority: 0.8, lastmod: today },
     { loc: "/dive-sites", changefreq: "monthly", priority: 0.8, lastmod: today },
     { loc: "/fun-dive-booking", changefreq: "monthly", priority: 0.9, lastmod: today },
-    {
-      loc: "/he",
-      changefreq: "monthly",
-      priority: 0.85,
-      lastmod: today,
-      alternates: HOME_HREFLANG_ALTERNATES,
-    },
-    {
-      loc: "/es",
-      changefreq: "monthly",
-      priority: 0.85,
-      lastmod: today,
-      alternates: HOME_HREFLANG_ALTERNATES,
-    },
+    // /he and /es are the homepage in Hebrew / Spanish since 2026-10-06.
+    { loc: "/he", changefreq: "weekly", priority: 0.95, lastmod: today, alternates: HOME_HREFLANG_ALTERNATES },
+    { loc: "/es", changefreq: "weekly", priority: 0.95, lastmod: today, alternates: HOME_HREFLANG_ALTERNATES },
+    // The long-form guides that used to live on /he and /es.
+    { loc: "/he/koh-tao-diving-guide", changefreq: "monthly", priority: 0.8, lastmod: today, hreflangs: ["he"] },
+    { loc: "/es/koh-tao-diving-guide", changefreq: "monthly", priority: 0.8, lastmod: today, hreflangs: ["es"] },
     { loc: "/privacy", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/data-deletion", changefreq: "yearly", priority: 0.2, lastmod: today },

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { pathLanguage } from "@/i18n/LanguageContext";
 import Seo from "@/components/Seo";
 import { COURSE_SEO } from "@/lib/courseSeoData";
 import { COURSE_TO_SLUG } from "@/lib/courseSlugMap";
@@ -21,13 +22,35 @@ const HOME_SEO = {
     "PADI 5-Star dive center on Koh Tao. Two custom dive boats, max 4:1 student-to-instructor ratio, flexible schedules. Open Water to Divemaster courses.",
 };
 
+/**
+ * /he and /es render this same homepage (2026-10-06). Their <title> and
+ * description follow the URL, not the visitor's stored preference: "/" must
+ * keep its English head even for a returning Hebrew reader, or the canonical
+ * English page would ship a Hebrew title.
+ */
+const HOME_SEO_BY_LANG = {
+  he: {
+    title: "סיאם סקובה | מרכז צלילה PADI 5 כוכבים בקוטאו, תאילנד",
+    description:
+      "מרכז צלילה PADI 5 כוכבים בקוטאו. שתי סירות צלילה פרטיות, עד 4 תלמידים למדריך, צלילות כיף (מודרכות) כל יום וקורסים מצלילת היכרות ועד Divemaster.",
+  },
+  es: {
+    title: "Siam Scuba | Centro de buceo PADI 5 estrellas en Koh Tao, Tailandia",
+    description:
+      "Centro de buceo PADI 5 estrellas en Koh Tao. Dos barcos de buceo propios, máximo 4 alumnos por instructor, fun dives cada día y cursos desde el bautismo hasta Divemaster.",
+  },
+} as const;
+
 const Index = ({ courseOverride }: { courseOverride?: string }) => {
   const [searchParams] = useSearchParams();
   const courseParam = courseOverride || searchParams.get("course");
 
   const courseSlug = courseOverride ? COURSE_TO_SLUG[courseOverride] : undefined;
   const courseSeo = courseSlug ? COURSE_SEO[courseSlug] : undefined;
-  const seo = courseSeo || HOME_SEO;
+  const { pathname } = useLocation();
+  const routeLang = pathLanguage(pathname);
+  const homeSeo = routeLang === "he" || routeLang === "es" ? HOME_SEO_BY_LANG[routeLang] : HOME_SEO;
+  const seo = courseSeo || homeSeo;
 
   useEffect(() => {
     if (courseParam) {

@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
-import { HOME_HREFLANG_ALTERNATES } from "@/lib/localeRoutes";
 import { ORG_LOGO } from "@/lib/brand";
 
 const HEBREW_WHATSAPP_HREF = buildWhatsAppLink({ offer: "general", lang: "he" });
@@ -59,7 +58,8 @@ const HebrewLanding = () => {
         description="מדריך הצלילה הישראלי לקוטאו - מחירי קורסי PADI מ-2,600 באט, יחס מדריך 1:4, מקדמה קטנה והיתרה באי, סירות צלילה פרטיות. ספרי PADI גם בעברית."
         ogType="article"
         jsonLd={articleSchema}
-        hreflangAlternates={HOME_HREFLANG_ALTERNATES}
+        // No hreflang: since 2026-10-06 this guide has its own URL and no
+        // translated twin (the he and es guides are different articles).
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "צלילה בקוטאו" },

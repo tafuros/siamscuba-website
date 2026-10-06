@@ -240,6 +240,11 @@ type TranslationStrings = {
   footer_links: string;
   footer_rights: string;
   footer_accessibility: string;
+  footer_privacy: string;
+  footer_terms: string;
+  footer_data_deletion: string;
+  fun_certified_note: string;
+  course_dsd_subtitle: string;
 
   // Search
   search_placeholder: string;
@@ -481,6 +486,11 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_links: "Quick Links",
     footer_rights: "All rights reserved.",
     footer_accessibility: "Accessibility",
+    footer_privacy: "Privacy Policy",
+    footer_terms: "Terms of Service",
+    footer_data_deletion: "Data Deletion",
+    fun_certified_note: "✳️ For certified divers · Snorkellers are welcome on the boat",
+    course_dsd_subtitle: "One Day Experience",
     search_placeholder: "Search courses, diving, boats...",
     search_no_results: "No results found.",
     share_button: "Share",
@@ -712,6 +722,11 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_links: "קישורים מהירים",
     footer_rights: "כל הזכויות שמורות.",
     footer_accessibility: "הצהרת נגישות",
+    footer_privacy: "מדיניות פרטיות",
+    footer_terms: "תנאי שימוש",
+    footer_data_deletion: "מחיקת מידע",
+    fun_certified_note: "✳️ לצוללים מוסמכים · שנורקלרים מוזמנים להצטרף לסירה",
+    course_dsd_subtitle: "חוויה של יום אחד",
     search_placeholder: "חפש קורסים, צלילה, סירות...",
     search_no_results: "לא נמצאו תוצאות.",
     share_button: "שתף",
@@ -943,6 +958,11 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_links: "Enlaces Rápidos",
     footer_rights: "Todos los derechos reservados.",
     footer_accessibility: "Accesibilidad",
+    footer_privacy: "Política de privacidad",
+    footer_terms: "Términos del servicio",
+    footer_data_deletion: "Eliminación de datos",
+    fun_certified_note: "✳️ Para buceadores certificados · Los que hacen snorkel son bienvenidos en el barco",
+    course_dsd_subtitle: "Experiencia de un día",
     search_placeholder: "Buscar cursos, buceo, barcos...",
     search_no_results: "No se encontraron resultados.",
     share_button: "Compartir",
@@ -1174,6 +1194,11 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_links: "Liens Rapides",
     footer_rights: "Tous droits réservés.",
     footer_accessibility: "Accessibilité",
+    footer_privacy: "Politique de confidentialité",
+    footer_terms: "Conditions d'utilisation",
+    footer_data_deletion: "Suppression des données",
+    fun_certified_note: "✳️ Pour plongeurs certifiés · Les snorkelers sont les bienvenus sur le bateau",
+    course_dsd_subtitle: "Expérience d'une journée",
     search_placeholder: "Rechercher cours, plongée, bateaux...",
     search_no_results: "Aucun résultat trouvé.",
     share_button: "Partager",
