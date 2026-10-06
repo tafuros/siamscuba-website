@@ -19,7 +19,7 @@ const FunDivingSection = () => {
     <section id="fun-diving" className="section-padding bg-ocean-surface relative overflow-hidden isolate">
       <AmbientReviews startIndex={2} count={4} />
       <div className="container mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mx-auto text-center mb-12">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mx-auto text-center mb-6 sm:mb-12">
           <p className="text-primary font-body text-sm uppercase tracking-[0.2em] mb-2">{t("fun_label")}</p>
           <div className="flex items-center justify-center gap-2">
             <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">{t("fun_title")}</h2>
@@ -46,19 +46,20 @@ const FunDivingSection = () => {
               <Share2 className="h-4 w-4" />
             </Button>
           </div>
-          <p className="mt-4 text-muted-foreground">{t("fun_subtitle")}</p>
+          <p className="mt-2 text-sm text-muted-foreground sm:mt-4 sm:text-base">{t("fun_subtitle")}</p>
         </motion.div>
 
-        {/* Features row */}
-        <div className="max-w-3xl mx-auto mb-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        {/* Features row - three across on phones too (Ben 2026-10-06): stacked
+            they took a full phone screen before the board. */}
+        <div className="max-w-3xl mx-auto mb-6 sm:mb-12">
+          <div className="grid grid-cols-3 gap-2 sm:gap-8">
             {features.map((item, i) => (
               <motion.div key={item.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
-                  <item.icon className="h-7 w-7 text-primary" />
+                <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 sm:mb-3 sm:h-14 sm:w-14 sm:rounded-2xl">
+                  <item.icon className="h-5 w-5 text-primary sm:h-7 sm:w-7" />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-foreground">{item.label}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{item.desc}</p>
+                <h3 className="font-display text-[13px] font-semibold leading-tight text-foreground sm:text-lg">{item.label}</h3>
+                <p className="mt-1 text-[11px] leading-snug text-muted-foreground sm:text-sm">{item.desc}</p>
               </motion.div>
             ))}
           </div>

@@ -327,23 +327,7 @@ const DivemasterContent = ({ lang }: DivemasterContentProps) => {
       <section className="border-t border-white/10 bg-black/30 py-14 sm:py-20">
         <div className="container mx-auto px-4">
           <h2 className="font-display text-3xl text-white sm:text-4xl">{c.dayTitle}</h2>
-          {/* A dive profile: descend, bottom time, ascend - one leg per part of the day */}
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 900 90"
-            preserveAspectRatio="none"
-            className={`mt-8 hidden h-20 w-full sm:block ${rtl ? "-scale-x-100" : ""}`}
-          >
-            <path
-              d="M0 8 H40 L110 70 H230 L300 8 H340 L400 52 H520 L580 8 H620 L660 30 H800 L860 8 H900"
-              fill="none"
-              stroke="#419EBC"
-              strokeWidth="2"
-              vectorEffect="non-scaling-stroke"
-            />
-            <line x1="0" y1="8" x2="900" y2="8" stroke="rgba(255,255,255,0.15)" strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
-          </svg>
-          <ol className="mt-6 grid gap-6 sm:mt-2 sm:grid-cols-3">
+          <ol className="mt-6 grid gap-6 sm:mt-8 sm:grid-cols-3">
             {c.day.map((d) => (
               <li key={d.time} className="border-s-2 border-[#419EBC]/50 ps-4 sm:border-s-0 sm:ps-0">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#419EBC]">{d.time}</span>
