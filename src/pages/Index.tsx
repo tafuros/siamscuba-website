@@ -35,9 +35,9 @@ const HOME_SEO_BY_LANG = {
       "מרכז צלילה PADI 5 כוכבים בקוטאו. שתי סירות צלילה פרטיות, עד 4 תלמידים למדריך, צלילות כיף (מודרכות) כל יום וקורסים מצלילת היכרות ועד Divemaster.",
   },
   es: {
-    title: "Siam Scuba | Centro de buceo PADI 5 estrellas en Koh Tao, Tailandia",
+    title: "Siam Scuba | Centro de buceo PADI 5 estrellas en Koh Tao",
     description:
-      "Centro de buceo PADI 5 estrellas en Koh Tao. Dos barcos de buceo propios, máximo 4 alumnos por instructor, fun dives cada día y cursos desde el bautismo hasta Divemaster.",
+      "Centro de buceo PADI 5 estrellas en Koh Tao. Dos barcos propios, máximo 4 alumnos por instructor, fun dives cada día y cursos del bautismo a Divemaster.",
   },
 } as const;
 

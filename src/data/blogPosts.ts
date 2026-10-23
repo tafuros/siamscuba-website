@@ -29,6 +29,11 @@ export interface BlogPost {
   seoTitle?: string;
   category: "Food" | "Beaches" | "Activities" | "Nightlife" | "Diving";
   excerpt: string;
+  /**
+   * Search-result description (70-155 chars). Falls back to `excerpt`, which stays the
+   * card/preview text. Set it when the excerpt is long or written for the blog index.
+   */
+  seoDescription?: string;
   coverImage: string;
   date: string;
   sections: BlogSection[];
@@ -69,7 +74,7 @@ export const blogPosts: BlogPost[] = [
     title: "כוכב ראשון בקוטאו – המדריך המלא לקורס Open Water בתאילנד",
     seoTitle: "כוכב ראשון בקוטאו - קורס Open Water בתאילנד",
     category: "Diving",
-    excerpt: "חולמים על כוכב ראשון בתאילנד? קוטאו היא בירת הצלילה של דרום-מזרח אסיה — ואצלנו תקבלו הסמכת PADI בקבוצות קטנות, מדריכים צמודים ושתי סירות צלילה פרטיות.",
+    excerpt: "חולמים על כוכב ראשון בתאילנד? קוטאו היא בירת הצלילה של דרום-מזרח אסיה, ואצלנו תקבלו הסמכת PADI בקבוצות קטנות ושתי סירות צלילה פרטיות.",
     coverImage: "/blog/open-water-course-koh-tao.jpg",
     date: "2026-03-29",
     sections: [
@@ -114,7 +119,7 @@ export const blogPosts: BlogPost[] = [
           "האם צריך ניסיון קודם? לא. הקורס מיועד לאנשים שמעולם לא צללו. אין צורך בניסיון שחייה מקצועי — מספיק שאתם מרגישים בנוח במים.",
           "מה גיל המינימום? 10 שנים לקורס Junior Open Water, 15 שנים לקורס הסטנדרטי.",
           "כמה זמן תקפה ההסמכה? ההסמכה תקפה לכל החיים. אין צורך בחידוש.",
-          "אפשר להזמין מראש מישראל? כן — פנו אלינו בוואטסאפ ואנחנו נדאג לכל הפרטים לפני שתנחתו בקוטאו.",
+          "אפשר להזמין מראש מישראל? כן - כל הפרטים, התאריכים והמחיר נמצאים [בעמוד קורס כוכב ראשון](/he/open-water-course), ואפשר גם לפנות אלינו בוואטסאפ ואנחנו נדאג לכל הפרטים לפני שתנחתו בקוטאו. עוד לא בטוחים שצלילה בשבילכם? התחילו מ[צלילת היכרות](/he/discover-scuba-diving).",
         ],
       },
     ],
@@ -556,7 +561,9 @@ const divingBlogPosts: BlogPost[] = [
   {
     slug: "koh-tao-diving-cost-guide",
     title: "How Much Does Diving Cost in Koh Tao? The Honest 2026 Price Guide",
-    seoTitle: "Koh Tao Diving Cost - 2026 Price Guide",
+    seoTitle: "Koh Tao Diving Prices 2026 - Every PADI Course",
+    seoDescription:
+      "Open Water 12,000 THB, Advanced 11,000, fun dives 2,000, Divemaster 40,000 - every Koh Tao course price for 2026, plus real daily living costs.",
     category: "Diving",
     excerpt: "Real prices for every PADI course and dive package on Koh Tao - plus daily living costs and the hidden fees you should watch for at other shops.",
     coverImage: "/blog/koh-tao-diving-cost-divers.webp",
@@ -574,15 +581,15 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Honest price breakdown for every PADI course on Koh Tao",
         paragraphs: [
           "Here's what each course costs at Siam Scuba in 2026. Every price below includes all gear rental, boat trips, certification fees, and tax. No surcharges added at the shop.",
-          "Discover Scuba Diving: ฿2,600 for the first dive, +฿1,000 for an optional second the same day - One day, no certification. An easy shallow-water start plus your ocean dives in calm water. Best if you're not sure you'll like diving.",
+          "[Discover Scuba Diving](/discover-scuba): ฿2,600 for the first dive, +฿1,000 for an optional second the same day - One day, no certification. An easy shallow-water start plus your ocean dives in calm water. Best if you're not sure you'll like diving.",
           "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
-          "PADI Open Water Diver: ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
-          "PADI Advanced Open Water: ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
+          "[PADI Open Water Diver](/open-water): ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
+          "[PADI Advanced Open Water](/advanced-open-water): ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,000 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver and Deep Diver are ฿9,000 each. Sidemount and DPV are priced on request - ask the team.",
-          "PADI Divemaster: ฿40,000 - 16-35 days, the internship period is included. Your first professional certification.",
+          "[PADI Divemaster](/divemaster): ฿40,000 - 16-35 days, the internship period is included. Your first professional certification.",
           "PADI Underwater Photography & Videography: ฿37,000 - 5 days, 10 dives, 1-on-1 instruction.",
           "PADI IDC (Instructor Development Course): price on request. We're a 5 Star IDC Centre, so you can train all the way from Open Water to Instructor at the same shop.",
         ],
@@ -647,6 +654,8 @@ const divingBlogPosts: BlogPost[] = [
     slug: "padi-advanced-open-water-koh-tao",
     title: "PADI Advanced Open Water on Koh Tao: The Complete 1.5-Day Course Guide",
     seoTitle: "PADI Advanced Open Water Koh Tao - 1.5-Day Guide",
+    seoDescription:
+      "PADI Advanced Open Water on Koh Tao: 5 dives in 1.5 days incl. deep and navigation, certified to 30m. 11,000 THB with 1 night's stay. Prerequisites inside.",
     category: "Diving",
     excerpt: "Everything about the PADI Advanced Open Water course on Koh Tao - the 5 dives, the deeper sites you unlock, prerequisites, and whether to do it right after Open Water.",
     coverImage: "/blog/padi-advanced-open-water-koh-tao.webp",
@@ -805,7 +814,7 @@ const divingBlogPosts: BlogPost[] = [
   {
     slug: "best-time-to-dive-koh-tao",
     title: "When Is the Best Time to Dive Koh Tao? Month-by-Month Conditions and Wildlife Guide",
-    seoTitle: "Best Time to Dive Koh Tao - Month by Month",
+    seoTitle: "Best Time to Dive Koh Tao - Month by Month 2026",
     category: "Diving",
     excerpt: "Honest month-by-month guide to diving conditions on Koh Tao - water temp, visibility, sea state, weather, and which months actually have the worst diving.",
     coverImage: "/blog/whale-shark-koh-tao.webp",
@@ -889,7 +898,9 @@ const divingBlogPosts: BlogPost[] = [
   {
     slug: "padi-open-water-koh-tao-complete-guide",
     title: "PADI Open Water Course on Koh Tao: The Complete 2026 Guide",
-    seoTitle: "PADI Open Water Koh Tao - Complete 2026 Guide",
+    seoTitle: "PADI Open Water Koh Tao - 2026 Price & Guide",
+    seoDescription:
+      "PADI Open Water on Koh Tao in 2.5 days for 12,000 THB - gear, 4 ocean dives, certification and 2 nights' stay included. What you learn and who it suits.",
     category: "Diving",
     excerpt: "Comprehensive guide to the PADI Open Water Diver course on Koh Tao - what you actually learn, the 4 ocean dives, group size, gear, health requirements, and how to book your spot.",
     coverImage: "/blog/scuba-diver-coral-reef-koh-tao.webp",
@@ -968,7 +979,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "WhatsApp us with your dates, the names in your group (singles, couples, friends - tell us so we can plan grouping), and any concerns. We confirm within an hour during daytime hours (Thailand time).",
           "A deposit holds your spot. You arrive, meet the team, see the boats and the gear, and settle the balance in person before your course begins - so you know exactly what you're signing up for.",
-          "Pre-purchase the PADI eLearning if you want to save a day - tell us when you book and we'll send you the activation link.",
+          "Dates, price and what is included are on our [PADI Open Water course page](/open-water). Pre-purchase the PADI eLearning if you want to save a day - tell us when you book and we'll send you the activation link.",
           "If you're flying in the day you start: we recommend not. Flying within 24 hours of diving is a no-go (decompression risk). Most students arrive on Koh Tao a day before the course starts.",
         ],
       },
@@ -1118,7 +1129,7 @@ const divingBlogPosts: BlogPost[] = [
     slug: "koh-tao-dive-sites-guide",
     title: "Complete Guide to the Best Dive Sites on Koh Tao",
     category: "Diving",
-    excerpt: "From the famous HTMS Sattakut wreck to the legendary Sail Rock — here's everything you need to know about diving on Koh Tao.",
+    excerpt: "From the famous HTMS Sattakut wreck to the legendary Sail Rock - here's everything you need to know about diving on Koh Tao.",
     coverImage: "/blog/koh-tao-dive-sites.webp",
     date: "2026-03-15",
     sections: [
@@ -1175,10 +1186,12 @@ const divingBlogPosts: BlogPost[] = [
   },
   {
     slug: "padi-open-water-koh-tao-what-to-expect",
-    title: "PADI Open Water Course on Koh Tao — What to Expect",
-    seoTitle: "PADI Open Water Koh Tao - What to Expect",
+    title: "PADI Open Water Course on Koh Tao - What to Expect",
+    seoTitle: "PADI Open Water Koh Tao - Day by Day",
+    seoDescription:
+      "What really happens on a PADI Open Water course on Koh Tao: theory, the pool on day one, then 4 ocean dives in 2.5 days. Small groups, 12,000 THB.",
     category: "Diving",
-    excerpt: "Never dived before? Here's exactly what happens during your PADI Open Water Diver course on Koh Tao — day by day.",
+    excerpt: "Never dived before? Here's exactly what happens during your PADI Open Water Diver course on Koh Tao - day by day.",
     coverImage: "/blog/padi-5-star-idc-koh-tao.webp",
     date: "2026-03-20",
     sections: [
@@ -1216,7 +1229,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Siam Scuba provides all equipment — BCD, regulator, wetsuit, mask, fins, tank. You don't need to bring anything except sunscreen (reef-safe please), a swimsuit, and a towel.",
           "You do not need to know how to swim competitively, but you should be comfortable in the water. PADI requires a 10-minute float/swim and 200-metre swim test — your instructor will guide you through this on Day 1.",
-          "Most people are surprised by how relaxed the pace is. Koh Tao's warm water (28–30°C year-round), excellent visibility, and friendly marine life make it the ideal place to learn. Our instructors are patient, experienced, and genuinely passionate about sharing the underwater world.",
+          "Most people are surprised by how relaxed the pace is. Koh Tao's warm water (28–30°C year-round), excellent visibility, and friendly marine life make it the ideal place to learn. Our instructors are patient, experienced, and genuinely passionate about sharing the underwater world. Dates and price: [PADI Open Water course on Koh Tao](/open-water).",
         ],
       },
     ],
@@ -1278,7 +1291,9 @@ const divingBlogPosts: BlogPost[] = [
   {
     slug: "curso-buceo-koh-tao",
     title: "Curso de Buceo Open Water en Koh Tao: La Guía Completa en Español",
-    seoTitle: "Curso Open Water en Koh Tao - Guía en Español",
+    seoTitle: "Curso de buceo Open Water en Koh Tao 2026",
+    seoDescription:
+      "Curso PADI Open Water en Koh Tao: 2,5 días, piscina el primer día y 4 inmersiones en el mar. 12.000 THB con equipo y certificación. Guía en español.",
     category: "Diving",
     excerpt: "Todo sobre el curso PADI Open Water en Koh Tao en español: qué aprenderás, las 4 inmersiones en mar abierto, el precio (12.000 THB), y cómo reservar con un depósito de 2.000 THB.",
     coverImage: "/blog/whale-shark-divers-koh-tao.webp",
@@ -1345,7 +1360,7 @@ const divingBlogPosts: BlogPost[] = [
           "Escríbenos por WhatsApp con tus fechas, cuántos sois, y el nombre de cada uno. Confirmamos disponibilidad en menos de una hora durante el día (hora de Tailandia).",
           "Un depósito de 2.000 THB te guarda la plaza; los 10.000 THB restantes se pagan en la tienda el primer día del curso. El depósito no es reembolsable, así que confirma tus fechas antes de enviarlo.",
           "Si vienes desde España y tienes nivel de español pero no de inglés, avísanos al reservar. Tenemos instructores y divemasters que hablan español; coordinamos la asignación según los grupos del momento.",
-          "Si quieres seguir leyendo: nuestro Advanced Open Water (en inglés por ahora, pronto en español) cubre lo que viene después del Open Water. Y si te interesa el camino profesional, mira la guía del Divemaster.",
+          "Fechas, precio y reserva del curso: [Curso PADI Open Water en Koh Tao](/es/open-water-course). Si quieres seguir leyendo: nuestro [Advanced Open Water](/es/advanced-open-water-course) cubre lo que viene después del Open Water. Y si te interesa el camino profesional, mira la [guía del Divemaster](/es/blog/divemaster-koh-tao-padi-espanol).",
         ],
       },
     ],

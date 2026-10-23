@@ -7,7 +7,7 @@ const Privacy = () => {
   return (
     <div className="min-h-screen">
       <Seo
-        title="Privacy Policy | Siam Scuba"
+        title="Privacy Policy | Siam Scuba Dive Center Koh Tao"
         description='How Siam Scuba ("we", "us") collects and uses personal data on siamscuba.com and via the WhatsApp assistant "Nemo". Your rights and how to contact us.'
       />
       <Navbar />

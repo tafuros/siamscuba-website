@@ -6,7 +6,7 @@ const Terms = () => {
   return (
     <div className="min-h-screen">
       <Seo
-        title="Terms of Service | Siam Scuba"
+        title="Terms of Service | Siam Scuba Dive Center Koh Tao"
         description='Terms governing your use of siamscuba.com, our WhatsApp assistant "Nemo", and the dive-related services we offer.'
       />
       <Navbar />

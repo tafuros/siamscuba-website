@@ -19,6 +19,7 @@ import { WIZARD_PRODUCT, usesBookingWrapper } from "@/lib/landerBooking";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
 import { cardSrcSet } from "@/lib/cardImage";
+import { renderInline } from "@/components/BlogRichText";
 
 interface CampaignLanderProps {
   offer: Offer;
@@ -399,6 +400,25 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
           </Accordion>
         </div>
       </section>
+
+      {/* Organic guide - plain HTML so it ships in the prerendered page */}
+      {copy.guide && (
+        <section className="py-12 md:py-16 border-t border-border">
+          <div className="container mx-auto px-4 max-w-2xl text-start">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-8 text-center">{copy.guide.headline}</h2>
+            {copy.guide.blocks.map((block) => (
+              <div key={block.heading} className="mb-8 last:mb-0">
+                <h3 className="text-lg md:text-xl font-semibold mb-3">{block.heading}</h3>
+                {block.paragraphs.map((p, i) => (
+                  <p key={i} className="text-sm md:text-base text-muted-foreground leading-relaxed mb-3 last:mb-0">
+                    {renderInline(p)}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Closing CTA */}
       <section className="py-12 md:py-16 bg-card">

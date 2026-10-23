@@ -61,6 +61,16 @@ export interface UspTile {
   body: string;
 }
 
+/**
+ * Long-form organic content rendered as plain HTML below the FAQ (so it is in the
+ * prerendered page, unlike the accordion answers). Paragraphs accept the blog's
+ * inline markdown links: [label](/path). Leaves the conversion layout above untouched.
+ */
+export interface LanderGuide {
+  headline: string;
+  blocks: { heading: string; paragraphs: string[] }[];
+}
+
 export interface LanderCopy {
   seoTitle: string;
   seoDescription: string;
@@ -89,6 +99,7 @@ export interface LanderCopy {
   ctaStripSubhead: string;
   faqHeadline: string;
   faqItems: FaqItem[];
+  guide?: LanderGuide;
   closingCtaHeadline: string;
   closingCtaSubhead: string;
 
@@ -329,7 +340,7 @@ const DSD_HE: LanderCopy = {
   uspTiles: [
     {
       icon: "users",
-      title: "מקסימום 2 חניכים לכל מדריך",
+      title: "קבוצות קטנות",
       body: "תשומת לב אמיתית. לא צלילה המונית של 12 אנשים.",
     },
     {
@@ -400,6 +411,47 @@ const DSD_HE: LanderCopy = {
       a: "כן - צלילות ההיכרות נחשבות לצלילת התרגול הראשונה אם תמשיכו איתנו תוך 6 חודשים.",
     },
   ],
+  guide: {
+    headline: "צלילת היכרות בקוטאו - מה מצפה לכם",
+    blocks: [
+      {
+        heading: "למי זה מתאים",
+        paragraphs: [
+          "צלילת היכרות (PADI Discover Scuba Diving) מיועדת למי שמעולם לא צלל ורוצה לנסות לפני שמתחייבים לקורס. לא צריך הסמכה ולא ניסיון - רק להרגיש בנוח במים ולהצליח לצוף על הגב. גיל המינימום הוא 10, ולילדים בני 8-9 יש את תוכנית Bubble Maker.",
+        ],
+      },
+      {
+        heading: "הנשימה הראשונה - ישר בים",
+        paragraphs: [
+          "צלילת ההיכרות שלנו מתחילה ישר בים. את ארבעת התרגילים הבסיסיים לומדים במים רדודים ומוגנים, ליד שונית אמיתית, ורק אז יורדים לצלילה עד עומק של 12 מטר לכל היותר. הצלילה הראשונה בדרך כלל רדודה יותר, 5-8 מטר.",
+        ],
+      },
+      {
+        heading: "איך נראה היום",
+        paragraphs: [
+          "נרשמים במועדון יום לפני, עד 18:00. ב-10:30 מתחילים בתדריך, היכרות עם הציוד ותיאום ציפיות. בצלילה הראשונה מתרגלים ואז צוללים. מי שמוסיף צלילה שנייה (1,000 THB) פשוט נהנה ממנה, בלי תרגילים. מסיימים בסביבות 16:00, בזמן לשקיעה על החוף.",
+        ],
+      },
+      {
+        heading: "מה כלול ב-2,600 THB",
+        paragraphs: [
+          "מדריך PADI דובר עברית, כל ציוד הצלילה, צלילה בשונית, ביטוח צלילה, כיבוד על הסירה ותעודת PADI Discover Scuba Diving. לא כלולים איסוף מהמלון, לינה (500 THB ללילה אצלנו) וצילום.",
+        ],
+      },
+      {
+        heading: "בריאות ובטיחות",
+        paragraphs: [
+          "לפני הצלילה ממלאים שאלון רפואי קצר. חלק מהמצבים, כמו אסטמה, מחלת לב או הריון, דורשים אישור רופא. ספרו לנו בוואטסאפ מראש, ונגיד לכם בדיוק מה צריך.",
+        ],
+      },
+      {
+        heading: "ואם התאהבתם?",
+        paragraphs: [
+          "צלילת ההיכרות נחשבת לצלילת התרגול הראשונה בקורס [כוכב ראשון (Open Water)](/he/open-water-course), אם ממשיכים איתנו תוך 6 חודשים. לא בטוחים מה מתאים לכם? השוו בין [צלילת היכרות לכוכב ראשון](/he/discover-scuba-vs-open-water).",
+        ],
+      },
+    ],
+  },
   closingCtaHeadline: "יום אחד, צלילה אחת, 2,600 THB.",
   closingCtaSubhead: "צלילה שנייה בתוספת 1,000 THB בלבד. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
 };
@@ -596,6 +648,53 @@ const OWD_ES: LanderCopy = {
       a: "Sí, y con descuento importante si lo reservas junto. Pregúntanos por WhatsApp.",
     },
   ],
+  guide: {
+    headline: "Curso de buceo en Koh Tao - todo lo que conviene saber antes de venir",
+    blocks: [
+      {
+        heading: "Qué es el PADI Open Water Diver",
+        paragraphs: [
+          "Es la primera certificación internacional de buceo. Al terminar puedes bucear con un compañero hasta 18 metros en cualquier centro del mundo, y la tarjeta es de por vida: no caduca ni se renueva.",
+          "La edad mínima es 10 años. Entre 10 y 14 sales con el Junior Open Water (máximo 12 metros) y desde los 15 con la certificación completa.",
+        ],
+      },
+      {
+        heading: "Por qué aprender a bucear en Koh Tao",
+        paragraphs: [
+          "Koh Tao certifica cada año más buceadores Open Water que ningún otro lugar del mundo. El agua está a 28-30°C todo el año, los puntos de buceo están cerca de la costa y la competencia entre centros mantiene precios justos sin bajar el estándar PADI.",
+          "Con nosotros todo el curso se queda en casa: nuestra propia piscina, nuestros dos barcos y grupos de máximo 4 alumnos por instructor. Nada de traslados a la piscina de otro resort ni salidas en barcos compartidos.",
+        ],
+      },
+      {
+        heading: "Cómo son los 2,5 días",
+        paragraphs: [
+          "Día 1: teoría en el club a las 09:00 y a las 11:00 a la piscina, donde aprendes todas las habilidades en agua tranquila y poco profunda.",
+          "Día 2: un poco más de teoría y al barco - prácticas en el mar e inmersión hasta 12 metros, segunda inmersión a las 14:00 y vuelta a las 16:00.",
+          "Día 3: inmersión al amanecer a las 05:50 hasta 18 metros, última inmersión a las 10:00 y a las 11:00 ya eres buceador certificado. Consejo: empieza el eLearning de PADI en casa y la parte teórica será rápida.",
+        ],
+      },
+      {
+        heading: "Qué incluye el precio",
+        paragraphs: [
+          "Los 12.000 THB por persona incluyen la teoría, la sesión en piscina, 4 inmersiones en el mar, todo el equipo, seguro de buceo, tentempiés en el barco, la tasa de certificación PADI y 2 noches de alojamiento con nosotros. No incluye comidas ni el traslado al centro.",
+          "Un depósito de 2.000 THB reserva tu plaza en la fecha que elijas. Abrimos cursos nuevos cada día, así que no tienes que planear el viaje en torno a nuestro calendario.",
+        ],
+      },
+      {
+        heading: "Antes de volar",
+        paragraphs: [
+          "Al empezar el curso rellenas un cuestionario médico de PADI. Si tienes asma, problemas cardíacos, cirugía de oído u otra condición médica, consigue la autorización de un médico en tu país antes de viajar.",
+          "Tienes que nadar 200 metros sin ayuda y flotar 10 minutos, en cualquier estilo. Y después de la última inmersión hay que esperar 24 horas antes de volar - tenlo en cuenta al reservar el vuelo.",
+        ],
+      },
+      {
+        heading: "Y después de certificarte",
+        paragraphs: [
+          "¿Quieres ir más hondo? El [Advanced Open Water](/es/advanced-open-water-course) suma 5 inmersiones y te certifica hasta 30 metros en 1,5 días. ¿Dudas entre probar o hacer el curso completo? Lee [bautismo de buceo u Open Water](/es/discover-scuba-vs-open-water), o la [guía completa del curso en español](/es/blog/curso-buceo-koh-tao).",
+        ],
+      },
+    ],
+  },
   closingCtaHeadline: "Cert PADI. 2,5 días. 12,000 THB.",
   closingCtaSubhead: "2 noches de alojamiento incluidas. WhatsApp con tus fechas - abrimos cursos cada día.",
 };
@@ -693,6 +792,53 @@ const OWD_HE: LanderCopy = {
       a: "כן, ובהנחה משמעותית אם מזמינים יחד. שאלו ב-WhatsApp.",
     },
   ],
+  guide: {
+    headline: "כוכב ראשון בקוטאו - כל מה שחשוב לדעת לפני שמגיעים",
+    blocks: [
+      {
+        heading: "מה זה בעצם כוכב ראשון?",
+        paragraphs: [
+          "כוכב ראשון הוא השם הישראלי לקורס PADI Open Water Diver - ההסמכה הבינלאומית הראשונה בצלילה. בסוף הקורס אתם מוסמכים לצלול עם בן או בת זוג לצלילה עד עומק 18 מטר, בכל מרכז צלילה בעולם. הכרטיס תקף לכל החיים, בלי חידושים.",
+          "גיל המינימום הוא 10. בגילאי 10-14 מקבלים הסמכת Junior Open Water עם עומק מרבי של 12 מטר, ומגיל 15 את ההסמכה המלאה.",
+        ],
+      },
+      {
+        heading: "למה ללמוד לצלול דווקא בקוטאו?",
+        paragraphs: [
+          "קוטאו מסמיכה בכל שנה יותר צוללני Open Water מכל מקום אחר בעולם. המים חמימים - 28-30 מעלות לאורך כל השנה - אתרי הצלילה קרובים לחוף, והתחרות בין מרכזי הצלילה שומרת על מחירים הוגנים בלי לוותר על סטנדרט PADI.",
+          "אצלנו כל הקורס נשאר בבית: הבריכה שלנו, שתי סירות הצלילה שלנו וקבוצות של עד 4 חניכים למדריך. לא מסיעים אתכם לבריכה של ריזורט אחר ולא דוחסים אתכם לסירה משותפת.",
+        ],
+      },
+      {
+        heading: "איך נראים 2.5 הימים",
+        paragraphs: [
+          "יום 1: ב-09:00 תיאוריה במועדון, וב-11:00 יורדים לבריכה ולומדים את כל המיומנויות במים רגועים ורדודים.",
+          "יום 2: עוד קצת תיאוריה ואז לסירה - תרגול בים וצלילה ראשונה עד 12 מטר, צלילה שנייה ב-14:00 וחזרה לחוף ב-16:00.",
+          "יום 3: צלילת שחר ב-05:50 עד 18 מטר, צלילה אחרונה ב-10:00, וב-11:00 אתם צוללים מוסמכים. טיפ: התחילו את הלימוד האונליין (eLearning) עוד בבית, וחלק הכיתה יהיה קליל.",
+        ],
+      },
+      {
+        heading: "מה המחיר כולל",
+        paragraphs: [
+          "12,000 THB לאדם כוללים את הלימוד העיוני, מפגש הבריכה, 4 צלילות בים, ציוד צלילה מלא, ביטוח צלילה, כיבוד על הסירה, אגרת ההסמכה של PADI ו-2 לילות לינה אצלנו. לא כלולים ארוחות והסעה למרכז הצלילה.",
+          "מקדמה של 2,000 THB שומרת לכם מקום בתאריך שבחרתם. קורסים חדשים נפתחים כל יום, כך שאין צורך לתכנן את הטיול סביב הלו״ז שלנו.",
+        ],
+      },
+      {
+        heading: "לפני שאתם טסים",
+        paragraphs: [
+          "בתחילת הקורס ממלאים שאלון רפואי של PADI. אם יש לכם אסטמה, בעיות לב, ניתוח אוזניים או מצב רפואי אחר, כדאי לקבל אישור רופא כבר בארץ, כדי שלא תגלו את זה רק בקוטאו.",
+          "צריך לשחות 200 מטר בלי עזרה ולצוף 10 דקות, בכל סגנון. ואחרי הצלילה האחרונה מחכים 24 שעות לפני טיסה - תכננו את הטיסה בהתאם.",
+        ],
+      },
+      {
+        heading: "ומה אחרי ההסמכה?",
+        paragraphs: [
+          "רוצים לצלול עמוק יותר? [קורס Advanced Open Water](/he/advanced-open-water-course) מוסיף 5 צלילות ומסמיך אתכם עד 30 מטר תוך 1.5 ימים. עוד מתלבטים אם להתחיל בקורס מלא? קראו [צלילת היכרות או כוכב ראשון](/he/discover-scuba-vs-open-water), או את [המדריך המלא לכוכב ראשון בקוטאו](/blog/kokhav-rishon-koh-tao).",
+        ],
+      },
+    ],
+  },
   closingCtaHeadline: "הסמכת PADI. 2.5 ימים. 12,000 THB.",
   closingCtaSubhead: "2 לילות לינה כלולים. WhatsApp עם התאריכים - פותחים קורסים כל יום.",
 };

@@ -127,7 +127,7 @@ const BlogPostPage = () => {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
-    description: post.excerpt,
+    description: post.seoDescription ?? post.excerpt,
     image: post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`,
     datePublished: datePublishedIso,
     dateModified: datePublishedIso,
@@ -159,7 +159,7 @@ const BlogPostPage = () => {
     <div className="min-h-screen bg-background">
       <Seo
         title={`${post.seoTitle ?? post.title} | Siam Scuba`}
-        description={post.excerpt.length > 155 ? `${post.excerpt.slice(0, 152).trimEnd()}...` : post.excerpt}
+        description={(() => { const d = post.seoDescription ?? post.excerpt; return d.length > 155 ? `${d.slice(0, 152).trimEnd()}...` : d; })()}
         ogType="article"
         noindex={post.noindex}
         ogImage={post.coverImage.startsWith("http") ? post.coverImage : `https://siamscuba.com${post.coverImage}`}
