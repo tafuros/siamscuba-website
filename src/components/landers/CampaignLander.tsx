@@ -19,7 +19,6 @@ import { WIZARD_PRODUCT, usesBookingWrapper } from "@/lib/landerBooking";
 import { trackViewContent, trackWhatsAppClick } from "@/utils/tracking";
 import { buildWhatsAppLink } from "@/utils/whatsapp";
 import { cardSrcSet } from "@/lib/cardImage";
-import { courseDetails, type CourseDetail } from "@/i18n/courseDetails";
 
 interface CampaignLanderProps {
   offer: Offer;
@@ -47,22 +46,9 @@ const DIVE_SITE_IMAGES: Record<string, string> = {
   Twins: "/dive-sites/twins.webp",
 };
 
-// The course copy decorates with emoji; strip them here as the course page does.
-const EMOJI = /\p{Extended_Pictographic}|[\u{1F1E6}-\u{1F1FF}]|\u{FE0F}|\u{200D}/gu;
-const clean = (s: string) => s.replace(EMOJI, "").replace(/\s{2,}/g, " ").trim();
-
-const ORGANIC_UI: Record<Lang, { prerequisites: string; bring: string; payment: string }> = {
-  en: { prerequisites: "Who can join", bring: "What to bring", payment: "Payment and changes" },
-  es: { prerequisites: "Requisitos", bring: "Qué traer", payment: "Pago y cambios" },
-  he: { prerequisites: "מי יכול להשתתף", bring: "מה להביא", payment: "תשלום ושינויים" },
-};
-
 const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
   const copy = LANDER_COPY[offer][lang];
   const isRtl = lang === "he";
-  const organic: CourseDetail | undefined = copy.organicCourse
-    ? courseDetails[lang]?.[copy.organicCourse]
-    : undefined;
 
   useEffect(() => {
     trackViewContent({ offer, lang });
@@ -413,40 +399,6 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
           </Accordion>
         </div>
       </section>
-
-      {/* Course detail - plain HTML so it ships in the prerendered page.
-          Copy comes from courseDetails (the same source as the course popup and
-          the course page); nothing here is written for the lander. */}
-      {organic && (
-        <section className="py-12 md:py-16 border-t border-border">
-          <div className="container mx-auto px-4 max-w-2xl text-start">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-center">{clean(organic.header)}</h2>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-8">{clean(organic.intro)}</p>
-            {[
-              { heading: ORGANIC_UI[lang].prerequisites, items: organic.prerequisites },
-              { heading: ORGANIC_UI[lang].bring, items: organic.whatToBring },
-              { heading: ORGANIC_UI[lang].payment, items: organic.payment },
-            ]
-              .filter((b) => b.items && b.items.length > 0)
-              .map((b) => (
-                <div key={b.heading} className="mb-8">
-                  <h3 className="text-lg md:text-xl font-semibold mb-3">{b.heading}</h3>
-                  <ul className="space-y-2 text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {b.items!.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <Check className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                        <span>{clean(item)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            {organic.nextStep && (
-              <p className="text-sm md:text-base font-medium leading-relaxed">{clean(organic.nextStep)}</p>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* Closing CTA */}
       <section className="py-12 md:py-16 bg-card">

@@ -11,6 +11,36 @@
   },
   "redirects": [
     {
+      "source": "/open-water-course",
+      "destination": "/open-water",
+      "permanent": true
+    },
+    {
+      "source": "/he/open-water-course",
+      "destination": "/he/open-water",
+      "permanent": true
+    },
+    {
+      "source": "/es/open-water-course",
+      "destination": "/es/open-water",
+      "permanent": true
+    },
+    {
+      "source": "/discover-scuba-diving",
+      "destination": "/discover-scuba",
+      "permanent": true
+    },
+    {
+      "source": "/he/discover-scuba-diving",
+      "destination": "/he/discover-scuba",
+      "permanent": true
+    },
+    {
+      "source": "/es/discover-scuba-diving",
+      "destination": "/es/discover-scuba",
+      "permanent": true
+    },
+    {
       "source": "/contact-us",
       "destination": "/",
       "permanent": true
@@ -337,57 +367,57 @@
     },
     {
       "source": "/7-reasons-you-need-to-try-diving",
-      "destination": "/discover-scuba-diving",
+      "destination": "/discover-scuba",
       "permanent": true
     },
     {
       "source": "/PADI-courses/siam-scuba-center-PADI-course-dsd.html",
-      "destination": "/discover-scuba-diving",
+      "destination": "/discover-scuba",
       "permanent": true
     },
     {
       "source": "/PADI-courses/siam-scuba-center-PADI-course-dsd",
-      "destination": "/discover-scuba-diving",
+      "destination": "/discover-scuba",
       "permanent": true
     },
     {
       "source": "/shop/padi-courses/padi-discover-scuba-diving-10-years-and-above",
-      "destination": "/discover-scuba-diving",
+      "destination": "/discover-scuba",
       "permanent": true
     },
     {
       "source": "/NMSmZ/shop/padi-courses/padi-open-water-diver",
-      "destination": "/open-water-course",
+      "destination": "/open-water",
       "permanent": true
     },
     {
       "source": "/PADI-courses/siam-scuba-center-PADI-course-open-water-diver.html",
-      "destination": "/open-water-course",
+      "destination": "/open-water",
       "permanent": true
     },
     {
       "source": "/PADI-courses/siam-scuba-center-PADI-course-open-water-diver",
-      "destination": "/open-water-course",
+      "destination": "/open-water",
       "permanent": true
     },
     {
       "source": "/PADI-courses/siam-scuba-center-PADI-course-scuba-diver.html",
-      "destination": "/open-water-course",
+      "destination": "/open-water",
       "permanent": true
     },
     {
       "source": "/PADI-courses/siam-scuba-center-PADI-course-scuba-diver",
-      "destination": "/open-water-course",
+      "destination": "/open-water",
       "permanent": true
     },
     {
       "source": "/shop/padi-courses/padi-open-water-diver",
-      "destination": "/open-water-course",
+      "destination": "/open-water",
       "permanent": true
     },
     {
       "source": "/shop/padi-courses/padi-scuba-diver",
-      "destination": "/open-water-course",
+      "destination": "/open-water",
       "permanent": true
     },
     {

@@ -24,8 +24,10 @@ export const LOCALE_FAMILIES: Partial<Record<Language, string>>[] = [
   // in Hebrew / Spanish - real translated twins. French has no URL of its own:
   // "/" translates itself into French through t().
   { en: "/", he: "/he", es: "/es" },
-  { en: "/discover-scuba-diving", es: "/es/discover-scuba-diving", he: "/he/discover-scuba-diving" },
-  { en: "/open-water-course", es: "/es/open-water-course", he: "/he/open-water-course" },
+  // Course pages (2026-10-23). The old landers on /discover-scuba-diving and
+  // /open-water-course 301 here, so they are no longer routes.
+  { en: "/discover-scuba", es: "/es/discover-scuba", he: "/he/discover-scuba" },
+  { en: "/open-water", es: "/es/open-water", he: "/he/open-water" },
   {
     en: "/advanced-open-water-course",
     es: "/es/advanced-open-water-course",

@@ -61,12 +61,6 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
     { loc: "/data-deletion", changefreq: "yearly", priority: 0.2, lastmod: today },
     // Paid-campaign landers (restored 2026-05-25 for campaign launch).
-    { loc: "/discover-scuba-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
-    { loc: "/es/discover-scuba-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
-    { loc: "/he/discover-scuba-diving", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
-    { loc: "/open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
-    { loc: "/es/open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
-    { loc: "/he/open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
     { loc: "/advanced-open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
     { loc: "/es/advanced-open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
     { loc: "/he/advanced-open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
@@ -142,12 +136,21 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   }
 
   for (const slug of Object.keys(SLUG_TO_COURSE)) {
+    // Course pages with Hebrew / Spanish twins (2026-10-23) carry the cluster.
+    const alternates = hreflangAlternatesFor(`/${slug}`);
     entries.push({
       loc: `/${slug}`,
       lastmod: today,
       changefreq: "monthly",
       priority: 0.8,
+      ...(alternates ? { alternates } : {}),
     });
+    if (alternates) {
+      for (const lang of ["he", "es"] as const) {
+        if (!alternates[lang]) continue;
+        entries.push({ loc: `/${lang}/${slug}`, lastmod: today, changefreq: "monthly", priority: 0.8, alternates });
+      }
+    }
   }
 
   return entries;

@@ -46,22 +46,22 @@ const SiamPhuketPage = () => {
     en: [
       { to: "/fun-dives", label: "Fun dives in Koh Tao" },
       { to: "/similan", label: "Similan Islands trips" },
-      { to: "/open-water-course", label: "PADI Open Water course" },
+      { to: "/open-water", label: "PADI Open Water course" },
     ],
     he: [
       { to: "/he/fun-dives", label: "צלילות כיף בקוטאו" },
       { to: "/similan", label: "טיולי סימילאן" },
-      { to: "/he/open-water-course", label: "קורס PADI Open Water" },
+      { to: "/he/open-water", label: "קורס PADI Open Water" },
     ],
     es: [
       { to: "/es/fun-dives", label: "Inmersiones en Koh Tao" },
       { to: "/similan", label: "Islas Similan" },
-      { to: "/es/open-water-course", label: "Curso PADI Open Water" },
+      { to: "/es/open-water", label: "Curso PADI Open Water" },
     ],
     fr: [
       { to: "/fr/fun-dives", label: "Plongées fun à Koh Tao" },
       { to: "/similan", label: "Îles Similan" },
-      { to: "/open-water-course", label: "Cours PADI Open Water" },
+      { to: "/open-water", label: "Cours PADI Open Water" },
     ],
   };
   const relatedLinks = RELATED[language] ?? RELATED.en;

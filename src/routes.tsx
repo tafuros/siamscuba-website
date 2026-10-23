@@ -104,35 +104,28 @@ export const routes: RouteRecord[] = [
       },
       // Paid-campaign landers — must come BEFORE :courseSlug (which is a greedy
       // dynamic match). 5 offers × 3 languages.
+      // Course pages in Hebrew / Spanish (Ben 2026-10-23: one page per course).
+      // The old campaign landers /discover-scuba-diving and /open-water-course
+      // (+ /he, /es) 301 to these in vercel.json. English stays on :courseSlug.
       {
-        path: "discover-scuba-diving",
-        lazy: lazyDefault(() => import("./pages/landers/DsdEnPage")),
-        entry: "src/pages/landers/DsdEnPage.tsx",
+        path: "he/open-water",
+        lazy: lazyDefault(() => import("./pages/CourseLocalePage")),
+        entry: "src/pages/CourseLocalePage.tsx",
       },
       {
-        path: "es/discover-scuba-diving",
-        lazy: lazyDefault(() => import("./pages/landers/DsdEsPage")),
-        entry: "src/pages/landers/DsdEsPage.tsx",
+        path: "he/discover-scuba",
+        lazy: lazyDefault(() => import("./pages/CourseLocalePage")),
+        entry: "src/pages/CourseLocalePage.tsx",
       },
       {
-        path: "he/discover-scuba-diving",
-        lazy: lazyDefault(() => import("./pages/landers/DsdHePage")),
-        entry: "src/pages/landers/DsdHePage.tsx",
+        path: "es/open-water",
+        lazy: lazyDefault(() => import("./pages/CourseLocalePage")),
+        entry: "src/pages/CourseLocalePage.tsx",
       },
       {
-        path: "open-water-course",
-        lazy: lazyDefault(() => import("./pages/landers/OwdEnPage")),
-        entry: "src/pages/landers/OwdEnPage.tsx",
-      },
-      {
-        path: "es/open-water-course",
-        lazy: lazyDefault(() => import("./pages/landers/OwdEsPage")),
-        entry: "src/pages/landers/OwdEsPage.tsx",
-      },
-      {
-        path: "he/open-water-course",
-        lazy: lazyDefault(() => import("./pages/landers/OwdHePage")),
-        entry: "src/pages/landers/OwdHePage.tsx",
+        path: "es/discover-scuba",
+        lazy: lazyDefault(() => import("./pages/CourseLocalePage")),
+        entry: "src/pages/CourseLocalePage.tsx",
       },
       {
         path: "advanced-open-water-course",

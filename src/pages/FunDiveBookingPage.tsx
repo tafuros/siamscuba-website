@@ -377,7 +377,7 @@ const FunDiveBookingPage = () => {
             <Link to="/dive-sites/sail-rock" className="underline underline-offset-2 hover:text-foreground">Sail Rock</Link> and{" "}
             <Link to="/dive-sites/twins" className="underline underline-offset-2 hover:text-foreground">Twins</Link>.
             Not certified yet? Start with the{" "}
-            <Link to="/open-water-course" className="underline underline-offset-2 hover:text-foreground">PADI Open Water course</Link>{" "}
+            <Link to="/open-water" className="underline underline-offset-2 hover:text-foreground">PADI Open Water course</Link>{" "}
             or see{" "}
             <Link to="/fun-dives" className="underline underline-offset-2 hover:text-foreground">how our fun dives work</Link>.
           </p>

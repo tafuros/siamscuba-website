@@ -28,8 +28,8 @@ Pinnacle, Sail Rock, and Twins.
 
 ## Landing pages
 
-- [Discover Scuba Diving](https://siamscuba.com/discover-scuba-diving)
-- [Open Water Course](https://siamscuba.com/open-water-course)
+- [Discover Scuba Diving](https://siamscuba.com/discover-scuba)
+- [Open Water Course](https://siamscuba.com/open-water)
 - [Fun Dives](https://siamscuba.com/fun-dives)
 
 ## Contact

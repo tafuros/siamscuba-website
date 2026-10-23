@@ -89,13 +89,6 @@ export interface LanderCopy {
   ctaStripSubhead: string;
   faqHeadline: string;
   faqItems: FaqItem[];
-  /**
-   * courseDetails key (src/i18n/courseDetails.ts) whose intro, what-to-bring,
-   * payment terms and next step render as plain HTML below the FAQ, so Google
-   * reads them in the prerendered page (the FAQ accordion answers are not).
-   * Single source: the popup, the course page and this block share that copy.
-   */
-  organicCourse?: string;
   closingCtaHeadline: string;
   closingCtaSubhead: string;
 
@@ -407,7 +400,6 @@ const DSD_HE: LanderCopy = {
       a: "כן - צלילות ההיכרות נחשבות לצלילת התרגול הראשונה אם תמשיכו איתנו תוך 6 חודשים.",
     },
   ],
-  organicCourse: "Discover Scuba Diving",
   closingCtaHeadline: "יום אחד, צלילה אחת, 2,600 THB.",
   closingCtaSubhead: "צלילה שנייה בתוספת 1,000 THB בלבד. כתבו לנו ב-WhatsApp - נמצא לכם משבצת השבוע.",
 };
@@ -604,7 +596,6 @@ const OWD_ES: LanderCopy = {
       a: "Sí, y con descuento importante si lo reservas junto. Pregúntanos por WhatsApp.",
     },
   ],
-  organicCourse: "Open Water Diver",
   closingCtaHeadline: "Cert PADI. 2,5 días. 12,000 THB.",
   closingCtaSubhead: "2 noches de alojamiento incluidas. WhatsApp con tus fechas - abrimos cursos cada día.",
 };
@@ -702,7 +693,6 @@ const OWD_HE: LanderCopy = {
       a: "כן, ובהנחה משמעותית אם מזמינים יחד. שאלו ב-WhatsApp.",
     },
   ],
-  organicCourse: "Open Water Diver",
   closingCtaHeadline: "הסמכת PADI. 2.5 ימים. 12,000 THB.",
   closingCtaSubhead: "2 לילות לינה כלולים. WhatsApp עם התאריכים - פותחים קורסים כל יום.",
 };

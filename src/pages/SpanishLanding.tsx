@@ -435,13 +435,13 @@ const SpanishLanding = () => {
           <Section id="mas-en-espanol" title="Más contenido en español">
             <ul className="space-y-3">
               <li>
-                <Link to="/es/discover-scuba-diving" className="inline-flex items-center gap-2 text-primary hover:underline">
+                <Link to="/es/discover-scuba" className="inline-flex items-center gap-2 text-primary hover:underline">
                   <ArrowRight className="h-4 w-4" />
                   Bautismo de buceo (Discover Scuba Diving) - tu primera inmersión
                 </Link>
               </li>
               <li>
-                <Link to="/es/open-water-course" className="inline-flex items-center gap-2 text-primary hover:underline">
+                <Link to="/es/open-water" className="inline-flex items-center gap-2 text-primary hover:underline">
                   <ArrowRight className="h-4 w-4" />
                   Curso PADI Open Water - 2,5 días, certificación de por vida
                 </Link>

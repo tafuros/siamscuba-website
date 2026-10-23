@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check, MessageCircle, Star, X } from "lucide-react";
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
@@ -8,6 +8,9 @@ import BookingLink from "@/components/BookingLink";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { courseDetails } from "@/i18n/courseDetails";
 import { COURSE_SEO } from "@/lib/courseSeoData";
+import { LANDER_COPY, type Offer } from "@/lib/landerCopy";
+import { hreflangAlternatesFor, localizedPath } from "@/lib/localeRoutes";
+import { pathLanguage } from "@/i18n/LanguageContext";
 import { COURSE_PAGES, COURSE_PAGE_UI, type CoursePageSlug } from "@/data/coursePages";
 import { REVIEW_STATS } from "@/data/reviewStats";
 import { googleReviews } from "@/data/googleReviews";
@@ -28,6 +31,15 @@ import { WHATSAPP_NUMBER } from "@/utils/whatsapp";
 // that job and the emoji would render differently on every device.
 const EMOJI = /\p{Extended_Pictographic}|[\u{1F1E6}-\u{1F1FF}]|\u{FE0F}|\u{200D}/gu;
 const clean = (s: string) => s.replace(EMOJI, "").replace(/\s{2,}/g, " ").trim();
+
+// Hebrew / Spanish search titles. They were written (and CTR-tuned from GSC) for
+// the campaign landers these pages replaced on 2026-10-23, so reuse them.
+const LOCAL_SEO_OFFER: Partial<Record<CoursePageSlug, Offer>> = {
+  "open-water": "owd",
+  "discover-scuba": "dsd",
+};
+
+const SITE = "https://siamscuba.com";
 
 const thb = (n: number) => `฿${n.toLocaleString("en-US")}`;
 
@@ -57,6 +69,18 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
   const ui = COURSE_PAGE_UI[language] ?? COURSE_PAGE_UI.en;
   const detail = courseDetails[language]?.[page.dialogKey] ?? courseDetails.en[page.dialogKey];
   const seo = COURSE_SEO[slug];
+  // SEO follows the URL, not the visitor's saved language: /open-water is the
+  // English page even when a returning Hebrew reader sees it translated.
+  const { pathname } = useLocation();
+  const urlLang = pathLanguage(pathname);
+  const localOffer = LOCAL_SEO_OFFER[slug];
+  const localCopy =
+    localOffer && (urlLang === "he" || urlLang === "es") ? LANDER_COPY[localOffer][urlLang] : undefined;
+  const seoTitle = localCopy?.seoTitle ?? seo.title;
+  const seoDescription = localCopy?.seoDescription ?? seo.description;
+  const pageUrl = `${SITE}${urlLang ? `/${urlLang}` : ""}/${slug}`;
+  const faqLang = urlLang ?? "en";
+  const nextHref = localizedPath(page.next.href, language) ?? page.next.href;
   // Playfair has no Hebrew glyphs - Hebrew headings use the body stack.
   const display = isRTL ? "font-bold" : "font-display font-bold";
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
@@ -85,16 +109,16 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      name: seo.h1,
-      description: seo.description,
+      name: localCopy ? h1 : seo.h1,
+      description: seoDescription,
       provider: { "@type": "Organization", name: "Siam Scuba", sameAs: "https://siamscuba.com" },
-      offers: { "@type": "Offer", price: page.priceThb, priceCurrency: "THB", category: "Paid", url: `https://siamscuba.com/${slug}` },
+      offers: { "@type": "Offer", price: page.priceThb, priceCurrency: "THB", category: "Paid", url: pageUrl },
       hasCourseInstance: { "@type": "CourseInstance", courseMode: "Onsite", location: "Koh Tao, Thailand" },
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: COURSE_PAGES[slug].faq.en.map((f) => ({
+      mainEntity: (COURSE_PAGES[slug].faq[faqLang] ?? COURSE_PAGES[slug].faq.en).map((f) => ({
         "@type": "Question",
         name: f.q,
         acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -105,10 +129,15 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
   return (
     <div dir={isRTL ? "rtl" : "ltr"} className="min-h-screen bg-[#03152a] text-white">
       <Seo
-        title={seo.title}
-        description={seo.description}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={pageUrl}
+        hreflangAlternates={hreflangAlternatesFor(`/${slug}`)}
         jsonLd={jsonLd}
-        breadcrumbs={[{ name: "Home", path: "/" }, { name: "Courses", path: "/#courses" }, { name: seo.h1 }]}
+        breadcrumbs={[
+          { name: urlLang === "he" ? "בית" : urlLang === "es" ? "Inicio" : "Home", path: urlLang ? `/${urlLang}` : "/" },
+          { name: localCopy ? h1 : seo.h1 },
+        ]}
       />
       <LanderNav />
       <a
@@ -312,7 +341,7 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
             <p className="mt-1 text-[14px] text-white/75">{page.next.body[language] ?? page.next.body.en}</p>
           </div>
           <Link
-            to={page.next.href}
+            to={nextHref}
             className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:bg-white/10"
           >
             {page.next.cta[language] ?? page.next.cta.en} <Arrow className="h-4 w-4" />

@@ -13,12 +13,16 @@ import {
   languageGuidePath,
   localizedPath,
 } from "../lib/localeRoutes";
+import { SLUG_TO_COURSE } from "../lib/courseSlugMap";
 
 const routesSrc = readFileSync(resolve(__dirname, "../routes.tsx"), "utf8");
 
 /** routes.tsx declares child paths without the leading slash ("es/fun-dives"). */
+/** English course pages are served by the dynamic :courseSlug route. */
 const routeExists = (path: string) =>
-  path === "/" ? true : routesSrc.includes(`path: "${path.slice(1)}"`);
+  path === "/" ||
+  routesSrc.includes(`path: "${path.slice(1)}"`) ||
+  Object.prototype.hasOwnProperty.call(SLUG_TO_COURSE, path.slice(1));
 
 describe("every locale-family path is a real route", () => {
   for (const family of LOCALE_FAMILIES) {
@@ -61,7 +65,8 @@ describe("localizedPath", () => {
   it("maps landers across locales", () => {
     expect(localizedPath("/fun-dives", "es")).toBe("/es/fun-dives");
     expect(localizedPath("/es/fun-dives", "he")).toBe("/he/fun-dives");
-    expect(localizedPath("/he/open-water-course", "es")).toBe("/es/open-water-course");
+    expect(localizedPath("/he/open-water", "es")).toBe("/es/open-water");
+    expect(localizedPath("/discover-scuba", "he")).toBe("/he/discover-scuba");
     expect(localizedPath("/es/sail-rock-diving", "en")).toBe("/sail-rock-diving");
   });
 
@@ -70,9 +75,9 @@ describe("localizedPath", () => {
   });
 
   // French only exists for fun-dives. Returning null keeps the switcher on the
-  // current page instead of inventing /fr/open-water-course.
+  // current page instead of inventing /fr/open-water.
   it("returns null when the target language has no twin", () => {
-    expect(localizedPath("/open-water-course", "fr")).toBeNull();
+    expect(localizedPath("/open-water", "fr")).toBeNull();
     expect(localizedPath("/fun-dives", "fr")).toBe("/fr/fun-dives");
   });
 
