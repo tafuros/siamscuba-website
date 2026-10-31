@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import BookingLink from "@/components/BookingLink";
 import { Fragment, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Clock, MapPin, MessageCircle } from "lucide-react";
+import { ArrowLeft, Camera, Clock, MapPin, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Seo from "@/components/Seo";
@@ -256,13 +256,25 @@ const BlogPostPage = () => {
                       )}
                       {section.image && (
                         <figure className="mt-6">
-                          <img
-                            src={section.image}
-                            alt={section.imageAlt || section.heading || ""}
-                            className="rounded-lg w-full sm:w-auto sm:max-h-[600px] mx-auto"
-                            loading="lazy"
-                            decoding="async"
-                          />
+                          {/* wrapper shrinks to the photo so the credit sits on the photo's own corner */}
+                          <div className="relative w-full sm:w-fit mx-auto">
+                            <img
+                              src={section.image}
+                              alt={section.imageAlt || section.heading || ""}
+                              className="block rounded-lg w-full sm:w-auto sm:max-h-[600px]"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                            {section.imageCredit && (
+                              <span
+                                dir="ltr"
+                                className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded bg-black/45 px-2 py-0.5 text-[11px] leading-4 text-white/90 backdrop-blur-sm"
+                              >
+                                <Camera className="h-3 w-3" aria-hidden="true" />
+                                {section.imageCredit}
+                              </span>
+                            )}
+                          </div>
                           {section.imageCaption && (
                             <figcaption className="mt-2 text-xs text-muted-foreground text-center">
                               {section.imageCaption}

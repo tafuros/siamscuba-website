@@ -211,6 +211,7 @@ type TranslationStrings = {
   blog_cat_activities: string;
   blog_cat_nightlife: string;
   blog_featured: string;
+  blog_hero_eyebrow: string;
   blog_reading_time: string;
   blog_toc_title: string;
   blog_inline_cta_title: string;
@@ -446,7 +447,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_subtitle: "Restaurants, beaches, activities & nightlife — everything you need to know about life on the island.",
     blog_view_all: "View All Articles",
     blog_page_title: "Koh Tao Guide",
-    blog_page_subtitle: "Your insider guide to the best restaurants, beaches, activities, and nightlife on Koh Tao.",
+    blog_page_subtitle: "Honest diving guides, course prices and island tips from the instructors who dive Koh Tao every day.",
     blog_back_to_guide: "Back to Guide",
     blog_article_not_found: "Article not found",
     blog_view_on_maps: "View on Google Maps",
@@ -460,6 +461,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "Activities",
     blog_cat_nightlife: "Nightlife",
     blog_featured: "Featured",
+    blog_hero_eyebrow: "Written by our instructors on Koh Tao",
     blog_reading_time: "{n} min read",
     blog_toc_title: "In this guide",
     blog_inline_cta_title: "Ready to dive Koh Tao?",
@@ -682,7 +684,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_subtitle: "מסעדות, חופים, פעילויות וחיי לילה — כל מה שצריך לדעת על החיים באי.",
     blog_view_all: "הצג את כל הכתבות",
     blog_page_title: "מדריך קוטאו",
-    blog_page_subtitle: "המדריך הפנימי שלך למסעדות, חופים, פעילויות וחיי לילה הטובים ביותר בקוטאו.",
+    blog_page_subtitle: "מדריכי צלילה כנים, מחירי קורסים וטיפים על האי - מהמדריכים שצוללים בקוטאו כל יום.",
     blog_back_to_guide: "חזרה למדריך",
     blog_article_not_found: "הכתבה לא נמצאה",
     blog_view_on_maps: "הצג ב-Google Maps",
@@ -696,6 +698,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "פעילויות",
     blog_cat_nightlife: "חיי לילה",
     blog_featured: "מומלצים",
+    blog_hero_eyebrow: "נכתב על ידי המדריכים שלנו בקוטאו",
     blog_reading_time: "{n} דקות קריאה",
     blog_toc_title: "במדריך הזה",
     blog_inline_cta_title: "מוכנים לצלול בקוטאו?",
@@ -918,7 +921,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_subtitle: "Restaurantes, playas, actividades y vida nocturna — todo lo que necesitas saber sobre la vida en la isla.",
     blog_view_all: "Ver Todos los Artículos",
     blog_page_title: "Guía Koh Tao",
-    blog_page_subtitle: "Tu guía de los mejores restaurantes, playas, actividades y vida nocturna en Koh Tao.",
+    blog_page_subtitle: "Guías de buceo honestas, precios de cursos y consejos de la isla, de los instructores que bucean en Koh Tao cada día.",
     blog_back_to_guide: "Volver a la Guía",
     blog_article_not_found: "Artículo no encontrado",
     blog_view_on_maps: "Ver en Google Maps",
@@ -932,6 +935,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "Actividades",
     blog_cat_nightlife: "Vida Nocturna",
     blog_featured: "Destacados",
+    blog_hero_eyebrow: "Escrito por nuestros instructores en Koh Tao",
     blog_reading_time: "{n} min de lectura",
     blog_toc_title: "En esta guía",
     blog_inline_cta_title: "¿Listo para bucear en Koh Tao?",
@@ -1154,7 +1158,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_subtitle: "Restaurants, plages, activités et vie nocturne — tout ce que vous devez savoir sur la vie sur l'île.",
     blog_view_all: "Voir Tous les Articles",
     blog_page_title: "Guide Koh Tao",
-    blog_page_subtitle: "Votre guide des meilleurs restaurants, plages, activités et vie nocturne à Koh Tao.",
+    blog_page_subtitle: "Guides de plongée honnêtes, prix des cours et conseils sur l'île, par les instructeurs qui plongent à Koh Tao chaque jour.",
     blog_back_to_guide: "Retour au Guide",
     blog_article_not_found: "Article introuvable",
     blog_view_on_maps: "Voir sur Google Maps",
@@ -1168,6 +1172,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "Activités",
     blog_cat_nightlife: "Vie Nocturne",
     blog_featured: "À la une",
+    blog_hero_eyebrow: "Écrit par nos instructeurs à Koh Tao",
     blog_reading_time: "{n} min de lecture",
     blog_toc_title: "Dans ce guide",
     blog_inline_cta_title: "Prêt à plonger à Koh Tao ?",
