@@ -521,7 +521,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { day: "יום 3", description: "06:30 - צלילה ראשונה עד 18 מ'. 09:00 - הפסקה. 10:00 - צלילה אחרונה. 11:00 - חזרה למועדון 🎉" },
       ],
       perks: [
-        "קבוצות קטנות: עד 6 תלמידים למדריך.",
+        "קבוצות קטנות: עד 4 תלמידים למדריך.",
         "לינה חינם: 2 לילות אירוח במועדון שלנו! 🎁",
         "מדריכים בכמה שפות 🌍",
       ],
@@ -897,7 +897,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { day: "Día 3", description: "06:30 - Primera inmersión a 18 m. 09:00 - Descanso. 10:00 - Inmersión final. 11:00 - De vuelta al club 🎉" },
       ],
       perks: [
-        "Grupos pequeños: máx. 6 alumnos por instructor.",
+        "Grupos pequeños: máx. 4 alumnos por instructor.",
         "Estancia gratis: ¡2 noches de alojamiento en nuestro club! 🎁",
         "Instructores en varios idiomas 🌍",
       ],
@@ -1273,7 +1273,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
         { day: "Jour 3", description: "06h30 - Première plongée à 18 m. 09h00 - Pause. 10h00 - Dernière plongée. 11h00 - Retour au club 🎉" },
       ],
       perks: [
-        "Petits groupes : max. 6 élèves par instructeur.",
+        "Petits groupes : max. 4 élèves par instructeur.",
         "Séjour gratuit : 2 nuits d'hébergement dans notre club ! 🎁",
         "Instructeurs en plusieurs langues 🌍",
       ],
