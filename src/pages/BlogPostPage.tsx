@@ -259,8 +259,9 @@ const BlogPostPage = () => {
                           <img
                             src={section.image}
                             alt={section.imageAlt || section.heading || ""}
-                            className="rounded-lg w-full"
+                            className="rounded-lg w-full sm:w-auto sm:max-h-[600px] mx-auto"
                             loading="lazy"
+                            decoding="async"
                           />
                           {section.imageCaption && (
                             <figcaption className="mt-2 text-xs text-muted-foreground text-center">

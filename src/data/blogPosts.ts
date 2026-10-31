@@ -87,6 +87,9 @@ export const blogPosts: BlogPost[] = [
       },
       {
         heading: "למה לעשות כוכב ראשון דווקא בקוטאו?",
+        image: "/blog/friends-on-dive-boat-koh-tao.webp",
+        imageAlt: "שתי חברות על סירת הצלילה של Siam Scuba מול חופי קוטאו",
+        imageCaption: "על הסירה בדרך לצלילה, קוטאו",
         paragraphs: [
           "קוטאו (Koh Tao) היא אחת מהמקומות הטובים בעולם לעשות כוכב ראשון — ולא בכדי. המים רדודים ושקופים, הנראות מגיעה לעשרות מטרים, הטמפרטורה עומדת על 28-30 מעלות לאורך כל השנה, ויש אלמוגים ודגים צבעוניים שמחכים לכם ממש מתחת לפני המים.",
           "בנוסף, קוטאו היא אחת הזולות ביותר בעולם לעשות קורס צלילה — בלי להתפשר על איכות. כאן תמצאו מדריכים מנוסים, ציוד מקצועי וסירות צלילה ייעודיות.",
@@ -94,6 +97,9 @@ export const blogPosts: BlogPost[] = [
       },
       {
         heading: "כוכב ראשון עם Siam Scuba — מה מיוחד אצלנו?",
+        image: "/blog/new-divers-underwater-ok-koh-tao.webp",
+        imageAlt: "שלושה צוללים חדשים מסמנים OK מתחת למים בקוטאו",
+        imageCaption: "תלמידים שלנו מתחת למים, יולי 2026",
         paragraphs: [
           "ב-Siam Scuba אנחנו עובדים בקבוצות קטנות של עד 4 תלמידים למדריך אחד. זה לא מקרי — זה מדיניות. אנחנו מאמינים שצלילה ראשונה צריכה להיות חוויה אישית, לא טיול קבוצתי של 12 אנשים.",
           "הקורס מתפרס על פני 2.5 ימים: לימוד תיאוריה (אפשר לסיים חלק ממנה אונליין לפני הנסיעה), תרגול בבריכה, ואז 4 צלילות בים הפתוח. בסיום תקבלו כרטיס הסמכה PADI שמוכר בכל מקום בעולם - לכל החיים.",
@@ -571,6 +577,9 @@ const divingBlogPosts: BlogPost[] = [
     sections: [
       {
         heading: "Why Koh Tao is the cheapest place in the world to learn to dive",
+        image: "/blog/happy-diver-boat-koh-tao.webp",
+        imageAlt: "Smiling diver in full gear on a Siam Scuba boat off Koh Tao",
+        imageCaption: "One of our divers before a boat dive, October 2026",
         paragraphs: [
           "Koh Tao certifies more PADI Open Water divers each year than anywhere else on the planet. The volume keeps prices low - but more importantly, the competition keeps them honest. A small Thai island packed with 50+ dive shops is the closest thing scuba has to a free market, and that's good news for your wallet.",
           "For comparison: a PADI Open Water course costs USD 600-900 in the Caribbean, AUD 700+ in Australia, and EUR 450-600 in Egypt. In Koh Tao the same internationally recognised certification - same PADI standards, same training, same lifetime card - costs ฿12,000 (about USD 340 / EUR 310 at current rates).",
@@ -619,6 +628,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Total budget by goal: from try-dive to professional",
+        image: "/blog/open-water-students-siam-scuba-boat.webp",
+        imageAlt: "Three Siam Scuba students in wetsuits on the dive boat",
+        imageCaption: "Open Water students on our boat, August 2026",
         paragraphs: [
           "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (an optional second dive is +฿1,000) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
@@ -671,6 +683,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "The 5 adventure dives explained",
+        image: "/blog/htms-sattakut-wreck-divers-koh-tao.webp",
+        imageAlt: "Divers over a sunken wreck with a deck gun off Koh Tao",
+        imageCaption: "A wreck adventure dive off Koh Tao",
         paragraphs: [
           "AOW is structured as 5 adventure dives over 1.5 days. Two are mandatory, three are your pick.",
           "Mandatory dives: Deep Adventure (typically to 30m at Chumphon Pinnacle or Shark Island) and Underwater Navigation Adventure (compass work plus natural-feature navigation, usually at Twins or Japanese Gardens).",
@@ -680,6 +695,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Best AOW dive sites on Koh Tao",
+        image: "/blog/advanced-divers-deep-pinnacle-koh-tao.webp",
+        imageAlt: "Two divers descending along a deep pinnacle wall in blue water",
+        imageCaption: "Descending a pinnacle in deep blue water",
         paragraphs: [
           "Sail Rock - the legendary pinnacle 45 minutes north of Koh Tao. Whale shark hot spot in season (April-May peak). Schooling barracuda, batfish, jacks. Max depth 35m, AOW required to see most of it.",
           "Chumphon Pinnacle - submerged seamount 30 minutes north. Often used for the Deep Adventure dive. Bull sharks in winter, turtles year-round, schooling fusiliers.",
@@ -760,6 +778,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "The IDC training structure (10 days)",
+        image: "/blog/dive-planning-slate-koh-tao.webp",
+        imageAlt: "Two divers reviewing a dive slate at the boat table",
+        imageCaption: "Planning a dive on the boat between sessions",
         paragraphs: [
           "Day 1-2: Standards review (the PADI Instructor Manual is your bible from now on), teaching philosophy, dive theory (physics, physiology, equipment, environment, RDP/eRDPML).",
           "Day 3-5: Confined water teaching presentations. You take the 24 fundamental skills you learned in Divemaster and teach them, broken down into demonstration speed for student understanding. You'll teach each skill multiple times under instructor critique.",
@@ -779,6 +800,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Why Koh Tao is the best place for IDC",
+        image: "/blog/dive-briefing-boat-table-koh-tao.webp",
+        imageAlt: "Instructor briefing three students at the dive boat table",
+        imageCaption: "A briefing on the boat, Koh Tao",
         paragraphs: [
           "Volume of students. Koh Tao certifies more divers annually than anywhere else on the planet. That means during your IDC and the post-IDC \"specialty teaching\" period, you have access to real student populations to practice on. Other locations can have IDC candidates teaching mock students (each other) for weeks.",
           "5 Star IDC Centre status (PADI's highest rating). We're audited regularly and the rating reflects real operational quality, not just paying for the badge.",
@@ -832,6 +856,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "February to May - peak conditions",
+        image: "/blog/green-turtle-koh-tao.webp",
+        imageAlt: "Green turtle resting on the reef at Koh Tao",
+        imageCaption: "Green turtle, October 2026",
         paragraphs: [
           "Visibility 20-30m on most sites. Sea is glass-flat most days. Air temperature 28-32°C, low humidity by tropical standards.",
           "Whale shark season peaks April through May at Sail Rock and Chumphon Pinnacle. Sightings happen year-round but April-May has the highest hit rate.",
@@ -870,6 +897,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Wildlife calendar",
+        image: "/blog/whale-shark-yellow-snapper-koh-tao.webp",
+        imageAlt: "Whale shark swimming above a school of yellow snapper",
+        imageCaption: "Whale shark on one of our trips, October 2026",
         paragraphs: [
           "Whale sharks: April to May peak. Year-round possible at Sail Rock and Chumphon Pinnacle.",
           "Bull sharks: November to March (when they appear at Chumphon Pinnacle). Sightings are rare but real.",
@@ -881,6 +911,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "What this means for booking",
+        image: "/blog/sunset-dive-boat-koh-tao.webp",
+        imageAlt: "Divers relaxing at sunset on the Siam Scuba dive boat",
+        imageCaption: "Sunset on the boat after the last dive",
         paragraphs: [
           "Maximum flexibility: target March or April. Best conditions, full wildlife calendar, and you'll get the most out of multi-day courses.",
           "If you're already coming October-November: still divable, just plan flexibility into your trip. A 7-day stay gives us multiple weather windows to work with; a 3-day rush trip during peak monsoon is a coin flip.",
@@ -918,6 +951,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "The 4 components of the course",
+        image: "/blog/open-water-theory-briefing-boat-koh-tao.webp",
+        imageAlt: "Instructor going through dive theory with two students on the boat",
+        imageCaption: "Theory with your instructor, on the boat",
         paragraphs: [
           "Theory: 5 modules covering physics, physiology, equipment, dive planning, and the underwater environment. You can do this as eLearning at home before you arrive (saves a day on the island), or in classroom sessions with us.",
           "Confined water sessions: 5 sets of skills practiced in a pool. Mask clearing, regulator recovery, alternate air source use, weight handling, neutral buoyancy basics. This is where you build the muscle memory.",
@@ -927,6 +963,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "The 4 ocean dives - what you'll see",
+        image: "/blog/open-water-skills-sandy-bottom-koh-tao.webp",
+        imageAlt: "Instructor and student practising skills kneeling on white sand",
+        imageCaption: "Skills practice on a sandy bottom",
         paragraphs: [
           "Dive 1: Twin Peaks or Japanese Gardens. 8-12m max depth. Calm reef, hard coral, damselfish, parrotfish, the occasional cuttlefish. You'll do basic skills (mask clear, regulator retrieval) on the bottom.",
           "Dive 2: White Rock or Aow Leuk. 12-15m max depth. More reef life, more variety. Often a turtle sighting.",
@@ -946,6 +985,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Group size matters more than people realize",
+        image: "/blog/open-water-divers-heart-sign-koh-tao.webp",
+        imageAlt: "Two Open Water students making a heart sign underwater",
+        imageCaption: "A small group, so everyone gets attention",
         paragraphs: [
           "PADI maximum is 8 students per instructor. That's the upper limit, not the standard.",
           "Industry common in Koh Tao: 6 to 8 students per instructor. With that ratio, the instructor can't watch everyone closely. Skills get rushed. Students who need extra help get less of it.",
@@ -1009,6 +1051,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Week 1-2 - Foundations",
+        image: "/blog/divemaster-gear-setup-dive-boat.webp",
+        imageAlt: "Divers setting up regulators and tanks on the dive boat",
+        imageCaption: "Gear setup on the boat is part of the daily routine",
         paragraphs: [
           "Theory crash course covers physics, physiology, equipment, dive theory, dive skills, and the underwater environment. The Divemaster Manual is a thick book - we work through it systematically with quizzes between sections.",
           "Water skills assessment: a 400m swim, an 800m snorkel, a 100m unconscious-diver tow, and a 15-minute tread. These aren't athletic tests - we work up to them. Most candidates pass after 1-2 attempts.",
@@ -1028,6 +1073,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Week 5 - Leading certified divers",
+        image: "/blog/boat-entry-giant-stride-koh-tao.webp",
+        imageAlt: "Diver doing a giant stride entry from the side of the dive boat",
+        imageCaption: "Giant stride off the boat",
         paragraphs: [
           "Mapping a dive site: you produce a full chart with depths, hazards, marine life points of interest, entry/exit, suggested route. You map either Twins, Japanese Gardens, or White Rock - all sites we run frequently.",
           "Mock dive briefings: you run a full briefing for a group of certified fun divers, then lead the dive. An instructor watches and gives feedback after.",
@@ -1111,6 +1159,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Why Siam Scuba Teaches PADI",
+        image: "/blog/diver-shaka-underwater-koh-tao.webp",
+        imageAlt: "Diver giving a shaka sign underwater over white sand",
+        imageCaption: "Happy diver, Koh Tao",
         paragraphs: [
           "Siam Scuba is a PADI 5 Star IDC Centre — one of the highest PADI ratings awarded to dive operations. This means our instructors are trained to the highest PADI standard, and we can certify divers all the way from absolute beginner to PADI Instructor.",
           "PADI is a little more strict with their requirements and sequencing — and that's exactly why we chose them. They do this to enhance both your safety and your retention of critical skills and information. Every skill you learn builds on the previous one, so by the time you finish a course, you're not just certified — you're genuinely confident underwater.",
@@ -1135,6 +1186,9 @@ const divingBlogPosts: BlogPost[] = [
     sections: [
       {
         heading: "Why Koh Tao Is One of the Best Dive Destinations in Asia",
+        image: "/blog/whale-shark-wreck-divers-koh-tao.webp",
+        imageAlt: "Whale shark swimming above a wreck with divers below",
+        imageCaption: "Whale shark with our divers, October 2026",
         paragraphs: [
           "Koh Tao — literally 'Turtle Island' — sits in the Gulf of Thailand and has been one of Southeast Asia's premier scuba diving destinations for over 30 years. The warm, clear waters (visibility often exceeding 20 metres), abundant marine life, and affordable prices make it the world's most popular place to get a dive certification.",
           "There are over 25 named dive sites around Koh Tao and the nearby islands, ranging from shallow reefs perfect for beginners to 30-metre deep walls and a large artificial wreck. Here's your guide to the best.",
@@ -1157,6 +1211,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Japanese Gardens — Best for Beginners",
+        image: "/blog/blue-spotted-stingray-koh-tao.webp",
+        imageAlt: "Blue-spotted stingray under a coral overhang",
+        imageCaption: "Blue-spotted stingray",
         paragraphs: [
           "Located in the shallow channel between Koh Tao and Koh Nang Yuan, Japanese Gardens is a sprawling coral garden at just 6–12 metres depth. It's the perfect dive for beginners, newly certified divers, and snorkellers.",
           "The site gets its name from the delicate hard corals that carpet the bottom like a manicured Japanese garden. You'll regularly spot clownfish in their anemones, pufferfish, blue-spotted stingrays, and — if you're lucky — hawksbill sea turtles.",
@@ -1171,6 +1228,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "White Rock — Fun Dive Favourite",
+        image: "/blog/batfish-school-koh-tao.webp",
+        imageAlt: "School of batfish in blue water",
+        imageCaption: "Batfish school",
         paragraphs: [
           "White Rock is one of the most visited dive sites on Koh Tao — and for good reason. The site is a series of granite boulders at 5–20 metres, covered in coral and teeming with fish. It's suitable for all certification levels.",
           "Resident hawksbill turtles are almost guaranteed sightings here. The site is large enough to explore thoroughly on a 50-minute dive without repeating the same area. A go-to choice for fun dives from Siam Scuba.",
@@ -1211,6 +1271,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Days 2–3 — Open Water Dives",
+        image: "/blog/giant-stride-entry-from-above-koh-tao.webp",
+        imageAlt: "Student entering the water with a giant stride, seen from above",
+        imageCaption: "First ocean entry off the boat",
         paragraphs: [
           "The heart of the course is four open water dives in the ocean around Koh Tao. Each dive has specific skills to demonstrate — underwater navigation, buoyancy control, air sharing — but there's also plenty of time to simply explore the reef.",
           "Typical sites for Open Water training dives include Japanese Gardens and Koh Nang Yuan, both of which have stunning coral and marine life even at shallow depths. You'll almost certainly see reef fish, sea turtles, and perhaps a reef shark or stingray.",
@@ -1219,6 +1282,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "The Final Day — Skills Assessment and Certification",
+        image: "/blog/diver-fish-school-sand-koh-tao.webp",
+        imageAlt: "Diver swimming past a school of fish over sand",
+        imageCaption: "Diving through a fish school",
         paragraphs: [
           "On the final day, your instructor completes your skills assessment and confirms that you've met all PADI requirements. At Siam Scuba, this often includes an additional fun dive as a reward — exploring a site without any skills to complete, just diving for pleasure.",
           "Your PADI certification card is issued digitally within 24 hours via the PADI app. You are now a certified Open Water Diver for life.",
@@ -1269,6 +1335,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "What Does the Divemaster Course Include?",
+        image: "/blog/giant-stride-dive-boat-koh-tao.webp",
+        imageAlt: "Diver jumping off the side of the Siam Scuba boat",
+        imageCaption: "Leading divers starts with the entry",
         paragraphs: [
           "The PADI Divemaster course at Siam Scuba covers: dive theory (physics, physiology, equipment, environment, dive skills and environment), water skills assessments, assisting with Open Water and other courses, supervised dive leading on Koh Tao's most popular sites, emergency scenario training, and dive site mapping.",
           "We include a free internship period where you assist on student courses under close instructor supervision — giving you real professional experience before you qualify.",
@@ -1309,6 +1378,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "El curso paso a paso: teoría, piscina y mar abierto",
+        image: "/blog/buceadora-corazon-koh-tao.webp",
+        imageAlt: "Buceadora haciendo un corazón con las manos bajo el agua",
+        imageCaption: "Una alumna en el mar, agosto 2026",
         paragraphs: [
           "Día 1: Teoría y piscina. Llegas por la mañana a nuestra base en Mae Haad. Repasas la teoría con tu instructor (puedes haber hecho la parte online en casa, recomendado, para ahorrar tiempo). Por la tarde bajas a la piscina con todo el equipo y practicas las habilidades fundamentales: respirar bajo el agua, despejar la máscara, recuperar el regulador, control de flotabilidad básico.",
           "Día 2: Dos inmersiones en mar abierto. Salimos en nuestro barco (Siam Explorer o Siam Pearl) hacia un sitio de buceo cercano. La primera inmersión es a 8-12 metros - una zona de coral suave con peces tropicales. La segunda baja a 12-15 metros, donde verás más vida marina, posiblemente tortugas.",
@@ -1318,6 +1390,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "Por qué el ratio de 4 alumnos por instructor importa",
+        image: "/blog/buceadora-banco-de-peces-koh-tao.webp",
+        imageAlt: "Buceadora con los brazos abiertos junto a un banco de peces",
+        imageCaption: "Grupos pequeños, más tiempo con tu instructor",
         paragraphs: [
           "El estándar PADI permite hasta 8 alumnos por instructor. La mayoría de centros de Koh Tao trabaja con 6-8 alumnos por grupo. Nosotros tenemos un ratio máximo de 4 alumnos por instructor. Sin excepciones.",
           "Cuatro alumnos por instructor significa que el instructor puede ver lo que cada uno hace bajo el agua. Si alguien tiene problemas con el equilibrado de oídos, el instructor lo nota. Si alguien va demasiado rápido o demasiado lento, hay tiempo para ajustar.",
@@ -1408,6 +1483,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "La pasantía semana a semana",
+        image: "/blog/buzos-arrecife-koh-tao.webp",
+        imageAlt: "Dos buzos descendiendo junto al arrecife en agua azul",
+        imageCaption: "Buceando en Koh Tao",
         paragraphs: [
           "Semana 1-2: Fundamentos. Curso teórico intensivo (física, fisiología, equipo, ambiente, planificación). Evaluación de habilidades acuáticas: 400m a nado, 800m con snorkel, 100m de remolque, 15 minutos de superficie sin apoyos. Demostración de las 24 habilidades fundamentales de PADI a nivel profesional. Empiezas a observar clases de instructores en silencio.",
           "Semana 3-4: Asistencia en cursos. Empiezas a trabajar con alumnos reales bajo supervisión del instructor. Preparación pre-buceo, asistencia bajo el agua, debriefings. Aquí dejas de pensar como buceador y empiezas a pensar como profesional.",
@@ -1427,6 +1505,9 @@ const divingBlogPosts: BlogPost[] = [
       },
       {
         heading: "El día a día como Divemaster Trainee",
+        image: "/blog/divemaster-gear-setup-dive-boat.webp",
+        imageAlt: "Buzos montando el equipo en el barco de buceo",
+        imageCaption: "Montar el equipo es parte del día a día",
         paragraphs: [
           "Mañanas en el barco: salida desde Mae Haad pier hacia el sitio de buceo de la mañana. Ayudas a los alumnos con el equipo, asistes durante la inmersión, debrief en el camino de vuelta.",
           "Comida y descanso: 2-3 horas en la base. Sandwich, fruta, agua. Tiempo para revisar el equipo y descansar.",
