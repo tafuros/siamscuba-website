@@ -325,22 +325,43 @@ const BlogPostPage = () => {
 
                     {/* Mid-article inline CTA */}
                     {i === midCtaIndex && (
-                      <div className="my-10 p-6 rounded-2xl bg-primary/5 border border-primary/20 flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
-                        <div>
-                          <h3 className="font-display text-lg font-semibold text-foreground">
+                      <div className="relative my-10 overflow-hidden rounded-2xl bg-[#03152a] text-white">
+                        <img
+                          src="/blog/divers-heart-sign-underwater-koh-tao.webp"
+                          alt=""
+                          className="absolute inset-0 h-full w-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background:
+                              "linear-gradient(180deg, rgba(3,21,42,.05) 0%, rgba(3,21,42,.45) 50%, rgba(3,21,42,.9) 100%)",
+                          }}
+                        />
+                        <div className="relative flex min-h-[260px] flex-col justify-end gap-4 px-6 pb-11 pt-24 sm:min-h-[300px] sm:flex-row sm:items-end sm:justify-between">
+                          <h3 className="font-display text-2xl font-semibold leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,.5)]">
                             {t("blog_inline_cta_title")}
                           </h3>
+                          <Button
+                            asChild
+                            size="default"
+                            className="h-11 rounded-full px-6 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shrink-0 self-start sm:self-auto"
+                          >
+                            <BookingLink to={inlineCtaHref}>
+                              <MessageCircle className="h-4 w-4" />
+                              {t("blog_inline_cta_button")}
+                            </BookingLink>
+                          </Button>
                         </div>
-                        <Button
-                          asChild
-                          size="default"
-                          className="rounded-full px-6 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shrink-0"
+                        <span
+                          dir="ltr"
+                          className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded bg-black/45 px-2 py-0.5 text-[11px] leading-4 text-white/90 backdrop-blur-sm"
                         >
-                          <BookingLink to={inlineCtaHref}>
-                            <MessageCircle className="h-4 w-4" />
-                            {t("blog_inline_cta_button")}
-                          </BookingLink>
-                        </Button>
+                          <Camera className="h-3 w-3" aria-hidden="true" />
+                          @fishgirl71 for @kohtaoprovideo
+                        </span>
                       </div>
                     )}
                   </Fragment>
