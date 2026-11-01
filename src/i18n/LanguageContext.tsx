@@ -12,6 +12,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { Head } from "vite-react-ssg";
 import { translations, rtlLanguages, type Language } from "./translations";
+import { HEBREW_BLOG_SLUGS } from "@/data/blogLanguages";
 
 interface LanguageContextType {
   language: Language;
@@ -41,6 +42,17 @@ const isKnownLanguage = (value: string | null): value is Language =>
 export const pathLanguage = (pathname: string): Language | null => {
   const match = pathname.match(/^\/(es|he|fr)(\/|$)/);
   return match ? (match[1] as Language) : null;
+};
+
+// A blog post's page speaks the post's language, chrome included (Ben,
+// 2026-11-01: a Hebrew post showed "Ready to dive Koh Tao?" and an English
+// navbar). Hebrew posts live at /blog/<slug> with no prefix, so the slug decides;
+// every other /blog/<slug> is English. Spanish posts are /es/blog (prefix wins).
+// The /blog index itself stays on the visitor's language. (exported for tests)
+export const blogPostLanguage = (pathname: string): Language | null => {
+  const match = pathname.match(/^\/blog\/([^/]+)\/?$/);
+  if (!match) return null;
+  return HEBREW_BLOG_SLUGS.includes(match[1]) ? "he" : "en";
 };
 
 // The language the visitor is reading in THIS visit (tab session). Real bug this
@@ -92,7 +104,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   // navigations. LanguageProvider renders inside the route element (App), so
   // the router context is always available here.
   const { pathname } = useLocation();
-  const urlLanguage = pathLanguage(pathname);
+  const urlLanguage = pathLanguage(pathname) ?? blogPostLanguage(pathname);
 
   // 2026-10-06: a locale-prefixed route STARTS in its own language. The URL is
   // identical at build time and on the client, so this cannot mismatch on
