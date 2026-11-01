@@ -5,12 +5,12 @@ import Seo from "@/components/Seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogCard from "@/components/BlogCard";
-import { listedBlogPosts } from "@/data/blogPosts";
+import { listedBlogPosts, type BlogPost } from "@/data/blogPosts";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const BlogPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,9 +28,10 @@ const BlogPage = () => {
   const categories = ["All", "Diving", "Food", "Beaches", "Activities", "Nightlife"];
 
   const sorted = useMemo(() => {
-    // /blog index excludes Spanish posts (those live at /es/blog/<slug>)
+    // The main list is English only; Hebrew/Spanish posts get their own block
+    // (top of the page when the visitor reads in that language, bottom otherwise).
     return listedBlogPosts
-      .filter((p) => p.language !== "es")
+      .filter((p) => !p.language || p.language === "en")
       .slice()
       .sort((a, b) => {
         const fa = a.featured ? 1 : 0;
@@ -39,6 +40,33 @@ const BlogPage = () => {
         return b.date.localeCompare(a.date);
       });
   }, []);
+
+  // Other-language posts, grouped by language, newest first.
+  const otherLangGroups = useMemo(() => {
+    const groups: { lang: "he" | "es"; label: string; posts: BlogPost[] }[] = [
+      { lang: "he", label: "בעברית", posts: [] },
+      { lang: "es", label: "En español", posts: [] },
+    ];
+    for (const p of listedBlogPosts) {
+      const g = groups.find((x) => x.lang === p.language);
+      if (g) g.posts.push(p);
+    }
+    for (const g of groups) g.posts.sort((a, b) => b.date.localeCompare(a.date));
+    return groups.filter((g) => g.posts.length > 0);
+  }, []);
+  const ownLangGroup = otherLangGroups.find((g) => g.lang === language);
+  const restLangGroups = otherLangGroups.filter((g) => g !== ownLangGroup);
+
+  const renderLangGroup = (g: (typeof otherLangGroups)[number]) => (
+    <div key={g.lang} dir={g.lang === "he" ? "rtl" : "ltr"} lang={g.lang} className="mb-8 last:mb-0">
+      <h3 className="mb-4 text-lg font-semibold text-foreground">{g.label}</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {g.posts.map((post) => (
+          <BlogCard key={post.slug} post={post} />
+        ))}
+      </div>
+    </div>
+  );
 
   const filtered = activeCategory === "All"
     ? sorted
@@ -106,6 +134,13 @@ const BlogPage = () => {
             </span>
           </section>
 
+          {/* Visitor reads in Hebrew/Spanish: their posts come first. */}
+          {ownLangGroup && (
+            <section aria-label={ownLangGroup.label} className="mb-12">
+              {renderLangGroup(ownLangGroup)}
+            </section>
+          )}
+
           {/* Category filters */}
           <div className="flex flex-wrap justify-center gap-2 mb-10">
             {categories.map((cat) => (
@@ -167,6 +202,19 @@ const BlogPage = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Posts in other languages - kept out of the English list */}
+          {restLangGroups.length > 0 && (
+            <section aria-labelledby="other-languages-heading" className="mt-16 border-t border-border/60 pt-10">
+              <h2
+                id="other-languages-heading"
+                className="font-display text-2xl font-semibold text-foreground mb-6"
+              >
+                {t("blog_other_languages")}
+              </h2>
+              {restLangGroups.map(renderLangGroup)}
+            </section>
+          )}
         </div>
       </main>
       <Footer />

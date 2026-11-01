@@ -211,6 +211,7 @@ type TranslationStrings = {
   blog_cat_activities: string;
   blog_cat_nightlife: string;
   blog_featured: string;
+  blog_other_languages: string;
   blog_hero_eyebrow: string;
   blog_reading_time: string;
   blog_toc_title: string;
@@ -461,6 +462,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "Activities",
     blog_cat_nightlife: "Nightlife",
     blog_featured: "Featured",
+    blog_other_languages: "Guides in other languages",
     blog_hero_eyebrow: "From the Siam Scuba team on Koh Tao",
     blog_reading_time: "{n} min read",
     blog_toc_title: "In this guide",
@@ -698,6 +700,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "פעילויות",
     blog_cat_nightlife: "חיי לילה",
     blog_featured: "מומלצים",
+    blog_other_languages: "מדריכים בשפות אחרות",
     blog_hero_eyebrow: "מצוות Siam Scuba בקוטאו",
     blog_reading_time: "{n} דקות קריאה",
     blog_toc_title: "במדריך הזה",
@@ -935,6 +938,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "Actividades",
     blog_cat_nightlife: "Vida Nocturna",
     blog_featured: "Destacados",
+    blog_other_languages: "Guías en otros idiomas",
     blog_hero_eyebrow: "Del equipo de Siam Scuba en Koh Tao",
     blog_reading_time: "{n} min de lectura",
     blog_toc_title: "En esta guía",
@@ -1172,6 +1176,7 @@ export const translations: Record<Language, TranslationStrings> = {
     blog_cat_activities: "Activités",
     blog_cat_nightlife: "Vie Nocturne",
     blog_featured: "À la une",
+    blog_other_languages: "Guides dans d'autres langues",
     blog_hero_eyebrow: "Par l'équipe Siam Scuba à Koh Tao",
     blog_reading_time: "{n} min de lecture",
     blog_toc_title: "Dans ce guide",
