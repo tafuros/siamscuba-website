@@ -1,8 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import BookingLink from "@/components/BookingLink";
-import { Fragment, useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, Camera, Clock, MapPin, MessageCircle } from "lucide-react";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, Camera, Clock, MapPin, MessageCircle, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Seo from "@/components/Seo";
@@ -46,6 +46,21 @@ const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = blogPosts.find((p) => p.slug === slug);
   const { t, language } = useLanguage();
+  // Click-to-enlarge for in-article photos.
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string; credit?: string } | null>(null);
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [lightbox]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -184,6 +199,7 @@ const BlogPostPage = () => {
           fetchpriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-background/80 to-transparent" />
         {post.coverImageCredit && (
           <span dir="ltr" className="absolute bottom-28 left-3 inline-flex items-center gap-1 rounded bg-black/45 px-2 py-0.5 text-[11px] leading-4 text-white/90 backdrop-blur-sm">
             <Camera className="h-3 w-3" aria-hidden="true" />
@@ -194,7 +210,7 @@ const BlogPostPage = () => {
 
       <div className="container mx-auto px-4 -mt-24 relative z-10 max-w-6xl pb-20">
         <div className={`grid gap-10 ${showToc ? "lg:grid-cols-[minmax(0,1fr)_240px]" : ""}`}>
-          <article className="max-w-3xl mx-auto w-full" dir={isRTL ? "rtl" : "ltr"}>
+          <article className="max-w-[680px] mx-auto w-full" dir={isRTL ? "rtl" : "ltr"}>
             <motion.div initial={{ y: 20 }} animate={{ y: 0 }}>
               <Link
                 to="/blog"
@@ -244,7 +260,7 @@ const BlogPostPage = () => {
                         </h2>
                       )}
                       {section.paragraphs.map((p, j) => (
-                        <p key={j} className="text-foreground/80 leading-relaxed mb-3">
+                        <p key={j} className="text-foreground/80 text-[17px] leading-[1.75] mb-4">
                           {renderInline(p)}
                         </p>
                       ))}
@@ -264,13 +280,26 @@ const BlogPostPage = () => {
                         <figure className="mt-6">
                           {/* wrapper shrinks to the photo so the credit sits on the photo's own corner */}
                           <div className="relative w-full sm:w-fit mx-auto">
-                            <img
-                              src={section.image}
-                              alt={section.imageAlt || section.heading || ""}
-                              className="block rounded-lg w-full sm:w-auto sm:max-h-[600px]"
-                              loading="lazy"
-                              decoding="async"
-                            />
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setLightbox({
+                                  src: section.image!,
+                                  alt: section.imageAlt || section.heading || "",
+                                  credit: section.imageCredit,
+                                })
+                              }
+                              className="block w-full cursor-zoom-in rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                              aria-label={section.imageAlt || section.heading || "Open photo"}
+                            >
+                              <img
+                                src={section.image}
+                                alt={section.imageAlt || section.heading || ""}
+                                className="block rounded-lg w-full sm:w-auto sm:max-h-[600px]"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </button>
                             {section.imageCredit && (
                               <span
                                 dir="ltr"
@@ -400,6 +429,56 @@ const BlogPostPage = () => {
         </div>
       </div>
       </main>
+
+      {/* Photo lightbox */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            onClick={() => setLightbox(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={lightbox.alt}
+          >
+            <button
+              type="button"
+              onClick={() => setLightbox(null)}
+              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+              style={{ marginTop: "env(safe-area-inset-top, 0px)" }}
+              aria-label="Close"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <motion.div
+              className="relative"
+              initial={{ scale: 0.97 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 460, damping: 40 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={lightbox.src}
+                alt={lightbox.alt}
+                className="block max-h-[88vh] max-w-[94vw] rounded-lg object-contain"
+              />
+              {lightbox.credit && (
+                <span
+                  dir="ltr"
+                  className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded bg-black/45 px-2 py-0.5 text-[11px] leading-4 text-white/90 backdrop-blur-sm"
+                >
+                  <Camera className="h-3 w-3" aria-hidden="true" />
+                  {lightbox.credit}
+                </span>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
