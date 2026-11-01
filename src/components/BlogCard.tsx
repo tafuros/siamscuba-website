@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Camera } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GlowCard } from "@/components/ui/spotlight-card";
@@ -34,13 +35,19 @@ const BlogCard = ({ post, variant = "default" }: BlogCardProps) => {
     <Link to={blogPostPath(post)} className="block h-full">
       <GlowCard glowColor="blue" customSize className="h-full !p-0 !gap-0 !grid-rows-[1fr] !shadow-none">
         <Card className="overflow-hidden group cursor-pointer border-0 bg-transparent shadow-none hover:shadow-none transition-all duration-300 h-full">
-          <div className={`overflow-hidden ${isHero ? "aspect-[16/9] lg:aspect-[16/10]" : "aspect-[16/10]"}`}>
+          <div className={`relative overflow-hidden ${isHero ? "aspect-[16/9] lg:aspect-[16/10]" : "aspect-[16/10]"}`}>
             <img
               src={post.coverImage}
               alt={post.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
+            {post.coverImageCredit && (
+              <span dir="ltr" className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded bg-black/45 px-2 py-0.5 text-[11px] leading-4 text-white/90 backdrop-blur-sm">
+                <Camera className="h-3 w-3" aria-hidden="true" />
+                {post.coverImageCredit}
+              </span>
+            )}
           </div>
           <CardContent className={isHero ? "p-6 lg:p-8" : "p-5"}>
             <Badge className={`${categoryColors[post.category] || ""} mb-3 text-xs`}>

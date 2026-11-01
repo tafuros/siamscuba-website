@@ -37,6 +37,8 @@ export interface BlogPost {
    */
   seoDescription?: string;
   coverImage: string;
+  /** Photographer credit shown bottom-left on the cover (card + post hero). */
+  coverImageCredit?: string;
   date: string;
   sections: BlogSection[];
   tags?: string[];
@@ -578,7 +580,8 @@ const divingBlogPosts: BlogPost[] = [
       "Open Water 12,000 THB, Advanced 11,000, fun dives 2,000, Divemaster 40,000 - every Koh Tao course price for 2026, plus real daily living costs.",
     category: "Diving",
     excerpt: "Real prices for every PADI course and dive package on Koh Tao - plus daily living costs and the hidden fees you should watch for at other shops.",
-    coverImage: "/blog/koh-tao-diving-cost-divers.webp",
+    coverImage: "/blog/divers-group-dive-boat-koh-tao.webp",
+    coverImageCredit: "@fishgirl71 for @kohtaoprovideo",
     date: "2026-05-09",
     sections: [
       {
@@ -1217,7 +1220,8 @@ const divingBlogPosts: BlogPost[] = [
     title: "Complete Guide to the Best Dive Sites on Koh Tao",
     category: "Diving",
     excerpt: "From the famous HTMS Sattakut wreck to the legendary Sail Rock - here's everything you need to know about diving on Koh Tao.",
-    coverImage: "/blog/koh-tao-dive-sites.webp",
+    coverImage: "/blog/divers-fish-school-pinnacle-koh-tao.webp",
+    coverImageCredit: "@oceanphanton for @kohtaoprovideo",
     date: "2026-03-15",
     sections: [
       {

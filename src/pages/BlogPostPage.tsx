@@ -184,6 +184,12 @@ const BlogPostPage = () => {
           fetchpriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        {post.coverImageCredit && (
+          <span dir="ltr" className="absolute bottom-28 left-3 inline-flex items-center gap-1 rounded bg-black/45 px-2 py-0.5 text-[11px] leading-4 text-white/90 backdrop-blur-sm">
+            <Camera className="h-3 w-3" aria-hidden="true" />
+            {post.coverImageCredit}
+          </span>
+        )}
       </div>
 
       <div className="container mx-auto px-4 -mt-24 relative z-10 max-w-6xl pb-20">
