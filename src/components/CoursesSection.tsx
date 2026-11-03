@@ -81,7 +81,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       description: t("courses_pro_desc"),
       courses: [
         { icon: Crown, title: t("course_dm"), dialogKey: "Divemaster", price: DM_PRICE, duration: t("dur_21_42_days"), highlights: [t("hl_lead"), t("hl_career"), t("hl_free_intern")], featured: true, hasDetails: true },
-        { icon: Award, title: t("course_idc"), dialogKey: "IDC (Instructor Course)", price: null, duration: t("dur_varies"), highlights: [t("hl_become_instructor"), t("hl_full_training"), t("hl_free_intern")], hasDetails: true },
+        { icon: Award, title: t("course_idc"), dialogKey: "IDC (Instructor Course)", price: null, duration: t("dur_varies"), highlights: [t("hl_become_instructor"), t("hl_full_training"), t("hl_career")], hasDetails: true },
       ],
     },
     {

@@ -648,7 +648,7 @@ const divingBlogPosts: BlogPost[] = [
           "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (an optional second dive is +฿1,000) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
           "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿2,000 = ฿25,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
-          "Pro pathway: ฿50,000 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿90,000-฿130,000 for a 6-week internship. Includes the internship - you assist on student courses, which is the real-world experience that makes you employable.",
+          "Pro pathway: ฿50,000 Divemaster + 6 weeks accommodation (฿8,000-฿15,000 monthly for a fan room, up to ฿25,000 with air-con) + food (฿8,000-฿15,000 per month) = roughly ฿75,000-฿110,000 for a 6-week internship. Includes the internship - you assist on student courses, which is the real-world experience that makes you employable.",
           "Total instructor pipeline (Open Water → Instructor): roughly ฿130,000-฿190,000 in course fees over 3-4 months. Possibly the cheapest route to a globally portable scuba instructor career on the planet.",
         ],
       },
@@ -1424,7 +1424,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Requisitos para empezar",
         paragraphs: [
           "PADI Rescue Diver activo (o equivalente reconocido de otra agencia: SSI, NAUI, SDI, etc.). Si solo tienes Open Water o Advanced, puedes hacer el Rescue Diver con nosotros antes - lo añadimos al paquete.",
-          "EFR Primary y Secondary Care (curso de primeros auxilios y RCP) en los últimos 24 meses. Si no lo tienes, lo hacemos al principio de la pasantía.",
+          "EFR Primary y Secondary Care (curso de primeros auxilios y RCP) en los últimos 24 meses. Si no lo tienes, lo haces con nosotros antes de empezar la pasantía (5.000 THB).",
           "Mínimo 40 inmersiones registradas para empezar. Para graduarte, necesitas 60 inmersiones registradas. La mayoría de candidatos llega a 80-120 inmersiones durante la pasantía gracias a las inmersiones de fun diving y las asistencias.",
           "18 años o más.",
           "Apto médicamente, con el formulario médico PADI rellenado y firmado por un médico cuando aplique.",
@@ -1449,9 +1449,9 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Curso de Divemaster: 50.000 THB en Siam Scuba. Incluye toda la formación, los manuales, las inmersiones, la pasantía, y las cuotas de procesamiento de PADI.",
           "Si necesitas Rescue Diver + EFR antes: 16.000 THB adicionales (11.000 + 5.000). En total el paquete completo desde Advanced Open Water hasta Divemaster ronda los 66.000 THB.",
-          "Alojamiento por 3-6 semanas: estudios mensuales con ventilador 8.000-15.000 THB/mes; habitaciones con aire acondicionado 15.000-25.000 THB/mes. Calcula 30.000-50.000 THB en total para 6 semanas.",
+          "Alojamiento por 3-6 semanas: estudios mensuales con ventilador 8.000-15.000 THB/mes; habitaciones con aire acondicionado 15.000-25.000 THB/mes. Calcula 12.000-38.000 THB en total para 6 semanas.",
           "Comida: 8.000-15.000 THB al mes según estilo de vida (comida tailandesa de calle vs. restaurantes para extranjeros).",
-          "Total realista para 6 semanas: 80.000-120.000 THB (2.150-3.250 EUR / 2.300-3.450 USD), curso incluido. Probablemente la ruta más barata del mundo para llegar a buceador profesional.",
+          "Total realista para 6 semanas: 75.000-110.000 THB con curso, alojamiento y comida. Probablemente la ruta más barata del mundo para llegar a buceador profesional.",
         ],
       },
       {
