@@ -28,5 +28,11 @@ export const COURSE_TO_SLUG: Record<string, string> = Object.fromEntries(
  * Where a course slug should LINK to. /divemaster 301s to the full lander
  * (vercel.json, 2026-11-03), so links skip the redirect hop.
  */
-const COURSE_PATH_OVERRIDE: Record<string, string> = { divemaster: "/divemaster-course" };
+const COURSE_PATH_OVERRIDE: Record<string, string> = {
+  divemaster: "/divemaster-course",
+  // 301 since 2026-11-03: the homepage-with-dialog copy competed with the real lander.
+  "advanced-open-water": "/advanced-open-water-course",
+};
 export const coursePath = (slug: string) => COURSE_PATH_OVERRIDE[slug] ?? `/${slug}`;
+/** Course slugs that 301 to a lander: never prerendered, never in the sitemap. */
+export const REDIRECTED_COURSE_SLUGS: readonly string[] = Object.keys(COURSE_PATH_OVERRIDE);

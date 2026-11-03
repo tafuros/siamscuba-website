@@ -75,8 +75,8 @@ export const blogPostPath = (post: Pick<BlogPost, "slug" | "language">): string 
 export const blogPosts: BlogPost[] = [
   {
     slug: "kokhav-rishon-koh-tao",
-    title: "כוכב ראשון בקוטאו – המדריך המלא לקורס Open Water בתאילנד",
-    seoTitle: "כוכב ראשון בקוטאו - קורס Open Water בתאילנד",
+    title: "כוכב ראשון בקוטאו - המדריך המלא ל-Open Water בתאילנד",
+    seoTitle: "כוכב ראשון בקוטאו - המדריך המלא ל-Open Water",
     category: "Diving",
     excerpt: "חולמים על כוכב ראשון בתאילנד? קוטאו היא בירת הצלילה של דרום-מזרח אסיה, ואצלנו תקבלו הסמכת PADI בקבוצות קטנות ושתי סירות צלילה פרטיות.",
     coverImage: "/blog/open-water-course-koh-tao.jpg",
@@ -501,7 +501,7 @@ export const blogPosts: BlogPost[] = [
         heading: "Getting to Siam Scuba, and out to the dive sites",
         paragraphs: [
           "Siam Scuba is listed in the app under **dive clubs**, so you can select us as your destination by name instead of trying to describe where in Sairee we are. Pick us from the list, see the fare, and turn up.",
-          "**Book a course with us and your transfer from the pier is free.** That covers every course we run - [Discover Scuba](/discover-scuba), [Open Water](/open-water), [Advanced Open Water](/advanced-open-water), the [specialty courses](/#courses), [Divemaster](/divemaster-course) and the [instructor course](/idc). Coming for fun dives instead, your pier transfer is 150 THB rather than the standard 400.",
+          "**Book a course with us and your transfer from the pier is free.** That covers every course we run - [Discover Scuba](/discover-scuba), [Open Water](/open-water), [Advanced Open Water](/advanced-open-water-course), the [specialty courses](/#courses), [Divemaster](/divemaster-course) and the [instructor course](/idc). Coming for fun dives instead, your pier transfer is 150 THB rather than the standard 400.",
           "Either way, tell us which ferry you are on when you book and we will have the ride waiting - so your first Koh Tao taxi conversation is not a negotiation with a backpack on.",
         ],
         table: {
@@ -605,7 +605,7 @@ const divingBlogPosts: BlogPost[] = [
           "PADI Bubble Maker (kids 8+): ฿3,800 - Scuba intro for children in shallow sheltered sea, with a PADI instructor.",
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
           "[PADI Open Water Diver](/open-water): ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
-          "[PADI Advanced Open Water](/advanced-open-water): ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
+          "[PADI Advanced Open Water](/advanced-open-water-course): ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 3 days (2 days Rescue + 1 day EFR). The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,000 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver and Deep Diver are ฿9,000 each. Sidemount and DPV are priced on request - ask the team.",
@@ -677,8 +677,8 @@ const divingBlogPosts: BlogPost[] = [
   },
   {
     slug: "padi-advanced-open-water-koh-tao",
-    title: "PADI Advanced Open Water on Koh Tao: The Complete 1.5-Day Course Guide",
-    seoTitle: "PADI Advanced Open Water Koh Tao - 1.5-Day Guide",
+    title: "PADI Advanced Open Water on Koh Tao: The 5 Adventure Dives Explained",
+    seoTitle: "Advanced Open Water on Koh Tao - The 5 Dives Explained",
     seoDescription:
       "PADI Advanced Open Water on Koh Tao: 5 dives in 1.5 days incl. deep and navigation, certified to 30m. 11,000 THB with 1 night's stay. Prerequisites inside.",
     category: "Diving",
@@ -957,8 +957,8 @@ const divingBlogPosts: BlogPost[] = [
   },
   {
     slug: "padi-open-water-koh-tao-complete-guide",
-    title: "PADI Open Water Course on Koh Tao: The Complete 2026 Guide",
-    seoTitle: "PADI Open Water Koh Tao - Price & Day-by-Day Guide 2026",
+    title: "PADI Open Water on Koh Tao: The Complete 2026 Guide",
+    seoTitle: "What Happens Each Day of PADI Open Water on Koh Tao - 2026 Guide",
     seoDescription:
       "PADI Open Water on Koh Tao in 2.5 days for 12,000 THB - gear, 4 ocean dives, certification and 2 nights' stay included. What you learn and who it suits.",
     category: "Diving",
@@ -1304,8 +1304,8 @@ const divingBlogPosts: BlogPost[] = [
   },
   {
     slug: "curso-buceo-koh-tao",
-    title: "Curso de Buceo Open Water en Koh Tao: La Guía Completa en Español",
-    seoTitle: "Curso de buceo Open Water en Koh Tao 2026",
+    title: "Open Water en Koh Tao: la guía completa en español",
+    seoTitle: "Bucear en Koh Tao por primera vez: guía del Open Water",
     seoDescription:
       "Curso PADI Open Water en Koh Tao: 2,5 días, piscina el primer día y 4 inmersiones en el mar. 12.000 THB con equipo y certificación. Guía en español.",
     category: "Diving",

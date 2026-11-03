@@ -70,14 +70,20 @@ const Seo = ({
     else ldEntries.push(jsonLd);
   }
   if (breadcrumbs && breadcrumbs.length > 0) {
-    ldEntries.push(buildBreadcrumbSchema(breadcrumbs));
+    // "Home" points at the homepage in the page's own language: /he and /es are
+    // real homepages (2026-11-03 audit - Hebrew/Spanish pages pointed at English "/").
+    const homeLang = new URL(url).pathname.match(/^\/(he|es)(\/|$)/)?.[1];
+    const localized = homeLang
+      ? breadcrumbs.map((b) => (b.path === "/" ? { ...b, path: `/${homeLang}` } : b))
+      : breadcrumbs;
+    ldEntries.push(buildBreadcrumbSchema(localized));
   }
 
   return (
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
+      <meta name="robots" content={noindex ? "noindex,follow" : "index,follow"} />
       <link rel="canonical" href={url} />
 
       {/* react-helmet-async (used by vite-react-ssg's <Head>) does NOT unwrap

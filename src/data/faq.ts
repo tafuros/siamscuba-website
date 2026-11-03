@@ -80,7 +80,7 @@ export const FAQ_COPY: Record<Language, FaqCopy> = {
           },
           {
             q: "What comes after Open Water?",
-            a: "[Advanced Open Water](/advanced-open-water): 1.5 days, 5 dives including deep and navigation, certified to 30 m - 11,000 THB with 1 night of accommodation. Then [Rescue Diver](/rescue-diver) (11,000 THB) with [EFR](/efr) first aid (5,000 THB).",
+            a: "[Advanced Open Water](/advanced-open-water-course): 1.5 days, 5 dives including deep and navigation, certified to 30 m - 11,000 THB with 1 night of accommodation. Then [Rescue Diver](/rescue-diver) (11,000 THB) with [EFR](/efr) first aid (5,000 THB).",
           },
           {
             q: "Can I go pro with you?",
@@ -404,7 +404,7 @@ export const FAQ_COPY: Record<Language, FaqCopy> = {
           },
           {
             q: "Et après l'Open Water ?",
-            a: "L'[Advanced Open Water](/advanced-open-water) : 1,5 jour, 5 plongées dont la profonde et l'orientation, certifié jusqu'à 30 m - 11 000 THB avec 1 nuit de logement. Ensuite, le [Rescue Diver](/rescue-diver) (11 000 THB) avec les premiers secours [EFR](/efr) (5 000 THB).",
+            a: "L'[Advanced Open Water](/advanced-open-water-course) : 1,5 jour, 5 plongées dont la profonde et l'orientation, certifié jusqu'à 30 m - 11 000 THB avec 1 nuit de logement. Ensuite, le [Rescue Diver](/rescue-diver) (11 000 THB) avec les premiers secours [EFR](/efr) (5 000 THB).",
           },
           {
             q: "Puis-je devenir professionnel chez vous ?",

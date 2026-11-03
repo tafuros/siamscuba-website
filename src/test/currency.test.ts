@@ -177,7 +177,8 @@ describe("surfaces that must stay in Baht", () => {
   it("JSON-LD offers still declare THB", () => {
     expect(read("src/lib/funDiveCopy.ts").includes('priceCurrency: "THB"')).toBe(true);
     expect(read("src/data/diveScheduleBoard.ts").includes('priceCurrency: "THB"')).toBe(true);
-    expect(read("index.html").includes('"priceCurrency": "THB"')).toBe(true);
+    // The course ItemList moved from index.html to the homepage (2026-11-03).
+    expect(read("src/data/courseListSchema.ts").includes('"priceCurrency": "THB"')).toBe(true);
   });
 
   it("the Nemo prompt still forbids the bot from converting currency", () => {

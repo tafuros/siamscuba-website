@@ -64,7 +64,9 @@ const Navbar = () => {
 
   const navLinks = [
     { label: t("nav_courses"), href: "#courses" },
-    { label: t("nav_fun_diving"), href: "#fun-diving" },
+    // The fun-dives lander in the reader's language (Ben, 2026-11-03 SEO round):
+    // it gets the internal link weight instead of the booking form.
+    { label: t("nav_fun_diving"), href: language === "en" ? "/fun-dives" : `/${language}/fun-dives` },
     { label: t("nav_dive_sites"), href: "/dive-sites" },
     { label: t("nav_koh_tao_guide"), href: "/blog" },
     // "Boats" and "About" left 2026-10-04 with their homepage sections

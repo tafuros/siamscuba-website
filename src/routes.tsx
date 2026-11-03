@@ -4,7 +4,7 @@ import RouteErrorBoundary from "./components/RouteErrorBoundary";
 import Index from "./pages/Index";
 import { blogPosts } from "./data/blogPosts";
 import { diveSites } from "./data/diveSites";
-import { SLUG_TO_COURSE } from "./lib/courseSlugMap";
+import { SLUG_TO_COURSE, REDIRECTED_COURSE_SLUGS } from "./lib/courseSlugMap";
 
 // react-router data routers want { Component } from lazy().
 // Our pages all use default exports, so wrap them.
@@ -352,9 +352,9 @@ export const routes: RouteRecord[] = [
         path: ":courseSlug",
         lazy: lazyDefault(() => import("./pages/CoursePage")),
         entry: "src/pages/CoursePage.tsx",
-        // /divemaster 301s to /divemaster-course (vercel.json, 2026-11-03), so it
-        // is not prerendered - a redirect source must not be a real page.
-        getStaticPaths: () => Object.keys(SLUG_TO_COURSE).filter((slug) => slug !== "divemaster"),
+        // Slugs that 301 to a lander (vercel.json) are not prerendered - a
+        // redirect source must not be a real page.
+        getStaticPaths: () => Object.keys(SLUG_TO_COURSE).filter((slug) => !REDIRECTED_COURSE_SLUGS.includes(slug)),
       },
       {
         path: "*",

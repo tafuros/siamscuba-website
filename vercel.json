@@ -16,6 +16,11 @@
       "permanent": true
     },
     {
+      "source": "/advanced-open-water",
+      "destination": "/advanced-open-water-course",
+      "permanent": true
+    },
+    {
       "source": "/blog/padi-open-water-koh-tao-what-to-expect",
       "destination": "/blog/padi-open-water-koh-tao-complete-guide",
       "permanent": true

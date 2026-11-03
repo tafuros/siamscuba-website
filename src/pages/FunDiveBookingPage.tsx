@@ -330,7 +330,10 @@ const FunDiveBookingPage = () => {
   return (
     <div className="min-h-screen bg-ocean-surface">
       <Seo
-        title="Book a Fun Dive in Koh Tao – Guided Day Trips | Siam Scuba"
+        title="Book a Fun Dive in Koh Tao - Guided Day Trips | Siam Scuba"
+        // A booking form, not a landing page: /fun-dives is the page to rank
+        // (2026-11-03). noindex keeps it out of results; links still pass.
+        noindex
         description="Book a guided fun dive in Koh Tao with Siam Scuba: small groups, two custom dive boats, sites including Chumphon Pinnacle, Shark Island and Twins, plus the Sunday Sail Rock day trip."
       />
       <motion.main

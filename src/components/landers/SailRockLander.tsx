@@ -332,7 +332,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
             {copy.faqItems.map((item, idx) => (
               <AccordionItem key={item.q} value={`faq-${idx}`}>
                 <AccordionTrigger className="text-left">{item.q}</AccordionTrigger>
-                <AccordionContent>{item.a}</AccordionContent>
+                <AccordionContent forceMount>{item.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

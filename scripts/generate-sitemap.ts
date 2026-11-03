@@ -5,7 +5,6 @@ import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const SITE_URL = "https://siamscuba.com";
-const SUPPORTED_LANGS = ["en", "he", "es", "fr"];
 
 interface SitemapEntry {
   loc: string;
@@ -14,7 +13,8 @@ interface SitemapEntry {
   priority?: number; // 0.0-1.0
   /**
    * If set, only emit hreflang for these languages (single-language content like blog posts).
-   * If undefined, the page is multi-language (i18n switcher) and gets all SUPPORTED_LANGS.
+   * Legacy marker for single-language content; hreflang is now derived from
+   * the locale cluster (or omitted), so this is informational only.
    */
   hreflangs?: string[];
   /**
@@ -29,7 +29,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   // Dynamically import data sources so this script picks up edits without rebuilding the bundle.
   const { blogPosts } = await import("../src/data/blogPosts");
   const { diveSites } = await import("../src/data/diveSites");
-  const { SLUG_TO_COURSE } = await import("../src/lib/courseSlugMap");
+  const { SLUG_TO_COURSE, REDIRECTED_COURSE_SLUGS } = await import("../src/lib/courseSlugMap");
   // Same object the three pages render into their <head>. Google merges the
   // sitemap and HTML annotations and errors out when they disagree, so the
   // cluster is defined once (src/lib/localeRoutes.ts) and consumed by both.
@@ -43,60 +43,61 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   const FAQ_ALTERNATES = hreflangAlternatesFor("/faq");
   const START_ALTERNATES = hreflangAlternatesFor("/discover-scuba-vs-open-water");
 
-  const today = new Date().toISOString().slice(0, 10);
+  // No build-date lastmod (2026-11-03): stamping every URL with the deploy date
+  // teaches Google to ignore lastmod. Only blog posts carry a real date.
 
   const entries: SitemapEntry[] = [
     // "/" used to claim he/es/fr as alternates pointing at ITSELF, which
     // contradicted /he and /es once they became real pages.
-    { loc: "/", changefreq: "weekly", priority: 1.0, lastmod: today, alternates: HOME_HREFLANG_ALTERNATES },
-    { loc: "/blog", changefreq: "weekly", priority: 0.8, lastmod: today },
-    { loc: "/dive-sites", changefreq: "monthly", priority: 0.8, lastmod: today },
-    { loc: "/fun-dive-booking", changefreq: "monthly", priority: 0.9, lastmod: today },
+    { loc: "/", changefreq: "weekly", priority: 1.0, alternates: HOME_HREFLANG_ALTERNATES },
+    { loc: "/blog", changefreq: "weekly", priority: 0.8 },
+    { loc: "/dive-sites", changefreq: "monthly", priority: 0.8 },
+    // /fun-dive-booking is noindex (a booking form) - /fun-dives ranks instead.
     // /he and /es are the homepage in Hebrew / Spanish since 2026-10-06.
-    { loc: "/he", changefreq: "weekly", priority: 0.95, lastmod: today, alternates: HOME_HREFLANG_ALTERNATES },
-    { loc: "/es", changefreq: "weekly", priority: 0.95, lastmod: today, alternates: HOME_HREFLANG_ALTERNATES },
+    { loc: "/he", changefreq: "weekly", priority: 0.95, alternates: HOME_HREFLANG_ALTERNATES },
+    { loc: "/es", changefreq: "weekly", priority: 0.95, alternates: HOME_HREFLANG_ALTERNATES },
     // The long-form guides that used to live on /he and /es.
-    { loc: "/he/koh-tao-diving-guide", changefreq: "monthly", priority: 0.8, lastmod: today, hreflangs: ["he"] },
-    { loc: "/es/koh-tao-diving-guide", changefreq: "monthly", priority: 0.8, lastmod: today, hreflangs: ["es"] },
-    { loc: "/privacy", changefreq: "yearly", priority: 0.2, lastmod: today },
-    { loc: "/terms", changefreq: "yearly", priority: 0.2, lastmod: today },
-    { loc: "/data-deletion", changefreq: "yearly", priority: 0.2, lastmod: today },
+    { loc: "/he/koh-tao-diving-guide", changefreq: "monthly", priority: 0.8, hreflangs: ["he"] },
+    { loc: "/es/koh-tao-diving-guide", changefreq: "monthly", priority: 0.8, hreflangs: ["es"] },
+    { loc: "/privacy", changefreq: "yearly", priority: 0.2 },
+    { loc: "/terms", changefreq: "yearly", priority: 0.2 },
+    { loc: "/data-deletion", changefreq: "yearly", priority: 0.2 },
     // Paid-campaign landers (restored 2026-05-25 for campaign launch).
-    { loc: "/advanced-open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
-    { loc: "/es/advanced-open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
-    { loc: "/he/advanced-open-water-course", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
-    { loc: "/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["en"] },
-    { loc: "/es/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["es"] },
-    { loc: "/he/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["he"] },
-    { loc: "/fr/fun-dives", changefreq: "monthly", priority: 0.9, lastmod: today, hreflangs: ["fr"] },
+    { loc: "/advanced-open-water-course", changefreq: "monthly", priority: 0.9, hreflangs: ["en"] },
+    { loc: "/es/advanced-open-water-course", changefreq: "monthly", priority: 0.9, hreflangs: ["es"] },
+    { loc: "/he/advanced-open-water-course", changefreq: "monthly", priority: 0.9, hreflangs: ["he"] },
+    { loc: "/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["en"] },
+    { loc: "/es/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["es"] },
+    { loc: "/he/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["he"] },
+    { loc: "/fr/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["fr"] },
     // Conservation hub (entry-gate card 4), full 4-language cluster.
-    { loc: "/conservation", changefreq: "monthly", priority: 0.8, lastmod: today, alternates: CONSERVATION_ALTERNATES },
-    { loc: "/he/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
-    { loc: "/es/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
-    { loc: "/fr/conservation", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: CONSERVATION_ALTERNATES },
-    { loc: "/hotel", changefreq: "weekly", priority: 0.8, lastmod: today, alternates: HOTEL_ALTERNATES },
-    { loc: "/he/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
-    { loc: "/es/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
-    { loc: "/fr/hotel", changefreq: "weekly", priority: 0.7, lastmod: today, alternates: HOTEL_ALTERNATES },
-    { loc: "/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.8, lastmod: today, alternates: START_ALTERNATES },
-    { loc: "/he/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: START_ALTERNATES },
-    { loc: "/es/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: START_ALTERNATES },
-    { loc: "/fr/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: START_ALTERNATES },
-    { loc: "/go-pro", changefreq: "monthly", priority: 0.9, lastmod: today, alternates: GO_PRO_ALTERNATES },
-    { loc: "/he/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },
-    { loc: "/es/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },
-    { loc: "/fr/go-pro", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: GO_PRO_ALTERNATES },
-    { loc: "/divemaster-course", changefreq: "monthly", priority: 0.9, lastmod: today, alternates: DM_ALTERNATES },
-    { loc: "/he/divemaster-course", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: DM_ALTERNATES },
-    { loc: "/es/divemaster-course", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: DM_ALTERNATES },
-    { loc: "/fr/divemaster-course", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: DM_ALTERNATES },
-    { loc: "/faq", changefreq: "monthly", priority: 0.8, lastmod: today, alternates: FAQ_ALTERNATES },
-    { loc: "/he/faq", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: FAQ_ALTERNATES },
-    { loc: "/es/faq", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: FAQ_ALTERNATES },
-    { loc: "/fr/faq", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: FAQ_ALTERNATES },
+    { loc: "/conservation", changefreq: "monthly", priority: 0.8, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/he/conservation", changefreq: "monthly", priority: 0.7, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/es/conservation", changefreq: "monthly", priority: 0.7, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/fr/conservation", changefreq: "monthly", priority: 0.7, alternates: CONSERVATION_ALTERNATES },
+    { loc: "/hotel", changefreq: "weekly", priority: 0.8, alternates: HOTEL_ALTERNATES },
+    { loc: "/he/hotel", changefreq: "weekly", priority: 0.7, alternates: HOTEL_ALTERNATES },
+    { loc: "/es/hotel", changefreq: "weekly", priority: 0.7, alternates: HOTEL_ALTERNATES },
+    { loc: "/fr/hotel", changefreq: "weekly", priority: 0.7, alternates: HOTEL_ALTERNATES },
+    { loc: "/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.8, alternates: START_ALTERNATES },
+    { loc: "/he/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, alternates: START_ALTERNATES },
+    { loc: "/es/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, alternates: START_ALTERNATES },
+    { loc: "/fr/discover-scuba-vs-open-water", changefreq: "monthly", priority: 0.7, alternates: START_ALTERNATES },
+    { loc: "/go-pro", changefreq: "monthly", priority: 0.9, alternates: GO_PRO_ALTERNATES },
+    { loc: "/he/go-pro", changefreq: "monthly", priority: 0.7, alternates: GO_PRO_ALTERNATES },
+    { loc: "/es/go-pro", changefreq: "monthly", priority: 0.7, alternates: GO_PRO_ALTERNATES },
+    { loc: "/fr/go-pro", changefreq: "monthly", priority: 0.7, alternates: GO_PRO_ALTERNATES },
+    { loc: "/divemaster-course", changefreq: "monthly", priority: 0.9, alternates: DM_ALTERNATES },
+    { loc: "/he/divemaster-course", changefreq: "monthly", priority: 0.7, alternates: DM_ALTERNATES },
+    { loc: "/es/divemaster-course", changefreq: "monthly", priority: 0.7, alternates: DM_ALTERNATES },
+    { loc: "/fr/divemaster-course", changefreq: "monthly", priority: 0.7, alternates: DM_ALTERNATES },
+    { loc: "/faq", changefreq: "monthly", priority: 0.8, alternates: FAQ_ALTERNATES },
+    { loc: "/he/faq", changefreq: "monthly", priority: 0.7, alternates: FAQ_ALTERNATES },
+    { loc: "/es/faq", changefreq: "monthly", priority: 0.7, alternates: FAQ_ALTERNATES },
+    { loc: "/fr/faq", changefreq: "monthly", priority: 0.7, alternates: FAQ_ALTERNATES },
     // Entry-gate split pages (multilingual single URL - all langs on one URL).
-    { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
-    { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },
+    { loc: "/similan", changefreq: "weekly", priority: 0.9 },
+    { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9 },
     // /freediving retired 2026-07-13 (301 -> "/"): must NOT be in the sitemap,
     // or Google keeps re-crawling a redirect we told it to forget.
   ];
@@ -124,7 +125,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
       : undefined;
     entries.push({
       loc: `/dive-sites/${site.slug}`,
-      lastmod: today,
+     
       changefreq: "monthly",
       priority: 0.7,
       ...(alternates ? { alternates } : {}),
@@ -132,7 +133,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     if (site.he) {
       entries.push({
         loc: `/he/dive-sites/${site.slug}`,
-        lastmod: today,
+       
         changefreq: "monthly",
         priority: 0.6,
         alternates,
@@ -141,14 +142,14 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   }
 
   for (const slug of Object.keys(SLUG_TO_COURSE)) {
-    // /divemaster 301s to the full lander /divemaster-course (2026-11-03) -
+    // Slugs that 301 to a lander (/divemaster, /advanced-open-water) -
     // a redirect must never be submitted.
-    if (slug === "divemaster") continue;
+    if (REDIRECTED_COURSE_SLUGS.includes(slug)) continue;
     // Course pages with Hebrew / Spanish twins (2026-10-23) carry the cluster.
     const alternates = hreflangAlternatesFor(`/${slug}`);
     entries.push({
       loc: `/${slug}`,
-      lastmod: today,
+     
       changefreq: "monthly",
       priority: 0.8,
       ...(alternates ? { alternates } : {}),
@@ -156,7 +157,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     if (alternates) {
       for (const lang of ["he", "es"] as const) {
         if (!alternates[lang]) continue;
-        entries.push({ loc: `/${lang}/${slug}`, lastmod: today, changefreq: "monthly", priority: 0.8, alternates });
+        entries.push({ loc: `/${lang}/${slug}`, changefreq: "monthly", priority: 0.8, alternates });
       }
     }
   }
@@ -164,19 +165,24 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   return entries;
 }
 
-function buildXml(entries: SitemapEntry[]): string {
+function buildXml(
+  entries: SitemapEntry[],
+  hreflangAlternatesFor: (p: string) => Partial<Record<string, string>> | undefined,
+): string {
   const urls = entries
     .map((e) => {
       const loc = `${SITE_URL}${e.loc}`;
-      const pairs: [string, string][] = e.alternates
-        ? Object.entries(e.alternates)
-        : (e.hreflangs ?? SUPPORTED_LANGS).map((lang) => [lang, loc]);
-      const alternates = pairs
-        .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`)
-        .join("\n");
-      // x-default is the language-agnostic entry point: the English URL when the
-      // page belongs to a cluster, otherwise the page itself.
-      const xDefault = e.alternates?.en ?? loc;
+      // hreflang ONLY for pages in a locale cluster, and always the exact cluster
+      // the page's own HTML emits (hreflangAlternatesFor - same source as Seo).
+      // A single-URL page gets none, matching its HTML; it used to claim it was
+      // also the he/es/fr version of itself (2026-11-03 audit).
+      const cluster = e.alternates ?? hreflangAlternatesFor(e.loc);
+      const alternates = cluster
+        ? Object.entries(cluster)
+            .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`)
+            .concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${cluster.en ?? loc}" />`)
+            .join("\n")
+        : null;
       return [
         "  <url>",
         `    <loc>${loc}</loc>`,
@@ -184,7 +190,6 @@ function buildXml(entries: SitemapEntry[]): string {
         e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
         e.priority !== undefined ? `    <priority>${e.priority.toFixed(1)}</priority>` : null,
         alternates,
-        `    <xhtml:link rel="alternate" hreflang="x-default" href="${xDefault}" />`,
         "  </url>",
       ]
         .filter(Boolean)
@@ -203,7 +208,8 @@ function buildXml(entries: SitemapEntry[]): string {
 
 async function main() {
   const entries = await loadRoutes();
-  const xml = buildXml(entries);
+  const { hreflangAlternatesFor } = await import("../src/lib/localeRoutes");
+  const xml = buildXml(entries, hreflangAlternatesFor);
   const out = resolve(process.cwd(), "dist", "sitemap.xml");
   writeFileSync(out, xml, "utf8");
   console.log(`[sitemap] wrote ${entries.length} URLs to ${out}`);

@@ -67,7 +67,7 @@ const DivemasterContent = ({ lang }: DivemasterContentProps) => {
 
   const ladder = [
     { key: "ow", label: c.ladder.ow, href: "/open-water" },
-    { key: "aow", label: c.ladder.aow, href: "/advanced-open-water" },
+    { key: "aow", label: c.ladder.aow, href: lang === "he" || lang === "es" ? `/${lang}/advanced-open-water-course` : "/advanced-open-water-course" },
     { key: "rescue", label: c.ladder.rescue, href: "/rescue-diver" },
     { key: "dm", label: c.ladder.dm, href: null },
     { key: "idc", label: c.ladder.idc, href: idcHref },

@@ -26,7 +26,9 @@ const OW_HUMAN = { en: "2.5 days", es: "2,5 días", he: "2.5 ימים" };
 
 describe("Open Water duration - structured data agrees everywhere", () => {
   it("the homepage Course schema says 2.5 days, not 3-4 / P4D", () => {
-    const html = read("index.html");
+    // The course ItemList moved from index.html to src/data/courseListSchema.ts
+    // (emitted on the homepage only, 2026-11-03).
+    const html = read("src/data/courseListSchema.ts");
     // Isolate the Open Water ListItem so a P4D belonging to Rescue Diver
     // (legitimately longer) cannot mask or trigger a failure here.
     const start = html.indexOf('"name": "PADI Open Water Diver"');
