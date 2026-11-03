@@ -187,7 +187,7 @@ const HebrewLanding = () => {
                 <strong>Wreck / Deep / Sidemount / DPV:</strong> 7,000-9,500 באט לכל קורס התמחות.
               </li>
               <li>
-                <strong>PADI Divemaster:</strong> 45,000 באט. 21-42 ימים, כולל תקופת ההתמחות. ההסמכה המקצועית
+                <strong>PADI Divemaster:</strong> 47,000 באט, הכל כלול. 21-42 ימים, כולל תקופת ההתמחות ודמי PADI. ההסמכה המקצועית
                 הראשונה.
               </li>
               <li>

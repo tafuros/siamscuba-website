@@ -260,6 +260,17 @@ const DivemasterContent = ({ lang }: DivemasterContentProps) => {
             <p className="mt-2 text-4xl font-semibold tabular-nums text-white" dir="ltr">
               ฿{price} <span className="text-base font-normal text-white/50">THB</span>
             </p>
+            <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+              {c.priceIncludes.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-white/85">
+                  <Check className="mt-1 h-4 w-4 shrink-0 text-[#7cc6e0]" strokeWidth={3} aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 rounded-xl border border-[#419EBC]/30 bg-[#06131d] px-4 py-3 text-sm leading-relaxed text-[#A5C5D4]">
+              {c.padiFeeNote}
+            </p>
             <p className="mt-4 leading-relaxed text-white/70">{c.priceBody}</p>
             <p className="mt-3 text-sm text-[#A5C5D4]">{c.priceCompare}</p>
           </article>

@@ -16,10 +16,12 @@ import type { CourseDetail } from "@/i18n/courseDetails";
  *     the island runs about 8,000-15,000 THB. Do NOT promise free housing.
  *
  * Prices here must match the homepage course cards (CoursesSection.tsx):
- * Divemaster 45,000 (Ben 2026-11-03; was 40,000 from 2026-09-27, 38,500 before), Rescue 11,000, EFR 5,000.
+ * Divemaster 47,000 ALL-INCLUSIVE incl. PADI materials + PADI application fee (Ben 2026-11-03,
+ * after a market check showed every Koh Tao centre charges the PADI fee on top;
+ * briefly 45,000 the same day, 40,000 from 2026-09-27, 38,500 before), Rescue 11,000, EFR 5,000.
  */
 
-export const DM_PRICE = 45000;
+export const DM_PRICE = 47000;
 
 export const DM_LANGS: Language[] = ["en", "he", "es", "fr"];
 
@@ -57,6 +59,9 @@ export interface DmCopy {
   priceTitle: string;
   priceBody: string;
   priceCompare: string;
+  /** All-inclusive checklist (Ben 2026-11-03: PADI fee included, say so). */
+  priceIncludes: string[];
+  padiFeeNote: string;
   stayTitle: string;
   stayBody: string;
   reqTitle: string;
@@ -97,7 +102,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   he: {
     seoTitle: "קורס דייבמאסטר בקו טאו - PADI Divemaster | סיאם סקובה",
     seoDescription:
-      "קורס PADI Divemaster בקו טאו: התמחות של 21-42 יום בתוך הצוות, במרכז PADI 5 Star IDC. 45,000 באט כולל ההתמחות ודמי ההסמכה של PADI.",
+      "קורס PADI Divemaster בקו טאו: התמחות של 21-42 יום בתוך הצוות, במרכז PADI 5 Star IDC. 47,000 באט כולל ההתמחות ודמי ההסמכה של PADI.",
     breadcrumb: "קורס דייבמאסטר",
     kicker: "PADI Divemaster · קו טאו",
     heroTitle: "הדרגה המקצועית הראשונה שלך בצלילה",
@@ -122,10 +127,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "איפה זה במסלול",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "אתה כאן",
-    priceTitle: "מחיר אחד, הכל בפנים",
+    priceTitle: "הכל כלול, גם דמי PADI",
     priceBody:
       "המחיר כולל את כל ההכשרה, החומרים, הצלילות, תקופת ההתמחות ודמי ההסמכה של PADI. אצלנו לא משלמים בנפרד על ההתמחות.",
     priceCompare: "בקריביים או באוסטרליה גובים על זה בדרך כלל עוד 2,000-3,000 דולר.",
+    priceIncludes: ["כל ההכשרה והצלילות", "חומרי הלימוד של PADI", "תקופת ההתמחות", "דמי ההסמכה של PADI"],
+    padiFeeNote: "ברוב מרכזי הצלילה בקו טאו משלמים את דמי ההסמכה של PADI (כ-286 דולר אוסטרלי) בנפרד. אצלנו הם כבר בפנים.",
     stayTitle: "לינה ואוכל",
     stayBody: "הלינה והאוכל בזמן ההכשרה על חשבונך. חדר חודשי באי עולה בערך 8,000-15,000 THB.",
     reqTitle: "תנאי קבלה",
@@ -200,7 +207,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   en: {
     seoTitle: "PADI Divemaster Course Koh Tao - Pro Internship | Siam Scuba",
     seoDescription:
-      "PADI Divemaster on Koh Tao: a 21-42 day internship inside our team at a PADI 5 Star IDC centre. 45,000 THB with the internship and PADI fees included.",
+      "PADI Divemaster on Koh Tao: a 21-42 day internship inside our team at a PADI 5 Star IDC centre. 47,000 THB with the internship and PADI fees included.",
     breadcrumb: "Divemaster Course",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Your first professional rating in diving",
@@ -225,10 +232,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "Where it sits on the route",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "You are here",
-    priceTitle: "One price, everything in",
+    priceTitle: "All-inclusive, PADI fees too",
     priceBody:
       "The price covers all the training, materials, dives, the internship period and your PADI certification fee. With us you don't pay separately for the internship.",
     priceCompare: "In the Caribbean or Australia that usually costs another 2,000-3,000 USD.",
+    priceIncludes: ["All training and dives", "PADI materials", "The internship period", "The PADI certification fee"],
+    padiFeeNote: "At most Koh Tao dive centres the PADI certification fee (about 286 AUD) is paid on top. With us it's already in the price.",
     stayTitle: "Accommodation and food",
     stayBody:
       "Accommodation and food during the training are on you. A monthly room on the island costs about 8,000-15,000 THB.",
@@ -305,7 +314,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   es: {
     seoTitle: "Curso PADI Divemaster en Koh Tao - Prácticas pro | Siam Scuba",
     seoDescription:
-      "PADI Divemaster en Koh Tao: prácticas de 21-42 días dentro de nuestro equipo en un centro PADI 5 Star IDC. 45.000 THB con prácticas y tasas PADI incluidas.",
+      "PADI Divemaster en Koh Tao: prácticas de 21-42 días dentro de nuestro equipo en un centro PADI 5 Star IDC. 47.000 THB con prácticas y tasas PADI incluidas.",
     breadcrumb: "Curso Divemaster",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Tu primer nivel profesional en el buceo",
@@ -330,10 +339,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "Dónde encaja en la ruta",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "Estás aquí",
-    priceTitle: "Un precio, todo incluido",
+    priceTitle: "Todo incluido, también las tasas PADI",
     priceBody:
       "El precio incluye toda la formación, los materiales, las inmersiones, el periodo de prácticas y la tasa de certificación de PADI. Con nosotros las prácticas no se pagan aparte.",
     priceCompare: "En el Caribe o en Australia eso suele costar otros 2.000-3.000 USD.",
+    priceIncludes: ["Toda la formación y las inmersiones", "Los materiales PADI", "El periodo de prácticas", "La tasa de certificación PADI"],
+    padiFeeNote: "En la mayoría de centros de Koh Tao la tasa de certificación PADI (unos 286 AUD) se paga aparte. Con nosotros ya está incluida.",
     stayTitle: "Alojamiento y comida",
     stayBody:
       "El alojamiento y la comida durante la formación corren por tu cuenta. Una habitación mensual en la isla cuesta unos 8.000-15.000 THB.",
@@ -410,7 +421,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   fr: {
     seoTitle: "Cours PADI Divemaster à Koh Tao - Stage pro | Siam Scuba",
     seoDescription:
-      "PADI Divemaster à Koh Tao : un stage de 21 à 42 jours au sein de notre équipe, dans un centre PADI 5 Star IDC. 45 000 THB, stage et frais PADI inclus.",
+      "PADI Divemaster à Koh Tao : un stage de 21 à 42 jours au sein de notre équipe, dans un centre PADI 5 Star IDC. 47 000 THB, stage et frais PADI inclus.",
     breadcrumb: "Cours Divemaster",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Votre premier niveau professionnel en plongée",
@@ -435,10 +446,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "Sa place dans le parcours",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "Vous êtes ici",
-    priceTitle: "Un seul prix, tout compris",
+    priceTitle: "Tout compris, frais PADI inclus",
     priceBody:
       "Le prix couvre toute la formation, le matériel pédagogique, les plongées, la période de stage et les frais de certification PADI. Chez nous, le stage ne se paie pas en plus.",
     priceCompare: "Dans les Caraïbes ou en Australie, cela coûte en général 2 000 à 3 000 USD de plus.",
+    priceIncludes: ["Toute la formation et les plongées", "Le matériel pédagogique PADI", "La période de stage", "Les frais de certification PADI"],
+    padiFeeNote: "Dans la plupart des centres de Koh Tao, les frais de certification PADI (environ 286 AUD) se paient en plus. Chez nous, ils sont déjà dans le prix.",
     stayTitle: "Logement et repas",
     stayBody:
       "Le logement et les repas pendant la formation sont à votre charge. Une chambre au mois sur l'île coûte environ 8 000 à 15 000 THB.",
@@ -537,7 +550,7 @@ export function divemasterCourseDetail(lang: Language): CourseDetail {
       waterTestsLine(c),
     ],
     schedule: c.day.map((d) => ({ time: d.time, description: d.body })),
-    included: [c.priceBody, c.priceCompare],
+    included: [c.priceBody, c.padiFeeNote, c.priceCompare],
     notIncluded: [c.dialog.stay],
     price: `${DM_PRICE.toLocaleString("en-US")} THB`,
     nextStep: c.nextBody,

@@ -173,11 +173,11 @@
       "id": "dm",
       "name": "Divemaster",
       "duration": "21-42 days",
-      "price_thb": 45000,
+      "price_thb": 47000,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Rescue Diver (or equivalent) + EFR within the last 24 months, at least 40 logged dives, age 18+",
-      "description": "First professional PADI level. Internship-style program inside the team; duration depends on progress. Price includes training, materials, dives, the internship and the PADI certification fee. Accommodation and food are NOT included - a monthly room on the island is about 8,000-15,000 THB. Landing page: https://siamscuba.com/divemaster-course"
+      "description": "First professional PADI level. Internship-style program inside the team; duration depends on progress. Price is all-inclusive: training, PADI materials (crew pack), dives, the internship and the PADI certification (application) fee - other Koh Tao centres usually charge the PADI fee (about 286 AUD) on top. Accommodation and food are NOT included - a monthly room on the island is about 8,000-15,000 THB. Landing page: https://siamscuba.com/divemaster-course"
     },
     {
       "id": "idc",
