@@ -1,6 +1,6 @@
 import Seo from "@/components/Seo";
 import DivemasterContent from "@/components/divemaster/DivemasterContent";
-import { DM_COPY, DM_PRICE, divemasterHreflangAlternates, divemasterUrl } from "@/data/divemaster";
+import { DM_COPY, DM_PRICE, divemasterHreflangAlternates, divemasterUrl, dmFaqSchema } from "@/data/divemaster";
 
 const LANG = "he" as const;
 
@@ -44,7 +44,7 @@ const DivemasterHePage = () => {
         description={copy.seoDescription}
         canonical={divemasterUrl(LANG)}
         hreflangAlternates={divemasterHreflangAlternates()}
-        jsonLd={courseSchema}
+        jsonLd={[courseSchema, dmFaqSchema(LANG)]}
         breadcrumbs={[{ name: "Home", path: "/" }, { name: copy.breadcrumb }]}
       />
       <DivemasterContent lang={LANG} />

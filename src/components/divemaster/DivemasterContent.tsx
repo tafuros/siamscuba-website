@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, MessageCircle, Check } from "lucide-react";
+import { ArrowRight, MessageCircle, Check, Plus } from "lucide-react";
 import type { Language } from "@/i18n/translations";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -60,7 +60,7 @@ const DivemasterContent = ({ lang }: DivemasterContentProps) => {
 
   const readout = [
     { label: c.readout.price, value: `฿${price}`, note: "THB" },
-    { label: c.readout.length, value: "16-35", note: c.readout.lengthNote },
+    { label: c.readout.length, value: "21-42", note: c.readout.lengthNote },
     { label: c.readout.dives, value: "40+", note: "" },
     { label: c.readout.age, value: "18+", note: "" },
   ];
@@ -238,6 +238,20 @@ const DivemasterContent = ({ lang }: DivemasterContentProps) => {
         </div>
       </section>
 
+      {/* ------------------------------------- why we don't rush (Ben, 2026-11-03) */}
+      <section className="border-t border-white/10 py-14 sm:py-20">
+        <div className="container mx-auto grid items-start gap-8 px-4 lg:grid-cols-[0.8fr_1.2fr]">
+          <h2 className="font-display text-3xl text-white [text-wrap:balance] sm:text-4xl">{c.paceTitle}</h2>
+          <div className="space-y-4 border-s-2 border-[#419EBC]/60 ps-5">
+            {c.paceBody.map((para, i) => (
+              <p key={i} className={`max-w-[60ch] leading-relaxed ${i === 0 ? "text-lg text-white" : "text-white/70"}`}>
+                {para}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ------------------------------------------------- price + stay */}
       <section className="border-t border-white/10 py-14 sm:py-20">
         <div className="container mx-auto grid gap-5 px-4 lg:grid-cols-[1.3fr_1fr]">
@@ -409,6 +423,24 @@ const DivemasterContent = ({ lang }: DivemasterContentProps) => {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------------- FAQ */}
+      <section id="faq" className="scroll-mt-24 border-t border-white/10 py-14 sm:py-20">
+        <div className="container mx-auto max-w-3xl px-4">
+          <h2 className="font-display text-3xl text-white sm:text-4xl">{c.faqTitle}</h2>
+          <div className="mt-8 divide-y divide-white/10 border-y border-white/10">
+            {c.faqs.map((f) => (
+              <details key={f.q} className="group py-1">
+                <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold text-white [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <Plus className="h-4 w-4 shrink-0 text-[#419EBC] transition-transform duration-200 group-open:rotate-45" aria-hidden="true" />
+                </summary>
+                <p className="max-w-[62ch] pb-5 leading-relaxed text-white/70">{f.a}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

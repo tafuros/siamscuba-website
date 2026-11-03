@@ -197,7 +197,7 @@ const SpanishLanding = () => {
                 especialidad.
               </li>
               <li>
-                <strong>PADI Divemaster:</strong> 40.000 THB. De 16 a 35 días, con periodo de
+                <strong>PADI Divemaster:</strong> 45.000 THB. De 21 a 42 días, con periodo de
                 prácticas incluido. Tu primera certificación profesional.
               </li>
               <li>

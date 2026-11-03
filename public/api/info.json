@@ -172,8 +172,8 @@
     {
       "id": "dm",
       "name": "Divemaster",
-      "duration": "16-35 days",
-      "price_thb": 40000,
+      "duration": "21-42 days",
+      "price_thb": 45000,
       "certification": true,
       "requires_prior_cert": true,
       "prerequisite": "Rescue Diver (or equivalent) + EFR within the last 24 months, at least 40 logged dives, age 18+",

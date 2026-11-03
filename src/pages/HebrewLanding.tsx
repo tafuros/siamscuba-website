@@ -187,7 +187,7 @@ const HebrewLanding = () => {
                 <strong>Wreck / Deep / Sidemount / DPV:</strong> 7,000-9,500 באט לכל קורס התמחות.
               </li>
               <li>
-                <strong>PADI Divemaster:</strong> 40,000 באט. 16-35 ימים, כולל תקופת ההתמחות. ההסמכה המקצועית
+                <strong>PADI Divemaster:</strong> 45,000 באט. 21-42 ימים, כולל תקופת ההתמחות. ההסמכה המקצועית
                 הראשונה.
               </li>
               <li>
@@ -237,7 +237,7 @@ const HebrewLanding = () => {
 
           <Section id="living-costs" title="עלויות חיים אם אתם נשארים יותר זמן">
             <p>
-              אם אתם מתכננים לעשות גם את ה-Advanced Open Water (יום וחצי נוסף) או Divemaster (16-35 ימים), כדאי
+              אם אתם מתכננים לעשות גם את ה-Advanced Open Water (יום וחצי נוסף) או Divemaster (21-42 ימים), כדאי
               לדעת את עלויות החיים החודשיות:
             </p>
             <ul className="space-y-2 mr-4 list-disc">

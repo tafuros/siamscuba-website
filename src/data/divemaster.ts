@@ -9,16 +9,17 @@ import type { CourseDetail } from "@/i18n/courseDetails";
  *
  * Copy from Ben, 2026-09-25 (Hebrew source, translated to en/es/fr). His
  * rulings on the two open points:
- *   - length is 16-35 days, depending on the candidate's pace (replaced the
- *     old "4-8 weeks" everywhere it appeared);
+ *   - length is 21-42 days, depending on the candidate's pace (Ben, 2026-11-03:
+ *     was 16-35, itself replacing the old "4-8 weeks"; 16 days was not
+ *     realistic, and the page now explains why we don't rush the course);
  *   - accommodation and food are the candidate's own cost - a monthly room on
  *     the island runs about 8,000-15,000 THB. Do NOT promise free housing.
  *
  * Prices here must match the homepage course cards (CoursesSection.tsx):
- * Divemaster 40,000 (raised from 38,500 by Ben on 2026-09-27), Rescue 11,000, EFR 5,000.
+ * Divemaster 45,000 (Ben 2026-11-03; was 40,000 from 2026-09-27, 38,500 before), Rescue 11,000, EFR 5,000.
  */
 
-export const DM_PRICE = 40000;
+export const DM_PRICE = 45000;
 
 export const DM_LANGS: Language[] = ["en", "he", "es", "fr"];
 
@@ -50,6 +51,9 @@ export interface DmCopy {
   ladderTitle: string;
   ladder: { ow: string; aow: string; rescue: string; dm: string; idc: string };
   youAreHere: string;
+  /** Why the course is 21-42 days and not squeezed (Ben, 2026-11-03). */
+  paceTitle: string;
+  paceBody: string[];
   priceTitle: string;
   priceBody: string;
   priceCompare: string;
@@ -75,6 +79,9 @@ export interface DmCopy {
   workTitle: string;
   workPlaces: string[];
   idcLinkLabel: string;
+  /** Page FAQ - also emitted as FAQPage JSON-LD by dmFaqSchema. */
+  faqTitle: string;
+  faqs: { q: string; a: string }[];
   closingTitle: string;
   closingBody: string;
   /** Short labels used in the homepage dialog. */
@@ -90,7 +97,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   he: {
     seoTitle: "קורס דייבמאסטר בקו טאו - PADI Divemaster | סיאם סקובה",
     seoDescription:
-      "קורס PADI Divemaster בקו טאו: התמחות של 16-35 יום בתוך הצוות, במרכז PADI 5 Star IDC. 40,000 באט כולל ההתמחות ודמי ההסמכה של PADI.",
+      "קורס PADI Divemaster בקו טאו: התמחות של 21-42 יום בתוך הצוות, במרכז PADI 5 Star IDC. 45,000 באט כולל ההתמחות ודמי ההסמכה של PADI.",
     breadcrumb: "קורס דייבמאסטר",
     kicker: "PADI Divemaster · קו טאו",
     heroTitle: "הדרגה המקצועית הראשונה שלך בצלילה",
@@ -107,6 +114,11 @@ export const DM_COPY: Record<Language, DmCopy> = {
       dives: "צלילות לפחות",
       age: "גיל",
     },
+    paceTitle: "למה 21-42 יום ולא שבועיים",
+    paceBody: [
+      "דייבמאסטר הוא מסלול מקצועי, לא עוד כרטיס לארנק. הוא קובע את היסודות שילוו אותך לאורך כל הקריירה בצלילה.",
+      "לכן אנחנו לא מלחיצים את הקורס. הזמן במים, עם הרבה קבוצות תלמידים, סגנונות הדרכה שונים ותנאים שמשתנים, הוא מה שהופך צולל טוב לאיש מקצוע שאפשר לסמוך עליו. מי שדוחס את הקורס מקבל כרטיס. מי שנותן לו זמן יוצא צולל טוב.",
+    ],
     ladderTitle: "איפה זה במסלול",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "אתה כאן",
@@ -163,6 +175,17 @@ export const DM_COPY: Record<Language, DmCopy> = {
     workTitle: "יש עבודה ל-DM ב:",
     workPlaces: ["דרום-מזרח אסיה", "ים סוף", "המלדיביים", "הקריביים", "אוסטרליה"],
     idcLinkLabel: "מידע על IDC",
+    faqTitle: "שאלות נפוצות",
+    faqs: [
+      { q: "כמה זמן לוקח קורס הדייבמאסטר?", a: "21 עד 42 יום, לפי הקצב והזמינות שלך. אנחנו ממליצים לא לקצר: ככל שיש יותר זמן במים ויותר קורסים שעוזרים בהם, יוצאים דייבמאסטר טוב יותר." },
+      { q: "אפשר לסיים בשבועיים?", a: "לא אצלנו. המינימום הוא 21 יום. בפחות מזה אין מספיק זמן לעזור בקורסים אמיתיים ולהוביל צלילות בתנאים שונים, וזה בדיוק מה שהקורס אמור לתת." },
+      { q: "מה כלול במחיר?", a: "ההכשרה, החומרים, הצלילות, תקופת ההתמחות ודמי ההסמכה של PADI. אצלנו לא משלמים בנפרד על ההתמחות. לינה ואוכל לא כלולים." },
+      { q: "כמה עולה לינה בזמן הקורס?", a: "הלינה והאוכל על חשבונך. חדר חודשי באי עולה בערך 8,000-15,000 THB." },
+      { q: "מה צריך כדי להתחיל?", a: "Rescue Diver, הסמכת EFR מ-24 החודשים האחרונים, לפחות 40 צלילות רשומות וגיל 18 ומעלה." },
+      { q: "אין לי עדיין Rescue או EFR. מה עושים?", a: "עושים אותם אצלנו לפני תחילת ההתמחות: Rescue ב-11,000 ו-EFR ב-5,000 THB." },
+      { q: "צריך להיות שחיין חזק?", a: "לא צריך להיות ספורטאי. יש מבחני מים - 400 מ' שחייה, 800 מ' שנורקל, 100 מ' גרירת צולל ו-15 דק' ציפה - ומתאמנים אליהם בהדרגה במהלך הקורס." },
+      { q: "מה אפשר לעשות אחרי הקורס?", a: "להוביל צוללים מוסמכים ולעזור בקורסים במרכזי צלילה בכל העולם. הרבה ממשיכים ישר לקורס מדריכים (IDC) אצלנו - אנחנו מרכז PADI 5 Star IDC." },
+    ],
     closingTitle: "מוכן להפוך את הצלילה למקצוע?",
     closingBody:
       "ספר לנו כמה צלילות יש לך ומתי אתה יכול להגיע. אם חסרים לך Rescue או EFR, נשבץ אותם לפני תחילת ההתמחות.",
@@ -177,7 +200,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   en: {
     seoTitle: "PADI Divemaster Course Koh Tao - Pro Internship | Siam Scuba",
     seoDescription:
-      "PADI Divemaster on Koh Tao: a 16-35 day internship inside our team at a PADI 5 Star IDC centre. 40,000 THB with the internship and PADI fees included.",
+      "PADI Divemaster on Koh Tao: a 21-42 day internship inside our team at a PADI 5 Star IDC centre. 45,000 THB with the internship and PADI fees included.",
     breadcrumb: "Divemaster Course",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Your first professional rating in diving",
@@ -194,6 +217,11 @@ export const DM_COPY: Record<Language, DmCopy> = {
       dives: "dives minimum",
       age: "Age",
     },
+    paceTitle: "Why 21-42 days, not two weeks",
+    paceBody: [
+      "Divemaster is a professional pathway, not just another card for your wallet. It sets the foundations you'll build your whole diving career on.",
+      "That's why we don't rush it. Time in the water - with many student groups, different teaching styles and changing conditions - is what turns a good diver into a professional people can rely on. Squeeze the course and you get a card. Give it time and you come out a good diver.",
+    ],
     ladderTitle: "Where it sits on the route",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "You are here",
@@ -252,6 +280,17 @@ export const DM_COPY: Record<Language, DmCopy> = {
     workTitle: "There's Divemaster work in:",
     workPlaces: ["Southeast Asia", "The Red Sea", "The Maldives", "The Caribbean", "Australia"],
     idcLinkLabel: "About the IDC",
+    faqTitle: "Frequently asked questions",
+    faqs: [
+      { q: "How long does the Divemaster course take?", a: "21 to 42 days, depending on your pace and availability. We recommend not cutting it short: the more time you spend in the water and the more courses you assist on, the better Divemaster you become." },
+      { q: "Can I finish in two weeks?", a: "Not with us. The minimum is 21 days. Anything shorter doesn't leave enough time to assist on real courses and lead dives in different conditions - which is exactly what the course is for." },
+      { q: "What does the price include?", a: "All the training, materials, dives, the internship period and the PADI certification fees. With us you don't pay extra for the internship. Accommodation and food are not included." },
+      { q: "How much is accommodation during the course?", a: "Accommodation and food are your own cost. A monthly room on the island runs about 8,000-15,000 THB." },
+      { q: "What do I need to start?", a: "Rescue Diver, an EFR certification from the last 24 months, at least 40 logged dives, and you must be 18 or older." },
+      { q: "I don't have Rescue or EFR yet. What now?", a: "You can do both with us before your internship starts: Rescue for 11,000 THB and EFR for 5,000 THB." },
+      { q: "Do I need to be a strong swimmer?", a: "You don't need to be an athlete. There are water skills tests - a 400 m swim, an 800 m snorkel, a 100 m tow of an \"unconscious\" diver and a 15-minute float - and you train for them gradually during the course." },
+      { q: "What can I do after the course?", a: "Lead certified divers and assist on courses at dive centres around the world. Many go straight on to the Instructor Development Course (IDC) with us - we're a PADI 5 Star IDC centre." },
+    ],
     closingTitle: "Ready to make diving your job?",
     closingBody:
       "Tell us how many dives you have and when you can come. If you still need Rescue or EFR, we'll fit them in before your internship starts.",
@@ -266,7 +305,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   es: {
     seoTitle: "Curso PADI Divemaster en Koh Tao - Prácticas pro | Siam Scuba",
     seoDescription:
-      "PADI Divemaster en Koh Tao: prácticas de 16-35 días dentro de nuestro equipo en un centro PADI 5 Star IDC. 40.000 THB con prácticas y tasas PADI incluidas.",
+      "PADI Divemaster en Koh Tao: prácticas de 21-42 días dentro de nuestro equipo en un centro PADI 5 Star IDC. 45.000 THB con prácticas y tasas PADI incluidas.",
     breadcrumb: "Curso Divemaster",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Tu primer nivel profesional en el buceo",
@@ -283,6 +322,11 @@ export const DM_COPY: Record<Language, DmCopy> = {
       dives: "inmersiones mínimo",
       age: "Edad",
     },
+    paceTitle: "Por qué 21-42 días y no dos semanas",
+    paceBody: [
+      "Divemaster es una carrera profesional, no una tarjeta más para la cartera. Pone las bases sobre las que construirás toda tu carrera en el buceo.",
+      "Por eso no lo apresuramos. El tiempo en el agua - con muchos grupos de alumnos, distintos estilos de enseñanza y condiciones que cambian - es lo que convierte a un buen buceador en un profesional en quien se puede confiar. Si comprimes el curso, te llevas una tarjeta. Si le das tiempo, sales siendo un buen buceador.",
+    ],
     ladderTitle: "Dónde encaja en la ruta",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "Estás aquí",
@@ -341,6 +385,17 @@ export const DM_COPY: Record<Language, DmCopy> = {
     workTitle: "Hay trabajo para Divemasters en:",
     workPlaces: ["El Sudeste Asiático", "El mar Rojo", "Las Maldivas", "El Caribe", "Australia"],
     idcLinkLabel: "Sobre el IDC",
+    faqTitle: "Preguntas frecuentes",
+    faqs: [
+      { q: "¿Cuánto dura el curso de Divemaster?", a: "De 21 a 42 días, según tu ritmo y tu disponibilidad. Te recomendamos no acortarlo: cuanto más tiempo pasas en el agua y en más cursos asistes, mejor Divemaster serás." },
+      { q: "¿Puedo terminarlo en dos semanas?", a: "Con nosotros no. El mínimo son 21 días. En menos tiempo no da para asistir en cursos reales ni para guiar inmersiones en condiciones distintas, que es justo para lo que sirve el curso." },
+      { q: "¿Qué incluye el precio?", a: "Toda la formación, los materiales, las inmersiones, el periodo de prácticas y las tasas de certificación PADI. Con nosotros las prácticas no se pagan aparte. El alojamiento y la comida no están incluidos." },
+      { q: "¿Cuánto cuesta el alojamiento durante el curso?", a: "El alojamiento y la comida corren de tu cuenta. Una habitación por meses en la isla cuesta unos 8.000-15.000 THB." },
+      { q: "¿Qué necesito para empezar?", a: "Rescue Diver, una certificación EFR de los últimos 24 meses, al menos 40 inmersiones registradas y tener 18 años o más." },
+      { q: "Todavía no tengo Rescue ni EFR. ¿Qué hago?", a: "Puedes hacer ambos con nosotros antes de empezar las prácticas: Rescue por 11.000 THB y EFR por 5.000 THB." },
+      { q: "¿Tengo que nadar muy bien?", a: "No hace falta ser atleta. Hay pruebas acuáticas - 400 m de natación, 800 m de snorkel, 100 m de remolque de un buceador y 15 minutos de flotación - y las vas preparando poco a poco durante el curso." },
+      { q: "¿Qué puedo hacer después del curso?", a: "Guiar a buceadores certificados y asistir en cursos en centros de buceo de todo el mundo. Muchos siguen directamente con el curso de instructor (IDC) con nosotros: somos un centro PADI 5 Star IDC." },
+    ],
     closingTitle: "¿Listo para convertir el buceo en tu trabajo?",
     closingBody:
       "Dinos cuántas inmersiones tienes y cuándo puedes venir. Si te falta el Rescue o el EFR, los encajamos antes de que empiecen tus prácticas.",
@@ -355,7 +410,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   fr: {
     seoTitle: "Cours PADI Divemaster à Koh Tao - Stage pro | Siam Scuba",
     seoDescription:
-      "PADI Divemaster à Koh Tao : un stage de 16 à 35 jours au sein de notre équipe, dans un centre PADI 5 Star IDC. 40 000 THB, stage et frais PADI inclus.",
+      "PADI Divemaster à Koh Tao : un stage de 21 à 42 jours au sein de notre équipe, dans un centre PADI 5 Star IDC. 45 000 THB, stage et frais PADI inclus.",
     breadcrumb: "Cours Divemaster",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Votre premier niveau professionnel en plongée",
@@ -372,6 +427,11 @@ export const DM_COPY: Record<Language, DmCopy> = {
       dives: "plongées minimum",
       age: "Âge",
     },
+    paceTitle: "Pourquoi 21 à 42 jours, et pas deux semaines",
+    paceBody: [
+      "Le Divemaster est une voie professionnelle, pas une carte de plus dans le portefeuille. Il pose les bases de toute votre carrière de plongeur.",
+      "C'est pourquoi nous ne le précipitons pas. Le temps passé dans l'eau - avec de nombreux groupes d'élèves, différents styles d'enseignement et des conditions qui changent - est ce qui fait d'un bon plongeur un professionnel sur qui l'on peut compter. Comprimez le cours, vous obtenez une carte. Donnez-lui du temps, vous en sortez bon plongeur.",
+    ],
     ladderTitle: "Sa place dans le parcours",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "Vous êtes ici",
@@ -430,6 +490,17 @@ export const DM_COPY: Record<Language, DmCopy> = {
     workTitle: "Il y a du travail de Divemaster en :",
     workPlaces: ["Asie du Sud-Est", "Mer Rouge", "Maldives", "Caraïbes", "Australie"],
     idcLinkLabel: "À propos de l'IDC",
+    faqTitle: "Questions fréquentes",
+    faqs: [
+      { q: "Combien de temps dure le cours Divemaster ?", a: "De 21 à 42 jours, selon votre rythme et vos disponibilités. Nous conseillons de ne pas le raccourcir : plus vous passez de temps dans l'eau et plus vous assistez de cours, meilleur Divemaster vous devenez." },
+      { q: "Puis-je le terminer en deux semaines ?", a: "Pas chez nous. Le minimum est de 21 jours. En moins de temps, impossible d'assister de vrais cours et de guider des plongées dans des conditions variées - c'est précisément le but du cours." },
+      { q: "Que comprend le prix ?", a: "Toute la formation, le matériel pédagogique, les plongées, la période de stage et les frais de certification PADI. Chez nous, le stage ne se paie pas en plus. Le logement et les repas ne sont pas inclus." },
+      { q: "Combien coûte le logement pendant le cours ?", a: "Le logement et les repas sont à votre charge. Une chambre au mois sur l'île coûte environ 8 000 à 15 000 THB." },
+      { q: "Que faut-il pour commencer ?", a: "Le Rescue Diver, un EFR de moins de 24 mois, au moins 40 plongées enregistrées et avoir 18 ans ou plus." },
+      { q: "Je n'ai pas encore le Rescue ni l'EFR. Que faire ?", a: "Vous pouvez passer les deux chez nous avant le début du stage : Rescue à 11 000 THB et EFR à 5 000 THB." },
+      { q: "Faut-il être bon nageur ?", a: "Pas besoin d'être un athlète. Il y a des épreuves aquatiques - 400 m de nage, 800 m en PMT, 100 m de remorquage d'un plongeur et 15 minutes de sustentation - et vous vous y préparez progressivement pendant le cours." },
+      { q: "Que puis-je faire après le cours ?", a: "Guider des plongeurs certifiés et assister des cours dans des centres de plongée du monde entier. Beaucoup enchaînent directement avec le cours d'instructeur (IDC) chez nous : nous sommes un centre PADI 5 Star IDC." },
+    ],
     closingTitle: "Prêt à faire de la plongée votre métier ?",
     closingBody:
       "Dites-nous combien de plongées vous avez et quand vous pouvez venir. S'il vous manque le Rescue ou l'EFR, nous les plaçons avant le début de votre stage.",
@@ -458,7 +529,7 @@ export function divemasterCourseDetail(lang: Language): CourseDetail {
   return {
     header: c.dialog.header,
     intro: c.heroSub,
-    structure: [c.internship],
+    structure: [c.internship, ...c.paceBody],
     prerequisites: c.reqs,
     extras: [c.reqNote],
     learns: [
@@ -468,8 +539,22 @@ export function divemasterCourseDetail(lang: Language): CourseDetail {
     schedule: c.day.map((d) => ({ time: d.time, description: d.body })),
     included: [c.priceBody, c.priceCompare],
     notIncluded: [c.dialog.stay],
-    price: "40,000 THB",
+    price: `${DM_PRICE.toLocaleString("en-US")} THB`,
     nextStep: c.nextBody,
     pageLink: { label: c.dialog.pageLink, href: divemasterPath(lang) },
+  };
+}
+
+/** FAQPage structured data for the lander, built from the same copy the page shows. */
+export function dmFaqSchema(lang: Language) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: lang,
+    mainEntity: DM_COPY[lang].faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
   };
 }

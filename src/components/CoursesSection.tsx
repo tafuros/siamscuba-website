@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Award, BookOpen, Star, Crown, Fish, Anchor, ArrowDown, Moon, Zap, Layers, ShieldCheck, Heart, Feather, Camera, Waves, Compass } from "lucide-react";
 import padi from "@/assets/padi-logo.png";
+import { DM_PRICE } from "@/data/divemaster";
 import CourseDetailDialog from "./CourseDetailDialog";
 import CourseCarouselRow from "./CourseCarouselRow";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -79,7 +80,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       label: t("courses_pro"),
       description: t("courses_pro_desc"),
       courses: [
-        { icon: Crown, title: t("course_dm"), dialogKey: "Divemaster", price: 40000, duration: t("dur_16_35_days"), highlights: [t("hl_lead"), t("hl_career"), t("hl_free_intern")], featured: true, hasDetails: true },
+        { icon: Crown, title: t("course_dm"), dialogKey: "Divemaster", price: DM_PRICE, duration: t("dur_21_42_days"), highlights: [t("hl_lead"), t("hl_career"), t("hl_free_intern")], featured: true, hasDetails: true },
         { icon: Award, title: t("course_idc"), dialogKey: "IDC (Instructor Course)", price: null, duration: t("dur_varies"), highlights: [t("hl_become_instructor"), t("hl_full_training"), t("hl_free_intern")], hasDetails: true },
       ],
     },
