@@ -618,7 +618,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Daily living costs while you're on the island",
         paragraphs: [
           "The course price isn't the whole story - you'll be on Koh Tao for at least 3 days for Open Water, longer for the pro track. Here's a realistic daily budget.",
-          "Accommodation: hostel dorm beds run ฿250-฿450 per night. Mid-range fan rooms or simple bungalows are ฿700-฿1,200. Air-con private rooms are ฿1,200-฿2,500. Beachfront resorts go up from there. For Divemaster and IDC trainees who stay 4-8 weeks, monthly rentals at ฿8,000-฿15,000 are standard.",
+          "Accommodation: hostel dorm beds run ฿250-฿450 per night. Mid-range fan rooms or simple bungalows are ฿700-฿1,200. Air-con private rooms are ฿1,200-฿2,500. Beachfront resorts go up from there. For Divemaster trainees (21-42 days) and IDC candidates, monthly rentals at ฿8,000-฿15,000 are standard.",
           "Food: a plate of Thai street food (pad thai, rice with meat, noodle soup) is ฿70-฿120. A western meal at a beach restaurant is ฿250-฿450. A proper sit-down dinner runs ฿400-฿700. Local bottled water and snacks are cheap - ฿20 for a 1.5L bottle.",
           "Transport: the island is small. A scooter rental costs ฿200-฿300 per day with fuel. Songthaew (shared pickup-truck taxi) rides are ฿100-฿200 per trip. The ferry from Bangkok costs ฿800-฿1,300 one-way depending on the route (we recommend Lomprayah or Songserm).",
           "Other: drinks at a beach bar are ฿120-฿200 for a beer, ฿200-฿350 for cocktails. Marine park fees only apply at certain dive sites and they're typically included in the course price at most reputable shops.",
@@ -648,8 +648,8 @@ const divingBlogPosts: BlogPost[] = [
           "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (an optional second dive is +฿1,000) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
           "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿2,000 = ฿25,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
-          "Pro pathway: ฿50,000 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿90,000-฿130,000 for a 6-week internship. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",
-          "Total instructor pipeline (Open Water → Instructor): roughly ฿120,000-฿180,000 in course fees over 3-4 months. Possibly the cheapest route to a globally portable scuba instructor career on the planet.",
+          "Pro pathway: ฿50,000 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿90,000-฿130,000 for a 6-week internship. Includes the internship - you assist on student courses, which is the real-world experience that makes you employable.",
+          "Total instructor pipeline (Open Water → Instructor): roughly ฿130,000-฿190,000 in course fees over 3-4 months. Possibly the cheapest route to a globally portable scuba instructor career on the planet.",
         ],
       },
       {
@@ -1090,7 +1090,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Calling it a \"course\" undersells it. A typical course is classroom learning over a few days. The PADI Divemaster is more like an apprenticeship - 21 to 42 days (3 to 6 weeks) of structured theory, real assist work on student courses, water skills assessment, and a final exam arc.",
           "At Siam Scuba the internship runs 21 to 42 days, and we recommend the full 6 weeks. We don't rush it: Divemaster is a professional pathway that sets the foundations for your whole diving career, and the extra weeks let you assist on more student courses, which is where the real learning happens.",
-          "At Siam Scuba, the free internship period is included in the course price. You aren't paying us extra to assist on student courses - that's the whole point. Some shops in other locations charge for it; we don't.",
+          "At Siam Scuba, the internship period is included in the course price. You aren't paying us extra to assist on student courses - that's the whole point. Some shops in other locations charge for it; we don't.",
           "Total cost at Siam Scuba: 50,000 THB for the course, all-inclusive - PADI materials and the PADI certification fee are in the price. Accommodation, food, and entertainment are separate.",
         ],
       },
@@ -1155,10 +1155,10 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "What happens next",
         paragraphs: [
-          "The most common pathway: continue straight to the Instructor Development Course (IDC) after Divemaster. Total cost from OW to OWSI is roughly 120,000-180,000 THB over 3-4 months, depending on package.",
+          "The most common pathway: continue straight to the Instructor Development Course (IDC) after Divemaster. Total cost from OW to OWSI is roughly 130,000-190,000 THB over 3-4 months, depending on package.",
           "Alternative: work as a Divemaster for 6-12 months first, save up, then do the IDC. This is what we recommend for candidates who want to be sure diving is the right career before investing in the instructor pathway.",
           "Job market for new Divemasters: roles are widely available across SE Asia, the Caribbean, the Red Sea, the Maldives, Australia, and the Mediterranean. Entry-level pay is modest (USD 600-1,000/month after housing) but living costs in tropical destinations are low.",
-          "The free internship culture is unique to Koh Tao. Elsewhere (Caribbean, Australia), Divemaster internships often charge USD 2,000-3,000 on top of the course fee. Worth knowing as you compare options.",
+          "An internship with no extra fee is the norm on Koh Tao. Elsewhere (Caribbean, Australia), Divemaster internships often charge USD 2,000-3,000 on top of the course fee. Worth knowing as you compare options.",
         ],
       },
     ],
@@ -1416,7 +1416,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Volumen. Koh Tao certifica más buceadores PADI cada año que cualquier otro lugar del planeta. Eso significa que durante tu pasantía hay flujo constante de alumnos en los que practicar la asistencia. En otros destinos puedes pasar semanas sin tener un alumno real al que ayudar - aquí tienes uno cada día.",
           "Comunidad. En la isla hay típicamente 15-25 Divemaster Trainees activos en cualquier momento, distribuidos entre varios centros. La amistad que se forma entre el grupo - cohorte mentality, le llamamos - es uno de los aspectos que más recuerdan los exalumnos.",
-          "Coste. La pasantía de Divemaster en Koh Tao es gratuita - está incluida en el precio del curso (50.000 THB). En el Caribe, Australia o las Maldivas, las pasantías de Divemaster cobran entre 2.000 y 3.000 USD adicionales sobre el precio del curso. Información que vale la pena saber al comparar.",
+          "Coste. La pasantía de Divemaster no se paga aparte - está incluida en el precio del curso (50.000 THB). En el Caribe, Australia o las Maldivas, las pasantías de Divemaster cobran entre 2.000 y 3.000 USD adicionales sobre el precio del curso. Información que vale la pena saber al comparar.",
           "Cultura. Koh Tao es informal, joven, multinacional. La vida nocturna es activa, la comida es barata, y el ritmo permite vivir bien con un presupuesto modesto durante los 21-42 días que dura la pasantía.",
         ],
       },
@@ -1448,7 +1448,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Coste total: el curso y la vida en la isla",
         paragraphs: [
           "Curso de Divemaster: 50.000 THB en Siam Scuba. Incluye toda la formación, los manuales, las inmersiones, la pasantía, y las cuotas de procesamiento de PADI.",
-          "Si necesitas Rescue Diver + EFR antes: 16.000 THB adicionales (11.000 + 5.000). En total el paquete completo desde Advanced Open Water hasta Divemaster ronda los 54.500 THB.",
+          "Si necesitas Rescue Diver + EFR antes: 16.000 THB adicionales (11.000 + 5.000). En total el paquete completo desde Advanced Open Water hasta Divemaster ronda los 66.000 THB.",
           "Alojamiento por 3-6 semanas: estudios mensuales con ventilador 8.000-15.000 THB/mes; habitaciones con aire acondicionado 15.000-25.000 THB/mes. Calcula 30.000-50.000 THB en total para 6 semanas.",
           "Comida: 8.000-15.000 THB al mes según estilo de vida (comida tailandesa de calle vs. restaurantes para extranjeros).",
           "Total realista para 6 semanas: 80.000-120.000 THB (2.150-3.250 EUR / 2.300-3.450 USD), curso incluido. Probablemente la ruta más barata del mundo para llegar a buceador profesional.",
@@ -1472,7 +1472,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "Qué pasa después de graduarte de Divemaster",
         paragraphs: [
-          "El camino más común: continuar directamente con el Instructor Development Course (IDC) después del Divemaster. Coste total desde Open Water hasta Open Water Scuba Instructor: aproximadamente 120.000-180.000 THB (3.250-4.850 EUR) en 3-4 meses.",
+          "El camino más común: continuar directamente con el Instructor Development Course (IDC) después del Divemaster. Coste total desde Open Water hasta Open Water Scuba Instructor: aproximadamente 130.000-190.000 THB en 3-4 meses.",
           "Alternativa: trabajar como Divemaster durante 6-12 meses primero, ahorrar, y después hacer el IDC. Esto es lo que recomendamos a candidatos que quieren confirmar que el buceo es la carrera correcta antes de invertir en el camino de instructor.",
           "Mercado laboral para Divemasters nuevos: hay vacantes regulares en el sudeste asiático (Tailandia, Indonesia, Filipinas, Malasia), Caribe (Belice, Roatán, Curacao), Mar Rojo (Egipto, Jordania, Sudán), Maldivas, Australia (Gran Barrera), y el Mediterráneo.",
           "Sueldo de entrada: modesto (USD 600-1.000/mes después de alojamiento), pero el coste de vida en destinos tropicales es bajo. Muchos Divemasters jóvenes ahorran lo suficiente para pagar el IDC en 6-12 meses de trabajo activo.",

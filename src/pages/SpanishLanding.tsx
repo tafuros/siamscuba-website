@@ -252,8 +252,8 @@ const SpanishLanding = () => {
 
           <Section id="coste-vida" title="Coste de vida si te quedas más tiempo">
             <p>
-              Si piensas encadenar el Advanced (un día y medio más) o hacer el Divemaster (de 4 a 8
-              semanas), conviene saber lo que cuesta vivir aquí al mes:
+              Si piensas encadenar el Advanced (un día y medio más) o hacer el Divemaster (de 21 a 42
+              días), conviene saber lo que cuesta vivir aquí al mes:
             </p>
             <ul className="space-y-2 ml-4 list-disc">
               <li>
@@ -273,8 +273,8 @@ const SpanishLanding = () => {
               </li>
             </ul>
             <p>
-              <strong>Total de 6 semanas con el Divemaster:</strong> entre 80,000 y 120,000 THB
-              (unos 2,100-3,200 euros), curso, alojamiento, comida y ocio incluidos. Probablemente sea
+              <strong>Total de 6 semanas con el Divemaster:</strong> entre 90,000 y 130,000 THB,
+              curso, alojamiento, comida y ocio incluidos. Probablemente sea
               la forma más barata del mundo de convertir una afición en una profesión.
             </p>
             <p>
