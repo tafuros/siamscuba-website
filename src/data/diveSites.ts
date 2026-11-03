@@ -122,7 +122,7 @@ export const diveSites: DiveSite[] = [
     locatorSvg: twinsLocator,
     coords: { lat: 10.1225, lng: 99.8065 },
     relatedCourses: ["open-water", "advanced-open-water"],
-    relatedBlogSlugs: ["koh-tao-dive-sites-guide", "padi-open-water-koh-tao-what-to-expect"],
+    relatedBlogSlugs: ["koh-tao-dive-sites-guide", "padi-open-water-koh-tao-complete-guide"],
     featured: true,
   },
   {

@@ -11,6 +11,16 @@
   },
   "redirects": [
     {
+      "source": "/blog/padi-open-water-koh-tao-what-to-expect",
+      "destination": "/blog/padi-open-water-koh-tao-complete-guide",
+      "permanent": true
+    },
+    {
+      "source": "/blog/padi-divemaster-koh-tao",
+      "destination": "/divemaster",
+      "permanent": true
+    },
+    {
       "source": "/open-water-course",
       "destination": "/open-water",
       "permanent": true

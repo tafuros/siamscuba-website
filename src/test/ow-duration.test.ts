@@ -145,7 +145,8 @@ describe("Open Water duration - blog posts do not contradict the landers", () =>
   // scan below stays honest about what it is NOT checking.
   const GENERAL_KOH_TAO_CLAIMS = [
     "On Koh Tao, the full Open Water course typically takes 3", // padi-vs-ssi-koh-tao
-    "On Koh Tao, the course typically takes 3 to 4 days", // ...what-to-expect
+    // (the "...what-to-expect" claim left with that post: Ben merged it into the
+    // complete guide and 301'd it on 2026-11-03)
   ];
 
   it("no blog post says Siam Scuba's Open Water course is 3 days", () => {

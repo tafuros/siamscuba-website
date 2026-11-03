@@ -139,7 +139,7 @@ export const blogPosts: BlogPost[] = [
     ],
     tags: ["Hebrew", "PADI", "Open Water", "Beginner"],
     relatedCourses: ["open-water", "discover-scuba"],
-    relatedBlogSlugs: ["padi-open-water-koh-tao-what-to-expect", "padi-vs-ssi-koh-tao"],
+    relatedBlogSlugs: ["padi-open-water-koh-tao-complete-guide", "padi-vs-ssi-koh-tao"],
     readingTime: 8,
     language: "he",
   },
@@ -671,7 +671,7 @@ const divingBlogPosts: BlogPost[] = [
     ],
     tags: ["PADI", "Cost", "Beginner", "Pro"],
     relatedCourses: ["open-water", "advanced-open-water", "divemaster", "discover-scuba"],
-    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "padi-open-water-koh-tao-what-to-expect"],
+    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "padi-open-water-koh-tao-complete-guide"],
     featured: true,
     readingTime: 9,
   },
@@ -761,7 +761,7 @@ const divingBlogPosts: BlogPost[] = [
     ],
     tags: ["PADI", "Advanced Open Water", "Intermediate"],
     relatedCourses: ["advanced-open-water", "wreck-diving", "deep-diving", "rescue-diver"],
-    relatedBlogSlugs: ["padi-open-water-koh-tao-what-to-expect", "koh-tao-dive-sites-guide", "koh-tao-diving-cost-guide"],
+    relatedBlogSlugs: ["padi-open-water-koh-tao-complete-guide", "koh-tao-dive-sites-guide", "koh-tao-diving-cost-guide"],
     relatedDiveSites: ["chumphon-pinnacle", "sail-rock", "twins"],
     readingTime: 8,
   },
@@ -853,7 +853,7 @@ const divingBlogPosts: BlogPost[] = [
     ],
     tags: ["PADI", "IDC", "Instructor", "Pro"],
     relatedCourses: ["idc", "divemaster", "rescue-diver"],
-    relatedBlogSlugs: ["padi-divemaster-koh-tao", "koh-tao-diving-cost-guide", "padi-vs-ssi-koh-tao"],
+    relatedBlogSlugs: ["divemaster-koh-tao-internship-day-by-day", "koh-tao-diving-cost-guide", "padi-vs-ssi-koh-tao"],
     readingTime: 10,
   },
   {
@@ -958,7 +958,7 @@ const divingBlogPosts: BlogPost[] = [
   {
     slug: "padi-open-water-koh-tao-complete-guide",
     title: "PADI Open Water Course on Koh Tao: The Complete 2026 Guide",
-    seoTitle: "PADI Open Water Koh Tao - 2026 Price & Guide",
+    seoTitle: "PADI Open Water Koh Tao - Price & Day-by-Day Guide 2026",
     seoDescription:
       "PADI Open Water on Koh Tao in 2.5 days for 12,000 THB - gear, 4 ocean dives, certification and 2 nights' stay included. What you learn and who it suits.",
     category: "Diving",
@@ -1006,9 +1006,14 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
       {
-        heading: "How long it takes",
+        heading: "How long it takes - day by day",
+        image: "/blog/giant-stride-entry-from-above-koh-tao.webp",
+        imageAlt: "Student entering the water with a giant stride, seen from above",
+        imageCaption: "First ocean entry off the boat",
+        imageCredit: "@deepseajess for @kohtaoprovideo",
         paragraphs: [
           "Standard: 2.5 days on the island if you complete the eLearning theory component at home before you arrive (recommended). Day 1 is theory and pool, days 2 and 3 are your four ocean dives, and you are certified by late morning on the final day.",
+          "Final day: your instructor signs off the last skills and you finish the exam. Your PADI certification card is issued digitally through the PADI app, and it is yours for life.",
           "Slower track: add a day if you do all your theory in person on the island instead of online before you arrive.",
           "We don't compress the course below 2.5 days. It is already an efficient schedule because the theory is done before you land - cutting it further leaves you less comfortable in the water and makes the skills less automatic.",
           "If you have time, spreading the same course over an extra day at a relaxed pace is the most enjoyable way to do it.",
@@ -1040,6 +1045,13 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
       {
+        heading: "What to bring and the swim test",
+        paragraphs: [
+          "All dive gear is provided, so you only need a swimsuit, a towel and reef-safe sunscreen.",
+          "You don't need to be a strong swimmer, but you do need to be comfortable in the water. PADI asks for a 10-minute float and a 200-metre swim (or 300 metres with mask, fins and snorkel), with no time limit. Your instructor runs it with you on day 1.",
+        ],
+      },
+      {
         heading: "Health requirements",
         paragraphs: [
           "PADI Medical Statement is a 10-question yes/no form covering common conditions. You'll fill it out on Day 1.",
@@ -1061,7 +1073,7 @@ const divingBlogPosts: BlogPost[] = [
     ],
     tags: ["PADI", "Open Water", "Beginner"],
     relatedCourses: ["open-water", "advanced-open-water", "discover-scuba"],
-    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "koh-tao-diving-cost-guide", "padi-open-water-koh-tao-what-to-expect"],
+    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "koh-tao-diving-cost-guide", "padi-advanced-open-water-koh-tao"],
     readingTime: 9,
   },
   {
@@ -1152,7 +1164,7 @@ const divingBlogPosts: BlogPost[] = [
     ],
     tags: ["PADI", "Divemaster", "Pro", "Internship"],
     relatedCourses: ["divemaster", "rescue-diver", "idc"],
-    relatedBlogSlugs: ["padi-divemaster-koh-tao", "padi-idc-koh-tao", "koh-tao-diving-cost-guide"],
+    relatedBlogSlugs: ["padi-idc-koh-tao", "koh-tao-diving-cost-guide", "best-time-to-dive-koh-tao"],
     readingTime: 10,
   },
   {
@@ -1211,7 +1223,7 @@ const divingBlogPosts: BlogPost[] = [
     ],
     tags: ["PADI", "SSI", "Beginner", "Open Water"],
     relatedCourses: ["open-water", "discover-scuba"],
-    relatedBlogSlugs: ["padi-open-water-koh-tao-what-to-expect", "koh-tao-dive-sites-guide"],
+    relatedBlogSlugs: ["padi-open-water-koh-tao-complete-guide", "koh-tao-dive-sites-guide"],
     featured: true,
     readingTime: 8,
   },
@@ -1285,129 +1297,10 @@ const divingBlogPosts: BlogPost[] = [
     ],
     tags: ["Dive Sites", "Wrecks", "Sail Rock", "Advanced"],
     relatedCourses: ["advanced-open-water", "wreck-diving", "deep-diving"],
-    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "padi-open-water-koh-tao-what-to-expect"],
+    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "padi-open-water-koh-tao-complete-guide"],
     relatedDiveSites: ["twins", "chumphon-pinnacle", "sail-rock"],
     featured: true,
     readingTime: 9,
-  },
-  {
-    slug: "padi-open-water-koh-tao-what-to-expect",
-    title: "PADI Open Water Course on Koh Tao - What to Expect",
-    seoTitle: "PADI Open Water Koh Tao - Day by Day",
-    seoDescription:
-      "What really happens on a PADI Open Water course on Koh Tao: theory, the pool on day one, then 4 ocean dives in 2.5 days. Small groups, 12,000 THB.",
-    category: "Diving",
-    excerpt: "Never dived before? Here's exactly what happens during your PADI Open Water Diver course on Koh Tao - day by day.",
-    coverImage: "/blog/padi-5-star-idc-koh-tao.webp",
-    date: "2026-03-20",
-    sections: [
-      {
-        heading: "What Is the PADI Open Water Diver Course?",
-        paragraphs: [
-          "The PADI Open Water Diver certification is the world's most popular dive certification. It qualifies you to dive to 18 metres anywhere in the world, with any buddy, for the rest of your life. The certification never expires.",
-          "On Koh Tao, the course typically takes 3 to 4 days and costs around 10,000–12,000 THB depending on the dive centre. At Siam Scuba, we keep groups to a maximum of 4 students per instructor — far fewer than the PADI maximum of 8 — so you get more time in the water and more personal coaching.",
-        ],
-      },
-      {
-        heading: "Day 1 — Theory and Pool",
-        paragraphs: [
-          "You'll start with theory: either through the PADI eLearning platform (which you can complete online before arriving on Koh Tao) or with your instructor using the PADI manual. The theory covers dive physics, equipment, hand signals, safety procedures, and dive planning.",
-          "In the afternoon, you head to the pool for your first confined water dives. This is where you practice the core skills: clearing your mask, breathing from a regulator underwater, and hovering neutrally. Most students are surprised by how natural it feels within an hour.",
-        ],
-      },
-      {
-        heading: "Days 2–3 — Open Water Dives",
-        image: "/blog/giant-stride-entry-from-above-koh-tao.webp",
-        imageAlt: "Student entering the water with a giant stride, seen from above",
-        imageCaption: "First ocean entry off the boat",
-
-        imageCredit: "@deepseajess for @kohtaoprovideo",
-        paragraphs: [
-          "The heart of the course is four open water dives in the ocean around Koh Tao. Each dive has specific skills to demonstrate — underwater navigation, buoyancy control, air sharing — but there's also plenty of time to simply explore the reef.",
-          "Typical sites for Open Water training dives include Japanese Gardens and Koh Nang Yuan, both of which have stunning coral and marine life even at shallow depths. You'll almost certainly see reef fish, sea turtles, and perhaps a reef shark or stingray.",
-          "Each dive lasts 40–50 minutes. Between dives you debrief with your instructor, review what you learned, and prepare for the next dive.",
-        ],
-      },
-      {
-        heading: "The Final Day — Skills Assessment and Certification",
-        image: "/blog/diver-fish-school-sand-koh-tao.webp",
-        imageAlt: "Diver swimming past a school of fish over sand",
-        imageCaption: "Diving through a fish school",
-
-        imageCredit: "@deepseajess for @kohtaoprovideo",
-        paragraphs: [
-          "On the final day, your instructor completes your skills assessment and confirms that you've met all PADI requirements. At Siam Scuba, this often includes an additional fun dive as a reward — exploring a site without any skills to complete, just diving for pleasure.",
-          "Your PADI certification card is issued digitally within 24 hours via the PADI app. You are now a certified Open Water Diver for life.",
-        ],
-      },
-      {
-        heading: "What to Bring and What to Expect",
-        paragraphs: [
-          "Siam Scuba provides all equipment — BCD, regulator, wetsuit, mask, fins, tank. You don't need to bring anything except sunscreen (reef-safe please), a swimsuit, and a towel.",
-          "You do not need to know how to swim competitively, but you should be comfortable in the water. PADI requires a 10-minute float/swim and 200-metre swim test — your instructor will guide you through this on Day 1.",
-          "Most people are surprised by how relaxed the pace is. Koh Tao's warm water (28–30°C year-round), excellent visibility, and friendly marine life make it the ideal place to learn. Our instructors are patient, experienced, and genuinely passionate about sharing the underwater world. Dates and price: [PADI Open Water course on Koh Tao](/open-water).",
-        ],
-      },
-    ],
-    tags: ["PADI", "Open Water", "Beginner"],
-    relatedCourses: ["open-water", "discover-scuba"],
-    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "kokhav-rishon-koh-tao"],
-    readingTime: 7,
-  },
-  {
-    slug: "padi-divemaster-koh-tao",
-    title: "How to Become a PADI Divemaster on Koh Tao",
-    category: "Diving",
-    excerpt: "Thinking about turning your passion for diving into a career? Here's everything you need to know about the PADI Divemaster course on Koh Tao.",
-    coverImage: "/blog/bannerfish-coral-reef-koh-tao.webp",
-    date: "2026-03-25",
-    sections: [
-      {
-        heading: "What Is the PADI Divemaster Certification?",
-        paragraphs: [
-          "The PADI Divemaster (DM) is the first professional-level certification in the PADI system. It qualifies you to lead certified divers on guided dives, assist instructors with dive courses, and work as a professional at dive centres worldwide.",
-          "For most people, the Divemaster course is the beginning of a life-changing career — or a gap year that turns into something much longer. Koh Tao is one of the most popular places in the world to complete a Divemaster because of the variety of dive sites, the warm water, and the large dive community.",
-        ],
-      },
-      {
-        heading: "Prerequisites for the PADI Divemaster Course",
-        paragraphs: [
-          "To enrol in a PADI Divemaster course, you need to be a certified PADI Rescue Diver (or equivalent from another agency), have completed Emergency First Response (EFR) training within the last 24 months, have a minimum of 40 logged dives, and be at least 18 years old.",
-          "Most students complete Open Water → Advanced → Rescue → Divemaster in sequence over several months. Some people do the entire journey on Koh Tao, spending 2–3 months on the island.",
-        ],
-      },
-      {
-        heading: "How Long Does the Divemaster Course Take?",
-        paragraphs: [
-          "At Siam Scuba, the PADI Divemaster program takes approximately 4 to 8 weeks, depending on your diving experience when you arrive and how many dives you log during the program.",
-          "The course involves daily diving — typically 2 dives in the morning and theory or skill practice in the afternoon. By the end you'll have accumulated significant underwater hours, strong buoyancy skills, and hands-on experience assisting with student courses.",
-        ],
-      },
-      {
-        heading: "What Does the Divemaster Course Include?",
-        image: "/blog/giant-stride-dive-boat-koh-tao.webp",
-        imageAlt: "Diver jumping off the side of the Siam Scuba boat",
-        imageCaption: "Leading divers starts with the entry",
-
-        imageCredit: "@soolbreeze for @kohtaoprovideo",
-        paragraphs: [
-          "The PADI Divemaster course at Siam Scuba covers: dive theory (physics, physiology, equipment, environment, dive skills and environment), water skills assessments, assisting with Open Water and other courses, supervised dive leading on Koh Tao's most popular sites, emergency scenario training, and dive site mapping.",
-          "We include a free internship period where you assist on student courses under close instructor supervision — giving you real professional experience before you qualify.",
-        ],
-      },
-      {
-        heading: "Career Opportunities After PADI Divemaster",
-        paragraphs: [
-          "A PADI Divemaster card opens doors at dive centres across Asia, the Caribbean, the Red Sea, Australia, and beyond. Most entry-level positions offer free accommodation, free diving, and a basic salary or commission structure.",
-          "Many Divemasters continue to the PADI Instructor Development Course (IDC) — the next step in the professional pathway. As a PADI 5 Star IDC Centre, Siam Scuba can take you all the way from Divemaster through to PADI Instructor without changing dive centres.",
-          "If you're considering a Divemaster course on Koh Tao, reach out to our team — we're happy to discuss your timeline, budget, and diving background to help you plan the best path forward.",
-        ],
-      },
-    ],
-    tags: ["PADI", "Divemaster", "Pro"],
-    relatedCourses: ["divemaster", "rescue-diver"],
-    relatedBlogSlugs: ["padi-vs-ssi-koh-tao", "koh-tao-dive-sites-guide"],
-    readingTime: 8,
   },
   {
     slug: "curso-buceo-koh-tao",
