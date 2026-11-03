@@ -184,7 +184,7 @@ const HebrewLanding = () => {
                 משמעותי בכישורי צלילה לכל הזמן.
               </li>
               <li>
-                <strong>Wreck / Deep / Sidemount / DPV:</strong> 7,000-9,500 באט לכל קורס התמחות.
+                <strong>Wreck / Deep:</strong> 9,000 באט כל אחד. Sidemount ו-DPV - לפי בקשה.
               </li>
               <li>
                 <strong>PADI Divemaster:</strong> 50,000 באט, הכל כלול. 21-42 ימים, כולל תקופת ההתמחות, חומרי הלימוד ודמי PADI. ההסמכה המקצועית

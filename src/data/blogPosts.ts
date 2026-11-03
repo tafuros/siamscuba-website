@@ -123,7 +123,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "יום ראשון בקורס — מה קורה?",
         paragraphs: [
-          "מגיעים לקליניקה שלנו ב-Mae Haad, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים לבריכה לתרגול ראשוני — שם לומדים לנשום מתחת למים, לפנות מסכה ממים ועוד כישורי בסיס.",
+          "מגיעים למועדון שלנו בחוף Sairee, ממלאים טפסים רפואיים קצרים, מכירים את המדריך שלכם ומתחילים עם הציוד. אחרי הצהריים יורדים לבריכה לתרגול ראשוני — שם לומדים לנשום מתחת למים, לפנות מסכה ממים ועוד כישורי בסיס.",
           "ביום השני והשלישי יוצאים לים בסירות הצלילה שלנו — ה-Siam Explorer וה-Siam Pearl — לאתרי צלילה כמו Japanese Gardens ו-Twin Peaks, עם ריף אלמוגים מרהיב ושפע של חיים ימיים.",
         ],
       },
@@ -664,7 +664,7 @@ const divingBlogPosts: BlogPost[] = [
         heading: "Ready to book? Here's how",
         paragraphs: [
           "Send us a WhatsApp message with your dates and which course you're interested in. We'll confirm availability within an hour during daytime hours (Thailand time).",
-          "A deposit secures your spot, and you settle the balance once you arrive on Koh Tao and have met our instructors. We're at Mae Haad pier, a 5-minute walk from the ferry dock. Most students drop their bags, come over, sign up, and start the course the next morning.",
+          "A deposit secures your spot, and you settle the balance once you arrive on Koh Tao and have met our instructors. We're on Sairee Beach, a short taxi ride from the ferry at Mae Haad pier. Most students drop their bags, come over, sign up, and start the course the next morning.",
           "If you're still narrowing down which course is right for you, two reads worth your time: our PADI vs SSI comparison and our walkthrough of what to expect on the Open Water course. Both linked below.",
         ],
       },
@@ -794,7 +794,7 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
       {
-        heading: "The IDC training structure (10 days)",
+        heading: "The IDC training structure (up to 2 weeks)",
         image: "/blog/dive-planning-slate-koh-tao.webp",
         imageAlt: "Two divers reviewing a dive slate at the boat table",
         imageCaption: "Planning a dive on the boat between sessions",
@@ -884,7 +884,7 @@ const divingBlogPosts: BlogPost[] = [
         imageCredit: "@fishgirl71 for @kohtaoprovideo",
         paragraphs: [
           "Visibility 20-30m on most sites. Sea is glass-flat most days. Air temperature 28-32°C, low humidity by tropical standards.",
-          "Whale shark season peaks April through May at Sail Rock and Chumphon Pinnacle. Sightings happen year-round but April-May has the highest hit rate.",
+          "Whale shark season runs March-May and September-October at Sail Rock and Chumphon Pinnacle, peaking April through May. Sightings are never guaranteed, but April-May has the highest hit rate.",
           "Highest tourist load - book accommodation 4-8 weeks ahead, especially around Songkran (Thai New Year, mid-April) and Easter.",
           "If you have flexibility, target March or April. Conditions are at their best, crowds are present but manageable, and the days are long enough for two-tank dive trips.",
         ],

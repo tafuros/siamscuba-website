@@ -331,7 +331,7 @@ const FunDiveBookingPage = () => {
     <div className="min-h-screen bg-ocean-surface">
       <Seo
         title="Book a Fun Dive in Koh Tao – Guided Day Trips | Siam Scuba"
-        description="Book a guided fun dive in Koh Tao with Siam Scuba: small groups, two custom dive boats, sites including Chumphon Pinnacle, Sail Rock, and Twins."
+        description="Book a guided fun dive in Koh Tao with Siam Scuba: small groups, two custom dive boats, sites including Chumphon Pinnacle, Shark Island and Twins, plus the Sunday Sail Rock day trip."
       />
       <motion.main
         initial={{ y: 20 }}

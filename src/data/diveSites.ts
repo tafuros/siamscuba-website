@@ -94,7 +94,7 @@ export const diveSites: DiveSite[] = [
     localName: "Koh Nang Yuan · Gulf of Thailand",
     excerpt:
       "Shallow, sheltered and easy to navigate — the dive site where most divers on Koh Tao take their first breaths underwater.",
-    depthRange: "5 - 19 m",
+    depthRange: "12 - 18 m",
     level: "Open Water",
     difficulty: "Easy",
     bestFor: "First dives & training",
@@ -132,7 +132,7 @@ export const diveSites: DiveSite[] = [
     excerpt:
       "The most celebrated dive in the Gulf of Thailand - a granite tower wrapped in soft coral, and a whale-shark magnet in season.",
     depthRange: "14 - 36 m",
-    level: "Advanced",
+    level: "Open Water+ (Advanced recommended)",
     difficulty: "Advanced",
     bestFor: "Whale sharks*",
     intro:
@@ -174,7 +174,7 @@ export const diveSites: DiveSite[] = [
     excerpt:
       "The Gulf of Thailand's signature pinnacle dive - towering schools of barracuda and trevally, and the famous vertical swim-through, The Chimney.",
     depthRange: "5 - 40 m",
-    level: "Advanced",
+    level: "Open Water+ (Advanced recommended)",
     difficulty: "Advanced",
     bestFor: "Big schools & The Chimney",
     intro:
@@ -211,7 +211,7 @@ export const diveSites: DiveSite[] = [
         "סייל רוק, אתר הצלילה המפורסם במפרץ תאילנד: להקות ברקודות וטרבלי, מעבר הארובה (The Chimney) ועומקים של 5-40 מטר. יום צלילה מקו טאו ב-4,000 באט.",
       excerpt:
         "אתר הצלילה הכי מזוהה במפרץ תאילנד - להקות ענק של ברקודות וטרבלי, ומעבר הצלילה האנכי המפורסם, הארובה (The Chimney).",
-      level: "Advanced",
+      level: "Open Water ומעלה (מומלץ Advanced)",
       difficulty: "מתקדם",
       bestFor: "להקות גדולות והארובה",
       intro:
