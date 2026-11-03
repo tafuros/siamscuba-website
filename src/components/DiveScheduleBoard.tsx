@@ -5,6 +5,14 @@ import { CheckCircle2, Clock, Users, Waves, AlertCircle } from "lucide-react";
 import { trackBookNowClick } from "@/utils/tracking";
 import Price from "@/components/Price";
 import { useLanguage } from "@/i18n/LanguageContext";
+
+/** Link from the Sunday trip panel to the Sail Rock lander (2026-11-03). */
+const SAIL_ROCK_MORE: Record<string, string> = {
+  en: "All about the Sail Rock day trip",
+  he: "כל הפרטים על טיול Sail Rock",
+  es: "Todo sobre la salida a Sail Rock",
+  fr: "Tout sur la sortie à Sail Rock",
+};
 import { BOARD_UI, localizedTrips, plainTripName } from "@/data/diveScheduleBoardI18n";
 import {
   weeklySchedule,
@@ -235,6 +243,7 @@ const tripPanelId = (tripId: TripId) => `trip-panel-${tripId}`;
 
 function TripPanel({ trip, dayLabel, active }: { trip: Trip; dayLabel: string; active: boolean }) {
   const { ui } = useBoard();
+  const { language } = useLanguage();
   return (
     <div id={tripPanelId(trip.id)} hidden={!active} className="border-t border-white/10 pt-6">
       <div className="grid gap-6 md:grid-cols-[1.1fr_1fr]">
@@ -292,6 +301,15 @@ function TripPanel({ trip, dayLabel, active }: { trip: Trip; dayLabel: string; a
               <Users className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               <span>{ui.refund(trip.minDivers)}</span>
             </p>
+          )}
+
+          {trip.id === "sail-rock-day-trip" && (
+            <Link
+              to={language === "he" || language === "es" ? `/${language}/sail-rock-diving` : "/sail-rock-diving"}
+              className="mt-3 inline-block text-xs font-semibold text-sky-200 underline underline-offset-4 hover:text-white"
+            >
+              {SAIL_ROCK_MORE[language] ?? SAIL_ROCK_MORE.en}
+            </Link>
           )}
 
           <div className="mt-5 flex flex-wrap items-center justify-between gap-3">

@@ -66,6 +66,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/advanced-open-water-course", changefreq: "monthly", priority: 0.9, hreflangs: ["en"] },
     { loc: "/es/advanced-open-water-course", changefreq: "monthly", priority: 0.9, hreflangs: ["es"] },
     { loc: "/he/advanced-open-water-course", changefreq: "monthly", priority: 0.9, hreflangs: ["he"] },
+    // Sail Rock day-trip lander - was missing from the sitemap entirely (2026-11-03).
+    { loc: "/sail-rock-diving", changefreq: "monthly", priority: 0.8 },
+    { loc: "/he/sail-rock-diving", changefreq: "monthly", priority: 0.7 },
+    { loc: "/es/sail-rock-diving", changefreq: "monthly", priority: 0.7 },
     { loc: "/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["en"] },
     { loc: "/es/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["es"] },
     { loc: "/he/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["he"] },

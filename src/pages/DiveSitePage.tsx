@@ -110,6 +110,9 @@ const DiveSitePage = ({ lang = "en" }: DiveSitePageProps) => {
     gettingThere: he?.gettingThere ?? site.gettingThere,
     seasonNote: he ? he.seasonNote : site.seasonNote,
   };
+  // The commercial page that sells the trip to this site (Sail Rock: the Sunday
+  // day trip lander, 2026-11-03 - it had no internal links at all).
+  const landerPath = he?.landerPath ?? (site.slug === "sail-rock" ? "/sail-rock-diving" : undefined);
   const enPath = `/dive-sites/${site.slug}`;
   const hePath = `/he/dive-sites/${site.slug}`;
   const url = `${SITE_URL}${lang === "he" ? hePath : enPath}`;
@@ -260,8 +263,8 @@ const DiveSitePage = ({ lang = "en" }: DiveSitePageProps) => {
                 size="lg"
                 className="mt-6 rounded-full px-10 bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
               >
-                {he?.landerPath ? (
-                  <Link to={he.landerPath}>
+                {landerPath ? (
+                  <Link to={landerPath}>
                     <MessageCircle className="h-5 w-5" />
                     {ui.ctaButton}
                   </Link>
