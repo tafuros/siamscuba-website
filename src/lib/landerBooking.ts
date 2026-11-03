@@ -46,6 +46,30 @@ export const TRIP_CARD_PRODUCT = {
 } as const;
 
 /**
+ * Homepage course cards (components/CourseCard.tsx), keyed by the card's
+ * `dialogKey`. Before 2026-11-03 every card's "Book now" / "Get price" opened
+ * the wizard with no course (Clarity audit 2026-09-13, fix 3), so a visitor who
+ * had just picked "Rescue Diver" was asked to pick it again.
+ *
+ * Checked against the live catalog 2026-11-03. Cards with NO DiveOS course
+ * (Bubble Maker, Peak Performance Buoyancy, Night Dive, DPV, Sidemount,
+ * Self-Reliant, UW Photography) are deliberately absent and keep opening the
+ * wizard without a preselect - a made-up code would be a silent no-op anyway.
+ */
+export const COURSE_CARD_PRODUCT: Record<string, string> = {
+  "Discover Scuba Diving": "DSD",
+  "Open Water Diver": "OW",
+  "Scuba Review": "SR",
+  "Advanced Open Water": "AOW",
+  "Rescue Diver": "RES",
+  "Emergency First Response (EFR)": "EFR",
+  Divemaster: "DM",
+  "IDC (Instructor Course)": "IDC",
+  "Wreck Diving": "WRECK",
+  "Deep Diving": "DEEP",
+};
+
+/**
  * The live DiveOS course codes, snapshotted 2026-08-01 so the guard test can run
  * offline (CI has no access to the dashboard).
  *

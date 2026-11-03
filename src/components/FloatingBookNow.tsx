@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
 import BookingLink from "@/components/BookingLink";
+import { trackBookNowClick } from "@/utils/tracking";
 
 const BOOKING_PATH = "/fun-dive-booking";
 
@@ -10,13 +11,12 @@ const FloatingBookNow = () => {
 
   // Mobile-only conversion FAB. Pinned top-right (just below the navbar) so it
   // stays reachable without covering the course cards mid-screen.
+  // One event, one dataLayer path (reference_gtag_shim_double_fire): go
+  // through trackBookNowClick like every other booking CTA, instead of a bare
+  // gtag("event", "book_now_click") that skipped the UTM fields, Clarity and
+  // the Meta InitiateCheckout the canonical helper sends.
   const handleClick = () => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      window.gtag("event", "book_now_click", {
-        event_category: "engagement",
-        event_label: "floating",
-      });
-    }
+    trackBookNowClick({ location: "floating", url: BOOKING_PATH });
   };
 
   return (
