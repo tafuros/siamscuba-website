@@ -10,7 +10,8 @@ import { useLanguage } from "@/i18n/LanguageContext";
  */
 
 const COORDINATOR = {
-  email: "benmosheavivi@gmail.com",
+  // Ben 2026-11-03: both business inboxes, no personal address.
+  emails: ["info@siamscuba.com", "siamscubadivep@gmail.com"],
   phone: "+66-82-506-8898",
 };
 
@@ -144,9 +145,14 @@ const Accessibility = () => {
               </li>
               <li>
                 <strong>{content.labelEmail}</strong>{" "}
-                <a className="text-primary underline underline-offset-2" href={`mailto:${COORDINATOR.email}`}>
-                  {COORDINATOR.email}
-                </a>
+                {COORDINATOR.emails.map((email, i) => (
+                  <span key={email}>
+                    {i > 0 && " · "}
+                    <a className="text-primary underline underline-offset-2" href={`mailto:${email}`} dir="ltr">
+                      {email}
+                    </a>
+                  </span>
+                ))}
               </li>
               <li>
                 <strong>{content.labelPhone}</strong>{" "}
