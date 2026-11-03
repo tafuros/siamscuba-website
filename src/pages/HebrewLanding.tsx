@@ -187,7 +187,7 @@ const HebrewLanding = () => {
                 <strong>Wreck / Deep:</strong> 9,000 באט כל אחד. Sidemount ו-DPV - לפי בקשה.
               </li>
               <li>
-                <strong>PADI Divemaster:</strong> 50,000 באט, הכל כלול. 21-42 ימים, כולל תקופת ההתמחות, חומרי הלימוד ודמי PADI. ההסמכה המקצועית
+                <strong>PADI Divemaster:</strong> 48,000 באט. 21-42 ימים, כולל תקופת ההתמחות וחומרי הלימוד (דמי ההסמכה של PADI בנפרד). ההסמכה המקצועית
                 הראשונה.
               </li>
               <li>
@@ -257,7 +257,7 @@ const HebrewLanding = () => {
               </li>
             </ul>
             <p>
-              <strong>סיכום ל-6 שבועות עם Divemaster:</strong> 90,000-130,000 באט - כולל הקורס,
+              <strong>סיכום ל-6 שבועות עם Divemaster:</strong> 88,000-128,000 באט - כולל הקורס,
               הלינה, האוכל, והבילויים. זה כנראה המסלול הזול ביותר בעולם להפיכת תחביב לקריירה.
             </p>
           </Section>

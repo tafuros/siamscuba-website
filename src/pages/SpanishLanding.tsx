@@ -197,7 +197,7 @@ const SpanishLanding = () => {
                 especialidad.
               </li>
               <li>
-                <strong>PADI Divemaster:</strong> 50.000 THB todo incluido. De 21 a 42 días, con periodo de
+                <strong>PADI Divemaster:</strong> 48.000 THB con materiales PADI (la tasa de certificación PADI se paga aparte). De 21 a 42 días, con periodo de
                 prácticas incluido. Tu primera certificación profesional.
               </li>
               <li>
@@ -273,7 +273,7 @@ const SpanishLanding = () => {
               </li>
             </ul>
             <p>
-              <strong>Total de 6 semanas con el Divemaster:</strong> entre 90,000 y 130,000 THB,
+              <strong>Total de 6 semanas con el Divemaster:</strong> entre 88,000 y 128,000 THB,
               curso, alojamiento, comida y ocio incluidos. Probablemente sea
               la forma más barata del mundo de convertir una afición en una profesión.
             </p>

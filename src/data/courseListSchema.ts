@@ -207,7 +207,7 @@ export const COURSE_LIST_SCHEMA = {
       "item": {
         "@type": "Course",
         "name": "PADI Divemaster",
-        "description": "Professional-level diving course. 21-42 day internship, all-inclusive (PADI materials and certification fee included), lead dives, start your diving career.",
+        "description": "Professional-level diving course. 21-42 day internship, PADI materials included (PADI certification fee paid separately), lead dives, start your diving career.",
         "provider": {
           "@type": "Organization",
           "name": "Siam Scuba",
@@ -220,7 +220,7 @@ export const COURSE_LIST_SCHEMA = {
         },
         "offers": {
           "@type": "Offer",
-          "price": "50000",
+          "price": "48000",
           "priceCurrency": "THB",
           "availability": "https://schema.org/InStock",
           "url": "https://siamscuba.com/divemaster-course"

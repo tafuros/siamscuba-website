@@ -16,12 +16,14 @@ import type { CourseDetail } from "@/i18n/courseDetails";
  *     the island runs about 8,000-15,000 THB. Do NOT promise free housing.
  *
  * Prices here must match the homepage course cards (CoursesSection.tsx):
- * Divemaster 50,000 ALL-INCLUSIVE incl. PADI materials (crew pack) + PADI application fee (Ben 2026-11-03,
+ * Divemaster 48,000 incl. PADI materials (crew pack); the PADI application fee is NOT
+ * included - paid separately (Ben 2026-11-03, final: "separate the PADI fees"; earlier
+ * the same day 45k/47k/50k all-inclusive were tried.
  * after a market check showed every Koh Tao centre charges the PADI fee on top;
  * briefly 45,000 then 47,000 the same day, 40,000 from 2026-09-27, 38,500 before), Rescue 11,000, EFR 5,000.
  */
 
-export const DM_PRICE = 50000;
+export const DM_PRICE = 48000;
 
 export const DM_LANGS: Language[] = ["en", "he", "es", "fr"];
 
@@ -59,7 +61,7 @@ export interface DmCopy {
   priceTitle: string;
   priceBody: string;
   priceCompare: string;
-  /** All-inclusive checklist (Ben 2026-11-03: PADI fee included, say so). */
+  /** What the price includes + a note on the PADI fee, paid separately (Ben 2026-11-03). */
   priceIncludes: string[];
   padiFeeNote: string;
   stayTitle: string;
@@ -102,7 +104,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   he: {
     seoTitle: "קורס דייבמאסטר בקו טאו - PADI Divemaster | סיאם סקובה",
     seoDescription:
-      "קורס PADI Divemaster בקו טאו: התמחות של 21-42 יום בתוך הצוות, במרכז PADI 5 Star IDC. 50,000 באט כולל ההתמחות ודמי ההסמכה של PADI.",
+      "קורס PADI Divemaster בקו טאו: התמחות של 21-42 יום בתוך הצוות, במרכז PADI 5 Star IDC. 48,000 באט כולל ההתמחות וחומרי הלימוד של PADI.",
     breadcrumb: "קורס דייבמאסטר",
     kicker: "PADI Divemaster · קו טאו",
     heroTitle: "הדרגה המקצועית הראשונה שלך בצלילה",
@@ -127,12 +129,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "איפה זה במסלול",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "אתה כאן",
-    priceTitle: "הכל כלול, גם חומרים ודמי PADI",
+    priceTitle: "מחיר אחד: הכשרה, התמחות וחומרי לימוד",
     priceBody:
-      "המחיר כולל את כל ההכשרה, החומרים, הצלילות, תקופת ההתמחות ודמי ההסמכה של PADI. אצלנו לא משלמים בנפרד על ההתמחות.",
+      "המחיר כולל את כל ההכשרה, חומרי הלימוד, הצלילות ותקופת ההתמחות. אצלנו לא משלמים בנפרד על ההתמחות.",
     priceCompare: "בקריביים או באוסטרליה גובים על זה בדרך כלל עוד 2,000-3,000 דולר.",
-    priceIncludes: ["כל ההכשרה והצלילות", "חומרי הלימוד של PADI (Crew Pack)", "תקופת ההתמחות", "דמי ההסמכה של PADI"],
-    padiFeeNote: "ברוב מרכזי הצלילה בקו טאו משלמים את דמי ההסמכה של PADI (כ-286 דולר אוסטרלי) בנפרד, ובחלק מהם גם את חומרי הלימוד (8,000-10,000 באט). אצלנו שניהם כבר בפנים.",
+    priceIncludes: ["כל ההכשרה והצלילות", "חומרי הלימוד של PADI (Crew Pack)", "תקופת ההתמחות"],
+    padiFeeNote: "לא כלול: דמי ההסמכה של PADI (כ-286 דולר אוסטרלי), שמשולמים בנפרד - כמו ברוב מרכזי הצלילה בקו טאו. חומרי הלימוד, שבחלק מהמרכזים עולים עוד 8,000-10,000 באט, אצלנו כבר בפנים.",
     stayTitle: "לינה ואוכל",
     stayBody: "הלינה והאוכל בזמן ההכשרה על חשבונך. חדר חודשי באי עולה בערך 8,000-15,000 THB.",
     reqTitle: "תנאי קבלה",
@@ -186,7 +188,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
     faqs: [
       { q: "כמה זמן לוקח קורס הדייבמאסטר?", a: "21 עד 42 יום, לפי הקצב והזמינות שלך. אנחנו ממליצים לא לקצר: ככל שיש יותר זמן במים ויותר קורסים שעוזרים בהם, יוצאים דייבמאסטר טוב יותר." },
       { q: "אפשר לסיים בשבועיים?", a: "לא אצלנו. המינימום הוא 21 יום. בפחות מזה אין מספיק זמן לעזור בקורסים אמיתיים ולהוביל צלילות בתנאים שונים, וזה בדיוק מה שהקורס אמור לתת." },
-      { q: "מה כלול במחיר?", a: "ההכשרה, החומרים, הצלילות, תקופת ההתמחות ודמי ההסמכה של PADI. אצלנו לא משלמים בנפרד על ההתמחות. לינה ואוכל לא כלולים." },
+      { q: "מה כלול במחיר?", a: "ההכשרה, חומרי הלימוד של PADI, הצלילות ותקופת ההתמחות. אצלנו לא משלמים בנפרד על ההתמחות. לא כלולים: דמי ההסמכה של PADI (כ-286 דולר אוסטרלי, משולמים בנפרד), לינה ואוכל." },
       { q: "כמה עולה לינה בזמן הקורס?", a: "הלינה והאוכל על חשבונך. חדר חודשי באי עולה בערך 8,000-15,000 THB." },
       { q: "מה צריך כדי להתחיל?", a: "Rescue Diver, הסמכת EFR מ-24 החודשים האחרונים, לפחות 40 צלילות רשומות וגיל 18 ומעלה." },
       { q: "אין לי עדיין Rescue או EFR. מה עושים?", a: "עושים אותם אצלנו לפני תחילת ההתמחות: Rescue ב-11,000 ו-EFR ב-5,000 THB." },
@@ -207,7 +209,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   en: {
     seoTitle: "PADI Divemaster Course Koh Tao - Pro Internship | Siam Scuba",
     seoDescription:
-      "PADI Divemaster on Koh Tao: a 21-42 day internship inside our team at a PADI 5 Star IDC centre. 50,000 THB with the internship and PADI fees included.",
+      "PADI Divemaster on Koh Tao: a 21-42 day internship inside our team at a PADI 5 Star IDC centre. 48,000 THB with the internship and PADI materials included.",
     breadcrumb: "Divemaster Course",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Your first professional rating in diving",
@@ -232,12 +234,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "Where it sits on the route",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "You are here",
-    priceTitle: "All-inclusive - materials and PADI fees too",
+    priceTitle: "One price: training, internship and PADI materials",
     priceBody:
-      "The price covers all the training, materials, dives, the internship period and your PADI certification fee. With us you don't pay separately for the internship.",
+      "The price covers all the training, PADI materials, dives and the internship period. With us you don't pay separately for the internship.",
     priceCompare: "In the Caribbean or Australia that usually costs another 2,000-3,000 USD.",
-    priceIncludes: ["All training and dives", "PADI materials (Crew Pack)", "The internship period", "The PADI certification fee"],
-    padiFeeNote: "At most Koh Tao dive centres the PADI certification fee (about 286 AUD) is paid on top, and at many the PADI materials too (8,000-10,000 THB). With us both are already in the price.",
+    priceIncludes: ["All training and dives", "PADI materials (Crew Pack)", "The internship period"],
+    padiFeeNote: "Not included: the PADI certification fee (about 286 AUD), paid separately - as at most Koh Tao dive centres. The PADI materials, which cost another 8,000-10,000 THB at some centres, are already in our price.",
     stayTitle: "Accommodation and food",
     stayBody:
       "Accommodation and food during the training are on you. A monthly room on the island costs about 8,000-15,000 THB.",
@@ -293,7 +295,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
     faqs: [
       { q: "How long does the Divemaster course take?", a: "21 to 42 days, depending on your pace and availability. We recommend not cutting it short: the more time you spend in the water and the more courses you assist on, the better Divemaster you become." },
       { q: "Can I finish in two weeks?", a: "Not with us. The minimum is 21 days. Anything shorter doesn't leave enough time to assist on real courses and lead dives in different conditions - which is exactly what the course is for." },
-      { q: "What does the price include?", a: "All the training, materials, dives, the internship period and the PADI certification fees. With us you don't pay extra for the internship. Accommodation and food are not included." },
+      { q: "What does the price include?", a: "All the training, PADI materials, dives and the internship period. With us you don't pay extra for the internship. Not included: the PADI certification fee (about 286 AUD, paid separately), accommodation and food." },
       { q: "How much is accommodation during the course?", a: "Accommodation and food are your own cost. A monthly room on the island runs about 8,000-15,000 THB." },
       { q: "What do I need to start?", a: "Rescue Diver, an EFR certification from the last 24 months, at least 40 logged dives, and you must be 18 or older." },
       { q: "I don't have Rescue or EFR yet. What now?", a: "You can do both with us before your internship starts: Rescue for 11,000 THB and EFR for 5,000 THB." },
@@ -314,7 +316,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   es: {
     seoTitle: "Curso PADI Divemaster en Koh Tao - Prácticas pro | Siam Scuba",
     seoDescription:
-      "PADI Divemaster en Koh Tao: prácticas de 21-42 días dentro de nuestro equipo en un centro PADI 5 Star IDC. 50.000 THB con prácticas y tasas PADI incluidas.",
+      "PADI Divemaster en Koh Tao: prácticas de 21-42 días dentro de nuestro equipo en un centro PADI 5 Star IDC. 48.000 THB con prácticas y materiales PADI incluidos.",
     breadcrumb: "Curso Divemaster",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Tu primer nivel profesional en el buceo",
@@ -339,12 +341,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "Dónde encaja en la ruta",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "Estás aquí",
-    priceTitle: "Todo incluido, también materiales y tasas PADI",
+    priceTitle: "Un precio: formación, prácticas y materiales PADI",
     priceBody:
-      "El precio incluye toda la formación, los materiales, las inmersiones, el periodo de prácticas y la tasa de certificación de PADI. Con nosotros las prácticas no se pagan aparte.",
+      "El precio incluye toda la formación, los materiales PADI, las inmersiones y el periodo de prácticas. Con nosotros las prácticas no se pagan aparte.",
     priceCompare: "En el Caribe o en Australia eso suele costar otros 2.000-3.000 USD.",
-    priceIncludes: ["Toda la formación y las inmersiones", "Los materiales PADI (Crew Pack)", "El periodo de prácticas", "La tasa de certificación PADI"],
-    padiFeeNote: "En la mayoría de centros de Koh Tao la tasa de certificación PADI (unos 286 AUD) se paga aparte, y en muchos también los materiales PADI (8.000-10.000 THB). Con nosotros las dos cosas ya están incluidas.",
+    priceIncludes: ["Toda la formación y las inmersiones", "Los materiales PADI (Crew Pack)", "El periodo de prácticas"],
+    padiFeeNote: "No incluido: la tasa de certificación PADI (unos 286 AUD), que se paga aparte, como en la mayoría de centros de Koh Tao. Los materiales PADI, que en algunos centros cuestan otros 8.000-10.000 THB, con nosotros ya están incluidos.",
     stayTitle: "Alojamiento y comida",
     stayBody:
       "El alojamiento y la comida durante la formación corren por tu cuenta. Una habitación mensual en la isla cuesta unos 8.000-15.000 THB.",
@@ -400,7 +402,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
     faqs: [
       { q: "¿Cuánto dura el curso de Divemaster?", a: "De 21 a 42 días, según tu ritmo y tu disponibilidad. Te recomendamos no acortarlo: cuanto más tiempo pasas en el agua y en más cursos asistes, mejor Divemaster serás." },
       { q: "¿Puedo terminarlo en dos semanas?", a: "Con nosotros no. El mínimo son 21 días. En menos tiempo no da para asistir en cursos reales ni para guiar inmersiones en condiciones distintas, que es justo para lo que sirve el curso." },
-      { q: "¿Qué incluye el precio?", a: "Toda la formación, los materiales, las inmersiones, el periodo de prácticas y las tasas de certificación PADI. Con nosotros las prácticas no se pagan aparte. El alojamiento y la comida no están incluidos." },
+      { q: "¿Qué incluye el precio?", a: "Toda la formación, los materiales PADI, las inmersiones y el periodo de prácticas. Con nosotros las prácticas no se pagan aparte. No incluido: la tasa de certificación PADI (unos 286 AUD, se paga aparte), el alojamiento y la comida." },
       { q: "¿Cuánto cuesta el alojamiento durante el curso?", a: "El alojamiento y la comida corren de tu cuenta. Una habitación por meses en la isla cuesta unos 8.000-15.000 THB." },
       { q: "¿Qué necesito para empezar?", a: "Rescue Diver, una certificación EFR de los últimos 24 meses, al menos 40 inmersiones registradas y tener 18 años o más." },
       { q: "Todavía no tengo Rescue ni EFR. ¿Qué hago?", a: "Puedes hacer ambos con nosotros antes de empezar las prácticas: Rescue por 11.000 THB y EFR por 5.000 THB." },
@@ -421,7 +423,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
   fr: {
     seoTitle: "Cours PADI Divemaster à Koh Tao - Stage pro | Siam Scuba",
     seoDescription:
-      "PADI Divemaster à Koh Tao : un stage de 21 à 42 jours au sein de notre équipe, dans un centre PADI 5 Star IDC. 50 000 THB, stage et frais PADI inclus.",
+      "PADI Divemaster à Koh Tao : un stage de 21 à 42 jours au sein de notre équipe, dans un centre PADI 5 Star IDC. 48 000 THB, stage et matériel PADI inclus.",
     breadcrumb: "Cours Divemaster",
     kicker: "PADI Divemaster · Koh Tao",
     heroTitle: "Votre premier niveau professionnel en plongée",
@@ -446,12 +448,12 @@ export const DM_COPY: Record<Language, DmCopy> = {
     ladderTitle: "Sa place dans le parcours",
     ladder: { ow: "Open Water", aow: "Advanced", rescue: "Rescue + EFR", dm: "Divemaster", idc: "IDC" },
     youAreHere: "Vous êtes ici",
-    priceTitle: "Tout compris, matériel et frais PADI inclus",
+    priceTitle: "Un seul prix : formation, stage et matériel PADI",
     priceBody:
-      "Le prix couvre toute la formation, le matériel pédagogique, les plongées, la période de stage et les frais de certification PADI. Chez nous, le stage ne se paie pas en plus.",
+      "Le prix couvre toute la formation, le matériel pédagogique PADI, les plongées et la période de stage. Chez nous, le stage ne se paie pas en plus.",
     priceCompare: "Dans les Caraïbes ou en Australie, cela coûte en général 2 000 à 3 000 USD de plus.",
-    priceIncludes: ["Toute la formation et les plongées", "Le matériel pédagogique PADI (Crew Pack)", "La période de stage", "Les frais de certification PADI"],
-    padiFeeNote: "Dans la plupart des centres de Koh Tao, les frais de certification PADI (environ 286 AUD) se paient en plus, et dans beaucoup le matériel PADI aussi (8 000 à 10 000 THB). Chez nous, les deux sont déjà dans le prix.",
+    priceIncludes: ["Toute la formation et les plongées", "Le matériel pédagogique PADI (Crew Pack)", "La période de stage"],
+    padiFeeNote: "Non inclus : les frais de certification PADI (environ 286 AUD), payés à part, comme dans la plupart des centres de Koh Tao. Le matériel PADI, qui coûte 8 000 à 10 000 THB de plus dans certains centres, est déjà compris chez nous.",
     stayTitle: "Logement et repas",
     stayBody:
       "Le logement et les repas pendant la formation sont à votre charge. Une chambre au mois sur l'île coûte environ 8 000 à 15 000 THB.",
@@ -507,7 +509,7 @@ export const DM_COPY: Record<Language, DmCopy> = {
     faqs: [
       { q: "Combien de temps dure le cours Divemaster ?", a: "De 21 à 42 jours, selon votre rythme et vos disponibilités. Nous conseillons de ne pas le raccourcir : plus vous passez de temps dans l'eau et plus vous assistez de cours, meilleur Divemaster vous devenez." },
       { q: "Puis-je le terminer en deux semaines ?", a: "Pas chez nous. Le minimum est de 21 jours. En moins de temps, impossible d'assister de vrais cours et de guider des plongées dans des conditions variées - c'est précisément le but du cours." },
-      { q: "Que comprend le prix ?", a: "Toute la formation, le matériel pédagogique, les plongées, la période de stage et les frais de certification PADI. Chez nous, le stage ne se paie pas en plus. Le logement et les repas ne sont pas inclus." },
+      { q: "Que comprend le prix ?", a: "Toute la formation, le matériel pédagogique PADI, les plongées et la période de stage. Chez nous, le stage ne se paie pas en plus. Non inclus : les frais de certification PADI (environ 286 AUD, payés à part), le logement et les repas." },
       { q: "Combien coûte le logement pendant le cours ?", a: "Le logement et les repas sont à votre charge. Une chambre au mois sur l'île coûte environ 8 000 à 15 000 THB." },
       { q: "Que faut-il pour commencer ?", a: "Le Rescue Diver, un EFR de moins de 24 mois, au moins 40 plongées enregistrées et avoir 18 ans ou plus." },
       { q: "Je n'ai pas encore le Rescue ni l'EFR. Que faire ?", a: "Vous pouvez passer les deux chez nous avant le début du stage : Rescue à 11 000 THB et EFR à 5 000 THB." },
@@ -550,8 +552,8 @@ export function divemasterCourseDetail(lang: Language): CourseDetail {
       waterTestsLine(c),
     ],
     schedule: c.day.map((d) => ({ time: d.time, description: d.body })),
-    included: [c.priceBody, c.padiFeeNote, c.priceCompare],
-    notIncluded: [c.dialog.stay],
+    included: [c.priceBody, c.priceCompare],
+    notIncluded: [c.padiFeeNote, c.dialog.stay],
     price: `${DM_PRICE.toLocaleString("en-US")} THB`,
     nextStep: c.nextBody,
     pageLink: { label: c.dialog.pageLink, href: divemasterPath(lang) },

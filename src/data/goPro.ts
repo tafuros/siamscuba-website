@@ -136,10 +136,10 @@ export const GO_PRO_TRACKS: GoProTrack[] = [
     },
     duration: { en: "21-42 days", he: "21-42 ימים", es: "21-42 días", fr: "21-42 jours" },
     points: {
-      en: ["The first professional rating", "Guide certified divers", "Internship included, PADI fees too"],
-      he: ["הדרגה המקצועית הראשונה", "להוביל צוללים מוסמכים", "ההתמחות ודמי PADI כלולים"],
-      es: ["El primer nivel profesional", "Guía a buceadores certificados", "Prácticas y tasas PADI incluidas"],
-      fr: ["Le premier niveau professionnel", "Guider des plongeurs certifiés", "Stage et frais PADI inclus"],
+      en: ["The first professional rating", "Guide certified divers", "Internship and PADI materials included"],
+      he: ["הדרגה המקצועית הראשונה", "להוביל צוללים מוסמכים", "ההתמחות וחומרי הלימוד כלולים"],
+      es: ["El primer nivel profesional", "Guía a buceadores certificados", "Prácticas y materiales PADI incluidos"],
+      fr: ["Le premier niveau professionnel", "Guider des plongeurs certifiés", "Stage et matériel PADI inclus"],
     },
   },
   {
