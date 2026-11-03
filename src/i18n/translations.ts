@@ -240,6 +240,7 @@ type TranslationStrings = {
   footer_desc: string;
   footer_contact: string;
   footer_links: string;
+  nav_faq: string;
   footer_rights: string;
   footer_accessibility: string;
   footer_privacy: string;
@@ -488,6 +489,7 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_desc: "Professional PADI dive center on Koh Tao, Thailand. Small groups, big adventures.",
     footer_contact: "Contact",
     footer_links: "Quick Links",
+    nav_faq: "FAQ",
     footer_rights: "All rights reserved.",
     footer_accessibility: "Accessibility",
     footer_privacy: "Privacy Policy",
@@ -726,6 +728,7 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_desc: "מרכז צלילה מקצועי PADI בקוטאו, תאילנד. קבוצות קטנות, הרפתקאות גדולות.",
     footer_contact: "יצירת קשר",
     footer_links: "קישורים מהירים",
+    nav_faq: "שאלות נפוצות",
     footer_rights: "כל הזכויות שמורות.",
     footer_accessibility: "הצהרת נגישות",
     footer_privacy: "מדיניות פרטיות",
@@ -964,6 +967,7 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_desc: "Centro de buceo profesional PADI en Koh Tao, Tailandia. Grupos pequeños, grandes aventuras.",
     footer_contact: "Contacto",
     footer_links: "Enlaces Rápidos",
+    nav_faq: "Preguntas frecuentes",
     footer_rights: "Todos los derechos reservados.",
     footer_accessibility: "Accesibilidad",
     footer_privacy: "Política de privacidad",
@@ -1202,6 +1206,7 @@ export const translations: Record<Language, TranslationStrings> = {
     footer_desc: "Centre de plongée professionnel PADI à Koh Tao, Thaïlande. Petits groupes, grandes aventures.",
     footer_contact: "Contact",
     footer_links: "Liens Rapides",
+    nav_faq: "FAQ",
     footer_rights: "Tous droits réservés.",
     footer_accessibility: "Accessibilité",
     footer_privacy: "Politique de confidentialité",

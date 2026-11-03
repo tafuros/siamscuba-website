@@ -40,6 +40,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   const HOTEL_ALTERNATES = hreflangAlternatesFor("/hotel");
   const GO_PRO_ALTERNATES = hreflangAlternatesFor("/go-pro");
   const DM_ALTERNATES = hreflangAlternatesFor("/divemaster-course");
+  const FAQ_ALTERNATES = hreflangAlternatesFor("/faq");
   const START_ALTERNATES = hreflangAlternatesFor("/discover-scuba-vs-open-water");
 
   const today = new Date().toISOString().slice(0, 10);
@@ -89,6 +90,10 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/he/divemaster-course", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: DM_ALTERNATES },
     { loc: "/es/divemaster-course", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: DM_ALTERNATES },
     { loc: "/fr/divemaster-course", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: DM_ALTERNATES },
+    { loc: "/faq", changefreq: "monthly", priority: 0.8, lastmod: today, alternates: FAQ_ALTERNATES },
+    { loc: "/he/faq", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: FAQ_ALTERNATES },
+    { loc: "/es/faq", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: FAQ_ALTERNATES },
+    { loc: "/fr/faq", changefreq: "monthly", priority: 0.7, lastmod: today, alternates: FAQ_ALTERNATES },
     // Entry-gate split pages (multilingual single URL - all langs on one URL).
     { loc: "/similan", changefreq: "weekly", priority: 0.9, lastmod: today },
     { loc: "/phuket-diving", changefreq: "weekly", priority: 0.9, lastmod: today },

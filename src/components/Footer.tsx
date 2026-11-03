@@ -8,6 +8,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { openGate } from "@/utils/gateBus";
 import { conservationPath } from "@/lib/conservationCopy";
 import { languageGuidePath } from "@/lib/localeRoutes";
+import { faqPath } from "@/data/faq";
 
 const Footer = () => {
   const { t, language } = useLanguage();
@@ -74,6 +75,11 @@ const Footer = () => {
               <li>
                 <Link to="/blog" className="hover:text-primary transition-colors">
                   {t("nav_koh_tao_guide")}
+                </Link>
+              </li>
+              <li>
+                <Link to={faqPath(language)} className="hover:text-primary transition-colors">
+                  {t("nav_faq")}
                 </Link>
               </li>
               {/* Site-wide entry point to /conservation. Without it the page is

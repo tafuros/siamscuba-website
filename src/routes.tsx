@@ -281,6 +281,27 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/DivemasterFrPage")),
         entry: "src/pages/DivemasterFrPage.tsx",
       },
+      // Site-wide FAQ (Ben, 2026-11-03) - one component, language from the prefix.
+      {
+        path: "faq",
+        lazy: lazyDefault(() => import("./pages/FaqPage")),
+        entry: "src/pages/FaqPage.tsx",
+      },
+      {
+        path: "he/faq",
+        lazy: lazyDefault(() => import("./pages/FaqPage")),
+        entry: "src/pages/FaqPage.tsx",
+      },
+      {
+        path: "es/faq",
+        lazy: lazyDefault(() => import("./pages/FaqPage")),
+        entry: "src/pages/FaqPage.tsx",
+      },
+      {
+        path: "fr/faq",
+        lazy: lazyDefault(() => import("./pages/FaqPage")),
+        entry: "src/pages/FaqPage.tsx",
+      },
       // Siam Hotel & Hostel - the property's own mini-site. Standalone chrome
       // (its own nav + footer), full en/he/es/fr cluster declared together in
       // LOCALE_FAMILIES so hreflang stays reciprocal.

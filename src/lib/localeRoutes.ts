@@ -55,6 +55,7 @@ export const LOCALE_FAMILIES: Partial<Record<Language, string>>[] = [
     es: "/es/divemaster-course",
     fr: "/fr/divemaster-course",
   },
+  { en: "/faq", he: "/he/faq", es: "/es/faq", fr: "/fr/faq" },
 ];
 
 const SITE_URL = "https://siamscuba.com";
