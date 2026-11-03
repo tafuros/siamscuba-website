@@ -144,7 +144,8 @@ describe("Open Water duration - blog posts do not contradict the landers", () =>
   // Siam Scuba's own course. Left as written on purpose; listed here so the
   // scan below stays honest about what it is NOT checking.
   const GENERAL_KOH_TAO_CLAIMS = [
-    "On Koh Tao, the full Open Water course typically takes 3", // padi-vs-ssi-koh-tao
+    // (padi-vs-ssi-koh-tao's "typically takes 3-4 days" was Ben's call to change
+    // on 2026-11-03: it now says our course takes 2.5 days)
     // (the "...what-to-expect" claim left with that post: Ben merged it into the
     // complete guide and 301'd it on 2026-11-03)
   ];
@@ -157,6 +158,7 @@ describe("Open Water duration - blog posts do not contradict the landers", () =>
       "Most students do 3 days",
       "you've just spent 3 days getting comfortable",
       "dura 3 días",
+      "full Open Water course typically takes 3",
     ].filter((phrase) => source.toLowerCase().includes(phrase.toLowerCase()));
 
     expect(offenders, `blogPosts.ts still claims a 3-day Open Water course`).toEqual([]);

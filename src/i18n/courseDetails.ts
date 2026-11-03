@@ -232,7 +232,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       header: "Rescue Diver Course 🤿",
       intro: "The course is split into theory, rescue exercises, and two realistic open-water scenarios.",
       structure: [
-        "3 days",
+        "2 days",
         "2 realistic scenarios putting everything together in a real open-water emergency simulation.",
       ],
       exercises: {
@@ -608,7 +608,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       header: "קורס Rescue Diver 🤿",
       intro: "הקורס מחולק לתיאוריה, תרגילי חילוץ ושני תרחישים מציאותיים בים הפתוח.",
       structure: [
-        "3 ימים",
+        "יומיים",
         "2 תרחישים מציאותיים שמחברים את הכול יחד - סימולציה של מצב חירום אמיתי בים הפתוח.",
       ],
       exercises: {
@@ -984,7 +984,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       header: "Curso Rescue Diver 🤿",
       intro: "El curso se divide en teoría, ejercicios de rescate y dos escenarios realistas en mar abierto.",
       structure: [
-        "3 días",
+        "2 días",
         "2 escenarios realistas que lo juntan todo en una simulación de emergencia real en mar abierto.",
       ],
       exercises: {
@@ -1360,7 +1360,7 @@ export const courseDetails: Record<Language, Record<string, CourseDetail>> = {
       header: "Cours Rescue Diver 🤿",
       intro: "Le cours se divise en théorie, exercices de sauvetage et deux scénarios réalistes en mer.",
       structure: [
-        "3 jours",
+        "2 jours",
         "2 scénarios réalistes qui rassemblent tout dans une simulation d'urgence réelle en mer.",
       ],
       exercises: {

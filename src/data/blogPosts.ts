@@ -606,7 +606,7 @@ const divingBlogPosts: BlogPost[] = [
           "Scuba Review (refresher): ฿2,500 - One day, 2 supervised ocean dives. For certified divers who haven't dived in a while.",
           "[PADI Open Water Diver](/open-water): ฿12,000 - 2.5 days, lifetime certification, max 4 students per instructor. Lets you dive anywhere in the world to 18m.",
           "[PADI Advanced Open Water](/advanced-open-water): ฿11,000 - 1.5 days, 5 dives including deep and navigation. Takes you to 30m.",
-          "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
+          "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 3 days (2 days Rescue + 1 day EFR). The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,000 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver and Deep Diver are ฿9,000 each. Sidemount and DPV are priced on request - ask the team.",
           "[PADI Divemaster](/divemaster): ฿50,000 all-inclusive - 21-42 days, with the internship, PADI materials and the PADI certification fee included. Your first professional certification.",
@@ -1169,7 +1169,7 @@ const divingBlogPosts: BlogPost[] = [
   },
   {
     slug: "padi-vs-ssi-koh-tao",
-    title: "PADI vs SSI on Koh Tao — Which Course Should You Choose?",
+    title: "PADI vs SSI on Koh Tao - Which Course Should You Choose?",
     seoTitle: "PADI vs SSI on Koh Tao - Which to Choose?",
     category: "Diving",
     excerpt: "Thinking about getting your dive certification on Koh Tao? Here's an honest comparison of PADI and SSI so you can make the right choice.",
@@ -1177,9 +1177,9 @@ const divingBlogPosts: BlogPost[] = [
     date: "2026-03-10",
     sections: [
       {
-        heading: "PADI vs SSI — Does It Actually Matter?",
+        heading: "PADI vs SSI - Does It Actually Matter?",
         paragraphs: [
-          "One of the most common questions we get from new divers on Koh Tao is: 'Should I do PADI or SSI?' The honest answer is that both are internationally recognised, respected certifications — and any dive centre around the world will accept either one.",
+          "One of the most common questions we get from new divers on Koh Tao is: 'Should I do PADI or SSI?' The honest answer is that both are internationally recognised, respected certifications - and any dive centre around the world will accept either one.",
           "That said, there are real differences in how the courses are structured, how the materials are delivered, and how they feel as a student. This guide breaks it all down so you can choose what's right for you.",
         ],
       },
@@ -1187,23 +1187,23 @@ const divingBlogPosts: BlogPost[] = [
         heading: "The PADI Open Water Course",
         paragraphs: [
           "PADI (Professional Association of Diving Instructors) is the world's largest dive training organisation, certifying over 1 million divers every year. Their Open Water Diver course is the most recognised beginner certification on the planet.",
-          "The PADI course consists of three parts: knowledge development (theory), confined water dives (with us, in our pool), and open water dives (four dives in the ocean). On Koh Tao, the full Open Water course typically takes 3–4 days.",
-          "One key thing to know: PADI materials (the printed or digital manual) are an additional cost on top of your course fee — usually around 800–1,000 THB extra. At Siam Scuba, we include everything in one transparent price so there are no surprises.",
+          "The PADI course consists of three parts: knowledge development (theory), confined water dives (with us, in our pool), and open water dives (four dives in the ocean). At Siam Scuba, the full PADI Open Water course takes 2.5 days.",
+          "One key thing to know: PADI materials (the printed or digital manual) are often an additional cost on top of the course fee at other dive centres. At Siam Scuba, we include everything in one transparent price so there are no surprises.",
         ],
       },
       {
         heading: "The SSI Open Water Course",
         paragraphs: [
           "SSI (Scuba Schools International) is the second-largest dive training agency in the world and is particularly popular in Europe and Asia. Their Open Water Diver course covers the same skills as PADI and results in an equivalent lifetime certification.",
-          "One practical advantage of SSI is that their digital training materials are typically included in the course price — no hidden fees. The SSI MyDiveGuide app lets you access your certification card and log dives digitally.",
+          "One practical advantage of SSI is that their digital training materials are typically included in the course price - no hidden fees. The SSI MyDiveGuide app lets you access your certification card and log dives digitally.",
           "On Koh Tao, SSI courses are offered by several of the larger dive centres including Big Blue Diving.",
         ],
       },
       {
         heading: "Which Certification Is Accepted Worldwide?",
         paragraphs: [
-          "Both PADI and SSI certifications are accepted at dive centres all over the world — from the Red Sea to the Great Barrier Reef, the Maldives to Bali. You will never be turned away because of your certification agency.",
-          "What dive centres actually check when you show up to dive is your certification level (Open Water, Advanced, Rescue, etc.) and your log book. The agency — PADI or SSI — is largely irrelevant once you have your card.",
+          "Both PADI and SSI certifications are accepted at dive centres all over the world - from the Red Sea to the Great Barrier Reef, the Maldives to Bali. You will never be turned away because of your certification agency.",
+          "What dive centres actually check when you show up to dive is your certification level (Open Water, Advanced, Rescue, etc.) and your log book. The agency - PADI or SSI - is largely irrelevant once you have your card.",
         ],
       },
       {
@@ -1214,8 +1214,8 @@ const divingBlogPosts: BlogPost[] = [
 
         imageCredit: "@deepseajess for @kohtaoprovideo",
         paragraphs: [
-          "Siam Scuba is a PADI 5 Star IDC Centre — one of the highest PADI ratings awarded to dive operations. This means our instructors are trained to the highest PADI standard, and we can certify divers all the way from absolute beginner to PADI Instructor.",
-          "PADI is a little more strict with their requirements and sequencing — and that's exactly why we chose them. They do this to enhance both your safety and your retention of critical skills and information. Every skill you learn builds on the previous one, so by the time you finish a course, you're not just certified — you're genuinely confident underwater.",
+          "Siam Scuba is a PADI 5 Star IDC Centre - one of the highest PADI ratings awarded to dive operations. This means our instructors are trained to the highest PADI standard, and we can certify divers all the way from absolute beginner to PADI Instructor.",
+          "PADI is a little more strict with their requirements and sequencing - and that's exactly why we chose them. They do this to enhance both your safety and your retention of critical skills and information. Every skill you learn builds on the previous one, so by the time you finish a course, you're not just certified - you're genuinely confident underwater.",
           "We also chose PADI because of its worldwide recognition, the depth of the training materials, and because our team has decades of combined PADI teaching experience. Our maximum student-to-instructor ratio is 4:1, which means you get far more personal attention than at larger operations.",
           "If you're still unsure, we're happy to chat. Just reach out via WhatsApp and our team will help you figure out the best course for your goals.",
         ],

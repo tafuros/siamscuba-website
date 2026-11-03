@@ -176,7 +176,7 @@ const HebrewLanding = () => {
                 4 לילות לינה מתנה.
               </li>
               <li>
-                <strong>PADI Rescue Diver (Rescue) + EFR:</strong> 16,000 באט (11,000 + 5,000). 4 ימים. הקורס שכל מי
+                <strong>PADI Rescue Diver (Rescue) + EFR:</strong> 16,000 באט (11,000 + 5,000). 3 ימים (יומיים Rescue ויום EFR). הקורס שכל מי
                 שעבר אותו אומר שהפך אותו לצוללן טוב יותר.
               </li>
               <li>

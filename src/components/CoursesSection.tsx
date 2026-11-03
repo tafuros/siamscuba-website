@@ -71,7 +71,7 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
       description: t("courses_advanced_desc"),
       courses: [
         { icon: Star, title: t("course_aow"), dialogKey: "Advanced Open Water", price: 11000, duration: t("dur_1_5_days"), highlights: [t("hl_30m"), t("hl_5_adventure"), t("hl_deep_nav")], featured: true, hasDetails: true },
-        { icon: ShieldCheck, title: t("course_rescue"), dialogKey: "Rescue Diver", price: 11000, duration: t("dur_3_days"), highlights: [t("hl_emergency"), t("hl_rescue_tech"), t("hl_stress")], hasDetails: true },
+        { icon: ShieldCheck, title: t("course_rescue"), dialogKey: "Rescue Diver", price: 11000, duration: t("dur_2_days"), highlights: [t("hl_emergency"), t("hl_rescue_tech"), t("hl_stress")], hasDetails: true },
         { icon: Heart, title: t("course_efr"), dialogKey: "Emergency First Response (EFR)", price: 5000, duration: t("dur_1_day"), highlights: [t("hl_cpr"), t("hl_intl_cert"), t("hl_life_saving")], hasDetails: true },
       ],
     },

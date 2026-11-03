@@ -29,9 +29,9 @@ export const COURSE_SEO: Record<string, CourseSeo> = {
     h1: "PADI Advanced Open Water Course",
   },
   "rescue-diver": {
-    title: "PADI Rescue Diver Course Koh Tao - 4 Days | Siam Scuba",
+    title: "PADI Rescue Diver Course Koh Tao - 2 Days | Siam Scuba",
     description:
-      "Build emergency response and rescue skills in Koh Tao with the PADI Rescue Diver course: 3-4 days of scenarios, stress control and rescue skills. ฿11,000.",
+      "Build emergency response and rescue skills in Koh Tao with the PADI Rescue Diver course: 2 days of scenarios, stress control and rescue skills. ฿11,000.",
     h1: "PADI Rescue Diver Course",
   },
   "divemaster": {

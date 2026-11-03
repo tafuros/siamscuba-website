@@ -80,7 +80,7 @@
     {
       "id": "rescue",
       "name": "Rescue Diver",
-      "duration": "3 days",
+      "duration": "2 days",
       "price_thb": 11000,
       "price_thb_with_efr": 16000,
       "efr_price_thb": 5000,
