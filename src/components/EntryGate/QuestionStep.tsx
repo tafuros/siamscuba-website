@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { GateQuestion } from "./gateContent";
 import DiverArt, { type DiverArtType } from "./DiverArt";
+import padiLogo from "@/assets/padi-logo.png";
 
 interface QuestionStepProps {
   question: GateQuestion;
@@ -108,8 +109,15 @@ const QuestionStep = ({ question, onPick, reducedMotion = false, artByKey, swapO
               transition={{ duration: 0.45, delay: reducedMotion ? 0 : 0.12 + i * 0.08 }}
               whileHover={reducedMotion ? undefined : { y: -4 }}
               dir={sideArt ? "ltr" : undefined}
-              className={`gate-card group flex min-h-[8.5rem] items-center justify-center rounded-2xl p-6 text-center backdrop-blur-md outline-none transition-colors ${sideArt ? "gap-4" : "flex-col gap-2"} ${toneClass} ${orderClass} ${spanClass}`}
+              className={`gate-card group flex min-h-[8.5rem] items-center justify-center rounded-2xl p-6 text-center backdrop-blur-md outline-none transition-colors ${sideArt ? "gap-4" : opt.key === "goPro" ? "flex-col gap-3 sm:flex-row sm:gap-6" : "flex-col gap-2"} ${toneClass} ${orderClass} ${spanClass}`}
             >
+              {opt.key === "goPro" && (
+                // PADI mark on a white tile - the logo's black wordmark would vanish on
+                // the dark Pro card. Stacked above the text on phones, beside it on desktop.
+                <span className="flex shrink-0 items-center justify-center rounded-xl bg-white p-1.5 shadow-[0_4px_18px_rgba(0,0,0,0.35)]">
+                  <img src={padiLogo} alt="PADI" width={800} height={889} className="h-12 w-auto sm:h-16" />
+                </span>
+              )}
               {art && (
                 <DiverArt
                   type={art}
