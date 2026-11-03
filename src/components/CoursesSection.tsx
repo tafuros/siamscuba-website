@@ -38,19 +38,14 @@ const CoursesSection = ({ initialCourse }: { initialCourse?: string | null }) =>
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const { t } = useLanguage();
 
-  // Auto-open the deep-linked course modal (e.g. /discover-scuba), but NOT while
-  // the first-visit cookie banner is still up: dismissing that banner registers
-  // as a click-outside and would instantly close the modal. So wait until consent
-  // is resolved before opening.
+  // Auto-open the deep-linked course modal (e.g. /rescue-diver) straight away
+  // (Ben, 2026-11-03, option A): it used to wait for cookie consent, so Google -
+  // which never consents - never saw the course content at all. The cookie
+  // banner stays clickable above the dialog, and the dialog ignores clicks on
+  // it (CookieConsent data-cookie-banner + CourseDetailDialog outside handlers).
   useEffect(() => {
     if (!initialCourse || typeof window === "undefined") return;
-    if (localStorage.getItem("cookie_consent")) {
-      setSelectedCourse(initialCourse);
-      return;
-    }
-    const open = () => setSelectedCourse(initialCourse);
-    window.addEventListener("cookie-consent-resolved", open);
-    return () => window.removeEventListener("cookie-consent-resolved", open);
+    setSelectedCourse(initialCourse);
   }, [initialCourse]);
 
   const categories = [

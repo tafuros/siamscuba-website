@@ -113,10 +113,14 @@ const CookieConsent = () => {
     <div
       role="region"
       aria-label={copy.label}
+      // A course URL opens its dialog straight away (2026-11-03), and a Radix
+      // modal sets pointer-events:none on everything outside it - so the banner
+      // re-enables them for itself, and the dialog ignores clicks that land here.
+      data-cookie-banner=""
       dir={isRTL ? "rtl" : "ltr"}
       className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 bg-[#0D1B26]/95 text-white backdrop-blur-md
         pb-[env(safe-area-inset-bottom,0px)] animate-[ccUp_0.3s_ease-out]"
-      style={{ animationFillMode: "both" }}
+      style={{ animationFillMode: "both", pointerEvents: "auto" }}
     >
       <style>{`@keyframes ccUp{from{transform:translateY(100%)}to{transform:translateY(0)}}`}</style>
       <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5">

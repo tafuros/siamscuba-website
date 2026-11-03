@@ -62,6 +62,13 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange, onSwitchCourse }:
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
+        // Accept/decline on the cookie banner must not close the course dialog.
+        onPointerDownOutside={(e) => {
+          if ((e.target as HTMLElement | null)?.closest?.("[data-cookie-banner]")) e.preventDefault();
+        }}
+        onInteractOutside={(e) => {
+          if ((e.target as HTMLElement | null)?.closest?.("[data-cookie-banner]")) e.preventDefault();
+        }}
         className={[
           "w-[calc(100%-1.5rem)] max-w-lg max-h-[90dvh] gap-0 overflow-hidden rounded-[28px] border-0 p-0 shadow-2xl sm:rounded-[28px]",
           // The shadcn close X becomes a round frosted button over the hero.
