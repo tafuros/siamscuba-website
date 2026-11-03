@@ -870,7 +870,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Koh Tao is divable year-round. It's not a seasonal destination like the Caribbean or the Red Sea where some months effectively shut down.",
           "Best months for conditions: February through May. Calm seas, 20-30m+ visibility, steady weather.",
-          "Worst months: October through mid-December (monsoon season). Choppy seas on north-shore sites, rain windows, visibility drops to 5-15m on bad days.",
+          "Rainy season: November to mid-December, peaking in November. Choppy seas on north-shore sites, rain windows, visibility drops to 5-15m on bad days. October is a transition month - mostly good diving, with the first rain days sometimes arriving late in the month.",
           "Year-round water temperature: 28-30°C. You don't need a thick wetsuit, ever. A 3mm shorty is plenty.",
           "Monthly weather is the single biggest factor that varies. Visibility varies but less dramatically than people expect.",
         ],
@@ -890,19 +890,20 @@ const divingBlogPosts: BlogPost[] = [
         ],
       },
       {
-        heading: "June to September - excellent diving, low crowds",
+        heading: "June to October - excellent diving, low crowds",
         paragraphs: [
           "Visibility 15-25m typically. Some afternoon thunderstorms, but they usually clear by morning - we run morning dives early specifically to avoid weather.",
           "Plankton blooms occasionally drop visibility for 1-2 days at a time. They're seasonal and unpredictable; you can have 30m visibility one day and 8m the next, then back to 25m.",
           "Sea state varies. Most days are good. Wind can pick up in late afternoon.",
           "Best balance of conditions and value. Accommodation prices drop noticeably. Course slots are easier to grab on short notice.",
           "Whale shark sightings continue, just with lower frequency than April-May.",
+          "October is a transition month: most days are still good, and the first rain days sometimes arrive toward the end of the month.",
         ],
       },
       {
-        heading: "October to mid-December - monsoon season",
+        heading: "November to mid-December - rainy season",
         paragraphs: [
-          "This is the season most blog posts gloss over. Heavy rain windows, especially in November when the monsoon peaks.",
+          "This is the season most blog posts gloss over. Heavy rain windows, peaking in November.",
           "Sea state: choppy on north-shore sites (Sail Rock, Chumphon Pinnacle). Some days they're undivable; we move to south-shore protected sites instead.",
           "Visibility: 5-15m on bad days, 15-25m on good days. Depends on rain runoff from the island and current direction.",
           "We dive every day except in extreme conditions. Our boats (Siam Explorer, Siam Pearl) are larger and sturdier than the small longtails most shops use, so we operate when smaller shops cancel.",
@@ -943,7 +944,7 @@ const divingBlogPosts: BlogPost[] = [
         imageCredit: "@oceanphanton for @kohtaoprovideo",
         paragraphs: [
           "Maximum flexibility: target March or April. Best conditions, full wildlife calendar, and you'll get the most out of multi-day courses.",
-          "If you're already coming October-November: still divable, just plan flexibility into your trip. A 7-day stay gives us multiple weather windows to work with; a 3-day rush trip during peak monsoon is a coin flip.",
+          "If you're already coming in November: still divable, just plan flexibility into your trip. A 7-day stay gives us multiple weather windows to work with; a 3-day rush trip during peak monsoon is a coin flip.",
           "Honest framing: a single bad-weather day on Koh Tao still has better conditions than most temperate dive sites on a good day. The water is warm, the marine life is rich, and even reduced visibility (10m) is plenty for training.",
           "Multi-day courses give us room to swap sites based on conditions. If Sail Rock is rough, we move to a south-shore reef. You won't notice unless you specifically asked for the rough-condition site.",
         ],
