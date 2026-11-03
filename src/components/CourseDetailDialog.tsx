@@ -387,7 +387,7 @@ const CourseDetailDialog = ({ courseTitle, open, onOpenChange, onSwitchCourse }:
               {priceNote && <p className="text-[11px] leading-snug text-muted-foreground">{priceNote}</p>}
             </div>
             <Button asChild className="shrink-0 rounded-full px-6" size="lg">
-              <BookingLink to="/fun-dive-booking" className="flex items-center gap-2">
+              <BookingLink trackLocation="course_dialog" to="/fun-dive-booking" className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
                 {t("nav_book_now")}
               </BookingLink>

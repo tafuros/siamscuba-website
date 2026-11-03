@@ -203,7 +203,7 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
           </dl>
 
           <div className="mt-7 flex flex-col items-center gap-3">
-            <BookingLink to={bookHref} className={`${bookBtn} px-10 py-4 text-[17px]`}>
+            <BookingLink trackLocation="hero" to={bookHref} className={`${bookBtn} px-10 py-4 text-[17px]`}>
               {ui.book} <Arrow className="h-[1.05em] w-[1.05em]" />
             </BookingLink>
             <a
@@ -360,7 +360,7 @@ const CourseLandingPage = ({ slug }: { slug: CoursePageSlug }) => {
             <b className="text-[17px] tabular-nums text-amber-400">{thb(page.priceThb)}</b>
             <span className="block text-[12px] text-white/65">{ui.stickyToday(thb(page.depositThb))}</span>
           </p>
-          <BookingLink to={bookHref} className={`${bookBtn} px-7 py-3 text-[15px] shadow-none`}>
+          <BookingLink trackLocation="sticky" to={bookHref} className={`${bookBtn} px-7 py-3 text-[15px] shadow-none`}>
             {ui.book}
           </BookingLink>
         </div>

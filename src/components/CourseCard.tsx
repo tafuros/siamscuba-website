@@ -10,7 +10,6 @@ import { COURSE_TO_SLUG, coursePath } from "@/lib/courseSlugMap";
 import { isCoursePageSlug } from "@/data/coursePages";
 import Price from "@/components/Price";
 import { COURSE_CARD_PRODUCT } from "@/lib/landerBooking";
-import { trackBookNowClick } from "@/utils/tracking";
 
 /** Shape of a course entry as built in CoursesSection. */
 export interface CourseCardData {
@@ -140,7 +139,8 @@ const CourseCard = ({
               <Button asChild variant={course.featured ? "default" : "outline"} size="sm" className="rounded-full flex-1 h-8 text-xs">
                 <BookingLink
                   to={bookHref}
-                  onClick={() => trackBookNowClick({ location: "course_card", product, url: bookHref })}
+                  trackLocation="course_card"
+                  trackProduct={product}
                 >
                   {course.price ? t("courses_book_now") : t("courses_get_price")}
                 </BookingLink>

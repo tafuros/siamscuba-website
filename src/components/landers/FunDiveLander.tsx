@@ -137,7 +137,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           </div>
 
           <div className="flex flex-col items-center gap-3">
-            <BookingLink to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
+            <BookingLink trackLocation="hero" to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
               {copy.ctaBook} {isRtl ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
             </BookingLink>
             <a
@@ -204,7 +204,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
                 {item.link && (
                   <>
                     {" "}
-                    <BookingLink to={item.link.href} className="font-semibold text-sky-300 underline underline-offset-2 hover:text-sky-200">
+                    <BookingLink trackLocation="faq_link" to={item.link.href} className="font-semibold text-sky-300 underline underline-offset-2 hover:text-sky-200">
                       {item.link.label}
                     </BookingLink>
                   </>
@@ -223,7 +223,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
         <p className="mb-9 text-center text-[15px] text-white/65">{copy.sitesSub}</p>
         <div className="grid grid-cols-2 gap-3.5 md:grid-cols-4">
           {copy.sites.map((site) => (
-            <BookingLink
+            <BookingLink trackLocation="site_card"
               key={site.name}
               to={`/fun-dive-booking?product=${site.product}&utm_passthrough=1`}
               aria-label={`${copy.stickyCta} - ${site.name}`}
@@ -305,7 +305,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           <em className="not-italic text-sky-300">{copy.closingB}</em>
         </h2>
         <p className="mb-7 text-[15px] text-white/65">{copy.closingSub}</p>
-        <BookingLink to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
+        <BookingLink trackLocation="closing" to={BOOKING_HREF} className={`${bookBtn} px-11 py-4 text-[17px]`}>
           {copy.ctaBook} {isRtl ? <ArrowLeft className="h-[1.05em] w-[1.05em]" /> : <ArrowRight className="h-[1.05em] w-[1.05em]" />}
         </BookingLink>
       </section>
@@ -321,7 +321,7 @@ const FunDiveLander = ({ lang }: FunDiveLanderProps) => {
           <b className="text-[17px] leading-tight text-amber-400">{copy.priceNum}</b>
           <span className="text-[10.5px] text-white/60">{copy.stickyPriceLabel}</span>
         </div>
-        <BookingLink to={BOOKING_HREF} className={`${bookBtn} flex-1 px-3 py-3 text-[15px] shadow-none`}>
+        <BookingLink trackLocation="sticky" to={BOOKING_HREF} className={`${bookBtn} flex-1 px-3 py-3 text-[15px] shadow-none`}>
           {copy.stickyCta}
         </BookingLink>
         <a

@@ -638,7 +638,7 @@ const NemoChat = () => {
 
             {/* Persistent CTA row - NOT LLM-dependent. Each fires its own event. */}
             <div className="grid grid-cols-3 gap-1.5 border-b border-border bg-secondary/30 px-2.5 py-2">
-              <BookingLink
+              <BookingLink trackLocation="chat_cta_row"
                 to="/fun-dive-booking"
                 onClick={() => {
                   trackChatCtaClick("fun_dive");
@@ -723,7 +723,7 @@ const NemoChat = () => {
                 in-chat detail collection. Panel closes so the visitor sees the
                 form; chat history persists for when they come back. */}
             {messages.length > 0 && !isBooking && (
-              <BookingLink
+              <BookingLink trackLocation="chat_nudge"
                 to="/fun-dive-booking"
                 onClick={() => {
                   trackChatCtaClick("fun_dive");

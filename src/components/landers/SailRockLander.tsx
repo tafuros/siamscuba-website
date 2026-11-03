@@ -120,7 +120,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
               </p>
             )}
             <div className="mt-6">
-              <BookingLink
+              <BookingLink trackLocation="hero"
                 to={heroCtaHref}
                 className="inline-flex flex-col items-center justify-center rounded-xl bg-accent px-7 py-4 text-base md:text-lg font-extrabold text-accent-foreground shadow-lg transition-transform hover:-translate-y-0.5"
               >
@@ -147,7 +147,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
               const iso = toIsoDate(d);
               const isNext = i === 0;
               return (
-                <BookingLink
+                <BookingLink trackLocation="departure_date"
                   key={iso}
                   to={bookingHref(iso)}
                   aria-label={`${copy.reserveCta} - ${fmtLong(d)}`}
@@ -168,7 +168,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
               );
             })}
           </div>
-          <BookingLink
+          <BookingLink trackLocation="departures"
             to={heroCtaHref}
             className="inline-flex items-center justify-center rounded-xl bg-[#1aa179] px-6 py-3 text-sm md:text-base font-extrabold text-white shadow-md transition-transform hover:-translate-y-0.5 hover:bg-[#178c69]"
           >
@@ -236,7 +236,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
             {copy.pricingAddon && (
               <div className="mt-2 text-sm opacity-90">{copy.pricingAddon}</div>
             )}
-            <BookingLink
+            <BookingLink trackLocation="pricing"
               to={heroCtaHref}
               className="mt-5 inline-flex flex-col items-start rounded-xl bg-accent px-7 py-4 text-base md:text-lg font-extrabold text-accent-foreground shadow-md transition-transform hover:-translate-y-0.5"
             >
@@ -304,7 +304,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{copy.ctaStripHeadline}</h2>
           <p className="text-sm md:text-base mb-6 opacity-90">{copy.ctaStripSubhead}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <BookingLink
+            <BookingLink trackLocation="cta_strip"
               to={heroCtaHref}
               className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm md:text-base font-semibold text-ocean-deep shadow-md transition-transform hover:-translate-y-0.5"
             >
@@ -348,7 +348,7 @@ const SailRockLander = ({ lang }: SailRockLanderProps) => {
               : copy.closingCtaHeadline}
           </h2>
           <p className="text-sm md:text-base text-muted-foreground mb-6">{copy.closingCtaSubhead}</p>
-          <BookingLink
+          <BookingLink trackLocation="closing"
             to={heroCtaHref}
             className="inline-flex items-center justify-center rounded-xl bg-accent px-8 py-4 text-base font-extrabold text-accent-foreground shadow-lg transition-transform hover:-translate-y-0.5"
           >
