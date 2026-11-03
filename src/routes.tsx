@@ -352,7 +352,9 @@ export const routes: RouteRecord[] = [
         path: ":courseSlug",
         lazy: lazyDefault(() => import("./pages/CoursePage")),
         entry: "src/pages/CoursePage.tsx",
-        getStaticPaths: () => Object.keys(SLUG_TO_COURSE),
+        // /divemaster 301s to /divemaster-course (vercel.json, 2026-11-03), so it
+        // is not prerendered - a redirect source must not be a real page.
+        getStaticPaths: () => Object.keys(SLUG_TO_COURSE).filter((slug) => slug !== "divemaster"),
       },
       {
         path: "*",

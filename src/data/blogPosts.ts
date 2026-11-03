@@ -501,7 +501,7 @@ export const blogPosts: BlogPost[] = [
         heading: "Getting to Siam Scuba, and out to the dive sites",
         paragraphs: [
           "Siam Scuba is listed in the app under **dive clubs**, so you can select us as your destination by name instead of trying to describe where in Sairee we are. Pick us from the list, see the fare, and turn up.",
-          "**Book a course with us and your transfer from the pier is free.** That covers every course we run - [Discover Scuba](/discover-scuba), [Open Water](/open-water), [Advanced Open Water](/advanced-open-water), the [specialty courses](/#courses), [Divemaster](/divemaster) and the [instructor course](/idc). Coming for fun dives instead, your pier transfer is 150 THB rather than the standard 400.",
+          "**Book a course with us and your transfer from the pier is free.** That covers every course we run - [Discover Scuba](/discover-scuba), [Open Water](/open-water), [Advanced Open Water](/advanced-open-water), the [specialty courses](/#courses), [Divemaster](/divemaster-course) and the [instructor course](/idc). Coming for fun dives instead, your pier transfer is 150 THB rather than the standard 400.",
           "Either way, tell us which ferry you are on when you book and we will have the ride waiting - so your first Koh Tao taxi conversation is not a negotiation with a backpack on.",
         ],
         table: {
@@ -609,7 +609,7 @@ const divingBlogPosts: BlogPost[] = [
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 3 days (2 days Rescue + 1 day EFR). The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,000 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver and Deep Diver are ฿9,000 each. Sidemount and DPV are priced on request - ask the team.",
-          "[PADI Divemaster](/divemaster): ฿50,000 all-inclusive - 21-42 days, with the internship, PADI materials and the PADI certification fee included. Your first professional certification.",
+          "[PADI Divemaster](/divemaster-course): ฿50,000 all-inclusive - 21-42 days, with the internship, PADI materials and the PADI certification fee included. Your first professional certification.",
           "PADI Underwater Photography & Videography: ฿37,000 - 5 days, 10 dives, 1-on-1 instruction.",
           "PADI IDC (Instructor Development Course): price on request. We're a 5 Star IDC Centre, so you can train all the way from Open Water to Instructor at the same shop.",
         ],

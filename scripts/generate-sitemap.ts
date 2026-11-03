@@ -141,6 +141,9 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
   }
 
   for (const slug of Object.keys(SLUG_TO_COURSE)) {
+    // /divemaster 301s to the full lander /divemaster-course (2026-11-03) -
+    // a redirect must never be submitted.
+    if (slug === "divemaster") continue;
     // Course pages with Hebrew / Spanish twins (2026-10-23) carry the cluster.
     const alternates = hreflangAlternatesFor(`/${slug}`);
     entries.push({

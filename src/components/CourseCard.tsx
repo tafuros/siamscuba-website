@@ -46,8 +46,10 @@ const CourseCard = ({
   const coursePageSlug = slugForCourse && isCoursePageSlug(slugForCourse) ? slugForCourse : null;
   const handleShare = async () => {
     const slug = COURSE_TO_SLUG[course.dialogKey];
+    // /divemaster 301s to the full lander - share the lander itself.
+    const sharePath = slug === "divemaster" ? "divemaster-course" : slug;
     const shareUrl = slug
-      ? `${window.location.origin}/${slug}`
+      ? `${window.location.origin}/${sharePath}`
       : `${window.location.origin}/?course=${encodeURIComponent(course.dialogKey)}`;
     // Share the link only (no text blob) so messaging apps render a clickable
     // link with a rich preview instead of a wall of text.
