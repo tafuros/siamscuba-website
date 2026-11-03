@@ -577,7 +577,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "How Much Does Diving Cost in Koh Tao? The Honest 2026 Price Guide",
     seoTitle: "Koh Tao Diving Prices 2026 - Every PADI Course",
     seoDescription:
-      "Open Water 12,000 THB, Advanced 11,000, fun dives 2,000, Divemaster 47,000 - every Koh Tao course price for 2026, plus real daily living costs.",
+      "Open Water 12,000 THB, Advanced 11,000, fun dives 2,000, Divemaster 50,000 - every Koh Tao course price for 2026, plus real daily living costs.",
     category: "Diving",
     excerpt: "Real prices for every PADI course and dive package on Koh Tao - plus daily living costs and the hidden fees you should watch for at other shops.",
     coverImage: "/blog/divers-group-dive-boat-koh-tao.webp",
@@ -609,7 +609,7 @@ const divingBlogPosts: BlogPost[] = [
           "PADI Rescue Diver + EFR: ฿16,000 (฿11,000 + ฿5,000) - 4 days. The course most people say changes how they dive.",
           "Peak Performance Buoyancy: ฿5,000 - 1 day, 2 dives. The single biggest skill upgrade you can buy.",
           "Wreck Diver and Deep Diver are ฿9,000 each. Sidemount and DPV are priced on request - ask the team.",
-          "[PADI Divemaster](/divemaster): ฿47,000 all-inclusive - 21-42 days, with the internship, PADI materials and the PADI certification fee included. Your first professional certification.",
+          "[PADI Divemaster](/divemaster): ฿50,000 all-inclusive - 21-42 days, with the internship, PADI materials and the PADI certification fee included. Your first professional certification.",
           "PADI Underwater Photography & Videography: ฿37,000 - 5 days, 10 dives, 1-on-1 instruction.",
           "PADI IDC (Instructor Development Course): price on request. We're a 5 Star IDC Centre, so you can train all the way from Open Water to Instructor at the same shop.",
         ],
@@ -648,7 +648,7 @@ const divingBlogPosts: BlogPost[] = [
           "Day tripper / try diving: ฿2,600 for a one-dive Discover Scuba (an optional second dive is +฿1,000) + 1 night accommodation + meals = ฿4,000-฿5,500 total.",
           "Hobby diver in 4 days: ฿12,000 Open Water + 4 nights mid-range stay (฿4,000-฿6,000) + food (฿1,500-฿2,500) = ฿18,000-฿21,000 all-in. That's USD 500-590.",
           "Confident diver in 7 days: Open Water + Advanced Open Water + a couple of fun dives = ฿12,000 + ฿11,000 + ฿2,000 = ฿25,000 for courses. Plus 7 days accommodation/food: ฿30,000-฿38,000 total. Around USD 850-1,080.",
-          "Pro pathway: ฿47,000 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿87,000-฿127,000 for a 6-week internship. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",
+          "Pro pathway: ฿50,000 Divemaster + 6 weeks accommodation (฿15,000-฿25,000 monthly rental) + food (฿8,000-฿15,000 per month) = ฿90,000-฿130,000 for a 6-week internship. Includes the free internship - you assist on student courses, which is the real-world experience that makes you employable.",
           "Total instructor pipeline (Open Water → Instructor): roughly ฿120,000-฿180,000 in course fees over 3-4 months. Possibly the cheapest route to a globally portable scuba instructor career on the planet.",
         ],
       },
@@ -1091,7 +1091,7 @@ const divingBlogPosts: BlogPost[] = [
           "Calling it a \"course\" undersells it. A typical course is classroom learning over a few days. The PADI Divemaster is more like an apprenticeship - 21 to 42 days (3 to 6 weeks) of structured theory, real assist work on student courses, water skills assessment, and a final exam arc.",
           "At Siam Scuba the internship runs 21 to 42 days, and we recommend the full 6 weeks. We don't rush it: Divemaster is a professional pathway that sets the foundations for your whole diving career, and the extra weeks let you assist on more student courses, which is where the real learning happens.",
           "At Siam Scuba, the free internship period is included in the course price. You aren't paying us extra to assist on student courses - that's the whole point. Some shops in other locations charge for it; we don't.",
-          "Total cost at Siam Scuba: 47,000 THB for the course, all-inclusive - PADI materials and the PADI certification fee are in the price. Accommodation, food, and entertainment are separate.",
+          "Total cost at Siam Scuba: 50,000 THB for the course, all-inclusive - PADI materials and the PADI certification fee are in the price. Accommodation, food, and entertainment are separate.",
         ],
       },
       {
@@ -1399,7 +1399,7 @@ const divingBlogPosts: BlogPost[] = [
     title: "PADI Divemaster en Koh Tao: La Guía Completa al Camino Profesional (en Español)",
     seoTitle: "PADI Divemaster en Koh Tao - Guía en Español",
     category: "Diving",
-    excerpt: "El curso PADI Divemaster en Koh Tao explicado en español: estructura semana a semana, requisitos, precio (47.000 THB), y qué viene después con la carrera de buceo profesional.",
+    excerpt: "El curso PADI Divemaster en Koh Tao explicado en español: estructura semana a semana, requisitos, precio (50.000 THB), y qué viene después con la carrera de buceo profesional.",
     coverImage: "/blog/yellowtail-fish-school-koh-tao.webp",
     date: "2026-05-09",
     sections: [
@@ -1416,7 +1416,7 @@ const divingBlogPosts: BlogPost[] = [
         paragraphs: [
           "Volumen. Koh Tao certifica más buceadores PADI cada año que cualquier otro lugar del planeta. Eso significa que durante tu pasantía hay flujo constante de alumnos en los que practicar la asistencia. En otros destinos puedes pasar semanas sin tener un alumno real al que ayudar - aquí tienes uno cada día.",
           "Comunidad. En la isla hay típicamente 15-25 Divemaster Trainees activos en cualquier momento, distribuidos entre varios centros. La amistad que se forma entre el grupo - cohorte mentality, le llamamos - es uno de los aspectos que más recuerdan los exalumnos.",
-          "Coste. La pasantía de Divemaster en Koh Tao es gratuita - está incluida en el precio del curso (47.000 THB). En el Caribe, Australia o las Maldivas, las pasantías de Divemaster cobran entre 2.000 y 3.000 USD adicionales sobre el precio del curso. Información que vale la pena saber al comparar.",
+          "Coste. La pasantía de Divemaster en Koh Tao es gratuita - está incluida en el precio del curso (50.000 THB). En el Caribe, Australia o las Maldivas, las pasantías de Divemaster cobran entre 2.000 y 3.000 USD adicionales sobre el precio del curso. Información que vale la pena saber al comparar.",
           "Cultura. Koh Tao es informal, joven, multinacional. La vida nocturna es activa, la comida es barata, y el ritmo permite vivir bien con un presupuesto modesto durante los 21-42 días que dura la pasantía.",
         ],
       },
@@ -1447,7 +1447,7 @@ const divingBlogPosts: BlogPost[] = [
       {
         heading: "Coste total: el curso y la vida en la isla",
         paragraphs: [
-          "Curso de Divemaster: 47.000 THB en Siam Scuba. Incluye toda la formación, los manuales, las inmersiones, la pasantía, y las cuotas de procesamiento de PADI.",
+          "Curso de Divemaster: 50.000 THB en Siam Scuba. Incluye toda la formación, los manuales, las inmersiones, la pasantía, y las cuotas de procesamiento de PADI.",
           "Si necesitas Rescue Diver + EFR antes: 16.000 THB adicionales (11.000 + 5.000). En total el paquete completo desde Advanced Open Water hasta Divemaster ronda los 54.500 THB.",
           "Alojamiento por 3-6 semanas: estudios mensuales con ventilador 8.000-15.000 THB/mes; habitaciones con aire acondicionado 15.000-25.000 THB/mes. Calcula 30.000-50.000 THB en total para 6 semanas.",
           "Comida: 8.000-15.000 THB al mes según estilo de vida (comida tailandesa de calle vs. restaurantes para extranjeros).",
