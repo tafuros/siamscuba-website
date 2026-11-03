@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { COURSE_SEO } from "@/lib/courseSeoData";
-import { SLUG_TO_COURSE } from "@/lib/courseSlugMap";
+import { SLUG_TO_COURSE, coursePath } from "@/lib/courseSlugMap";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 interface RelatedCoursesProps {
@@ -35,7 +35,7 @@ const RelatedCourses = ({ slugs, heading }: RelatedCoursesProps) => {
           const course = COURSE_SEO[slug];
           const name = SLUG_TO_COURSE[slug];
           return (
-            <Link key={slug} to={`/${slug}`} className="group">
+            <Link key={slug} to={coursePath(slug)} className="group">
               <Card className="h-full border bg-card hover:border-primary/40 transition-colors">
                 <CardContent className="p-5 flex flex-col h-full">
                   <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-primary transition-colors mb-2">

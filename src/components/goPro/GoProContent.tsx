@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { divemasterPath } from "@/data/divemaster";
 import { ArrowRight, MessageCircle, Clock, Users } from "lucide-react";
 import type { Language } from "@/i18n/translations";
 import Navbar from "@/components/Navbar";
@@ -182,7 +183,7 @@ const GoProContent = ({ lang }: GoProContentProps) => {
                         dialog - link to it rather than duplicating it here. */}
                     {track.courseSlug && (
                       <Link
-                        to={`/${track.courseSlug}`}
+                        to={track.courseSlug === "divemaster" ? divemasterPath(lang) : `/${track.courseSlug}`}
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#A5C5D4] hover:underline"
                       >
                         {copy.detailCta}

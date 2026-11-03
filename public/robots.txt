@@ -3,6 +3,8 @@ Allow: /
 Sitemap: https://siamscuba.com/sitemap.xml
 
 # Block old WordPress remnants
+# (/category/, /tag/, /author/ are NOT blocked: vercel.json 301s them to /blog,
+#  and Google must be able to crawl a URL to see its redirect - 2026-11-03)
 Disallow: /wp-content/
 Disallow: /wp-admin/
 Disallow: /wp-includes/
@@ -12,9 +14,6 @@ Disallow: /xmlrpc.php
 Disallow: /feed/
 Disallow: /comments/
 Disallow: /trackback/
-Disallow: /category/
-Disallow: /tag/
-Disallow: /author/
 Disallow: /?attachment_id=
 Disallow: /?p=
 Disallow: /?page_id=

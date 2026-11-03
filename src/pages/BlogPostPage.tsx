@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { coursePath } from "@/lib/courseSlugMap";
 import BookingLink from "@/components/BookingLink";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -118,7 +119,7 @@ const BlogPostPage = () => {
   // Pick the inline CTA destination — first related course if present, else booking
   const inlineCtaHref =
     post.relatedCourses && post.relatedCourses.length > 0
-      ? `/${post.relatedCourses[0]}`
+      ? coursePath(post.relatedCourses[0])
       : "/fun-dive-booking";
 
   // Insert mid-article CTA between sections 3 and 4 (only if there are at least 5 sections)
