@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import BookingLink from "@/components/BookingLink";
 import { CheckCircle2, Clock, Users, Waves, AlertCircle } from "lucide-react";
-import { trackBookNowClick } from "@/utils/tracking";
 import Price from "@/components/Price";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -205,7 +204,8 @@ function BookButton({ trip, className = "" }: { trip: Trip; className?: string }
   return (
     <BookingLink
       to={to}
-      onClick={() => trackBookNowClick({ location: trip.trackingSlot, product: trip.productCode ?? "", url: to })}
+      trackLocation={trip.trackingSlot}
+      trackProduct={trip.productCode ?? ""}
       className={
         "inline-flex h-11 items-center justify-center rounded-full bg-white px-7 text-sm font-semibold text-[#0b2444] transition-colors hover:bg-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b2444] " +
         className
@@ -231,7 +231,8 @@ function BookDayButton({ trip, day }: { trip: Trip; day: ScheduleDay }) {
   return (
     <BookingLink
       to={to}
-      onClick={() => trackBookNowClick({ location: `${trip.trackingSlot}-day`, product: trip.productCode ?? "", url: to })}
+      trackLocation={`${trip.trackingSlot}-day`}
+      trackProduct={trip.productCode ?? ""}
       className="mt-3 flex h-12 w-full items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-[#0b2444] transition-colors hover:bg-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b2444]"
     >
       {ui.bookDay(ui.days[day.key].label, plainTripName(trip.name))}

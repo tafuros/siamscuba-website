@@ -17,6 +17,7 @@ import { resolve } from "node:path";
 import {
   WIZARD_PRODUCT,
   TRIP_CARD_PRODUCT,
+  COURSE_CARD_PRODUCT,
   DIVEOS_COURSE_CODES,
   usesBookingWrapper,
 } from "../lib/landerBooking";
@@ -78,6 +79,28 @@ describe("homepage trip cards -> DiveOS product codes", () => {
     expect(TRIP_CARD_PRODUCT.funDive).toBe("FD");
     expect(TRIP_CARD_PRODUCT.sailRock).toBe("SAILROCK");
     expect(TRIP_CARD_PRODUCT.funDive).not.toBe(TRIP_CARD_PRODUCT.sailRock);
+  });
+});
+
+describe("homepage course cards -> DiveOS product codes", () => {
+  // Clarity audit 2026-09-13 fix 3: every card used to open the wizard empty.
+  it("every course-card code is a real DiveOS Course.code", () => {
+    const known = new Set<string>(DIVEOS_COURSE_CODES);
+    for (const [card, code] of Object.entries(COURSE_CARD_PRODUCT)) {
+      expect(known, `course card "${card}" preselects unknown code "${code}"`).toContain(code);
+    }
+  });
+
+  it("every mapped card exists in CoursesSection (no stale dialogKeys)", () => {
+    const source = readFileSync(resolve(process.cwd(), "src/components/CoursesSection.tsx"), "utf8");
+    for (const card of Object.keys(COURSE_CARD_PRODUCT)) {
+      expect(source, `no course card with dialogKey "${card}"`).toContain(`dialogKey: "${card}"`);
+    }
+  });
+
+  it("the card CTA passes the mapped product to the booking page", () => {
+    const source = readFileSync(resolve(process.cwd(), "src/components/CourseCard.tsx"), "utf8");
+    expect(source).toContain("COURSE_CARD_PRODUCT[course.dialogKey]");
   });
 });
 

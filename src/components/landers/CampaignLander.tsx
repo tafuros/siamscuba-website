@@ -175,7 +175,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                 </a>
               ) : (
                 <Button asChild size="lg" className="rounded-full px-6 bg-accent hover:bg-accent/90">
-                  <BookingLink to={primaryHref}>{copy.ctaPrimary}</BookingLink>
+                  <BookingLink trackLocation="hero" to={primaryHref}>{copy.ctaPrimary}</BookingLink>
                 </Button>
               )}
               {primaryIsExternal ? null : (
@@ -367,7 +367,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
                   variant="secondary"
                   className="rounded-full px-6"
                 >
-                  <BookingLink to={primaryHref}>{copy.ctaPrimary}</BookingLink>
+                  <BookingLink trackLocation="mid" to={primaryHref}>{copy.ctaPrimary}</BookingLink>
                 </Button>
                 <a
                   href={whatsappHref}
@@ -419,7 +419,7 @@ const CampaignLander = ({ offer, lang }: CampaignLanderProps) => {
           ) : (
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="rounded-full px-8 bg-accent hover:bg-accent/90">
-                <BookingLink to={primaryHref}>{copy.ctaPrimary}</BookingLink>
+                <BookingLink trackLocation="closing" to={primaryHref}>{copy.ctaPrimary}</BookingLink>
               </Button>
               <a
                 href={whatsappHref}

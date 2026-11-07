@@ -350,7 +350,7 @@ const BlogPostPage = () => {
                             size="default"
                             className="h-11 rounded-full px-6 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shrink-0 self-start sm:self-auto"
                           >
-                            <BookingLink to={inlineCtaHref}>
+                            <BookingLink trackLocation="blog_inline" to={inlineCtaHref}>
                               <MessageCircle className="h-4 w-4" />
                               {t("blog_inline_cta_button")}
                             </BookingLink>
@@ -411,7 +411,7 @@ const BlogPostPage = () => {
                   size="lg"
                   className="mt-6 rounded-full px-10 bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
                 >
-                  <BookingLink to="/fun-dive-booking">
+                  <BookingLink trackLocation="blog_bottom" to="/fun-dive-booking">
                     <MessageCircle className="h-5 w-5" />
                     {t("blog_cta_button")}
                   </BookingLink>

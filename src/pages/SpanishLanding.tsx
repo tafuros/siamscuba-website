@@ -297,12 +297,13 @@ const SpanishLanding = () => {
               álgido en abril y mayo.
             </p>
             <p>
-              <strong>De junio a septiembre, muy bien y con menos gente:</strong> visibilidad de 15-25
-              metros, alguna tormenta por la tarde y precios más bajos.
+              <strong>De junio a octubre, muy bien y con menos gente:</strong> visibilidad de 15-25
+              metros, alguna tormenta por la tarde y precios más bajos. Octubre es un mes de
+              transición: a finales de mes a veces llegan los primeros días de lluvia.
             </p>
             <p>
-              <strong>De octubre a mediados de diciembre, temporada de lluvias:</strong> es la que
-              nadie te cuenta. Llueve fuerte, el mar se pica en los sitios del norte y la visibilidad
+              <strong>De noviembre a mediados de diciembre, temporada de lluvias:</strong> es la que
+              nadie te cuenta, con el pico en noviembre. Llueve fuerte, el mar se pica en los sitios del norte y la visibilidad
               baja a 5-15 metros en los peores días. Nosotros salimos casi todos los días - nuestros
               barcos son grandes - pero no es lo mismo.
             </p>
@@ -313,7 +314,7 @@ const SpanishLanding = () => {
             </p>
             <p>
               <strong>Nuestra recomendación:</strong> si puedes elegir, ven en marzo o abril. Si vienes
-              igualmente en octubre o noviembre, reserva 5-7 días en la isla para poder aprovechar las
+              igualmente en noviembre, reserva 5-7 días en la isla para poder aprovechar las
               ventanas de buen tiempo.
             </p>
           </Section>

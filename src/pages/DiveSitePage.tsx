@@ -269,7 +269,7 @@ const DiveSitePage = ({ lang = "en" }: DiveSitePageProps) => {
                     {ui.ctaButton}
                   </Link>
                 ) : (
-                  <BookingLink to="/fun-dive-booking">
+                  <BookingLink trackLocation="dive_site" to="/fun-dive-booking">
                     <MessageCircle className="h-5 w-5" />
                     {ui.ctaButton}
                   </BookingLink>

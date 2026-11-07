@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { COURSE_TO_SLUG, coursePath } from "@/lib/courseSlugMap";
 import { isCoursePageSlug } from "@/data/coursePages";
 import Price from "@/components/Price";
+import { COURSE_CARD_PRODUCT } from "@/lib/landerBooking";
 
 /** Shape of a course entry as built in CoursesSection. */
 export interface CourseCardData {
@@ -44,6 +45,12 @@ const CourseCard = ({
 }) => {
   const slugForCourse = COURSE_TO_SLUG[course.dialogKey];
   const coursePageSlug = slugForCourse && isCoursePageSlug(slugForCourse) ? slugForCourse : null;
+  // Preselect this card's course in the wizard (Clarity audit fix 3). Cards
+  // with no DiveOS course open the wizard without a preselect, as before.
+  const product = COURSE_CARD_PRODUCT[course.dialogKey];
+  const bookHref = product
+    ? `/fun-dive-booking?product=${encodeURIComponent(product)}&utm_passthrough=1`
+    : "/fun-dive-booking";
   const handleShare = async () => {
     const slug = COURSE_TO_SLUG[course.dialogKey];
     const shareUrl = slug
@@ -130,7 +137,11 @@ const CourseCard = ({
             )}
             <div className="flex gap-1.5">
               <Button asChild variant={course.featured ? "default" : "outline"} size="sm" className="rounded-full flex-1 h-8 text-xs">
-                <BookingLink to="/fun-dive-booking">
+                <BookingLink
+                  to={bookHref}
+                  trackLocation="course_card"
+                  trackProduct={product}
+                >
                   {course.price ? t("courses_book_now") : t("courses_get_price")}
                 </BookingLink>
               </Button>

@@ -198,13 +198,13 @@ const StartDivingPage = ({ lang }: { lang: StartLang }) => {
           <p className="mt-4 text-[14px] text-white/65">{copy.recoShort}</p>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <BookingLink to={BOOK_OW} className={`${bookBtn} px-6 py-3.5`}>
+            <BookingLink trackLocation="start_ow" to={BOOK_OW} className={`${bookBtn} px-6 py-3.5`}>
               <span className="inline-flex items-center gap-2 text-[16px]">
                 {copy.ctaOw} <Arrow className="h-4 w-4" />
               </span>
               <span className="text-[12px] font-semibold opacity-75">{copy.ctaOwSub}</span>
             </BookingLink>
-            <BookingLink
+            <BookingLink trackLocation="start_dsd"
               to={BOOK_DSD}
               className="inline-flex flex-col items-center justify-center rounded-full border border-white/30 px-6 py-3.5 font-bold hover:bg-white/10"
             >
