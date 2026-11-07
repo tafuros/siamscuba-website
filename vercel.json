@@ -11,6 +11,21 @@
   },
   "redirects": [
     {
+      "source": "/padi-open-water-course",
+      "destination": "/open-water",
+      "permanent": true
+    },
+    {
+      "source": "/fun-diving",
+      "destination": "/fun-dives",
+      "permanent": true
+    },
+    {
+      "source": "/courses",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/divemaster",
       "destination": "/divemaster-course",
       "permanent": true

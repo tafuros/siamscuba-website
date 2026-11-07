@@ -10,6 +10,21 @@ import { conservationPath } from "@/lib/conservationCopy";
 import { languageGuidePath } from "@/lib/localeRoutes";
 import { faqPath } from "@/data/faq";
 
+// Anchor text per the backlinks plan (X1 / X2). FR was not in the plan - same
+// wording, translated.
+const FOOTER_DIVEOS: Record<string, string> = {
+  en: "Bookings run on DiveOS - dive center software",
+  es: "Reservas con DiveOS",
+  he: "ההזמנות מנוהלות ב-DiveOS",
+  fr: "Réservations gérées avec DiveOS",
+};
+const FOOTER_SHIRTS: Record<string, string> = {
+  en: "Siam Scuba dive t-shirts",
+  es: "Camisetas de buceo Siam Scuba",
+  he: "חולצות צלילה של סיאם סקובה",
+  fr: "T-shirts de plongée Siam Scuba",
+};
+
 const Footer = () => {
   const { t, language } = useLanguage();
   const guidePath = languageGuidePath(language);
@@ -138,15 +153,33 @@ const Footer = () => {
           </nav>
         </div>
 
-        <div className="mt-5 flex justify-center">
+        {/* Our own properties (backlinks plan 2026-09, X1 + X2): plain canonical
+            URLs, no ?ref - the referrer is enough and param URLs split signals. */}
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-background/40">
           <a
             href="https://tafuros.com/?ref=siamscuba"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-background/40 transition-colors hover:text-primary"
+            className="transition-colors hover:text-primary"
             aria-label="Built by Tafuros"
           >
             Built by Tafuros
+          </a>
+          <a
+            href={language === "he" ? "https://www.diveos.co/he/" : "https://www.diveos.co/"}
+            target="_blank"
+            rel="noopener"
+            className="transition-colors hover:text-primary"
+          >
+            {FOOTER_DIVEOS[language] ?? FOOTER_DIVEOS.en}
+          </a>
+          <a
+            href="https://shirts.siamscuba.com/"
+            target="_blank"
+            rel="noopener"
+            className="transition-colors hover:text-primary"
+          >
+            {FOOTER_SHIRTS[language] ?? FOOTER_SHIRTS.en}
           </a>
         </div>
       </div>

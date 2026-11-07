@@ -114,7 +114,10 @@ expect "/open-water"                                200
 
 info "Unmatched URLs must hard-404 with the branded page"
 expect "/totally-made-up-path-check"                404 "drifted off the map"
-expect "/courses"                                   404
+
+info "Legacy URLs redirect permanently (backlinks X0)"
+expect "/courses"                                   308
+expect "/padi-open-water-course"                    308
 
 info "Language-namespaced blog posts"
 expect "/es/blog/curso-buceo-koh-tao"               200
