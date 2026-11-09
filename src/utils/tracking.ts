@@ -397,6 +397,28 @@ export function trackBookNowClick(params: BookNowClickParams): void {
   });
 }
 
+export interface StayClickParams {
+  place_name: string;
+  /** Stable section id, e.g. "quiet" - not the Hebrew heading. */
+  section: string;
+}
+
+/**
+ * Clicks on the /he/koh-tao-stay guide. SIGNALS only, and deliberately not via
+ * trackWhatsAppClick: that one fires the Google Ads WhatsApp conversion, and a
+ * message to a third-party hotel is not a lead for the dive shop.
+ *
+ * One dataLayer push each, no bare gtag("event", …) with the same name. Reaching
+ * GA4 still needs GTM Custom Event tags for these two names.
+ */
+export function trackStayMapClick(params: StayClickParams): void {
+  pushDataLayer("stay_map_click", { ...params, ...utmFields() });
+}
+
+export function trackStayWhatsAppClick(params: StayClickParams): void {
+  pushDataLayer("stay_whatsapp_click", { ...params, ...utmFields() });
+}
+
 export interface GenerateLeadParams {
   form_name: "fun_dive_booking" | "booking_wizard" | "course_inquiry" | "contact" | "hotel_booking_request";
   dive_date?: string;

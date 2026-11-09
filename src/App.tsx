@@ -59,7 +59,7 @@ const SkipLink = () => {
  * CTA on every card) the bubble pitches diving at someone who came for a bed,
  * so it stays off there. Delete this gate if Nemo ever learns the rooms.
  */
-const NEMO_HIDDEN_PREFIXES = ["/hotel", "/he/hotel", "/es/hotel", "/fr/hotel"];
+const NEMO_HIDDEN_PREFIXES = ["/hotel", "/he/hotel", "/es/hotel", "/fr/hotel", "/he/koh-tao-stay"];
 
 const ChatWidget = () => {
   const { pathname } = useLocation();

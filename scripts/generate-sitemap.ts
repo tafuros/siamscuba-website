@@ -70,6 +70,7 @@ async function loadRoutes(): Promise<SitemapEntry[]> {
     { loc: "/sail-rock-diving", changefreq: "monthly", priority: 0.8 },
     { loc: "/he/sail-rock-diving", changefreq: "monthly", priority: 0.7 },
     { loc: "/es/sail-rock-diving", changefreq: "monthly", priority: 0.7 },
+    { loc: "/he/koh-tao-stay", changefreq: "monthly", priority: 0.6, hreflangs: ["he"] },
     { loc: "/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["en"] },
     { loc: "/es/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["es"] },
     { loc: "/he/fun-dives", changefreq: "monthly", priority: 0.9, hreflangs: ["he"] },

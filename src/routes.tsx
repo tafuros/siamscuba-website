@@ -202,6 +202,12 @@ export const routes: RouteRecord[] = [
         lazy: lazyDefault(() => import("./pages/landers/SailRockHePage")),
         entry: "src/pages/landers/SailRockHePage.tsx",
       },
+      // Hebrew-only stay guide, reached from the Instagram auto-DM.
+      {
+        path: "he/koh-tao-stay",
+        lazy: lazyDefault(() => import("./pages/landers/KohTaoStayHePage")),
+        entry: "src/pages/landers/KohTaoStayHePage.tsx",
+      },
       {
         path: "similan",
         lazy: lazyDefault(() => import("./pages/SiamSimilansPage")),
